@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using Qs.Types;
@@ -32,8 +28,8 @@ namespace Qs.Runtime
 
         public string Name { get; private set; }
 
-        private System.Type _NamespaceType;
-        public System.Type NamespaceType
+        private Type _NamespaceType;
+        public Type NamespaceType
         {
             get
             {
@@ -49,11 +45,11 @@ namespace Qs.Runtime
 
 
 
-        private Dictionary<string, object> Values = new Dictionary<string, object>(System.StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, object> Values = new(StringComparer.OrdinalIgnoreCase);
 
         public QsReference AddReference(string newVariable, string targetVariable)
         {
-            QsReference qsr = new QsReference(targetVariable);
+            var qsr = new QsReference(targetVariable);
 
             Values.Add(newVariable, qsr);
 
@@ -130,7 +126,7 @@ namespace Qs.Runtime
             object o;
             Values.TryGetValue(name, out o);
 
-            if (o == null) throw new QsVariableNotFoundException("Variable '" + name + "' not found in '" + this.Name + "' namespace.");
+            if (o == null) throw new QsVariableNotFoundException("Variable '" + name + "' not found in '" + Name + "' namespace.");
             return o;        
         }
 
@@ -175,23 +171,23 @@ namespace Qs.Runtime
         /// <returns></returns>
         public QsFunction GetQsFunctionFromTypeMethod(MethodInfo methodInfo, QsFunctionAttribute funcAttribute)
         {
-            string qsNamespace = this._NamespaceType.Name;
+            var qsNamespace = _NamespaceType.Name;
 
-            string qsFuncName = funcAttribute == null ? methodInfo.Name : funcAttribute.FunctionName;
+            var qsFuncName = funcAttribute == null ? methodInfo.Name : funcAttribute.FunctionName;
 
             var miParameters = methodInfo.GetParameters();
-            int qsFuncParamCount = miParameters.Length;
+            var qsFuncParamCount = miParameters.Length;
 
 
-            QsFunction QsModFunc = new QsFunction("[" +qsNamespace + "." + qsFuncName + "]", true);
+            var QsModFunc = new QsFunction("[" +qsNamespace + "." + qsFuncName + "]", true);
             QsModFunc.FunctionNamespace = qsNamespace;
             QsModFunc.FunctionName = qsFuncName;
 
-            List<QsParamInfo> prms = new List<QsParamInfo>(miParameters.Length);
+            List<QsParamInfo> prms = new(miParameters.Length);
 
             foreach (var miParam in miParameters)
             {
-                QsParamInfo prm = new QsParamInfo();
+                var prm = new QsParamInfo();
 
                 //parameter name
                 prm.Name = miParam.Name;
@@ -208,7 +204,7 @@ namespace Qs.Runtime
             
             QsModFunc.Parameters = prms.ToArray();
             QsModFunc.FunctionDeclaration += "(";
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var p in prms) sb.Append(", " + p.Name);
             if (sb.Length > 0) QsModFunc.FunctionDeclaration += sb.ToString().TrimStart(',', ' ');
             QsModFunc.FunctionDeclaration += ")";
@@ -243,8 +239,7 @@ namespace Qs.Runtime
              /*| BindingFlags.InvokeMethod */
              );
             
-            Dictionary<string, object> CodedMembers = 
-                new Dictionary<string, object>(System.StringComparer.OrdinalIgnoreCase);
+            Dictionary<string, object> CodedMembers = new(StringComparer.OrdinalIgnoreCase);
 
             /*
             var FilteredMethods = from m in methods
@@ -270,14 +265,14 @@ namespace Qs.Runtime
                     ParameterInfo[] mps = method.GetParameters();
                     
                     
-                    int paramCount = mps.Length;
+                    var paramCount = mps.Length;
 
 
                     var fAttributes = method.GetCustomAttributes(typeof(QsFunctionAttribute), false);
 
                     QsFunctionAttribute funcAttribute = null;
-                    string method_name = string.Empty;
-                    string methodTrueName = string.Empty;
+                    var method_name = string.Empty;
+                    var methodTrueName = string.Empty;
 
                     if (fAttributes.Length > 0)
                     {
@@ -337,7 +332,7 @@ namespace Qs.Runtime
                                      )
                                      select m;
 
-            List<KeyValuePair<string, object>> CodedMembers = new List<KeyValuePair<string, object>>();
+            List<KeyValuePair<string, object>> CodedMembers = new();
 
             foreach (var prop in FilteredProperties)
             {
@@ -352,7 +347,7 @@ namespace Qs.Runtime
 
         public IEnumerable<KeyValuePair<string, object>> GetItems()
         {
-            List<KeyValuePair<string, object>> items = new List<KeyValuePair<string, object>>();
+            List<KeyValuePair<string, object>> items = new();
 
             items.AddRange(Values);
 
@@ -375,7 +370,7 @@ namespace Qs.Runtime
 
         public IEnumerable<string> GetVariablesKeys()
         {
-            var varo = from item in this.GetItems()
+            var varo = from item in GetItems()
                        select item.Key;
             return varo;
 
@@ -391,13 +386,13 @@ namespace Qs.Runtime
         /// </summary>
         /// <param name="nameSpace"></param>
         /// <returns></returns>
-        private static System.Type GetQsNamespaceType(string qsNamespace)
+        private static Type GetQsNamespaceType(string qsNamespace)
         {
             
             qsNamespace = qsNamespace.Replace(':', '.');
 
 
-            string cls = qsNamespace;
+            var cls = qsNamespace;
 
             if (cls.StartsWith(".."))
                 cls = cls.Replace("..", ""); // indicates that we used root operator in namespace  ::
@@ -413,7 +408,7 @@ namespace Qs.Runtime
             System.Type ns = Root.GetInternalType(cls);            
 #else
 
-            System.Type ns = System.Type.GetType(cls, false, true);
+            var ns = Type.GetType(cls, false, true);
 #endif
 
             if (ns == null)
@@ -481,7 +476,7 @@ namespace Qs.Runtime
                     NameSpace = new QsNamespace(moduleNamespace);
 
                     // search if this namespace represent hardcoded namespace
-                    System.Type nst = GetQsNamespaceType(moduleNamespace);
+                    var nst = GetQsNamespaceType(moduleNamespace);
                     NameSpace._NamespaceType = nst;
 
                     if (forceCreation | (nst != null))
@@ -503,10 +498,10 @@ namespace Qs.Runtime
         /// <returns></returns>
         public static QsNamespace GetTypedNamespace(string moduleNamespace)
         {
-            QsNamespace NameSpace = new QsNamespace(moduleNamespace);
+            var NameSpace = new QsNamespace(moduleNamespace);
 
             // search if this namespace represent hardcoded namespace
-            System.Type nst = GetQsNamespaceType(moduleNamespace);
+            var nst = GetQsNamespaceType(moduleNamespace);
             NameSpace._NamespaceType = nst;
 
             return NameSpace;
@@ -522,14 +517,14 @@ namespace Qs.Runtime
         /// Returns a delegate to native c# function.
         /// </summary>
         /// <param name="method"></param>
-        internal static System.Delegate FormNativeFunctionDelegate(MethodInfo method)
+        internal static Delegate FormNativeFunctionDelegate(MethodInfo method)
         {
-            bool DecorateNativeFunction = false;
+            var DecorateNativeFunction = false;
 
             if (method.ReturnType != typeof(QsValue)) DecorateNativeFunction = true;
             //construct the lambda
 
-            SimpleLambdaBuilder lb = SimpleLambdaBuilder.Create(typeof(QsValue), method.Name);
+            var lb = SimpleLambdaBuilder.Create(typeof(QsValue), method.Name);
             
 
             //prepare parameters with the same name of native function but with qsparameter type
@@ -548,62 +543,62 @@ namespace Qs.Runtime
                 switch (parameters.Length)
                 {
                     case 0:
-                        return  System.Delegate.CreateDelegate(
+                        return  Delegate.CreateDelegate(
                             typeof(Func<QsValue>),
                             method);
                         
                     case 1:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsValue>),
                             method);
 
                     case 2:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsValue>),
                             method);
                                     
                     case 3:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
                     case 4:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
                     case 5:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
                     case 6:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
                     case 7:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
                     case 8:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
                         
                     case 9:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
                         
                     case 10:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
                         
                     case 11:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
                         
                     case 12:
-                        return System.Delegate.CreateDelegate(
+                        return Delegate.CreateDelegate(
                             typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                             method);
 
@@ -616,7 +611,7 @@ namespace Qs.Runtime
             //    1- check the parameter
             //    2- convert the parameter into native c# during runtime so it can be passed to the desired function
 
-            List<Expression> statements = new List<Expression>();
+            List<Expression> statements = new();
 
             var qns = typeof(QsNamespace);
             var qsys = typeof(Root);
@@ -658,7 +653,7 @@ namespace Qs.Runtime
 
             lb.Body = Expression.Block(statements);
 
-            LambdaExpression lbe = lb.MakeLambda();
+            var lbe = lb.MakeLambda();
 
             return lbe.Compile();
 

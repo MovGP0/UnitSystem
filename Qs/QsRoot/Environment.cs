@@ -1,81 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Qs.Types;
-using Qs.Runtime;
+﻿using Qs.Types;
 using Qs;
 
-namespace QsRoot
+namespace QsRoot;
+
+/// <summary>
+/// System Environment but in unitized properties
+/// </summary>
+public static class Environment
 {
-    /// <summary>
-    /// System Environment but in unitized properties
-    /// </summary>
-    public static class Environment
+    public static QsValue TickCount
     {
-        public static QsValue TickCount
+        get
         {
-            get
-            {
                 
-                return System.Environment.TickCount.ToQuantity("ms").ToScalarValue();
-            }
+            return System.Environment.TickCount.ToQuantity("ms").ToScalarValue();
         }
+    }
 
-        public static QsValue ProcessorCount
+    public static QsValue ProcessorCount
+    {
+        get
         {
-            get
-            {
-                return System.Environment.ProcessorCount.ToQuantity().ToScalar();
-            }
+            return System.Environment.ProcessorCount.ToQuantity().ToScalar();
         }
-
+    }
 
 #if !WINRT
 
-        public static QsText CurrentDirectory
+    public static QsText CurrentDirectory
+    {
+        get
         {
-            get
-            {
                 
-                return new QsText(System.Environment.CurrentDirectory);
-            }
+            return new QsText(System.Environment.CurrentDirectory);
         }
-
-        public static QsText MachineName
-        {
-            get
-            {
-                
-                return new QsText(System.Environment.MachineName);
-            }
-        }
-
-        public static QsObject OsVersion
-        {
-            get
-            {
-                return  QsObject.CreateNativeObject( System.Environment.OSVersion);
-            }
-        }
-
-        public static QsText SystemDirectory
-        {
-            get
-            {
-                return new QsText(System.Environment.SystemDirectory);
-            }
-        }
-
-        public static QsText UserName
-        {
-            get
-            {
-                return new QsText(System.Environment.UserName);
-            }
-        }
-
-#endif
     }
 
+    public static QsText MachineName
+    {
+        get
+        {
+                
+            return new QsText(System.Environment.MachineName);
+        }
+    }
+
+    public static QsObject OsVersion
+    {
+        get
+        {
+            return  QsObject.CreateNativeObject( System.Environment.OSVersion);
+        }
+    }
+
+    public static QsText SystemDirectory
+    {
+        get
+        {
+            return new QsText(System.Environment.SystemDirectory);
+        }
+    }
+
+    public static QsText UserName
+    {
+        get
+        {
+            return new QsText(System.Environment.UserName);
+        }
+    }
+
+#endif
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ParticleLexer;
+﻿using ParticleLexer;
 using ParticleLexer.StandardTokens;
-using QuantitySystem.Units;
 using System.Globalization;
 using ParticleLexer.QsTokens;
 
@@ -18,9 +13,9 @@ namespace Qs.Runtime
             get
             {
                 //go through all elements and print their index: text
-                string gg = "";
+                var gg = "";
                 
-                foreach (var v in base.Keys)
+                foreach (var v in Keys)
                 {
                     gg += v.ToString(CultureInfo.InvariantCulture).Trim() + ": " + base[v].ElementDeclaration + "; ";
                 }
@@ -79,7 +74,7 @@ namespace Qs.Runtime
             else
                 SequenceIndexName = DefaultIndexName;
 
-            this.Parameters = (from v in parameters select new QsParamInfo { Name = v }).ToArray();
+            Parameters = (from v in parameters select new QsParamInfo { Name = v }).ToArray();
 
             if (parameters.Length == 0) CachingEnabled = true;  //Allow caching for parameterless sequence.
         }
@@ -105,7 +100,7 @@ namespace Qs.Runtime
                 }
             }
 
-            Token t = Token.ParseText(sequence);
+            var t = Token.ParseText(sequence);
 
             t = t.MergeTokens<MultipleSpaceToken>();
 
@@ -140,9 +135,9 @@ namespace Qs.Runtime
             t = t.MergeTokensInGroups(new ParenthesisGroupToken(), new SquareBracketsGroupToken());
             t = t.RemoveSpaceTokens();
 
-            int nsidx = 0; // surve as a base for indexing token if there is namespace it will be 1 otherwise remain 0
+            var nsidx = 0; // surve as a base for indexing token if there is namespace it will be 1 otherwise remain 0
 
-            string declaredNamespace = string.Empty;
+            var declaredNamespace = string.Empty;
 
             
             foreach (var tok in t)
@@ -166,7 +161,7 @@ namespace Qs.Runtime
 
                 Type SequenceTokenType = null;
 
-                int shift = 0;
+                var shift = 0;
 
                 if ((nsidx + t.Count) > 2)
                 {
@@ -199,16 +194,16 @@ namespace Qs.Runtime
 
 
                 // s[]   found
-                string sequenceName = t[nsidx + 0].TokenValue;
+                var sequenceName = t[nsidx + 0].TokenValue;
 
                 
                 // Specify the index area  [k=m->n, l=i->j]
-                Token IndicesArea = t[nsidx + 1];
+                var IndicesArea = t[nsidx + 1];
                 IndicesArea = IndicesArea.RemoveSpaceTokens().TrimStart<LeftSquareBracketToken>().TrimEnd<RightSquareBracketToken>();
 
-                List<string> indexes = new List<string>();
-                List<string> rangeStartNames = new List<string>();
-                List<string> rangeEndNames = new List<string>();
+                List<string> indexes = new();
+                List<string> rangeStartNames = new();
+                List<string> rangeEndNames = new();
 
                 if (!string.IsNullOrEmpty(IndicesArea.TokenValue))
                 {
@@ -226,7 +221,7 @@ namespace Qs.Runtime
                         }
                         else
                         {
-                            string SyntaxErrorMessage = "Sequence syntax error in indexer declaration: Correct Declaration looks like S[k] or S[k=m->n]";
+                            var SyntaxErrorMessage = "Sequence syntax error in indexer declaration: Correct Declaration looks like S[k] or S[k=m->n]";
                             if (m.Count == 5)
                             {
 
@@ -275,7 +270,7 @@ namespace Qs.Runtime
 
                 t = t.MergeAllBut(nsidx + 3 + shift, typeof(SequenceElementToken), new SemiColonToken());
 
-                QsSequence seqo = GetSequence(qse.Scope, declaredNamespace, FormSequenceSymbolicName(sequenceName, indexes.Count, parameters.Length));
+                var seqo = GetSequence(qse.Scope, declaredNamespace, FormSequenceSymbolicName(sequenceName, indexes.Count, parameters.Length));
 
                 if (seqo == null)
                 {
@@ -318,7 +313,7 @@ namespace Qs.Runtime
 
                 //beginElement is zero index element in positive sequence and -1 index element in negative sequence.
 
-                QsSequenceElement beginElement = QsSequenceElement.Parse(t[nsidx + 3 + shift].TokenValue, qse, seqo);
+                var beginElement = QsSequenceElement.Parse(t[nsidx + 3 + shift].TokenValue, qse, seqo);
 
                 if (SequenceTokenType == typeof(PositiveSequenceToken))
                     seqo[0] = beginElement;
@@ -327,9 +322,9 @@ namespace Qs.Runtime
 
                 // take the right side arguments to be added into the sequence.
 
-                int seqoIndex = 5 + shift; // the argument with index 1
+                var seqoIndex = 5 + shift; // the argument with index 1
                 
-                int ix = 1;   //index of sequence.
+                var ix = 1;   //index of sequence.
 
                 if (SequenceTokenType == typeof(NegativeSequenceToken))
                 {
@@ -341,7 +336,7 @@ namespace Qs.Runtime
                     if (t[nsidx + seqoIndex].TokenClassType != typeof(SemiColonToken))
                     {
                         //assuming for now all entered values are quantities.
-                        QsSequenceElement seqoElement = QsSequenceElement.Parse(t[nsidx + seqoIndex].TokenValue, qse, seqo);
+                        var seqoElement = QsSequenceElement.Parse(t[nsidx + seqoIndex].TokenValue, qse, seqo);
                         
                         seqo[ix] = seqoElement;  //-5 bacause I am starting from 1 index
 
@@ -356,10 +351,8 @@ namespace Qs.Runtime
                 return seqo;
 
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public override string ToString()
@@ -382,11 +375,9 @@ namespace Qs.Runtime
                 var seq = (QsSequence)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, sequenceName);
                 return seq;
             }
-            else
-            {
-                QsNamespace ns = QsNamespace.GetNamespace(scope, qsNamespace);
-                return (QsSequence)ns.GetValueOrNull(sequenceName);
-            }
+
+            var ns = QsNamespace.GetNamespace(scope, qsNamespace);
+            return (QsSequence)ns.GetValueOrNull(sequenceName);
         }
 
 
@@ -401,7 +392,7 @@ namespace Qs.Runtime
         {
             if (indexesCount == 0) indexesCount = 1;
 
-            string sn = name + "%" + indexesCount.ToString(CultureInfo.InvariantCulture); // +"#" + parametersCount.ToString(CultureInfo.InvariantCulture);
+            var sn = name + "%" + indexesCount.ToString(CultureInfo.InvariantCulture); // +"#" + parametersCount.ToString(CultureInfo.InvariantCulture);
             
             return sn;
         }

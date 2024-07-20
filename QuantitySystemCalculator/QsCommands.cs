@@ -35,7 +35,7 @@ public static class QsCommands
 
         if (commands[0] == "exit")
         {
-            System.Environment.Exit(0);
+            Environment.Exit(0);
             //Console.WriteLine("Press CTRL+Z to exit");
             CommandProcessed = true;
         }

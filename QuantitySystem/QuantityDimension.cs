@@ -217,31 +217,31 @@ namespace QuantitySystem
 
             if (QD != null)
             {
-                if (!this.ElectricCurrent.Equals(QD.ElectricCurrent))
+                if (!ElectricCurrent.Equals(QD.ElectricCurrent))
                     return false;
 
-                if (!this.Length.Equals(QD.Length))
+                if (!Length.Equals(QD.Length))
                     return false;
                 
-                if (!this.LuminousIntensity.Equals( QD.LuminousIntensity))
+                if (!LuminousIntensity.Equals( QD.LuminousIntensity))
                     return false;
 
-                if (!this.Mass.Equals(QD.Mass))
+                if (!Mass.Equals(QD.Mass))
                     return false;
 
-                if (!this.AmountOfSubstance.Equals(QD.AmountOfSubstance))
+                if (!AmountOfSubstance.Equals(QD.AmountOfSubstance))
                     return false;
 
-                if (!this.Temperature.Equals(QD.Temperature))
+                if (!Temperature.Equals(QD.Temperature))
                     return false;
 
-                if (!this.Time.Equals(QD.Time))
+                if (!Time.Equals(QD.Time))
                     return false;
 
-                if (!this.Currency.Equals(QD.Currency))
+                if (!Currency.Equals(QD.Currency))
                     return false;
 
-                if (!this.Digital.Equals(QD.Digital))
+                if (!Digital.Equals(QD.Digital))
                     return false;
 
                 return true;
@@ -260,28 +260,28 @@ namespace QuantitySystem
         /// <returns></returns>
         public bool IsEqual(QuantityDimension dimension)
         {
-            if (this.ElectricCurrent.Exponent != dimension.ElectricCurrent.Exponent)
+            if (ElectricCurrent.Exponent != dimension.ElectricCurrent.Exponent)
                 return false;
 
-            if (this.Length.Exponent != dimension.Length.Exponent)
+            if (Length.Exponent != dimension.Length.Exponent)
                 return false;
 
-            if (this.LuminousIntensity.Exponent != dimension.LuminousIntensity.Exponent)
+            if (LuminousIntensity.Exponent != dimension.LuminousIntensity.Exponent)
                 return false;
 
-            if (this.Mass.Exponent != dimension.Mass.Exponent)
+            if (Mass.Exponent != dimension.Mass.Exponent)
                 return false;
 
-            if (this.AmountOfSubstance.Exponent != dimension.AmountOfSubstance.Exponent)
+            if (AmountOfSubstance.Exponent != dimension.AmountOfSubstance.Exponent)
                 return false;
 
-            if (this.Temperature.Exponent != dimension.Temperature.Exponent)
+            if (Temperature.Exponent != dimension.Temperature.Exponent)
                 return false;
 
-            if (this.Time.Exponent != dimension.Time.Exponent)
+            if (Time.Exponent != dimension.Time.Exponent)
                 return false;
 
-            if (this.Currency.Exponent != dimension.Currency.Exponent)
+            if (Currency.Exponent != dimension.Currency.Exponent)
                 return false;
 
             return true;
@@ -580,13 +580,13 @@ namespace QuantitySystem
             {
                 return CurrentDimensionsDictionary[quantityType];
             }
-            catch (System.Collections.Generic.KeyNotFoundException ex)
+            catch (KeyNotFoundException ex)
             {
                 //if key not found and quantityType is really Quantity
                 //then return dimensionless Quantity
 
                 if (quantityType.BaseType.GetGenericTypeDefinition() == typeof(DimensionlessQuantity<>))
-                    return QuantityDimension.Dimensionless;
+                    return Dimensionless;
                 else
                     throw new DimensionNotFoundException("UnExpected Exception. TypeOf<" + quantityType.ToString() + "> have no dimension associate with it", ex);
 

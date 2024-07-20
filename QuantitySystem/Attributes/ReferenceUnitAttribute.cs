@@ -22,7 +22,7 @@
         public ReferenceUnitAttribute(double numerator)
         {
             this.numerator = numerator;
-            this.denominator = 1;
+            denominator = 1;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@
             this.source = source;
             UnitType = unitType;
             
-            this.denominator = 1;
+            denominator = 1;
 
             // the numerator will be calculated based on source value
 

@@ -14,11 +14,6 @@
 // See http://www.boost.org for updates, documentation, and revision history.
 
 
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
 using Qs.Types;
 
@@ -76,13 +71,13 @@ namespace Qs.Numerics
 
         public static implicit operator Quaternion(double d)
         {
-            Quaternion dd = new Quaternion(d);
+            var dd = new Quaternion(d);
             return dd;
         }
 
         public static implicit operator Quaternion(Complex d)
         {
-            Quaternion dd = new Quaternion(d.Real, d.Imaginary);
+            var dd = new Quaternion(d.Real, d.Imaginary);
             return dd;
         }
 
@@ -116,14 +111,14 @@ namespace Qs.Numerics
 
         public static Quaternion operator +(Quaternion lhs, double rhs)
         {
-            Quaternion result = new Quaternion(lhs);
+            var result = new Quaternion(lhs);
             result.a += rhs;
             return result;
         }
 
         public static Quaternion operator +(Quaternion lhs, Complex rhs)
         {
-            Quaternion result = new Quaternion(lhs);
+            var result = new Quaternion(lhs);
             result.a += rhs.Real;
             result.b += rhs.Imaginary;
             return result;
@@ -131,7 +126,7 @@ namespace Qs.Numerics
 
         public static Quaternion operator +(Quaternion lhs, Quaternion rhs)
         {
-            Quaternion result = new Quaternion(lhs);
+            var result = new Quaternion(lhs);
             result.a += rhs.a;
             result.b += rhs.b;
             result.c += rhs.c;
@@ -141,14 +136,14 @@ namespace Qs.Numerics
 
         public static Quaternion operator -(Quaternion lhs, double rhs)
         {
-            Quaternion result = new Quaternion(lhs);
+            var result = new Quaternion(lhs);
             result.a -= rhs;
             return result;
         }
 
         public static Quaternion operator -(Quaternion lhs, Complex rhs)
         {
-            Quaternion result = new Quaternion(lhs);
+            var result = new Quaternion(lhs);
             result.a -= rhs.Real;
             result.b -= rhs.Imaginary;
             return result;
@@ -156,7 +151,7 @@ namespace Qs.Numerics
 
         public static Quaternion operator -(Quaternion lhs, Quaternion rhs)
         {
-            Quaternion result = new Quaternion(lhs);
+            var result = new Quaternion(lhs);
             result.a -= rhs.a;
             result.b -= rhs.b;
             result.c -= rhs.c;
@@ -169,7 +164,7 @@ namespace Qs.Numerics
 
         public static Quaternion operator *(Quaternion lhs, double rhs)
         {
-            Quaternion result = new Quaternion(lhs);
+            var result = new Quaternion(lhs);
             result.a *= rhs;
             result.b *= rhs;
             result.c *= rhs;
@@ -180,39 +175,39 @@ namespace Qs.Numerics
         public static Quaternion operator *(Quaternion lhs, Complex rhs)
         {
 
-            double ar = rhs.Real;
-            double br = rhs.Imaginary;
+            var ar = rhs.Real;
+            var br = rhs.Imaginary;
 
-            double at = lhs.a * ar - lhs.b * br;
-            double bt = lhs.a * br + lhs.b * ar;
-            double ct = lhs.c * ar + lhs.d * br;
-            double dt = -lhs.c * br + lhs.d * ar;                                             
+            var at = lhs.a * ar - lhs.b * br;
+            var bt = lhs.a * br + lhs.b * ar;
+            var ct = lhs.c * ar + lhs.d * br;
+            var dt = -lhs.c * br + lhs.d * ar;                                             
                                                                                  
-            Quaternion result = new Quaternion(at, bt, ct, dt);
+            var result = new Quaternion(at, bt, ct, dt);
             return result;
         }
 
         public static Quaternion operator *(Quaternion lhs, Quaternion rhs)
         {
 
-            double ar = (rhs.a);
-            double br = (rhs.b);
-            double cr = (rhs.c);
-            double dr = (rhs.d);
+            var ar = (rhs.a);
+            var br = (rhs.b);
+            var cr = (rhs.c);
+            var dr = (rhs.d);
 
-            double at = lhs.a * ar - lhs.b * br - lhs.c * cr - lhs.d * dr;
-            double bt = lhs.a * br + lhs.b * ar + lhs.c * dr - lhs.d * cr;
-            double ct = lhs.a * cr - lhs.b * dr + lhs.c * ar + lhs.d * br;
-            double dt = lhs.a * dr + lhs.b * cr - lhs.c * br + lhs.d * ar;
+            var at = lhs.a * ar - lhs.b * br - lhs.c * cr - lhs.d * dr;
+            var bt = lhs.a * br + lhs.b * ar + lhs.c * dr - lhs.d * cr;
+            var ct = lhs.a * cr - lhs.b * dr + lhs.c * ar + lhs.d * br;
+            var dt = lhs.a * dr + lhs.b * cr - lhs.c * br + lhs.d * ar;
 
-            Quaternion result = new Quaternion(at, bt, ct, dt);
+            var result = new Quaternion(at, bt, ct, dt);
             
             return result;
         }
 
         public static Quaternion operator /(Quaternion lhs, double rhs)
         {
-            Quaternion result = new Quaternion(lhs);
+            var result = new Quaternion(lhs);
             result.a /= rhs;
             result.b /= rhs;
             result.c /= rhs;
@@ -223,37 +218,37 @@ namespace Qs.Numerics
         public static Quaternion operator /(Quaternion lhs, Complex rhs)
         {
 
-            double ar = rhs.Real;
-            double br = rhs.Imaginary;
+            var ar = rhs.Real;
+            var br = rhs.Imaginary;
 
-            double denominator = ar * ar + br * br;
+            var denominator = ar * ar + br * br;
 
-            double at = (lhs.a * ar + lhs.b * br) / denominator;    //(a*ar+b*br)/denominator;
-            double bt = (-lhs.a * br + lhs.b * ar) / denominator;    //(ar*b-a*br)/denominator;
-            double ct = (lhs.c * ar - lhs.d * br) / denominator;    //(ar*c-d*br)/denominator;
-            double dt = (lhs.c * br + lhs.d * ar) / denominator;    //(ar*d+br*c)/denominator;
+            var at = (lhs.a * ar + lhs.b * br) / denominator;    //(a*ar+b*br)/denominator;
+            var bt = (-lhs.a * br + lhs.b * ar) / denominator;    //(ar*b-a*br)/denominator;
+            var ct = (lhs.c * ar - lhs.d * br) / denominator;    //(ar*c-d*br)/denominator;
+            var dt = (lhs.c * br + lhs.d * ar) / denominator;    //(ar*d+br*c)/denominator;
 
-            Quaternion result = new Quaternion(at, bt, ct, dt);
+            var result = new Quaternion(at, bt, ct, dt);
             return result;
         }
 
         public static Quaternion operator /(Quaternion lhs, Quaternion rhs)
         {
 
-            double ar = (rhs.a);
-            double br = (rhs.b);
-            double cr = (rhs.c);
-            double dr = (rhs.d);
+            var ar = (rhs.a);
+            var br = (rhs.b);
+            var cr = (rhs.c);
+            var dr = (rhs.d);
 
-            double denominator = ar * ar + br * br + cr * cr + dr * dr;
+            var denominator = ar * ar + br * br + cr * cr + dr * dr;
 
-            double at = (lhs.a * ar + lhs.b * br + lhs.c * cr + lhs.d * dr) / denominator;    //(a*ar+b*br+c*cr+d*dr)/denominator;
-            double bt = (-lhs.a * br + lhs.b * ar - lhs.c * dr + lhs.d * cr) / denominator;    //((ar*b-a*br)+(cr*d-c*dr))/denominator;
-            double ct = (-lhs.a * cr + lhs.b * dr + lhs.c * ar - lhs.d * br) / denominator;    //((ar*c-a*cr)+(dr*b-d*br))/denominator;
-            double dt = (-lhs.a * dr - lhs.b * cr + lhs.c * br + lhs.d * ar) / denominator;    //((ar*d-a*dr)+(br*c-b*cr))/denominator;
+            var at = (lhs.a * ar + lhs.b * br + lhs.c * cr + lhs.d * dr) / denominator;    //(a*ar+b*br+c*cr+d*dr)/denominator;
+            var bt = (-lhs.a * br + lhs.b * ar - lhs.c * dr + lhs.d * cr) / denominator;    //((ar*b-a*br)+(cr*d-c*dr))/denominator;
+            var ct = (-lhs.a * cr + lhs.b * dr + lhs.c * ar - lhs.d * br) / denominator;    //((ar*c-a*cr)+(dr*b-d*br))/denominator;
+            var dt = (-lhs.a * dr - lhs.b * cr + lhs.c * br + lhs.d * ar) / denominator;    //((ar*d-a*dr)+(br*c-b*cr))/denominator;
                 
 
-            Quaternion result = new Quaternion(at, bt, ct, dt);
+            var result = new Quaternion(at, bt, ct, dt);
 
             return result;
         }
@@ -275,13 +270,13 @@ namespace Qs.Numerics
 
         public static Quaternion Pow(Quaternion q, double nn)
         {
-            int n = (int)nn;
+            var n = (int)nn;
 
             if(n > 1)
             {
-                int    m = n>>1;
+                var    m = n>>1;
 
-                Quaternion result = Pow(q, m);
+                var result = Pow(q, m);
                 
                 result *= result;
                 
@@ -292,18 +287,18 @@ namespace Qs.Numerics
                 
                 return(result);
             }
-            else if    (n == 1)
+
+            if    (n == 1)
             {
                 return(q);
             }
-            else if    (n == 0)
+            if    (n == 0)
             {
                 return (new Quaternion(1));
             }
-            else    /* n < 0 */
-            {
-                return (Pow(new Quaternion(1) / q, -n));
-            }
+
+            /* n < 0 */
+            return (Pow(new Quaternion(1) / q, -n));
         }
 
 
@@ -314,10 +309,9 @@ namespace Qs.Numerics
                 lhs.b == rhs.b &&
                 lhs.c == rhs.c &&
                 lhs.d == rhs.d
-                )
+               )
                 return true;
-            else
-                return false;
+            return false;
         }
 
         public static bool operator !=(Quaternion lhs, Quaternion rhs)
@@ -327,16 +321,15 @@ namespace Qs.Numerics
 
         public bool Equals(Quaternion other)
         {
-            if (this.a == other.a &&
-                this.b == other.b &&
-                this.c == other.c &&
-                this.d == other.d
-                )
+            if (a == other.a &&
+                b == other.b &&
+                c == other.c &&
+                d == other.d
+               )
                 return true;
-            else
-                return false;
+            return false;
         }
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is Quaternion rhs)
                 return Equals(rhs);

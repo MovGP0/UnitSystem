@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Qs.Types
+﻿namespace Qs.Types
 {
     /// <summary>
     /// QsOperation Type is a class that express special holders for certain known mathematical operation

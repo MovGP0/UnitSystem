@@ -31,7 +31,7 @@
         /// </summary>
         public virtual BaseQuantity Invert()
         {
-            BaseQuantity bq = (BaseQuantity)this.MemberwiseClone();
+            BaseQuantity bq = (BaseQuantity)MemberwiseClone();
             bq.SetExponent(0 - _Exponent);
             
 
@@ -70,7 +70,7 @@
             if(bd!=null)
             {
 
-                if (this.Dimension.IsDimensionless & bd.Dimension.IsDimensionless)
+                if (Dimension.IsDimensionless & bd.Dimension.IsDimensionless)
                 {
                     //why I've tested dimensioless in begining??
                     //   because I want special dimensionless quantities like angle and solid angle to be treated
@@ -79,7 +79,7 @@
                     return true;
                 }
 
-                return this.Dimension.Equals(bd.Dimension);
+                return Dimension.Equals(bd.Dimension);
             }
             else
             {

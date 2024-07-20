@@ -1,171 +1,163 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Dynamic;
+﻿using System.Dynamic;
 using System.Linq.Expressions;
 
-namespace Qs
+namespace Qs;
+
+/// <summary>
+/// 
+/// </summary>
+public class QsScope : IDynamicMetaObjectProvider
 {
+    public DynamicMetaObject GetMetaObject(Expression parameter)
+    {
+        throw new NotImplementedException("QsScope doesn't implement GetMetaObject function");
+    }
 
-
+    Dictionary<string, IQsStorageProvider> StorageProviders = new(StringComparer.OrdinalIgnoreCase);
+    public QsScope()
+    {
+        StorageProviders["PrimaryStorage"] = new QsScopeStorage();
+    }
 
     /// <summary>
-    /// 
+    /// Register new storage that is implemented from IQsStorageProvider
     /// </summary>
-    public class QsScope : IDynamicMetaObjectProvider
+    /// <param name="storageProviderName"></param>
+    /// <param name="storage"></param>
+    /// <returns></returns>
+    public int RegisterScopeStorage(string storageProviderName, IQsStorageProvider storage)
     {
-        public DynamicMetaObject GetMetaObject(Expression parameter)
+        StorageProviders.Add(storageProviderName, storage);
+        return StorageProviders.Count;
+    }
+
+    public void UnRegisterScopeStorage(string storageProviderName)
+    {
+        var ss = StorageProviders[storageProviderName];
+        ss.Dispose();
+        StorageProviders.Remove(storageProviderName);
+    }
+
+    public void ReplacePrimaryScopeStorage(IQsStorageProvider storage)
+    {
+        StorageProviders["PrimaryStorage"] = storage;
+    }
+
+    /// <summary>
+    /// Returns all the items in the registered storages
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<KeyValuePair<string, object>> GetItems()
+    {
+        List<KeyValuePair<string, object>> all = new();
+        foreach (var v in StorageProviders.Values)
         {
-            throw new NotImplementedException("QsScope doesn't implement GetMetaObject function");
+            all.AddRange(v.GetItems());
         }
 
-        Dictionary<string, IQsStorageProvider> StorageProviders = new Dictionary<string, IQsStorageProvider>(StringComparer.OrdinalIgnoreCase);
-        public QsScope()
+        return all.AsEnumerable();
+    }
+
+    public IEnumerable<string> GetKeys()
+    {
+        List<string> all = new();
+        foreach (var v in StorageProviders.Values)
         {
-            StorageProviders["PrimaryStorage"] = new QsScopeStorage();
+            all.AddRange(v.GetKeys());
         }
 
+        return all.AsEnumerable();
+    }
 
-        /// <summary>
-        /// Register new storage that is implemented from IQsStorageProvider
-        /// </summary>
-        /// <param name="storageProviderName"></param>
-        /// <param name="storage"></param>
-        /// <returns></returns>
-        public int RegisterScopeStorage(string storageProviderName, IQsStorageProvider storage)
+    public IEnumerable<object> GetValues()
+    {
+        List<object> all = new();
+        foreach (var v in StorageProviders.Values)
         {
-            StorageProviders.Add(storageProviderName, storage);
-            return StorageProviders.Count;
+            all.AddRange(v.GetValues());
         }
 
-        public void UnRegisterScopeStorage(string storageProviderName)
-        {
-            var ss = StorageProviders[storageProviderName];
-            ss.Dispose();
-            StorageProviders.Remove(storageProviderName);
-        }
+        return all.AsEnumerable();
+    }
 
-        public void ReplacePrimaryScopeStorage(IQsStorageProvider storage)
+    public bool HasValue(string variable)
+    {
+        foreach (var v in StorageProviders)
         {
-            StorageProviders["PrimaryStorage"] = storage;
-        }
-
-
-        /// <summary>
-        /// Returns all the items in the registered storages
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<KeyValuePair<string, object>> GetItems()
-        {
-            List<KeyValuePair<string, object>> all = new List<KeyValuePair<string, object>>();
-            foreach (var v in StorageProviders.Values)
+            if (v.Value.HasValue(variable))
             {
-                all.AddRange(v.GetItems());
-            }
-
-            return all.AsEnumerable();
-        }
-
-        public IEnumerable<string> GetKeys()
-        {
-            List<string> all = new List<string>();
-            foreach (var v in StorageProviders.Values)
-            {
-                all.AddRange(v.GetKeys());
-            }
-
-            return all.AsEnumerable();
-        }
-
-        public IEnumerable<object> GetValues()
-        {
-            List<object> all = new List<object>();
-            foreach (var v in StorageProviders.Values)
-            {
-                all.AddRange(v.GetValues());
-            }
-
-            return all.AsEnumerable();
-        }
-
-        public bool HasValue(string variable)
-        {
-            foreach (var v in StorageProviders)
-            {
-                if (v.Value.HasValue(variable))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Getting the value of the last added provider as  LIFO   or stack
-        /// </summary>
-        /// <param name="variable"></param>
-        /// <returns></returns>
-        public object GetValue(string variable)
-        {
-            for (int i = StorageProviders.Count; i > 0; i--)
-            {
-                var sprov = StorageProviders.Values.ElementAt(i - 1);
-
-                if (sprov.HasValue(variable))
-                    return sprov.GetValue(variable);
-            }
-
-            throw new QsException("variable not found in any storage provider");
-        }
-
-        public void SetValue(string variable, object value)
-        {
-            foreach (var v in StorageProviders.Values)
-            {
-                v.SetValue(variable, value);
+                return true;
             }
         }
 
-        public bool TryGetValue(string variable, out object q)
+        return false;
+    }
+
+    /// <summary>
+    /// Getting the value of the last added provider as  LIFO   or stack
+    /// </summary>
+    /// <param name="variable"></param>
+    /// <returns></returns>
+    public object GetValue(string variable)
+    {
+        for (var i = StorageProviders.Count; i > 0; i--)
         {
-            bool result = false;
+            var sprov = StorageProviders.Values.ElementAt(i - 1);
 
-            for (int i = StorageProviders.Count; i > 0; i--)
-            {
-                var sprov = StorageProviders.Values.ElementAt(i - 1);
-
-                result = result | sprov.TryGetValue(variable, out q);
-
-                if (result) return true;
-            }
-
-            q = null;
-            return false;
+            if (sprov.HasValue(variable))
+                return sprov.GetValue(variable);
         }
 
+        throw new QsException("variable not found in any storage provider");
+    }
 
-        public bool DeleteValue(string variable)
+    public void SetValue(string variable, object value)
+    {
+        foreach (var v in StorageProviders.Values)
         {
-            bool deleted = false;
+            v.SetValue(variable, value);
+        }
+    }
 
-            foreach (var v in StorageProviders.Values)
-            {
-                if (v.HasValue(variable))
-                {
-                    v.DeleteValue(variable);
-                    deleted = true;
-                }
-            }
+    public bool TryGetValue(string variable, out object? q)
+    {
+        var result = false;
 
-            return deleted;
+        for (var i = StorageProviders.Count; i > 0; i--)
+        {
+            var sprov = StorageProviders.Values.ElementAt(i - 1);
+
+            result = result | sprov.TryGetValue(variable, out q);
+
+            if (result) return true;
         }
 
-        public void Clear()
+        q = null;
+        return false;
+    }
+
+
+    public bool DeleteValue(string variable)
+    {
+        var deleted = false;
+
+        foreach (var v in StorageProviders.Values)
         {
-            foreach (var v in StorageProviders.Values)
-                v.Clear();
+            if (v.HasValue(variable))
+            {
+                v.DeleteValue(variable);
+                deleted = true;
+            }
+        }
+
+        return deleted;
+    }
+
+    public void Clear()
+    {
+        foreach (var v in StorageProviders.Values)
+        {
+            v.Clear();
         }
     }
 }

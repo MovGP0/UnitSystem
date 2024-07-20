@@ -214,7 +214,7 @@ namespace ParticleLexer
                         )
                     {
                         //check if the next token is group
-                        if (ci < this.Count - 1)
+                        if (ci < Count - 1)
                         {
                             Token cnext = childTokens[ci + 1];
 
@@ -259,7 +259,7 @@ namespace ParticleLexer
                 ci++;
             }
 
-            first.TokenClassType = this.TokenClassType;
+            first.TokenClassType = TokenClassType;
 
             return Zabbat(first);
         }

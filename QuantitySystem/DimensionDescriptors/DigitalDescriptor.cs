@@ -6,7 +6,7 @@
         public DigitalDescriptor(float exponent)
             : this()
         {
-            this.Exponent = exponent;
+            Exponent = exponent;
         }
 
         #region IDimensionDescriptor<InformationDescriptor> Members
@@ -20,21 +20,21 @@
         public DigitalDescriptor Add(DigitalDescriptor dimensionDescriptor)
         {
             DigitalDescriptor desc = new DigitalDescriptor();
-            desc.Exponent = this.Exponent + dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent + dimensionDescriptor.Exponent;
             return desc;
         }
 
         public DigitalDescriptor Subtract(DigitalDescriptor dimensionDescriptor)
         {
             DigitalDescriptor desc = new DigitalDescriptor();
-            desc.Exponent = this.Exponent - dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent - dimensionDescriptor.Exponent;
             return desc;
         }
 
         public DigitalDescriptor Multiply(float exponent)
         {
             DigitalDescriptor desc = new DigitalDescriptor();
-            desc.Exponent = this.Exponent * exponent;
+            desc.Exponent = Exponent * exponent;
             return desc;
         }
 

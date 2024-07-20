@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
-using System.Threading;
 
 namespace Qs
 {
@@ -15,8 +9,8 @@ namespace Qs
     /// </summary>
     class SimpleLambdaBuilder
     {
-        private List<ParameterExpression> _params = new List<ParameterExpression>();
-        private readonly List<KeyValuePair<ParameterExpression, bool>> _visibleVars = new List<KeyValuePair<ParameterExpression, bool>>();
+        private List<ParameterExpression> _params = new();
+        private readonly List<KeyValuePair<ParameterExpression, bool>> _visibleVars = new();
         private string _name;
         private Type _returnType;
         private Expression _body;
@@ -27,8 +21,8 @@ namespace Qs
         public SimpleLambdaBuilder(string functionName, Type type)
         {
             // TODO: Complete member initialization
-            this._name = functionName;
-            this._returnType = type;
+            _name = functionName;
+            _returnType = type;
         }
 
         /// <summary>
@@ -58,7 +52,7 @@ namespace Qs
         {
             Contract.Requires(type != null);
 
-            ParameterExpression result = Expression.Parameter(type, name);
+            var result = Expression.Parameter(type, name);
             _params.Add(result);
             _visibleVars.Add(new KeyValuePair<ParameterExpression, bool>(result, false));
             return result;
@@ -81,11 +75,11 @@ namespace Qs
         {
             Contract.Requires(returnType != null);
 
-            bool action = returnType == typeof(void);
-            int paramCount = parameterList == null ? 0 : parameterList.Count;
+            var action = returnType == typeof(void);
+            var paramCount = parameterList == null ? 0 : parameterList.Count;
 
             Type[] typeArgs = new Type[paramCount + (action ? 0 : 1)];
-            for (int i = 0; i < paramCount; i++)
+            for (var i = 0; i < paramCount; i++)
             {
                 Contract.Requires(parameterList[i]!=null);
                 typeArgs[i] = parameterList[i].Type;
@@ -111,7 +105,7 @@ namespace Qs
         public LambdaExpression MakeLambda()
         {
             
-            LambdaExpression lambda = Expression.Lambda(
+            var lambda = Expression.Lambda(
                 GetLambdaType(_returnType, _params),
                 _body,
                 _name + "$" + Interlocked.Increment(ref _lambdaId),

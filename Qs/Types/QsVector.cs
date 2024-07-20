@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using QuantitySystem.Quantities.BaseQuantities;
-using QuantitySystem.Units;
-using Qs.Runtime;
+﻿using System.Text;
 
 namespace Qs.Types
 {
@@ -82,7 +76,7 @@ namespace Qs.Types
         {
             
 
-            var v_dot_v = this.DotProductOperation(this) as QsScalar;
+            var v_dot_v = DotProductOperation(this) as QsScalar;
 
             var sqrt_v_dot_v = v_dot_v.PowerScalar("0.5".ToScalar());
 
@@ -96,8 +90,8 @@ namespace Qs.Types
         /// <returns></returns>
         public QsScalar Sum()
         {
-            QsScalar total = this[0];
-            for (int i = 1; i < this.Count; i++) total = total + this[i];
+            var total = this[0];
+            for (var i = 1; i < Count; i++) total = total + this[i];
             return total;
 
         }
@@ -130,17 +124,17 @@ namespace Qs.Types
             get
             {
                 if (Count == 1) return true;
-                else return false;
+                return false;
             }
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("QsVector: ");
-            for (int ix = 0; ix < this.Count; ix++)
+            for (var ix = 0; ix < Count; ix++)
             {
-                string cell = this[ix].ToShortString();
+                var cell = this[ix].ToShortString();
                 sb.Append(cell);
                 sb.Append(" ");
             }
@@ -156,7 +150,7 @@ namespace Qs.Types
         /// <returns></returns>
         public static QsVector CopyVector(QsVector vector)
         {
-            QsVector vec = new QsVector(vector.Count);
+            var vec = new QsVector(vector.Count);
 
             foreach (var q in vector)
             {

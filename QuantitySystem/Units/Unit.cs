@@ -69,7 +69,7 @@ namespace QuantitySystem.Units
 
             lock (CachedUnitsValues)
             {
-                if (CachedUnitsValues.TryGetValue(this.GetType(), out uv))
+                if (CachedUnitsValues.TryGetValue(GetType(), out uv))
                 {
                     _Symbol = uv._Symbol;
                     _QuantityType = uv._QuantityType;
@@ -84,7 +84,7 @@ namespace QuantitySystem.Units
                 {
                     //read the current attributes
 
-                    MemberInfo info = this.GetType();
+                    MemberInfo info = GetType();
 
                     object[] attributes = (object[])info.GetCustomAttributes(true);
 
@@ -163,7 +163,7 @@ namespace QuantitySystem.Units
                     uv._ReferenceUnitDenominator = _ReferenceUnitDenominator;
 
 
-                    CachedUnitsValues.Add(this.GetType(), uv);
+                    CachedUnitsValues.Add(GetType(), uv);
 
                 }
 
@@ -222,7 +222,7 @@ namespace QuantitySystem.Units
         /// Returns a unique key for the unit based on the unit type and the representative quantity type
         /// Also m! and m  while they are the same unit but they represents Polar and Regular Lenghts respectively.
         /// </summary>
-        public Tuple<Type, Type> UniqueKey => new Tuple<Type, Type>(this.GetType(), QuantityType);
+        public Tuple<Type, Type> UniqueKey => new Tuple<Type, Type>(GetType(), QuantityType);
 
 
         /// <summary>
@@ -264,8 +264,8 @@ namespace QuantitySystem.Units
             {
                 if (_ReferenceUnit != null)
                 {
-                    if (_ReferenceUnit.UnitExponent != this.UnitExponent)
-                        _ReferenceUnit.UnitExponent = this.UnitExponent;
+                    if (_ReferenceUnit.UnitExponent != UnitExponent)
+                        _ReferenceUnit.UnitExponent = UnitExponent;
                 }
 
                 return _ReferenceUnit; 
@@ -323,14 +323,14 @@ namespace QuantitySystem.Units
 
                 }
 
-                unit = new Unit(this.QuantityType, InvertedUnits.ToArray());
+                unit = new Unit(QuantityType, InvertedUnits.ToArray());
                 
             }
             else
             {
                 //convert exponent because this is a strongly typed unit.
 
-                unit = (Unit)this.MemberwiseClone();
+                unit = (Unit)MemberwiseClone();
                 unit.UnitExponent = 0 - UnitExponent;
                 unit.UnitDimension = unit.UnitDimension.Invert();
                 
@@ -411,8 +411,8 @@ namespace QuantitySystem.Units
 
             Quantity.Value = value;
 
-            if (this.IsOverflowed) Quantity.Value =
-                 AnyQuantity<T>.MultiplyScalarByGeneric(this.GetUnitOverflow(), value);
+            if (IsOverflowed) Quantity.Value =
+                 AnyQuantity<T>.MultiplyScalarByGeneric(GetUnitOverflow(), value);
             
             return Quantity;
         }
@@ -453,7 +453,7 @@ namespace QuantitySystem.Units
 
                 if (IsStronglyTyped)
                 {
-                    Type UnitType = this.GetType();
+                    Type UnitType = GetType();
 
                     string ns = UnitType.Namespace.Substring(UnitType.Namespace.LastIndexOf("Units.", StringComparison.Ordinal) + 6);
                     return ns;
@@ -513,7 +513,7 @@ namespace QuantitySystem.Units
         }
         #endregion
 
-        public string Name => this.GetType().Name;
+        public string Name => GetType().Name;
 
         public string QuantityTypeName => QuantityType.Name;
 
@@ -528,7 +528,7 @@ namespace QuantitySystem.Units
 
         public Unit Clone()
         {
-            return (Unit)this.MemberwiseClone();
+            return (Unit)MemberwiseClone();
         }
 
         #endregion
@@ -542,9 +542,9 @@ namespace QuantitySystem.Units
         public override bool Equals(object obj)
         {
             Unit u = obj as Unit;
-            if(!Object.ReferenceEquals(u, null))
+            if(!ReferenceEquals(u, null))
             {
-                if (this.Symbol.Equals(u.Symbol, StringComparison.Ordinal))
+                if (Symbol.Equals(u.Symbol, StringComparison.Ordinal))
                     return true;
             }
             return false;
@@ -552,13 +552,13 @@ namespace QuantitySystem.Units
 
         public override int GetHashCode()
         {
-            return this.Symbol.GetHashCode();
+            return Symbol.GetHashCode();
         }
 
         public static  bool operator ==(Unit lhs, Unit rhs)
         {
             // If both are null, or both are same instance, return true.
-            if (System.Object.ReferenceEquals(lhs, rhs))
+            if (ReferenceEquals(lhs, rhs))
             {
                 return true;
             }

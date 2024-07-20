@@ -5,7 +5,7 @@
 
         public MassDescriptor(float exponent):this()
         {
-            this.Exponent = exponent;
+            Exponent = exponent;
         }
 
 
@@ -22,21 +22,21 @@
         public MassDescriptor Add(MassDescriptor dimensionDescriptor)
         {
             MassDescriptor desc = new MassDescriptor();
-            desc.Exponent = this.Exponent + dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent + dimensionDescriptor.Exponent;
             return desc;
         }
 
         public MassDescriptor Subtract(MassDescriptor dimensionDescriptor)
         {
             MassDescriptor desc = new MassDescriptor();
-            desc.Exponent = this.Exponent - dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent - dimensionDescriptor.Exponent;
             return desc;
         }
 
         public MassDescriptor Multiply(float exponent)
         {
             MassDescriptor desc = new MassDescriptor();
-            desc.Exponent = this.Exponent * exponent;
+            desc.Exponent = Exponent * exponent;
             return desc;
         }
 

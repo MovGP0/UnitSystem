@@ -188,8 +188,8 @@ namespace ParticleLexer
         {
             get
             {
-                if (this.childTokens.Count > 0)
-                    return this.childTokens[0].IndexInText;
+                if (childTokens.Count > 0)
+                    return childTokens[0].IndexInText;
                 else
                     return _IndexInText;
             }
@@ -201,7 +201,7 @@ namespace ParticleLexer
         {
             get
             {
-                return "[" + this.IndexInText.ToString() + ", "+TokenClassType.Name + "]: " + TokenValue;
+                return "[" + IndexInText.ToString() + ", "+TokenClassType.Name + "]: " + TokenValue;
             }
         }
         public override string ToString()
@@ -395,7 +395,7 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token MergeAllBut(int startIndex, Type mergedTokensClassType, params TokenClass[] tokenClasses)
         {
-            Token first = this.MergeTokens(tokenClasses[0]);
+            Token first = MergeTokens(tokenClasses[0]);
             for (int i = 1; i < tokenClasses.Length; i++)
             {
                 first = first.MergeTokens(tokenClasses[i]);
@@ -646,7 +646,7 @@ namespace ParticleLexer
                 current.AppendSubToken(merged);
             }
 
-            current.TokenClassType = this.TokenClassType;
+            current.TokenClassType = TokenClassType;
             return Zabbat(current);
         }
 
@@ -737,7 +737,7 @@ namespace ParticleLexer
                 TokenClassesIndex = 0;
             }
                 
-            current.TokenClassType = this.TokenClassType;
+            current.TokenClassType = TokenClassType;
             return Zabbat(current);
         }
 
@@ -980,7 +980,7 @@ namespace ParticleLexer
         public int IndexOf(Type tokenClassType)
         {
             int idx = -1;
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (this[i].TokenClassType == tokenClassType)
                 {
@@ -1150,7 +1150,7 @@ namespace ParticleLexer
         {
             int idx = startIndex;
             string total = string.Empty;
-            while (idx < this.Count)
+            while (idx < Count)
             {
                 total += this[idx].TokenValue;
                 idx++;
@@ -1168,7 +1168,7 @@ namespace ParticleLexer
         /// <returns>Return new token with sub tokens trimmed</returns>
         public Token TrimTokens(int leftIndex, int rightIndex)
         {
-            int count = this.Count;
+            int count = Count;
 
 
             Token rtk = new Token();
@@ -1191,11 +1191,11 @@ namespace ParticleLexer
         public Token FuseTokens<FusedTokenClass>(string leftText, string rightText)
             where FusedTokenClass : TokenClass
         {
-            int count = this.Count;
+            int count = Count;
 
             Token rtk = new Token();
 
-            foreach (var t in Token.ParseText(leftText))
+            foreach (var t in ParseText(leftText))
             {
                 rtk.AppendSubToken(t);
             }
@@ -1204,7 +1204,7 @@ namespace ParticleLexer
             {
                 rtk.AppendSubToken(this[b]);
             }
-            foreach (var t in Token.ParseText(rightText))
+            foreach (var t in ParseText(rightText))
             {
                 rtk.AppendSubToken(t);
             }

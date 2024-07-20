@@ -81,7 +81,7 @@ namespace ParticleLexer
         public TokenClass()
         {
 
-            _ThisTokenType = this.GetType();
+            _ThisTokenType = GetType();
             
             Regex j;
 
@@ -107,7 +107,7 @@ namespace ParticleLexer
             {
 
                 // Cache the regexes due to the multiple creation  of the inherited types
-                var rxs = this.GetType().GetCustomAttributes(false);
+                var rxs = GetType().GetCustomAttributes(false);
 
                 if (rxs.Length > 0)
                 {

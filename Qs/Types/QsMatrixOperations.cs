@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using QuantitySystem.Quantities.BaseQuantities;
-using Qs.Runtime;
-using ParticleLexer;
-using ParticleLexer.StandardTokens;
+﻿using ParticleLexer;
 
 namespace Qs.Types
 {
@@ -21,12 +14,12 @@ namespace Qs.Types
         /// <returns></returns>
         public QsMatrix MultiplyScalar(QsScalar scalar)
         {
-            QsMatrix Total = new QsMatrix();
-            for (int IY = 0; IY < this.RowsCount; IY++)
+            var Total = new QsMatrix();
+            for (var IY = 0; IY < RowsCount; IY++)
             {
-                List<QsScalar> row = new List<QsScalar>(ColumnsCount);
+                List<QsScalar> row = new(ColumnsCount);
 
-                for (int IX = 0; IX < this.ColumnsCount; IX++)
+                for (var IX = 0; IX < ColumnsCount; IX++)
                 {
                     row.Add(this[IY, IX] * scalar);
                 }
@@ -44,12 +37,12 @@ namespace Qs.Types
         /// <returns></returns>
         public QsMatrix DivideScalar(QsScalar scalar)
         {
-            QsMatrix Total = new QsMatrix();
-            for (int IY = 0; IY < this.RowsCount; IY++)
+            var Total = new QsMatrix();
+            for (var IY = 0; IY < RowsCount; IY++)
             {
-                List<QsScalar> row = new List<QsScalar>(ColumnsCount);
+                List<QsScalar> row = new(ColumnsCount);
 
-                for (int IX = 0; IX < this.ColumnsCount; IX++)
+                for (var IX = 0; IX < ColumnsCount; IX++)
                 {
                     row.Add(this[IY, IX] / scalar);
                 }
@@ -67,12 +60,12 @@ namespace Qs.Types
         /// <returns></returns>
         private QsValue ModuloScalar(QsScalar scalar)
         {
-            QsMatrix Total = new QsMatrix();
-            for (int IY = 0; IY < this.RowsCount; IY++)
+            var Total = new QsMatrix();
+            for (var IY = 0; IY < RowsCount; IY++)
             {
-                List<QsScalar> row = new List<QsScalar>(ColumnsCount);
+                List<QsScalar> row = new(ColumnsCount);
 
-                for (int IX = 0; IX < this.ColumnsCount; IX++)
+                for (var IX = 0; IX < ColumnsCount; IX++)
                 {
                     row.Add(this[IY, IX] % scalar);
                 }
@@ -89,12 +82,12 @@ namespace Qs.Types
         /// <returns></returns>
         private QsMatrix AddScalar(QsScalar scalar)
         {
-            QsMatrix Total = new QsMatrix();
-            for (int IY = 0; IY < this.RowsCount; IY++)
+            var Total = new QsMatrix();
+            for (var IY = 0; IY < RowsCount; IY++)
             {
-                List<QsScalar> row = new List<QsScalar>(ColumnsCount);
+                List<QsScalar> row = new(ColumnsCount);
 
-                for (int IX = 0; IX < this.ColumnsCount; IX++)
+                for (var IX = 0; IX < ColumnsCount; IX++)
                 {
                     row.Add(this[IY, IX] + scalar);
                 }
@@ -111,12 +104,12 @@ namespace Qs.Types
         /// <returns></returns>
         private QsMatrix SubtractScalar(QsScalar scalar)
         {
-            QsMatrix Total = new QsMatrix();
-            for (int IY = 0; IY < this.RowsCount; IY++)
+            var Total = new QsMatrix();
+            for (var IY = 0; IY < RowsCount; IY++)
             {
-                List<QsScalar> row = new List<QsScalar>(ColumnsCount);
+                List<QsScalar> row = new(ColumnsCount);
 
-                for (int IX = 0; IX < this.ColumnsCount; IX++)
+                for (var IX = 0; IX < ColumnsCount; IX++)
                 {
                     row.Add(this[IY, IX] - scalar);
                 }
@@ -135,13 +128,13 @@ namespace Qs.Types
         /// <returns></returns>
         public QsMatrix PowerScalar(QsScalar value)
         {
-            QsMatrix Total = (QsMatrix)this.Identity; //first get the identity matrix of this matrix.
+            var Total = (QsMatrix)Identity; //first get the identity matrix of this matrix.
 
-            int count = Qs.IntegerFromQsValue(value);
+            var count = Qs.IntegerFromQsValue(value);
 
             if (count > 0)
             {
-                for (int i = 1; i <= count; i++)
+                for (var i = 1; i <= count; i++)
                 {
                     Total = Total.MultiplyMatrix(this);
                 }
@@ -153,9 +146,9 @@ namespace Qs.Types
             else
             {
                 count = Math.Abs(count);
-                for (int i = 1; i <= count; i++)
+                for (var i = 1; i <= count; i++)
                 {
-                    Total = Total.MultiplyMatrix(this.Inverse);    //multiply the inverses many times
+                    Total = Total.MultiplyMatrix(Inverse);    //multiply the inverses many times
                 }
             }
 
@@ -172,12 +165,12 @@ namespace Qs.Types
         /// <returns></returns>
         public QsMatrix ElementsPowerScalar(QsScalar scalar)
         {
-            QsMatrix Total = new QsMatrix();
-            for (int IY = 0; IY < this.RowsCount; IY++)
+            var Total = new QsMatrix();
+            for (var IY = 0; IY < RowsCount; IY++)
             {
-                List<QsScalar> row = new List<QsScalar>(ColumnsCount);
+                List<QsScalar> row = new(ColumnsCount);
 
-                for (int IX = 0; IX < this.ColumnsCount; IX++)
+                for (var IX = 0; IX < ColumnsCount; IX++)
                 {
                     row.Add(this[IY, IX].PowerScalar(scalar));
                 }
@@ -281,12 +274,10 @@ namespace Qs.Types
             {
                 if (IsSquared)
                 {
-                    return MakeIdentity(this.RowsCount);
+                    return MakeIdentity(RowsCount);
                 }
-                else
-                {
-                    throw new QsMatrixException("No Identity matrix for non square matrix");
-                }
+
+                throw new QsMatrixException("No Identity matrix for non square matrix");
             }
 
         }
@@ -300,20 +291,18 @@ namespace Qs.Types
 
             if (value is QsScalar)
             {
-                return this.AddScalar((QsScalar)value);
+                return AddScalar((QsScalar)value);
             }
-            else if (value is QsVector)
+
+            if (value is QsVector)
             {
                 throw new NotSupportedException();
             }
-            else if (value is QsMatrix)
+            if (value is QsMatrix)
             {
-                return this.AddMatrix((QsMatrix)value);
+                return AddMatrix((QsMatrix)value);
             }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
 
         public override QsValue SubtractOperation(QsValue vl)
@@ -325,20 +314,18 @@ namespace Qs.Types
 
             if (value is QsScalar)
             {
-                return this.SubtractScalar((QsScalar)value);
+                return SubtractScalar((QsScalar)value);
             }
-            else if (value is QsVector)
+
+            if (value is QsVector)
             {
                 throw new NotSupportedException();
             }
-            else if (value is QsMatrix)
+            if (value is QsMatrix)
             {
-                return this.SubtractMatrix((QsMatrix)value);
+                return SubtractMatrix((QsMatrix)value);
             }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
 
         public override QsValue MultiplyOperation(QsValue vl)
@@ -349,24 +336,22 @@ namespace Qs.Types
 
             if (value is QsScalar)
             {
-                return this.MultiplyScalar((QsScalar)value);
+                return MultiplyScalar((QsScalar)value);
             }
-            else if (value is QsVector)
+
+            if (value is QsVector)
             {
                 // return value is column vector
-                QsMatrix mvec =  this.MultiplyMatrix(((QsVector)value).ToCoVectorMatrix());
+                var mvec =  MultiplyMatrix(((QsVector)value).ToCoVectorMatrix());
 
                 // make it ordinary vector again.
                 return mvec.Columns[0];
             }
-            else if (value is QsMatrix)
+            if (value is QsMatrix)
             {
-                return this.MultiplyMatrix((QsMatrix)value);
+                return MultiplyMatrix((QsMatrix)value);
             }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
 
         public override QsValue DotProductOperation(QsValue vl)
@@ -378,22 +363,20 @@ namespace Qs.Types
 
             if (value is QsScalar)
             {
-                return this.MultiplyScalar((QsScalar)value);
+                return MultiplyScalar((QsScalar)value);
             }
-            else if (value is QsVector)
+
+            if (value is QsVector)
             {
                 throw new NotSupportedException();
 
             }
-            else if (value is QsMatrix)
+            if (value is QsMatrix)
             {
 
                 throw new NotSupportedException();
             }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
 
         public override QsValue CrossProductOperation(QsValue value)
@@ -410,20 +393,18 @@ namespace Qs.Types
 
             if (value is QsScalar)
             {
-                return this.DivideScalar((QsScalar)value);
+                return DivideScalar((QsScalar)value);
             }
-            else if (value is QsVector)
+
+            if (value is QsVector)
             {
                 throw new NotSupportedException();
             }
-            else if (value is QsMatrix)
+            if (value is QsMatrix)
             {
-                return this.MultiplyMatrix(((QsMatrix)value).Inverse);
+                return MultiplyMatrix(((QsMatrix)value).Inverse);
             }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
 
         public override QsValue ModuloOperation(QsValue vl)
@@ -435,20 +416,18 @@ namespace Qs.Types
 
             if (value is QsScalar)
             {
-                return this.ModuloScalar((QsScalar)value);
+                return ModuloScalar((QsScalar)value);
             }
-            else if (value is QsVector)
+
+            if (value is QsVector)
             {
                 throw new NotSupportedException();
             }
-            else if (value is QsMatrix)
+            if (value is QsMatrix)
             {
                 throw new NotSupportedException();
             }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
 
 
@@ -462,20 +441,18 @@ namespace Qs.Types
             if (value is QsScalar)
             {
                 var s = value as QsScalar;
-                return this.PowerScalar(s);
+                return PowerScalar(s);
             }
-            else if (value is QsVector)
+
+            if (value is QsVector)
             {
                 throw new NotSupportedException();
             }
-            else if (value is QsMatrix)
+            if (value is QsMatrix)
             {
                 throw new NotSupportedException();
             }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
 
         public override QsValue NormOperation()
@@ -486,10 +463,9 @@ namespace Qs.Types
         public override QsValue AbsOperation()
         {
 
-            if (this.RowsCount < 4)
-                return this.Determinant().Sum();
-            else
-                return Determinant(this);
+            if (RowsCount < 4)
+                return Determinant().Sum();
+            return Determinant(this);
 
         }
 
@@ -504,20 +480,18 @@ namespace Qs.Types
             if (value is QsScalar)
             {
                 var s = value as QsScalar;
-                return this.ElementsPowerScalar(s);
+                return ElementsPowerScalar(s);
             }
-            else if (value is QsVector)
+
+            if (value is QsVector)
             {
                 throw new NotSupportedException();
             }
-            else if (value is QsMatrix)
+            if (value is QsMatrix)
             {
                 throw new NotSupportedException();
             }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -537,16 +511,16 @@ namespace Qs.Types
                 // Kronecker product
                 var tm = (QsMatrix)value;
 
-                QsMatrix result = new QsMatrix();
+                var result = new QsMatrix();
 
-                List<QsMatrix> lm = new List<QsMatrix>();
+                List<QsMatrix> lm = new();
 
-                for (int i = 0; i < this.RowsCount; i++)
+                for (var i = 0; i < RowsCount; i++)
                 {
                     QsMatrix rowM = null;
-                    for (int j = 0; j < this.ColumnsCount; j++)
+                    for (var j = 0; j < ColumnsCount; j++)
                     {
-                        QsScalar element = this[i, j];
+                        var element = this[i, j];
                         var imat =  (QsMatrix)(tm * element);
                         if (rowM == null) rowM = imat;
                         else rowM = rowM.AppendRightMatrix(imat);
@@ -581,7 +555,7 @@ namespace Qs.Types
             else times = vl;
 
 
-            QsMatrix ShiftedMatrix = new QsMatrix();
+            var ShiftedMatrix = new QsMatrix();
             foreach (var vec in this)
             {
                 ShiftedMatrix.AddVector((QsVector)vec.LeftShiftOperation(times));
@@ -602,7 +576,7 @@ namespace Qs.Types
             else times = vl;
 
 
-            QsMatrix ShiftedMatrix = new QsMatrix();
+            var ShiftedMatrix = new QsMatrix();
             foreach (var vec in this)
             {
                 ShiftedMatrix.AddVector((QsVector)vec.RightShiftOperation(times));
@@ -639,17 +613,17 @@ namespace Qs.Types
             //if ((object)value == null) return false;
             if(value is QsMatrix m)
             {
-                if (this.RowsCount != m.RowsCount) return false;
-                if (this.ColumnsCount != m.ColumnsCount) return false;
+                if (RowsCount != m.RowsCount) return false;
+                if (ColumnsCount != m.ColumnsCount) return false;
                 
-                if (!object.ReferenceEquals(m, this))
+                if (!ReferenceEquals(m, this))
                 {
 
                     // if not then we need to compare it element by element
 
-                    for (int i = 0; i < RowsCount; i++)
+                    for (var i = 0; i < RowsCount; i++)
                     {
-                        for (int j = 0; j < ColumnsCount; j++)
+                        for (var j = 0; j < ColumnsCount; j++)
                         {
 
                             if (!this[i, j].Equality(m[i, j])) return false;
@@ -678,22 +652,20 @@ namespace Qs.Types
         /// <returns></returns>
         public override QsValue GetIndexedItem(QsParameter[] allIndices)
         {
-            int[] indices = new int[allIndices.Length];
-            for (int ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;                
+            var indices = new int[allIndices.Length];
+            for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;                
 
-            int icount = indices.Count();
+            var icount = indices.Count();
             if (icount == 2)
             {
                 return this[indices[0], indices[1]];
             }
-            else if (icount == 1)
+
+            if (icount == 1)
             {
                 return this[indices[0]];
             }
-            else
-            {
-                throw new QsException("Matrices indices only up to two");
-            }
+            throw new QsException("Matrices indices only up to two");
         }
 
         public override void SetIndexedItem(QsParameter[] indices, QsValue value)
@@ -719,17 +691,15 @@ namespace Qs.Types
 
             if (value is QsScalar)
             {
-                QsMatrix n = new QsMatrix();
+                var n = new QsMatrix();
                 foreach (var row in n.Rows)
                 {
                     n.AddRow(row.DifferentiateScalar((QsScalar)value).ToArray());
                 }
                 return n;
             }
-            else
-            {
-                return base.DifferentiateOperation(value);
-            }
+
+            return base.DifferentiateOperation(value);
         }
 
 
@@ -740,8 +710,8 @@ namespace Qs.Types
         /// <returns></returns>
         public QsMatrix RemoveRow(int rowIndex)
         {
-            QsMatrix m = new QsMatrix();
-            for (int iy = 0; iy < this.RowsCount; iy++)
+            var m = new QsMatrix();
+            for (var iy = 0; iy < RowsCount; iy++)
             {
                 if (iy != rowIndex) m.AddVector(this[iy]);
             }
@@ -756,10 +726,10 @@ namespace Qs.Types
         /// <returns></returns>
         public QsMatrix RemoveColumn(int columnIndex)
         {
-            QsMatrix m = new QsMatrix();
-            for (int ix = 0; ix < this.ColumnsCount; ix++)
+            var m = new QsMatrix();
+            for (var ix = 0; ix < ColumnsCount; ix++)
             {
-                if (ix != columnIndex) m.AddColumnVector(this.GetColumnVector(ix));
+                if (ix != columnIndex) m.AddColumnVector(GetColumnVector(ix));
             }
             return m;
         }
@@ -769,18 +739,18 @@ namespace Qs.Types
         {
             get
             {
-                if (object.ReferenceEquals( _Cofactors , null))
+                if (ReferenceEquals( _Cofactors , null))
                 {
                     _Cofactors = new QsMatrix();
 
-                    bool FirstNegative = false;
-                    for (int i = 0; i < RowsCount; i++)
+                    var FirstNegative = false;
+                    for (var i = 0; i < RowsCount; i++)
                     {
-                        QsVector v = new QsVector(this.ColumnsCount);
+                        var v = new QsVector(ColumnsCount);
                         
-                        for (int j = 0; j < ColumnsCount; j++)
+                        for (var j = 0; j < ColumnsCount; j++)
                         {
-                            var minor = this.RemoveRow(i).RemoveColumn(j);
+                            var minor = RemoveRow(i).RemoveColumn(j);
                             var d = Determinant(minor);
                             if (Math.Pow(-1, i + j) < 0) d = QsScalar.Zero - d;
                             v.AddComponent(d);
@@ -817,25 +787,25 @@ namespace Qs.Types
         public override QsValue Execute(Token expression)
         {
 
-            string operation = expression.TokenValue;
+            var operation = expression.TokenValue;
 
             if (operation.Equals("Transpose()", StringComparison.OrdinalIgnoreCase))
-                return this.Transpose();
+                return Transpose();
 
             if (operation.Equals("Identity", StringComparison.OrdinalIgnoreCase))
-                return this.Identity;
+                return Identity;
 
             if (operation.Equals("Determinant", StringComparison.OrdinalIgnoreCase))
-                return QsMatrix.Determinant(this);
+                return Determinant(this);
 
             if (operation.Equals("Cofactors", StringComparison.OrdinalIgnoreCase))
-                return this.Cofactors;
+                return Cofactors;
 
             if (operation.Equals("Adjoint", StringComparison.OrdinalIgnoreCase))
-                return this.Adjoint;
+                return Adjoint;
 
             if (operation.Equals("Inverse", StringComparison.OrdinalIgnoreCase))
-                return this.Inverse;
+                return Inverse;
 
 
             throw new QsException("Not implemented or Unknow method for the matrix type");

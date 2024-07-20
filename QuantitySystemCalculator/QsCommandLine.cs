@@ -18,9 +18,9 @@ public class QsCommandLine : CommandLine
 
         if (!string.IsNullOrEmpty(Qs.Scripting.QsScriptCode.LastLine))
         {
-            QsCommands.Engine = this.Engine;
+            QsCommands.Engine = Engine;
 
-            QsCommands.ScriptScope = this.ScriptScope;
+            QsCommands.ScriptScope = ScriptScope;
 
 
             QsCommands.CheckCommand(Qs.Scripting.QsScriptCode.LastLine);

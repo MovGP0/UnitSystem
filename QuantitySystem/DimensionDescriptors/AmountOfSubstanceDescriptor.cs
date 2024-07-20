@@ -5,7 +5,7 @@
 
         public AmountOfSubstanceDescriptor(float exponent):this()
         {
-            this.Exponent = exponent;
+            Exponent = exponent;
         }
 
         #region IDimensionDescriptor<AmountOfSubstanceDescriptor> Members
@@ -19,7 +19,7 @@
         public AmountOfSubstanceDescriptor Add(AmountOfSubstanceDescriptor dimensionDescriptor)
         {
             AmountOfSubstanceDescriptor desc = new AmountOfSubstanceDescriptor();
-            desc.Exponent = this.Exponent + dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent + dimensionDescriptor.Exponent;
             return desc;
 
         }
@@ -27,14 +27,14 @@
         public AmountOfSubstanceDescriptor Subtract(AmountOfSubstanceDescriptor dimensionDescriptor)
         {
             AmountOfSubstanceDescriptor desc = new AmountOfSubstanceDescriptor();
-            desc.Exponent = this.Exponent -  dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent -  dimensionDescriptor.Exponent;
             return desc;
         }
 
         public AmountOfSubstanceDescriptor Multiply(float exponent)
         {
             AmountOfSubstanceDescriptor desc = new AmountOfSubstanceDescriptor();
-            desc.Exponent = this.Exponent * exponent;
+            desc.Exponent = Exponent * exponent;
             return desc;
         }
 

@@ -1,8 +1,4 @@
-﻿using ParticleLexer;
-using ParticleLexer.StandardTokens;
-using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using ParticleLexer.StandardTokens;
 
 namespace ParticleLexer.QsTokens
 {
@@ -444,10 +440,10 @@ namespace ParticleLexer.QsTokens
         /// <returns></returns>
         public static Token DiscoverQsCalls(this Token token, StringComparer stringComparer, params string[] ignoreWords)
         {
-            Token first = new Token();
-            Token current = first;
+            var first = new Token();
+            var current = first;
 
-            int ci = 0;
+            var ci = 0;
 
             while (ci < token.Count)
             {
@@ -472,7 +468,7 @@ namespace ParticleLexer.QsTokens
                         //check if the next token is group
                         if (ci < token.Count - 1)
                         {
-                            Token cnext = token[ci + 1];
+                            var cnext = token[ci + 1];
 
                             #region Parenthesis group discovery
                             if (cnext.TokenClassType == typeof(ParenthesisGroupToken))
@@ -480,7 +476,7 @@ namespace ParticleLexer.QsTokens
                                 // so this is a function
                                 //take the current token with the next token and make it as functionToken
 
-                                Token functionCallToken = new Token();
+                                var functionCallToken = new Token();
                                 functionCallToken.TokenClassType = typeof(ParenthesisCallToken);
                                 functionCallToken.AppendSubToken(c);
 
@@ -510,7 +506,7 @@ namespace ParticleLexer.QsTokens
                                 // so this is a sequence
                                 //take the current token with the next token and make it as sequenceToken
 
-                                Token sequenceCallToken = new Token();
+                                var sequenceCallToken = new Token();
                                 sequenceCallToken.TokenClassType = typeof(SequenceCallToken);
                                 sequenceCallToken.AppendSubToken(c);
 
@@ -526,7 +522,7 @@ namespace ParticleLexer.QsTokens
                                 if (token.Count > ci + 2)
                                 {
                                     //check if we have a Parenthesis parameters after Square Brackets
-                                    Token cnextnext = token[ci + 2];
+                                    var cnextnext = token[ci + 2];
                                     if (cnextnext.TokenClassType == typeof(ParenthesisGroupToken))
                                     {
                                         //then this is a sequence call with parameters.
@@ -583,25 +579,25 @@ namespace ParticleLexer.QsTokens
         {
             // here I will discover the looping statement  loop expression on vector name
 
-            Token root = new Token();
-            Token runner = root;
+            var root = new Token();
+            var runner = root;
 
             //add every token until you encounter "loop"  then "on"
-            int ix = 0;
+            var ix = 0;
 
-            Stack<Token> s = new Stack<Token>();
+            Stack<Token> s = new();
             
             while (ix < tokens.Count)
             {
                 if (tokens[ix].TokenClassType == typeof(LoopStatementToken))
                 {
-                    Token loopBody = new Token();
+                    var loopBody = new Token();
                     loopBody.TokenClassType = typeof(LoopBodyToken);
                     runner.AppendSubToken(loopBody);
 
                     loopBody.AppendSubToken(tokens[ix]); // add the "loop" token 
                     
-                    Token bodyexpr = new Token() { TokenClassType = typeof(LoopBodyExpressionToken) };
+                    var bodyexpr = new Token() { TokenClassType = typeof(LoopBodyExpressionToken) };
                     loopBody.AppendSubToken(bodyexpr);
 
                     runner = bodyexpr;

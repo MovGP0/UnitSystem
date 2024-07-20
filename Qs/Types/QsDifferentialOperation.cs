@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Qs.Types
+﻿namespace Qs.Types
 {
     /// <summary>
     /// The class will hold intermediate operations that could be applied to function
@@ -35,11 +30,11 @@ namespace Qs.Types
             }
         }
 
-        private List<InnerOperation> operations = new List<InnerOperation>();
+        private List<InnerOperation> operations = new();
 
         public override object Clone()
         {
-            QsDifferentialOperation fo = new QsDifferentialOperation();
+            var fo = new QsDifferentialOperation();
             fo.operations.AddRange(operations);
             return fo;
         }
@@ -53,15 +48,15 @@ namespace Qs.Types
         public override QsValue DifferentiateOperation(QsValue value)
         {
             var sc = value as QsScalar;
-            if (!Object.ReferenceEquals(sc , null))
+            if (!ReferenceEquals(sc , null))
             {
-                if (!Object.ReferenceEquals(sc.SymbolicQuantity, null))
+                if (!ReferenceEquals(sc.SymbolicQuantity, null))
                 {
                     var a = sc;
 
                     operations.Add(new InnerOperation { Operation = Operator.Differentiate, value = a });
 
-                    return new QsScalar(ScalarTypes.QsOperation) { Operation = (QsOperation)this.Clone() };
+                    return new QsScalar(ScalarTypes.QsOperation) { Operation = (QsOperation)Clone() };
                 }
             }
             throw new NotImplementedException();
@@ -76,11 +71,11 @@ namespace Qs.Types
         public override QsValue MultiplyOperation(QsValue value)
         {
             var sc = value as QsScalar;
-            if (!Object.ReferenceEquals(sc, null))
+            if (!ReferenceEquals(sc, null))
             {
                 if (sc.ScalarType == ScalarTypes.FunctionQuantity)
                 {
-                    if (!Object.ReferenceEquals(sc.FunctionQuantity, null))
+                    if (!ReferenceEquals(sc.FunctionQuantity, null))
                     {
                         var f = (QsFunction)sc.FunctionQuantity.Value;
 
@@ -110,7 +105,7 @@ namespace Qs.Types
                             case Operator.Differentiate:
                                 {
                                     var dsv = ((QsScalar)op.value).SymbolicQuantity.Value;
-                                    int times = (int)dsv.SymbolPower;
+                                    var times = (int)dsv.SymbolPower;
                                     while (times > 0)
                                     {
                                         f = f.Differentiate(dsv.Symbol);
@@ -139,9 +134,9 @@ namespace Qs.Types
         {
             if (value is QsDifferentialOperation op)
             {
-                if (this.operations.Count != op.operations.Count) return false;
+                if (operations.Count != op.operations.Count) return false;
 
-                for (int i = 0; i < op.operations.Count; i++)
+                for (var i = 0; i < op.operations.Count; i++)
                 {
                     if (!op.operations[i].Equals(op.operations[i]))
                         return false;
@@ -154,7 +149,7 @@ namespace Qs.Types
 
         public override string ToString()
         {
-            string g = "@";
+            var g = "@";
             foreach (var o in operations)
             {
                 g += o.Operation + o.value.ToValueString();

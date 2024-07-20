@@ -6,7 +6,7 @@
 
         public TimeDescriptor(float exponent):this()
         {
-            this.Exponent = exponent;
+            Exponent = exponent;
         }
 
         #region IDimensionDescriptor<TimeDescriptor> Members
@@ -19,21 +19,21 @@
         public TimeDescriptor Add(TimeDescriptor dimensionDescriptor)
         {
             TimeDescriptor desc = new TimeDescriptor();
-            desc.Exponent = this.Exponent + dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent + dimensionDescriptor.Exponent;
             return desc;
         }
 
         public TimeDescriptor Subtract(TimeDescriptor dimensionDescriptor)
         {
             TimeDescriptor desc = new TimeDescriptor();
-            desc.Exponent = this.Exponent - dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent - dimensionDescriptor.Exponent;
             return desc;
         }
 
         public TimeDescriptor Multiply(float exponent)
         {
             TimeDescriptor desc = new TimeDescriptor();
-            desc.Exponent = this.Exponent * exponent;
+            desc.Exponent = Exponent * exponent;
             return desc;
         }
 

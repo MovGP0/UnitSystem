@@ -38,9 +38,9 @@ namespace QuantitySystem.Units
         {
             if (obj is UnitPathItem upi)
             {
-                if ((this.Unit.GetType() == upi.Unit.GetType())
-                    && (this.Numerator == upi.Numerator)
-                    && (this.Denominator == upi.Denominator))
+                if ((Unit.GetType() == upi.Unit.GetType())
+                    && (Numerator == upi.Numerator)
+                    && (Denominator == upi.Denominator))
                     return true;
                 else
                     return false;

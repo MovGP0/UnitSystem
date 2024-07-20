@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Qs.Runtime;
+﻿using Qs.Runtime;
 
 namespace Qs.Types
 {
@@ -28,7 +24,7 @@ namespace Qs.Types
             {
                 if (_varname.Contains(":"))
                 {
-                    int lc = _varname.LastIndexOf(':');
+                    var lc = _varname.LastIndexOf(':');
 
                     var ns = _varname.Substring(0, lc);
                     var nm = _varname.Substring(lc + 1);
@@ -36,14 +32,14 @@ namespace Qs.Types
                     var cns = QsNamespace.GetNamespace(QsEvaluator.CurrentEvaluator.Scope, ns);
                     return (QsValue)cns.GetValue(nm);
                 }
-                else
-                    return (QsValue)QsEvaluator.CurrentEvaluator.GetVariable(_varname);
+
+                return (QsValue)QsEvaluator.CurrentEvaluator.GetVariable(_varname);
             }
             set
             {
                 if (_varname.Contains(":"))
                 {
-                    int lc = _varname.LastIndexOf(':');
+                    var lc = _varname.LastIndexOf(':');
 
                     var ns = _varname.Substring(0, lc);
                     var nm = _varname.Substring(lc + 1);
@@ -65,7 +61,7 @@ namespace Qs.Types
 
         public override string ToString()
         {
-            return VariableName + ": " + ContentValue.ToString();
+            return VariableName + ": " + ContentValue;
         }
 
 

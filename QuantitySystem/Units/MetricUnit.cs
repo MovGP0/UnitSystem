@@ -13,7 +13,7 @@ namespace QuantitySystem.Units
         {
 
             //access the SIUnitAttribute
-            MemberInfo info = this.GetType();
+            MemberInfo info = GetType();
 
             object[] attributes = (object[])info.GetCustomAttributes(true);
 
@@ -119,9 +119,9 @@ namespace QuantitySystem.Units
                     {
                         // native si not in the default mode.
                         //put the default of this unit by creating it again
-                        MetricUnit RefUnit = (MetricUnit)this.MemberwiseClone();
-                        RefUnit.UnitPrefix = this.defaultUnitPrefix;
-                        RefUnit.UnitExponent = this.UnitExponent;
+                        MetricUnit RefUnit = (MetricUnit)MemberwiseClone();
+                        RefUnit.UnitPrefix = defaultUnitPrefix;
+                        RefUnit.UnitExponent = UnitExponent;
 
                         return RefUnit;
                     }
@@ -174,12 +174,12 @@ namespace QuantitySystem.Units
                     if (IsDefaultUnit)
                         return 0;
                     else
-                        return Math.Pow(this.defaultUnitPrefix.GetFactorForConvertTo(UnitPrefix), UnitExponent);
+                        return Math.Pow(defaultUnitPrefix.GetFactorForConvertTo(UnitPrefix), UnitExponent);
                 }
                 else
                 {
                     //convert me to default also if I had prefix over the default of me
-                    double CorrectToDefault = Math.Pow(this.defaultUnitPrefix.GetFactorForConvertTo(UnitPrefix), UnitExponent);
+                    double CorrectToDefault = Math.Pow(defaultUnitPrefix.GetFactorForConvertTo(UnitPrefix), UnitExponent);
 
                     //p.u   where
                     //      p: prefix
@@ -200,10 +200,10 @@ namespace QuantitySystem.Units
         /// <returns></returns>
         public override string ToString()
         {
-            if (this.unitPrefix.Exponent == 0)
-                return this.GetType().Name + " " + this.Symbol;
+            if (unitPrefix.Exponent == 0)
+                return GetType().Name + " " + Symbol;
             else
-                return this.UnitPrefix.Prefix + this.GetType().Name.ToLower() + " " + this.Symbol;
+                return UnitPrefix.Prefix + GetType().Name.ToLower() + " " + Symbol;
         }
     }
 }

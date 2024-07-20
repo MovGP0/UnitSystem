@@ -35,7 +35,7 @@
         /// <returns>Conversion factor</returns>
         public double GetFactorForConvertTo(MetricPrefix prefix)
         {
-            return prefix.Factor / this.Factor;
+            return prefix.Factor / Factor;
         }
 
         #region SI Standard prefixes as static properties
@@ -237,7 +237,7 @@
         {
             get
             {
-                return this.PrefixExponent;
+                return PrefixExponent;
             }
         }
 
@@ -255,7 +255,7 @@
         #region Operations
         public MetricPrefix Invert()
         {
-            return MetricPrefix.FromExponent(0 - this.PrefixExponent);
+            return FromExponent(0 - PrefixExponent);
         }
 
         public static MetricPrefix Add(MetricPrefix firstPrefix, MetricPrefix secondPrefix)
@@ -264,7 +264,7 @@
 
             CheckExponent(exp);
 
-            MetricPrefix prefix = MetricPrefix.FromExponent(exp);
+            MetricPrefix prefix = FromExponent(exp);
             return prefix;
         
         }
@@ -280,7 +280,7 @@
 
             CheckExponent(exp);
 
-            MetricPrefix prefix = MetricPrefix.FromExponent(exp);
+            MetricPrefix prefix = FromExponent(exp);
             return prefix;
         }
 
@@ -296,7 +296,7 @@
 
             CheckExponent(exp);
 
-            MetricPrefix prefix = MetricPrefix.FromExponent(exp);
+            MetricPrefix prefix = FromExponent(exp);
             return prefix;
 
         }
@@ -313,7 +313,7 @@
 
             CheckExponent(exp);
 
-            MetricPrefix prefix = MetricPrefix.FromExponent(exp);
+            MetricPrefix prefix = FromExponent(exp);
             return prefix;
 
         }
@@ -342,7 +342,7 @@
             if (exp > 24) throw new MetricPrefixException("Exponent Exceed 24")
             {
                 WrongExponent = exp,
-                CorrectPrefix = MetricPrefix.FromExponent(24),
+                CorrectPrefix = FromExponent(24),
                 OverflowExponent = (exp - 24) + ov
 
             };
@@ -350,7 +350,7 @@
             if (exp < -24) throw new MetricPrefixException("Exponent Precede -24")
             {
                 WrongExponent = exp,
-                CorrectPrefix = MetricPrefix.FromExponent(-24),
+                CorrectPrefix = FromExponent(-24),
                 OverflowExponent = (exp + 24) + ov
 
             };
@@ -371,7 +371,7 @@
                     throw new MetricPrefixException("Exponent not aligned")
                     {
                         WrongExponent = exp,
-                        CorrectPrefix = MetricPrefix.FromExponent(cexp),
+                        CorrectPrefix = FromExponent(cexp),
                         OverflowExponent = (exp - cexp) + ov           //5-3 = 2  ,  -5--3 =-2
 
                     };
@@ -385,7 +385,7 @@
                 throw new MetricPrefixException("Exponent not aligned")
                 {
                     WrongExponent = exp,
-                    CorrectPrefix = MetricPrefix.FromExponent(0),
+                    CorrectPrefix = FromExponent(0),
                     OverflowExponent = ov           //5-3 = 2  ,  -5--3 =-2
 
                 };

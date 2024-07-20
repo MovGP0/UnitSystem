@@ -10,7 +10,7 @@
             if (up != null)
             {
                 //compare with count indexing
-                if (up.Count == this.Count)
+                if (up.Count == Count)
                 {
                     for (int ix = 0; ix < Count; ix++)
                     {
@@ -39,7 +39,7 @@
 
                 double cf = 1;
                 int ix = 0;
-                while (ix < this.Count)
+                while (ix < Count)
                 {
                     cf = cf * this.ElementAt(ix).Times;
                     ix++;

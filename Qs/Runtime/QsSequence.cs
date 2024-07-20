@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using Qs.Types;
 
 namespace Qs.Runtime
@@ -57,30 +55,30 @@ namespace Qs.Runtime
             get
             {
                 QsSequenceElement el;
-                if (!this.TryGetValue(index, out el))
+                if (!TryGetValue(index, out el))
                 {
                     //failed to get the value
                     // here the magic begins
 
                     if (index > 0)
                     {
-                        int IX = index;
-                        while (!this.ContainsKey(IX))
+                        var IX = index;
+                        while (!ContainsKey(IX))
                         {
                             IX--;  //decrease the index.
                         }
                         //Bingo we found it
-                        this.TryGetValue(IX, out el);
+                        TryGetValue(IX, out el);
                     }
                     else if (index < 0)
                     {
-                        int IX = index;
-                        while (!this.ContainsKey(IX))
+                        var IX = index;
+                        while (!ContainsKey(IX))
                         {
                             IX++;  //decrease the index.
                         }
                         //Bingo we found it
-                        this.TryGetValue(IX, out el);
+                        TryGetValue(IX, out el);
                     }
                     else
                     {
@@ -165,7 +163,7 @@ namespace Qs.Runtime
         /// Keeps the the values that were calculated before.
         /// When modifieng an item the index of this item and all after items should be deleted.
         /// </summary>
-        private Dictionary<int, QsValue> CachedValues = new Dictionary<int, QsValue>();
+        private Dictionary<int, QsValue> CachedValues = new();
 
 
         /// <summary>
@@ -186,7 +184,7 @@ namespace Qs.Runtime
             }
 
             
-            if (this.Parameters.Length > 0)
+            if (Parameters.Length > 0)
             {
                 // this is a call to form symbolic element
                 // like g[n](x) ..> x^n
@@ -195,9 +193,9 @@ namespace Qs.Runtime
                 //  and be parsed into function  (QsFunction)
                 var e = GetElement(index);
 
-                string se_text = e.ElementDeclaration.Replace("$" + this.SequenceIndexName, "`");
-                se_text = se_text.Replace(this.SequenceIndexName, index.ToString(CultureInfo.InvariantCulture));
-                se_text = se_text.Replace("`", "$" + this.SequenceIndexName);
+                var se_text = e.ElementDeclaration.Replace("$" + SequenceIndexName, "`");
+                se_text = se_text.Replace(SequenceIndexName, index.ToString(CultureInfo.InvariantCulture));
+                se_text = se_text.Replace("`", "$" + SequenceIndexName);
 
                 if (!string.IsNullOrEmpty(SequenceRangeStartName))
                 {
@@ -215,23 +213,21 @@ namespace Qs.Runtime
 
                 var FunctionBody = se_text;
 
-                string porma = string.Empty;  // the parameters separated by comma ','
-                foreach (var prm in this.Parameters)
+                var porma = string.Empty;  // the parameters separated by comma ','
+                foreach (var prm in Parameters)
                 {
                     porma += prm.Name + ", ";
                 }
                 porma = porma.TrimEnd(',', ' ');
 
-                string FunctionDeclaration = "_(" + porma + ") = " + FunctionBody;
+                var FunctionDeclaration = "_(" + porma + ") = " + FunctionBody;
 
-                QsFunction qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
+                var qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
 
                 return new QsScalar(ScalarTypes.FunctionQuantity) { FunctionQuantity = qs.ToQuantity() };
             }
-            else
-            {
-                val = GetElement(index).Execute(index);
-            }
+
+            val = GetElement(index).Execute(index);
 
             if (CachingEnabled) CachedValues[index] = val;
 
@@ -242,43 +238,43 @@ namespace Qs.Runtime
         #region Get Element Quantity Functions
         public QsValue GetElementValue(int index, QsParameter arg0)
         {
-            QsValue val = GetElement(index).Execute(index, arg0);
+            var val = GetElement(index).Execute(index, arg0);
             return val;
         }
         
         public QsValue GetElementValue(int index, QsParameter arg0, QsParameter arg1)
         {
-            QsValue val = GetElement(index).Execute(index, arg0, arg1);
+            var val = GetElement(index).Execute(index, arg0, arg1);
             return val;
         }
 
         public QsValue GetElementValue(int index, QsParameter arg0, QsParameter arg1, QsParameter arg2)
         {
-            QsValue val = GetElement(index).Execute(index, arg0, arg1, arg2);
+            var val = GetElement(index).Execute(index, arg0, arg1, arg2);
             return val;
         }
 
         public QsValue GetElementValue(int index, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
         {
-            QsValue val = GetElement(index).Execute(index, arg0, arg1, arg2, arg3);
+            var val = GetElement(index).Execute(index, arg0, arg1, arg2, arg3);
             return val;
         }
 
         public QsValue GetElementValue(int index, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
         {
-            QsValue val = GetElement(index).Execute(index, arg0, arg1, arg2, arg3, arg4);
+            var val = GetElement(index).Execute(index, arg0, arg1, arg2, arg3, arg4);
             return val;
         }
 
         public QsValue GetElementValue(int index, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
         {
-            QsValue val = GetElement(index).Execute(index, arg0, arg1, arg2, arg3, arg4, arg5);
+            var val = GetElement(index).Execute(index, arg0, arg1, arg2, arg3, arg4, arg5);
             return val;
         }
 
         public QsValue GetElementValue(int index, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
         {
-            QsValue val = GetElement(index).Execute(index, arg1, arg1, arg2, arg3, arg4, arg5, arg6);
+            var val = GetElement(index).Execute(index, arg1, arg1, arg2, arg3, arg4, arg5, arg6);
             return val;
         }
         
@@ -290,7 +286,7 @@ namespace Qs.Runtime
         public QsValue RangeOperation(string operation, int fromIndex, int toIndex)
         {
             BeginRangeOperation(fromIndex, toIndex);
-            QsValue result = default(QsValue);
+            var result = default(QsValue);
             try
             {
                 if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
@@ -322,7 +318,7 @@ namespace Qs.Runtime
         public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0)
         {
             BeginRangeOperation(fromIndex, toIndex);
-            QsValue result = default(QsValue);
+            var result = default(QsValue);
             try
             {
                 if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
@@ -356,7 +352,7 @@ namespace Qs.Runtime
         public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
         {
             BeginRangeOperation(fromIndex, toIndex);
-            QsValue result = default(QsValue);
+            var result = default(QsValue);
             try
             {
                 if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
@@ -388,7 +384,7 @@ namespace Qs.Runtime
         public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
         {
             BeginRangeOperation(fromIndex, toIndex);
-            QsValue result = default(QsValue);
+            var result = default(QsValue);
             try
             {
                 if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
@@ -420,7 +416,7 @@ namespace Qs.Runtime
         public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
         {
             BeginRangeOperation(fromIndex, toIndex);
-            QsValue result = default(QsValue);
+            var result = default(QsValue);
             try
             {
                 if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
@@ -452,7 +448,7 @@ namespace Qs.Runtime
         public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
         {
             BeginRangeOperation(fromIndex, toIndex);
-            QsValue result = default(QsValue);
+            var result = default(QsValue);
             try
             {
                 if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
@@ -484,7 +480,7 @@ namespace Qs.Runtime
         public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
         {
             BeginRangeOperation(fromIndex, toIndex);
-            QsValue result = default(QsValue);
+            var result = default(QsValue);
             try
             {
                 if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
@@ -517,7 +513,7 @@ namespace Qs.Runtime
         public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
         {
             BeginRangeOperation(fromIndex, toIndex);
-            QsValue result = default(QsValue);
+            var result = default(QsValue);
             try
             {
                 if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
@@ -561,15 +557,15 @@ namespace Qs.Runtime
         /// <returns></returns>
         public new IEnumerator<QsValue> GetEnumerator()
         {
-            int i = MinimumIndex;
-            var q = this.GetElementValue(i);
+            var i = MinimumIndex;
+            var q = GetElementValue(i);
             while (((QsScalar)q).NumericalQuantity.Value < double.MaxValue)
             {
 
                 yield return (QsValue)q;
 
                 i++;
-                q = this.GetElementValue(i);
+                q = GetElementValue(i);
 
             }
         }

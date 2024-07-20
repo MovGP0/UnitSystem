@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Qs.Numerics
 {
@@ -25,7 +21,7 @@ namespace Qs.Numerics
         /// <param name="den"></param>
         private static void Simplify(ref float num, ref float den)
         {
-            for (int fac = 24; fac >= 2; fac--)
+            for (var fac = 24; fac >= 2; fac--)
             {
                 if ((num % fac == 0) && (den % fac == 0))
                 {
@@ -44,8 +40,8 @@ namespace Qs.Numerics
         /// <returns></returns>
         public static Rational operator +(Rational a, Rational b)
         {
-            float num = a.num * b.den + b.num * a.den;
-            float den = a.den * b.den;
+            var num = a.num * b.den + b.num * a.den;
+            var den = a.den * b.den;
 
             Simplify(ref num, ref den);
 
@@ -54,8 +50,8 @@ namespace Qs.Numerics
 
         public static Rational operator -(Rational a, Rational b)
         {
-            float num = a.num * b.den - b.num * a.den;
-            float den = a.den * b.den;
+            var num = a.num * b.den - b.num * a.den;
+            var den = a.den * b.den;
 
             Simplify(ref num, ref den);
 
@@ -97,7 +93,7 @@ namespace Qs.Numerics
 
         public static Rational Pow(Rational a, double power)
         {
-            var result = new Rational((float)System.Math.Pow(a.num, (float)power), (float)System.Math.Pow(a.den, (float)power));
+            var result = new Rational((float)Math.Pow(a.num, (float)power), (float)Math.Pow(a.den, (float)power));
             return result;
         }
 

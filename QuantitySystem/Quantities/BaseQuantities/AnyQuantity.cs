@@ -36,7 +36,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
         public override string ToString()
         {
-            string qname = this.GetType().Name;
+            string qname = GetType().Name;
             qname = qname.Substring(0, qname.Length - 2);
 
             return qname + ": " + Value.ToString() + " " + (Unit != null ? Unit.Symbol : "");
@@ -247,7 +247,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
         #endregion
 
-        public override QuantitySystem.Quantities.BaseQuantities.BaseQuantity Invert()
+        public override BaseQuantity Invert()
         {
             AnyQuantity<T> q = (AnyQuantity<T>)base.Invert();
 
@@ -256,7 +256,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
             
             if (q.Unit != null)
             {
-                q.Unit = this.Unit.Invert();
+                q.Unit = Unit.Invert();
             }
 
             return q;
@@ -295,7 +295,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
         public AnyQuantity<T> Clone()
         {
-            object t = this.MemberwiseClone();
+            object t = MemberwiseClone();
             var t2 = ((AnyQuantity<T>)t);
             if (t2.Unit != null) t2.Unit = (Unit)Unit.Clone();
             return t2;

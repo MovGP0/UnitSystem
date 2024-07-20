@@ -111,7 +111,7 @@ public class Step
                 
 
             Flow Parent = CreateHostFlow();
-            Parent.ReSetToStep(this.Id);
+            Parent.ReSetToStep(Id);
             return Parent.CurrentStepIndex;
         }
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace Qs
+﻿namespace Qs
 {
     public class QsException : Exception
     {

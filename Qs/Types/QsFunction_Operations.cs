@@ -1,14 +1,9 @@
-﻿using System;
-using Qs.Runtime;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Qs.Runtime;
 using ParticleLexer;
-using ParticleLexer.QsTokens;
 using ParticleLexer.StandardTokens;
 //using Microsoft.Scripting.Ast;
 using SymbolicAlgebra;
 using QuantitySystem.Quantities.BaseQuantities;
-using QuantitySystem.Units;
 using System.Text;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -28,14 +23,14 @@ namespace Qs.Types
         /// <returns></returns>
         internal static string RemoveRedundantParameters(params string[] parameters)
         {
-            Dictionary<string, bool> rp = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+            Dictionary<string, bool> rp = new(StringComparer.OrdinalIgnoreCase);
             foreach (var prm in parameters)
             {
                 if (!rp.ContainsKey(prm))
                     rp[prm] = true;
             }
 
-            string all = string.Empty;
+            var all = string.Empty;
             foreach (var k in rp.Keys)
                 all += "," + k;
 
@@ -61,7 +56,7 @@ namespace Qs.Types
             var fname = "_";
 
             var fbody = "";
-            List<string> fparamList = new List<string>();
+            List<string> fparamList = new();
             foreach (var f in functions)
             {
                 fbody += " " + f.FunctionBody + " " + operation;
@@ -74,15 +69,15 @@ namespace Qs.Types
             var fNameParamPart = fname + "(" + RemoveRedundantParameters(fparam) + ") =";
             functionDeclaration = fNameParamPart + fbody;
 
-            Token fTokens = new Token();
+            var fTokens = new Token();
 
             // add first part tokens
-            foreach (var t in QsFunction.TokenizeFunction(fNameParamPart))
+            foreach (var t in TokenizeFunction(fNameParamPart))
             {
                 fTokens.AppendSubToken(t);
             }
 
-            for (int i = 0; i < functions.Length; i++ )
+            for (var i = 0; i < functions.Length; i++ )
             {
                 // prepare function body tokens
                 foreach (var t in functions[i].FunctionBodyToken)
@@ -110,9 +105,9 @@ namespace Qs.Types
             fbody = fbody.TrimEnd(operation.ToCharArray());
 
 
-            Token fTokens = new Token();
+            var fTokens = new Token();
 
-            for (int i = 0; i < functions.Length; i++)
+            for (var i = 0; i < functions.Length; i++)
             {
                 // prepare function body tokens
                 foreach (var t in functions[i].FunctionBodyToken)
@@ -138,71 +133,72 @@ namespace Qs.Types
         {
             if (value is QsFunction)
             {
-                QsFunction fn2 = (QsFunction)value;
+                var fn2 = (QsFunction)value;
 
-                string fParameters = RemoveRedundantParameters(this.ParametersNames.Union(fn2.ParametersNames).ToArray());
+                var fParameters = RemoveRedundantParameters(ParametersNames.Union(fn2.ParametersNames).ToArray());
                 
-                string thisFunctionBody  = this.FunctionBody;
-                foreach(string p in this.ParametersNames)
+                var thisFunctionBody  = FunctionBody;
+                foreach(var p in ParametersNames)
                 {
                     thisFunctionBody = thisFunctionBody.Replace(p, "$" + p);
                 }
 
-                string targetFunctionBody  = fn2.FunctionBody;
-                foreach(string p in fn2.ParametersNames)
+                var targetFunctionBody  = fn2.FunctionBody;
+                foreach(var p in fn2.ParametersNames)
                 {
                     targetFunctionBody = targetFunctionBody.Replace(p, "$" + p);
                 }
 
                 // form the expressions that will be parsed.
-                string fpt = "(" + thisFunctionBody + ")" + operation + "(" + targetFunctionBody + ")";
+                var fpt = "(" + thisFunctionBody + ")" + operation + "(" + targetFunctionBody + ")";
 
                 fpt = fpt.Replace("!", "__FAC__"); // replacing the ! sign with __FAC__ to include the '!' sign into the calculations {because '!' is operator in parsing so it doesn't enter the algebraic calculations}
                 //evaulate fpt
 
                 try
                 {
-                    QsScalar sc = (QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(fpt);
-                    string FuncBody = sc.SymbolicQuantity.Value.ToString().Replace("__FAC__", "!");
-                    string WholeFunction = "_(" + fParameters + ") = " + FuncBody;
-                    return QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction);
+                    var sc = (QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(fpt);
+                    var FuncBody = sc.SymbolicQuantity.Value.ToString().Replace("__FAC__", "!");
+                    var WholeFunction = "_(" + fParameters + ") = " + FuncBody;
+                    return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction);
                 }
                 catch(QsIncompleteExpression)
                 {
                     // something happened make the operation in old fashion
                     string WholeFunction;
-                    Token FunctionToken = JoinFunctionsArrayTokensWithOperation(operation, out WholeFunction,this,fn2);
-                    return QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction, FunctionToken);
+                    var FunctionToken = JoinFunctionsArrayTokensWithOperation(operation, out WholeFunction,this,fn2);
+                    return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction, FunctionToken);
                 }
             }
-            else if (value is QsScalar)
+
+            if (value is QsScalar)
             {
-                QsScalar svl = (QsScalar)value;
+                var svl = (QsScalar)value;
 
                 var fname = "_";
 
-                var fbody = this.FunctionBody;
-                if (svl.ScalarType == ScalarTypes.SymbolicQuantity) fbody = "(" + fbody + ")" + operation + "(" + svl.SymbolicQuantity.Value.ToString() + ")";
-                else if (svl.ScalarType == ScalarTypes.NumericalQuantity) fbody = "(" + fbody + ")" + operation + svl.NumericalQuantity.Value.ToString();
-                else if (svl.ScalarType == ScalarTypes.RationalNumberQuantity) fbody = "(" + fbody + ")" + operation + svl.RationalQuantity.Value.Value.ToString();
+                var fbody = FunctionBody;
+                if (svl.ScalarType == ScalarTypes.SymbolicQuantity) fbody = "(" + fbody + ")" + operation + "(" + svl.SymbolicQuantity.Value + ")";
+                else if (svl.ScalarType == ScalarTypes.NumericalQuantity) fbody = "(" + fbody + ")" + operation + svl.NumericalQuantity.Value;
+                else if (svl.ScalarType == ScalarTypes.RationalNumberQuantity) fbody = "(" + fbody + ")" + operation + svl.RationalQuantity.Value.Value;
                 else if (svl.ScalarType == ScalarTypes.FunctionQuantity) fbody = "(" + fbody + ")" + operation + "(" + svl.FunctionQuantity.Value.FunctionBody + ")";
                 else throw new QsException("Operation '" + operation + "' for the target scalar type (" + svl.ScalarType + ") is not supported");
 
 
-                QsScalar fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
+                var fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
 
-                string FuncBody = string.Empty;
+                var FuncBody = string.Empty;
                 if(fb.ScalarType == ScalarTypes.SymbolicQuantity)
                     FuncBody = fb.SymbolicQuantity.Value.ToString().Replace("__FAC__", "!");
                 else
                     FuncBody = fb.ToExpressionParsableString();
 
-                string[] functionParametersArray = this.ParametersNames; // this is the available parameters for the original function.
+                string[] functionParametersArray = ParametersNames; // this is the available parameters for the original function.
 
                 if (svl.ScalarType == ScalarTypes.SymbolicQuantity)
                 {
                     
-                    List<string> newParametersList = new List<string>(functionParametersArray);
+                    List<string> newParametersList = new(functionParametersArray);
 
                     newParametersList.AddRange(svl.SymbolicQuantity.Value.InvolvedSymbols);
 
@@ -212,7 +208,7 @@ namespace Qs.Types
                 if (svl.ScalarType == ScalarTypes.FunctionQuantity)
                 {
 
-                    List<string> newParametersList = new List<string>(functionParametersArray);
+                    List<string> newParametersList = new(functionParametersArray);
 
                     newParametersList.AddRange(svl.FunctionQuantity.Value.ParametersNames);
 
@@ -220,13 +216,9 @@ namespace Qs.Types
                 }
 
                 var f = fname + "(" + RemoveRedundantParameters(functionParametersArray) + ") = " + FuncBody;
-                return QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, f);
+                return ParseFunction(QsEvaluator.CurrentEvaluator, f);
             }
-            
-            else
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -236,8 +228,8 @@ namespace Qs.Types
         {
             get
             {
-                var fbody = this.FunctionBody;
-                foreach (string p in this.ParametersNames)
+                var fbody = FunctionBody;
+                foreach (var p in ParametersNames)
                 {
                     fbody = fbody.Replace(p, "$" + p);
                 }
@@ -251,13 +243,13 @@ namespace Qs.Types
 
         public SymbolicVariable ToSymbolicVariable()
         {
-            return SymbolicVariable.Parse(this.FunctionBody);
+            return SymbolicVariable.Parse(FunctionBody);
         }
 
         public AnyQuantity<SymbolicVariable> ToSymbolicQuantity()
         {
             
-            var fv = SymbolicVariable.Parse(this.FunctionBody);
+            var fv = SymbolicVariable.Parse(FunctionBody);
             return fv.ToQuantity();
             
 
@@ -270,7 +262,7 @@ namespace Qs.Types
         {
             
             //return (QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(SymbolicBodyText);
-            var fv = SymbolicVariable.Parse(this.FunctionBody);
+            var fv = SymbolicVariable.Parse(FunctionBody);
             return new QsScalar(ScalarTypes.SymbolicQuantity) { SymbolicQuantity = fv.ToQuantity() };
             
         }
@@ -280,7 +272,7 @@ namespace Qs.Types
         {
             var fname = functionName;
 
-            List<string> fparamList = new List<string>();
+            List<string> fparamList = new();
             foreach (var f in functions)
             {
                 fparamList.AddRange(f.ParametersNames);
@@ -356,7 +348,7 @@ namespace Qs.Types
         public static bool operator ==(QsFunction a, QsFunction b)
         {
             // If both are null, or both are same instance, return true.
-            if (System.Object.ReferenceEquals(a, b))
+            if (ReferenceEquals(a, b))
             {
                 return true;
             }
@@ -382,9 +374,9 @@ namespace Qs.Types
         {
             if(value is QsFunction func)
             {
-                if (object.ReferenceEquals(func, this)) return true;
+                if (ReferenceEquals(func, this)) return true;
 
-                var thisDebugView = ExpressionDebugView.GetValue(this._FunctionExpression.Body) as string;
+                var thisDebugView = ExpressionDebugView.GetValue(_FunctionExpression.Body) as string;
                 var funcDebugView = ExpressionDebugView.GetValue(func._FunctionExpression.Body) as string;
 
                 return thisDebugView.Equals(funcDebugView);
@@ -440,32 +432,32 @@ namespace Qs.Types
         /// <returns></returns>
         public override QsValue DifferentiateOperation(QsValue value)
         {
-            QsScalar sval = (QsScalar)value;
+            var sval = (QsScalar)value;
 
             if (sval.ScalarType == ScalarTypes.SymbolicQuantity)
             {
                 var dsv = sval.SymbolicQuantity.Value;
 
-                string fname = "_";
-                string WholeFunction = string.Empty;
-                if (this.FunctionBodyToken[0].TokenClassType == typeof(CurlyBracketGroupToken))
+                var fname = "_";
+                var WholeFunction = string.Empty;
+                if (FunctionBodyToken[0].TokenClassType == typeof(CurlyBracketGroupToken))
                 {
                     // vector differentiation 
                     // take every term in the vector and differentiate it
-                    var vcs = QsVar.VectorComponents(this.FunctionBodyToken[0]);
-                    StringBuilder sc = new StringBuilder();
-                    sc.Append(fname + "(" + RemoveRedundantParameters(this.ParametersNames) + ") = ");
+                    var vcs = QsVar.VectorComponents(FunctionBodyToken[0]);
+                    var sc = new StringBuilder();
+                    sc.Append(fname + "(" + RemoveRedundantParameters(ParametersNames) + ") = ");
                     sc.Append("{ ");
                     foreach (var c in vcs)
                     {
-                        SymbolicVariable nsv = SymbolicVariable.Parse(c);
-                        int times = (int)dsv.SymbolPower;
+                        var nsv = SymbolicVariable.Parse(c);
+                        var times = (int)dsv.SymbolPower;
                         while (times > 0)
                         {
                             nsv = nsv.Differentiate(dsv.Symbol);
                             times--;
                         }
-                        sc.Append(nsv.ToString());
+                        sc.Append(nsv);
                         sc.Append(" ");
                     }
                     sc.Append("}");
@@ -474,24 +466,22 @@ namespace Qs.Types
                 }
                 else
                 {
-                    SymbolicVariable nsv = ToSymbolicVariable();
-                    int times = (int)dsv.SymbolPower;
+                    var nsv = ToSymbolicVariable();
+                    var times = (int)dsv.SymbolPower;
                     while (times > 0)
                     {
                         nsv = nsv.Differentiate(dsv.Symbol);
                         times--;
                     }
                     
-                    WholeFunction = fname + "(" + RemoveRedundantParameters(this.ParametersNames) + ") = " + nsv.ToString();
+                    WholeFunction = fname + "(" + RemoveRedundantParameters(ParametersNames) + ") = " + nsv;
                 }
 
 
-                return QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction);
+                return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction);
             }
-            else
-            {
-                return base.DifferentiateOperation(value);
-            }
+
+            return base.DifferentiateOperation(value);
         }
     }
 }

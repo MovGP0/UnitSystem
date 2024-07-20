@@ -44,7 +44,7 @@ namespace QuantitySystem.Units
 
             if (dimension.Mass.Exponent != 0)
             {
-                Type UnitType = Unit.GetDefaultUnitTypeOf(typeof(Mass<>), unitSystem);
+                Type UnitType = GetDefaultUnitTypeOf(typeof(Mass<>), unitSystem);
 
                 Unit u = (Unit)Activator.CreateInstance(UnitType);
 
@@ -56,7 +56,7 @@ namespace QuantitySystem.Units
 
             if (dimension.Length.Exponent != 0)
             {
-                Type UnitType = Unit.GetDefaultUnitTypeOf(typeof(Length<>), unitSystem);
+                Type UnitType = GetDefaultUnitTypeOf(typeof(Length<>), unitSystem);
 
                 Unit u = (Unit)Activator.CreateInstance(UnitType);
 
@@ -68,7 +68,7 @@ namespace QuantitySystem.Units
 
             if (dimension.Time.Exponent != 0)
             {
-                Type UnitType = Unit.GetDefaultUnitTypeOf(typeof(Time<>), unitSystem);
+                Type UnitType = GetDefaultUnitTypeOf(typeof(Time<>), unitSystem);
 
                 Unit u = (Unit)Activator.CreateInstance(UnitType);
 
@@ -80,7 +80,7 @@ namespace QuantitySystem.Units
 
             if (dimension.Temperature.Exponent != 0)
             {
-                Type UnitType = Unit.GetDefaultUnitTypeOf(typeof(Temperature<>), unitSystem);
+                Type UnitType = GetDefaultUnitTypeOf(typeof(Temperature<>), unitSystem);
 
                 Unit u = (Unit)Activator.CreateInstance(UnitType);
 
@@ -92,7 +92,7 @@ namespace QuantitySystem.Units
 
             if (dimension.LuminousIntensity.Exponent != 0)
             {
-                Type UnitType = Unit.GetDefaultUnitTypeOf(typeof(LuminousIntensity<>), unitSystem);
+                Type UnitType = GetDefaultUnitTypeOf(typeof(LuminousIntensity<>), unitSystem);
 
                 Unit u = (Unit)Activator.CreateInstance(UnitType);
 
@@ -104,7 +104,7 @@ namespace QuantitySystem.Units
 
             if (dimension.AmountOfSubstance.Exponent != 0)
             {
-                Type UnitType = Unit.GetDefaultUnitTypeOf(typeof(AmountOfSubstance<>), unitSystem);
+                Type UnitType = GetDefaultUnitTypeOf(typeof(AmountOfSubstance<>), unitSystem);
 
                 Unit u = (Unit)Activator.CreateInstance(UnitType);
 
@@ -116,7 +116,7 @@ namespace QuantitySystem.Units
 
             if (dimension.ElectricCurrent.Exponent != 0)
             {
-                Type UnitType = Unit.GetDefaultUnitTypeOf(typeof(ElectricalCurrent<>), unitSystem);
+                Type UnitType = GetDefaultUnitTypeOf(typeof(ElectricalCurrent<>), unitSystem);
 
                 Unit u = (Unit)Activator.CreateInstance(UnitType);
 
@@ -178,7 +178,7 @@ namespace QuantitySystem.Units
 
             //try direct mapping first to get the unit
 
-            Type InnerUnitType = Unit.GetDefaultSIUnitTypeOf(quantityType);
+            Type InnerUnitType = GetDefaultSIUnitTypeOf(quantityType);
 
             if (InnerUnitType == null)
             {
@@ -279,18 +279,18 @@ namespace QuantitySystem.Units
 
             }
 
-            this._Symbol = GenerateUnitSymbolFromSubBaseUnits();
+            _Symbol = GenerateUnitSymbolFromSubBaseUnits();
 
 
-            this._IsDefaultUnit = true;
+            _IsDefaultUnit = true;
 
             //the quantity may be derived quantity which shouldn't be referenced :check here.
-            this._QuantityType = quantityType;
+            _QuantityType = quantityType;
 
             
-            _UnitDimension = QuantityDimension.DimensionFrom(this._QuantityType);
+            _UnitDimension = QuantityDimension.DimensionFrom(_QuantityType);
 
-            this._IsBaseUnit = false;
+            _IsBaseUnit = false;
 
         }
 
@@ -309,8 +309,8 @@ namespace QuantitySystem.Units
 
             var gen_q = m_QuantityType.GetGenericTypeDefinition() ;
 
-            if (gen_q == typeof(Currency<>)) return new QuantitySystem.Units.Currency.Coin();
-            if (gen_q == typeof(Digital<>)) return new QuantitySystem.Units.Digital.Bit();
+            if (gen_q == typeof(Currency<>)) return new Currency.Coin();
+            if (gen_q == typeof(Digital<>)) return new Digital.Bit();
 
             if (gen_q == typeof(Displacement<>))
             {
@@ -428,7 +428,7 @@ namespace QuantitySystem.Units
 
             SubUnits = GroupUnits(SubUnits); //group similar units
 
-            this._Symbol = GenerateUnitSymbolFromSubBaseUnits();
+            _Symbol = GenerateUnitSymbolFromSubBaseUnits();
 
             // if the passed type is AnyQuantity<object> for example
             //     then I want to get the type without type parameters AnyQuantity<>
@@ -441,9 +441,9 @@ namespace QuantitySystem.Units
 
             if (quantityType != typeof(DerivedQuantity<>) && quantityType != null)
             {
-                if (quantityType != typeof(DimensionlessQuantity<>)) this._IsDefaultUnit = true;
+                if (quantityType != typeof(DimensionlessQuantity<>)) _IsDefaultUnit = true;
 
-                this._QuantityType = quantityType;
+                _QuantityType = quantityType;
 
                 //get the unit dimension from the passed type.
                 _UnitDimension = QuantityDimension.DimensionFrom(quantityType);
@@ -453,17 +453,17 @@ namespace QuantitySystem.Units
             {
                 //passed type is derivedQuantity which indicates that the units representing unknow derived quantity to the system
                 //so that quantityType should be kept as derived quantity type.
-                this._QuantityType = quantityType;
+                _QuantityType = quantityType;
 
 
                 //get the unit dimension from the passed units.
-                this._UnitDimension = QuantityDimension.Dimensionless;
+                _UnitDimension = QuantityDimension.Dimensionless;
                 foreach (Unit uu in SubUnits)
-                    this._UnitDimension += uu.UnitDimension;
+                    _UnitDimension += uu.UnitDimension;
             }
 
 
-            this._IsBaseUnit = false;
+            _IsBaseUnit = false;
 
         }
 

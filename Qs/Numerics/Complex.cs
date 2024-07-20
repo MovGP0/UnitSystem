@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Qs.Numerics
 {
@@ -31,9 +27,9 @@ namespace Qs.Numerics
         }
 
 
-        public static readonly Complex Zero = new Complex(0, 0);
-        public static readonly Complex One = new Complex(1.0, 0.0);
-        public static readonly Complex ImaginaryOne = new Complex(0.0, 1.0);
+        public static readonly Complex Zero = new(0, 0);
+        public static readonly Complex One = new(1.0, 0.0);
+        public static readonly Complex ImaginaryOne = new(0.0, 1.0);
 
 
 
@@ -63,10 +59,9 @@ namespace Qs.Numerics
 
         public bool Equals(Complex other)
         {
-            if ((this._real == other._real) && (this._imaginary == other._imaginary))
+            if ((_real == other._real) && (_imaginary == other._imaginary))
                 return true;
-            else
-                return false;
+            return false;
         }
 
 
@@ -74,19 +69,17 @@ namespace Qs.Numerics
         {
             if ((lhs._real == rhs._real) && (lhs._imaginary == rhs._imaginary))
                 return true;
-            else
-                return false;
+            return false;
         }
 
         public static bool operator !=(Complex lhs, Complex rhs)
         {
             if ((lhs._real != rhs._real) || (lhs._imaginary != rhs._imaginary))
                  return true;
-            else
-                return false;
+            return false;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is Complex lhs)
                 return Equals(lhs);
@@ -134,7 +127,7 @@ namespace Qs.Numerics
 
             double real, imag, den, r;
 
-            if (System.Math.Abs(b._real) >= System.Math.Abs(b._imaginary))
+            if (Math.Abs(b._real) >= Math.Abs(b._imaginary))
             {
                 r = b._imaginary / b._real;
                 den = b._real + r * b._imaginary;
@@ -181,15 +174,15 @@ namespace Qs.Numerics
 
         public Complex Power(Complex y)
         {
-            double c = y._real;
-            double d = y._imaginary;
-            int power = (int)c;
+            var c = y._real;
+            var d = y._imaginary;
+            var power = (int)c;
 
             if (power == c && power >= 0 && d == .0)
             {
-                Complex result = One;
+                var result = One;
                 if (power == 0) return result;
-                Complex factor = this;
+                var factor = this;
                 while (power != 0)
                 {
                     if ((power & 1) != 0)
@@ -201,20 +194,18 @@ namespace Qs.Numerics
                 }
                 return result;
             }
-            else if (IsZero)
+
+            if (IsZero)
             {
                 return y.IsZero ? One : Zero;
             }
-            else
-            {
-                double a = _real;
-                double b = _imaginary;
-                double powers = a * a + b * b;
-                double arg = System.Math.Atan2(b, a);
-                double mul = System.Math.Pow(powers, c / 2) * System.Math.Exp(-d * arg);
-                double common = c * arg + .5 * d * System.Math.Log(powers);
-                return new Complex(mul * System.Math.Cos(common), mul * System.Math.Sin(common));
-            }
+            var a = _real;
+            var b = _imaginary;
+            var powers = a * a + b * b;
+            var arg = Math.Atan2(b, a);
+            var mul = Math.Pow(powers, c / 2) * Math.Exp(-d * arg);
+            var common = c * arg + .5 * d * Math.Log(powers);
+            return new Complex(mul * Math.Cos(common), mul * Math.Sin(common));
         }
 
 

@@ -1,17 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <TransformOnBuild>true</TransformOnBuild>
+    <!--WarningsAsErrors>CS8765;CS8766;CS8767;CS8603;CS8600;CS8625</WarningsAsErrors-->
+    <Confiurations>Debug;Release</Confiurations>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>$(DefineConstants);CONTRACTS_FULL</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Label="Analyzers">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Roslynator.Analyzers" Version="4.12.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.12.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParticleLexer\ParticleLexer.csproj" />
     <ProjectReference Include="..\PassiveFlow\PassiveFlow.csproj" />
     <ProjectReference Include="..\QuantitySystem\QuantitySystem.csproj" />
     <ProjectReference Include="..\SymbolicAlgebra\SymbolicAlgebra.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Update="QsRoot\QsMath.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QsMath.generated.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="QsRoot\QsMath.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QsMath.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

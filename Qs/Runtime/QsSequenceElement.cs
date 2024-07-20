@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using Qs.Types;
 using QuantitySystem.Quantities.BaseQuantities;
 using QuantitySystem.Units;
@@ -93,14 +92,14 @@ namespace Qs.Runtime
                 return ((Func<int, QsValue>)ElementValue)(executionIndex);
                 
             }
-            else if (ElementValue.GetType() == typeof(QsSequence))
+
+            if (ElementValue.GetType() == typeof(QsSequence))
             {
-                QsSequence seq = (QsSequence)ElementValue;
+                var seq = (QsSequence)ElementValue;
 
                 return (QsValue)seq.GetElementValue(executionIndex);
             }
-            else
-                return (QsValue)ElementValue;
+            return (QsValue)ElementValue;
         }
 
         public QsValue Execute(int executionIndex, params QsParameter[] args)
@@ -146,7 +145,7 @@ namespace Qs.Runtime
         /// <returns></returns>
         public static QsSequenceElement FromQuantity(QsValue quantity)
         {
-            QsSequenceElement el = new QsSequenceElement();
+            var el = new QsSequenceElement();
             el.ElementValue = quantity;
             el.ElementDeclaration = quantity.ToString();
 
@@ -166,7 +165,7 @@ namespace Qs.Runtime
         public static QsSequenceElement FromSequenceAccess(QsSequence sequence)
         {
 
-            QsSequenceElement el = new QsSequenceElement();
+            var el = new QsSequenceElement();
             el.ElementValue = sequence;
 
             el.IndexEvaluation = false;  
@@ -182,7 +181,7 @@ namespace Qs.Runtime
         /// <returns></returns>
         public static QsSequenceElement FromDelegate(Func<int, QsValue> function)
         {
-            QsSequenceElement el = new QsSequenceElement();
+            var el = new QsSequenceElement();
             el.ElementValue = function;
 
             return el;
@@ -195,7 +194,7 @@ namespace Qs.Runtime
         /// <returns></returns>
         public static QsSequenceElement FromDelegate(Func<int, QsValue, QsValue> function)
         {
-            QsSequenceElement el = new QsSequenceElement();
+            var el = new QsSequenceElement();
             el.ElementValue = function;
             return el;
         }
@@ -207,7 +206,7 @@ namespace Qs.Runtime
         /// <returns></returns>
         public static QsSequenceElement FromDelegate(Func<int, QsValue, QsValue, QsValue> function)
         {
-            QsSequenceElement el = new QsSequenceElement();
+            var el = new QsSequenceElement();
             el.ElementValue = function;
             return el;
         }
@@ -219,7 +218,7 @@ namespace Qs.Runtime
         /// <returns></returns>
         public static QsSequenceElement FromDelegate(Func<int, QsValue, QsValue, QsValue, QsValue> function)
         {
-            QsSequenceElement el = new QsSequenceElement();
+            var el = new QsSequenceElement();
             el.ElementValue = function;
 
             return el;
@@ -239,52 +238,49 @@ namespace Qs.Runtime
             AnyQuantity<double> v;
             if (Unit.TryParseQuantity(element, out v))
             {
-                var el = QsSequenceElement.FromQuantity(new QsScalar { NumericalQuantity = v });
+                var el = FromQuantity(new QsScalar { NumericalQuantity = v });
                 el.ElementDeclaration = element;
 
                 el.IndexEvaluation = false;
                 el.ParameterEvaluation = false;
                 return el;
             }
-            else
+
+            var se = new QsSequenceElement();
+                
+            //try one index delegate without parameters
+            //Create the lambda function that will pass the index and parameters to the expression.
+            var lb = SimpleLambdaBuilder.Create(typeof(QsValue), "ElementValue");
+
+            //add the index parameter
+            lb.Parameter(typeof(int), sequence.SequenceIndexName);
+                
+                
+            //find the index parameter in line to know if it will be evaluated or not
+            if (element.IndexOf(sequence.SequenceIndexName) > -1)
+                se.IndexEvaluation = true;
+
+
+            //make the sequence parameters.
+            foreach (var seqParam in sequence.Parameters)
             {
-                QsSequenceElement se = new QsSequenceElement();
-                
-                //try one index delegate without parameters
-                //Create the lambda function that will pass the index and parameters to the expression.
-                SimpleLambdaBuilder lb = SimpleLambdaBuilder.Create(typeof(QsValue), "ElementValue");
-
-                //add the index parameter
-                lb.Parameter(typeof(int), sequence.SequenceIndexName);
-                
-                
-                //find the index parameter in line to know if it will be evaluated or not
-                if (element.IndexOf(sequence.SequenceIndexName) > -1)
-                    se.IndexEvaluation = true;
-
-
-                //make the sequence parameters.
-                foreach (var seqParam in sequence.Parameters)
-                {
-                    //lb.Parameter(typeof(QsValue), seqParam.Name);
-                    lb.Parameter(typeof(QsParameter), seqParam.Name);
-                    if (element.IndexOf(seqParam.Name) > -1)
-                        se.ParameterEvaluation = true;
-                }
-
-                QsVar pvar = new QsVar(qse, element, sequence, lb);
-
-                lb.Body = pvar.ResultExpression;
-
-                LambdaExpression le = lb.MakeLambda();
-
-                se.ElementDeclaration = element;
-                se.ElementExpression = pvar.ResultExpression;
-                se.ElementValue = le.Compile();
-
-                return se;
-
+                //lb.Parameter(typeof(QsValue), seqParam.Name);
+                lb.Parameter(typeof(QsParameter), seqParam.Name);
+                if (element.IndexOf(seqParam.Name) > -1)
+                    se.ParameterEvaluation = true;
             }
+
+            var pvar = new QsVar(qse, element, sequence, lb);
+
+            lb.Body = pvar.ResultExpression;
+
+            var le = lb.MakeLambda();
+
+            se.ElementDeclaration = element;
+            se.ElementExpression = pvar.ResultExpression;
+            se.ElementValue = le.Compile();
+
+            return se;
 
             throw new QsException("Check me in sequence element :( :( :( ");
             

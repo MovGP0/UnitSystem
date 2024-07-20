@@ -20,7 +20,7 @@ public class Flow : IEnumerable<Step>
     public Flow()
     {
         //getting the type of this instance
-        Type FlowType = this.GetType();
+        Type FlowType = GetType();
 
         FieldInfo[] FlowFields = FlowType.GetFields();
         foreach (FieldInfo fi in FlowFields)
@@ -49,11 +49,11 @@ public class Flow : IEnumerable<Step>
                         aa.ActionStatus = aas[i].StageStatusID;
                         acts[i] = aa;
                     }
-                    fli = this.Add(fi.Name, fia[0]._StepId, fia[0]._ItemAssociatedTypes, fia[0].Skip, acts);
+                    fli = Add(fi.Name, fia[0]._StepId, fia[0]._ItemAssociatedTypes, fia[0].Skip, acts);
                 }
                 else
                 {
-                    fli = this.Add(fi.Name, fia[0]._StepId, fia[0]._ItemAssociatedTypes, fia[0].Skip);
+                    fli = Add(fi.Name, fia[0]._StepId, fia[0]._ItemAssociatedTypes, fia[0].Skip);
                 }
 
                 fli.Description_1 = fi.Name;
@@ -294,7 +294,7 @@ public class Flow : IEnumerable<Step>
 
         // retry the sub if current step should be eleminated from the 
         // current cycle
-        if (this.CurrentStep.Skip && this.CurrentStep.Id != this.LastStep.Id)
+        if (CurrentStep.Skip && CurrentStep.Id != LastStep.Id)
         {
             steps = 1;
             goto skipping;
@@ -319,7 +319,7 @@ public class Flow : IEnumerable<Step>
 
         // retry the sub if current step should be eleminated from the 
         // current cycle
-        if (this.CurrentStep.Skip && this.CurrentStep.Id != this.FirstStep.Id)
+        if (CurrentStep.Skip && CurrentStep.Id != FirstStep.Id)
         {
             steps = 1;
             goto skipping;
@@ -505,9 +505,9 @@ public class Flow : IEnumerable<Step>
     public override bool Equals(object obj)
     {
         Flow fl2 = (Flow)obj;
-        if (this.GetType().Equals(fl2.GetType()))
+        if (GetType().Equals(fl2.GetType()))
         {
-            if (this.CurrentStep.Id == fl2.CurrentStep.Id)
+            if (CurrentStep.Id == fl2.CurrentStep.Id)
                 return true;
             else
                 return false;
@@ -607,7 +607,7 @@ public class Flow : IEnumerable<Step>
     {
         get
         {
-            int delta = this._Current_StepIndex - this._Previous_StepIndex;
+            int delta = _Current_StepIndex - _Previous_StepIndex;
 
             //search in last active step actions
             //with position that is equal to delta
@@ -618,7 +618,7 @@ public class Flow : IEnumerable<Step>
                     if (flact.TargetStepName != null)
                     {
                         Step RequiredFlowStep = this[flact.TargetStepName];
-                        if (this.CurrentStep.Id == RequiredFlowStep.Id)
+                        if (CurrentStep.Id == RequiredFlowStep.Id)
                             return flact;
                     }
                     else

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 using ParticleLexer;
 using ParticleLexer.StandardTokens;
@@ -57,9 +54,9 @@ namespace Qs.Types
             if (expression.TokenClassType == typeof(ParenthesisCallToken))
             {
                 // function call
-                string MethodName = expression[0].TokenValue;
+                var MethodName = expression[0].TokenValue;
                 string[] args = expression[1].TrimTokens(1, 1).TokenValue.Split(',');
-                int argn = args.Length;
+                var argn = args.Length;
                 
                 if (args.Length == 1 && args[0] == string.Empty) argn=0;
 
@@ -73,22 +70,22 @@ namespace Qs.Types
 
                 var argsToken = expression[1];
 
-                List<Expression> Arguments = new List<Expression>();
+                List<Expression> Arguments = new();
 
-                int ix = 0;
+                var ix = 0;
                 foreach (var tk in argsToken)
                 {
-                    if (tk.TokenClassType == typeof(ParticleLexer.StandardTokens.ParameterToken))
+                    if (tk.TokenClassType == typeof(ParameterToken))
                     {
-                        var qv = new global::Qs.Runtime.QsVar(
-                            global::Qs.Runtime.QsEvaluator.CurrentEvaluator
+                        var qv = new Runtime.QsVar(
+                            Runtime.QsEvaluator.CurrentEvaluator
                             , tk);
 
                         // evaluate the expresion
                         var expr = qv.ResultExpression;  // the return value is QsValue
 
                         // we have to check the corresponding parameter type to make convertion if needed.
-                        Type targetType = d_method_params[ix].ParameterType;
+                        var targetType = d_method_params[ix].ParameterType;
 
                         Arguments.Add(Root.QsToNativeConvert(targetType, expr));
                         ix++;
@@ -115,39 +112,39 @@ namespace Qs.Types
                 else
                 {
                     // determine the return type to conver it into suitable QsValue
-                    var mi = typeof(Root).GetMethod("NativeToQsConvert", System.Reflection.BindingFlags.IgnoreCase| System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                    var mi = typeof(Root).GetMethod("NativeToQsConvert", BindingFlags.IgnoreCase| BindingFlags.Public | BindingFlags.Static);
                     ResultExpression = Expression.Call(mi, Expression.Convert(ResultExpression, typeof(object)));
 
                     Expression<Func<QsValue>> cq = Expression.Lambda<Func<QsValue>>(ResultExpression);
 
                     Func<QsValue> aqf = cq.Compile();
 
-                    QsValue result = aqf();
+                    var result = aqf();
 
                     return result;
                 }
 
             }
-            else
+
             {
                 // property access.
-               ResultExpression =  Expression.Property(Expression.Constant(_NativeObject), expression.TokenValue);
+                ResultExpression =  Expression.Property(Expression.Constant(_NativeObject), expression.TokenValue);
 
-               var mi = typeof(Root).GetMethod("NativeToQsConvert", System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
-               ResultExpression = Expression.Call(mi, Expression.Convert(ResultExpression, typeof(object)));
+                var mi = typeof(Root).GetMethod("NativeToQsConvert", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static);
+                ResultExpression = Expression.Call(mi, Expression.Convert(ResultExpression, typeof(object)));
 
 
-               // Construct Lambda function which return one object.
-               Expression<Func<QsValue>> cq = Expression.Lambda<Func<QsValue>>(ResultExpression);
+                // Construct Lambda function which return one object.
+                Expression<Func<QsValue>> cq = Expression.Lambda<Func<QsValue>>(ResultExpression);
 
-               // compile the function
-               Func<QsValue> aqf = cq.Compile();
+                // compile the function
+                Func<QsValue> aqf = cq.Compile();
 
-               // execute the function
-               QsValue result = aqf();
+                // execute the function
+                var result = aqf();
 
-               // return the result
-               return result;
+                // return the result
+                return result;
 
             }
 
@@ -155,7 +152,7 @@ namespace Qs.Types
 
         public void SetProperty(string propertyName, object value)
         {
-            var pi = InstanceType.GetProperty(propertyName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.IgnoreCase);
+            var pi = InstanceType.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
 
             var vc = Root.QsToNativeConvert(pi.PropertyType, value);
 
@@ -164,7 +161,7 @@ namespace Qs.Types
 
         public PropertyInfo GetPropertyInfo(string propertyName)
         {
-            return InstanceType.GetProperty(propertyName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.IgnoreCase);
+            return InstanceType.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
         }
 
 
@@ -181,17 +178,15 @@ namespace Qs.Types
 
             if (pi.PropertyType.IsArray)
             {
-                Array array = (Array)pi.GetValue(_NativeObject, null);
-                return QsRoot.Root.NativeToQsConvert(array.GetValue((int)indices[0]));
+                var array = (Array)pi.GetValue(_NativeObject, null);
+                return Root.NativeToQsConvert(array.GetValue((int)indices[0]));
             }
-            else if (pi.GetIndexParameters().Length > 0)
+
+            if (pi.GetIndexParameters().Length > 0)
             {
                 return GetProperty(propertyName, indices);
             }
-            else
-            {
-                throw new QsException("The property " + propertyName + " is not array nor object to be indexed");
-            }
+            throw new QsException("The property " + propertyName + " is not array nor object to be indexed");
         }
 
         /// <summary>
@@ -214,7 +209,7 @@ namespace Qs.Types
 
         public override string ToString()
         {
-            return "Native: " + _NativeObject.ToString();
+            return "Native: " + _NativeObject;
         }
 
         public override string ToShortString()
@@ -305,15 +300,13 @@ namespace Qs.Types
                 Func<object> aqf = cq.Compile();
 
                 // execute the function
-                object result = aqf();
+                var result = aqf();
 
                 // return the result
                 return new QsObject(result);
             }
-            else
-            {
-                throw new NotImplementedException("Operation between " + this.ToString() + " and " + value.ToString() + " is not supported");
-            }
+
+            throw new NotImplementedException("Operation between " + ToString() + " and " + value + " is not supported");
         }
 
         public override QsValue SubtractOperation(QsValue value)
@@ -341,16 +334,14 @@ namespace Qs.Types
                 Func<object> aqf = cq.Compile();
 
                 // execute the function
-                object result = aqf();
+                var result = aqf();
 
                 // return the result
                 return new QsObject(result);
 
             }
-            else
-            {
-                throw new NotImplementedException("Operation between " + this.ToString() + " and " + value.ToString() + " is not supported");
-            }
+
+            throw new NotImplementedException("Operation between " + ToString() + " and " + value + " is not supported");
         }
 
         public override QsValue MultiplyOperation(QsValue value)
@@ -378,16 +369,14 @@ namespace Qs.Types
                 Func<object> aqf = cq.Compile();
 
                 // execute the function
-                object result = aqf();
+                var result = aqf();
 
                 // return the result
                 return new QsObject(result);
 
             }
-            else
-            {
-                throw new NotImplementedException("Operation between " + this.ToString() + " and " + value.ToString() + " is not supported");
-            }
+
+            throw new NotImplementedException("Operation between " + ToString() + " and " + value + " is not supported");
         }
 
         public override QsValue DivideOperation(QsValue value)
@@ -414,16 +403,14 @@ namespace Qs.Types
                 Func<object> aqf = cq.Compile();
 
                 // execute the function
-                object result = aqf();
+                var result = aqf();
 
                 // return the result
                 return new QsObject(result);
 
             }
-            else
-            {
-                throw new NotImplementedException("Operation between " + this.ToString() + " and " + value.ToString() + " is not supported");
-            }
+
+            throw new NotImplementedException("Operation between " + ToString() + " and " + value + " is not supported");
         }
 
         
@@ -507,7 +494,7 @@ namespace Qs.Types
             
             
             var pi = InstanceType.GetProperty("Item"
-                , System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public 
+                , BindingFlags.Instance | BindingFlags.Public 
                 );
 
             
@@ -520,7 +507,7 @@ namespace Qs.Types
         public override void SetIndexedItem(QsParameter[] indices, QsValue value)
         {
             var pi = InstanceType.GetProperty("Item"
-                , System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public
+                , BindingFlags.Instance | BindingFlags.Public
                 );
             var gs = pi.GetSetMethod();
 
@@ -542,12 +529,12 @@ namespace Qs.Types
 
             if (key.ToString().Equals("Properties", StringComparison.OrdinalIgnoreCase))
             {
-                QsFlowingTuple f = new QsFlowingTuple();
+                var f = new QsFlowingTuple();
                 var mms = InstanceType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-                QsTupleValue[] fefe = new QsTupleValue[mms.Length];
+                var fefe = new QsTupleValue[mms.Length];
             
-                for (int ix = 0; ix < mms.Length; ix++)
+                for (var ix = 0; ix < mms.Length; ix++)
                 {
                     fefe[ix].Name = (string) mms[ix].Name;
                     
@@ -559,14 +546,14 @@ namespace Qs.Types
 
             if (key.ToString().Equals("Methods", StringComparison.OrdinalIgnoreCase))
             {
-                QsFlowingTuple f = new QsFlowingTuple();
+                var f = new QsFlowingTuple();
                 var mms = from m in InstanceType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
                           where m.IsSpecialName == false
                           select m;
 
-                QsTupleValue[] fefe = new QsTupleValue[mms.Count()];
+                var fefe = new QsTupleValue[mms.Count()];
 
-                for (int ix = 0; ix < mms.Count(); ix++)
+                for (var ix = 0; ix < mms.Count(); ix++)
                 {
                     fefe[ix].Name = (string)mms.ElementAt(ix).Name;
 

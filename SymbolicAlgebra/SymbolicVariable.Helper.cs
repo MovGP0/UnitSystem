@@ -26,71 +26,71 @@ public sealed partial class SymbolicVariable
 
     public static SymbolicVariable NegativeOne
     {
-        get { return SymbolicVariable._NegativeOne.Clone(); }
+        get { return _NegativeOne.Clone(); }
     }
 
     public static SymbolicVariable Zero
     {
-        get { return SymbolicVariable._Zero.Clone(); }
+        get { return _Zero.Clone(); }
     }
 
     public static SymbolicVariable One
     {
-        get { return SymbolicVariable._One.Clone(); }
+        get { return _One.Clone(); }
     }
 
     public static SymbolicVariable Two
     {
-        get { return SymbolicVariable._Two.Clone(); }
+        get { return _Two.Clone(); }
     }
 
     public static SymbolicVariable Three
     {
-        get { return SymbolicVariable._Three.Clone(); }
+        get { return _Three.Clone(); }
     }
 
     public static SymbolicVariable Four
     {
-        get { return SymbolicVariable._Four.Clone(); }
+        get { return _Four.Clone(); }
     }
 
     public static SymbolicVariable Five
     {
-        get { return SymbolicVariable._Five.Clone(); }
+        get { return _Five.Clone(); }
     }
 
     public static SymbolicVariable Six
     {
-        get { return SymbolicVariable._Six.Clone(); }
+        get { return _Six.Clone(); }
     }
 
     public static SymbolicVariable Seven
     {
-        get { return SymbolicVariable._Seven.Clone(); }
+        get { return _Seven.Clone(); }
     }
 
     public static SymbolicVariable Eight
     {
-        get { return SymbolicVariable._Eight.Clone(); }
+        get { return _Eight.Clone(); }
     }
 
     public static SymbolicVariable Nine
     {
-        get { return SymbolicVariable._Nine.Clone(); }
+        get { return _Nine.Clone(); }
     }
 
     public static SymbolicVariable Ten
     {
-        get { return SymbolicVariable._Ten.Clone(); }
+        get { return _Ten.Clone(); }
     }
 
     public static SymbolicVariable Eleven
     {
-        get { return SymbolicVariable._Eleven.Clone(); }
+        get { return _Eleven.Clone(); }
     }
 
     public static SymbolicVariable Twelve
     {
-        get { return SymbolicVariable._Twelve.Clone(); }
+        get { return _Twelve.Clone(); }
     }
 }

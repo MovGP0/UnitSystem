@@ -5,7 +5,7 @@
 
         public ElectricCurrentDescriptor(float exponent):this()
         {
-            this.Exponent = exponent;
+            Exponent = exponent;
         }
 
         #region IDimensionDescriptor<ElectricCurrentDescriptor> Members
@@ -18,21 +18,21 @@
         public ElectricCurrentDescriptor Add(ElectricCurrentDescriptor dimensionDescriptor)
         {
             ElectricCurrentDescriptor desc = new ElectricCurrentDescriptor();
-            desc.Exponent = this.Exponent+ dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent+ dimensionDescriptor.Exponent;
             return desc;
         }
 
         public ElectricCurrentDescriptor Subtract(ElectricCurrentDescriptor dimensionDescriptor)
         {
             ElectricCurrentDescriptor desc = new ElectricCurrentDescriptor();
-            desc.Exponent = this.Exponent - dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent - dimensionDescriptor.Exponent;
             return desc;
         }
 
         public ElectricCurrentDescriptor Multiply(float exponent)
         {
             ElectricCurrentDescriptor desc = new ElectricCurrentDescriptor();
-            desc.Exponent = this.Exponent * exponent;
+            desc.Exponent = Exponent * exponent;
             return desc;
         }
 

@@ -216,7 +216,7 @@ namespace ParticleLexer
 {
 
     using System.Collections.Generic;
-    using ParticleLexer.StandardTokens;
+    using StandardTokens;
 
     public sealed partial class Token : IEnumerable<Token>
     {
@@ -224,7 +224,7 @@ namespace ParticleLexer
 
 
 
-        public static System.Type GetTokenClassType(char c)
+        public static Type GetTokenClassType(char c)
         {
             switch (c)
             {

@@ -21,7 +21,7 @@ namespace QuantitySystem.Units
 
 
             //create the corresponding quantity
-            AnyQuantity<T> qty = this.GetThisUnitQuantity<T>();
+            AnyQuantity<T> qty = GetThisUnitQuantity<T>();
 
             //assign the unit to the created quantity
             qty.Unit = this;
@@ -597,14 +597,14 @@ namespace QuantitySystem.Units
                 string varUnit = um.Groups["unit"].Value;
                 val = double.Parse(um.Groups["num"].Value, CultureInfo.InvariantCulture);
 
-                Unit un = Unit.Parse(varUnit);
+                Unit un = Parse(varUnit);
                 qty = un.GetThisUnitQuantity<double>(val);
 
                 return true;
             }
             else if (double.TryParse(quantity, NumberStyles.Any, CultureInfo.InvariantCulture, out val))
             {
-                qty = Unit.DiscoverUnit(QuantityDimension.Dimensionless).GetThisUnitQuantity<double>(val);
+                qty = DiscoverUnit(QuantityDimension.Dimensionless).GetThisUnitQuantity<double>(val);
 
                 return true;
             }
@@ -625,10 +625,10 @@ namespace QuantitySystem.Units
             //    and this made errors in conversion between dimensionless units :).
             if (power == 0)
             {
-                return Unit.DiscoverUnit(QuantityDimension.Dimensionless);
+                return DiscoverUnit(QuantityDimension.Dimensionless);
             }
 
-            Unit u = (Unit)this.MemberwiseClone();
+            Unit u = (Unit)MemberwiseClone();
 
             if (SubUnits!=null)
             {
@@ -647,7 +647,7 @@ namespace QuantitySystem.Units
             }
 
 
-            u._UnitDimension = this._UnitDimension * power; //must change the unit dimension of the unit
+            u._UnitDimension = _UnitDimension * power; //must change the unit dimension of the unit
             // however because the unit is having sub units we don't have to modify the exponent of it
             //  note: unit that depend on sub units is completly unaware of its exponent
             //    or I should say it is always equal = 1

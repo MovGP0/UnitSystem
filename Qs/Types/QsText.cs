@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 
 namespace Qs.Types
 {
@@ -36,7 +33,7 @@ namespace Qs.Types
         public override QsValue AddOperation(QsValue value)
         {
             
-            QsText t = new QsText(Text + value.ToString());
+            var t = new QsText(Text + value);
             return t;
         }
 
@@ -67,21 +64,21 @@ namespace Qs.Types
 
         public override QsValue LeftShiftOperation(QsValue times)
         {
-            int itimes = Qs.IntegerFromQsValue((QsScalar)times);
+            var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
-            if (itimes > this.Text.Length) itimes = itimes % this.Text.Length;
+            if (itimes > Text.Length) itimes = itimes % Text.Length;
 
 
-            StringBuilder vec = new StringBuilder(this.Text.Length);
+            var vec = new StringBuilder(Text.Length);
 
-            for (int i = itimes; i < this.Text.Length; i++)
+            for (var i = itimes; i < Text.Length; i++)
             {
-                vec.Append(this.Text[i]);
+                vec.Append(Text[i]);
             }
 
-            for (int i = 0; i < itimes; i++)
+            for (var i = 0; i < itimes; i++)
             {
-                vec.Append(this.Text[i]);
+                vec.Append(Text[i]);
             }
 
 
@@ -91,22 +88,22 @@ namespace Qs.Types
 
         public override QsValue RightShiftOperation(QsValue times)
         {
-            int itimes = Qs.IntegerFromQsValue((QsScalar)times);
+            var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
-            if (itimes > this.Text.Length) itimes = itimes % this.Text.Length;
+            if (itimes > Text.Length) itimes = itimes % Text.Length;
 
             // 1 2 3 4 5 >> 2  == 4 5 1 2 3
              
-            StringBuilder vec = new StringBuilder(this.Text.Length);
+            var vec = new StringBuilder(Text.Length);
 
-            for (int i = this.Text.Length - itimes; i < this.Text.Length; i++)
+            for (var i = Text.Length - itimes; i < Text.Length; i++)
             {
-                vec.Append(this.Text[i]);
+                vec.Append(Text[i]);
             }
 
-            for (int i = 0; i < (this.Text.Length - itimes); i++)
+            for (var i = 0; i < (Text.Length - itimes); i++)
             {
-                vec.Append(this.Text[i]);
+                vec.Append(Text[i]);
             }
 
 
@@ -136,17 +133,13 @@ namespace Qs.Types
 
         public override bool Equality(QsValue value)
         {
-            QsText text = value as QsText;
+            var text = value as QsText;
             if (text==null)
                 return false;
-            else 
-            {
-                if (text.Text.Equals(this.Text, StringComparison.OrdinalIgnoreCase))
-                    return true;
-                else
-                    return false;
-            }
-            
+            if (text.Text.Equals(Text, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+
         }
 
         public override bool Inequality(QsValue value)
@@ -181,9 +174,9 @@ namespace Qs.Types
 
         public override QsValue GetIndexedItem(QsParameter[] indices)
         {
-            int i = (int)((QsScalar)indices[0].QsNativeValue).NumericalQuantity.Value;
+            var i = (int)((QsScalar)indices[0].QsNativeValue).NumericalQuantity.Value;
 
-            if (i < 0) i = this.Text.Length + i;
+            if (i < 0) i = Text.Length + i;
 #if WINRT
             return Char.GetNumericValue(Text, i).ToQuantity().ToScalar();
 #else
@@ -201,7 +194,7 @@ namespace Qs.Types
         public override QsValue ColonOperator(QsValue value)
         {
             string[] lines = Text.Split('\n');
-            int l = (int)((QsScalar)value).NumericalQuantity.Value;
+            var l = (int)((QsScalar)value).NumericalQuantity.Value;
 
             return new QsText(lines[l]);
         }

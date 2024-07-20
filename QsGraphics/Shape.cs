@@ -18,7 +18,7 @@ namespace QsGraphics
         {
             get
             {
-                return this.GetType().Name;
+                return GetType().Name;
             }
         }
     }

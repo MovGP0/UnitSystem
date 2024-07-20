@@ -5,7 +5,7 @@
 
         public CurrencyDescriptor(float exponent):this()
         {
-            this.Exponent = exponent;
+            Exponent = exponent;
         }
 
         #region IDimensionDescriptor<MoneyDescriptor> Members
@@ -19,21 +19,21 @@
         public CurrencyDescriptor Add(CurrencyDescriptor dimensionDescriptor)
         {
             CurrencyDescriptor desc = new CurrencyDescriptor();
-            desc.Exponent = this.Exponent + dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent + dimensionDescriptor.Exponent;
             return desc;
         }
 
         public CurrencyDescriptor Subtract(CurrencyDescriptor dimensionDescriptor)
         {
             CurrencyDescriptor desc = new CurrencyDescriptor();
-            desc.Exponent = this.Exponent - dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent - dimensionDescriptor.Exponent;
             return desc;
         }
 
         public CurrencyDescriptor Multiply(float exponent)
         {
             CurrencyDescriptor desc = new CurrencyDescriptor();
-            desc.Exponent = this.Exponent * exponent;
+            desc.Exponent = Exponent * exponent;
             return desc;
         }
 

@@ -5,8 +5,8 @@
 
         public LengthDescriptor(float normalExponent, float polarExponent):this()
         {
-            this.ScalarExponent = normalExponent;
-            this.VectorExponent = polarExponent;
+            ScalarExponent = normalExponent;
+            VectorExponent = polarExponent;
         }
 
         #region Length Properties Types
@@ -38,9 +38,9 @@
             {
                 LengthDescriptor ld = (LengthDescriptor)obj;
                 {
-                    if (this.ScalarExponent != ld.ScalarExponent) return false;
+                    if (ScalarExponent != ld.ScalarExponent) return false;
 
-                    if (this.VectorExponent != ld.VectorExponent) return false;
+                    if (VectorExponent != ld.VectorExponent) return false;
 
                     return true;
                 }
@@ -70,8 +70,8 @@
         public LengthDescriptor Add(LengthDescriptor dimensionDescriptor)
         {
             LengthDescriptor l = new LengthDescriptor();
-            l.ScalarExponent = this.ScalarExponent + dimensionDescriptor.ScalarExponent;
-            l.VectorExponent = this.VectorExponent + dimensionDescriptor.VectorExponent;
+            l.ScalarExponent = ScalarExponent + dimensionDescriptor.ScalarExponent;
+            l.VectorExponent = VectorExponent + dimensionDescriptor.VectorExponent;
 
             return l;
         }
@@ -79,8 +79,8 @@
         public LengthDescriptor Subtract(LengthDescriptor dimensionDescriptor)
         {
             LengthDescriptor l = new LengthDescriptor();
-            l.ScalarExponent = this.ScalarExponent - dimensionDescriptor.ScalarExponent;
-            l.VectorExponent = this.VectorExponent - dimensionDescriptor.VectorExponent;
+            l.ScalarExponent = ScalarExponent - dimensionDescriptor.ScalarExponent;
+            l.VectorExponent = VectorExponent - dimensionDescriptor.VectorExponent;
 
             return l;
         }
@@ -88,8 +88,8 @@
         public LengthDescriptor Multiply(float exponent)
         {
             LengthDescriptor l = new LengthDescriptor();
-            l.ScalarExponent = this.ScalarExponent * exponent;
-            l.VectorExponent = this.VectorExponent * exponent;
+            l.ScalarExponent = ScalarExponent * exponent;
+            l.VectorExponent = VectorExponent * exponent;
 
             return l;
         }

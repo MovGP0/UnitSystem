@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Qs.Runtime;
-
-namespace Qs
+﻿namespace Qs
 {
     public interface IQsStorageProvider : IDisposable
     {
@@ -26,7 +20,7 @@ namespace Qs
     public class QsScopeStorage : IQsStorageProvider
     {
 
-        Dictionary<string, object> _Storage = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, object> _Storage = new(StringComparer.OrdinalIgnoreCase);
 
         public IEnumerable<KeyValuePair<string, object>> GetItems()
         {

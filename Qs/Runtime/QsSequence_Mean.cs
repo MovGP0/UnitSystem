@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using Qs.Types;
 
 
@@ -20,7 +19,7 @@ namespace Qs.Runtime
             
 
             var n = toIndex - fromIndex + 1;
-            if (this.Parameters.Length > 0)
+            if (Parameters.Length > 0)
             {
                 // this is a call to form symbolic element
                 // like g[n](x) ..> x^n
@@ -29,31 +28,29 @@ namespace Qs.Runtime
                 //  and be parsed into function  (QsFunction)
 
 
-                string porma = string.Empty;  // the parameters separated by comma ','
-                foreach (var prm in this.Parameters)
+                var porma = string.Empty;  // the parameters separated by comma ','
+                foreach (var prm in Parameters)
                 {
                     porma += prm.Name + ", ";
                 }
                 porma = porma.TrimEnd(',', ' ');
 
-                string FunctionBody = "(" + JoinElementsWithOperation(fromIndex, toIndex, "+") + ")/" + n.ToString(CultureInfo.InvariantCulture);
+                var FunctionBody = "(" + JoinElementsWithOperation(fromIndex, toIndex, "+") + ")/" + n.ToString(CultureInfo.InvariantCulture);
 
-                string FunctionDeclaration = "_(" + porma + ") = " + FunctionBody;
+                var FunctionDeclaration = "_(" + porma + ") = " + FunctionBody;
 
-                QsFunction qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
+                var qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
                 
                 return qs;
             }
-            else
-            {
-                FixIndices(ref fromIndex, ref toIndex);
 
-                var tot = SumElements(fromIndex, toIndex);
+            FixIndices(ref fromIndex, ref toIndex);
 
-                var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+            var tot = SumElements(fromIndex, toIndex);
+
+            var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
                 
-                return tot / count;
-            }
+            return tot / count;
         }
 
 

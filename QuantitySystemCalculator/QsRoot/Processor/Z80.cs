@@ -76,7 +76,7 @@ namespace QsRoot.Processor
         public Z80 GetZ80(int pc, Z80 z)
         {
             
-            return new Z80 { PC = this.PC + z.PC };
+            return new Z80 { PC = PC + z.PC };
         }
 
         public static Z80 LoadPC(int step)
@@ -96,7 +96,7 @@ namespace QsRoot.Processor
 
         public QsValue AddHL(Z80 z80)
         {
-            return this.HL + z80.HL;
+            return HL + z80.HL;
         }
 
 
@@ -141,7 +141,7 @@ namespace QsRoot.Processor
                 switch (register)
                 {
                     case "AF":
-                        return this.AF;
+                        return AF;
                     case "BC":
                         return BC;
                     case "DE":
@@ -165,7 +165,7 @@ namespace QsRoot.Processor
                 switch (register)
                 {
                     case "AF":
-                        this.AF = value;
+                        AF = value;
                         break;
                     case "BC":
                         BC = value;

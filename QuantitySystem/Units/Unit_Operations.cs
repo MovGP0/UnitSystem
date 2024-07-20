@@ -17,7 +17,7 @@ namespace QuantitySystem.Units
             //from this unit get my path to the default unit.
             UnitPathStack path = new UnitPathStack();
 
-            if (this.ReferenceUnit != null) //check that first parent exist.
+            if (ReferenceUnit != null) //check that first parent exist.
             {
                 Unit RefUnit = this;
                 double RefTimesNum = 1;
@@ -65,7 +65,7 @@ namespace QuantitySystem.Units
             {
                 // no referenceUnit so this is SI unit because all my units ends with SI
                 // and it is default unit because all si units have default units with the default prefix.
-                if (this.QuantityType != typeof(DimensionlessQuantity<>))
+                if (QuantityType != typeof(DimensionlessQuantity<>))
                 {
                     path.Push(
                         new UnitPathItem
@@ -218,7 +218,7 @@ namespace QuantitySystem.Units
 
                 #region Validity of Conversion
 
-                if (this.UnitDimension.IsDimensionless == true && unit.UnitDimension.IsDimensionless == true)
+                if (UnitDimension.IsDimensionless == true && unit.UnitDimension.IsDimensionless == true)
                 {
 
                 }
@@ -228,7 +228,7 @@ namespace QuantitySystem.Units
                     //   because I want special dimensionless quantities like angle and solid angle to be treated
                     //   as normal dimensionless values
 
-                    if (this.UnitDimension.Equals(unit.UnitDimension) == false)
+                    if (UnitDimension.Equals(unit.UnitDimension) == false)
                     {
                         throw new UnitsNotDimensionallyEqualException();
                     }
@@ -242,7 +242,7 @@ namespace QuantitySystem.Units
 
                 //test if one of the units are not strongly typed
                 //  because this needs special treatment. ;)
-                if (this.IsStronglyTyped == false || unit.IsStronglyTyped == false)
+                if (IsStronglyTyped == false || unit.IsStronglyTyped == false)
                 {
                     #region Complex units
 
@@ -250,7 +250,7 @@ namespace QuantitySystem.Units
                     // Source unit ==> SI Base Units
                     // target unit ==> SI BaseUnits
 
-                    UnitPathStack SourcePath = this.PathToSIBaseUnits();
+                    UnitPathStack SourcePath = PathToSIBaseUnits();
                     UnitPathStack TargetPath = unit.PathToSIBaseUnits();
 
                     UnitPathStack Tito = new UnitPathStack();
@@ -281,7 +281,7 @@ namespace QuantitySystem.Units
 
                 // 1- Get Path default unit to current unit.
 
-                UnitPathStack FromMeToDefaultUnit = this.PathToDefaultUnit();
+                UnitPathStack FromMeToDefaultUnit = PathToDefaultUnit();
 
                 // 2- Get Path From Default unit to the passed unit.
 
@@ -294,7 +294,7 @@ namespace QuantitySystem.Units
 
                 bool NoBoundaryCross = false;
 
-                if (this.UnitSystem == unit.UnitSystem)
+                if (UnitSystem == unit.UnitSystem)
                 {
                     NoBoundaryCross = true;
                 }
@@ -302,9 +302,9 @@ namespace QuantitySystem.Units
                 {
                     //test for that units parents are the same
 
-                    string ThisParent = this.UnitSystem.IndexOf('.') > -1 ?
-                                        this.UnitSystem.Substring(0, this.UnitSystem.IndexOf('.')) :
-                                        this.UnitSystem;
+                    string ThisParent = UnitSystem.IndexOf('.') > -1 ?
+                                        UnitSystem.Substring(0, UnitSystem.IndexOf('.')) :
+                                        UnitSystem;
 
                     string TargetParent = unit.UnitSystem.IndexOf('.') > -1 ?
                                         unit.UnitSystem.Substring(0, unit.UnitSystem.IndexOf('.')) :
@@ -427,7 +427,7 @@ namespace QuantitySystem.Units
                 //another check if the units are inverted then 
                 // go through all items in path and invert it also
 
-                if (this.IsInverted && unit.IsInverted)
+                if (IsInverted && unit.IsInverted)
                 {
                     foreach (UnitPathItem upi in Total)
                     {
@@ -446,13 +446,13 @@ namespace QuantitySystem.Units
 
         public UnitPathStack PathToSIBaseUnits()
         {
-            if (this.IsStronglyTyped)
+            if (IsStronglyTyped)
             {
                 //get the corresponding unit in the SI System
-                Type InnerUnitType = Unit.GetDefaultSIUnitTypeOf(this.QuantityType);
+                Type InnerUnitType = GetDefaultSIUnitTypeOf(QuantityType);
 
-                if (InnerUnitType == null && this.QuantityType == typeof(Displacement<>))
-                    InnerUnitType = Unit.GetDefaultSIUnitTypeOf(typeof(Length<>));
+                if (InnerUnitType == null && QuantityType == typeof(Displacement<>))
+                    InnerUnitType = GetDefaultSIUnitTypeOf(typeof(Length<>));
 
                 if (InnerUnitType == null)
                 {
@@ -462,11 +462,11 @@ namespace QuantitySystem.Units
                     //  we need to replace the knot unit with mixed unit to be able to do the conversion
 
                     // first we should reach default unit
-                    UnitPathStack path = this.PathToDefaultUnit();
+                    UnitPathStack path = PathToDefaultUnit();
 
                     //then test the system of the current unit if it was other than Metric.SI
                     //    then we must jump to SI otherwise we are already in default SI
-                    if (this.UnitSystem == "Metric.SI" && this.UnitExponent == 1)
+                    if (UnitSystem == "Metric.SI" && UnitExponent == 1)
                     {
                         
                         //because no unit in SI with exponent = 1 don't have direct unit type
@@ -498,10 +498,10 @@ namespace QuantitySystem.Units
                 {
 
                     Unit SIUnit = (Unit)Activator.CreateInstance(InnerUnitType);
-                    SIUnit.UnitExponent = this.UnitExponent;
-                    SIUnit.UnitDimension = this.UnitDimension;
+                    SIUnit.UnitExponent = UnitExponent;
+                    SIUnit.UnitDimension = UnitDimension;
 
-                    UnitPathStack up = this.PathToUnit(SIUnit);
+                    UnitPathStack up = PathToUnit(SIUnit);
 
                     if (!SIUnit.IsBaseUnit)
                     {
@@ -530,7 +530,7 @@ namespace QuantitySystem.Units
             
         
             UnitPathStack Pathes = new UnitPathStack();
-            foreach (Unit un in this.SubUnits)
+            foreach (Unit un in SubUnits)
             {
                 UnitPathStack up = null;
 

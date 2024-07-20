@@ -6,7 +6,7 @@
 
         public TemperatureDescriptor(float exponent):this()
         {
-            this.Exponent = exponent;
+            Exponent = exponent;
         }
 
         #region IDimensionDescriptor<TemperatureDescriptor> Members
@@ -23,21 +23,21 @@
         public TemperatureDescriptor Add(TemperatureDescriptor dimensionDescriptor)
         {
             TemperatureDescriptor desc = new TemperatureDescriptor();
-            desc.Exponent = this.Exponent + dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent + dimensionDescriptor.Exponent;
             return desc;
         }
 
         public TemperatureDescriptor Subtract(TemperatureDescriptor dimensionDescriptor)
         {
             TemperatureDescriptor desc = new TemperatureDescriptor();
-            desc.Exponent = this.Exponent - dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent - dimensionDescriptor.Exponent;
             return desc;
         }
 
         public TemperatureDescriptor Multiply(float exponent)
         {
             TemperatureDescriptor desc = new TemperatureDescriptor();
-            desc.Exponent = this.Exponent * exponent;
+            desc.Exponent = Exponent * exponent;
             return desc;
         }
 

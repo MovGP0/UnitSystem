@@ -71,7 +71,7 @@ namespace QuantitySystem.Quantities
             var qtypes = from qt in internalQuantities
                          select new Tuple<Type, float>(qt.GetType().GetGenericTypeDefinition(), qt.Exponent);
 
-            BaseQuantity.SetInternalQuantities(this.GetType().GetGenericTypeDefinition(), qtypes.ToArray());
+            BaseQuantity.SetInternalQuantities(GetType().GetGenericTypeDefinition(), qtypes.ToArray());
         }
 
         public AnyQuantity<T>[] GetInternalQuantities()
@@ -132,13 +132,13 @@ namespace QuantitySystem.Quantities
                 lq.Add((AnyQuantity<T>)qty.Invert());
             }
 
-            DerivedQuantity<T> dq = (DerivedQuantity<T>)this.Clone();
+            DerivedQuantity<T> dq = (DerivedQuantity<T>)Clone();
 
             dq.SetInternalQuantities(lq.ToArray());
-            dq.Value = AnyQuantity<T>.DivideScalarByGeneric(1.0, dq.Value);
-            if (this.Unit != null)
+            dq.Value = DivideScalarByGeneric(1.0, dq.Value);
+            if (Unit != null)
             {
-                dq.Unit = this.Unit.Invert();
+                dq.Unit = Unit.Invert();
 
             }
 

@@ -44,7 +44,7 @@ namespace QsRoot
                 DownloadExchangeFile();
             }
 
-            using (var rr = new System.IO.StreamReader(TodayChangeRatesFile))
+            using (var rr = new StreamReader(TodayChangeRatesFile))
             {
                 CurrenciesJson = ParticleLexer.Token.ParseText(rr.ReadToEnd());
             }

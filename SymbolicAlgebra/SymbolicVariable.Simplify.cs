@@ -26,7 +26,7 @@ namespace SymbolicAlgebra
                     if (_NegativeSimplifyValue == null)
                     {
                         string value = string.Format("-Sin({0})^2-Cos({0})^2+1", Parameter);
-                        _NegativeSimplifyValue = SymbolicVariable.Parse(value);
+                        _NegativeSimplifyValue = Parse(value);
                     }
                     return _NegativeSimplifyValue;
                 }
@@ -96,7 +96,7 @@ namespace SymbolicAlgebra
             {
                 while (pst.Cos_2_Count > 0 && pst.Sin_2_Count > 0)
                 {
-                    var tttt = SymbolicVariable.Add(SimplifiedResult, pst.NegativeSimplifyValue);
+                    var tttt = Add(SimplifiedResult, pst.NegativeSimplifyValue);
 
                     SimplifiedResult = tttt;
 
@@ -123,7 +123,7 @@ namespace SymbolicAlgebra
 
             var factorized = FactorWithCommonFactor(sv);
 
-            SymbolicVariable total = SymbolicVariable.Zero.Clone();
+            SymbolicVariable total = Zero.Clone();
 
             // facorized expressions contain their terms in the multiplied symbols
             for (int i = 0; i < factorized.TermsCount; i++)
@@ -204,7 +204,7 @@ namespace SymbolicAlgebra
 
             List<SymbolicVariable[]> bo2bo2 = new List<SymbolicVariable[]>();
 
-            bo2bo2.Add(this.GetMultipliedTerms());
+            bo2bo2.Add(GetMultipliedTerms());
 
             if (_AddedTerms != null)
                 foreach (var aterm in _AddedTerms) bo2bo2.Add(aterm.Value.GetMultipliedTerms());
@@ -275,7 +275,7 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public bool CanBeFactored()
         {
-            var map = this.GetCommonFactorsMap();
+            var map = GetCommonFactorsMap();
 
 
             // get all keys  sorted by number of elements
@@ -312,7 +312,7 @@ namespace SymbolicAlgebra
             
             // imagine a*x+a*y  result is a*(x+y)
 
-            SymbolicVariable result = SymbolicVariable.One.Clone();
+            SymbolicVariable result = One.Clone();
             
             var term_key = keys[0];  // the biggest values count   as shown above in the query statement
 
@@ -344,8 +344,8 @@ namespace SymbolicAlgebra
 
             //Common_Factors_Keys  now contains the factors that I will work on it.
 
-            SymbolicVariable common_multipliers = SymbolicVariable.Zero.Clone();
-            SymbolicVariable rest_multipliers = SymbolicVariable.Zero.Clone();
+            SymbolicVariable common_multipliers = Zero.Clone();
+            SymbolicVariable rest_multipliers = Zero.Clone();
 
             for (int i = 0; i < sv.TermsCount; i++)
             {
@@ -355,7 +355,7 @@ namespace SymbolicAlgebra
                     var term = sv[i].Clone();
                     foreach (SymbolicVariable ke in Common_Factors_Keys)
                     {
-                        term = SymbolicVariable.Divide(term, ke);   // divide by factor to remove it from the term.
+                        term = Divide(term, ke);   // divide by factor to remove it from the term.
                         /*
                         if (term.Symbol == ke.Symbol)
                         {
@@ -404,7 +404,7 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public static SymbolicVariable ReOrderNegativeSymbols(SymbolicVariable sVariable, out SymbolicVariable reOrderedVariable)
         {
-            SymbolicVariable denominator = SymbolicVariable.One.Clone();
+            SymbolicVariable denominator = One.Clone();
 
             reOrderedVariable = sVariable.Clone();
 
@@ -415,7 +415,7 @@ namespace SymbolicAlgebra
                 denominator.Symbol = sVariable.Symbol;
                 
                 if (sVariable._SymbolPowerTerm != null) //include the symbol power term also but invert its sign
-                    denominator._SymbolPowerTerm = SymbolicVariable.Multiply(SymbolicVariable.NegativeOne, sVariable._SymbolPowerTerm);
+                    denominator._SymbolPowerTerm = Multiply(NegativeOne, sVariable._SymbolPowerTerm);
 
 
                 // fix the reordered variable by removing this symbol information because it will appear later 
@@ -435,11 +435,11 @@ namespace SymbolicAlgebra
                     var siv = new SymbolicVariable(fs.Key);
                     if (fs.Value.SymbolicVariable != null)
                         siv._SymbolPowerTerm =
-                            SymbolicVariable.Multiply(SymbolicVariable.NegativeOne, fs.Value.SymbolicVariable);
+                            Multiply(NegativeOne, fs.Value.SymbolicVariable);
                     else
                         siv.SymbolPower = Math.Abs(fs.Value.NumericalVariable);
 
-                    denominator = SymbolicVariable.Multiply(denominator, siv);  // accumulate negative power symbols here
+                    denominator = Multiply(denominator, siv);  // accumulate negative power symbols here
 
                     // remove this fused symbol from reOrdered variable
                     reOrderedVariable.FusedSymbols.Remove(fs.Key);
@@ -447,7 +447,7 @@ namespace SymbolicAlgebra
             }
 
 
-            reOrderedVariable.DividedTerm = SymbolicVariable.Multiply(reOrderedVariable.DividedTerm, denominator);
+            reOrderedVariable.DividedTerm = Multiply(reOrderedVariable.DividedTerm, denominator);
 
             return denominator;
         }
@@ -464,12 +464,12 @@ namespace SymbolicAlgebra
 
             var svclone = sv.Clone(true);
             var divisor = svclone._DividedTerm;
-            svclone._DividedTerm = SymbolicVariable.One;
+            svclone._DividedTerm = One;
             for (int i = 0; i < svclone.TermsCount; i++)
             {
                 SymbolicVariable ordered;
-                SymbolicVariable.ReOrderNegativeSymbols(svclone[i], out ordered);
-                ordered._DividedTerm = SymbolicVariable.Multiply(divisor, ordered._DividedTerm);
+                ReOrderNegativeSymbols(svclone[i], out ordered);
+                ordered._DividedTerm = Multiply(divisor, ordered._DividedTerm);
                 SeparatedVariabls.Add(ordered);
             }
 
@@ -506,7 +506,7 @@ namespace SymbolicAlgebra
         {
             var terms = SeparateWithDifferentDenominators(sv);
 
-            SymbolicVariable OrderedVariable = SymbolicVariable.Zero;
+            SymbolicVariable OrderedVariable = Zero;
 
             foreach (var exTerm in terms)
             {
@@ -519,18 +519,18 @@ namespace SymbolicAlgebra
 
                     proTerm._DividedTerm = unif.Numerator;
 
-                    proTerm = SymbolicVariable.Multiply(proTerm, unif.Denominator);
+                    proTerm = Multiply(proTerm, unif.Denominator);
                 }
                 
                 // multipy the OrderedVariable divided term in the target extra term
 
-                var exNumerator = SymbolicVariable.Multiply(OrderedVariable.DividedTerm, proTerm.Numerator);
-                var exDenominator = SymbolicVariable.Multiply(OrderedVariable.DividedTerm, proTerm.Denominator);
+                var exNumerator = Multiply(OrderedVariable.DividedTerm, proTerm.Numerator);
+                var exDenominator = Multiply(OrderedVariable.DividedTerm, proTerm.Denominator);
 
-                var OrdNumerator = SymbolicVariable.Multiply(proTerm.Denominator, OrderedVariable.Numerator);
+                var OrdNumerator = Multiply(proTerm.Denominator, OrderedVariable.Numerator);
 
 
-                OrderedVariable = SymbolicVariable.Add(OrdNumerator, exNumerator);
+                OrderedVariable = Add(OrdNumerator, exNumerator);
 
                 OrderedVariable._DividedTerm = exDenominator;
                 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-namespace Qs.Types
+﻿namespace Qs.Types
 {
     public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
@@ -142,12 +136,12 @@ namespace Qs.Types
         {
             // code taken from: http://local.wasp.uwa.edu.au/~pbourke/miscellaneous/determinant/
             
-            int n = a.RowsCount;
-            QsScalar det = default(QsScalar);
+            var n = a.RowsCount;
+            var det = default(QsScalar);
 
             if (n < 1) throw new QsException("Zero component matrix, are you crazy :)");                // error condition, should never get here
 
-            else if (n == 1)
+            if (n == 1)
             {                 
                 // should not get here
                 det = a[0][0];
@@ -160,14 +154,14 @@ namespace Qs.Types
                 det = a[0][0] * a[1][1] - a[1][0] * a[0][1];// the recursion series
             }
 
-                                                           // recursion continues, solve next sub-matrix
+            // recursion continues, solve next sub-matrix
             else
             {                             // solve the next minor by building a
                 // sub matrix
                 
                 int i, j, j1, j2;
 
-                QsMatrix m = QsMatrix.MakeEmptySquareMatrix(n - 1);
+                var m = MakeEmptySquareMatrix(n - 1);
 
                 // for each column in sub-matrix
                 for (j1 = 0; j1 < n; j1++)
@@ -189,7 +183,7 @@ namespace Qs.Types
                         }
                     }
 
-                    var fn = System.Math.Pow(-1.0, 1.0 + j1 + 1.0);
+                    var fn = Math.Pow(-1.0, 1.0 + j1 + 1.0);
                     var f = fn.ToQuantity().ToScalar();
                     var mr = Determinant(m);
 
@@ -214,12 +208,12 @@ namespace Qs.Types
         {
             get
             {
-                if (this.IsSquared)
+                if (IsSquared)
                 {
                     throw new NotImplementedException();
                 }
-                else
-                    throw new QsException("This matrix is not a squared matrix");
+
+                throw new QsException("This matrix is not a squared matrix");
             }
         }
 
@@ -227,12 +221,12 @@ namespace Qs.Types
         {
             get
             {
-                if (this.IsSquared)
+                if (IsSquared)
                 {
                     throw new NotImplementedException();
                 }
-                else
-                    throw new QsException("This matrix is not a squared matrix");
+
+                throw new QsException("This matrix is not a squared matrix");
             }
         }
     }

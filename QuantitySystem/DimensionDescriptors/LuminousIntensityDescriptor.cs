@@ -5,7 +5,7 @@
 
         public LuminousIntensityDescriptor(float exponent):this()
         {
-            this.Exponent = exponent;
+            Exponent = exponent;
         }
 
 
@@ -24,21 +24,21 @@
         public LuminousIntensityDescriptor Add(LuminousIntensityDescriptor dimensionDescriptor)
         {
             LuminousIntensityDescriptor desc = new LuminousIntensityDescriptor();
-            desc.Exponent  = this.Exponent + dimensionDescriptor.Exponent;
+            desc.Exponent  = Exponent + dimensionDescriptor.Exponent;
             return desc;
         }
 
         public LuminousIntensityDescriptor Subtract(LuminousIntensityDescriptor dimensionDescriptor)
         {
             LuminousIntensityDescriptor desc = new LuminousIntensityDescriptor();
-            desc.Exponent = this.Exponent - dimensionDescriptor.Exponent;
+            desc.Exponent = Exponent - dimensionDescriptor.Exponent;
             return desc;
         }
 
         public LuminousIntensityDescriptor Multiply(float exponent)
         {
             LuminousIntensityDescriptor desc = new LuminousIntensityDescriptor();
-            desc.Exponent = this.Exponent * exponent;
+            desc.Exponent = Exponent * exponent;
             return desc;
         }
 

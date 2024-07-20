@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text.RegularExpressions;
 using ParticleLexer;
 using ParticleLexer.QsTokens;
@@ -11,7 +8,6 @@ using QuantitySystem;
 using QuantitySystem.Quantities.BaseQuantities;
 using QuantitySystem.Units;
 using System.Text;
-using System.Linq.Expressions;
 using QsRoot;
 using System.Globalization;
 
@@ -59,14 +55,12 @@ namespace Qs.Runtime
                                select item.Key;
                     return varo;
                 }
-                else
-                {
-                    throw new Exception("No Scope exist");
-                }
+
+                throw new Exception("No Scope exist");
             }
         }
 
-        private QsScope _InternalScope = new QsScope();
+        private QsScope _InternalScope = new();
 
         public QsScope Scope
         {
@@ -80,17 +74,15 @@ namespace Qs.Runtime
 
         public object GetVariable(string varName)
         {
-            
+
             if (Scope != null)
             {
                 object q;
                 Scope.TryGetValue(varName, out q);
                 return q;
             }
-            else
-            {
-                throw new NotImplementedException("you should be running in DLR");
-            }
+
+            throw new NotImplementedException("you should be running in DLR");
 
         }
 
@@ -102,10 +94,8 @@ namespace Qs.Runtime
                 Scope.TryGetValue(varName, out q);
                 return (AnyQuantity<double>)q;
             }
-            else
-            {
-                throw new Exception("No Scope exist");
-            }
+
+            throw new Exception("No Scope exist");
         }
 
 
@@ -134,19 +124,15 @@ namespace Qs.Runtime
         {
             if (string.IsNullOrEmpty(nameSpace))
             {
-                QsReference qsr = new QsReference(referencedVariableName);
+                var qsr = new QsReference(referencedVariableName);
                 SetVariable(varName, qsr);
                 return qsr;
             }
-            else
-            {
-                //try to set the property in the namespace
+            //try to set the property in the namespace
 
-                QsNamespace ns = QsNamespace.GetNamespace(Scope, nameSpace, true);
+            var ns = QsNamespace.GetNamespace(Scope, nameSpace, true);
 
-                return ns.AddReference(varName, referencedVariableName);
-
-            }            
+            return ns.AddReference(varName, referencedVariableName);
 
         }
 
@@ -166,7 +152,7 @@ namespace Qs.Runtime
             {
                 //try to set the property in the namespace
 
-                QsNamespace ns = QsNamespace.GetNamespace(Scope, nameSpace, true);
+                var ns = QsNamespace.GetNamespace(Scope, nameSpace, true);
 
                 ns.SetValue(varName, varValue);
                 
@@ -177,7 +163,7 @@ namespace Qs.Runtime
         /// <summary>
         /// Stack that reserve the SilentEvaluation during successive calls to the SilentEvaluate
         /// </summary>
-        private Stack<bool> SilentStack = new Stack<bool>();
+        private Stack<bool> SilentStack = new();
 
         /// <summary>
         /// Determine if we should echo the output on the screen or not.
@@ -187,7 +173,7 @@ namespace Qs.Runtime
             get
             {
                 if (SilentStack.Count > 0) return true;
-                else return false;
+                return false;
             }
         }
 
@@ -214,9 +200,9 @@ namespace Qs.Runtime
 
 
 
-        static Regex UnitToUnitRegex = new Regex(UnitToUnitExpression);
-        static Regex UnitRegex = new Regex(UnitExpression);
-        static Regex VariableQuantityRegex = new Regex(VariableQuantityExpression);
+        static Regex UnitToUnitRegex = new(UnitToUnitExpression);
+        static Regex UnitRegex = new(UnitExpression);
+        static Regex VariableQuantityRegex = new(VariableQuantityExpression);
         public object Evaluate(string expr)
         {
 
@@ -235,15 +221,15 @@ namespace Qs.Runtime
 
                 try
                 {
-                    Unit u1 = Unit.Parse(m.Groups[1].Value);
-                    Unit u2 = Unit.Parse(m.Groups[2].Value);
+                    var u1 = Unit.Parse(m.Groups[1].Value);
+                    var u2 = Unit.Parse(m.Groups[2].Value);
                     //PrintUnitInfo(u);
-                    UnitPathStack up = u1.PathToUnit(u2);
+                    var up = u1.PathToUnit(u2);
 
                     Console.ForegroundColor = ForegroundColor;
 
                     Console.WriteLine();
-                    double ConversionFactor = up.ConversionFactor;
+                    var ConversionFactor = up.ConversionFactor;
                     if (u1.IsOverflowed)
                     {
                         var uof = u1.GetUnitOverflow();
@@ -259,11 +245,11 @@ namespace Qs.Runtime
                         ConversionFactor /= uof;
                     }
 
-                    string cf = "    Conversion Factor => " + ConversionFactor.ToString(CultureInfo.InvariantCulture);
+                    var cf = "    Conversion Factor => " + ConversionFactor.ToString(CultureInfo.InvariantCulture);
 
-                    foreach (UnitPathItem upi in up) Console.WriteLine("    -> {0}", upi);
+                    foreach (var upi in up) Console.WriteLine("    -> {0}", upi);
 
-                    string dashes = "    ".PadRight(cf.Length, '-');
+                    var dashes = "    ".PadRight(cf.Length, '-');
 
                     Console.WriteLine(dashes);
                     Console.ForegroundColor = ValuesColor;
@@ -292,7 +278,7 @@ namespace Qs.Runtime
 
                 try
                 {
-                    Unit u = Unit.Parse(m.Groups[1].Value);
+                    var u = Unit.Parse(m.Groups[1].Value);
                     PrintUnitInfo(u);
                     return u;
                 }
@@ -304,7 +290,7 @@ namespace Qs.Runtime
             }
             #endregion
 
-            string varName = string.Empty;
+            var varName = string.Empty;
 
             #region Match variable Assignation with quantity "a=40[Acceleration]"
             //match variable assignation with quantity
@@ -314,7 +300,7 @@ namespace Qs.Runtime
             {
                 //get the variable name
                 varName = m.Groups[1].Value;
-                double varVal = double.Parse(m.Groups[2].Value, CultureInfo.InvariantCulture);
+                var varVal = double.Parse(m.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 QsScalar qty = null;
 
@@ -363,13 +349,13 @@ namespace Qs.Runtime
         /// <returns></returns>
         public static int GetAssignOperatorIndex(string m)
         {
-            int ix = 0;
-            int sl = m.Length;
-            int scs = 0;
-            int bcs = 0;
-            int rcs = 0;
+            var ix = 0;
+            var sl = m.Length;
+            var scs = 0;
+            var bcs = 0;
+            var rcs = 0;
 
-            bool InText = false;
+            var InText = false;
             while (ix < sl)
             {
                 if (m[ix] == '(') scs++;
@@ -408,7 +394,7 @@ namespace Qs.Runtime
         /// <returns></returns>
         public static bool IsSequence(string varName, out Token seq, out string seqNamespace, out int nsidx)
         {
-            bool IsSequence = false;
+            var IsSequence = false;
             seq = null;
             nsidx = 0;
             seqNamespace = string.Empty;
@@ -447,9 +433,9 @@ namespace Qs.Runtime
         internal object ExtraEvaluate(string line)
         {
             // f(x,y,z) = x + y + (z/2.04 * 32<kg>)
-            QsFunction func = QsFunction.ParseFunction(this, line);
+            var func = QsFunction.ParseFunction(this, line);
 
-            if (!System.Object.ReferenceEquals(func, null))
+            if (!ReferenceEquals(func, null))
             {
                 //store the expression for later use 
                 StoreFunction(func);
@@ -458,7 +444,7 @@ namespace Qs.Runtime
 
 
             //try to get sequence.
-            QsSequence seqo = QsSequence.ParseSequence(this, line);
+            var seqo = QsSequence.ParseSequence(this, line);
             if (seqo != null)
             {
                 //store the expression for later use 
@@ -469,9 +455,9 @@ namespace Qs.Runtime
             
             #region expression evaluation with assignation or no assignation
 
-            string varName = string.Empty;
+            var varName = string.Empty;
 
-            int AssignOperatorIndex = GetAssignOperatorIndex(line);
+            var AssignOperatorIndex = GetAssignOperatorIndex(line);
 
             if (AssignOperatorIndex > 0)  //assign operator should always have something behind it.
             {
@@ -511,7 +497,7 @@ namespace Qs.Runtime
                     Token seq;
                     int nsidx;
                     string seqNamespace;
-                    bool IsSequence = QsEvaluator.IsSequence(varName, out seq, out seqNamespace, out nsidx);
+                    var IsSequence = QsEvaluator.IsSequence(varName, out seq, out seqNamespace, out nsidx);
                     if (IsSequence)
                     {
                         #region Sequence element operation
@@ -524,8 +510,8 @@ namespace Qs.Runtime
                                 #region indexed sequence.
                                 //a[n:1] = n!    the form that we expect.
                                 string[] indexText = seq[nsidx + 1].TokenValue.Trim('[', ']').Split(':');
-                                int n = int.Parse(indexText[1]);
-                                string indexName = indexText[0];
+                                var n = int.Parse(indexText[1]);
+                                var indexName = indexText[0];
 
                                 if (seq.Count == nsidx + 3)
                                 {
@@ -543,16 +529,16 @@ namespace Qs.Runtime
                                         throw new QsException("Expected Parenthesis for sequence element assignation");
                                     }
 
-                                    string sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, parameters.Length);
+                                    var sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, parameters.Length);
 
-                                    QsSequence sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
+                                    var sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
 
                                     //replace the index name used with the real index of the sequence.
-                                    string evline = line.Replace(indexName, sq.SequenceIndexName);
+                                    var evline = line.Replace(indexName, sq.SequenceIndexName);
 
 
                                     //replace the parameter names with parameters with the real parameter names of sequence
-                                    for (int i = 0; i < parameters.Length; i++)
+                                    for (var i = 0; i < parameters.Length; i++)
                                     {
                                         evline = evline.Replace(parameters[i], sq.Parameters[i].Name);
                                     }
@@ -563,11 +549,11 @@ namespace Qs.Runtime
                                 else
                                 {
                                     #region Parameterless indexed Sequence
-                                    string sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, 0);
-                                    QsSequence sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
+                                    var sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, 0);
+                                    var sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
 
                                     //replace the index name used with the real index of the sequence.
-                                    string evline = line.Replace(indexName, sq.SequenceIndexName);
+                                    var evline = line.Replace(indexName, sq.SequenceIndexName);
 
                                     sq[n] = QsSequenceElement.Parse(evline, this, sq);
                                     #endregion
@@ -581,7 +567,7 @@ namespace Qs.Runtime
 
                                 //match for a[1]
 
-                                string SequenceParameter = seq[nsidx + 1].TokenValue.Trim('[', ']');
+                                var SequenceParameter = seq[nsidx + 1].TokenValue.Trim('[', ']');
                                 int n;
                                 if (int.TryParse(SequenceParameter, out n))
                                 {
@@ -601,14 +587,14 @@ namespace Qs.Runtime
                                             throw new QsException("Expected Parenthesis for sequence element assignation");
                                         }
 
-                                        string sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, parameters.Length);
+                                        var sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, parameters.Length);
 
-                                        QsSequence sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
+                                        var sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
 
-                                        string evline = line;
+                                        var evline = line;
 
                                         //replace the parameter names with parameters with the real parameter names of sequence
-                                        for (int i = 0; i < parameters.Length; i++)
+                                        for (var i = 0; i < parameters.Length; i++)
                                         {
                                             evline = evline.Replace(parameters[i], sq.Parameters[i].Name);
                                         }
@@ -624,21 +610,21 @@ namespace Qs.Runtime
                                         // the judgment here is to get the object 
                                         // if it was a QsObject then we deal with its indexer.
 
-                                        string oname = seq[nsidx + 0].TokenValue;
+                                        var oname = seq[nsidx + 0].TokenValue;
 
-                                        var _obj = QsEvaluator.GetScopeValueOrNull(Scope, seqNamespace, oname) as QsObject;
+                                        var _obj = GetScopeValueOrNull(Scope, seqNamespace, oname) as QsObject;
 
                                         if (_obj == null)
                                         {
-                                            string sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, 0);
+                                            var sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, 0);
 
-                                            QsSequence sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
+                                            var sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
 
                                             sq[n] = QsSequenceElement.Parse(line, this, sq);
                                         }
                                         else
                                         {
-                                            QsVar qv = new QsVar(this, line);
+                                            var qv = new QsVar(this, line);
 
                                             _obj.SetIndexedItem(
                                                 new QsParameter[] 
@@ -658,9 +644,9 @@ namespace Qs.Runtime
                                     SequenceParameter = SequenceParameter.Trim('"');  // remove 
                                     // get the name of this variable
                                     
-                                    string oname = seq[nsidx + 0].TokenValue;
+                                    var oname = seq[nsidx + 0].TokenValue;
                                     var oinstance = GetVariable(oname) as QsValue;
-                                    QsVar qv = new QsVar(this, line);
+                                    var qv = new QsVar(this, line);
 
                                     oinstance.SetIndexedItem(
                                         new QsParameter[] { QsParameter.MakeParameter(new QsText(SequenceParameter), SequenceParameter) }
@@ -674,27 +660,25 @@ namespace Qs.Runtime
 
                             return null;
                         }
-                        else
-                        {
-                            // not sequence.
-                            //do nothing
-                            return null;
-                        }
+
+                        // not sequence.
+                        //do nothing
+                        return null;
                         #endregion
                     }
-                    else
+
                     {
                         
                         #region Normal Variable
 
                         //Normal Variable.
                         // get the after assign expression value
-                        QsVar qv = new QsVar(this, line);
+                        var qv = new QsVar(this, line);
 
                         if (varName.Contains(":"))
                         {
                             #region namespace in variable
-                            Token vnToken = Token.ParseText(varName);
+                            var vnToken = Token.ParseText(varName);
                             vnToken = vnToken.MergeTokens<MultipleSpaceToken>();
                             vnToken = vnToken.RemoveSpaceTokens();
                             vnToken = vnToken.MergeTokens<WordToken>();
@@ -715,79 +699,74 @@ namespace Qs.Runtime
                                     StoreFunction(qf);
                                     return qvResult;
                                 }
+
+                                if (vnToken[vnToken.Count - 1].TokenValue.StartsWith("@") && qvResult.GetType() == typeof(QsScalar))
+                                {
+                                    var fsc = (QsScalar)qvResult;
+                                    if (fsc.ScalarType == ScalarTypes.FunctionQuantity)
+                                    {
+                                        // @f = @function which means we should assign f to qsfunction f
+                                            
+                                        var qf = (QsFunction)((QsScalar)qvResult).FunctionQuantity.Value.Clone();
+
+                                        qf.FunctionNamespace = vnToken[0][0].TokenValue;
+                                        qf.FunctionName = vnToken[1][1].TokenValue;
+
+                                        StoreFunction(qf);
+                                        return qf;
+                                    }
+
+                                    if (fsc.ScalarType == ScalarTypes.SymbolicQuantity)
+                                    {
+                                        var fh = "_(";
+                                        foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols) fh += p + ", ";
+                                        fh = fh.TrimEnd(',', ' ') + ") = ";
+
+                                        var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value);
+
+                                        qf.FunctionNamespace = vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':');
+                                        qf.FunctionName = vnToken[vnToken.Count - 1].TokenValue.TrimStart('@');
+
+                                        StoreFunction(qf);
+                                        return qf;
+                                    }
+                                    throw new QsException("Cannot store scalar " + fsc.ScalarType + " into function variable");
+                                }
+
+                                if (vnToken[vnToken.Count - 2].TokenValue.StartsWith("&") && qvResult is QsValue)
+                                {
+                                    // store the reference of the value to the same name here
+                                    //  &b = a   it means that b and a will point to the same variable.
+                                    var existValue = GetVariable(line.Trim());
+                                    var ns = vnToken.TrimTokens(0,2).TokenValue.TrimEnd(':');
+                                    var nm = vnToken[vnToken.Count - 1].TokenValue.TrimStart('&');
+                                    var q = AddReference(ns, nm, line.Trim());
+                                    PrintQuantity(q);
+                                    return q;
+                                }
                                 else
                                 {
-                                    if (vnToken[vnToken.Count - 1].TokenValue.StartsWith("@") && qvResult.GetType() == typeof(QsScalar))
-                                    {
-                                        var fsc = (QsScalar)qvResult;
-                                        if (fsc.ScalarType == ScalarTypes.FunctionQuantity)
-                                        {
-                                            // @f = @function which means we should assign f to qsfunction f
-                                            
-                                            var qf = (QsFunction)((QsScalar)qvResult).FunctionQuantity.Value.Clone();
-
-                                            qf.FunctionNamespace = vnToken[0][0].TokenValue;
-                                            qf.FunctionName = vnToken[1][1].TokenValue;
-
-                                            StoreFunction(qf);
-                                            return qf;
-                                        }
-                                        else if (fsc.ScalarType == ScalarTypes.SymbolicQuantity)
-                                        {
-                                            var fh = "_(";
-                                            foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols) fh += p + ", ";
-                                            fh = fh.TrimEnd(',', ' ') + ") = ";
-
-                                            var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value.ToString());
-
-                                            qf.FunctionNamespace = vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':');
-                                            qf.FunctionName = vnToken[vnToken.Count - 1].TokenValue.TrimStart('@');
-
-                                            StoreFunction(qf);
-                                            return qf;
-                                        }
-                                        else
-                                        {
-                                            throw new QsException("Cannot store scalar " + fsc.ScalarType.ToString() + " into function variable");
-                                        }
-                                    }
-                                    else if (vnToken[vnToken.Count - 2].TokenValue.StartsWith("&") && qvResult is QsValue)
-                                    {
-                                        // store the reference of the value to the same name here
-                                        //  &b = a   it means that b and a will point to the same variable.
-                                        var existValue = GetVariable(line.Trim());
-                                        var ns = vnToken.TrimTokens(0,2).TokenValue.TrimEnd(':');
-                                        var nm = vnToken[vnToken.Count - 1].TokenValue.TrimStart('&');
-                                        var q = AddReference(ns, nm, line.Trim());
-                                        PrintQuantity(q);
-                                        return q;
-                                    }
-                                    else
-                                    {
                                         
-                                        SetVariable(
-                                            vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
-                                            , vnToken[vnToken.Count - 1].TokenValue
-                                            , qvResult
-                                            );
+                                    SetVariable(
+                                        vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
+                                        , vnToken[vnToken.Count - 1].TokenValue
+                                        , qvResult
+                                    );
 
                                        
-                                        var q = GetScopeQsValue(this.Scope
-                                            , vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
-                                            , vnToken[vnToken.Count - 1].TokenValue
-                                            );
-                                        PrintQuantity(q);
-                                        return q;
-                                    }
+                                    var q = GetScopeQsValue(Scope
+                                        , vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
+                                        , vnToken[vnToken.Count - 1].TokenValue
+                                    );
+                                    PrintQuantity(q);
+                                    return q;
                                 }
                             }
-                            else
-                            {
-                                throw new QsInvalidInputException();
-                            }
+
+                            throw new QsInvalidInputException();
                             #endregion
                         }
-                        else
+
                         {
                             #region bare variable name
                             //assign the variable
@@ -799,290 +778,279 @@ namespace Qs.Runtime
                                 StoreFunction(qf);
                                 return qvResult;
                             }
-                            else
+
+                            if (varName.StartsWith("@") && qvResult.GetType() == typeof(QsScalar))
                             {
-                                if (varName.StartsWith("@") && qvResult.GetType() == typeof(QsScalar))
+                                #region Variable starts with @ and the result is scalar function or symbolic quantity
+                                var fsc = (QsScalar)qvResult;
+                                varName = varName.Substring(1); // remove @
+                                if (fsc.ScalarType == ScalarTypes.FunctionQuantity)
                                 {
-                                    #region Variable starts with @ and the result is scalar function or symbolic quantity
-                                    var fsc = (QsScalar)qvResult;
-                                    varName = varName.Substring(1); // remove @
-                                    if (fsc.ScalarType == ScalarTypes.FunctionQuantity)
-                                    {
-                                        // @f = @function which means we should assign f to qsfunction f
+                                    // @f = @function which means we should assign f to qsfunction f
 
-                                        var qf = (QsFunction)((QsScalar)qvResult).FunctionQuantity.Value.Clone();
-                                        qf.FunctionName = varName;
-                                        StoreFunction(qf);
-                                        return qf;
-                                    }
-                                    else if (fsc.ScalarType == ScalarTypes.SymbolicQuantity)
-                                    {
-                                        var fh = "_(";
-                                        foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols) fh += p + ", ";
-                                        fh = fh.TrimEnd(',', ' ') + ") = ";
-
-                                        var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value.ToString());
-                                        qf.FunctionName = varName;
-
-                                        StoreFunction(qf);
-                                        return qf;
-                                    }
-                                    else
-                                    {
-                                        
-                                        throw new QsException("Cannot store scalar " + fsc.ScalarType.ToString() + " into function variable");
-
-                                    }
-                                    #endregion
+                                    var qf = (QsFunction)((QsScalar)qvResult).FunctionQuantity.Value.Clone();
+                                    qf.FunctionName = varName;
+                                    StoreFunction(qf);
+                                    return qf;
                                 }
-                                else if(varName.StartsWith("@") && (qvResult.GetType()==typeof(QsVector) || qvResult.GetType()==typeof(QsMatrix)||qvResult.GetType()==typeof(QsTensor)))
+
+                                if (fsc.ScalarType == ScalarTypes.SymbolicQuantity)
                                 {
-                                    #region Variable starts with @ and result is complex qs type vector, matrix, or tensor to be converted into the corresponding field i.e. vector field or matrix field
-                                    varName = varName.Substring(1); // remove @
+                                    var fh = "_(";
+                                    foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols) fh += p + ", ";
+                                    fh = fh.TrimEnd(',', ' ') + ") = ";
 
-                                    // vector or matrix or tensor
-                                    // the parsing to function should know the symbolic variables in the expression
-                                    //  and get the parameters required arranged by alphabet ofcourse
+                                    var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value);
+                                    qf.FunctionName = varName;
 
-                                    QsScalar[] AllComponents = null;
-                                    Type qvType = qvResult.GetType();
+                                    StoreFunction(qf);
+                                    return qf;
+                                }
+                                throw new QsException("Cannot store scalar " + fsc.ScalarType + " into function variable");
 
-                                    if(qvType == typeof(QsVector))
-                                        AllComponents = ((QsVector)qvResult).ToArray();
-                                    if(qvType == typeof(QsMatrix))
-                                        AllComponents = ((QsMatrix)qvResult).ToArray();
+                                #endregion
+                            }
 
-                                     if(qvType == typeof(QsTensor))
-                                        throw new QsException("Tensor parsing to function is not supported yet");
+                            if(varName.StartsWith("@") && (qvResult.GetType()==typeof(QsVector) || qvResult.GetType()==typeof(QsMatrix)||qvResult.GetType()==typeof(QsTensor)))
+                            {
+                                #region Variable starts with @ and result is complex qs type vector, matrix, or tensor to be converted into the corresponding field i.e. vector field or matrix field
+                                varName = varName.Substring(1); // remove @
+
+                                // vector or matrix or tensor
+                                // the parsing to function should know the symbolic variables in the expression
+                                //  and get the parameters required arranged by alphabet ofcourse
+
+                                QsScalar[] AllComponents = null;
+                                var qvType = qvResult.GetType();
+
+                                if(qvType == typeof(QsVector))
+                                    AllComponents = ((QsVector)qvResult).ToArray();
+                                if(qvType == typeof(QsMatrix))
+                                    AllComponents = ((QsMatrix)qvResult).ToArray();
+
+                                if(qvType == typeof(QsTensor))
+                                    throw new QsException("Tensor parsing to function is not supported yet");
 
   
-                                    List<string> vparameters = new List<string>();
-                                    foreach(var c in AllComponents)
-                                        if(c.ScalarType ==  ScalarTypes.SymbolicQuantity)
-                                        {
-                                            foreach (var sym in c.SymbolicQuantity.Value.InvolvedSymbols)
-                                            {
-                                                if (!vparameters.Contains(sym)) vparameters.Add(sym);
-                                            }
-                                        }
-
-
-                                    var fh = "_(";
-                                        foreach (var p in vparameters) fh += p + ", ";
-                                        fh = fh.TrimEnd(',', ' ') + ") = ";
-                                    if(qvType == typeof(QsVector))
+                                List<string> vparameters = new();
+                                foreach(var c in AllComponents)
+                                    if(c.ScalarType ==  ScalarTypes.SymbolicQuantity)
                                     {
-                                        StringBuilder fhb = new StringBuilder();
-                                        fhb.Append('{');
-                                        foreach(var c in AllComponents)
+                                        foreach (var sym in c.SymbolicQuantity.Value.InvolvedSymbols)
+                                        {
+                                            if (!vparameters.Contains(sym)) vparameters.Add(sym);
+                                        }
+                                    }
+
+
+                                var fh = "_(";
+                                foreach (var p in vparameters) fh += p + ", ";
+                                fh = fh.TrimEnd(',', ' ') + ") = ";
+                                if(qvType == typeof(QsVector))
+                                {
+                                    var fhb = new StringBuilder();
+                                    fhb.Append('{');
+                                    foreach(var c in AllComponents)
+                                    {
+                                        fhb.Append(c.ToParsableValuedString());
+                                        fhb.Append(' ');
+                                    }
+                                    fhb.Append('}');
+
+                                    var qf = QsFunction.ParseFunction(this, fh + fhb);
+                                    qf.FunctionName = varName;
+
+                                    StoreFunction(qf);
+                                    return qf;
+                                }
+
+                                if (qvType == typeof(QsMatrix))
+                                {
+                                    var m = (QsMatrix)qvResult;
+                                    var fhb = new StringBuilder();
+                                    fhb.Append('[');
+                                    foreach (var vv in m)
+                                    {
+                                        fhb.Append(' ');
+                                        foreach (var c in vv)
                                         {
                                             fhb.Append(c.ToParsableValuedString());
                                             fhb.Append(' ');
                                         }
-                                        fhb.Append('}');
-
-                                        var qf = QsFunction.ParseFunction(this, fh + fhb.ToString());
-                                        qf.FunctionName = varName;
-
-                                        StoreFunction(qf);
-                                        return qf;
+                                        fhb.Append("; ");
                                     }
-                                    else if (qvType == typeof(QsMatrix))
+
+                                    var all = fh + fhb.ToString().Trim(';', ' ') + "]";
+
+
+                                    var qf = QsFunction.ParseFunction(this, all);
+                                    qf.FunctionName = varName;
+
+                                    StoreFunction(qf);
+                                    return qf;
+
+                                }
+                                throw new QsException("QsType " + qvType.Name + " is not supported to be converted into function");
+
+                                #endregion
+                            }
+                            if (varName.StartsWith("&") && qvResult is QsValue)
+                            {
+                                var existValue = GetVariable(line.Trim());
+                                var q = AddReference(string.Empty, varName.Substring(1), line.Trim());
+                                PrintQuantity(q);
+                                return q;
+                            }
+                            var varNameTokens = QsVar.TokenzieExpression(varName);
+                            var v_index = 0;
+                            QsValue parent_object = null;
+                            PropertyInfo ParentPropertyInfo = null;
+                            int? ParentPropertyInfoIndexer = null;
+                            Dictionary<PropertyInfo, bool> PropertyInfoIndexed = new();
+
+                            while (v_index < varNameTokens.Count && varNameTokens.Count > 1)
+                            {
+                                if (varNameTokens[v_index].TokenClassType == typeof(WordToken))
+                                {
+                                    // set parent_object value
+                                    if (v_index == 0)
                                     {
-                                        QsMatrix m = (QsMatrix)qvResult;
-                                        StringBuilder fhb = new StringBuilder();
-                                        fhb.Append('[');
-                                        foreach (var vv in m)
-                                        {
-                                            fhb.Append(' ');
-                                            foreach (var c in vv)
-                                            {
-                                                fhb.Append(c.ToParsableValuedString());
-                                                fhb.Append(' ');
-                                            }
-                                            fhb.Append("; ");
-                                        }
-
-                                        var all = fh + fhb.ToString().Trim(';', ' ') + "]";
-
-
-                                        var qf = QsFunction.ParseFunction(this, all);
-                                        qf.FunctionName = varName;
-
-                                        StoreFunction(qf);
-                                        return qf;
-
+                                        parent_object = GetScopeQsValue(Scope, "", varNameTokens[v_index].TokenValue);
                                     }
                                     else
                                     {
-                                        throw new QsException("QsType " + qvType.Name + " is not supported to be converted into function");
+                                        // get property from parent_object
+                                        if (varNameTokens[v_index - 1].TokenClassType == typeof(PointerOperatorToken))
+                                        {
+                                            // we are accessing property here
+                                            var parent = (QsObject)parent_object;
+                                            if (ParentPropertyInfo == null)
+                                            {
+                                                ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
+                                            }
+                                            else
+                                            {
+                                                if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
+                                                {
+                                                    parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
+                                                    parent = (QsObject)parent_object;
+                                                    ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
+                                                }
+                                                else
+                                                {
+                                                    // we had previous unresolved property info
+                                                    // so we get it as an object 
+                                                    //   set this object as the parent
+                                                    //  then get the sub property metadata again.
+                                                    parent_object = parent.GetProperty(ParentPropertyInfo.Name);
+                                                    parent = (QsObject)parent_object;
+                                                    ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // previous operator not known
+                                            throw new NotImplementedException("Operator " + varNameTokens[v_index - 1].TokenValue + " not known");
+                                        }
                                     }
-                                    #endregion
                                 }
-                                else if (varName.StartsWith("&") && qvResult is QsValue)
+                                else if (varNameTokens[v_index].TokenClassType == typeof(SequenceCallToken))
                                 {
-                                    var existValue = GetVariable(line.Trim());
-                                    var q = AddReference(string.Empty, varName.Substring(1), line.Trim());
+                                    if (v_index == 0)
+                                    {
+                                        // variable name beginning with indexer :  G[0] for example is handled before
+                                        throw new NotImplementedException("Review the code above ,.., this case of sequence calling at the beginning of expression is handled there");
+                                    }
+
+                                    if (varNameTokens[v_index - 1].TokenClassType == typeof(PointerOperatorToken))
+                                    {
+                                        // then we are referring to object with a property in its properties that is an array.
+                                        // we need to get this property
+                                        var parent = (QsObject)parent_object;
+                                        if (ParentPropertyInfo == null)
+                                        {
+                                            ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
+                                            PropertyInfoIndexed[ParentPropertyInfo] = true;
+                                        }
+                                        else
+                                        {
+                                            // if the previous parent property has an indexers then we need to get it as an index
+                                            // if not then it was a normal variable
+                                            if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
+                                            {
+                                                parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
+                                                parent = (QsObject)parent_object;
+                                                ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
+                                            }
+                                            else
+                                            {
+                                                // get the previous property and make it parent
+                                                parent_object = parent.GetProperty(ParentPropertyInfo.Name);
+                                                parent = (QsObject)parent_object;
+                                                ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
+                                            }
+
+                                        }
+
+                                        // and get the indexing number
+                                        ParentPropertyInfoIndexer = int.Parse(varNameTokens[v_index][1][1].TokenValue);
+                                    }
+                                }
+
+                                //nothing
+                                v_index++;
+                            }
+
+                            if (parent_object!=null && ParentPropertyInfo!=null)
+                            {
+                                if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
+                                {
+                                    // set the value to the indexed item.
+                                    var parent = (QsObject)parent_object;
+                                    ParentPropertyInfo.SetValue(parent.ThisObject, qvResult, new object[] { ParentPropertyInfoIndexer.Value });
+                                    var q = parent.GetProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
+                                    PrintQuantity(q);
+                                    return q;
+                                }
+
+                                if (PropertyInfoIndexed.ContainsKey(ParentPropertyInfo) && PropertyInfoIndexed[ParentPropertyInfo]) // indexer in object
+                                {
+                                    // we are dealing with indexer
+                                    // indexer should be called by the index
+                                            
+                                    var parent = (QsObject)parent_object;
+
+                                    var InsidePropertyAsObject = ParentPropertyInfo.GetValue(parent.ThisObject, null);
+                                    var InsidePropertyObjectType = InsidePropertyAsObject.GetType();
+                                    var IndexerProperty = InsidePropertyObjectType.GetProperty("Item");
+
+                                    var nativeValue = Root.QsToNativeConvert(IndexerProperty.PropertyType, qvResult);
+                                    IndexerProperty.SetValue(InsidePropertyAsObject
+                                        , nativeValue
+                                        , new object[] { ParentPropertyInfoIndexer.Value }
+                                    );
+
+                                    var q = IndexerProperty.GetValue(InsidePropertyAsObject, new object[] { ParentPropertyInfoIndexer.Value });
                                     PrintQuantity(q);
                                     return q;
                                 }
                                 else
                                 {
-                                    var varNameTokens = QsVar.TokenzieExpression(varName);
-                                    int v_index = 0;
-                                    QsValue parent_object = null;
-                                    PropertyInfo ParentPropertyInfo = null;
-                                    int? ParentPropertyInfoIndexer = null;
-                                    Dictionary<PropertyInfo, bool> PropertyInfoIndexed = new Dictionary<PropertyInfo, bool>();
-
-                                    while (v_index < varNameTokens.Count && varNameTokens.Count > 1)
-                                    {
-                                        if (varNameTokens[v_index].TokenClassType == typeof(WordToken))
-                                        {
-                                            // set parent_object value
-                                            if (v_index == 0)
-                                            {
-                                                parent_object = GetScopeQsValue(this.Scope, "", varNameTokens[v_index].TokenValue);
-                                            }
-                                            else
-                                            {
-                                                // get property from parent_object
-                                                if (varNameTokens[v_index - 1].TokenClassType == typeof(PointerOperatorToken))
-                                                {
-                                                    // we are accessing property here
-                                                    QsObject parent = (QsObject)parent_object;
-                                                    if (ParentPropertyInfo == null)
-                                                    {
-                                                        ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
-                                                    }
-                                                    else
-                                                    {
-                                                        if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
-                                                        {
-                                                            parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
-                                                            parent = (QsObject)parent_object;
-                                                            ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
-                                                        }
-                                                        else
-                                                        {
-                                                            // we had previous unresolved property info
-                                                            // so we get it as an object 
-                                                            //   set this object as the parent
-                                                            //  then get the sub property metadata again.
-                                                            parent_object = parent.GetProperty(ParentPropertyInfo.Name);
-                                                            parent = (QsObject)parent_object;
-                                                            ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    // previous operator not known
-                                                    throw new NotImplementedException("Operator " + varNameTokens[v_index - 1].TokenValue + " not known");
-                                                }
-                                            }
-                                        }
-                                        else if (varNameTokens[v_index].TokenClassType == typeof(SequenceCallToken))
-                                        {
-                                            if (v_index == 0)
-                                            {
-                                                // variable name beginning with indexer :  G[0] for example is handled before
-                                                throw new NotImplementedException("Review the code above ,.., this case of sequence calling at the beginning of expression is handled there");
-                                            }
-                                            else
-                                            {
-                                                if (varNameTokens[v_index - 1].TokenClassType == typeof(PointerOperatorToken))
-                                                {
-                                                    // then we are referring to object with a property in its properties that is an array.
-                                                    // we need to get this property
-                                                    QsObject parent = (QsObject)parent_object;
-                                                    if (ParentPropertyInfo == null)
-                                                    {
-                                                        ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
-                                                        PropertyInfoIndexed[ParentPropertyInfo] = true;
-                                                    }
-                                                    else
-                                                    {
-                                                        // if the previous parent property has an indexers then we need to get it as an index
-                                                        // if not then it was a normal variable
-                                                        if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
-                                                        {
-                                                            parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
-                                                            parent = (QsObject)parent_object;
-                                                            ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
-                                                        }
-                                                        else
-                                                        {
-                                                            // get the previous property and make it parent
-                                                            parent_object = parent.GetProperty(ParentPropertyInfo.Name);
-                                                            parent = (QsObject)parent_object;
-                                                            ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
-                                                        }
-
-                                                    }
-
-                                                    // and get the indexing number
-                                                    ParentPropertyInfoIndexer = int.Parse(varNameTokens[v_index][1][1].TokenValue);
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            //nothing
-                                        }
-                                        v_index++;
-                                    }
-
-                                    if (parent_object!=null && ParentPropertyInfo!=null)
-                                    {
-                                        if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
-                                        {
-                                            // set the value to the indexed item.
-                                            QsObject parent = (QsObject)parent_object;
-                                            ParentPropertyInfo.SetValue(parent.ThisObject, qvResult, new object[] { ParentPropertyInfoIndexer.Value });
-                                            var q = parent.GetProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
-                                            PrintQuantity(q);
-                                            return q;
-                                        }
-                                        else if (PropertyInfoIndexed.ContainsKey(ParentPropertyInfo) && PropertyInfoIndexed[ParentPropertyInfo]) // indexer in object
-                                        {
-                                            // we are dealing with indexer
-                                            // indexer should be called by the index
-                                            
-                                            QsObject parent = (QsObject)parent_object;
-
-                                            var InsidePropertyAsObject = ParentPropertyInfo.GetValue(parent.ThisObject, null);
-                                            Type InsidePropertyObjectType = InsidePropertyAsObject.GetType();
-                                            PropertyInfo IndexerProperty = InsidePropertyObjectType.GetProperty("Item");
-
-                                            var nativeValue = Root.QsToNativeConvert(IndexerProperty.PropertyType, qvResult);
-                                            IndexerProperty.SetValue(InsidePropertyAsObject
-                                                , nativeValue
-                                                , new object[] { ParentPropertyInfoIndexer.Value }
-                                                );
-
-                                            var q = IndexerProperty.GetValue(InsidePropertyAsObject, new object[] { ParentPropertyInfoIndexer.Value });
-                                            PrintQuantity(q);
-                                            return q;
-                                        }
-                                        else
-                                        {
-                                            QsObject parent = (QsObject)parent_object;
-                                            parent.SetProperty(ParentPropertyInfo.Name, qvResult);
-                                            var q = parent.GetProperty(ParentPropertyInfo.Name);
-                                            PrintQuantity(q);
-                                            return q;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        // bare variable name without enclosed properties
-                                        SetVariable(varName, qvResult);
-                                        var q = GetScopeQsValue(this.Scope, "", varName);
-                                        PrintQuantity(q);
-                                        return q;
-                                    }
+                                    var parent = (QsObject)parent_object;
+                                    parent.SetProperty(ParentPropertyInfo.Name, qvResult);
+                                    var q = parent.GetProperty(ParentPropertyInfo.Name);
+                                    PrintQuantity(q);
+                                    return q;
                                 }
+                            }
+
+                            {
+                                // bare variable name without enclosed properties
+                                SetVariable(varName, qvResult);
+                                var q = GetScopeQsValue(Scope, "", varName);
+                                PrintQuantity(q);
+                                return q;
                             }
                             #endregion
                         }
@@ -1092,12 +1060,12 @@ namespace Qs.Runtime
 
                     #endregion
                 }
-                else
+
                 {
                     // there is no assignation here  
                     // the code goes here when we don't find '=' equal sign.
 
-                    QsVar qv = new QsVar(this, line);
+                    var qv = new QsVar(this, line);
                     //only print the result.
                     var q = qv.Execute();
                     if (q != null) PrintQuantity(q);
@@ -1135,10 +1103,8 @@ namespace Qs.Runtime
                 {
                     throw new QsException("Unhandled", e.InnerException);
                 }
-                else
-                {
-                    throw new QsException("Unhandled", e);
-                }
+
+                throw new QsException("Unhandled", e);
             }
             #endregion
 
@@ -1155,7 +1121,7 @@ namespace Qs.Runtime
 #else
             Console.ForegroundColor = HelpColor;
 
-            Console.WriteLine("    Unit:        {0}", unit.ToString());
+            Console.WriteLine("    Unit:        {0}", unit);
             Console.WriteLine("    Quantity:    {0}", unit.QuantityTypeName);
             Console.WriteLine("    Dimension:   {0}", unit.UnitDimension);
             Console.WriteLine("    Unit System: {0}", unit.UnitSystem);
@@ -1177,7 +1143,7 @@ namespace Qs.Runtime
             {
                 Console.ForegroundColor = ValuesColor;
 
-                Console.WriteLine("    {0}", qty.ToString());
+                Console.WriteLine("    {0}", qty);
 
                 Console.ForegroundColor = ForegroundColor;
             }
@@ -1204,23 +1170,19 @@ namespace Qs.Runtime
                 scope.TryGetValue(name, out q);
                 return q;
             }
-            else
+
+            object o;
+
+            scope.TryGetValue(nameSpace, out o);
+
+            var ns = o as QsNamespace;
+
+            if (ns != null)
             {
-                object o;
-
-                scope.TryGetValue(nameSpace, out o);
-
-                QsNamespace ns = o as QsNamespace;
-
-                if (ns != null)
-                {
-                    return ns.GetValueOrNull(name);
-                }
-                else
-                {
-                    return null;
-                }
+                return ns.GetValueOrNull(name);
             }
+
+            return null;
         }
 
         /// <summary>
@@ -1243,36 +1205,30 @@ namespace Qs.Runtime
                 {
                     return (QsValue)q;
                 }
-                else
+
+                // look for enum in the QsRoot namespace
+                var t = Type.GetType("QsRoot." + name);
+                if (t != null)
                 {
-                    // look for enum in the QsRoot namespace
-                    var t = Type.GetType("QsRoot." + name);
-                    if (t != null)
+                    if (t.IsEnum)
                     {
-                        if (t.IsEnum)
-                        {
-                            // convert enum into Flowing Tuple and return it.
+                        // convert enum into Flowing Tuple and return it.
                             
-                            return QsRoot.Root.NativeToQsConvert(t);
-                        }
+                        return Root.NativeToQsConvert(t);
                     }
-
-                    throw new QsVariableNotFoundException("Variable '" + name + "' Not Found.")
-                        {
-                            Namespace = qsNamespace,
-                            Variable = name
-                        };
                 }
-            }
-            else
-            {
-                //get the variable from the name space
 
-                var module = QsNamespace.GetNamespace(scope, qsNamespace);
-
-                return (QsValue)module.GetValue(name);
-                    
+                throw new QsVariableNotFoundException("Variable '" + name + "' Not Found.")
+                {
+                    Namespace = qsNamespace,
+                    Variable = name
+                };
             }
+            //get the variable from the name space
+
+            var module = QsNamespace.GetNamespace(scope, qsNamespace);
+
+            return (QsValue)module.GetValue(name);
 
         }
 
@@ -1281,12 +1237,9 @@ namespace Qs.Runtime
 
             if (string.IsNullOrEmpty(qsNamespace))
             {
-                if (!this.Scope.DeleteValue(name))
+                if (!Scope.DeleteValue(name))
                     throw new QsException("Can't delete the variable");
-                else
-                {
-                    GC.Collect();
-                }
+                GC.Collect();
             }
             return null;
         }
@@ -1340,7 +1293,7 @@ namespace Qs.Runtime
             // 3- if default function does'nt exist declare default function.
             // Default function: is function declared without specifying its parameters in its name  f#2 f#4  are default functions.
 
-            QsFunction DefaultFunction = QsFunction.GetDefaultFunction(this.Scope, qsFunction.FunctionNamespace, 
+            var DefaultFunction = QsFunction.GetDefaultFunction(Scope, qsFunction.FunctionNamespace, 
                 qsFunction.FunctionName, qsFunction.Parameters.Length);
 
             if (DefaultFunction == null)
@@ -1355,7 +1308,7 @@ namespace Qs.Runtime
                 // 1- find if function with the same parameters and name exist 
                 // 2- overwrite this function otherwise create new one.
 
-                var OverLoadedFunction = QsFunction.GetExactFunctionWithParameters(this.Scope,
+                var OverLoadedFunction = QsFunction.GetExactFunctionWithParameters(Scope,
                     qsFunction.FunctionNamespace,
                     qsFunction.FunctionName,
                     qsFunction.ParametersNames);

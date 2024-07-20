@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Qs.Types
+﻿namespace Qs.Types
 {
     public partial class QsTensor : QsValue
     {
@@ -25,19 +20,19 @@ namespace Qs.Types
             {
                 var scalar = value as QsScalar;
 
-                QsTensor NewTensor = new QsTensor();
-                if (this.Order > 3)
+                var NewTensor = new QsTensor();
+                if (Order > 3)
                 {
-                    foreach (var iTensor in this.InnerTensors)
+                    foreach (var iTensor in InnerTensors)
                     {
                         NewTensor.AddInnerTensor((QsTensor)iTensor.AddOperation(value));
                     }
                 }
                 else
                 {
-                    for (int il = 0; il < this.MatrixLayers.Count; il++)
+                    for (var il = 0; il < MatrixLayers.Count; il++)
                     {
-                        QsMatrix ResultMatrix = (QsMatrix)this.MatrixLayers[il].AddOperation(scalar);
+                        var ResultMatrix = (QsMatrix)MatrixLayers[il].AddOperation(scalar);
                         NewTensor.AddMatrix(ResultMatrix);
                     }
                 }
@@ -47,36 +42,34 @@ namespace Qs.Types
             if (value is QsTensor)
             {
                 var tensor = value as QsTensor;
-                if (this.Order != (tensor.Order)) throw new QsException("Adding two different ranked tensors are not supported");
+                if (Order != (tensor.Order)) throw new QsException("Adding two different ranked tensors are not supported");
 
-                if (this.Order > 3)
+                if (Order > 3)
                 {
-                    QsTensor NewTensor = new QsTensor();
-                    for (int i=0; i< this.InnerTensors.Count(); i++)
+                    var NewTensor = new QsTensor();
+                    for (var i=0; i< InnerTensors.Count(); i++)
                     {
-                        var iTensor = this.InnerTensors[i];
+                        var iTensor = InnerTensors[i];
                         NewTensor.AddInnerTensor((QsTensor)
                             iTensor.AddOperation(tensor.InnerTensors[i]));
                     }
                     return NewTensor;
                 }
-                else
+
+                if (tensor.MatrixLayers.Count == MatrixLayers.Count)
                 {
-                    if (tensor.MatrixLayers.Count == this.MatrixLayers.Count)
+                    // the operation will succeed
+                    if (tensor.FaceRowsCount == FaceRowsCount)
                     {
-                        // the operation will succeed
-                        if (tensor.FaceRowsCount == this.FaceRowsCount)
+                        if (tensor.FaceColumnsCount == FaceColumnsCount)
                         {
-                            if (tensor.FaceColumnsCount == this.FaceColumnsCount)
+                            var NewTensor = new QsTensor();
+                            for (var il = 0; il < MatrixLayers.Count; il++)
                             {
-                                QsTensor NewTensor = new QsTensor();
-                                for (int il = 0; il < this.MatrixLayers.Count; il++)
-                                {
-                                    QsMatrix ResultMatrix = (QsMatrix)this.MatrixLayers[il].AddOperation(tensor.MatrixLayers[il]);
-                                    NewTensor.AddMatrix(ResultMatrix);
-                                }
-                                return NewTensor;
+                                var ResultMatrix = (QsMatrix)MatrixLayers[il].AddOperation(tensor.MatrixLayers[il]);
+                                NewTensor.AddMatrix(ResultMatrix);
                             }
+                            return NewTensor;
                         }
                     }
                 }
@@ -96,19 +89,19 @@ namespace Qs.Types
             {
                 var scalar = value as QsScalar;
 
-                QsTensor NewTensor = new QsTensor();
-                if (this.Order > 3)
+                var NewTensor = new QsTensor();
+                if (Order > 3)
                 {
-                    foreach (var iTensor in this.InnerTensors)
+                    foreach (var iTensor in InnerTensors)
                     {
                         NewTensor.SubtractOperation((QsTensor)iTensor.AddOperation(value));
                     }
                 }
                 else
                 {
-                    for (int il = 0; il < this.MatrixLayers.Count; il++)
+                    for (var il = 0; il < MatrixLayers.Count; il++)
                     {
-                        QsMatrix ResultMatrix = (QsMatrix)this.MatrixLayers[il].SubtractOperation(scalar);
+                        var ResultMatrix = (QsMatrix)MatrixLayers[il].SubtractOperation(scalar);
                         NewTensor.AddMatrix(ResultMatrix);
                     }
                 }
@@ -118,36 +111,34 @@ namespace Qs.Types
             if (value is QsTensor)
             {
                 var tensor = value as QsTensor;
-                if (this.Order != (tensor.Order)) throw new QsException("Adding two different ranked tensors are not supported");
+                if (Order != (tensor.Order)) throw new QsException("Adding two different ranked tensors are not supported");
 
-                if (this.Order > 3)
+                if (Order > 3)
                 {
-                    QsTensor NewTensor = new QsTensor();
-                    for (int i = 0; i < this.InnerTensors.Count(); i++)
+                    var NewTensor = new QsTensor();
+                    for (var i = 0; i < InnerTensors.Count(); i++)
                     {
-                        var iTensor = this.InnerTensors[i];
+                        var iTensor = InnerTensors[i];
                         NewTensor.AddInnerTensor((QsTensor)
                             iTensor.SubtractOperation(tensor.InnerTensors[i]));
                     }
                     return NewTensor;
                 }
-                else
+
+                if (tensor.MatrixLayers.Count == MatrixLayers.Count)
                 {
-                    if (tensor.MatrixLayers.Count == this.MatrixLayers.Count)
+                    // the operation will succeed
+                    if (tensor.FaceRowsCount == FaceRowsCount)
                     {
-                        // the operation will succeed
-                        if (tensor.FaceRowsCount == this.FaceRowsCount)
+                        if (tensor.FaceColumnsCount == FaceColumnsCount)
                         {
-                            if (tensor.FaceColumnsCount == this.FaceColumnsCount)
+                            var NewTensor = new QsTensor();
+                            for (var il = 0; il < MatrixLayers.Count; il++)
                             {
-                                QsTensor NewTensor = new QsTensor();
-                                for (int il = 0; il < this.MatrixLayers.Count; il++)
-                                {
-                                    QsMatrix ResultMatrix = (QsMatrix)this.MatrixLayers[il].SubtractOperation(tensor.MatrixLayers[il]);
-                                    NewTensor.AddMatrix(ResultMatrix);
-                                }
-                                return NewTensor;
+                                var ResultMatrix = (QsMatrix)MatrixLayers[il].SubtractOperation(tensor.MatrixLayers[il]);
+                                NewTensor.AddMatrix(ResultMatrix);
                             }
+                            return NewTensor;
                         }
                     }
                 }
@@ -167,19 +158,19 @@ namespace Qs.Types
             {
                 var scalar = (QsScalar)value;
 
-                QsTensor NewTensor = new QsTensor();
-                if (this.Order > 3)
+                var NewTensor = new QsTensor();
+                if (Order > 3)
                 {
-                    foreach (var iTensor in this.InnerTensors)
+                    foreach (var iTensor in InnerTensors)
                     {
                         NewTensor.AddInnerTensor((QsTensor)iTensor.MultiplyOperation(value));
                     }
                 }
                 else
                 {
-                    for (int il = 0; il < this.MatrixLayers.Count; il++)
+                    for (var il = 0; il < MatrixLayers.Count; il++)
                     {
-                        QsMatrix ResultMatrix = (QsMatrix)this.MatrixLayers[il].MultiplyOperation(scalar);
+                        var ResultMatrix = (QsMatrix)MatrixLayers[il].MultiplyOperation(scalar);
                         NewTensor.AddMatrix(ResultMatrix);
                     }
                 }
@@ -190,24 +181,22 @@ namespace Qs.Types
             if (value is QsTensor)
             {
                 var tensor = (QsTensor) value;
-                if (this.Order == 1 && tensor.Order == 1)
+                if (Order == 1 && tensor.Order == 1)
                 {
                     var thisVec = this[0][0];
                     var thatVec = tensor[0][0];
                     var result = (QsMatrix)thisVec.TensorProductOperation(thatVec);
                     return new QsTensor(result);
                 }
-                if (this.Order == 2 && tensor.Order <= 2)
+                if (Order == 2 && tensor.Order <= 2)
                 {
                     //tenosrial product of two matrices will result in another matrix also.
-                    QsMatrix result = (QsMatrix)this.MatrixLayers[0].TensorProductOperation(tensor.MatrixLayers[0]);
+                    var result = (QsMatrix)MatrixLayers[0].TensorProductOperation(tensor.MatrixLayers[0]);
 
                     return new QsTensor(result);
                 }
-                else
-                {
-                    throw new QsException("", new NotImplementedException());
-                }
+
+                throw new QsException("", new NotImplementedException());
             }
 
             throw new QsException("Tensor Multiplication Operation with " + value.GetType().Name + " Failed");
@@ -263,15 +252,15 @@ namespace Qs.Types
         {
             if (value is QsTensor ts)
             {
-                if (this.Order != ts.Order) return false;
-                if (!object.ReferenceEquals(ts, this))
+                if (Order != ts.Order) return false;
+                if (!ReferenceEquals(ts, this))
                 {
 
                     // we need to test equality to 
 
-                    if (this.InnerTensors != null)
+                    if (InnerTensors != null)
                     {
-                        for (int i = 0; i < InnerTensors.Count; i++)
+                        for (var i = 0; i < InnerTensors.Count; i++)
                         {
                             if (!InnerTensors[i].Equality(ts.InnerTensors[i])) return false;
                         }
@@ -279,7 +268,7 @@ namespace Qs.Types
                     else
                     {
 
-                        for (int mn = 0; mn < MatrixLayers.Count; mn++)
+                        for (var mn = 0; mn < MatrixLayers.Count; mn++)
                         {
                             if (!MatrixLayers[mn].Equality(ts.MatrixLayers[mn])) return false;
                         }
@@ -320,11 +309,12 @@ namespace Qs.Types
             
             if (tensor == null) throw new QsException("Must be a tensor for scalar product");
 
-            if (this.Order > 3)
+            if (Order > 3)
             {
                 throw new NotImplementedException();
             }
-            else if (this.Order == 1)
+
+            if (Order == 1)
             {
                 if (tensor.Order == 1)
                 {
@@ -334,7 +324,7 @@ namespace Qs.Types
                     return new QsTensor(new QsMatrix(new QsVector(result)));
                 }
             }
-            else if (this.Order == 2)
+            else if (Order == 2)
             {
                 // only for tensors that looks like matrix.
 
@@ -368,7 +358,7 @@ namespace Qs.Types
                 }
                 */
             }
-            
+
             throw new NotImplementedException();
             
         }
@@ -395,82 +385,79 @@ namespace Qs.Types
 
         public override QsValue GetIndexedItem(QsParameter[] allIndices)
         {
-            int[] indices = new int[allIndices.Length];
+            var indices = new int[allIndices.Length];
 
-            for (int ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;                
+            for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;                
 
-            int dr = this.Order - indices.Count();
+            var dr = Order - indices.Count();
             if (dr < 0)
             {
                 throw new QsException("Indices count exceed the tensor rank, only specify indices to the same rank to get scalar, or less to get vectors to tensors");
             }
-            else if (dr == 0)
+
+            if (dr == 0)
             {
                 return GetScalar(indices);
             }
-            else if (dr == 1)
+            if (dr == 1)
             {
                 // return vector
-                if (this.Order == 2)
+                if (Order == 2)
                 {
                     return this[0][indices[0]];
                 }
-                else if (this.Order == 3)
+
+                if (Order == 3)
                 {
                     return this[indices[0]][indices[1]];
                 }
-                else
+                var t = this;
+                var ix = 0;
+                var ic = indices.Count();
+                while (ix < ic - 2)
                 {
-                    QsTensor t = this;
-                    int ix = 0;
-                    int ic = indices.Count();
-                    while (ix < ic - 2)
-                    {
-                        int idx = indices[ix];
-                        if (idx < 0) idx = t.InnerTensors.Count + idx;
-                        t = t.InnerTensors[idx];
-                        ix++;
-                    }
-                    return t[indices[ix]][indices[ix + 1]];  //ix was increased the latest time.
+                    var idx = indices[ix];
+                    if (idx < 0) idx = t.InnerTensors.Count + idx;
+                    t = t.InnerTensors[idx];
+                    ix++;
                 }
+                return t[indices[ix]][indices[ix + 1]];  //ix was increased the latest time.
             }
-            else if (dr == 2)
+            if (dr == 2)
             {
                 // return matrix;
-                if (this.Order == 2)
+                if (Order == 2)
                 {
                     return this[indices[0]];
                 }
-                else
+
+                // specify the tensor
+                var t = this;
+                var ix = 0;
+                var ic = indices.Count();
+                while (ix < ic - 1)
                 {
-                    // specify the tensor
-                    QsTensor t = this;
-                    int ix = 0;
-                    int ic = indices.Count();
-                    while (ix < ic - 1)
-                    {
-                        int idx = indices[ix];
+                    var idx = indices[ix];
 
-                        if (idx < 0) idx = t.InnerTensors.Count + idx;
+                    if (idx < 0) idx = t.InnerTensors.Count + idx;
 
-                        t = t.InnerTensors[idx];
-                        ix++;
-                    }
-
-
-
-                    // then return the matrix.
-                    return t[indices[ix]];  //ix was increased the latest time.
+                    t = t.InnerTensors[idx];
+                    ix++;
                 }
+
+
+
+                // then return the matrix.
+                return t[indices[ix]];  //ix was increased the latest time.
             }
             else
             {
                 // return tensor
-                QsTensor t = this;
-                int ix = 0;
+                var t = this;
+                var ix = 0;
                 while (ix < indices.Count())
                 {
-                    int idx = indices[ix];
+                    var idx = indices[ix];
                     if (idx < 0) idx = t.InnerTensors.Count + idx;
                     t = t.InnerTensors[idx];
                     ix++;
@@ -505,10 +492,8 @@ namespace Qs.Types
                 }
                 return t;
             }
-            else
-            {
-                return base.DifferentiateOperation(value);
-            }
+
+            return base.DifferentiateOperation(value);
         }
         #endregion
 

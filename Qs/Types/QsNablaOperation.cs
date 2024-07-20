@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Qs.Runtime;
-using SymbolicAlgebra;
+﻿using SymbolicAlgebra;
 
 namespace Qs.Types.Operators
 {
@@ -29,15 +24,15 @@ namespace Qs.Types.Operators
         {
             get
             {
-                QsVector v = new QsVector(Coordinates.Length);
+                var v = new QsVector(Coordinates.Length);
 
                 foreach (var x in Coordinates)
                 {
-                    QsDifferentialOperation dpo = new QsDifferentialOperation();
+                    var dpo = new QsDifferentialOperation();
                     
                     var dx = (QsScalar)dpo.DifferentiateOperation(new SymbolicVariable(x).ToQuantity().ToScalar());
                     if(Power>1)
-                        for (int p = 1; p < Power; p++)
+                        for (var p = 1; p < Power; p++)
                         {
                             dx = (QsScalar)dx.DifferentiateOperation(new SymbolicVariable(x).ToQuantity().ToScalar());
                         }
@@ -60,22 +55,22 @@ namespace Qs.Types.Operators
         {
             var fscalar = value as QsScalar;
 
-            if (!Object.ReferenceEquals(fscalar, null))
+            if (!ReferenceEquals(fscalar, null))
             {
                 // Here we will multiply the nabla \/ *  with @function 
-                if (!Object.ReferenceEquals(fscalar.FunctionQuantity, null))
+                if (!ReferenceEquals(fscalar.FunctionQuantity, null))
                 {
                     var f = fscalar.FunctionQuantity.Value;
                     
                     string[] prms = f.ParametersNames;
 
-                    SymbolicVariable fsv = f.ToSymbolicVariable();
+                    var fsv = f.ToSymbolicVariable();
 
-                    QsVector GradientResult = new QsVector();
+                    var GradientResult = new QsVector();
 
                     // we loop through the symbolic body and differentiate it with respect to the function parameters.
                     // then accumulate the 
-                    foreach (string prm in prms)
+                    foreach (var prm in prms)
                     {
                         GradientResult.AddComponent(fsv.Differentiate(prm).ToQuantity().ToScalar());
                     }
@@ -85,7 +80,7 @@ namespace Qs.Types.Operators
             }
             if (value is QsVector)
             {
-                return this.DelVector.MultiplyVector((QsVector)value);
+                return DelVector.MultiplyVector((QsVector)value);
             }
             
             throw new NotImplementedException(@"Multiplication of \/ * " + value.GetType().Name +" Not implemented yet");
@@ -102,7 +97,7 @@ namespace Qs.Types.Operators
         {
             if (value is QsVector)
             {
-                return this.DelVector.DotProductOperation((QsVector)value);
+                return DelVector.DotProductOperation((QsVector)value);
             }
 
             throw new NotImplementedException(@"\/ . " + value.GetType().Name + " not implemented");
@@ -118,7 +113,7 @@ namespace Qs.Types.Operators
         {
             if (value is QsVector)
             {
-                return this.DelVector.CrossProductOperation((QsVector)value);
+                return DelVector.CrossProductOperation((QsVector)value);
             }
 
             throw new NotImplementedException(@"\/ x " + value.GetType().Name + " not implemented");
@@ -128,16 +123,16 @@ namespace Qs.Types.Operators
         private int Power = 1;
         public override QsValue PowerOperation(QsValue value)
         {
-            int p = (int)((QsScalar)value).NumericalQuantity.Value;
+            var p = (int)((QsScalar)value).NumericalQuantity.Value;
             Power = p;
             return this;
         }
 
         public override string ToShortString()
         {
-            string nb = @"\";
+            var nb = @"\";
 
-            string ccs = string.Empty;
+            var ccs = string.Empty;
 
             foreach (var s in Coordinates) ccs += s + " ";
 

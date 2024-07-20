@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Qs.Types
 {
@@ -10,8 +6,8 @@ namespace Qs.Types
     {
         public bool Value;
 
-        static QsBoolean _QsTrue = new QsBoolean { Value = true };
-        static QsBoolean _QsFalse = new QsBoolean { Value = false };
+        static QsBoolean _QsTrue = new() { Value = true };
+        static QsBoolean _QsFalse = new() { Value = false };
 
         public static QsBoolean True
         {
@@ -81,17 +77,17 @@ namespace Qs.Types
 
         public override QsValue AddOperation(QsValue value)
         {
-            return new QsBoolean { Value = this.Value | ((QsBoolean)value).Value };
+            return new QsBoolean { Value = Value | ((QsBoolean)value).Value };
         }
 
         public override QsValue SubtractOperation(QsValue value)
         {
-            return new QsBoolean { Value = this.Value | !((QsBoolean)value).Value };
+            return new QsBoolean { Value = Value | !((QsBoolean)value).Value };
         }
 
         public override QsValue MultiplyOperation(QsValue value)
         {
-            return new QsBoolean { Value = this.Value & ((QsBoolean)value).Value };
+            return new QsBoolean { Value = Value & ((QsBoolean)value).Value };
         }
 
         public override QsValue DivideOperation(QsValue value)
@@ -131,12 +127,12 @@ namespace Qs.Types
 
         public override bool Equality(QsValue value)
         {
-            return this.Value == ((QsBoolean)value).Value;
+            return Value == ((QsBoolean)value).Value;
         }
 
         public override bool Inequality(QsValue value)
         {
-            return this.Value != ((QsBoolean)value).Value;
+            return Value != ((QsBoolean)value).Value;
         }
 
         public override QsValue DotProductOperation(QsValue value)

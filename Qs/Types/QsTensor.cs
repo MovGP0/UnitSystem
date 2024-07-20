@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 
 namespace Qs.Types
 {
@@ -12,7 +9,7 @@ namespace Qs.Types
     public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     {
 
-        protected List<QsMatrix> MatrixLayers = new List<QsMatrix>();
+        protected List<QsMatrix> MatrixLayers = new();
 
 
         /// <summary>
@@ -39,33 +36,23 @@ namespace Qs.Types
                 {
 
                     if (MatrixLayers.Count > 1) return 3;
-                    else if (MatrixLayers.Count == 1)
+                    if (MatrixLayers.Count == 1)
                     {
                         var matrix = MatrixLayers[0];
                         if (matrix.RowsCount > 1) return 2;
-                        else
-                        {
-                            // only one row then it is vector
-                            var vector = matrix.Rows[0];
-                            if (vector.Count > 1) return 1;
-                            else return 0;   //scalar
-
-                        }
+                        // only one row then it is vector
+                        var vector = matrix.Rows[0];
+                        if (vector.Count > 1) return 1;
+                        return 0;   //scalar
                     }
-                    else
-                    {
-                        throw new QsException("Tensor is not initialized yet");
-                    }
+                    throw new QsException("Tensor is not initialized yet");
                 }
-                else
-                {
-                    // inner tensors do exist
-                    // make recursive call to obtain the tensor rank
+                // inner tensors do exist
+                // make recursive call to obtain the tensor rank
 
-                    int rank = this.InnerTensors[0].Order;
+                var rank = InnerTensors[0].Order;
 
-                    return rank + 1;
-                }
+                return rank + 1;
             }
         }
 
@@ -143,7 +130,7 @@ namespace Qs.Types
 
                     if (MatrixLayers.Count > 0)
                     {
-                        if (v.Count != this.FaceColumnsCount)
+                        if (v.Count != FaceColumnsCount)
                             throw new QsInvalidInputException("Adding first rank tensor with different number of columns");
 
                     }
@@ -156,9 +143,9 @@ namespace Qs.Types
 
                 if (MatrixLayers.Count > 0)
                 {
-                    if (matrix.RowsCount == this.FaceRowsCount)
+                    if (matrix.RowsCount == FaceRowsCount)
                     {
-                        if (matrix.ColumnsCount == this.FaceColumnsCount)
+                        if (matrix.ColumnsCount == FaceColumnsCount)
                         {
 
                         }
@@ -241,52 +228,51 @@ namespace Qs.Types
         /// <returns></returns>
         public QsScalar GetScalar(params int[] indices)
         {
-            if (indices.Count() != this.Order)
+            if (indices.Count() != Order)
             {
-                throw new QsException("Indices number (" + indices.Length.ToString() + ") doesn't equal the tensor rank (" + this.Order.ToString() + ") (remember that you are getting a scalar)");
+                throw new QsException("Indices number (" + indices.Length + ") doesn't equal the tensor rank (" + Order + ") (remember that you are getting a scalar)");
+            }
+
+            if (indices == null)
+            {
+                return this[0][0][0];
+            }
+
+            if (indices.Count() == 1)
+            {
+                return this[0][0][indices[0]];
+            }
+            if (indices.Count() == 2)
+            {
+                return this[0][indices[0]][indices[1]];
+            }
+            if (indices.Count() == 3)
+            {
+                // cube
+                return this[indices[0]][indices[1]][indices[2]];
+            }
+            if (indices.Count() == 4)
+            {
+                // hyper cube
+                var idx = indices[0];
+                if (idx < 0) idx = InnerTensors.Count + idx;
+
+                return InnerTensors[idx][indices[1]][indices[2]][indices[3]];
             }
             else
             {
-                if (indices == null)
-                {
-                    return this[0][0][0];
-                }
-                else if (indices.Count() == 1)
-                {
-                    return this[0][0][indices[0]];
-                }
-                else if (indices.Count() == 2)
-                {
-                    return this[0][indices[0]][indices[1]];
-                }
-                else if (indices.Count() == 3)
-                {
-                    // cube
-                    return this[indices[0]][indices[1]][indices[2]];
-                }
-                else if (indices.Count() == 4)
-                {
-                    // hyper cube
-                    int idx = indices[0];
-                    if (idx < 0) idx = this.InnerTensors.Count + idx;
-
-                    return this.InnerTensors[idx][indices[1]][indices[2]][indices[3]];
-                }
-                else
-                {
-                    List<int> newIndices = new List<int>(indices.Length - 1);
-                    for (int ix = 1; ix < indices.Length; ix++) newIndices.Add(indices[ix]);
-                    int idx = indices[0];
-                    if (idx < 0) idx = this.InnerTensors.Count + idx;
-                    return this.InnerTensors[idx].GetScalar(newIndices.ToArray());
-                }
+                var newIndices = new List<int>(indices.Length - 1);
+                for (var ix = 1; ix < indices.Length; ix++) newIndices.Add(indices[ix]);
+                var idx = indices[0];
+                if (idx < 0) idx = InnerTensors.Count + idx;
+                return InnerTensors[idx].GetScalar(newIndices.ToArray());
             }
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            string rankText = Order.ToString();
+            var sb = new StringBuilder();
+            var rankText = Order.ToString();
             if (Order == 0) rankText += "th";
             if (Order == 1) rankText += "st";
             if (Order == 2) rankText += "nd";
@@ -306,8 +292,8 @@ namespace Qs.Types
 
         public override string ToShortString()
         {
-            StringBuilder sb = new StringBuilder();
-            string rankText = Order.ToString();
+            var sb = new StringBuilder();
+            var rankText = Order.ToString();
             if (Order == 0) rankText += "th";
             if (Order == 1) rankText += "st";
             if (Order == 2) rankText += "nd";

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using QuantitySystem.Quantities.BaseQuantities;
-using Qs.Types;
-using Qs.Runtime;
+﻿using Qs.Runtime;
 
 namespace Qs.Types
 {
@@ -17,7 +11,7 @@ namespace Qs.Types
         /// <summary>
         /// The parameter representation as a C# object 
         /// </summary>
-        public object ParameterValue { get; private set; }
+        public object? ParameterValue { get; private set; }
 
         /// <summary>
         /// Original value before evaluation.
@@ -34,8 +28,7 @@ namespace Qs.Types
                 string[] rv = ParameterRawText.Split(':');
                 if (rv.Length == 2)
                     return rv[0];
-                else
-                    return "";
+                return "";
 
             }
         }
@@ -50,34 +43,23 @@ namespace Qs.Types
                 string[] rv = ParameterRawText.Split(':');
                 if (rv.Length == 2)
                     return rv[1];
-                else
-                    return rv[0];
+                return rv[0];
             }
         }
 
-        public static QsParameter MakeParameter(object value, string rawValue)
+        public static QsParameter MakeParameter(object? value, string rawValue)
         {
-            QsParameter qp = new QsParameter();
-
-            qp.ParameterValue = value;
-
-            qp.ParameterRawText = rawValue;
-
-            return qp;
+            return new()
+            {
+                ParameterValue = value,
+                ParameterRawText = rawValue
+            };
         }
-
 
         /// <summary>
         /// The parameter value as a native qs value or null if fail.
         /// </summary>
-        public QsValue QsNativeValue
-        {
-            get
-            {
-                return ParameterValue as QsValue;
-            }
-        }
-
+        public QsValue? QsNativeValue => ParameterValue as QsValue;
 
         /// <summary>
         /// Get the quantity from the parameter body on the form  ([namespace:]variable)  x:var or var
@@ -110,21 +92,20 @@ namespace Qs.Types
             get
             {
                 if (ParameterValue is QsValue) return true;
-                else return false;
+                return false;
             }
         }
 
         /// <summary>
         /// Get the parameter value string if exist or the parameter body itself
         /// </summary>
-        public string UnknownValueText
+        public string? UnknownValueText
         {
             get
             {
-                if (ParameterValue != null)
-                    return ParameterValue.ToString();
-                else
-                    return ParameterRawText;
+                return ParameterValue != null
+                    ? ParameterValue.ToString()
+                    : ParameterRawText;
             }
         }
 

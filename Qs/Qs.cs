@@ -1,12 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Qs.Types;
 using QuantitySystem;
 using QuantitySystem.Quantities.BaseQuantities;
 using QuantitySystem.Units;
 using SymbolicAlgebra;
 using Qs.Numerics;
-using System.Reflection;
 
 namespace Qs
 {
@@ -39,8 +37,8 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<double> ToQuantity(this int i)
         {
-            Unit un = Unit.DiscoverUnit(QuantityDimension.Dimensionless);
-            return un.GetThisUnitQuantity<double>((double)i);
+            var un = Unit.DiscoverUnit(QuantityDimension.Dimensionless);
+            return un.GetThisUnitQuantity((double)i);
         }
 
         /// <summary>
@@ -50,8 +48,8 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<double> ToQuantity(this float d)
         {
-            Unit un = Unit.DiscoverUnit(QuantityDimension.Dimensionless);
-            return un.GetThisUnitQuantity<double>((double)d);
+            var un = Unit.DiscoverUnit(QuantityDimension.Dimensionless);
+            return un.GetThisUnitQuantity((double)d);
         }
 
         /// <summary>
@@ -61,8 +59,8 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<double> ToQuantity(this double d)
         {
-            Unit un = Unit.DiscoverUnit(QuantityDimension.Dimensionless);
-            return un.GetThisUnitQuantity<double>(d);
+            var un = Unit.DiscoverUnit(QuantityDimension.Dimensionless);
+            return un.GetThisUnitQuantity(d);
         }
 
         /// <summary>
@@ -73,14 +71,14 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<double> ToQuantity(this double d, string unit)
         {
-            Unit un = Unit.Parse(unit);
+            var un = Unit.Parse(unit);
 
-            return un.GetThisUnitQuantity<double>(d);
+            return un.GetThisUnitQuantity(d);
         }
 
         public static AnyQuantity<double> ToQuantity(this int d, string unit)
         {
-            Unit un = Unit.Parse(unit);
+            var un = Unit.Parse(unit);
 
             return un.GetThisUnitQuantity<double>(d);
         }
@@ -103,9 +101,9 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<Complex> ToQuantity(this Complex complexValue, string unit="1")
         {
-            Unit un = Unit.Parse(unit);
+            var un = Unit.Parse(unit);
 
-            return un.GetThisUnitQuantity<Complex>(complexValue);
+            return un.GetThisUnitQuantity(complexValue);
         }
 
 
@@ -128,9 +126,9 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<Quaternion> ToQuantity(this Quaternion quaternionValue, string unit = "1")
         {
-            Unit un = Unit.Parse(unit);
+            var un = Unit.Parse(unit);
 
-            return un.GetThisUnitQuantity<Quaternion>(quaternionValue);
+            return un.GetThisUnitQuantity(quaternionValue);
         }
 
         /// <summary>
@@ -161,7 +159,7 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<SymbolicVariable> ToQuantity(this SymbolicVariable sv, string unit="1")
         {
-            Unit sunit = Unit.Parse(unit);
+            var sunit = Unit.Parse(unit);
             AnyQuantity<SymbolicVariable> SymbolicQuantity = sunit.GetThisUnitQuantity<SymbolicVariable>(sv);
 
             return SymbolicQuantity;
@@ -175,7 +173,7 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<QsFunction> ToQuantity(this QsFunction fn, string unit = "1")
         {
-            Unit sunit = Unit.Parse(unit);
+            var sunit = Unit.Parse(unit);
 
             AnyQuantity<QsFunction> FunctionQuantity = sunit.GetThisUnitQuantity<QsFunction>(fn);
 
@@ -189,7 +187,7 @@ namespace Qs
         /// <returns></returns>
         public static QsScalar ToScalar(this AnyQuantity<SymbolicVariable> qty)
         {
-            QsScalar symscalar = new QsScalar(ScalarTypes.SymbolicQuantity)
+            var symscalar = new QsScalar(ScalarTypes.SymbolicQuantity)
             {
                 SymbolicQuantity = qty
             };
@@ -203,7 +201,7 @@ namespace Qs
         /// <returns></returns>
         public static QsScalar ToScalar(this AnyQuantity<QsFunction> functionQuantity)
         {
-            QsScalar fnScalar = new QsScalar(ScalarTypes.FunctionQuantity)
+            var fnScalar = new QsScalar(ScalarTypes.FunctionQuantity)
             {
                 FunctionQuantity = functionQuantity
             };
@@ -223,7 +221,7 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<Complex> ToComplex(this AnyQuantity<double> qty)
         {
-            AnyQuantity<Complex> converted = qty.Unit.GetThisUnitQuantity<Complex>(qty.Value);
+            var converted = qty.Unit.GetThisUnitQuantity<Complex>(qty.Value);
             return converted;
         }
 
@@ -235,14 +233,14 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<Quaternion> ToQuaternion(this AnyQuantity<double> qty)
         {
-            AnyQuantity<Quaternion> converted = qty.Unit.GetThisUnitQuantity<Quaternion>(qty.Value);
+            var converted = qty.Unit.GetThisUnitQuantity<Quaternion>(qty.Value);
             return converted;
         }
 
         public static AnyQuantity<Rational> ToRational(this AnyQuantity<double> qty)
         {
 
-            AnyQuantity<Rational> converted = qty.Unit.GetThisUnitQuantity<Rational>(new Rational((float)qty.Value, 1));
+            var converted = qty.Unit.GetThisUnitQuantity(new Rational((float)qty.Value, 1));
             return converted;
         }
 
@@ -254,7 +252,7 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<Quaternion> ToQuaternion(this AnyQuantity<Complex> qty)
         {
-            AnyQuantity<Quaternion> converted = qty.Unit.GetThisUnitQuantity<Quaternion>(qty.Value);
+            var converted = qty.Unit.GetThisUnitQuantity<Quaternion>(qty.Value);
             return converted;
         }
 
@@ -268,9 +266,9 @@ namespace Qs
         /// <returns></returns>
         public static AnyQuantity<Rational> ToQuantity(this Rational rationalValue, string unit = "1")
         {
-            Unit un = Unit.Parse(unit);
+            var un = Unit.Parse(unit);
 
-            return un.GetThisUnitQuantity<Rational>(rationalValue);
+            return un.GetThisUnitQuantity(rationalValue);
         }
 
 
@@ -319,9 +317,9 @@ namespace Qs
         {
             QsScalar[] ss = new QsScalar[data.Length];
 
-            for (int i = 0; i < data.Length; i++)
+            for (var i = 0; i < data.Length; i++)
             {
-                double d = Convert.ToDouble(data[i]);
+                var d = Convert.ToDouble(data[i]);
 
                 ss[i] = d.ToQuantity().ToScalar();
             }
@@ -331,7 +329,7 @@ namespace Qs
         public static QsVector ToQsVector<T>(this T[] data)
         {
             var scs = ToScalars(data);
-            QsVector vector = new QsVector(scs);
+            var vector = new QsVector(scs);
             return vector;
         }
 
