@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ParticleLexer\ParticleLexer.csproj" />
+    <ProjectReference Include="..\PassiveFlow\PassiveFlow.csproj" />
+    <ProjectReference Include="..\QuantitySystem\QuantitySystem.csproj" />
+    <ProjectReference Include="..\SymbolicAlgebra\SymbolicAlgebra.csproj" />
+  </ItemGroup>
+
+</Project>

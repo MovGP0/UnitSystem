@@ -1,4 +1,4 @@
-﻿namespace UnitSystem.UnitTests;
+﻿namespace UnitTests.Shared;
 
 /// <summary>
 /// Attribute to describe the object or method under test.

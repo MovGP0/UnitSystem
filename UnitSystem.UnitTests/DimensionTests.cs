@@ -1,5 +1,6 @@
 ﻿using Shouldly;
 using UnitSystem.Dimensions;
+using UnitTests.Shared;
 
 namespace UnitSystem.UnitTests;
 

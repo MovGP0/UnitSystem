@@ -3,6 +3,7 @@ using Shouldly;
 using UnitSystem.Prefixes;
 using UnitSystem.Quantities;
 using UnitSystem.Systems;
+using UnitTests.Shared;
 using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;
@@ -11,7 +12,7 @@ namespace UnitSystem.UnitTests;
 public static class ScalarQuantityTests
 {
     [TestClass]
-    [TestOf(typeof(ScalarQuantity), ILObjectNames.op_Division)]
+    [TestOf(typeof(ScalarQuantity), ILObjectNames.Division)]
     public sealed class DivisionTests
     {
         [TestMethod]
@@ -62,7 +63,7 @@ public static class ScalarQuantityTests
     }
 
     [TestClass]
-    [TestOf(typeof(ScalarQuantity), ILObjectNames.op_Addition)]
+    [TestOf(typeof(ScalarQuantity), ILObjectNames.Addition)]
     public sealed class AdditionTests
     {
         [TestMethod]
@@ -83,7 +84,7 @@ public static class ScalarQuantityTests
     }
 
     [TestClass]
-    [TestOf(typeof(ScalarQuantity), ILObjectNames.op_Subtraction)]
+    [TestOf(typeof(ScalarQuantity), ILObjectNames.Subtraction)]
     public sealed class SubtractionTests
     {
         [TestMethod]
@@ -104,7 +105,7 @@ public static class ScalarQuantityTests
     }
 
     [TestClass]
-    [TestOf(typeof(ScalarQuantity), ILObjectNames.op_Power)]
+    [TestOf(typeof(ScalarQuantity), ILObjectNames.Power)]
     public sealed class ExponentTests
     {
         [TestMethod]
@@ -124,7 +125,7 @@ public static class ScalarQuantityTests
     }
 
     [TestClass]
-    [TestOf(typeof(ScalarQuantity), ILObjectNames.op_Inequality)]
+    [TestOf(typeof(ScalarQuantity), ILObjectNames.Inequality)]
     public sealed class InEqualityTests
     {
         [TestMethod]
@@ -150,7 +151,7 @@ public static class ScalarQuantityTests
     }
 
     [TestClass]
-    [TestOf(typeof(ScalarQuantity), ILObjectNames.op_Equality)]
+    [TestOf(typeof(ScalarQuantity), ILObjectNames.Equality)]
     public sealed class EqualityTests
     {
         [TestMethod]
@@ -188,7 +189,7 @@ public static class ScalarQuantityTests
     }
 
     [TestClass]
-    [TestOf(typeof(ScalarQuantity), ILObjectNames.op_LessThan)]
+    [TestOf(typeof(ScalarQuantity), ILObjectNames.LessThan)]
     public sealed class LessThanTests
     {
         [TestMethod]

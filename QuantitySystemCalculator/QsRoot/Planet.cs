@@ -1,0 +1,123 @@
+﻿using QuantitySystem.Quantities.BaseQuantities;
+using Qs.Types;
+
+namespace QsRoot
+{
+
+    public struct PlanetElement
+    {
+        public string ElementName { get; set; }
+        public int ElementNumber { get; set; }
+        public bool Rare { get; set; }
+    }
+
+    public class Planet
+    {
+
+        public Mass<double> Mass { get; set; }
+
+        PlanetElement _pe = new PlanetElement() { ElementName = "7agar", ElementNumber = 34 };
+
+        public PlanetElement Element
+        {
+            get
+            {
+                return _pe;
+            }
+            set
+            {
+                _pe = value;
+            }
+
+        }
+
+
+        public bool Rare { get; set; }
+
+        
+
+        public Planet()
+        {
+            planets++;
+            Name = "Planet " + planets.ToString();    
+        }
+
+        public Planet(PlanetElement pe)
+        {
+            _pe = pe;
+        }
+
+        public QsScalar Volume
+        {
+            get;
+            set;
+        }
+
+        public string Name { get; set; }
+
+
+        public long[] Rocks { get; set; }
+
+
+
+
+        static int planets = 0;
+
+        public Planet NextPlanet
+        {
+            get
+            {
+                
+                return new Planet();
+            }
+        }
+
+        //public double this[int ix]
+        //{
+        //    get
+        //    {
+        //        var rr = new Random(System.Environment.TickCount);
+        //        return rr.NextDouble() * ix;
+        //    }
+        //}
+
+        Dictionary<string, Planet> _SubPlanets = new Dictionary<string, Planet>();
+        public Planet this[string planetName]
+        {
+            get
+            {
+
+                return _SubPlanets[planetName];
+            }
+            set
+            {
+                _SubPlanets[planetName] = value;
+            }
+        }
+
+
+        public Planet[] SubPlanets
+        {
+            get
+            {
+                return _SubPlanets.Values.ToArray();
+            }
+        }
+
+
+        public int sum(int a, int b)
+        {
+            return a+b;
+        }
+
+        public Planet GetNextPlanet()
+        {
+            return new Planet();
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+}

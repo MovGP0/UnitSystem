@@ -1,4 +1,5 @@
 ﻿using Shouldly;
+using UnitTests.Shared;
 using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;
@@ -7,7 +8,7 @@ namespace UnitSystem.UnitTests;
 public static class UnitsTests
 {
     [TestClass]
-    [TestOf(typeof(Unit), ILObjectNames.op_Multiply)]
+    [TestOf(typeof(Unit), ILObjectNames.Multiply)]
     public sealed class MultiplyTests
     {
         [TestMethod]
@@ -46,7 +47,7 @@ public static class UnitsTests
     }
 
     [TestClass]
-    [TestOf(typeof(Unit), ILObjectNames.op_Division)]
+    [TestOf(typeof(Unit), ILObjectNames.Division)]
     public sealed class DivisionTests
     {
         [TestMethod]

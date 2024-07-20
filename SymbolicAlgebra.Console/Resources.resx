@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Copyright" xml:space="preserve">
+        <value>Symbolic Algebra Console {0}
+Copyright 2012-{1} at Lost Particles.
+All Rights Reserved for Ahmed.Sadek@LostParticles.net the Author of the library.</value>
+    </data>
+    <data name="Help" xml:space="preserve">
+        <value>Postfix Operators:
+'.'  Integration Operator       -- STILL EXPERIMENTAL -- 
+'|'  Differentiation Operator
+'^'  Power Operator
+'*'  Multiplication
+'/'  Division
+'+'  Addition
+'-'  Subtraction
+
+Prefix Operators:
+'%'  Constants Prefix 
+
+SA&gt; x+x           will produce 2*x
+SA&gt; (x^2+2*x)|x   will produce  2*x+x
+SA&gt; (2*x).x       will produce  x^2
+
+SA&gt; :Q            to Quit  like VIM ;)
+
+Custom Function Declaration:
+':=' f(x) := x^3</value>
+    </data>
+    <data name="Help2" xml:space="preserve">
+        <value>Using the library in your C# program directly:
+
+Using SymbolicAlgebra;
+
+// Assign variable immediately
+var x = new SymbolicVariable(""x"");
+var y = new SymbolicVariable(""y"");
+
+// or parse the expression directly.
+var myeq = SymbolicVariable.Parse(""(a+b)^2"");
+
+// then use the language overloaded arithmatic opertors directly.
+var total = (x*y*x).Differentiate(""x"");
+
+Finally  .. Enjoy</value>
+    </data>
+</root>

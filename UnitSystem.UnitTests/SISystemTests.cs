@@ -1,6 +1,7 @@
 ﻿using Shouldly;
 using UnitSystem.Prefixes;
 using UnitSystem.Systems;
+using UnitTests.Shared;
 using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;

@@ -29,9 +29,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Shouldly" Version="4.2.1" />
+    <PackageReference Include="Shouldly.FromAssert" Version="1.1.22">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NSubstitute" Version="5.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnitSystem\UnitSystem.csproj" />
+    <ProjectReference Include="..\UnitTests.Shared\UnitTests.Shared.csproj" />
   </ItemGroup>
 </Project>

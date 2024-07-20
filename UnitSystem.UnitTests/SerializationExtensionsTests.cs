@@ -6,6 +6,7 @@ using Shouldly;
 using UnitSystem.Quantities;
 using UnitSystem.Serialization;
 using UnitSystem.Systems;
+using UnitTests.Shared;
 using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;

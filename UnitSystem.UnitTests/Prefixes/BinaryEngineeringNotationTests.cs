@@ -1,5 +1,6 @@
 ﻿using Shouldly;
 using UnitSystem.Prefixes;
+using UnitTests.Shared;
 
 namespace UnitSystem.UnitTests.Prefixes;
 
