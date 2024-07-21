@@ -108,7 +108,7 @@ public sealed class KnownUnit : Unit
             ThrowArgumentException();
         }
 
-        if (!MetricPrefix.TryGetValue(prefix, out MetricPrefix? inherentPrefix))
+        if (!MetricPrefix.TryGetValue(prefix, out var inherentPrefix))
         {
             ThrowArgumentException();
         }

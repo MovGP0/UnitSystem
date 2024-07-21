@@ -1,124 +1,135 @@
-﻿namespace QuantitySystem.DimensionDescriptors
+﻿namespace QuantitySystem.DimensionDescriptors;
+
+public struct LengthDescriptor :
+    IDimensionDescriptor<LengthDescriptor>,
+    IEquatable<LengthDescriptor>,
+    IComparable<LengthDescriptor>,
+    IComparable
 {
-    public struct LengthDescriptor : IDimensionDescriptor<LengthDescriptor>
+    public LengthDescriptor(float normalExponent, float polarExponent):this()
     {
-
-        public LengthDescriptor(float normalExponent, float polarExponent):this()
-        {
-            ScalarExponent = normalExponent;
-            VectorExponent = polarExponent;
-        }
-
-        #region Length Properties Types
-
-        public float ScalarExponent
-        {
-            get;
-            set;
-        }
-
-        public float VectorExponent
-        {
-            get;
-            set;
-        }
-
-        public float MatrixExponent
-        {
-            get;
-            set;
-        }
-
-        #endregion
-
-
-        public override bool Equals(object obj)
-        {
-            try
-            {
-                LengthDescriptor ld = (LengthDescriptor)obj;
-                {
-                    if (ScalarExponent != ld.ScalarExponent) return false;
-
-                    if (VectorExponent != ld.VectorExponent) return false;
-
-                    return true;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public override int GetHashCode()
-        {
-            return ScalarExponent.GetHashCode() ^ VectorExponent.GetHashCode();
-        }
-
-        #region IDimensionDescriptor<LengthDescriptor> Members
-
-
-        public float Exponent
-        {
-            get { return ScalarExponent + VectorExponent; }
-            set { }
-        }
-
-
-
-        public LengthDescriptor Add(LengthDescriptor dimensionDescriptor)
-        {
-            LengthDescriptor l = new LengthDescriptor();
-            l.ScalarExponent = ScalarExponent + dimensionDescriptor.ScalarExponent;
-            l.VectorExponent = VectorExponent + dimensionDescriptor.VectorExponent;
-
-            return l;
-        }
-
-        public LengthDescriptor Subtract(LengthDescriptor dimensionDescriptor)
-        {
-            LengthDescriptor l = new LengthDescriptor();
-            l.ScalarExponent = ScalarExponent - dimensionDescriptor.ScalarExponent;
-            l.VectorExponent = VectorExponent - dimensionDescriptor.VectorExponent;
-
-            return l;
-        }
-
-        public LengthDescriptor Multiply(float exponent)
-        {
-            LengthDescriptor l = new LengthDescriptor();
-            l.ScalarExponent = ScalarExponent * exponent;
-            l.VectorExponent = VectorExponent * exponent;
-
-            return l;
-        }
-
-        public LengthDescriptor Invert()
-        {
-            LengthDescriptor l = new LengthDescriptor();
-            l.ScalarExponent = 0 - ScalarExponent;
-            l.VectorExponent = 0 - VectorExponent;
-            return l;
-        }
-
-
-        #endregion
-
-
-        #region Helper Instantiators
-        public static LengthDescriptor NormalLength(int exponent)
-        {
-
-            return new LengthDescriptor(exponent, 0);
-
-        }
-        public static LengthDescriptor RadiusLength(int exponent)
-        {
-
-            return new LengthDescriptor(0, exponent);
-
-        }
-        #endregion
+        ScalarExponent = normalExponent;
+        VectorExponent = polarExponent;
     }
+
+    public LengthDescriptor(float normalExponent, float polarExponent, float matrixExponent):this()
+    {
+        ScalarExponent = normalExponent;
+        VectorExponent = polarExponent;
+        MatrixExponent = matrixExponent;
+    }
+
+    public float ScalarExponent { get; set; }
+
+    public float VectorExponent { get; set; }
+
+    public float MatrixExponent { get; set; }
+
+    public float Exponent
+    {
+        get => ScalarExponent + VectorExponent + MatrixExponent;
+        set => throw new NotSupportedException();
+    }
+
+    public LengthDescriptor Add(LengthDescriptor dimensionDescriptor)
+    {
+        return new LengthDescriptor
+        {
+            ScalarExponent = ScalarExponent + dimensionDescriptor.ScalarExponent,
+            VectorExponent = VectorExponent + dimensionDescriptor.VectorExponent,
+            MatrixExponent = MatrixExponent + dimensionDescriptor.MatrixExponent
+        };
+    }
+
+    public LengthDescriptor Subtract(LengthDescriptor dimensionDescriptor)
+    {
+        return new LengthDescriptor
+        {
+            ScalarExponent = ScalarExponent - dimensionDescriptor.ScalarExponent,
+            VectorExponent = VectorExponent - dimensionDescriptor.VectorExponent,
+            MatrixExponent = MatrixExponent - dimensionDescriptor.MatrixExponent
+        };
+    }
+
+    public LengthDescriptor Multiply(float exponent)
+    {
+        return new LengthDescriptor
+        {
+            ScalarExponent = ScalarExponent * exponent,
+            VectorExponent = VectorExponent * exponent,
+            MatrixExponent = MatrixExponent * exponent
+        };
+    }
+
+    public LengthDescriptor Invert()
+    {
+        return new LengthDescriptor
+        {
+            ScalarExponent = 0 - ScalarExponent,
+            VectorExponent = 0 - VectorExponent,
+            MatrixExponent = 0 - MatrixExponent
+        };
+    }
+
+    public static LengthDescriptor NormalLength(int exponent)
+        => new (exponent, 0);
+
+    public static LengthDescriptor RadiusLength(int exponent)
+        => new(0, exponent);
+
+    public bool Equals(LengthDescriptor ld)
+    {
+        return ScalarExponent == ld.ScalarExponent
+               && VectorExponent == ld.VectorExponent
+               && MatrixExponent == ld.MatrixExponent;
+    }
+
+    public override bool Equals(object? obj)
+        => obj is LengthDescriptor ld && Equals(ld);
+
+    public override int GetHashCode()
+        => HashCode.Combine(ScalarExponent, VectorExponent);
+
+    public static bool operator ==(LengthDescriptor left, LengthDescriptor right)
+        => left.Equals(right);
+
+    public static bool operator !=(LengthDescriptor left, LengthDescriptor right)
+        => !left.Equals(right);
+
+    public int CompareTo(LengthDescriptor other)
+    {
+        var scalarExponentComparison = ScalarExponent.CompareTo(other.ScalarExponent);
+        if (scalarExponentComparison != 0)
+        {
+            return scalarExponentComparison;
+        }
+
+        var vectorExponentComparison = VectorExponent.CompareTo(other.VectorExponent);
+        if (vectorExponentComparison != 0)
+        {
+            return vectorExponentComparison;
+        }
+
+        return MatrixExponent.CompareTo(other.MatrixExponent);
+    }
+
+    public int CompareTo(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return 1;
+        return obj is LengthDescriptor other
+            ? CompareTo(other)
+            : throw new ArgumentException($"Object must be of type {nameof(LengthDescriptor)}");
+    }
+
+    public static bool operator <(LengthDescriptor left, LengthDescriptor right)
+        => left.CompareTo(right) < 0;
+
+    public static bool operator >(LengthDescriptor left, LengthDescriptor right)
+        => left.CompareTo(right) > 0;
+
+    public static bool operator <=(LengthDescriptor left, LengthDescriptor right)
+        => left.CompareTo(right) <= 0;
+
+    public static bool operator >=(LengthDescriptor left, LengthDescriptor right)
+        => left.CompareTo(right) >= 0;
 }

@@ -8,9 +8,11 @@
         public const string SqrtText = "sqrt";
 
 
-        public static readonly string[] TrigFunctions = { "sin", "sinh", "cos", "cosh", "tan", "tanh", "sec", "sech", "csc", "csch", "cot", "coth" };
+        public static readonly string[] TrigFunctions = ["sin", "sinh", "cos", "cosh", "tan", "tanh", "sec", "sech", "csc", "csch", "cot", "coth"
+        ];
 
-        public static readonly string[] InversedTrigFunctions = { "asin", "asinh", "acos", "acosh", "atan", "atanh", "asec", "asech", "acsc", "acsch", "acot", "acoth" };
+        public static readonly string[] InversedTrigFunctions = ["asin", "asinh", "acos", "acosh", "atan", "atanh", "asec", "asech", "acsc", "acsch", "acot", "acoth"
+        ];
 
         /// <summary>
         /// get the function derivation  like sin => cos
@@ -21,85 +23,85 @@
         public static string[]? DiffTrigFunction(SymbolicVariable function, out bool negative)
         {
 
-            string func = function.FunctionName;
+            var func = function.FunctionName;
 
             if (string.Equals(func, "exp", StringComparison.OrdinalIgnoreCase))
             {
                 negative = false;
-                return new string[] { "exp" };
+                return ["exp"];
             }
 
 
             if (string.Equals(func, "sin", StringComparison.OrdinalIgnoreCase))
             {
                 negative = false;
-                return new string[] { "cos" };
+                return ["cos"];
             }
 
             if (string.Equals(func, "sinh", StringComparison.OrdinalIgnoreCase))
             {
                 negative = false;
-                return new string[] { "cosh" };
+                return ["cosh"];
             }
 
             if (string.Equals(func, "cos", StringComparison.OrdinalIgnoreCase))
             {
                 negative = true;
-                return new string[] { "sin" };
+                return ["sin"];
             }
 
             if (string.Equals(func, "cosh", StringComparison.OrdinalIgnoreCase))
             {
                 negative = false;
-                return new string[] { "sinh" };
+                return ["sinh"];
             }
 
             if (string.Equals(func, "tan", StringComparison.OrdinalIgnoreCase))
             {
                 negative = false;
-                return new string[] { "sec", "sec" };
+                return ["sec", "sec"];
             }
 
             if (string.Equals(func, "tanh", StringComparison.OrdinalIgnoreCase))
             {
                 negative = false;
-                return new string[] { "sech", "sech" };
+                return ["sech", "sech"];
             }
 
             if (string.Equals(func, "sec", StringComparison.OrdinalIgnoreCase))
             {
                 negative = false;
-                return new string[] { "sec", "tan" };
+                return ["sec", "tan"];
             }
 
             if (string.Equals(func, "sech", StringComparison.OrdinalIgnoreCase))
             {
                 negative = true;
-                return new string[] { "sech", "tanh" };
+                return ["sech", "tanh"];
             }
 
             if (string.Equals(func, "csc", StringComparison.OrdinalIgnoreCase))
             {
                 negative = true;
-                return new string[] { "csc", "cot" };
+                return ["csc", "cot"];
             }
 
             if (string.Equals(func, "csch", StringComparison.OrdinalIgnoreCase))
             {
                 negative = true;
-                return new string[] { "csch", "coth" };
+                return ["csch", "coth"];
             }
 
             if (string.Equals(func, "cot", StringComparison.OrdinalIgnoreCase))
             {
                 negative = true;
-                return new string[] { "csc", "csc" };
+                return ["csc", "csc"];
             }
 
             if (string.Equals(func, "coth", StringComparison.OrdinalIgnoreCase))
             {
                 negative = true;
-                return new string[] { "csch", "csch" };
+                return ["csch", "csch"];
             }
 
             negative = false;
@@ -205,7 +207,7 @@
 
         public static SymbolicVariable? IntegTrigFunction(SymbolicVariable fv, string parameter)
         {
-            string func = fv.FunctionName;
+            var func = fv.FunctionName;
             
             var spara = new SymbolicVariable(parameter);
 
@@ -288,7 +290,7 @@
 
         public static SymbolicVariable? IntegInversedTrigFunction(SymbolicVariable fv, string parameter)
         {
-            string func = fv.FunctionName;
+            var func = fv.FunctionName;
 
             var spara = new SymbolicVariable(parameter);
 

@@ -7,4 +7,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="Units\Currency\Currencies.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Currencies.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Units\Currency\Currencies.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Currencies.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

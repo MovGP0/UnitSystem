@@ -294,13 +294,13 @@ public class SymbolicVariableTest
 
         var aa2 = aa.Power(2);
 
-        string ex2 = "x^(4*t+2)*y^(4*t)+6*t*z*x^(2*t+1)*y^(2*t)+9*t^2*z^2";
+        var ex2 = "x^(4*t+2)*y^(4*t)+6*t*z*x^(2*t+1)*y^(2*t)+9*t^2*z^2";
 
         Assert.AreEqual(ex2, aa2.ToString());
 
         var aaa = aa * aa2;
 
-        string maxima =
+        var maxima =
         "x^(6*t+3)*y^(6*t)+9*t*z*x^(4*t+2)*y^(4*t)+27*t^2*z^2*x^(2*t+1)*y^(2*t)+27*t^3*z^3";
         Assert.AreEqual(maxima, aaa.ToString());
 
@@ -733,7 +733,7 @@ public class SymbolicVariableTest
 
         Assert.AreEqual(-2179.0, pp.Execute(y, x, z, u));
 
-        double v = _cosFunction.Execute(3.14159265358979);
+        var v = _cosFunction.Execute(3.14159265358979);
 
         Assert.AreEqual(-1.0, v);
 
@@ -772,24 +772,24 @@ public class SymbolicVariableTest
 
         xdic.Add("x", 0);
 
-        int times = 100000;
+        var times = 100000;
 
         // Test using dictionary
-        int t0 = Environment.TickCount;
-        for (int i = 0; i < times; i++)
+        var t0 = Environment.TickCount;
+        for (var i = 0; i < times; i++)
         {
             r.Execute(xdic);
             xdic["x"] = xdic["x"]++;
         }
 
-        int tElapsed = Environment.TickCount - t0;
+        var tElapsed = Environment.TickCount - t0;
 
         Trace.WriteLine(string.Format("Dictionary One Parameter Elapsed Time {0}", tElapsed));
 
         // test without dictionary
         double pizo = 0;
         t0 = Environment.TickCount;
-        for (int i = 0; i < times; i++)
+        for (var i = 0; i < times; i++)
         {
             r.Execute(pizo);
             pizo++;
@@ -986,7 +986,7 @@ public class SymbolicVariableTest
         bb = SymbolicVariable.Parse("-120*t^3+180*t^2+1.06581410364015E-14*t+-30");
         Assert.AreEqual(bb.InvolvedSymbols.Length, 1);
 
-        double r = bb.Execute(2);
+        var r = bb.Execute(2);
     }
 
     [TestMethod]
@@ -1022,7 +1022,7 @@ public class SymbolicVariableTest
     [TestMethod]
     public void IIF_ExecuteTest()
     {
-        SymbolicVariable iif = SymbolicVariable.Parse("IIF(x <= 5, x^2, x^3)");
+        var iif = SymbolicVariable.Parse("IIF(x <= 5, x^2, x^3)");
 
         Assert.AreEqual<string>(iif.InvolvedSymbols[0], "x");
 

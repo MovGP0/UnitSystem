@@ -34,7 +34,7 @@
             // solve
 
             SymbolicVariable ExtractedTerm = null;
-            SymbolicVariable RestTerm = Clone();
+            var RestTerm = Clone();
 
             // extract the needed term
             if (Symbol.Equals(variable, StringComparison.OrdinalIgnoreCase))
@@ -67,7 +67,7 @@
 
             // now we have extracted term as  3*x [Extracted Term] =  5*y [Rest Term]
 
-            SymbolicVariable result = RestTerm / ExtractedTerm.Coeffecient;
+            var result = RestTerm / ExtractedTerm.Coeffecient;
             return result;
         }
 

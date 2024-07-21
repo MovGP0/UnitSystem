@@ -15,9 +15,10 @@
 
         public static implicit operator AngularMomentum<T>(T value)
         {
-            AngularMomentum<T> Q = new AngularMomentum<T>();
-
-            Q.Value = value;
+            AngularMomentum<T> Q = new AngularMomentum<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

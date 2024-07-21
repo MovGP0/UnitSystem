@@ -55,11 +55,11 @@ namespace QsGraphics
 
         public override void Draw(Graphics graphics, float pixelPerMeter)
         {
-            PointF p1 = new PointF();
-            PointF p2 = new PointF();
+            var p1 = new PointF();
+            var p2 = new PointF();
 
             // include time into the picture
-            Time<double> TQ = (Time<double>)MetricUnit.Milli<Second>(0);
+            var TQ = (Time<double>)MetricUnit.Milli<Second>(0);
 
             // prepare for time
             if (Timer.IsRunning)
@@ -118,9 +118,9 @@ namespace QsGraphics
             p2.Y = (float)((ActualY + ActualRadius).Value * pixelPerMeter);
 
 
-            SizeF sf = new SizeF(p2.X - p1.X, p2.Y - p1.Y);
+            var sf = new SizeF(p2.X - p1.X, p2.Y - p1.Y);
 
-            RectangleF rc = new RectangleF(p1, sf);
+            var rc = new RectangleF(p1, sf);
 
             graphics.DrawEllipse(
                 Pens.Blue

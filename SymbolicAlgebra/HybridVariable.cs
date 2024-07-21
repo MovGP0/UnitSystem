@@ -146,7 +146,7 @@
 
         public object Clone()
         {
-            HybridVariable hv = new HybridVariable();
+            var hv = new HybridVariable();
             hv.NumericalVariable = NumericalVariable;
             if (SymbolicVariable != null)
                 hv.SymbolicVariable = SymbolicVariable.Clone();

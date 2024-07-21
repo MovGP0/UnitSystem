@@ -4,64 +4,64 @@ using System.Reflection;
 using QuantitySystem.Attributes;
 using QuantitySystem.Quantities;
 
-namespace QuantitySystem.Units
+namespace QuantitySystem.Units;
+
+public partial class Unit
 {
-    public partial class Unit
+    #region Fields
+        
+    protected string _Symbol;
+
+    protected bool _IsDefaultUnit;
+    private readonly bool _IsBaseUnit;
+
+
+    protected Type _QuantityType;
+    protected QuantityDimension _UnitDimension;
+
+
+
+        
+    //the reference unit information.
+    protected readonly Unit _ReferenceUnit;
+
+    protected readonly double _ReferenceUnitNumerator;
+    protected readonly double _ReferenceUnitDenominator;
+
+
+
+    private readonly bool _IsStronglyTyped = false;
+
+    #endregion
+
+    struct UnitValues
     {
-        #region Fields
-        
-        protected string _Symbol;
+        public string _Symbol;
 
-        protected bool _IsDefaultUnit;
-        private readonly bool _IsBaseUnit;
+        public bool _IsDefaultUnit;
+        public bool _IsBaseUnit;
 
 
-        protected Type _QuantityType;
-        protected QuantityDimension _UnitDimension;
+        public Type _QuantityType;
+        public QuantityDimension _UnitDimension;
 
 
+        public Unit _ReferenceUnit;
 
-        
-        //the reference unit information.
-        protected readonly Unit _ReferenceUnit;
+        public double _ReferenceUnitNumerator;
+        public double _ReferenceUnitDenominator;
 
-        protected readonly double _ReferenceUnitNumerator;
-        protected readonly double _ReferenceUnitDenominator;
+    }
 
-
-
-        private readonly bool _IsStronglyTyped = false;
-
-        #endregion
-
-        struct UnitValues
-        {
-            public string _Symbol;
-
-            public bool _IsDefaultUnit;
-            public bool _IsBaseUnit;
+    static Dictionary<Type, UnitValues> CachedUnitsValues = new Dictionary<Type, UnitValues>();
 
 
-            public Type _QuantityType;
-            public QuantityDimension _UnitDimension;
-
-
-            public Unit _ReferenceUnit;
-
-            public double _ReferenceUnitNumerator;
-            public double _ReferenceUnitDenominator;
-
-        }
-
-        static Dictionary<Type, UnitValues> CachedUnitsValues = new Dictionary<Type, UnitValues>();
-
-
-        /// <summary>
-        /// Fill the instance of the unit with the attributes
-        /// found on it.
-        /// </summary>
-        protected Unit()
-        {
+    /// <summary>
+    /// Fill the instance of the unit with the attributes
+    /// found on it.
+    /// </summary>
+    protected Unit()
+    {
             //only called on the strongly typed units
             _IsStronglyTyped = true;            
             
@@ -89,7 +89,7 @@ namespace QuantitySystem.Units
                     object[] attributes = (object[])info.GetCustomAttributes(true);
 
                     //get the UnitAttribute
-                    UnitAttribute ua = (UnitAttribute)attributes.SingleOrDefault<object>(ut => ut is UnitAttribute);
+                    var ua = (UnitAttribute)attributes.SingleOrDefault<object>(ut => ut is UnitAttribute);
 
                     if (ua != null)
                     {
@@ -123,7 +123,7 @@ namespace QuantitySystem.Units
                     }
 
                     //Get the reference attribute
-                    ReferenceUnitAttribute dua = (ReferenceUnitAttribute)attributes.SingleOrDefault<object>(ut => ut is ReferenceUnitAttribute);
+                    var dua = (ReferenceUnitAttribute)attributes.SingleOrDefault<object>(ut => ut is ReferenceUnitAttribute);
 
                     if (dua != null)
                     {
@@ -135,7 +135,7 @@ namespace QuantitySystem.Units
                         {
                             //get the SI Unit Type for this quantity
                             //first search for direct mapping
-                            Type SIUnitType = GetDefaultSIUnitTypeOf(_QuantityType);
+                            var SIUnitType = GetDefaultSIUnitTypeOf(_QuantityType);
                             if (SIUnitType != null)
                             {
                                 _ReferenceUnit = (Unit)Activator.CreateInstance(SIUnitType);
@@ -173,14 +173,14 @@ namespace QuantitySystem.Units
 
 
 
-        #region Characterisitics
+    #region Characterisitics
 
 
         
-        public virtual string Symbol
+    public virtual string Symbol
+    {
+        get
         {
-            get
-            {
 
                 //symbol in strong typed are fetched from the attributes
 
@@ -194,74 +194,74 @@ namespace QuantitySystem.Units
                     return _Symbol;
                 }
             }
-        }
+    }
 
-        /// <summary>
-        /// Determine if the unit is the default unit for the quantity type.
-        /// </summary>
-        public virtual bool IsDefaultUnit
+    /// <summary>
+    /// Determine if the unit is the default unit for the quantity type.
+    /// </summary>
+    public virtual bool IsDefaultUnit
+    {
+        get
         {
-            get
-            {
                 //based on the current unit attribute
                 return _IsDefaultUnit;
             }
-        }
+    }
 
-        /// <summary>
-        /// The dimension that this unit represents.
-        /// </summary>
-        public QuantityDimension UnitDimension
+    /// <summary>
+    /// The dimension that this unit represents.
+    /// </summary>
+    public QuantityDimension UnitDimension
+    {
+        get { return _UnitDimension; }
+        internal set { _UnitDimension = value; }
+    }
+
+
+    /// <summary>
+    /// Returns a unique key for the unit based on the unit type and the representative quantity type
+    /// Also m! and m  while they are the same unit but they represents Polar and Regular Lenghts respectively.
+    /// </summary>
+    public Tuple<Type, Type> UniqueKey => new Tuple<Type, Type>(GetType(), QuantityType);
+
+
+    /// <summary>
+    /// The Type of the Quantity of this unit.
+    /// </summary>
+    public Type QuantityType
+    {
+        get
         {
-            get { return _UnitDimension; }
-            internal set { _UnitDimension = value; }
-        }
-
-
-        /// <summary>
-        /// Returns a unique key for the unit based on the unit type and the representative quantity type
-        /// Also m! and m  while they are the same unit but they represents Polar and Regular Lenghts respectively.
-        /// </summary>
-        public Tuple<Type, Type> UniqueKey => new Tuple<Type, Type>(GetType(), QuantityType);
-
-
-        /// <summary>
-        /// The Type of the Quantity of this unit.
-        /// </summary>
-        public Type QuantityType
-        {
-            get
-            {
                 return _QuantityType;
             }
-            internal set
-            {
+        internal set
+        {
                 _QuantityType = value;
                 _UnitDimension = QuantityDimension.DimensionFrom(value);
             }
-        }
+    }
 
-        /// <summary>
-        /// Tells if Unit is related to one of the seven base quantities.
-        /// </summary>
-        public bool IsBaseUnit
+    /// <summary>
+    /// Tells if Unit is related to one of the seven base quantities.
+    /// </summary>
+    public bool IsBaseUnit
+    {
+        get
         {
-            get
-            {
                 return _IsBaseUnit;
             }
-        }
+    }
 
 
 
-        /// <summary>
-        /// The unit that serve a parent for this unit.
-        /// and should take the same exponent of the unit.
-        /// </summary>
-        public virtual Unit ReferenceUnit
+    /// <summary>
+    /// The unit that serve a parent for this unit.
+    /// and should take the same exponent of the unit.
+    /// </summary>
+    public virtual Unit ReferenceUnit
+    {
+        get 
         {
-            get 
-            {
                 if (_ReferenceUnit != null)
                 {
                     if (_ReferenceUnit.UnitExponent != UnitExponent)
@@ -270,54 +270,54 @@ namespace QuantitySystem.Units
 
                 return _ReferenceUnit; 
             }
-        }
+    }
 
-        /// <summary>
-        /// How much the current unit equal to the reference unit.
-        /// </summary>
-        public double ReferenceUnitTimes
-        {
-            get { return ReferenceUnitNumerator / ReferenceUnitDenominator; }
-        }
+    /// <summary>
+    /// How much the current unit equal to the reference unit.
+    /// </summary>
+    public double ReferenceUnitTimes
+    {
+        get { return ReferenceUnitNumerator / ReferenceUnitDenominator; }
+    }
 
-        public virtual double ReferenceUnitNumerator
+    public virtual double ReferenceUnitNumerator
+    {
+        get 
         {
-            get 
-            {
 
                 return Math.Pow(_ReferenceUnitNumerator, unitExponent);
             }
-        }
+    }
 
-        public virtual double ReferenceUnitDenominator
+    public virtual double ReferenceUnitDenominator
+    {
+        get
         {
-            get
-            {
                 return Math.Pow(_ReferenceUnitDenominator, unitExponent);
             }
-        }
+    }
 
 
 
 
-        #endregion
+    #endregion
 
-        #region Operations
+    #region Operations
 
-        /// <summary>
-        /// Invert the current unit simply from numerator to denominator and vice versa.
-        /// </summary>
-        /// <returns></returns>
-        public Unit Invert()
-        {
+    /// <summary>
+    /// Invert the current unit simply from numerator to denominator and vice versa.
+    /// </summary>
+    /// <returns></returns>
+    public Unit Invert()
+    {
             Unit unit = null;
             if (SubUnits != null)
             {
                 //convert sub units if this were only a generated unit.
 
-                List<Unit> InvertedUnits = new List<Unit>();
+                List<Unit> InvertedUnits = [];
 
-                foreach (Unit lun in SubUnits)
+                foreach (var lun in SubUnits)
                 {
                     InvertedUnits.Add(lun.Invert());
 
@@ -339,25 +339,25 @@ namespace QuantitySystem.Units
             return unit;
         }
 
-        #region Manipulating quantities
-        //I want to get away from Activator.CreateInstance because it is very slow :)
-        // so I'll cach resluts 
-        static Dictionary<Type, object> Qcach = new Dictionary<Type, object>();
+    #region Manipulating quantities
+    //I want to get away from Activator.CreateInstance because it is very slow :)
+    // so I'll cach resluts 
+    static Dictionary<Type, object> Qcach = new Dictionary<Type, object>();
 
 
 
-        /// <summary>
-        /// Gets the quantity of this unit based on the desired container.
-        /// <see cref="QuantityType"/>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public AnyQuantity<T> GetThisUnitQuantity<T>()
-        {
+    /// <summary>
+    /// Gets the quantity of this unit based on the desired container.
+    /// <see cref="QuantityType"/>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public AnyQuantity<T> GetThisUnitQuantity<T>()
+    {
 
             AnyQuantity<T> Quantity = null;
 
-            Type qt = QuantityType.MakeGenericType(typeof(T));
+            var qt = QuantityType.MakeGenericType(typeof(T));
                 
             object j;
             if (Qcach.TryGetValue(qt, out j))
@@ -379,13 +379,13 @@ namespace QuantitySystem.Units
         }
 
         
-        public AnyQuantity<T> GetThisUnitQuantity<T>(T value)
-        {
+    public AnyQuantity<T> GetThisUnitQuantity<T>(T value)
+    {
 
             AnyQuantity<T> Quantity = null;
             if (QuantityType != typeof(DerivedQuantity<>) && QuantityType != null)
             {
-                Type qt = QuantityType.MakeGenericType(typeof(T));
+                var qt = QuantityType.MakeGenericType(typeof(T));
                 
                 object j;
                 if (Qcach.TryGetValue(qt, out j))
@@ -417,45 +417,44 @@ namespace QuantitySystem.Units
             return Quantity;
         }
 
-        #endregion
+    #endregion
 
 
 
-        #endregion
+    #endregion
 
 
-        #region Properties
+    #region Properties
 
-        private float unitExponent = 1;
+    private float unitExponent = 1;
 
-        public float UnitExponent
+    public float UnitExponent
+    {
+        get
         {
-            get
-            {
                 return unitExponent;
             }
-            set
-            {
+        set
+        {
                 unitExponent = value;
                 
             }
-        }
+    }
 
-        public const string MixedSystem = "MixedSystem";
+    public const string MixedSystem = "MixedSystem";
 
-        public string UnitSystem 
+    public string UnitSystem 
+    { 
+        get 
         { 
-            get 
-            { 
                 //based on the current namespace of the unit
-                //return the text of the namespace 
-                // after Unit.
+                //return the text of the namespace          // after Unit.
 
                 if (IsStronglyTyped)
                 {
-                    Type UnitType = GetType();
+                    var UnitType = GetType();
 
-                    string ns = UnitType.Namespace.Substring(UnitType.Namespace.LastIndexOf("Units.", StringComparison.Ordinal) + 6);
+                    var ns = UnitType.Namespace[(UnitType.Namespace.LastIndexOf("Units.", StringComparison.Ordinal) + 6)..];
                     return ns;
                 }
                 else
@@ -464,12 +463,11 @@ namespace QuantitySystem.Units
                     // check all sub units if there unit system is the same then
                     //  return it 
 
-
-                    if (SubUnits.Count > 0)
+         if (SubUnits.Count > 0)
                     {
-                        string ns = SubUnits[0].UnitSystem;
+                        var ns = SubUnits[0].UnitSystem;
 
-                        int suidx = 1;
+                        var suidx = 1;
 
                         while (suidx < SubUnits.Count)
                         {
@@ -488,60 +486,60 @@ namespace QuantitySystem.Units
 
                 }
             } 
-        }
+    }
 
 
-        /// <summary>
-        /// Determine if the unit is inverted or not.
-        /// </summary>
-        public bool IsInverted
+    /// <summary>
+    /// Determine if the unit is inverted or not.
+    /// </summary>
+    public bool IsInverted
+    {
+        get
         {
-            get
-            {
                 if (UnitExponent < 0) return true;
                 else
                     return false;
             }
-        }
+    }
 
-        public bool IsStronglyTyped
+    public bool IsStronglyTyped
+    {
+        get
         {
-            get
-            {
                 return _IsStronglyTyped;
             }
-        }
-        #endregion
+    }
+    #endregion
 
-        public string Name => GetType().Name;
+    public string Name => GetType().Name;
 
-        public string QuantityTypeName => QuantityType.Name;
+    public string QuantityTypeName => QuantityType.Name;
 
 
-        public override string ToString()
-        {
+    public override string ToString()
+    {
             return Name + " " + Symbol;
         }
 
 
-        #region ICloneable Members
+    #region ICloneable Members
 
-        public Unit Clone()
-        {
+    public Unit Clone()
+    {
             return (Unit)MemberwiseClone();
         }
 
-        #endregion
+    #endregion
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            Unit u = obj as Unit;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public override bool Equals(object obj)
+    {
+            var u = obj as Unit;
             if(!ReferenceEquals(u, null))
             {
                 if (Symbol.Equals(u.Symbol, StringComparison.Ordinal))
@@ -550,13 +548,13 @@ namespace QuantitySystem.Units
             return false;
         }
 
-        public override int GetHashCode()
-        {
+    public override int GetHashCode()
+    {
             return Symbol.GetHashCode();
         }
 
-        public static  bool operator ==(Unit lhs, Unit rhs)
-        {
+    public static  bool operator ==(Unit lhs, Unit rhs)
+    {
             // If both are null, or both are same instance, return true.
             if (ReferenceEquals(lhs, rhs))
             {
@@ -564,7 +562,7 @@ namespace QuantitySystem.Units
             }
 
             // If one is null, but not both, return false.
-            if (((object)lhs == null) || ((object)rhs == null))
+            if ((object)lhs == null || (object)rhs == null)
             {
                 return false;
             }
@@ -573,10 +571,9 @@ namespace QuantitySystem.Units
 
         }
 
-        public static bool operator !=(Unit lhs, Unit rhs)
-        {
+    public static bool operator !=(Unit lhs, Unit rhs)
+    {
             return !(lhs == rhs);
 
         }
-    }
 }

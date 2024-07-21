@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator ElectricCharge<T>(T value)
         {
-            ElectricCharge<T> Q = new ElectricCharge<T>();
-
-            Q.Value = value;
+            ElectricCharge<T> Q = new ElectricCharge<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

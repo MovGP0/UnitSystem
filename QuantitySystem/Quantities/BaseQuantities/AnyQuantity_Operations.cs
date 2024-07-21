@@ -29,9 +29,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 {
                     //use direct calculations
 
-                    double firstVal = (double)(object)firstQuantity.Value;
+                    var firstVal = (double)(object)firstQuantity.Value;
 
-                    double secondVal = (double)(object)secondQuantity.Value;
+                    var secondVal = (double)(object)secondQuantity.Value;
 
 
                     //correct the values according to left unit or first unit.
@@ -40,7 +40,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
                         //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
@@ -49,7 +49,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
                     ////sum the values
 
-                    double result = firstVal + secondVal;
+                    var result = firstVal + secondVal;
 
 
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
@@ -66,9 +66,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 }
                 else
                 {
-                    T firstVal = (firstQuantity.Value);
+                    var firstVal = firstQuantity.Value;
 
-                    T secondVal = (secondQuantity.Value);
+                    var secondVal = secondQuantity.Value;
 
                     //correct the values according to left unit or first unit.
                     //the resulted quantity has the values of the first unit.
@@ -76,7 +76,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
 
                         secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
@@ -92,7 +92,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     Func<T> aqf = cq.Compile();
 
                     // execute the function
-                    T result = aqf();
+                    var result = aqf();
 
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
@@ -137,9 +137,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 }
 
 
-                T firstVal = (firstQuantity.Value);
+                var firstVal = firstQuantity.Value;
 
-                Q secondVal = (secondQuantity.Value);
+                var secondVal = secondQuantity.Value;
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
@@ -147,7 +147,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                 {
                     //factor from second unit to first unit
-                    UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                    var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
                     
                     secondVal = MultiplyScalarByGeneric<Q>(stof.ConversionFactor, secondVal);
                 }
@@ -162,7 +162,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 Func<T> aqf = cq.Compile();
 
                 // execute the function
-                T result = aqf();
+                var result = aqf();
 
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                 {
@@ -204,9 +204,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 {
                     //use direct calculations
 
-                    double firstVal = (double)(object)firstQuantity.Value;
+                    var firstVal = (double)(object)firstQuantity.Value;
 
-                    double secondVal = (double)(object)secondQuantity.Value;
+                    var secondVal = (double)(object)secondQuantity.Value;
 
                     //correct the values according to left unit or first unit.
                     //the resulted quantity has the values of the first unit.
@@ -214,7 +214,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
                         secondVal = stof.ConversionFactor * secondVal;
                     }
@@ -223,7 +223,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
                     ////sum the values
 
-                    double result = firstVal - secondVal;
+                    var result = firstVal - secondVal;
 
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
@@ -239,8 +239,8 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 else
                 {
 
-                    T firstVal = (firstQuantity.Value);
-                    T secondVal = (secondQuantity.Value);
+                    var firstVal = firstQuantity.Value;
+                    var secondVal = secondQuantity.Value;
 
                     //correct the values according to left unit or first unit.
                     //the resulted quantity has the values of the first unit.
@@ -248,7 +248,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
                         secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
                     }
@@ -263,7 +263,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     Func<T> aqf = cq.Compile();
 
                     // execute the function
-                    T result = aqf();
+                    var result = aqf();
 
 
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
@@ -300,14 +300,14 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
             if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
             {
-                qresult.Value = (T)(object)(((double)(object)firstQuantity.Value) * ((double)(object)secondQuantity.Value));
+                qresult.Value = (T)(object)((double)(object)firstQuantity.Value * (double)(object)secondQuantity.Value);
 
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                 {
 
-                    Unit un = new Unit(qresult.GetType(), firstQuantity.Unit, secondQuantity.Unit);
+                    var un = new Unit(qresult.GetType(), firstQuantity.Unit, secondQuantity.Unit);
                     qresult.Unit = un;
-                    if (un.IsOverflowed) qresult.Value = (T)(object)(un.GetUnitOverflow() * ((double)(object)qresult.Value));
+                    if (un.IsOverflowed) qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object)qresult.Value);
                 }
             }
             else
@@ -321,7 +321,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                 {
 
-                    Unit un = new Unit(qresult.GetType(), firstQuantity.Unit, secondQuantity.Unit);
+                    var un = new Unit(qresult.GetType(), firstQuantity.Unit, secondQuantity.Unit);
                     qresult.Unit = un;
                     if (un.IsOverflowed) qresult.Value = MultiplyScalarByGeneric(un.GetUnitOverflow(), qresult.Value);
 
@@ -362,14 +362,14 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
             if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
             {
-                qresult.Value = (T)(object)(((double)(object)firstQuantity.Value) * ((double)(object)sec_qty.Value));
+                qresult.Value = (T)(object)((double)(object)firstQuantity.Value * (double)(object)sec_qty.Value);
 
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                 {
 
-                    Unit un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
+                    var un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
                     qresult.Unit = un;
-                    if (un.IsOverflowed) qresult.Value = (T)(object)(un.GetUnitOverflow() * ((double)(object)qresult.Value));
+                    if (un.IsOverflowed) qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object)qresult.Value);
                 }
             }
             else
@@ -383,7 +383,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                 {
 
-                    Unit un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
+                    var un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
                     qresult.Unit = un;
                     if (un.IsOverflowed) qresult.Value = MultiplyScalarByGeneric(un.GetUnitOverflow(), qresult.Value);
 
@@ -403,14 +403,14 @@ namespace QuantitySystem.Quantities.BaseQuantities
         {
             if (!exponent.Dimension.IsDimensionless)
             {
-                string expectedResult = quantity.ToShortString() + "^" + exponent.ToShortString();
+                var expectedResult = quantity.ToShortString() + "^" + exponent.ToShortString();
                 throw new QuantityException("Raising Quantity to a non dimensionless quantity is not implemented\nExpected Result is " + expectedResult, new NotImplementedException());
             }
 
             
             // and I am ignoring the units conversion also 
             
-            Unit unit = quantity.Unit.RaiseUnitPower((float)exponent.Value);
+            var unit = quantity.Unit.RaiseUnitPower((float)exponent.Value);
 
 
             AnyQuantity<T> result = null;
@@ -460,7 +460,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
             if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
             {
-                qresult.Value = (T)(object)(((double)(object)firstQuantity.Value) % ((double)(object)secondQuantity.Value));
+                qresult.Value = (T)(object)((double)(object)firstQuantity.Value % (double)(object)secondQuantity.Value);
             }
             else
             {
@@ -482,9 +482,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     #region Premitive
                     //use direct calculations
 
-                    double firstVal = (double)(object)firstQuantity.Value;
+                    var firstVal = (double)(object)firstQuantity.Value;
 
-                    double secondVal = (double)(object)secondQuantity.Value;
+                    var secondVal = (double)(object)secondQuantity.Value;
 
 
                     //correct the values according to left unit or first unit.
@@ -493,7 +493,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
                         //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
@@ -509,9 +509,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
                     #region Custom Types
 
-                    T firstVal = (firstQuantity.Value);
+                    var firstVal = firstQuantity.Value;
 
-                    T secondVal = (secondQuantity.Value);
+                    var secondVal = secondQuantity.Value;
 
                     //correct the values according to left unit or first unit.
                     //the resulted quantity has the values of the first unit.
@@ -519,7 +519,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
 
                         secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
@@ -531,10 +531,10 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     Expression<Func<bool>> cq = Expression.Lambda<Func<bool>>(expr);
 
                     // compile the function
-                    Func<bool> aqf = cq.Compile();
+                    var aqf = cq.Compile();
 
                     // execute the function
-                    bool result = aqf();
+                    var result = aqf();
 
                     return result;
 
@@ -558,9 +558,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     #region Premitive
                     //use direct calculations
 
-                    double firstVal = (double)(object)firstQuantity.Value;
+                    var firstVal = (double)(object)firstQuantity.Value;
 
-                    double secondVal = (double)(object)secondQuantity.Value;
+                    var secondVal = (double)(object)secondQuantity.Value;
 
 
                     //correct the values according to left unit or first unit.
@@ -569,7 +569,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
                         //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
@@ -586,9 +586,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     #region Custom Types
                     
 
-                    T firstVal = (firstQuantity.Value);
+                    var firstVal = firstQuantity.Value;
 
-                    T secondVal = (secondQuantity.Value);
+                    var secondVal = secondQuantity.Value;
 
                     //correct the values according to left unit or first unit.
                     //the resulted quantity has the values of the first unit.
@@ -596,7 +596,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
 
                         secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
@@ -608,10 +608,10 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     Expression<Func<bool>> cq = Expression.Lambda<Func<bool>>(expr);
 
                     // compile the function
-                    Func<bool> aqf = cq.Compile();
+                    var aqf = cq.Compile();
 
                     // execute the function
-                    bool result = aqf();
+                    var result = aqf();
 
                     return result;
                     #endregion
@@ -634,9 +634,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     #region Premitive
                     //use direct calculations
 
-                    double firstVal = (double)(object)firstQuantity.Value;
+                    var firstVal = (double)(object)firstQuantity.Value;
 
-                    double secondVal = (double)(object)secondQuantity.Value;
+                    var secondVal = (double)(object)secondQuantity.Value;
 
 
                     //correct the values according to left unit or first unit.
@@ -645,7 +645,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
                         //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
@@ -664,9 +664,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     
 
 
-                    T firstVal = (firstQuantity.Value);
+                    var firstVal = firstQuantity.Value;
 
-                    T secondVal = (secondQuantity.Value);
+                    var secondVal = secondQuantity.Value;
 
                     //correct the values according to left unit or first unit.
                     //the resulted quantity has the values of the first unit.
@@ -674,7 +674,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
 
                         secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
@@ -686,10 +686,10 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     Expression<Func<bool>> cq = Expression.Lambda<Func<bool>>(expr);
 
                     // compile the function
-                    Func<bool> aqf = cq.Compile();
+                    var aqf = cq.Compile();
 
                     // execute the function
-                    bool result = aqf();
+                    var result = aqf();
 
                     return result;
                     #endregion
@@ -712,9 +712,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     #region Premitive
                     //use direct calculations
 
-                    double firstVal = (double)(object)firstQuantity.Value;
+                    var firstVal = (double)(object)firstQuantity.Value;
 
-                    double secondVal = (double)(object)secondQuantity.Value;
+                    var secondVal = (double)(object)secondQuantity.Value;
 
 
                     //correct the values according to left unit or first unit.
@@ -723,7 +723,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
                         //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
@@ -738,9 +738,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 {
 
                     #region Custom Types
-                    T firstVal = (firstQuantity.Value);
+                    var firstVal = firstQuantity.Value;
 
-                    T secondVal = (secondQuantity.Value);
+                    var secondVal = secondQuantity.Value;
 
                     //correct the values according to left unit or first unit.
                     //the resulted quantity has the values of the first unit.
@@ -748,7 +748,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
 
                         secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
@@ -760,10 +760,10 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     Expression<Func<bool>> cq = Expression.Lambda<Func<bool>>(expr);
 
                     // compile the function
-                    Func<bool> aqf = cq.Compile();
+                    var aqf = cq.Compile();
 
                     // execute the function
-                    bool result = aqf();
+                    var result = aqf();
 
                     return result;
                     #endregion
@@ -785,9 +785,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     #region Premitive
                     //use direct calculations
 
-                    double firstVal = (double)(object)firstQuantity.Value;
+                    var firstVal = (double)(object)firstQuantity.Value;
 
-                    double secondVal = (double)(object)secondQuantity.Value;
+                    var secondVal = (double)(object)secondQuantity.Value;
 
 
                     //correct the values according to left unit or first unit.
@@ -796,7 +796,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
                         //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
@@ -812,9 +812,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
                     #region Custom Types
 
-                    T firstVal = (firstQuantity.Value);
+                    var firstVal = firstQuantity.Value;
 
-                    T secondVal = (secondQuantity.Value);
+                    var secondVal = secondQuantity.Value;
 
                     //correct the values according to left unit or first unit.
                     //the resulted quantity has the values of the first unit.
@@ -822,7 +822,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
 
                         secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
@@ -834,10 +834,10 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     Expression<Func<bool>> cq = Expression.Lambda<Func<bool>>(expr);
 
                     // compile the function
-                    Func<bool> aqf = cq.Compile();
+                    var aqf = cq.Compile();
 
                     // execute the function
-                    bool result = aqf();
+                    var result = aqf();
 
                     return result;
                     #endregion
@@ -862,9 +862,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     #region Premitive
                     //use direct calculations
 
-                    double firstVal = (double)(object)firstQuantity.Value;
+                    var firstVal = (double)(object)firstQuantity.Value;
 
-                    double secondVal = (double)(object)secondQuantity.Value;
+                    var secondVal = (double)(object)secondQuantity.Value;
 
 
                     //correct the values according to left unit or first unit.
@@ -873,7 +873,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
                         secondVal = stof.ConversionFactor * secondVal;
                     }
@@ -890,9 +890,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
 
 
-                    T firstVal = (firstQuantity.Value);
+                    var firstVal = firstQuantity.Value;
 
-                    T secondVal = (secondQuantity.Value);
+                    var secondVal = secondQuantity.Value;
 
                     //correct the values according to left unit or first unit.
                     //the resulted quantity has the values of the first unit.
@@ -900,7 +900,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                     {
                         //factor from second unit to first unit
-                        UnitPathStack stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
+                        var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
 
                         secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
@@ -912,10 +912,10 @@ namespace QuantitySystem.Quantities.BaseQuantities
                     Expression<Func<bool>> cq = Expression.Lambda<Func<bool>>(expr);
 
                     // compile the function
-                    Func<bool> aqf = cq.Compile();
+                    var aqf = cq.Compile();
 
                     // execute the function
-                    bool result = aqf();
+                    var result = aqf();
 
                     return result;
                     #endregion

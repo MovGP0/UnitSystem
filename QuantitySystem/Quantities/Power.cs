@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Power<T>(T value)
         {
-            Power<T> Q = new Power<T>();
-
-            Q.Value = value;
+            Power<T> Q = new Power<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

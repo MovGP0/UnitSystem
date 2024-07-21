@@ -18,7 +18,7 @@ public sealed partial class Dimension : ImmutableCollection<float>
     /// <summary>
     /// Gets a dimensionless instance of <see cref="Dimension"/>.
     /// </summary>
-    public static Dimension DimensionLess { get; } = new();
+    public static Dimension DimensionLess { get; } = [];
 
     /// <summary>
     /// Trims trailing zeros from the array of exponents.

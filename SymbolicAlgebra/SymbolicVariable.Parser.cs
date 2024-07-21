@@ -18,7 +18,7 @@ namespace SymbolicAlgebra
             {
                 get
                 {
-                    string gg = SymbolicExpression.ToString();
+                    var gg = SymbolicExpression.ToString();
 
                     gg += Operation;
 
@@ -42,8 +42,8 @@ namespace SymbolicAlgebra
             public Expression DynamicExpression;
         }
         
-        static readonly char[] parse_separators = {'^', '*', '/', '+', '-', '(', '|', '.'};
-        static readonly char[] parse_seps       = {'^', '*', '/', '+', '-', '|', '.'};
+        static readonly char[] parse_separators = ['^', '*', '/', '+', '-', '(', '|', '.'];
+        static readonly char[] parse_seps       = ['^', '*', '/', '+', '-', '|', '.'];
 
         /// <summary>
         /// Parse expression of variables and make SymbolicVariable
@@ -54,13 +54,13 @@ namespace SymbolicAlgebra
         {
             
 
-            var r = from zr in expression.Split(new string[]{":="}, StringSplitOptions.RemoveEmptyEntries)
+            var r = from zr in expression.Split([":="], StringSplitOptions.RemoveEmptyEntries)
                     where string.IsNullOrWhiteSpace(zr)==false
                     select zr.Trim();
             
             string[] rr = r.ToArray();
 
-            string expr  = string.Empty;
+            var expr  = string.Empty;
             if (rr.Length == 0) return null;
             if (rr.Length > 1)
             {
@@ -87,17 +87,17 @@ namespace SymbolicAlgebra
             //    -  Subtraction
 
 
-            bool NextGroupIsNegativeSign = false;
+            var NextGroupIsNegativeSign = false;
             
             // Tokenization is done by separating with operators
-            SymbolicExpressionOperator Root = new SymbolicExpressionOperator();
-            SymbolicExpressionOperator ep = Root;
+            var Root = new SymbolicExpressionOperator();
+            var ep = Root;
 
-            StringBuilder TokenBuilder = new StringBuilder();
-            Stack<int> PLevels = new Stack<int>();
-            bool Inner = false;
-            bool FunctionContext = false;
-            for (int ix = 0; ix < expr.Length; ix++)
+            var TokenBuilder = new StringBuilder();
+            var PLevels = new Stack<int>();
+            var Inner = false;
+            var FunctionContext = false;
+            for (var ix = 0; ix < expr.Length; ix++)
             {
                 if (PLevels.Count == 0)
                 {
@@ -158,9 +158,9 @@ namespace SymbolicAlgebra
                                 // and we need to preserve the information about next group
                                 //   that it has a sign.
 
-                                string signs = TokenBuilder.ToString();
+                                var signs = TokenBuilder.ToString();
 
-                                int nve = signs.ToCharArray().Count(sign => sign == '-');
+                                var nve = signs.ToCharArray().Count(sign => sign == '-');
 
                                 if ((nve % 2.0) != 0)
                                 {
@@ -265,25 +265,33 @@ namespace SymbolicAlgebra
             TokenBuilder = null;
 
 
-            string[] Group = { "^"    /* Power for normal product '*' */
-                             };
+            string[] Group =
+            [
+                "^"    /* Power for normal product '*' */
+            ];
 
-            string[] SymGroup = { "|" /* Derivation operator */,
-                                  "." /* Integration operator */};
+            string[] SymGroup =
+            [
+                "|" /* Derivation operator */,
+                                  "." /* Integration operator */
+            ];
 
-            string[] Group1 = { "*"   /* normal multiplication */, 
+            string[] Group1 =
+            [
+                "*"   /* normal multiplication */, 
                                 "/"   /* normal division */, 
-                                "%"   /* modulus */ };
+                                "%"   /* modulus */
+            ];
 
 
-            string[] Group2 = { "+", "-" };
+            string[] Group2 = ["+", "-"];
 
             /// Operator Groups Ordered by Priorities.
-            string[][] OperatorGroups = { Group, SymGroup, Group1, Group2};
+            string[][] OperatorGroups = [Group, SymGroup, Group1, Group2];
 
             foreach (var opg in OperatorGroups)
             {
-                SymbolicExpressionOperator eop = Root;
+                var eop = Root;
 
                 //Pass for '[op]' and merge it  but from top to child :)  {forward)
                 while (eop.Next != null)
@@ -337,18 +345,18 @@ namespace SymbolicAlgebra
         private static SymbolicVariable? ArithExpression(SymbolicExpressionOperator eop, out short skip)
         {
 
-            SymbolicVariable left = eop.SymbolicExpression;
-            string op = eop.Operation;
-            SymbolicVariable right = eop.Next.SymbolicExpression;
+            var left = eop.SymbolicExpression;
+            var op = eop.Operation;
+            var right = eop.Next.SymbolicExpression;
 
             skip = 1;
 
             if (op == "|")
             {
-                int p = (int)right.SymbolPower;
-                string rp = right.Symbol;
+                var p = (int)right.SymbolPower;
+                var rp = right.Symbol;
 
-                SymbolicVariable v = left;
+                var v = left;
                 while (p > 0)
                 {
                     v = v.Differentiate(rp);
@@ -359,10 +367,10 @@ namespace SymbolicAlgebra
 
             if (op == ".")
             {
-                int p = (int)right.SymbolPower;
-                string rp = right.Symbol;
+                var p = (int)right.SymbolPower;
+                var rp = right.Symbol;
 
-                SymbolicVariable v = left;
+                var v = left;
                 while (p > 0)
                 {
                     v = v.Integrate(rp);
@@ -415,9 +423,9 @@ namespace SymbolicAlgebra
         private static Expression ArithExpression(DynamicExpressionOperator eop, out short skip)
         {
 
-            Expression left = eop.DynamicExpression;
-            string op = eop.Operation;
-            Expression right = eop.Next.DynamicExpression;
+            var left = eop.DynamicExpression;
+            var op = eop.Operation;
+            var right = eop.Next.DynamicExpression;
 
             skip = 1;
 
@@ -479,7 +487,7 @@ namespace SymbolicAlgebra
                 expression = ToString();
             }
 
-            bool NegativeExpression = false;
+            var NegativeExpression = false;
 
             if (expression.StartsWith("-"))
             {
@@ -488,9 +496,9 @@ namespace SymbolicAlgebra
             }
 
 
-            char[] separators = { '^', '*', '/', '+', '-', '(', '<', '>', '=' };
+            char[] separators = ['^', '*', '/', '+', '-', '(', '<', '>', '='];
 
-            char[] operators = { '^', '*', '/', '+', '-' };
+            char[] operators = ['^', '*', '/', '+', '-'];
 
 
             expression = expression.Replace(" ", "");
@@ -508,13 +516,13 @@ namespace SymbolicAlgebra
             
 
             // Tokenization is done by separating with operators
-            DynamicExpressionOperator Root = new DynamicExpressionOperator();
-            DynamicExpressionOperator ep = Root;
+            var Root = new DynamicExpressionOperator();
+            var ep = Root;
 
-            StringBuilder TokenBuilder = new StringBuilder();
-            Stack<int> PLevels = new Stack<int>();
-            bool Inner = false;
-            bool FunctionContext = false;
+            var TokenBuilder = new StringBuilder();
+            var PLevels = new Stack<int>();
+            var Inner = false;
+            var FunctionContext = false;
 
             #region method that will be reused
             Action<Dictionary<string, ParameterExpression>> redundantFunction = (parameters) =>
@@ -568,9 +576,10 @@ namespace SymbolicAlgebra
                                         , BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static
                                         );
                             else if (fname.Equals("log", StringComparison.OrdinalIgnoreCase))
-                                targetfunction = typeof(Math).GetMethod("Log", new Type[] { typeof(double) });
+                                targetfunction = typeof(Math).GetMethod("Log", [typeof(double)]);
                             else if (fname.Equals("iif", StringComparison.OrdinalIgnoreCase))
-                                targetfunction = typeof(CoLogic).GetMethod("IIF", new Type[] { typeof(bool), typeof(double), typeof(double) });
+                                targetfunction = typeof(CoLogic).GetMethod("IIF", [typeof(bool), typeof(double), typeof(double)
+                                ]);
                             else
                                 targetfunction = typeof(Math).GetMethod(
                                     fname
@@ -583,7 +592,7 @@ namespace SymbolicAlgebra
                                 var fps = FMatch.Groups["parameters"].Value;
                                 string[] pss = TextTools.ComaSplit(fps);
                                 Expression[] tfparams = new Expression[pss.Length];
-                                for (int ixf = 0; ixf < pss.Length; ixf++)
+                                for (var ixf = 0; ixf < pss.Length; ixf++)
                                 {
                                     tfparams[ixf] = ParseDynamicExpression(ref parameters, pss[ixf]);
                                 }
@@ -627,7 +636,7 @@ namespace SymbolicAlgebra
 
             #endregion
 
-            for (int ix = 0; ix < expression.Length; ix++)
+            for (var ix = 0; ix < expression.Length; ix++)
             {
                 if (PLevels.Count == 0)
                 {
@@ -738,27 +747,32 @@ namespace SymbolicAlgebra
             TokenBuilder = null;
 
 
-            string[] Group = { "^"    /* Power for normal product '*' */
-                             };
+            string[] Group =
+            [
+                "^"    /* Power for normal product '*' */
+            ];
 
 
-            string[] Group1 = { "*"   /* normal multiplication */, 
+            string[] Group1 =
+            [
+                "*"   /* normal multiplication */, 
                                 "/"   /* normal division */, 
-                                "%"   /* modulus */ };
+                                "%"   /* modulus */
+            ];
 
 
-            string[] Group2 = { "+", "-" };
+            string[] Group2 = ["+", "-"];
 
-            string[] Group3 = { "<", "<=", ">", ">=" };
+            string[] Group3 = ["<", "<=", ">", ">="];
 
-            string[] Group4 = { "=", "<>" };
+            string[] Group4 = ["=", "<>"];
 
             /// Operator Groups Ordered by Priorities.
-            string[][] OperatorGroups = { Group, Group1, Group2, Group3, Group4 };
+            string[][] OperatorGroups = [Group, Group1, Group2, Group3, Group4];
 
             foreach (var opg in OperatorGroups)
             {
-                DynamicExpressionOperator eop = Root;
+                var eop = Root;
 
                 //Pass for '[op]' and merge it  but from top to child :)  {forward)
                 while (eop.Next != null)
@@ -826,7 +840,7 @@ namespace SymbolicAlgebra
                 //    DynamicBody = Expression.Multiply(Expression.Constant(-1.0), DynamicBody);
 
                 // i will parse each term alone.  // so that i have more control over the parse
-                for (int tc = 1; tc < TermsCount; tc++)
+                for (var tc = 1; tc < TermsCount; tc++)
                 {
                     var rt = this[tc];
 
@@ -861,7 +875,7 @@ namespace SymbolicAlgebra
 
             if (parameters.Count != pcount) throw new SymbolicException("Number of arguments is not correct");
 
-            double[] FinalParams = (from pr in parameters 
+            var FinalParams = (from pr in parameters 
                                    orderby pr.Key
                                    select pr.Value).ToArray();
 
@@ -946,7 +960,7 @@ namespace SymbolicAlgebra
 
             if (parameters.Length < pcount)
             {
-                string es =
+                var es =
                     string.Format("Feeded parameters are less than the required parameters of the expression {0} expected where {1} feeded\nExpression: {2}", pcount, parameters.Length, ToString());
 
                 throw new SymbolicException(es);

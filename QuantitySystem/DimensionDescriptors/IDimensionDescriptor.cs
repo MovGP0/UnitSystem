@@ -1,19 +1,14 @@
-﻿namespace QuantitySystem.DimensionDescriptors
+﻿namespace QuantitySystem.DimensionDescriptors;
+
+public interface IDimensionDescriptor<TDimensionDescriptor>
 {
+    float Exponent { get; set; }
 
-    public interface IDimensionDescriptor<TDimensionDescriptor>
-    {
-        float Exponent { get; set; }
-
-        TDimensionDescriptor Add(TDimensionDescriptor dimensionDescriptor);
+    TDimensionDescriptor Add(TDimensionDescriptor dimensionDescriptor);
         
-        TDimensionDescriptor Subtract(TDimensionDescriptor dimensionDescriptor);
+    TDimensionDescriptor Subtract(TDimensionDescriptor dimensionDescriptor);
 
-        TDimensionDescriptor Multiply(float exponent);
+    TDimensionDescriptor Multiply(float exponent);
 
-        TDimensionDescriptor Invert();
-
-    }
-
-
+    TDimensionDescriptor Invert();
 }

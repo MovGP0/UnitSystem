@@ -18,13 +18,13 @@
             if (a.IsOne) return b.Clone();
             if (b.IsOne) return a.Clone();
 
-            SymbolicVariable TargetSubTerm = b.Clone();
+            var TargetSubTerm = b.Clone();
 
             TargetSubTerm._AddedTerms = null;   // remove added variables to prevent its repeated calculations in second passes
             TargetSubTerm._ExtraTerms = null;   // remove the extra terms also
             // or to make sure nothing bad happens {my idiot design :S)
 
-            SymbolicVariable SourceTerm = a.Clone();
+            var SourceTerm = a.Clone();
             if (a.BaseEquals(TargetSubTerm))
             {
                 #region Symbols are Equal (I mean 2*x^3 = 2*X^3)
@@ -285,7 +285,7 @@
             // Extra Terms of a
             if (SourceTerm.ExtraTerms.Count > 0)
             {
-                List<ExtraTerm> newExtraTerms = new List<ExtraTerm>();
+                List<ExtraTerm> newExtraTerms = [];
                 foreach (var et in SourceTerm.ExtraTerms)
                 {
                     var eterm = et.Term;
@@ -298,8 +298,8 @@
             }
 
             // now source term which is the first parameter cloned, have the new calculated value.
-            int subIndex = 0;
-            SymbolicVariable total = SourceTerm;
+            var subIndex = 0;
+            var total = SourceTerm;
 
             while (subIndex < b.AddedTerms.Count)
             {
@@ -322,7 +322,7 @@
             }
 
             // for extra terms  {terms that has different divided term}
-            int extraIndex = 0;
+            var extraIndex = 0;
             while (extraIndex < b.ExtraTerms.Count)
             {
                 var eTerm = b.ExtraTerms[extraIndex];
@@ -359,10 +359,10 @@
                     ConstantPower = CoeffecientPowerTerm
                 };
 
-                CoeffecienttValue[] cvs = new CoeffecienttValue[FusedConstants.Count + 1];
+                var cvs = new CoeffecienttValue[FusedConstants.Count + 1];
                 cvs[0] = primary;
 
-                for (int i = 0; i < FusedConstants.Count; i++)
+                for (var i = 0; i < FusedConstants.Count; i++)
                 {
                     var hb = FusedConstants.ElementAt(i);
                     cvs[i + 1] = new CoeffecienttValue
@@ -400,7 +400,7 @@
                     // then make use of the fusedsymbols to add our constant
 
 
-                    double sbase = Math.Log(SourceTerm.Coeffecient, cst.ConstantValue);
+                    var sbase = Math.Log(SourceTerm.Coeffecient, cst.ConstantValue);
 
                     if (SourceTerm.Coeffecient == cst.ConstantValue)
                     {

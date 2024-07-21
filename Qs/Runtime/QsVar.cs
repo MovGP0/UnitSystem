@@ -296,7 +296,7 @@ class QsVar
         tokens = tokens.RemoveAnySpaceTokens();
 
         tokens = tokens.DiscoverQsCalls(StringComparer.OrdinalIgnoreCase,
-            new string[] { "When", "Otherwise", "And", "Or", "Loop", "On" }
+            ["When", "Otherwise", "And", "Or", "Loop", "On"]
         );
 
         tokens = tokens.DiscoverQsLoopsTokens();
@@ -745,14 +745,14 @@ class QsVar
                     if (q.Equals(Sequence.SequenceRangeStartName, StringComparison.OrdinalIgnoreCase))
                     {
                         quantityExpression = Expression.PropertyOrField(Expression.Constant(Sequence), "StartIndex");
-                        quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", new Type[] { typeof(int) }), quantityExpression);
+                        quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]), quantityExpression);
 
                         Sequence.CachingEnabled = false;
                     }
                     else if (q.Equals(Sequence.SequenceRangeEndName, StringComparison.OrdinalIgnoreCase))
                     {
                         quantityExpression = Expression.PropertyOrField(Expression.Constant(Sequence), "EndIndex");
-                        quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", new Type[] { typeof(int) }), quantityExpression);
+                        quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]), quantityExpression);
 
                         Sequence.CachingEnabled = false; // because start and end index may change from call to call
                     }
@@ -770,7 +770,7 @@ class QsVar
                             // convert it into Quantity.
                             //   because it is only integer
 
-                            quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", new Type[] { typeof(int) }), quantityExpression);
+                            quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]), quantityExpression);
 
                         }
                         else if (Sequence.Parameters.Count(s => s.Name.Equals(q, StringComparison.OrdinalIgnoreCase)) > 0)
@@ -804,7 +804,7 @@ class QsVar
                         var mix = typeof(QsValue).GetMethod("GetIndexedItem");
                         var mpm = typeof(QsParameter).GetMethod("MakeParameter");
 
-                        var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", new Type[] { typeof(int) });
+                        var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]);
 
                         var lip = Expression.Call(ItoQsv, vp);
 
@@ -856,7 +856,7 @@ class QsVar
                                     )
                             {
                                 // case of loop counter
-                                var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", new Type[] { typeof(int) });
+                                var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]);
 
                                 quantityExpression = Expression.Call(ItoQsv, loopIteratorParameter[tokens[ix].TokenValue.Substring(1)]);
                             }
@@ -881,7 +881,7 @@ class QsVar
                                 )
                         {
                             // case of loop counter
-                            var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", new Type[] { typeof(int) });
+                            var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]);
 
                             quantityExpression = Expression.Call(ItoQsv, loopIteratorParameter[tokens[ix].TokenValue.Substring(1)]);
                         }
@@ -990,15 +990,15 @@ class QsVar
 
     private Expression ConstructTupleExpression(Token x)
     {
-        List<Expression> ps = new();
+        List<Expression> ps = [];
 
-        var tpvcp1 = typeof(QsTupleValue).GetConstructor(new Type[]{typeof(QsValue)});
+        var tpvcp1 = typeof(QsTupleValue).GetConstructor([typeof(QsValue)]);
 
-        var tpvcp2 = typeof(QsTupleValue).GetConstructor(new Type[]{typeof(string), typeof(QsValue)});
+        var tpvcp2 = typeof(QsTupleValue).GetConstructor([typeof(string), typeof(QsValue)]);
 
-        var tpvcp3 = typeof(QsTupleValue).GetConstructor(new Type[]{typeof(int), typeof(string), typeof(QsValue)});
+        var tpvcp3 = typeof(QsTupleValue).GetConstructor([typeof(int), typeof(string), typeof(QsValue)]);
 
-        var tpvcp4 = typeof(QsTupleValue).GetConstructor(new Type[]{typeof(int), typeof(QsValue)});
+        var tpvcp4 = typeof(QsTupleValue).GetConstructor([typeof(int), typeof(QsValue)]);
 
 
         /*
@@ -1068,7 +1068,7 @@ class QsVar
 
         }
 
-        var cp = typeof(QsFlowingTuple).GetConstructor(new Type[] { typeof(QsTupleValue[]) });
+        var cp = typeof(QsFlowingTuple).GetConstructor([typeof(QsTupleValue[])]);
 
         return Expression.New(cp, Expression.NewArrayInit(typeof(QsTupleValue), ps.ToArray()));
     }
@@ -1093,14 +1093,14 @@ class QsVar
     private Expression CreateInstance(Token token, out Type discoveredType)
     {
         var cls = string.Empty;
-        string[] args = {};
+        string[] args = [];
 
         if(token.TokenClassType == typeof(ParenthesisCallToken))
         {
             cls = token[0].TokenValue;
 
 
-            List<string> parms = new();
+            List<string> parms = [];
             //discover parameters
             for (var ai = 1; ai < token[1].Count - 1; ai++)
             {
@@ -1343,7 +1343,7 @@ class QsVar
     {
         if (tok.TokenClassType != typeof(CurlyBracketGroupToken)) throw new QsException("The passed token type is not curly bracket group token, it is " + tok.TokenClassType.Name);
 
-        List<string> qtyExpressions = new();
+        List<string> qtyExpressions = [];
         var token = tok.TrimStart(typeof(LeftCurlyBracketToken));
         token = token.TrimEnd(typeof(RightCurlyBracketToken));
 
@@ -1370,7 +1370,7 @@ class QsVar
     /// <returns></returns>
     private Expression ParseVector(Token tok)
     {
-        List<Expression> qtyExpressions = new();
+        List<Expression> qtyExpressions = [];
         var token = tok.TrimStart(typeof(LeftCurlyBracketToken));
         token = token.TrimEnd(typeof(RightCurlyBracketToken));
 
@@ -1405,7 +1405,7 @@ class QsVar
     /// <returns></returns>
     private Expression ParseMatrix(Token tok)
     {
-        List<Expression> vctExpressions = new();
+        List<Expression> vctExpressions = [];
 
         var token = tok.TrimStart(typeof(LeftSquareBracketToken));
 
@@ -1427,7 +1427,7 @@ class QsVar
                 // loop through every element 
                 //  whether it was scalar or vector or matrix.
 
-                List<Expression> componentsExpressions = new();
+                List<Expression> componentsExpressions = [];
 
                 var stoks = token[i].MergeAllBut(typeof(MergedToken), new CommaToken(), new MultipleSpaceToken());
 
@@ -1467,7 +1467,7 @@ class QsVar
 
     public Expression ParseTensor(Token tok)
     {
-        List<Expression> vctExpressions = new();
+        List<Expression> vctExpressions = [];
 
         var token = tok.TrimStart(typeof(LeftTensorToken));
 
@@ -1513,7 +1513,7 @@ class QsVar
     public Expression ParseText(Token tok)
     {
         var tx = Expression.Constant( tok.TrimTokens(1,1).TokenValue);
-        var texte = Expression.New(typeof(QsText).GetConstructor(new Type[] {typeof(string)}), tx);
+        var texte = Expression.New(typeof(QsText).GetConstructor([typeof(string)]), tx);
         return Expression.Convert(texte, typeof(QsValue));
     }
 
@@ -1945,11 +1945,11 @@ class QsVar
             indexText = QsSequence.DefaultIndexName;
 
         // discover sequence parameters.
-        List<Expression> parameters = new();
+        List<Expression> parameters = [];
         if (args != null)
         {
             //the sequence called with parameters
-            parameters = new List<Expression>();
+            parameters = [];
 
             //now parameters separated
             for (var ai = 1; ai < args.Count - 1; ai++)
@@ -2069,28 +2069,34 @@ class QsVar
             switch (parameters.Count)
             {
                 case 0:
-                    mi = typeof(QsSequence).GetMethod(methodName, new Type[] { typeof(int) });
+                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int)]);
                     break;
                 case 1:
-                    mi = typeof(QsSequence).GetMethod(methodName, new Type[] { typeof(int), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter)]);
                     break;
                 case 2:
-                    mi = typeof(QsSequence).GetMethod(methodName, new Type[] { typeof(int), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 3:
-                    mi = typeof(QsSequence).GetMethod(methodName, new Type[] { typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 4:
-                    mi = typeof(QsSequence).GetMethod(methodName, new Type[] { typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 5:
-                    mi = typeof(QsSequence).GetMethod(methodName, new Type[] { typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 6:
-                    mi = typeof(QsSequence).GetMethod(methodName, new Type[] { typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 7:
-                    mi = typeof(QsSequence).GetMethod(methodName, new Type[] { typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 default:
                     throw new QsException("Number of sequence parameters exceed the built in functionality");
@@ -2106,28 +2112,35 @@ class QsVar
             switch (parameters.Count)
             {
                 case 0:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, new Type[] { typeof(string), typeof(int), typeof(int) });
+                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int)]);
                     break;
                 case 1:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, new Type[] { typeof(string), typeof(int), typeof(int), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter)
+                    ]);
                     break;
                 case 2:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, new Type[] { typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 3:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, new Type[] { typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 4:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, new Type[] { typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 5:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, new Type[] { typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 6:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, new Type[] { typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 case 7:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, new Type[] { typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter) });
+                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                    ]);
                     break;
                 default:
                     throw new QsException("Number of sequence parameters exceed the built in functionality");
@@ -2163,7 +2176,7 @@ class QsVar
     {
         //fn(x, y, ff(y/x, e + fr(d)))     <== sample form :D
 
-        List<Token> ArgumentTokens = new();
+        List<Token> ArgumentTokens = [];
 
         //discover parameters
         for (var ai = 1; ai < args.Count - 1; ai++ )
@@ -2190,7 +2203,7 @@ class QsVar
 
         var NamedArgumentOccured = false;
             
-        List<string> argNames = new();
+        List<string> argNames = [];
             
         foreach (var argToken in ArgumentTokens)
         {                
@@ -2228,7 +2241,7 @@ class QsVar
 
                 //we need to make another filtering criteria to decrease the discovered numbers.
 
-                List<QsFunction> Pass2Functions = new();
+                List<QsFunction> Pass2Functions = [];
 
                 foreach (var func in DiscoveredFunctions)
                 {
@@ -2280,7 +2293,7 @@ class QsVar
         #endregion
 
 
-        List<Expression> parameters = new();
+        List<Expression> parameters = [];
 
         #region Helper delegates
         //delegate to check if the function name in the Function object of the current function expression formation or if parsemode = function
@@ -2336,7 +2349,7 @@ class QsVar
                 //   x-2
                 //   x/4
                 //   40
-                List<Expression> FunctorParams = new();
+                List<Expression> FunctorParams = [];
                 foreach (var tk in ArgumentTokens)
                 {
                     var prm = tk.TokenValue;
@@ -2705,44 +2718,53 @@ class QsVar
     // passes depends on priorities of operators.
 
     // Internal Higher Priority Group
-    readonly static string[] HigherGroup = { "_h*" /* Higher Multiplication priority used internally in
-                                          the case of -4  or 5^-3
-                                          To be treated like -1_h*4   or 5^-1_h*4
-                                       */};
+    readonly static string[] HigherGroup =
+    [
+        "_h*" /* Higher Multiplication priority used internally in
+                                              the case of -4  or 5^-3
+                                              To be treated like -1_h*4   or 5^-1_h*4
+                                           */
+    ];
 
-    readonly static string[] Group = { "^"    /* Power for normal product '*' */,
+    readonly static string[] Group =
+    [
+        "^"    /* Power for normal product '*' */,
         "^."   /* Power for dot product */,
         "^x"   /* Power for cross product */,
         ".."   /* Vector Range operator {from..to} */,
         "->"   /* object member calling */,
         "!"    /* Exclamation operation */,
         ":"    /* colon operation*/
-    };
+    ];
 
-    readonly static string[] SymGroup = { "|" /* Derivation operator */};
+    readonly static string[] SymGroup = ["|" /* Derivation operator */];
 
-    readonly static string[] Group0 = { "x"   /* cross product */};
+    readonly static string[] Group0 = ["x"   /* cross product */];
 
-    readonly static string[] Group1 = { "*"   /* normal multiplication */,
+    readonly static string[] Group1 =
+    [
+        "*"   /* normal multiplication */,
         "."   /* dot product */,
         "(*)" /* Tensor product */,
         "/"   /* normal division */,
-        "%"   /* modulus */ };
+        "%"   /* modulus */
+    ];
 
-    readonly static string[] Group2 = { "+", "-" };
+    readonly static string[] Group2 = ["+", "-"];
 
-    readonly static string[] Shift = { "<<", ">>" };
+    readonly static string[] Shift = ["<<", ">>"];
 
-    readonly static string[] RelationalGroup = { "<", ">", "<=", ">=" };
-    readonly static string[] EqualityGroup = { "==", "!=" };
-    readonly static string[] AndGroup = { "and" };
-    readonly static string[] OrGroup = { "or" };
+    readonly static string[] RelationalGroup = ["<", ">", "<=", ">="];
+    readonly static string[] EqualityGroup = ["==", "!="];
+    readonly static string[] AndGroup = ["and"];
+    readonly static string[] OrGroup = ["or"];
 
-    readonly static string[] WhenOtherwiseGroup = { "when", "otherwise" };
+    readonly static string[] WhenOtherwiseGroup = ["when", "otherwise"];
 
 
     /// Operator Groups Ordered by Priorities.
-    readonly static string[][] OperatorGroups = { HigherGroup, Group, SymGroup, Group0, Group1, Group2, Shift, RelationalGroup, EqualityGroup, AndGroup, OrGroup, WhenOtherwiseGroup };
+    readonly static string[][] OperatorGroups = [HigherGroup, Group, SymGroup, Group0, Group1, Group2, Shift, RelationalGroup, EqualityGroup, AndGroup, OrGroup, WhenOtherwiseGroup
+    ];
 
     #endregion 
 

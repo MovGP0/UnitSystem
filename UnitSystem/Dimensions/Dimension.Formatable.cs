@@ -32,7 +32,7 @@ public sealed partial class Dimension
                 return "";
             }
 
-            string symbol = system.DimensionSymbols[index];
+            var symbol = system.DimensionSymbols[index];
             return value == 1f
                 ? symbol
                 : $"{symbol}^{value.ToString(format, formatProvider)}";

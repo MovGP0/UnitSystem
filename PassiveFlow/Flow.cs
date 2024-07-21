@@ -9,10 +9,10 @@ public class Flow : IEnumerable<Step>
     public event EventHandler<StepEventArgs>? StepChanged;
 
     //holding instance of every Step Field
-    private List<Step> innerSteps = new List<Step>();
+    private List<Step> innerSteps = [];
 
     //holding the field types
-    private List<FieldInfo> _MyFields = new  List<FieldInfo>();
+    private List<FieldInfo> _MyFields = [];
 
     /// <summary>
     /// this constructor initialize the class that is inherited from the Flow class to know the fields that marked as steps
@@ -20,10 +20,10 @@ public class Flow : IEnumerable<Step>
     public Flow()
     {
         //getting the type of this instance
-        Type FlowType = GetType();
+        var FlowType = GetType();
 
         FieldInfo[] FlowFields = FlowType.GetFields();
-        foreach (FieldInfo fi in FlowFields)
+        foreach (var fi in FlowFields)
         {
             StepAttribute[] fia = (StepAttribute[])fi.GetCustomAttributes(typeof(StepAttribute), true);
             if (fia.Length > 0)
@@ -37,9 +37,9 @@ public class Flow : IEnumerable<Step>
                 if (aas.Length > 0)
                 {
                     StepAction[] acts = new StepAction[aas.Length];
-                    for (int i = 0; i < aas.Length; i++)
+                    for (var i = 0; i < aas.Length; i++)
                     {
-                        StepAction aa = new StepAction();
+                        var aa = new StepAction();
                         aa.ActionId = aas[i].ActionID;
                         aa.ActionText = aas[i].ActionText;
                         if (aas[i].GetType().Equals(typeof(StepActionAttribute)))
@@ -78,7 +78,7 @@ public class Flow : IEnumerable<Step>
     #region Flowstep Add procedures
     public Step Add(string stepName, int stepId)
     {
-        Step fi = new Step(this);
+        var fi = new Step(this);
         fi.Name = stepName;
         fi.Id = stepId;
         innerSteps.Add(fi);
@@ -87,7 +87,7 @@ public class Flow : IEnumerable<Step>
 
     public Step Add(string stepName, int stepId, params Type[] stepAssociatedTypes)
     {
-        Step fi = new Step(this);
+        var fi = new Step(this);
         fi.Name = stepName;
         fi.Id = stepId;
         fi.AssociatedTypes = stepAssociatedTypes;
@@ -97,7 +97,7 @@ public class Flow : IEnumerable<Step>
 
     private Step Add(string stepName, int stepId, Type[] stepAssociatedTypes, bool skip)
     {
-        Step fi = new Step(this);
+        var fi = new Step(this);
         fi.Name = stepName;
         fi.Id = stepId;
         fi.AssociatedTypes = stepAssociatedTypes;
@@ -110,7 +110,7 @@ public class Flow : IEnumerable<Step>
 
     public Step Add(string stepName, int stepId, Type[] stepAssociatedTypes, bool skip, params StepAction[] stepActions)
     {
-        Step fi = new Step(this);
+        var fi = new Step(this);
         fi.Name = stepName;
         fi.Id = stepId;
         fi.AssociatedTypes = stepAssociatedTypes;
@@ -134,11 +134,11 @@ public class Flow : IEnumerable<Step>
     /// <returns></returns>
     public string GetActionDescription(int actionId)
     {
-        foreach (Step fi in this)
+        foreach (var fi in this)
         {
             if (fi.AttachedActions != null)
             {
-                foreach (StepAction act in fi.AttachedActions)
+                foreach (var act in fi.AttachedActions)
                 {
                     if (act.ActionId == actionId)
                     {
@@ -157,7 +157,7 @@ public class Flow : IEnumerable<Step>
     /// <returns></returns>
     public string GetStepName(int stepId)
     {
-        foreach (Step fi in this)
+        foreach (var fi in this)
         {
             if (fi.Id == stepId)
                 return fi.Name;
@@ -196,12 +196,12 @@ public class Flow : IEnumerable<Step>
     /// <returns></returns>
     public Step[]? GetStepsOfType(Type associatedType)
     {
-        List<Step> al = new  List<Step>();
-        foreach (Step fli in this)
+        List<Step> al = [];
+        foreach (var fli in this)
         {
             if (fli.AssociatedTypes != null)
             {
-                foreach (Type tp in fli.AssociatedTypes)
+                foreach (var tp in fli.AssociatedTypes)
                 {
                     if (tp == associatedType || associatedType.IsSubclassOf(tp))
                         al.Add(fli);
@@ -217,7 +217,7 @@ public class Flow : IEnumerable<Step>
     {
         get
         {
-            foreach (Step fi in innerSteps)
+            foreach (var fi in innerSteps)
             {
                 if (fi.Id == index) return fi;
             }
@@ -229,7 +229,7 @@ public class Flow : IEnumerable<Step>
     {
         get
         {
-            foreach (Step fi in innerSteps)
+            foreach (var fi in innerSteps)
             {
                 if (fi.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return fi;
@@ -366,8 +366,8 @@ public class Flow : IEnumerable<Step>
     {
         _Previous_StepIndex = _Current_StepIndex;
 
-        int i = FlowSteps.GetLowerBound(0);
-        foreach (Step fi in innerSteps)
+        var i = FlowSteps.GetLowerBound(0);
+        foreach (var fi in innerSteps)
         {
             if (fi.Id == stepId)
             {
@@ -390,8 +390,8 @@ public class Flow : IEnumerable<Step>
     {
         _Previous_StepIndex = _Current_StepIndex;
 
-        int i = FlowSteps.GetLowerBound(0);
-        foreach (Step fi in innerSteps)
+        var i = FlowSteps.GetLowerBound(0);
+        foreach (var fi in innerSteps)
         {
             if (fi.Id == stepId)
             {
@@ -504,7 +504,7 @@ public class Flow : IEnumerable<Step>
 
     public override bool Equals(object obj)
     {
-        Flow fl2 = (Flow)obj;
+        var fl2 = (Flow)obj;
         if (GetType().Equals(fl2.GetType()))
         {
             if (CurrentStep.Id == fl2.CurrentStep.Id)
@@ -607,17 +607,17 @@ public class Flow : IEnumerable<Step>
     {
         get
         {
-            int delta = _Current_StepIndex - _Previous_StepIndex;
+            var delta = _Current_StepIndex - _Previous_StepIndex;
 
             //search in last active step actions
             //with position that is equal to delta
             if (PreviousStep.AttachedActions != null)
             {
-                foreach (StepAction flact in PreviousStep.AttachedActions)
+                foreach (var flact in PreviousStep.AttachedActions)
                 {
                     if (flact.TargetStepName != null)
                     {
-                        Step RequiredFlowStep = this[flact.TargetStepName];
+                        var RequiredFlowStep = this[flact.TargetStepName];
                         if (CurrentStep.Id == RequiredFlowStep.Id)
                             return flact;
                     }

@@ -99,7 +99,7 @@ public class Root
     public static object[] QsParametersToNativeValues(MethodInfo method, params QsParameter[] parameters)
     {
 
-        List<object?> NativeParameters = new();
+        List<object?> NativeParameters = [];
 
         var iy = 0;
         ParameterInfo[] paramInfos = method.GetParameters();
@@ -496,7 +496,7 @@ public class Root
             if (value is QsValue vs)
             {
                 var mi = typeof(Root).GetMethod("ToNumericArray", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(targetType.GetElementType());
-                return mi.Invoke(null, new object[] { vs });
+                return mi.Invoke(null, [vs]);
             }
 
             throw new QsException("Can't Convert " + value.GetType().Name + " into " + targetType.Name);

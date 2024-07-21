@@ -6,8 +6,8 @@ namespace QsRoot
     public static class Currency
     {
 
-        static ParticleLexer.Token CurrenciesJson;
-        static Dictionary<string, double> CurrentCurrencies;
+        static ParticleLexer.Token _currenciesJson;
+        static Dictionary<string, double> _currentCurrencies;
 
         static Currency()
         {
@@ -21,7 +21,7 @@ namespace QsRoot
         {
             get
             {
-                string file = string.Format("XChangeRates-{0}-{1}-{2}.json", DateTime.Today.Year, DateTime.Today.Month.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'), DateTime.Today.Day.ToString(CultureInfo.InvariantCulture).PadLeft(2,'0'));
+                var file = string.Format("XChangeRates-{0}-{1}-{2}.json", DateTime.Today.Year, DateTime.Today.Month.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'), DateTime.Today.Day.ToString(CultureInfo.InvariantCulture).PadLeft(2,'0'));
                 return file;
             }
         }
@@ -29,10 +29,10 @@ namespace QsRoot
 
         static void DownloadExchangeFile()
         {
-            string web = "https://quantitysystem.azurewebsites.net/api/ExchangeRates";
+            var web = "https://quantitysystem.azurewebsites.net/api/ExchangeRates";
 
-            System.Net.WebClient wc = new System.Net.WebClient();
-            byte[] xch = wc.DownloadData(web);
+            var wc = new System.Net.WebClient();
+            var xch = wc.DownloadData(web);
             File.WriteAllBytes(TodayChangeRatesFile, xch);
         }
 
@@ -46,7 +46,7 @@ namespace QsRoot
 
             using (var rr = new StreamReader(TodayChangeRatesFile))
             {
-                CurrenciesJson = ParticleLexer.Token.ParseText(rr.ReadToEnd());
+                _currenciesJson = ParticleLexer.Token.ParseText(rr.ReadToEnd());
             }
 
             /*
@@ -57,33 +57,33 @@ namespace QsRoot
              * value is either string or number
              * 
              */
-            CurrenciesJson = CurrenciesJson.TokenizeTextStrings();
-            CurrenciesJson = CurrenciesJson.MergeTokens<WordToken>();
-            CurrenciesJson = CurrenciesJson.RemoveAnySpaceTokens();
-            CurrenciesJson = CurrenciesJson.RemoveNewLineTokens();
-            CurrenciesJson = CurrenciesJson.MergeTokens<NumberToken>();
-            CurrenciesJson = CurrenciesJson.MergeSequenceTokens<MergedToken>(
+            _currenciesJson = _currenciesJson.TokenizeTextStrings();
+            _currenciesJson = _currenciesJson.MergeTokens<WordToken>();
+            _currenciesJson = _currenciesJson.RemoveAnySpaceTokens();
+            _currenciesJson = _currenciesJson.RemoveNewLineTokens();
+            _currenciesJson = _currenciesJson.MergeTokens<NumberToken>();
+            _currenciesJson = _currenciesJson.MergeSequenceTokens<MergedToken>(
                 typeof(ParticleLexer.CommonTokens.TextStringToken),
                 typeof(ColonToken),
                 typeof(NumberToken)
                 );
 
 
-            CurrentCurrencies = new Dictionary<string, double>();
+            _currentCurrencies = new Dictionary<string, double>();
 
             // find rates key
-            foreach (var tok in CurrenciesJson)
+            foreach (var tok in _currenciesJson)
             {
                 if (tok.TokenClassType == typeof(MergedToken))
                 {
-                    CurrentCurrencies.Add(tok[0].TrimTokens(1, 1).TokenValue, double.Parse(tok[2].TokenValue, CultureInfo.InvariantCulture));
+                    _currentCurrencies.Add(tok[0].TrimTokens(1, 1).TokenValue, double.Parse(tok[2].TokenValue, CultureInfo.InvariantCulture));
                 }
             }
         }
 
         public static double CurrencyConverter(string currency)
         {
-            if (CurrentCurrencies.TryGetValue(currency, out double result))
+            if (_currentCurrencies.TryGetValue(currency, out var result))
                 return 1.0 / result;
             else
                 return double.NaN;

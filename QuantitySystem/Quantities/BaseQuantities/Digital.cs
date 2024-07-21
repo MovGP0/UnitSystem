@@ -23,9 +23,10 @@
 
         public static implicit operator Digital<T>(T value)
         {
-            Digital<T> Q = new Digital<T>();
-
-            Q.Value = value;
+            Digital<T> Q = new Digital<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

@@ -23,9 +23,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator SpecificEnergy<T>(T value)
         {
-            SpecificEnergy<T> Q = new SpecificEnergy<T>();
-
-            Q.Value = value;
+            SpecificEnergy<T> Q = new SpecificEnergy<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

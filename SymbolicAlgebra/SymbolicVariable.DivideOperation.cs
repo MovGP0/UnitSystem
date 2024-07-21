@@ -7,7 +7,7 @@
         {
             if (a == null || b == null) return null;
 
-            SymbolicVariable SourceTerm = a.Clone();
+            var SourceTerm = a.Clone();
 
             // if the divided term is more than on term
             // x^2/(y-x)  ==>  
@@ -29,7 +29,7 @@
             }
 
 
-            SymbolicVariable TargetSubTerm = b.Clone();
+            var TargetSubTerm = b.Clone();
 
 
             TargetSubTerm._AddedTerms = null;   // remove added variables to prevent its repeated calculations in second passes
@@ -291,7 +291,7 @@
             // Extra Terms of a
             if (SourceTerm.ExtraTerms.Count > 0)
             {
-                List<ExtraTerm> newExtraTerms = new List<ExtraTerm>();
+                List<ExtraTerm> newExtraTerms = [];
                 foreach (var et in SourceTerm.ExtraTerms)
                 {
                     var eterm = et.Term;
@@ -304,8 +304,8 @@
             }
 
 
-            int subIndex = 0;
-            SymbolicVariable total = SourceTerm;
+            var subIndex = 0;
+            var total = SourceTerm;
 
             while (subIndex < b.AddedTerms.Count)
             {
@@ -324,7 +324,7 @@
             }
 
             // for extra terms  {terms that has different divided term}
-            int extraIndex = 0;
+            var extraIndex = 0;
             while (extraIndex < b.ExtraTerms.Count)
             {
                 var eTerm = b.ExtraTerms[extraIndex];
@@ -371,7 +371,7 @@
                     // then make use of the fusedsymbols to add our constant
 
 
-                    double sbase = Math.Log(SourceTerm.Coeffecient, cst.ConstantValue);
+                    var sbase = Math.Log(SourceTerm.Coeffecient, cst.ConstantValue);
 
                     if (SourceTerm.Coeffecient == cst.ConstantValue)
                     {

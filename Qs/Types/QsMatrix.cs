@@ -9,7 +9,7 @@ namespace Qs.Types;
 /// </summary>
 public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 {
-    public List<QsVector> Rows = new();
+    public List<QsVector> Rows = [];
 
     public QsMatrix()
     {
@@ -21,7 +21,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     /// <param name="vectors"></param>
     public QsMatrix(params QsVector[] vectors)
     {
-        List<QsVector> copiedVectors = new();
+        List<QsVector> copiedVectors = [];
         foreach (var v in vectors) copiedVectors.Add(QsVector.CopyVector(v));
         Rows.AddRange(copiedVectors);
     }

@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator MassMomentOfInertia<T>(T value)
         {
-            MassMomentOfInertia<T> Q = new MassMomentOfInertia<T>();
-
-            Q.Value = value;
+            MassMomentOfInertia<T> Q = new MassMomentOfInertia<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

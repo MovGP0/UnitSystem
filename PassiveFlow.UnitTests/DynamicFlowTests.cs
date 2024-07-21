@@ -8,10 +8,10 @@ public sealed class DynamicFlowTests
     {
         StringBuilder log = new();
 
-        Flow dynamicFlow = new Flow();
+        Flow dynamicFlow = [];
         dynamicFlow.StepChanged += Log;
 
-        Step f = dynamicFlow.Add("B1", 20);
+        var f = dynamicFlow.Add("B1", 20);
         f.Value = "This is bad";
         f = dynamicFlow.Add("B2", 30);
         f = dynamicFlow.Add("B3", 40);

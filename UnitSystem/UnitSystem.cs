@@ -108,12 +108,12 @@ internal class UnitSystem : IUnitSystem
     {
         // Prefer returning a known or coherent unit
 
-        if (_units.TryGetValue((factor, offset, dimension), out KnownUnit? known))
+        if (_units.TryGetValue((factor, offset, dimension), out var known))
         {
             return known;
         }
 
-        if (factor.Equals(1.0) && offset.Equals(0.0) && _coherentUnits.TryGetValue(dimension, out Unit? coherent))
+        if (factor.Equals(1.0) && offset.Equals(0.0) && _coherentUnits.TryGetValue(dimension, out var coherent))
         {
             return coherent;
         }
@@ -140,7 +140,7 @@ internal class UnitSystem : IUnitSystem
     {
         if (unit.IsCoherent) return unit;
 
-        if (_coherentUnits.TryGetValue(unit.Dimension, out Unit? coherentUnit))
+        if (_coherentUnits.TryGetValue(unit.Dimension, out var coherentUnit))
         {
             return coherentUnit;
         }
@@ -176,7 +176,7 @@ internal class UnitSystem : IUnitSystem
             throw new InvalidOperationException(Messages.UnitSymbolAlreadyKnown.FormatWith(unit.Symbol));
         }
 
-        if (_units.TryGetValue((unit.Factor, unit.Offset, unit.Dimension), out KnownUnit? collision))
+        if (_units.TryGetValue((unit.Factor, unit.Offset, unit.Dimension), out var collision))
         {
             throw new InvalidOperationException(Messages.UnitAlreadyKnown.FormatWith(unit, collision));
         }

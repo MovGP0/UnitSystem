@@ -28,10 +28,10 @@
         /// <returns></returns>
         internal static List<MultipliedTerm> DeConstruct(SymbolicVariable sv)
         {
-            int MultipliedTermsCount = sv.FusedSymbols.Count + sv.FusedConstants.Count + 1; // last one is the basic symbol and coeffecient in the instant
+            var MultipliedTermsCount = sv.FusedSymbols.Count + sv.FusedConstants.Count + 1; // last one is the basic symbol and coeffecient in the instant
 
             // separate all terms into array by flatting them
-            List<MultipliedTerm> MultipliedTerms = new List<MultipliedTerm>(MultipliedTermsCount);
+            var MultipliedTerms = new List<MultipliedTerm>(MultipliedTermsCount);
 
             Action<SymbolicVariable> SpliBaseTerm = (rr) =>
             {
@@ -44,7 +44,7 @@
                 if (basicterm.CoeffecientPowerTerm != null)
                 {
                     // coefficient
-                    SymbolicVariable CoeffecientOnly = new SymbolicVariable("");
+                    var CoeffecientOnly = new SymbolicVariable("");
                     CoeffecientOnly._CoeffecientPowerTerm = basicterm.CoeffecientPowerTerm;
                     CoeffecientOnly.Coeffecient = basicterm.Coeffecient;
                     MultipliedTerms.Add(new MultipliedTerm(CoeffecientOnly));
@@ -70,7 +70,7 @@
                 //  value contains the power  which always will be symbolic power or null
                 foreach (var FC in FCConstants)
                 {
-                    SymbolicVariable CoeffecientOnly = new SymbolicVariable("");
+                    var CoeffecientOnly = new SymbolicVariable("");
                     CoeffecientOnly._CoeffecientPowerTerm = FC.Value.SymbolicVariable.Clone();
                     CoeffecientOnly.Coeffecient = FC.Key;
 

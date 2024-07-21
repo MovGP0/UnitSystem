@@ -48,7 +48,7 @@
         {
             var sv = term.Clone();
 
-            bool symbolpowercontainParameter = false;
+            var symbolpowercontainParameter = false;
             if (sv._SymbolPowerTerm != null)
             {
                 if (sv._SymbolPowerTerm.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase))
@@ -57,12 +57,12 @@
                 }
                 else
                 {
-                    int prcount = sv._SymbolPowerTerm.FusedSymbols.Count(p => p.Key.Equals(parameter, StringComparison.OrdinalIgnoreCase));
+                    var prcount = sv._SymbolPowerTerm.FusedSymbols.Count(p => p.Key.Equals(parameter, StringComparison.OrdinalIgnoreCase));
                     symbolpowercontainParameter = prcount > 0;
                 }
             }
 
-            bool cc = false;
+            var cc = false;
             if (sv.BaseVariable != null) cc = sv.BaseVariable.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase); // case of base variable
             else if (sv.IsFunction && symbolpowercontainParameter == true)
             {
@@ -289,7 +289,7 @@
                                 // replace parameters
                                 var dsf = Functions[extendedFunction].ToString();
 
-                                for (int ipxf = 0; ipxf < fps.Length; ipxf++)
+                                for (var ipxf = 0; ipxf < fps.Length; ipxf++)
                                 {
                                     dsf = dsf.Replace(fps[ipxf], fv._RawFunctionParameters[ipxf]);
                                 }
@@ -314,7 +314,7 @@
                         else
                         {
                             // symbol power term exist
-                            SymbolicVariable oldPower = sv._SymbolPowerTerm;
+                            var oldPower = sv._SymbolPowerTerm;
                             sv._SymbolPowerTerm = Subtract(sv._SymbolPowerTerm, One);
                             sv = Multiply(sv, oldPower);
                         }
@@ -441,17 +441,17 @@
 
             */
 
-            SymbolicVariable SvDividedTerm = sv.DividedTerm;  // here we isolate the divided term for later calculations
+            var SvDividedTerm = sv.DividedTerm;  // here we isolate the divided term for later calculations
             sv.DividedTerm = One;
 
             var MultipliedTerms = DeConstruct(sv);
 
             //
-            SymbolicVariable InversedTrig_Term = One;
-            SymbolicVariable Logarithms_Term = One;
-            SymbolicVariable Algebra_Term = One;
-            SymbolicVariable Trig_Term = One;
-            SymbolicVariable Exponential_Term = One;
+            var InversedTrig_Term = One;
+            var Logarithms_Term = One;
+            var Algebra_Term = One;
+            var Trig_Term = One;
+            var Exponential_Term = One;
 
             
 
@@ -550,7 +550,7 @@
 
         public SymbolicVariable Integrate(string parameter)
         {
-            SymbolicVariable result = Clone();
+            var result = Clone();
 
             Dictionary<string, SymbolicVariable> OtherAddedTerms = result._AddedTerms;
             result._AddedTerms = null;
@@ -564,7 +564,7 @@
             // take the rest terms
             if (OtherAddedTerms != null)
             {
-                for (int ix = 0; ix < OtherAddedTerms.Count; ix++)
+                for (var ix = 0; ix < OtherAddedTerms.Count; ix++)
                 {
                     var term = OtherAddedTerms.Values.ElementAt(ix);
                     term = IntegBigTerm(term, parameter);
@@ -575,7 +575,7 @@
 
             if (OtherExtraTerms != null)
             {
-                for (int ix = 0; ix < OtherExtraTerms.Count; ix++)
+                for (var ix = 0; ix < OtherExtraTerms.Count; ix++)
                 {
                     var term = OtherExtraTerms[ix].Term;
                     term = IntegBigTerm(term, parameter);

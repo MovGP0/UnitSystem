@@ -1,42 +1,39 @@
 ﻿using Qs.Types;
 
-namespace QsRoot.Processor
+namespace QsRoot.Processor;
+
+public class EightBitProcessor
 {
-    public class EightBitProcessor
+    public QsValue Af { get; set; }
+    public QsValue Bc { get; set; }
+    public QsValue De { get; set; }
+    public QsValue Hl { get; set; }
+
+    public QsValue Ix { get; set; }
+    public QsValue Iy { get; set; }
+
+    public QsValue Sp { get; set; }
+    public QsValue Pc { get; set; }
+
+    public EightBitProcessor()
     {
-        public QsValue AF { get; set; }
-        public QsValue BC { get; set; }
-        public QsValue DE { get; set; }
-        public QsValue HL { get; set; }
+        Af = QsScalar.Zero;
+        Bc = QsScalar.Zero;
+        De = QsScalar.Zero;
+        Hl = QsScalar.Zero;
+        Ix = QsScalar.Zero;
+        Iy = QsScalar.Zero;
+        Sp = QsScalar.Zero;
+        Pc = QsScalar.Zero;
+    }
 
-        public QsValue IX { get; set; }
-        public QsValue IY { get; set; }
-
-        public QsValue SP { get; set; }
-        public QsValue PC { get; set; }
-
-        public EightBitProcessor()
-        {
-            AF = QsScalar.Zero;
-            BC = QsScalar.Zero;
-            DE = QsScalar.Zero;
-            HL = QsScalar.Zero;
-            IX = QsScalar.Zero;
-            IY = QsScalar.Zero;
-            SP = QsScalar.Zero;
-            PC = QsScalar.Zero;
-        }
-
-        /// <summary>
-        /// this function takes the object of z80 and return its PC  (Pointer Counter)
-        /// </summary>
-        /// <param name="z80"></param>
-        /// <returns></returns>
-        public static QsValue GetPC(EightBitProcessor epc)
-        {
-            return epc.PC;
-        }
-
-
+    /// <summary>
+    /// this function takes the object of z80 and return its PC  (Pointer Counter)
+    /// </summary>
+    /// <param name="z80"></param>
+    /// <returns></returns>
+    public static QsValue GetPc(EightBitProcessor epc)
+    {
+        return epc.Pc;
     }
 }

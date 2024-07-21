@@ -15,12 +15,12 @@
 
             if (!a.DividedTerm.Equals(b.DividedTerm))
             {
-                SymbolicVariable a_b = a.Clone();
-                bool econsumed = false;
+                var a_b = a.Clone();
+                var econsumed = false;
                 if (a_b.ExtraTerms.Count > 0)
                 {
                     // find if in extra terms there is an equality  of b into it
-                    for (int iet = 0; iet < a_b.ExtraTerms.Count; iet++)
+                    for (var iet = 0; iet < a_b.ExtraTerms.Count; iet++)
                     {
                         if (a_b.ExtraTerms[iet].Term.DividedTerm.Equals(b.DividedTerm))
                         {
@@ -44,14 +44,14 @@
             }
 
 
-            SymbolicVariable subB = b.Clone();
-            int sub = -1;
+            var subB = b.Clone();
+            var sub = -1;
 
-            SymbolicVariable sv = a.Clone();
+            var sv = a.Clone();
         NewPart:
 
 
-            bool consumed = false;
+            var consumed = false;
 
             if (a.BaseEquals(subB))
             {

@@ -23,9 +23,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator MolarSpecificHeat<T>(T value)
         {
-            MolarSpecificHeat<T> Q = new MolarSpecificHeat<T>();
-
-            Q.Value = value;
+            MolarSpecificHeat<T> Q = new MolarSpecificHeat<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

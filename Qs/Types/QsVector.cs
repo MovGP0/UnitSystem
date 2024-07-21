@@ -15,7 +15,7 @@ namespace Qs.Types
 
         public QsVector()
         {
-            ListStorage = new List<QsScalar>();
+            ListStorage = [];
         }
 
         public QsVector(int count)            

@@ -30,7 +30,7 @@
             }
         }
 
-        private List<InnerOperation> operations = new();
+        private List<InnerOperation> operations = [];
 
         public override object Clone()
         {

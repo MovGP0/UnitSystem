@@ -19,9 +19,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Frequency<T>(T value)
         {
-            Frequency<T> Q = new Frequency<T>();
-
-            Q.Value = value;
+            Frequency<T> Q = new Frequency<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

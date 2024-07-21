@@ -12,7 +12,7 @@
         {
             var sv = term.Clone();
 
-            bool symbolpowercontainParameter = false;
+            var symbolpowercontainParameter = false;
             if (sv._SymbolPowerTerm != null)
             {
                 if (sv._SymbolPowerTerm.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase))
@@ -21,12 +21,12 @@
                 }
                 else
                 {
-                    int prcount = sv._SymbolPowerTerm.FusedSymbols.Count(p => p.Key.Equals(parameter, StringComparison.OrdinalIgnoreCase));
+                    var prcount = sv._SymbolPowerTerm.FusedSymbols.Count(p => p.Key.Equals(parameter, StringComparison.OrdinalIgnoreCase));
                     symbolpowercontainParameter = prcount > 0;
                 }
             }
 
-            bool cc = false;
+            var cc = false;
             if(sv.BaseVariable!=null) cc = sv.BaseVariable.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase); // case of base variable
             else if (sv.IsFunction && symbolpowercontainParameter == true)
             {
@@ -67,7 +67,7 @@
                     else
                     {
                         // symbol power term exist
-                        SymbolicVariable oldPower = sv._SymbolPowerTerm;
+                        var oldPower = sv._SymbolPowerTerm;
                         sv._SymbolPowerTerm = Subtract(sv._SymbolPowerTerm, One);
                         sv = Multiply(sv, oldPower);
                     }
@@ -98,7 +98,7 @@
                     else
                     {
                         // symbol power term exist
-                        SymbolicVariable oldPower = hv.SymbolicVariable;
+                        var oldPower = hv.SymbolicVariable;
 
                         hv.SymbolicVariable = Subtract(hv.SymbolicVariable, One);
                         sv._FusedSymbols[parameter] = hv;
@@ -203,7 +203,7 @@
                                 // replace parameters
                                 var dsf = Functions[extendedFunction].ToString();
 
-                                for(int ipxf=0; ipxf < fps.Length ;ipxf++)
+                                for(var ipxf=0; ipxf < fps.Length ;ipxf++)
                                 {
                                     dsf = dsf.Replace(fps[ipxf], fv._RawFunctionParameters[ipxf]);
                                 }
@@ -229,7 +229,7 @@
                         else
                         {
                             // symbol power term exist
-                            SymbolicVariable oldPower = sv._SymbolPowerTerm;
+                            var oldPower = sv._SymbolPowerTerm;
                             sv._SymbolPowerTerm = Subtract(sv._SymbolPowerTerm, One);
                             sv = Multiply(sv, oldPower);
                         }
@@ -279,7 +279,7 @@
             // every term is differentiated and multiplied by other terms  if  x*y*z  then == dx*y*z+x*dy+z+x*y*dz
 
 
-            SymbolicVariable SvDividedTerm = sv.DividedTerm;  // here we isolate the divided term for later calculations
+            var SvDividedTerm = sv.DividedTerm;  // here we isolate the divided term for later calculations
             sv.DividedTerm = One;
 
             var MultipliedTerms = DeConstruct(sv);
@@ -287,7 +287,7 @@
             List<SymbolicVariable> CalculatedDiffs = new List<SymbolicVariable>(MultipliedTerms.Count);
 
             // get all differentials of all terms                       // x*y*z ==>  dx  dy  dz 
-            for (int ix = 0; ix < MultipliedTerms.Count; ix++)
+            for (var ix = 0; ix < MultipliedTerms.Count; ix++)
             {
                 CalculatedDiffs.Add(DiffTerm(MultipliedTerms[ix].Term, parameter));
             }
@@ -309,17 +309,17 @@
             }
 
             // every result of calculated differentials should be multiplied by the other terms.
-            for (int ix = 0; ix < CalculatedDiffs.Count; ix++)
+            for (var ix = 0; ix < CalculatedDiffs.Count; ix++)
             {
                 var term = CalculatedDiffs[ix];
 
                 if (term.IsZero) continue;
                 var mt = One;
-                int mltc = MultipliedTerms.Count;
+                var mltc = MultipliedTerms.Count;
 
                 //if (!SvDividedTerm.IsOne) mltc++;
 
-                for (int iy = 0; iy < mltc; iy++)
+                for (var iy = 0; iy < mltc; iy++)
                 {
                     if (iy == ix) continue;
 
@@ -357,7 +357,7 @@
         /// <returns></returns>
         public SymbolicVariable Differentiate(string parameter)
         {
-            SymbolicVariable result = Clone();
+            var result = Clone();
 
             Dictionary<string, SymbolicVariable> OtherAddedTerms = result._AddedTerms;
             result._AddedTerms = null;
@@ -371,7 +371,7 @@
             // take the rest terms
             if (OtherAddedTerms != null)
             {
-                for (int ix = 0; ix < OtherAddedTerms.Count; ix++)
+                for (var ix = 0; ix < OtherAddedTerms.Count; ix++)
                 {
                     var term = OtherAddedTerms.Values.ElementAt(ix);
                     term = DiffBigTerm(term, parameter);
@@ -382,7 +382,7 @@
 
             if (OtherExtraTerms != null)
             {
-                for (int ix = 0; ix < OtherExtraTerms.Count; ix++)
+                for (var ix = 0; ix < OtherExtraTerms.Count; ix++)
                 {
                     var term = OtherExtraTerms[ix].Term;
                     term = DiffBigTerm(term, parameter);

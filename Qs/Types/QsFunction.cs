@@ -141,7 +141,7 @@ public partial class QsFunction : QsValue
     internal Expression GetInvokeExpression(QsVar vario, string[] args)
     {
 
-        List<Expression> parameters = new();
+        List<Expression> parameters = [];
 
         for (var ip = 0; ip < args.Count(); ip++)
         {
@@ -216,7 +216,7 @@ public partial class QsFunction : QsValue
     /// <returns></returns>
     public QsValue GetInvoke(params QsParameter[] parameters)
     {
-        List<QsParameter> ProcessedParameters = new();
+        List<QsParameter> ProcessedParameters = [];
 
         for (var ip = 0; ip < parameters.Count(); ip++)
         {
@@ -601,8 +601,8 @@ public partial class QsFunction : QsValue
             //remove the last : from namespace
             functionNamespace = functionNamespace.TrimEnd(':');
 
-            List<string> textParams = new();
-            List<QsParamInfo> prms = new();
+            List<string> textParams = [];
+            List<QsParamInfo> prms = [];
             foreach (var c in functionToken[nsidx + 1])
             {
                 if (
@@ -643,7 +643,7 @@ public partial class QsFunction : QsValue
                 lb.Parameter(typeof(QsParameter), prm.Name);
             }
 
-            List<Expression> statements = new();
+            List<Expression> statements = [];
 
             qf.FunctionBody = functionDeclaration.Substring(functionToken[nsidx + 2].IndexInText + functionToken[nsidx + 2].TokenValueLength).Trim();
 

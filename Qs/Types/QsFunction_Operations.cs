@@ -56,7 +56,7 @@ namespace Qs.Types
             var fname = "_";
 
             var fbody = "";
-            List<string> fparamList = new();
+            List<string> fparamList = [];
             foreach (var f in functions)
             {
                 fbody += " " + f.FunctionBody + " " + operation;
@@ -198,7 +198,7 @@ namespace Qs.Types
                 if (svl.ScalarType == ScalarTypes.SymbolicQuantity)
                 {
                     
-                    List<string> newParametersList = new(functionParametersArray);
+                    List<string> newParametersList = [..functionParametersArray];
 
                     newParametersList.AddRange(svl.SymbolicQuantity.Value.InvolvedSymbols);
 
@@ -208,7 +208,7 @@ namespace Qs.Types
                 if (svl.ScalarType == ScalarTypes.FunctionQuantity)
                 {
 
-                    List<string> newParametersList = new(functionParametersArray);
+                    List<string> newParametersList = [..functionParametersArray];
 
                     newParametersList.AddRange(svl.FunctionQuantity.Value.ParametersNames);
 
@@ -272,7 +272,7 @@ namespace Qs.Types
         {
             var fname = functionName;
 
-            List<string> fparamList = new();
+            List<string> fparamList = [];
             foreach (var f in functions)
             {
                 fparamList.AddRange(f.ParametersNames);

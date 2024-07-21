@@ -88,9 +88,9 @@ namespace QuantitySystem
         {
             get
             {
-                string mass = "M" + Mass.Exponent.ToString(CultureInfo.InvariantCulture);
-                string length = "L" + Length.Exponent.ToString(CultureInfo.InvariantCulture);
-                string time = "T" + Time.Exponent.ToString(CultureInfo.InvariantCulture);
+                var mass = "M" + Mass.Exponent.ToString(CultureInfo.InvariantCulture);
+                var length = "L" + Length.Exponent.ToString(CultureInfo.InvariantCulture);
+                var time = "T" + Time.Exponent.ToString(CultureInfo.InvariantCulture);
 
                 return mass + length + time;
             }
@@ -111,7 +111,7 @@ namespace QuantitySystem
                 //M1L1T-2
                 //take from MLT untill the M==0
 
-                float TargetM = Mass.Exponent;
+                var TargetM = Mass.Exponent;
 
 
                 float TargetF = 0;
@@ -139,11 +139,11 @@ namespace QuantitySystem
                 //M1L1T-2
                 //take from MLT untill the M==0
 
-                float TargetM = Mass.Exponent;
+                var TargetM = Mass.Exponent;
 
-                float TargetL = Length.Exponent;
+                var TargetL = Length.Exponent;
 
-                float TargetT = Time.Exponent;
+                var TargetT = Time.Exponent;
 
                 float TargetF = 0;
 
@@ -158,9 +158,9 @@ namespace QuantitySystem
                 }
 
 
-                string force = "F" + TargetF.ToString(CultureInfo.InvariantCulture);
-                string length = "L" + TargetL.ToString(CultureInfo.InvariantCulture);
-                string time = "T" + TargetT.ToString(CultureInfo.InvariantCulture);
+                var force = "F" + TargetF.ToString(CultureInfo.InvariantCulture);
+                var length = "L" + TargetL.ToString(CultureInfo.InvariantCulture);
+                var time = "T" + TargetT.ToString(CultureInfo.InvariantCulture);
 
                 return force + length + time;
 
@@ -174,12 +174,12 @@ namespace QuantitySystem
 
         public override string ToString()
         {
-            string dim = "";
+            var dim = "";
 
             dim += "M" + Mass.Exponent.ToString(CultureInfo.InvariantCulture);
 
 
-            string lll = "";
+            var lll = "";
 
             if (Length.VectorExponent != 0)
             {
@@ -212,7 +212,7 @@ namespace QuantitySystem
 
         public override bool Equals(object obj)
         {
-            QuantityDimension QD = obj as QuantityDimension;
+            var QD = obj as QuantityDimension;
 
 
             if (QD != null)
@@ -289,7 +289,7 @@ namespace QuantitySystem
 
         public override int GetHashCode()
         {
-            int hc = ToString().GetHashCode();
+            var hc = ToString().GetHashCode();
             return hc;
         }
         
@@ -305,18 +305,18 @@ namespace QuantitySystem
         public static QuantityDimension Add(QuantityDimension firstDimension, QuantityDimension secondDimension)
         {
 
-            QuantityDimension QD = new QuantityDimension();
-
-            QD.Mass = firstDimension.Mass.Add(secondDimension.Mass);
-            QD.Length = firstDimension.Length.Add(secondDimension.Length);
-            QD.Time =  firstDimension.Time.Add( secondDimension.Time);
-            QD.Temperature = firstDimension.Temperature.Add(secondDimension.Temperature);
-            QD.ElectricCurrent = firstDimension.ElectricCurrent.Add(secondDimension.ElectricCurrent);
-            QD.AmountOfSubstance = firstDimension.AmountOfSubstance.Add( secondDimension.AmountOfSubstance);
-            QD.LuminousIntensity = firstDimension.LuminousIntensity.Add(secondDimension.LuminousIntensity);
-
-            QD.Currency = firstDimension.Currency.Add(secondDimension.Currency);
-            QD.Digital = firstDimension.Digital.Add(secondDimension.Digital);
+            var QD = new QuantityDimension
+            {
+                Mass = firstDimension.Mass.Add(secondDimension.Mass),
+                Length = firstDimension.Length.Add(secondDimension.Length),
+                Time = firstDimension.Time.Add( secondDimension.Time),
+                Temperature = firstDimension.Temperature.Add(secondDimension.Temperature),
+                ElectricCurrent = firstDimension.ElectricCurrent.Add(secondDimension.ElectricCurrent),
+                AmountOfSubstance = firstDimension.AmountOfSubstance.Add( secondDimension.AmountOfSubstance),
+                LuminousIntensity = firstDimension.LuminousIntensity.Add(secondDimension.LuminousIntensity),
+                Currency = firstDimension.Currency.Add(secondDimension.Currency),
+                Digital = firstDimension.Digital.Add(secondDimension.Digital)
+            };
 
             return QD;
         }
@@ -328,18 +328,18 @@ namespace QuantitySystem
 
         public static QuantityDimension Subtract(QuantityDimension firstDimension, QuantityDimension secondDimension)
         {
-            QuantityDimension QD = new QuantityDimension();
-
-            QD.Mass = firstDimension.Mass.Subtract(secondDimension.Mass);
-            QD.Length = firstDimension.Length.Subtract(secondDimension.Length);
-            QD.Time = firstDimension.Time.Subtract(secondDimension.Time);
-            QD.Temperature = firstDimension.Temperature.Subtract(secondDimension.Temperature);
-            QD.ElectricCurrent = firstDimension.ElectricCurrent.Subtract(secondDimension.ElectricCurrent);
-            QD.AmountOfSubstance = firstDimension.AmountOfSubstance.Subtract(secondDimension.AmountOfSubstance);
-            QD.LuminousIntensity = firstDimension.LuminousIntensity.Subtract(secondDimension.LuminousIntensity);
-
-            QD.Currency = firstDimension.Currency.Subtract(secondDimension.Currency);
-            QD.Digital = firstDimension.Digital.Subtract(secondDimension.Digital);
+            var QD = new QuantityDimension
+            {
+                Mass = firstDimension.Mass.Subtract(secondDimension.Mass),
+                Length = firstDimension.Length.Subtract(secondDimension.Length),
+                Time = firstDimension.Time.Subtract(secondDimension.Time),
+                Temperature = firstDimension.Temperature.Subtract(secondDimension.Temperature),
+                ElectricCurrent = firstDimension.ElectricCurrent.Subtract(secondDimension.ElectricCurrent),
+                AmountOfSubstance = firstDimension.AmountOfSubstance.Subtract(secondDimension.AmountOfSubstance),
+                LuminousIntensity = firstDimension.LuminousIntensity.Subtract(secondDimension.LuminousIntensity),
+                Currency = firstDimension.Currency.Subtract(secondDimension.Currency),
+                Digital = firstDimension.Digital.Subtract(secondDimension.Digital)
+            };
 
             return QD;
         }
@@ -351,18 +351,19 @@ namespace QuantitySystem
 
         public static QuantityDimension Multiply(QuantityDimension dimension, float exponent)
         {
-            QuantityDimension QD = new QuantityDimension();
+            var QD = new QuantityDimension
+            {
+                Mass = dimension.Mass.Multiply(exponent),
+                Length = dimension.Length.Multiply(exponent),
+                Time = dimension.Time.Multiply(exponent),
+                Temperature = dimension.Temperature.Multiply(exponent),
+                ElectricCurrent = dimension.ElectricCurrent.Multiply(exponent),
+                AmountOfSubstance = dimension.AmountOfSubstance.Multiply(exponent),
+                LuminousIntensity = dimension.LuminousIntensity.Multiply(exponent),
+                Currency = dimension.Currency.Multiply(exponent),
+                Digital = dimension.Digital.Multiply(exponent)
+            };
 
-
-            QD.Mass = dimension.Mass.Multiply(exponent);
-            QD.Length = dimension.Length.Multiply(exponent);
-            QD.Time = dimension.Time.Multiply(exponent);
-            QD.Temperature = dimension.Temperature.Multiply(exponent);
-            QD.ElectricCurrent = dimension.ElectricCurrent.Multiply(exponent);
-            QD.AmountOfSubstance = dimension.AmountOfSubstance.Multiply(exponent);
-            QD.LuminousIntensity = dimension.LuminousIntensity.Multiply(exponent);
-            QD.Currency = dimension.Currency.Multiply(exponent);
-            QD.Digital = dimension.Digital.Multiply(exponent);
 
             return QD;
 
@@ -372,7 +373,7 @@ namespace QuantitySystem
     
     
         #region Quantities Preparation
-        private static List<Type> CurrentQuantityTypes = new List<Type>();
+        private static List<Type> CurrentQuantityTypes = [];
 
 
         /// <summary>
@@ -414,7 +415,7 @@ namespace QuantitySystem
         static QuantityDimension()
         {
 
-            Assembly CurrentAssembly = Assembly.GetExecutingAssembly();
+            var CurrentAssembly = Assembly.GetExecutingAssembly();
             Type[] types = CurrentAssembly.GetTypes();
 
             var QuantityTypes = from QuantityType in types
@@ -425,7 +426,7 @@ namespace QuantitySystem
 
             //storing the quantity types with thier dimensions
 
-            foreach (Type QuantityType in CurrentQuantityTypes)
+            foreach (var QuantityType in CurrentQuantityTypes)
             {
                 //cach the quantities that is not abstract types
 
@@ -447,7 +448,7 @@ namespace QuantitySystem
                         CurrentDimensionsDictionary.Add(QuantityType, Quantity.Dimension);
 
                         //store the quantity name and type with insensitive names
-                        CurrentQuantitiesNamesDictionary.Add(QuantityType.Name.Substring(0, QuantityType.Name.Length - 2), QuantityType);
+                        CurrentQuantitiesNamesDictionary.Add(QuantityType.Name[..^2], QuantityType);
                     
                     }
                 }
@@ -485,7 +486,7 @@ namespace QuantitySystem
         {
             try
             {
-                Type QuantityType = CurrentQuantitiesDictionary[dimension];
+                var QuantityType = CurrentQuantitiesDictionary[dimension];
 
 
                 return QuantityType;
@@ -493,7 +494,7 @@ namespace QuantitySystem
             }
             catch (KeyNotFoundException ex)
             {
-                QuantityNotFoundException qnfe = new QuantityNotFoundException("Couldn't Find the quantity dimension in the dimensions Hash Key", ex);
+                var qnfe = new QuantityNotFoundException("Couldn't Find the quantity dimension in the dimensions Hash Key", ex);
 
                 throw qnfe;
             }
@@ -509,7 +510,7 @@ namespace QuantitySystem
         {
             try
             {
-                Type QuantityType = CurrentQuantitiesNamesDictionary[quantityName];
+                var QuantityType = CurrentQuantitiesNamesDictionary[quantityName];
 
 
                 return QuantityType;
@@ -517,7 +518,7 @@ namespace QuantitySystem
             }
             catch (KeyNotFoundException ex)
             {
-                QuantityNotFoundException qnfe = new QuantityNotFoundException("Couldn't Find the quantity dimension in the dimensions Hash Key", ex);
+                var qnfe = new QuantityNotFoundException("Couldn't Find the quantity dimension in the dimensions Hash Key", ex);
 
                 throw qnfe;
             }
@@ -539,11 +540,11 @@ namespace QuantitySystem
         {
             lock (QuantitiesCached)
             {
-                Type QuantityType = QuantityTypeFrom(dimension);
+                var QuantityType = QuantityTypeFrom(dimension);
 
                 //the quantity type now is without container type we should generate it
 
-                Type QuantityWithContainerType = QuantityType.MakeGenericType(typeof(T));
+                var QuantityWithContainerType = QuantityType.MakeGenericType(typeof(T));
 
                 object j;
                 if (QuantitiesCached.TryGetValue(QuantityWithContainerType, out j))
@@ -601,9 +602,9 @@ namespace QuantitySystem
         /// <returns></returns>
         private static int ExponentOfMass(string mlt)
         {
-            int m_index = 0;
-            int l_index = mlt.IndexOf('L');
-            int m = int.Parse(mlt.Substring(m_index + 1, l_index - m_index - 1), CultureInfo.InvariantCulture);
+            var m_index = 0;
+            var l_index = mlt.IndexOf('L');
+            var m = int.Parse(mlt.Substring(m_index + 1, l_index - m_index - 1), CultureInfo.InvariantCulture);
 
             return m;
 
@@ -617,10 +618,10 @@ namespace QuantitySystem
         /// <returns></returns>
         private static int ExponentOfLength(string mlt)
         {
-            int l_index = mlt.IndexOf('L');
-            int t_index = mlt.IndexOf('T');
+            var l_index = mlt.IndexOf('L');
+            var t_index = mlt.IndexOf('T');
 
-            int l = int.Parse(mlt.Substring(l_index + 1, t_index - l_index - 1), CultureInfo.InvariantCulture);
+            var l = int.Parse(mlt.Substring(l_index + 1, t_index - l_index - 1), CultureInfo.InvariantCulture);
 
             return l;
 
@@ -633,8 +634,8 @@ namespace QuantitySystem
         /// <returns></returns>
         private static int ExponentOfTime(string mlt)
         {
-            int t_index = mlt.IndexOf('T');
-            int t = int.Parse(mlt.Substring(t_index + 1, mlt.Length - t_index - 1), CultureInfo.InvariantCulture);
+            var t_index = mlt.IndexOf('T');
+            var t = int.Parse(mlt.Substring(t_index + 1, mlt.Length - t_index - 1), CultureInfo.InvariantCulture);
 
             return t;
 
@@ -645,9 +646,9 @@ namespace QuantitySystem
         public static QuantityDimension ParseMLT(string mlt)
         {
 
-            int m = ExponentOfMass(mlt);
-            int l = ExponentOfLength(mlt);
-            int t = ExponentOfTime(mlt);
+            var m = ExponentOfMass(mlt);
+            var l = ExponentOfLength(mlt);
+            var t = ExponentOfTime(mlt);
 
             return new QuantityDimension(m, l, t);
         }
@@ -658,7 +659,7 @@ namespace QuantitySystem
             dimension = dimension.Trim();
 
             // M L T I O N J   C
-            List<float> exps = new List<float>();
+            List<float> exps = [];
             if (char.IsNumber(dimension[0]))
             {
                 // parsing started with numbers which will be most probably 
@@ -674,19 +675,21 @@ namespace QuantitySystem
                     }
                 }
 
-                float M = exps.Count > 0 ? exps[0] : 0;
-                float L = exps.Count > 1 ? exps[1] : 0;
-                float T = exps.Count > 2 ? exps[2] : 0;
-                float I = exps.Count > 3 ? exps[3] : 0;
-                float O = exps.Count > 4 ? exps[4] : 0;
-                float N = exps.Count > 5 ? exps[5] : 0;
-                float J = exps.Count > 6 ? exps[6] : 0;
-                float C = exps.Count > 7 ? exps[7] : 0;
-                float D = exps.Count > 8 ? exps[8] : 0;
+                var M = exps.Count > 0 ? exps[0] : 0;
+                var L = exps.Count > 1 ? exps[1] : 0;
+                var T = exps.Count > 2 ? exps[2] : 0;
+                var I = exps.Count > 3 ? exps[3] : 0;
+                var O = exps.Count > 4 ? exps[4] : 0;
+                var N = exps.Count > 5 ? exps[5] : 0;
+                var J = exps.Count > 6 ? exps[6] : 0;
+                var C = exps.Count > 7 ? exps[7] : 0;
+                var D = exps.Count > 8 ? exps[8] : 0;
 
-                var qd = new QuantityDimension(M, L, T, I, O, N, J);
-                qd.Currency = new CurrencyDescriptor(C);
-                qd.Digital = new DigitalDescriptor(D);
+                var qd = new QuantityDimension(M, L, T, I, O, N, J)
+                {
+                    Currency = new CurrencyDescriptor(C),
+                    Digital = new DigitalDescriptor(D)
+                };
 
                 return qd;
 
@@ -699,7 +702,7 @@ namespace QuantitySystem
 
                 var mts = Regex.Matches(dumber, @"(([MmLlTtIiOoNnJjCcDd])(\-*[0-9]+))+?");
 
-                Dictionary<char,float> edps = new Dictionary<char,float>();
+                var edps = new Dictionary<char,float>();
 
                 foreach(Match m in mts)
                 {
@@ -718,10 +721,11 @@ namespace QuantitySystem
 
                 var qd = new QuantityDimension(edps['M']
                     , edps['L'], edps['T'], edps['I'], edps['O']
-                    , edps['N'], edps['J']);
-
-                qd.Currency = new CurrencyDescriptor(edps['C']);
-                qd.Digital = new DigitalDescriptor(edps['D']);
+                    , edps['N'], edps['J'])
+                {
+                    Currency = new CurrencyDescriptor(edps['C']),
+                    Digital = new DigitalDescriptor(edps['D'])
+                };
 
                 return qd;
             }
@@ -759,17 +763,19 @@ namespace QuantitySystem
 
         public QuantityDimension Invert()
         {
-            QuantityDimension qd = new QuantityDimension();
+            var qd = new QuantityDimension
+            {
+                Mass = Mass.Invert(),
+                Length = Length.Invert(),
+                Time = Time.Invert(),
+                ElectricCurrent = ElectricCurrent.Invert(),
+                Temperature = Temperature.Invert(),
+                AmountOfSubstance = AmountOfSubstance.Invert(),
+                LuminousIntensity = LuminousIntensity.Invert(),
+                Currency = Currency.Invert(),
+                Digital = Digital.Invert()
+            };
 
-            qd.Mass = Mass.Invert();
-            qd.Length = Length.Invert();
-            qd.Time = Time.Invert();
-            qd.ElectricCurrent = ElectricCurrent.Invert();
-            qd.Temperature = Temperature.Invert();
-            qd.AmountOfSubstance = AmountOfSubstance.Invert();
-            qd.LuminousIntensity = LuminousIntensity.Invert();
-            qd.Currency = Currency.Invert();
-            qd.Digital = Digital.Invert();
             return qd;
 
         }

@@ -57,7 +57,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
         {
             get
             {
-                QuantityDimension LengthDimension = new QuantityDimension();
+                var LengthDimension = new QuantityDimension();
 
                 switch (LengthRank)
                 {
@@ -76,9 +76,10 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
         public static implicit operator Length<T>(T value)
         {
-            Length<T> Q = new Length<T>();
-
-            Q.Value = value;
+            Length<T> Q = new Length<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

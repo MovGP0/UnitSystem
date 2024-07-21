@@ -110,7 +110,7 @@ public class Step
         {
                 
 
-            Flow Parent = CreateHostFlow();
+            var Parent = CreateHostFlow();
             Parent.ReSetToStep(Id);
             return Parent.CurrentStepIndex;
         }
@@ -147,9 +147,9 @@ public class Step
         if (fi.FlowHostType == typeof(Flow))
         {
             // dynamically created flow
-            Parent = new Flow();
+            Parent = [];
             var fiContainer = fi.FlowContainer;
-            foreach (Step s in fiContainer)
+            foreach (var s in fiContainer)
             {
                 var ns = Parent.Add(s.Name, s.Id, s.AssociatedTypes, s.Skip, s.AttachedActions);
                 ns.Value = s.Value;

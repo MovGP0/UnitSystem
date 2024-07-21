@@ -13,8 +13,8 @@
         {
             if (power == 0) return _One;
 
-            SymbolicVariable total = Clone();
-            int pw = Math.Abs(power);
+            var total = Clone();
+            var pw = Math.Abs(power);
             while (pw > 1)
             {
                 if (IsFunction && FunctionName.Equals("Sqrt", StringComparison.OrdinalIgnoreCase))
@@ -45,7 +45,7 @@
         {
             if (Math.Floor(power) == power) return Power((int)power);
 
-            SymbolicVariable p = Clone();
+            var p = Clone();
             if (p.IsOneTerm)
             {
                 // raise the coeffecient and symbol

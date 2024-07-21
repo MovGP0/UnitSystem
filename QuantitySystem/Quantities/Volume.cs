@@ -16,9 +16,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Volume<T>(T value)
         {
-            Volume<T> Q = new Volume<T>();
-
-            Q.Value = value;
+            Volume<T> Q = new Volume<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

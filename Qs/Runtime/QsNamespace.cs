@@ -332,7 +332,7 @@ namespace Qs.Runtime
                                      )
                                      select m;
 
-            List<KeyValuePair<string, object>> CodedMembers = new();
+            List<KeyValuePair<string, object>> CodedMembers = [];
 
             foreach (var prop in FilteredProperties)
             {
@@ -347,7 +347,7 @@ namespace Qs.Runtime
 
         public IEnumerable<KeyValuePair<string, object>> GetItems()
         {
-            List<KeyValuePair<string, object>> items = new();
+            List<KeyValuePair<string, object>> items = [];
 
             items.AddRange(Values);
 
@@ -611,7 +611,7 @@ namespace Qs.Runtime
             //    1- check the parameter
             //    2- convert the parameter into native c# during runtime so it can be passed to the desired function
 
-            List<Expression> statements = new();
+            List<Expression> statements = [];
 
             var qns = typeof(QsNamespace);
             var qsys = typeof(Root);

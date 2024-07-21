@@ -70,7 +70,7 @@ namespace Qs.Types
 
                 var argsToken = expression[1];
 
-                List<Expression> Arguments = new();
+                List<Expression> Arguments = [];
 
                 var ix = 0;
                 foreach (var tk in argsToken)

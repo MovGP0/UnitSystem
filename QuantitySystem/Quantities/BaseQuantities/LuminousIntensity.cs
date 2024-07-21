@@ -18,9 +18,10 @@
 
         public static implicit operator LuminousIntensity<T>(T value)
         {
-            LuminousIntensity<T> Q = new LuminousIntensity<T>();
-
-            Q.Value = value;
+            LuminousIntensity<T> Q = new LuminousIntensity<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

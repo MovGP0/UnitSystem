@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator MagneticFluxDensity<T>(T value)
         {
-            MagneticFluxDensity<T> Q = new MagneticFluxDensity<T>();
-
-            Q.Value = value;
+            MagneticFluxDensity<T> Q = new MagneticFluxDensity<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

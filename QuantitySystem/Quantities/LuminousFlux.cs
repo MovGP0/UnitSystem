@@ -19,9 +19,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator LuminousFlux<T>(T value)
         {
-            LuminousFlux<T> Q = new LuminousFlux<T>();
-
-            Q.Value = value;
+            LuminousFlux<T> Q = new LuminousFlux<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

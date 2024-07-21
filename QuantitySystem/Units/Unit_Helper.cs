@@ -5,19 +5,19 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using QuantitySystem.Quantities;
 
-namespace QuantitySystem.Units
+namespace QuantitySystem.Units;
+
+public partial class Unit
 {
-    public partial class Unit
-    {
         
-        /// <summary>
-        /// Returns quantity based on current unit instance.
-        /// </summary>
-        /// <typeparam name="T">Quatntity Storage Type</typeparam>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        internal AnyQuantity<T> MakeQuantity<T>(T value)
-        {
+    /// <summary>
+    /// Returns quantity based on current unit instance.
+    /// </summary>
+    /// <typeparam name="T">Quatntity Storage Type</typeparam>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    internal AnyQuantity<T> MakeQuantity<T>(T value)
+    {
 
 
             //create the corresponding quantity
@@ -36,13 +36,13 @@ namespace QuantitySystem.Units
         
         
 
-        /// <summary>
-        /// Returns quantity from the current unit type.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static AnyQuantity<double> QuantityOf<TUnit>(double value) where TUnit:Unit, new()
-        {
+    /// <summary>
+    /// Returns quantity from the current unit type.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static AnyQuantity<double> QuantityOf<TUnit>(double value) where TUnit:Unit, new()
+    {
 
             Unit unit = new TUnit();
             return unit.MakeQuantity<double>(value);
@@ -50,16 +50,16 @@ namespace QuantitySystem.Units
         }
 
 
-        #region Helper Properties
-        private static Type[] unitTypes;
+    #region Helper Properties
+    private static Type[] unitTypes;
 
-        /// <summary>
-        /// All Types inherited from Unit Type.
-        /// </summary>
-        public static Type[] UnitTypes
+    /// <summary>
+    /// All Types inherited from Unit Type.
+    /// </summary>
+    public static Type[] UnitTypes
+    {
+        get
         {
-            get
-            {
                 if (unitTypes == null)
                 {
                     Type[] AllTypes = Assembly.GetExecutingAssembly().GetTypes();
@@ -73,29 +73,29 @@ namespace QuantitySystem.Units
                 }
                 return unitTypes;
             }
-        }
-        #endregion
+    }
+    #endregion
 
-        #region Helper Functions and Properties
-
-
+    #region Helper Functions and Properties
 
 
-        /// <summary>
-        /// Gets the default unit type of quantity type parameter based on the unit system (namespace)
-        /// under the Units name space.
-        /// The Default Unit Type for length in Imperial is Foot for example.
-        /// </summary>
-        /// <param name="quantityType">quantity type</param>
-        /// <param name="unitSystem">The Unit System or explicitly the namespace under Units Namespace</param>
-        /// <returns>Unit Type Based on the unit system</returns>
-        public static Type GetDefaultUnitTypeOf(Type quantityType, string unitSystem)
-        {
+
+
+    /// <summary>
+    /// Gets the default unit type of quantity type parameter based on the unit system (namespace)
+    /// under the Units name space.
+    /// The Default Unit Type for length in Imperial is Foot for example.
+    /// </summary>
+    /// <param name="quantityType">quantity type</param>
+    /// <param name="unitSystem">The Unit System or explicitly the namespace under Units Namespace</param>
+    /// <returns>Unit Type Based on the unit system</returns>
+    public static Type GetDefaultUnitTypeOf(Type quantityType, string unitSystem)
+    {
             unitSystem = unitSystem.ToUpperInvariant();
 
             if (unitSystem.Contains("METRIC.SI"))
             {
-                Type oUnitType = GetDefaultSIUnitTypeOf(quantityType);
+                var oUnitType = GetDefaultSIUnitTypeOf(quantityType);
                 return oUnitType;
             }
             else
@@ -115,12 +115,12 @@ namespace QuantitySystem.Units
                 Func<Type, bool> SearchForQuantityType = unitType =>
                 {
                     //search in the attributes of the unit type
-                    MemberInfo info = unitType as MemberInfo;
+                    var info = unitType as MemberInfo;
 
                     object[] attributes = (object[])info.GetCustomAttributes(true);
 
                     //get the UnitAttribute
-                    UnitAttribute ua = (UnitAttribute)attributes.SingleOrDefault<object>(ut => ut is UnitAttribute);
+                    var ua = (UnitAttribute)attributes.SingleOrDefault<object>(ut => ut is UnitAttribute);
 
                     if (ua != null)
                     {
@@ -134,7 +134,7 @@ namespace QuantitySystem.Units
                             else if (ua is MetricUnitAttribute)
                             {
                                 //check if the unit has SystemDefault flag true or not.
-                                MetricUnitAttribute mua = ua as MetricUnitAttribute;
+                                var mua = ua as MetricUnitAttribute;
                                 if (mua.SystemDefault)
                                 {
                                     return true;
@@ -160,7 +160,7 @@ namespace QuantitySystem.Units
                 };
 
 
-                string CurrentUnitSystem = unitSystem; //
+                var CurrentUnitSystem = unitSystem; //
                 Type SystemUnitType = null;
 
                 //search in upper namespaces also to get the default unit of the parent system.
@@ -184,7 +184,7 @@ namespace QuantitySystem.Units
                     }
                     else
                     {
-                        CurrentUnitSystem = CurrentUnitSystem.Substring(0, CurrentUnitSystem.LastIndexOf('.'));
+                        CurrentUnitSystem = CurrentUnitSystem[..CurrentUnitSystem.LastIndexOf('.')];
                     }
 
                 }
@@ -203,18 +203,18 @@ namespace QuantitySystem.Units
         }
 
 
-        /// <summary>
-        /// Gets the unit type of quantity type parameter based on SI unit system.
-        /// The function is direct mapping from types of quantities to types of units.
-        /// if function returns null then this quantity dosen't have a statically linked unit to it.
-        /// this means the quantity should return a unit in runtime.
-        /// </summary>
-        /// <param name="qType">Type of Quantity</param>
-        /// <returns>SI Unit Type</returns>
-        public static Type GetDefaultSIUnitTypeOf(Type qType)
-        {
+    /// <summary>
+    /// Gets the unit type of quantity type parameter based on SI unit system.
+    /// The function is direct mapping from types of quantities to types of units.
+    /// if function returns null then this quantity dosen't have a statically linked unit to it.
+    /// this means the quantity should return a unit in runtime.
+    /// </summary>
+    /// <param name="qType">Type of Quantity</param>
+    /// <returns>SI Unit Type</returns>
+    public static Type GetDefaultSIUnitTypeOf(Type qType)
+    {
             
-            Type quantityType = qType;
+            var quantityType = qType;
 
 
             //getting the generic type
@@ -237,12 +237,12 @@ namespace QuantitySystem.Units
             Func<Type, bool> SearchForQuantityType = unitType =>
             {
                 //search in the attributes of the unit type
-                MemberInfo info = unitType as MemberInfo;
+                var info = unitType as MemberInfo;
 
                 object[] attributes = (object[])info.GetCustomAttributes(true);
 
                 //get the UnitAttribute
-                UnitAttribute ua = (UnitAttribute)attributes.SingleOrDefault<object>(ut => ut is UnitAttribute);
+                var ua = (UnitAttribute)attributes.SingleOrDefault<object>(ut => ut is UnitAttribute);
 
                 if (ua != null)
                 {
@@ -259,28 +259,28 @@ namespace QuantitySystem.Units
             };
 
 
-            Type SIUnitType = SIUnitTypes.SingleOrDefault(
+            var SIUnitType = SIUnitTypes.SingleOrDefault(
                 SearchForQuantityType
                 );
 
             return SIUnitType;
         }
 
-        #endregion
+    #endregion
 
 
 
-        /// <summary>
-        /// Find Strongly typed unit.
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        private static Unit FindUnit (string un)
-        {
-            string unit = un.Replace("$", "\\$");
+    /// <summary>
+    /// Find Strongly typed unit.
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <returns></returns>
+    private static Unit FindUnit (string un)
+    {
+            var unit = un.Replace("$", "\\$");
 
             
-            bool UnitVectorModifier = false;
+            var UnitVectorModifier = false;
 
             if (unit.EndsWith("!", StringComparison.Ordinal)) 
             {
@@ -289,9 +289,9 @@ namespace QuantitySystem.Units
                 UnitVectorModifier = true; //unit modifier have one use for now is to convert the Length Quantity into Length Quantity into RadiusLength quantity
             }
 
-            foreach (Type unitType in UnitTypes)
+            foreach (var unitType in UnitTypes)
             {
-                UnitAttribute ua = GetUnitAttribute(unitType);
+                var ua = GetUnitAttribute(unitType);
                 if (ua != null)
                 {
 
@@ -299,7 +299,7 @@ namespace QuantitySystem.Units
 
                     if (Regex.Match(ua.Symbol, "^" + unit + "$", RegexOptions.Singleline).Success)
                     {
-                        Unit u = (Unit)Activator.CreateInstance(unitType);
+                        var u = (Unit)Activator.CreateInstance(unitType);
 
                         //test unit if it is metric so that we remove the default prefix that created with it
                         if (u is MetricUnit)
@@ -336,14 +336,14 @@ namespace QuantitySystem.Units
 
 
 
-        /// <summary>
-        /// Parse units with exponent and one division '/' with many '.'
-        /// i.e. m/s m/s^2 kg.m/s^2
-        /// </summary>
-        /// <param name="units"></param>
-        /// <returns></returns>
-        public static Unit Parse(string units)
-        {
+    /// <summary>
+    /// Parse units with exponent and one division '/' with many '.'
+    /// i.e. m/s m/s^2 kg.m/s^2
+    /// </summary>
+    /// <param name="units"></param>
+    /// <returns></returns>
+    public static Unit Parse(string units)
+    {
             
             //  if found  treat store its value.
             //  m/s^2   m.K/m.s
@@ -356,8 +356,8 @@ namespace QuantitySystem.Units
 
             string[] numa = uny[0].Split('.');
 
-            List<Unit> dunits = new List<Unit>();
-            foreach (string num in numa)
+            List<Unit> dunits = [];
+            foreach (var num in numa)
             {
                 dunits.Add(ParseUnit(num));
             }
@@ -365,7 +365,7 @@ namespace QuantitySystem.Units
             if (uny.Length > 1)
             {
                 string[] dena = uny[1].Split('.');
-                foreach (string den in dena)
+                foreach (var den in dena)
                 {
                     var uu = ParseUnit(den);
                     if (uu.SubUnits != null)
@@ -380,9 +380,9 @@ namespace QuantitySystem.Units
             if (dunits.Count == 1) return dunits[0];
 
             //get the dimension of all units
-            QuantityDimension ud = QuantityDimension.Dimensionless;
+            var ud = QuantityDimension.Dimensionless;
 
-            foreach (Unit un in dunits)
+            foreach (var un in dunits)
             {
                 ud += un.UnitDimension;
             }
@@ -393,21 +393,21 @@ namespace QuantitySystem.Units
             uQType = QuantityDimension.GetQuantityTypeFrom(ud);
             
 
-            Unit FinalUnit = new Unit(uQType, dunits.ToArray());
+            var FinalUnit = new Unit(uQType, dunits.ToArray());
 
             return FinalUnit;
 
         }
 
 
-        /// <summary>
-        /// Returns the unit corresponding to the passed string.
-        /// Suppors units with exponent.
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        internal static Unit ParseUnit(string un)
-        {
+    /// <summary>
+    /// Returns the unit corresponding to the passed string.
+    /// Suppors units with exponent.
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <returns></returns>
+    internal static Unit ParseUnit(string un)
+    {
 
             if (un == "1")
             {
@@ -420,9 +420,9 @@ namespace QuantitySystem.Units
             string[] upower = un.Split('^');
 
 
-            string unit = upower[0];
+            var unit = upower[0];
 
-            int power = 1;
+            var power = 1;
 
             if (upower.Length > 1) power = int.Parse(upower[1], CultureInfo.InvariantCulture);
 
@@ -437,19 +437,19 @@ namespace QuantitySystem.Units
             {
                 //try to find if it as a Metric unit with prefix
                 //loop through all prefixes.
-                for (int i = 10; i >= -10; i -= 1)
+                for (var i = 10; i >= -10; i -= 1)
                 {
                     if (i == 0) i--; //skip the None prefix
                     if (unit.StartsWith(MetricPrefix.GetPrefix(i).Symbol, StringComparison.Ordinal))
                     {
                         //found
 
-                        MetricPrefix mp = MetricPrefix.GetPrefix(i);
-                        string upart = unit.Substring(mp.Symbol.Length);
+                        var mp = MetricPrefix.GetPrefix(i);
+                        var upart = unit[mp.Symbol.Length..];
 
                         //then it should be MetricUnit otherwise die :)
 
-                        MetricUnit u = FindUnit(upart) as MetricUnit;
+                        var u = FindUnit(upart) as MetricUnit;
 
                         if (u == null) goto nounit;
                         
@@ -469,11 +469,11 @@ namespace QuantitySystem.Units
 
 
                 //discover the new type
-                QuantityDimension ud = FinalUnit.UnitDimension * power;
+                var ud = FinalUnit.UnitDimension * power;
 
                 Unit[] chobits = new Unit[power];  //what is chobits any way :O
 
-                for(int iy=0;iy<power;iy++) 
+                for(var iy=0;iy<power;iy++) 
                     chobits[iy] = (Unit)FinalUnit.MemberwiseClone();
 
 
@@ -496,15 +496,15 @@ namespace QuantitySystem.Units
         }
 
 
-        private static Dictionary<Type, UnitAttribute> UnitsAttributes = new Dictionary<Type, UnitAttribute>();
+    private static Dictionary<Type, UnitAttribute> UnitsAttributes = new Dictionary<Type, UnitAttribute>();
 
-        /// <summary>
-        /// Get the unit attribute which hold the unit information.
-        /// </summary>
-        /// <param name="unitType"></param>
-        /// <returns></returns>
-        public static UnitAttribute GetUnitAttribute(Type unitType)
-        {
+    /// <summary>
+    /// Get the unit attribute which hold the unit information.
+    /// </summary>
+    /// <param name="unitType"></param>
+    /// <returns></returns>
+    public static UnitAttribute GetUnitAttribute(Type unitType)
+    {
             UnitAttribute ua;
             if (!UnitsAttributes.TryGetValue(unitType, out ua))
             {
@@ -520,15 +520,15 @@ namespace QuantitySystem.Units
         }
 
 
-        /// <summary>
-        /// Returns the unit of strongly typed metric unit to unit with sub units as base units
-        /// and add the prefix to the expanded base units.
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static Unit ExpandMetricUnit(MetricUnit unit)
-        {
-            List<Unit> DefaultUnits = new List<Unit>();
+    /// <summary>
+    /// Returns the unit of strongly typed metric unit to unit with sub units as base units
+    /// and add the prefix to the expanded base units.
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <returns></returns>
+    public static Unit ExpandMetricUnit(MetricUnit unit)
+    {
+            List<Unit> DefaultUnits = [];
 
             if (unit.IsBaseUnit)
             {
@@ -539,13 +539,13 @@ namespace QuantitySystem.Units
             else
             {
 
-                QuantityDimension qdim = QuantityDimension.DimensionFrom(unit.QuantityType);
+                var qdim = QuantityDimension.DimensionFrom(unit.QuantityType);
 
                 if (unit is MetricUnit)
                 {
                     //pure unit without sub units like Pa, N, and L
 
-                    Unit u = DiscoverUnit(qdim);
+                    var u = DiscoverUnit(qdim);
 
                     List<Unit> baseUnits = u.SubUnits;
 
@@ -565,14 +565,14 @@ namespace QuantitySystem.Units
 
 
 
-        /// <summary>
-        /// Takes string of the form number and unit i.e. "50.34 &lt;kg>"
-        /// and returns Quantity of the discovered unit.
-        /// </summary>
-        /// <param name="quantity"></param>
-        /// <returns></returns>
-        public static AnyQuantity<double> ParseQuantity(string quantity)
-        {
+    /// <summary>
+    /// Takes string of the form number and unit i.e. "50.34 &lt;kg>"
+    /// and returns Quantity of the discovered unit.
+    /// </summary>
+    /// <param name="quantity"></param>
+    /// <returns></returns>
+    public static AnyQuantity<double> ParseQuantity(string quantity)
+    {
             AnyQuantity<double> aty;
             if (TryParseQuantity(quantity, out aty))
                 return aty;
@@ -581,23 +581,23 @@ namespace QuantitySystem.Units
         }
 
 
-        private const string DoubleNumber = @"[-+]?\d+(\.\d+)*([eE][-+]?\d+)*";
+    private const string DoubleNumber = @"[-+]?\d+(\.\d+)*([eE][-+]?\d+)*";
 
-        private const string UnitizedNumber = "^(?<num>" + DoubleNumber + @")\s*<(?<unit>([\w\$\.\^/!]+)?)>$";
-        private static Regex UnitizedNumberRegex = new Regex(UnitizedNumber);
+    private const string UnitizedNumber = "^(?<num>" + DoubleNumber + @")\s*<(?<unit>([\w\$\.\^/!]+)?)>$";
+    private static Regex UnitizedNumberRegex = new Regex(UnitizedNumber);
 
-        public static bool TryParseQuantity(string quantity, out AnyQuantity<double> qty)
-        {
+    public static bool TryParseQuantity(string quantity, out AnyQuantity<double> qty)
+    {
             
             double val;
 
-            Match um = UnitizedNumberRegex.Match(quantity.Trim());
+            var um = UnitizedNumberRegex.Match(quantity.Trim());
             if (um.Success)
             {
-                string varUnit = um.Groups["unit"].Value;
+                var varUnit = um.Groups["unit"].Value;
                 val = double.Parse(um.Groups["num"].Value, CultureInfo.InvariantCulture);
 
-                Unit un = Parse(varUnit);
+                var un = Parse(varUnit);
                 qty = un.GetThisUnitQuantity<double>(val);
 
                 return true;
@@ -617,24 +617,23 @@ namespace QuantitySystem.Units
         }
 
 
-        public Unit RaiseUnitPower(float power)
-        {
+    public Unit RaiseUnitPower(float power)
+    {
             //make short-cut when power equal zero return dimensionless unit immediatly
-            //  because if I left the execution to the end 
-            //  the dimensionless unit is created and wrapping the original unit under sub unit
+            //  because if I left the execution to the end      //  the dimensionless unit is created and wrapping the original unit under sub unit
             //    and this made errors in conversion between dimensionless units :).
             if (power == 0)
             {
                 return DiscoverUnit(QuantityDimension.Dimensionless);
             }
 
-            Unit u = (Unit)MemberwiseClone();
+            var u = (Unit)MemberwiseClone();
 
             if (SubUnits!=null)
             {
                 u.SubUnits = new List<Unit>(SubUnits.Count);
 
-                for(int i=0; i<SubUnits.Count;i++)
+                for(var i=0; i<SubUnits.Count;i++)
                 {
                     u.SubUnits.Add(SubUnits[i].RaiseUnitPower(power));
                 }
@@ -678,5 +677,4 @@ namespace QuantitySystem.Units
 
 
 
-    }
 }

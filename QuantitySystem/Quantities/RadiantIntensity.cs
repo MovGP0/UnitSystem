@@ -20,9 +20,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator RadiantIntensity<T>(T value)
         {
-            RadiantIntensity<T> Q = new RadiantIntensity<T>();
-
-            Q.Value = value;
+            RadiantIntensity<T> Q = new RadiantIntensity<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

@@ -62,7 +62,7 @@ namespace QsGraphics
         {
             Reset();
             
-            Action a = _Form.Close;
+            var a = _Form.Close;
             if(_Form.IsHandleCreated)
                 _Form.Invoke(a);          //execute the code of the form in its running thread by invoke
         }
@@ -78,7 +78,7 @@ namespace QsGraphics
         //private AnyQuantity<double> zrm = Unit.ParseQuantity("0<m!>");
 
 
-        List<Shape> Shapes = new List<Shape>();
+        List<Shape> Shapes = [];
 
        
         /// <summary>
@@ -115,7 +115,7 @@ namespace QsGraphics
         public void Reset()
         {
             loop = false;
-            foreach (Shape sh in Shapes) sh.Reset();
+            foreach (var sh in Shapes) sh.Reset();
             Task.WaitAll(runningTasks.ToArray());
         }
 
@@ -134,7 +134,7 @@ namespace QsGraphics
             OffGraphics.Clear(Color.White);
 
             // draw the shapes
-            foreach (Shape sp in Shapes)
+            foreach (var sp in Shapes)
                 sp.Draw(OffGraphics, (float)_PixelPerMeter);
 
             // draw the offscreen into the displayed screen
@@ -145,10 +145,10 @@ namespace QsGraphics
 
         }
 
-        List<Task> runningTasks = new List<Task>();
+        List<Task> runningTasks = [];
         public void UpdateFor(Time<double> time)
         {
-            Stopwatch sw = new Stopwatch();
+            var sw = new Stopwatch();
             var mtime = MetricUnit.Milli<Second>(0) + time;
 
             loop = true;
@@ -170,7 +170,7 @@ namespace QsGraphics
         
         public void UpdateForever()
         {
-            Stopwatch sw = new Stopwatch();
+            var sw = new Stopwatch();
 
             loop = true;
 

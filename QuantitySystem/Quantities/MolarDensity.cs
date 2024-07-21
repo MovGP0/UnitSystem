@@ -22,9 +22,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator MolarDensity<T>(T value)
         {
-            MolarDensity<T> Q = new MolarDensity<T>();
-
-            Q.Value = value;
+            MolarDensity<T> Q = new MolarDensity<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

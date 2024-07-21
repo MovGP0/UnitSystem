@@ -29,9 +29,10 @@
 
         public static implicit operator Mass<T>(T value)
         {
-            Mass<T> Q = new Mass<T>();
-
-            Q.Value = value;
+            Mass<T> Q = new Mass<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

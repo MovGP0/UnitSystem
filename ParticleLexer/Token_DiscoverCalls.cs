@@ -16,12 +16,12 @@ namespace ParticleLexer
         {
             if (closeTokenClasses.Length != mergedTokenClasses.Length) throw new ArgumentException("Number of closing and merged token classes should be equal");
 
-            Token first = new Token();
-            Token current = first;
+            var first = new Token();
+            var current = first;
 
-            int ci = 0;
+            var ci = 0;
 
-            bool InComplete = false;
+            var InComplete = false;
 
             while (ci < childTokens.Count)
             {
@@ -52,7 +52,7 @@ namespace ParticleLexer
                 {
                     //put the close token inside the current container
                     current.AppendSubToken(c);
-                    int ix = 0;
+                    var ix = 0;
                     for (; ix < closeTokenClasses.Length; ix++)
                     {
                         if (closeTokenClasses[ix] == c.TokenClassType)
@@ -100,10 +100,10 @@ namespace ParticleLexer
         public Token MergeTokensInGroups(params GroupTokenClass[] groupsTokens)
         {
             
-            Token first = new Token();
-            Token current = first;
+            var first = new Token();
+            var current = first;
 
-            int ci = 0;
+            var ci = 0;
 
             while (ci < childTokens.Count)
             {
@@ -161,7 +161,7 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token DiscoverCalls(params CallTokenClass[] callClasses)
         {
-            return DiscoverCalls(StringComparer.OrdinalIgnoreCase, callClasses,new Type[] { typeof(WordToken) }, new string[] { });
+            return DiscoverCalls(StringComparer.OrdinalIgnoreCase, callClasses, [typeof(WordToken)], []);
         }
 
         /// <summary>
@@ -189,10 +189,10 @@ namespace ParticleLexer
                                      select gct.GroupToken.Type).ToArray();
             
 
-            Token first = new Token();
-            Token current = first;
+            var first = new Token();
+            var current = first;
 
-            int ci = 0;
+            var ci = 0;
 
             while (ci < childTokens.Count)
             {
@@ -216,7 +216,7 @@ namespace ParticleLexer
                         //check if the next token is group
                         if (ci < Count - 1)
                         {
-                            Token cnext = childTokens[ci + 1];
+                            var cnext = childTokens[ci + 1];
 
                             #region group discovery
                             // see if the next token class type is among the types we are checking for.
@@ -224,10 +224,10 @@ namespace ParticleLexer
                             {
                                 // so this is a call pattern
                                 // find the CALL class type of this group from the original CallTokenClasses
-                                CallTokenClass TargetCallClass = callTokensClasses.First(o => o.GroupToken.Type == cnext.TokenClassType);
+                                var TargetCallClass = callTokensClasses.First(o => o.GroupToken.Type == cnext.TokenClassType);
                                 //take the current token with the next token and make it as functionToken
 
-                                Token targetCallToken = new Token();
+                                var targetCallToken = new Token();
                                 targetCallToken.TokenClassType = TargetCallClass.Type;
                                 targetCallToken.AppendSubToken(c);
 
@@ -276,19 +276,19 @@ namespace ParticleLexer
         {
             
             //here I must merge all but the parenthesis
-            Token temp = new Token();
+            var temp = new Token();
 
-            for (int iy = 1; iy < cnext.Count - 1; iy++)
+            for (var iy = 1; iy < cnext.Count - 1; iy++)
                 temp.AppendSubToken(cnext[iy]);
 
 
             temp = temp.MergeAllBut<ParameterToken>(separator);
 
-            Token tmp2 = new Token();
+            var tmp2 = new Token();
             tmp2.TokenClassType = cnext.TokenClassType;
             tmp2.AppendSubToken(cnext[0]);
 
-            foreach (Token itmp in temp)
+            foreach (var itmp in temp)
                 tmp2.AppendSubToken(itmp);
 
             tmp2.AppendSubToken(cnext[cnext.Count - 1]);

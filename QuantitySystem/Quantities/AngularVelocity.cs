@@ -18,9 +18,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator AngularVelocity<T>(T value)
         {
-            AngularVelocity<T> Q = new AngularVelocity<T>();
-
-            Q.Value = value;
+            AngularVelocity<T> Q = new AngularVelocity<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

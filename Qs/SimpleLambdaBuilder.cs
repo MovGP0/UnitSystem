@@ -9,8 +9,8 @@ namespace Qs
     /// </summary>
     class SimpleLambdaBuilder
     {
-        private List<ParameterExpression> _params = new();
-        private readonly List<KeyValuePair<ParameterExpression, bool>> _visibleVars = new();
+        private List<ParameterExpression> _params = [];
+        private readonly List<KeyValuePair<ParameterExpression, bool>> _visibleVars = [];
         private string _name;
         private Type _returnType;
         private Expression _body;

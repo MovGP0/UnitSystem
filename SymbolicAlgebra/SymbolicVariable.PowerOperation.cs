@@ -56,7 +56,7 @@ public partial class SymbolicVariable
 
                 // raised the fused symbols 
 
-                for (int i = 0; i < FusedSymbols.Count; i++)
+                for (var i = 0; i < FusedSymbols.Count; i++)
                 {
                     var fusedItem = FusedSymbols[FusedSymbols.ElementAt(i).Key];
                     if (fusedItem.SymbolicVariable == null)
@@ -75,7 +75,7 @@ public partial class SymbolicVariable
                 // (x+y)^(3*x)
                 // to implement this 
                 // the whole symbolic variable should have Symbolic Term.
-                SymbolicVariable thisBase = new SymbolicVariable(this);
+                var thisBase = new SymbolicVariable(this);
                 if (_SymbolPowerTerm != null)
                     thisBase._SymbolPowerTerm = _SymbolPowerTerm * b;
                 else

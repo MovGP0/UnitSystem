@@ -87,7 +87,7 @@ namespace Qs.Runtime
         /// <returns></returns>
         public QsSequenceElement[] GetElementsValuesInArray(int fromIndex, int toIndex)
         {
-            List<QsSequenceElement> Elements = new();
+            List<QsSequenceElement> Elements = [];
 
             var counterIndex = fromIndex;
             var still = true;
@@ -430,7 +430,7 @@ namespace Qs.Runtime
         {
             if (Parameters.Length > 0)
             {
-                List<string> ProcessedElements = new();
+                List<string> ProcessedElements = [];
 
                 #region symbolic representation
 

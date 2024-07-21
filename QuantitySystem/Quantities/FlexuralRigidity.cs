@@ -15,9 +15,10 @@
 
         public static implicit operator FlexuralRigidity<T>(T value)
         {
-            FlexuralRigidity<T> Q = new FlexuralRigidity<T>();
-
-            Q.Value = value;
+            FlexuralRigidity<T> Q = new FlexuralRigidity<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

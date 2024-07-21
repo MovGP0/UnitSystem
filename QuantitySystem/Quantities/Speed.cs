@@ -19,9 +19,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Speed<T>(T value)
         {
-            Speed<T> Q = new Speed<T>();
-
-            Q.Value = value;
+            Speed<T> Q = new Speed<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

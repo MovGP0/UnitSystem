@@ -49,7 +49,7 @@ public class QsScope : IDynamicMetaObjectProvider
     /// <returns></returns>
     public IEnumerable<KeyValuePair<string, object>> GetItems()
     {
-        List<KeyValuePair<string, object>> all = new();
+        List<KeyValuePair<string, object>> all = [];
         foreach (var v in StorageProviders.Values)
         {
             all.AddRange(v.GetItems());
@@ -60,7 +60,7 @@ public class QsScope : IDynamicMetaObjectProvider
 
     public IEnumerable<string> GetKeys()
     {
-        List<string> all = new();
+        List<string> all = [];
         foreach (var v in StorageProviders.Values)
         {
             all.AddRange(v.GetKeys());
@@ -71,7 +71,7 @@ public class QsScope : IDynamicMetaObjectProvider
 
     public IEnumerable<object> GetValues()
     {
-        List<object> all = new();
+        List<object> all = [];
         foreach (var v in StorageProviders.Values)
         {
             all.AddRange(v.GetValues());

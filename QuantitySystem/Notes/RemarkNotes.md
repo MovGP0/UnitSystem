@@ -4,42 +4,38 @@ Hello
 I discovered that I have a distracted thoughts so I am trying to collect my thoughts here sequentially
 the file will describe what I will make and what I already made because I didn't keep track of things last months
 
-
 Ideas:
 ------
 
 1] DimensionlessQuantity is simply any variable that is have no dimensions
   so that the current valuetypes of c# like int,float, and double are dimensionless
   however in my implementation the you should declare DimensionlessQuantity explicitly
-  
+
   by using DimensionlessQuantity you can multiply or divide it to any Quantity without dimension information
   being loss
-  
+
   Tasks:
   - Create instance from DimensionlessQuantity    |  Done
   - Multiplication and Division                   |  need Test
-  
 
 2] Make Console Calculator to evaulate Quantities
   to illustrate the quantites calculations and other facilities to the library
-  
- 
-  
+
   Tasks:
   - Console with Prompt Qs>
   - Options
 	a] Write unit in <> print the unit information and its quantity 
 		Qs> <m>
-		
+
 	b] Support Variables Accept variables
 		Qs> a=1<m>	  
 		Qs> b=1<ft>   
-    
+
 	c] Simple operations 
 		+ - / *
 		a+b
 		c = a+ b
-		
+
 3] 	adding two dimensionless variable made an error 
 	reason: dimensionless unit is dervied unit without refernce unit that made the program add the same unit in
 			the unit path
@@ -58,23 +54,23 @@ Ideas:
 		
 5]  Fix the unit formation from multiplication
     current behaviour for density*velocity    	
-	    
-	Qs> rho = 1[Density]
-	  Density`1: 1 <kg/m^3>
+```
+Qs> rho = 1[Density]
+  Density`1: 1 <kg/m^3>
 
-	Qs> v=1[Viscosity]
-	  Viscosity`1: 1 <Pa.s>
+Qs> v=1[Viscosity]
+  Viscosity`1: 1 <Pa.s>
 
-	Qs> rho * v
-	  DerivedQuantity`1: 1 <<kg/m^3>^2>
-    
-    That was wrong after fixation 
-    the result was 
-      DerivedQuantity`1: 1 <<kg/m^3>.<Pa.s>>
-      
-    Partially (Fixed)
-    
-    
+Qs> rho * v
+  DerivedQuantity`1: 1 <<kg/m^3>^2>
+```
+That was wrong after fixation 
+the result was
+```
+    DerivedQuantity`1: 1 <<kg/m^3>.<Pa.s>>
+```
+Partially (Fixed)
+
 6]  When summing force of units <kg.<m/s^2>> + <N> 
 	error occured because conversion is not done correctly 
 	unit <kg.<m/s^2>> can't be converted because the algorithm is searching for the default unit
@@ -160,23 +156,20 @@ Ideas:
 8] Constructor of unit that takes dimension have a slight problem
 	if it was discovered that the unit is from base unit then it will return a unit with sub units
 	contain only one unit and the unit will be not base
-	
+
 	Proposed solution 
 	move the constructor to static creation function.
-	
+
 	(Fixed)
-	                  
- 
+
 9] Unit object didn't hold the dimension information so conversion to any unit is valid :S
    proposed solution: add dimension information to the unit.    
      error occured because I was instantiating unit from the DimensionLessQuantity 
 			hint: NEVER instantiate unit from Quantity because units depending on Quantities
 			      and if quantity is never cached then its corresponding unit will never find it
-			      
+
    (Fixed)
-			 
-    
-    
+
 10] now we are version 1.0.3 in library
 	-summing or subtracting two derived quantities result in exception.
 	[Fixed]
@@ -191,27 +184,16 @@ Ideas:
 		rod       km
 		---   *   ---   difference of expontent will give 10^-3    
 		Mm         ft
-		
+
 		[Fixed]
-		
-		
-12]		
+
+12]
 		also what if we multiplied Yotta * Yotta  the result will be overflow 
 		and if exponent lie in wrong direction
 		[Fixed]   
 		     in   1.0.6.2
-		     
+
 13] The whole prefix thing have been revised again.		     
-		
-		
+
 14] Functions to be added {added}
 	this leads to more integration into DLR  now the the console is based on DLR
-	
-    
-    
-	
-	
-  
-  
-  
-  

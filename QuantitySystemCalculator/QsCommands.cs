@@ -5,9 +5,7 @@ using QuantitySystem.Units;
 
 public static class QsCommands
 {
-
     public static bool CommandProcessed;
-
 
     public static ScriptEngine Engine { get; set; }
     public static ScriptScope ScriptScope { get; set; }
@@ -25,10 +23,10 @@ public static class QsCommands
     /// <returns></returns>
     public static bool CheckCommand(string command)
     {
-        string[] commands = command.ToLower().Split(' ');
+        var commands = command.ToLower().Split(' ');
 
         //remove unnessacary spaces.
-        for (int i = 0; i < commands.Length; i++)
+        for (var i = 0; i < commands.Length; i++)
             commands[i] = commands[i].Trim();
 
         if (commands[0] == "quit") return false;
@@ -48,7 +46,7 @@ public static class QsCommands
 
         if (commands[0] == "list")
         {
-            string param = string.Empty;
+            var param = string.Empty;
 
             if (commands.Length < 2)
             {
@@ -79,7 +77,6 @@ public static class QsCommands
 
             CommandProcessed = true;
         }
-
 
         if (commands[0] == "new")
         {
@@ -146,7 +143,7 @@ public static class QsCommands
 
             if (commands.Length > 1)
             {
-                string file = commands[1];
+                var file = commands[1];
                 //if (File.Exists(file))
                 {
                     ScriptScope.Engine.ExecuteFile(file, ScriptScope);
@@ -162,17 +159,15 @@ public static class QsCommands
     {
         Console.ForegroundColor = HelpColor;
 
-        int[] exo = { 24, 21, 18, 15, 12, 9, 6, 3, 2, 1, 0, -1, -2, -3, -6, -9, -12, -15, -18, -21, -24 };
-        foreach (int e in exo)
+        int[] exo = [24, 21, 18, 15, 12, 9, 6, 3, 2, 1, 0, -1, -2, -3, -6, -9, -12, -15, -18, -21, -24];
+        foreach (var e in exo)
         {
-            MetricPrefix pr = MetricPrefix.FromExponent(e);
+            var pr = MetricPrefix.FromExponent(e);
             Console.WriteLine("     {0}         {1}        10^{2}", pr.Prefix.PadRight(10), pr.Symbol.PadRight(10), pr.Exponent);
         }
 
         Console.ForegroundColor = ForegroundColor;
     }
-
-
 
     #region Console commands
 
@@ -200,28 +195,28 @@ public static class QsCommands
     {
         Console.ForegroundColor = HelpColor;
 
-        var lib_ver = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(QuantitySystem.QuantityDimension)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
+        var libVer = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(QuantitySystem.QuantityDimension)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
 
-        var qsc_ver = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(Qs.Qs)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
+        var qscVer = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(Qs.Qs)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
 
-        var symb_ver = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(SymbolicAlgebra.SymbolicVariable)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
+        var symbVer = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(SymbolicAlgebra.SymbolicVariable)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
             
-        var calc_ver = (AssemblyFileVersionAttribute)Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
+        var calcVer = (AssemblyFileVersionAttribute)Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
 
 
-        Console.WriteLine("Quantity System Framework  ver " + lib_ver.Version);
-        Console.WriteLine("Quantity System DLR        ver " + qsc_ver.Version);
-        Console.WriteLine("Symbolic Algebra Library   ver " + symb_ver.Version);
-        Console.WriteLine("Quantity System Calculator ver " + calc_ver.Version);
+        Console.WriteLine("Quantity System Framework  ver " + libVer.Version);
+        Console.WriteLine("Quantity System DLR        ver " + qscVer.Version);
+        Console.WriteLine("Symbolic Algebra Library   ver " + symbVer.Version);
+        Console.WriteLine("Quantity System Calculator ver " + calcVer.Version);
 
 
-        var qsc_cwr = Assembly
+        var qscCwr = Assembly
             .GetEntryAssembly()?
             .GetCustomAttributes<AssemblyCopyrightAttribute>()
             .FirstOrDefault();
 
         Console.WriteLine();
-        Console.WriteLine(qsc_cwr?.Copyright);
+        Console.WriteLine(qscCwr?.Copyright);
         //Console.WriteLine("Project Original Repository: http://QuantitySystem.CodePlex.com");
         Console.WriteLine("Project Repository: https://github.com/ibluesun/QuantitySystem");
         Console.WriteLine("Project Blog:   http://QuantitySystem.WordPress.com");
@@ -371,14 +366,14 @@ public static class QsCommands
         Console.WriteLine();
         Console.ForegroundColor = ValuesColor;
 
-        foreach (string var in GetVariablesKeys())
+        foreach (var var in GetVariablesKeys())
         {
             var v = GetVariable(var);
             Console.WriteLine("    " + var + " = " + v.ToString());
             if (v is QsNamespace)
             {
-                QsNamespace ns = (QsNamespace)v;
-                foreach (string nsvar in ns.GetVariablesKeys())
+                var ns = (QsNamespace)v;
+                foreach (var nsvar in ns.GetVariablesKeys())
                 {
                     Console.WriteLine("        " + nsvar + " = " + ns.GetValue(nsvar).ToString());
                 }                    
@@ -398,10 +393,10 @@ public static class QsCommands
         Console.ForegroundColor = HelpColor;
 
         Console.WriteLine();
-        List<string> quats = new List<string>();
-        foreach (Type QType in QuantitySystem.QuantityDimension.AllQuantitiesTypes)
+        List<string> quats = [];
+        foreach (var qType in QuantitySystem.QuantityDimension.AllQuantitiesTypes)
         {
-            quats.Add ("    " + QType.Name.Substring(0, QType.Name.Length - 2).PadRight(30) + "    " + QuantitySystem.QuantityDimension.DimensionFrom(QType).ToString());
+            quats.Add ("    " + qType.Name.Substring(0, qType.Name.Length - 2).PadRight(30) + "    " + QuantitySystem.QuantityDimension.DimensionFrom(qType).ToString());
         }
 
         var qss = from q in quats orderby q select q;
@@ -414,10 +409,10 @@ public static class QsCommands
 
     private struct UnitInfo
     {
-        public string uname;
-        public string symbol;
-        public string system;
-        public string qtype;
+        public string Uname;
+        public string Symbol;
+        public string System;
+        public string Qtype;
     }
 
     /// <summary>
@@ -429,29 +424,29 @@ public static class QsCommands
 
         var units = new List<UnitInfo>();
 
-        foreach (Type utype in Unit.UnitTypes)
+        foreach (var utype in Unit.UnitTypes)
         {
-            QuantitySystem.Attributes.UnitAttribute ua = Unit.GetUnitAttribute(utype);
+            var ua = Unit.GetUnitAttribute(utype);
             if (ua != null)
             {
-                string uname = utype.Name.PadRight(16);
+                var uname = utype.Name.PadRight(16);
 
-                string symbol = "<" + ua.Symbol + ">";
+                var symbol = "<" + ua.Symbol + ">";
                 symbol = symbol.PadRight(10);
 
-                string system = utype.Namespace.Substring("QuantitySystem.Units".Length + 1).PadRight(18);
+                var system = utype.Namespace.Substring("QuantitySystem.Units".Length + 1).PadRight(18);
 
-                string qtype = ua.QuantityType.ToString().Substring(ua.QuantityType.Namespace.Length + 1).TrimEnd("`1[T]".ToCharArray());
+                var qtype = ua.QuantityType.ToString().Substring(ua.QuantityType.Namespace.Length + 1).TrimEnd("`1[T]".ToCharArray());
 
 
                 if (string.IsNullOrEmpty(quantity))
                 {
-                    UnitInfo ui = new UnitInfo
+                    var ui = new UnitInfo
                     {
-                        uname = uname,
-                        symbol = symbol,
-                        system = system,
-                        qtype = qtype
+                        Uname = uname,
+                        Symbol = symbol,
+                        System = system,
+                        Qtype = qtype
                     };
 
                     units.Add(ui);
@@ -465,8 +460,8 @@ public static class QsCommands
         }
 
         var uts = from ut in units
-                    orderby ut.qtype
-                    select ("    " + ut.uname + " " + ut.symbol + " " + ut.system + ut.qtype);
+                    orderby ut.Qtype
+                    select ("    " + ut.Uname + " " + ut.Symbol + " " + ut.System + ut.Qtype);
             foreach (var ut in uts)
             {
                     
@@ -476,5 +471,4 @@ public static class QsCommands
     }
 
     #endregion
-
 }

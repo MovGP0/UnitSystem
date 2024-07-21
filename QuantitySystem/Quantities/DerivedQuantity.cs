@@ -10,7 +10,7 @@ namespace QuantitySystem.Quantities
         public DerivedQuantity(QuantityDimension dimension)
         {
             //create quantity for each sub quantity
-            List<AnyQuantity<T>> quantities = new List<AnyQuantity<T>>();
+            List<AnyQuantity<T>> quantities = [];
 
             if (dimension.Mass.Exponent != 0)
             {
@@ -107,7 +107,7 @@ namespace QuantitySystem.Quantities
             {
                 if (_Dimension == null)
                 {
-                    QuantityDimension QDTotal = new QuantityDimension();
+                    var QDTotal = new QuantityDimension();
 
                     foreach (AnyQuantity<T> aq in InternalQuantities)
                     {
@@ -125,7 +125,7 @@ namespace QuantitySystem.Quantities
         /// <returns></returns>
         public override BaseQuantity Invert()
         {
-            List<AnyQuantity<T>> lq = new List<AnyQuantity<T>>();
+            List<AnyQuantity<T>> lq = [];
 
             foreach (AnyQuantity<T> qty in InternalQuantities)
             {

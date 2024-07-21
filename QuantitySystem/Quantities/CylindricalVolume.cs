@@ -23,9 +23,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator CylindricalVolume<T>(T value)
         {
-            CylindricalVolume<T> Q = new CylindricalVolume<T>();
-
-            Q.Value = value;
+            CylindricalVolume<T> Q = new CylindricalVolume<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

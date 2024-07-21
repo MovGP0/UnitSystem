@@ -18,9 +18,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator BitRate<T>(T value)
         {
-            BitRate<T> Q = new BitRate<T>();
-
-            Q.Value = value;
+            BitRate<T> Q = new BitRate<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

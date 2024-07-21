@@ -21,7 +21,7 @@ namespace Qs.Scripting
         
         public override object Run(Scope scope)
         {
-            string code = string.Empty;
+            var code = string.Empty;
             //try
             {
                 if (SourceUnit.HasPath)
@@ -43,7 +43,7 @@ namespace Qs.Scripting
             //    code = LastLine;   //workaround because Host have something weird in SourceTextReader that don't work linux mono
             //} 
 
-            QsEvaluator qs = QsEvaluator.CurrentEvaluator;
+            var qs = QsEvaluator.CurrentEvaluator;
 
             //qs.Scope = scope;
 
@@ -51,7 +51,7 @@ namespace Qs.Scripting
 
             object ret=null;
 
-            foreach (string line in lines)
+            foreach (var line in lines)
             {
                 if (!string.IsNullOrEmpty(line))
                 {
@@ -71,12 +71,12 @@ namespace Qs.Scripting
                         //  oo(ferwe#kd adflk ) # 
 
                         // first pass (from left to right): find the # char which is the comment.
-                        int pc = 0; // for ()
+                        var pc = 0; // for ()
                         
-                        bool qcOpened = false;
-                        int ix = 0;
+                        var qcOpened = false;
+                        var ix = 0;
 
-                        StringBuilder sb = new StringBuilder();
+                        var sb = new StringBuilder();
                         while (ix < line.Length)
                         {
                             var c = line[ix];
@@ -111,7 +111,7 @@ namespace Qs.Scripting
                             ix++;
                         }
 
-                        string l2 = sb.ToString().Trim();  // text without comment.
+                        var l2 = sb.ToString().Trim();  // text without comment.
 
                         //check the last charachter
                         if (l2.EndsWith(";"))

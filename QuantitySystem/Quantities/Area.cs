@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Area<T>(T value)
         {
-            Area<T> Q = new Area<T>();
-
-            Q.Value = value;
+            Area<T> Q = new Area<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

@@ -1,6 +1,3 @@
-﻿namespace QuantitySystem.Units
-{
-    public class DynamicUnit : Unit
-    {
-    }
-}
+﻿namespace QuantitySystem.Units;
+
+public class DynamicUnit : Unit;

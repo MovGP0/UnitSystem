@@ -143,9 +143,9 @@ namespace SymbolicAlgebra
         /// <param name="expression">Could be number, string, or function form</param>
         public SymbolicVariable(string token)
         {
-            StringBuilder sb = new StringBuilder();
-            int minuscount = 0;
-            bool inStart = true;  //because i am testing at the begining of string.
+            var sb = new StringBuilder();
+            var minuscount = 0;
+            var inStart = true;  //because i am testing at the begining of string.
             foreach (var t in token)
             {
                 if (t != ' ')
@@ -163,9 +163,9 @@ namespace SymbolicAlgebra
                 }
             }
             
-            double rem = Math.IEEERemainder(minuscount, 2);
+            var rem = Math.IEEERemainder(minuscount, 2);
 
-            string expression = sb.ToString();
+            var expression = sb.ToString();
             double coe;
 
             // try infinity first
@@ -219,7 +219,7 @@ namespace SymbolicAlgebra
                         _RawFunctionParameters = TextTools.ComaSplit(parms);
 
                         _FunctionParameters = new SymbolicVariable[_RawFunctionParameters.Length];
-                        for (int i = 0; i < _RawFunctionParameters.Length; i++)
+                        for (var i = 0; i < _RawFunctionParameters.Length; i++)
                         {
                             _FunctionParameters[i] = Parse(_RawFunctionParameters[i]);
                         }
@@ -228,8 +228,8 @@ namespace SymbolicAlgebra
                     // the following is the process of simplifieng known functions to its simplified form
                     if (_FunctionParameters != null)
                     {
-                        string[] oddfuncs = { "sin", "csc", "tan", "cot" };
-                        string[] evenfuncs = { "cos", "sec" };
+                        string[] oddfuncs = ["sin", "csc", "tan", "cot"];
+                        string[] evenfuncs = ["cos", "sec"];
                         
 
                         // for some triogonmetric functions like sin  sin(-x) = -sin(x)  // this is important
@@ -255,7 +255,7 @@ namespace SymbolicAlgebra
                             }
                         }
 
-                        bool log = false;
+                        var log = false;
                         if (_FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
                         {
                             #region log simplification region
@@ -303,8 +303,8 @@ namespace SymbolicAlgebra
                                         var first_constant = new HybridVariable { NumericalVariable = 1, SymbolicVariable = logparam.CoeffecientPowerTerm };
                                         logparam._CoeffecientPowerTerm = null;
 
-                                        HybridVariable[] fusedConstants = new HybridVariable[logparam.FusedConstants.Count];
-                                        for (int i = 0; i < logparam.FusedConstants.Count; i++)
+                                        var fusedConstants = new HybridVariable[logparam.FusedConstants.Count];
+                                        for (var i = 0; i < logparam.FusedConstants.Count; i++)
                                         {
                                             // get the power we need
                                             fusedConstants[i] = (HybridVariable)logparam.FusedConstants.ElementAt(i).Value.Clone();
@@ -318,8 +318,8 @@ namespace SymbolicAlgebra
                                         logparam._SymbolPowerTerm = null;
                                         logparam.SymbolPower = 1;
 
-                                        HybridVariable[] fusedPowers = new HybridVariable[logparam.FusedSymbols.Count];
-                                        for (int i = 0; i < logparam.FusedSymbols.Count; i++)
+                                        var fusedPowers = new HybridVariable[logparam.FusedSymbols.Count];
+                                        for (var i = 0; i < logparam.FusedSymbols.Count; i++)
                                         {
                                             // get the power we need
                                             fusedPowers[i] = (HybridVariable)logparam.FusedSymbols.ElementAt(i).Value.Clone();
@@ -332,14 +332,14 @@ namespace SymbolicAlgebra
 
                                         // first coefficient power * log(coefficient)
                                         final = Multiply(first_constant, new SymbolicVariable("log(" + logparam.Coeffecient.ToString(CultureInfo.InvariantCulture) + ")"));
-                                        for (int i = 0; i < logparam.FusedConstants.Count; i++)
+                                        for (var i = 0; i < logparam.FusedConstants.Count; i++)
                                         {
                                             final = Add(final, Multiply(fusedConstants[i], new SymbolicVariable("log(" + logparam.FusedConstants.ElementAt(i).Key.ToString(CultureInfo.InvariantCulture) + ")")));
                                         }
 
                                         // continue with symbols
                                         final = Add(final, Multiply(first_symbol, new SymbolicVariable("log(" + logparam.Symbol + ")")));
-                                        for (int i = 0; i < logparam.FusedSymbols.Count; i++)
+                                        for (var i = 0; i < logparam.FusedSymbols.Count; i++)
                                         {
                                             final = Add(final, Multiply(fusedPowers[i], new SymbolicVariable("log(" + logparam.FusedSymbols.ElementAt(i).Key + ")")));
                                         }
@@ -363,7 +363,7 @@ namespace SymbolicAlgebra
                                             _FunctionParameters[0]._SymbolPowerTerm = null;
                                             _FunctionParameters[0].SymbolPower = 1;
 
-                                            string pwop = "log(" + _FunctionParameters[0] + ")";
+                                            var pwop = "log(" + _FunctionParameters[0] + ")";
                                             _FunctionParameters = null;
                                             var t = new SymbolicVariable(pwop);
 
@@ -380,7 +380,7 @@ namespace SymbolicAlgebra
 
                                             // make the log(parameter without its power)
                                             _FunctionParameters[0]._CoeffecientPowerTerm = null;
-                                            string pwop = "log(" + _FunctionParameters[0] + ")";
+                                            var pwop = "log(" + _FunctionParameters[0] + ")";
                                             _FunctionParameters = null;
                                             var t = new SymbolicVariable(pwop);
 
@@ -406,7 +406,7 @@ namespace SymbolicAlgebra
                         else 
                         {
                             Symbol = _FunctionName + "(";
-                            for (int i = 0; i < _FunctionParameters.Length; i++)
+                            for (var i = 0; i < _FunctionParameters.Length; i++)
                             {
                                 Symbol += _FunctionParameters[i].ToString() + ",";
                             }
@@ -450,11 +450,11 @@ namespace SymbolicAlgebra
         /// <param name="functionNames"></param>
         private void SetFunctionName(string[] functionNames)
         {
-            string f1 = functionNames[0];
+            var f1 = functionNames[0];
 
             Symbol = f1 + "(";
 
-            string iparms = string.Empty;
+            var iparms = string.Empty;
 
             foreach (var p in _FunctionParameters)
             {
@@ -475,7 +475,7 @@ namespace SymbolicAlgebra
             // use the fusedsymbols to add the extra functions.
             if (functionNames.Length > 1)
             {
-                for (int i = 1; i < functionNames.Length; i++)
+                for (var i = 1; i < functionNames.Length; i++)
                 {
                     if (Symbol.Equals(functionNames[i] + "(" + iparms + ")", StringComparison.OrdinalIgnoreCase))
                     {
@@ -491,7 +491,7 @@ namespace SymbolicAlgebra
                         }
                         else
                         {
-                            HybridVariable hfv = new HybridVariable();
+                            var hfv = new HybridVariable();
                             hfv.NumericalVariable = 1.0;
 
                             FusedSymbols.Add(functionNames[i] + "(" + iparms + ")", hfv);
@@ -600,7 +600,7 @@ namespace SymbolicAlgebra
         {
             get
             {
-                if (_ExtraTerms == null) _ExtraTerms = new List<ExtraTerm>();
+                if (_ExtraTerms == null) _ExtraTerms = [];
                 return _ExtraTerms;
             }
         }
@@ -672,15 +672,15 @@ namespace SymbolicAlgebra
         private string GetConstantBaseValue(int i)
         {
 
-            string result = string.Empty;
+            var result = string.Empty;
 
-            double power = FusedConstants.ElementAt(i).Value.NumericalVariable;
-            SymbolicVariable powerTerm = FusedConstants.ElementAt(i).Value.SymbolicVariable;
+            var power = FusedConstants.ElementAt(i).Value.NumericalVariable;
+            var powerTerm = FusedConstants.ElementAt(i).Value.SymbolicVariable;
 
-            string variableName = FusedConstants.ElementAt(i).Key.ToString(CultureInfo.InvariantCulture);
+            var variableName = FusedConstants.ElementAt(i).Key.ToString(CultureInfo.InvariantCulture);
             if (powerTerm != null)
             {
-                string powerTermText = powerTerm.ToString();
+                var powerTermText = powerTerm.ToString();
                 if (powerTermText.Length > 1)
                     result = variableName + "^(" + powerTermText + ")";
                 else
@@ -699,16 +699,16 @@ namespace SymbolicAlgebra
         private string GetConstantAbsoluteBaseValue(int i)
         {
 
-            string result = string.Empty;
+            var result = string.Empty;
 
-            double power = FusedConstants.ElementAt(i).Value.NumericalVariable;
-            SymbolicVariable powerTerm = FusedConstants.ElementAt(i).Value.SymbolicVariable;
+            var power = FusedConstants.ElementAt(i).Value.NumericalVariable;
+            var powerTerm = FusedConstants.ElementAt(i).Value.SymbolicVariable;
 
-            string variableName = FusedConstants.ElementAt(i).Key.ToString(CultureInfo.InvariantCulture);
+            var variableName = FusedConstants.ElementAt(i).Key.ToString(CultureInfo.InvariantCulture);
 
             if (powerTerm != null)
             {
-                string powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).ToString() : powerTerm.ToString();
+                var powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).ToString() : powerTerm.ToString();
                 if (powerTermText.Length > 1)
                     result = variableName + "^(" + powerTermText + ")";
                 else
@@ -740,15 +740,15 @@ namespace SymbolicAlgebra
         private string GetSymbolBaseValue(int i)
         {
             
-            string result = string.Empty;
+            var result = string.Empty;
             
-            double power = FusedSymbols.ElementAt(i).Value.NumericalVariable;
-            SymbolicVariable powerTerm = FusedSymbols.ElementAt(i).Value.SymbolicVariable;
+            var power = FusedSymbols.ElementAt(i).Value.NumericalVariable;
+            var powerTerm = FusedSymbols.ElementAt(i).Value.SymbolicVariable;
 
-            string variableName = FusedSymbols.ElementAt(i).Key;
+            var variableName = FusedSymbols.ElementAt(i).Key;
             if (powerTerm != null)
             {
-                string powerTermText = powerTerm.ToString();
+                var powerTermText = powerTerm.ToString();
                 if (powerTermText.Length > 1)
                     result = variableName + "^(" + powerTermText + ")";
                 else
@@ -778,16 +778,16 @@ namespace SymbolicAlgebra
         private string GetSymbolAbsoluteBaseValue(int i)
         {
 
-            string result = string.Empty;
+            var result = string.Empty;
 
-            double power = FusedSymbols.ElementAt(i).Value.NumericalVariable;
-            SymbolicVariable powerTerm = FusedSymbols.ElementAt(i).Value.SymbolicVariable;
+            var power = FusedSymbols.ElementAt(i).Value.NumericalVariable;
+            var powerTerm = FusedSymbols.ElementAt(i).Value.SymbolicVariable;
 
-            string variableName = FusedSymbols.ElementAt(i).Key;
+            var variableName = FusedSymbols.ElementAt(i).Key;
 
             if (powerTerm != null)
             {
-                string powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).ToString() : powerTerm.ToString();
+                var powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).ToString() : powerTerm.ToString();
 
                 if (powerTermText.Length > 1)
                     result = variableName + "^(" + powerTermText + ")";
@@ -832,7 +832,7 @@ namespace SymbolicAlgebra
         public SymbolicVariable? GetFusedTerm(int i)
         {
             var fs = FusedSymbols.ElementAt(i);
-            SymbolicVariable ft = Parse(fs.Key);
+            var ft = Parse(fs.Key);
 
             if (fs.Value.SymbolicVariable != null) return ft.RaiseToSymbolicPower(fs.Value.SymbolicVariable);
             else return ft.Power(fs.Value.NumericalVariable);
@@ -846,7 +846,7 @@ namespace SymbolicAlgebra
         public SymbolicVariable? GetConstantTerm(int i)
         {
             var fs = FusedConstants.ElementAt(i);
-            SymbolicVariable ft = new SymbolicVariable(fs.Key.ToString(CultureInfo.InvariantCulture));
+            var ft = new SymbolicVariable(fs.Key.ToString(CultureInfo.InvariantCulture));
 
             if (fs.Value.SymbolicVariable != null) return ft.RaiseToSymbolicPower(fs.Value.SymbolicVariable);
             else return ft.Power(fs.Value.NumericalVariable);
@@ -893,18 +893,18 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public SymbolicVariable[] GetMultipliedTerms()
         {
-            List<SymbolicVariable> MultilpiedTerms = new List<SymbolicVariable>();
+            List<SymbolicVariable> MultilpiedTerms =
+            [
+                GetTheStrippedCoefficient(),
+                GetTheStrippedVariable()
+            ];
 
-            MultilpiedTerms.Add(GetTheStrippedCoefficient());
-
-            MultilpiedTerms.Add(GetTheStrippedVariable());
-
-            for (int ifsx = 0; ifsx < FusedConstants.Count; ifsx++)
+            for (var ifsx = 0; ifsx < FusedConstants.Count; ifsx++)
             {
                 MultilpiedTerms.Add(GetConstantTerm(ifsx));
             }
 
-            for (int ifsx = 0; ifsx < FusedSymbols.Count; ifsx++)
+            for (var ifsx = 0; ifsx < FusedSymbols.Count; ifsx++)
             {
                 MultilpiedTerms.Add(GetFusedTerm(ifsx));
             }
@@ -924,7 +924,7 @@ namespace SymbolicAlgebra
         {
             get
             {
-                string result = string.Empty;
+                var result = string.Empty;
 
                 
                 // add the key of the coefficient only  when it has power term and coefficient itself is not zero.
@@ -950,10 +950,10 @@ namespace SymbolicAlgebra
                     }
                 }
 
-                for (int i = 0; i < FusedSymbols.Count; i++)
+                for (var i = 0; i < FusedSymbols.Count; i++)
                 {
 
-                    double pp = GetFusedPower(i);
+                    var pp = GetFusedPower(i);
                    
                     if(string.IsNullOrEmpty(result))
                     {
@@ -981,7 +981,7 @@ namespace SymbolicAlgebra
         {
             get
             {
-                string g = WholeValueBaseKey;
+                var g = WholeValueBaseKey;
 
                 if (g.Contains("|")) return g.Substring(g.IndexOf('|') + 1);
                 else return g;
@@ -1027,7 +1027,7 @@ namespace SymbolicAlgebra
         private  string GetFormattedSymbolicValue()
         {
             
-            string result = string.Empty;
+            var result = string.Empty;
 
             // first check the primary storage of the symbol and if it has value or noy
 
@@ -1068,10 +1068,10 @@ namespace SymbolicAlgebra
             }
 
 
-            for (int i = 0; i < FusedSymbols.Count; i++)
+            for (var i = 0; i < FusedSymbols.Count; i++)
             {
 
-                double pp = GetFusedPower(i);         // fused symbol power
+                var pp = GetFusedPower(i);         // fused symbol power
 
                 if (string.IsNullOrEmpty(result))
                 {
@@ -1102,7 +1102,7 @@ namespace SymbolicAlgebra
         /// </summary>
         private string FormSymbolTextValue()
         {
-            string result = GetFormattedSymbolicValue();
+            var result = GetFormattedSymbolicValue();
 
             if (Coeffecient == 0) return "0";                 // this cancel all the symbolic variable because of 0 in coeffecient
 
@@ -1117,7 +1117,7 @@ namespace SymbolicAlgebra
 
             if (Coeffecient != 1)
             {
-                string rr = Coeffecient.ToString(CultureInfo.InvariantCulture);
+                var rr = Coeffecient.ToString(CultureInfo.InvariantCulture);
                 if (_CoeffecientPowerTerm != null)
                 {
                     // coeffecient part  like 3^x  {remember coeffecient may be raised to symbol}
@@ -1167,9 +1167,9 @@ namespace SymbolicAlgebra
             if (FusedConstants.Count > 0) if (result == "1") result = string.Empty;
             
             // continue with the rest of constants
-            for (int i = 0; i < FusedConstants.Count; i++)
+            for (var i = 0; i < FusedConstants.Count; i++)
             {
-                double pp = GetFusedConstantPower(i);
+                var pp = GetFusedConstantPower(i);
 
                 if (string.IsNullOrEmpty(result))
                 {
@@ -1194,7 +1194,7 @@ namespace SymbolicAlgebra
 
         public string FinalText()
         {
-            string result = FormSymbolTextValue();
+            var result = FormSymbolTextValue();
 
             if (AddedTerms.Count > 0)
             {
@@ -1238,7 +1238,7 @@ namespace SymbolicAlgebra
                 }
                 else
                 {
-                    string etv = eterm.Term.FinalText();
+                    var etv = eterm.Term.FinalText();
                     if(etv.StartsWith("-")) 
                         result+=etv;
                     else 
@@ -1256,7 +1256,7 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public override string ToString()
         {
-            string final = FinalText();
+            var final = FinalText();
             return final;
         }
 
@@ -1351,14 +1351,14 @@ namespace SymbolicAlgebra
                 //variable name of this instance    THE VARIABLE NAME which is x or y or xy  
                 if (!string.IsNullOrEmpty(Symbol))
                 {
-                    HybridVariable hv = new HybridVariable { NumericalVariable = SymbolPower, SymbolicVariable = SymbolPowerTerm };
+                    var hv = new HybridVariable { NumericalVariable = SymbolPower, SymbolicVariable = SymbolPowerTerm };
                     vvs.Add(Symbol, hv);
                 }
 
                 // variable part of the target instance
                 if (!string.IsNullOrEmpty(sv.Symbol))
                 {
-                    HybridVariable hv = new HybridVariable { NumericalVariable = sv.SymbolPower, SymbolicVariable = sv.SymbolPowerTerm };
+                    var hv = new HybridVariable { NumericalVariable = sv.SymbolPower, SymbolicVariable = sv.SymbolPowerTerm };
 
                     if (vvs.ContainsKey(sv.Symbol))
                     {
@@ -1430,13 +1430,13 @@ namespace SymbolicAlgebra
                 if (_AddedTerms.Count == sv._AddedTerms.Count && _AddedTerms.Count > 0)
                 {
                     //ok there are another tests to be done.
-                    int EqualTerms = 0;
+                    var EqualTerms = 0;
 
-                    int count = TermsCount;
+                    var count = TermsCount;
 
-                    for (int ix = 0; ix < count; ix++)
+                    for (var ix = 0; ix < count; ix++)
                     {
-                        for (int iy = 0; iy < count; iy++)
+                        for (var iy = 0; iy < count; iy++)
                         {
                             if (this[ix].Equals(sv[iy])) EqualTerms++;
                         }
@@ -1509,7 +1509,7 @@ namespace SymbolicAlgebra
 
             if (aterms != null)
             {
-                for (int i = 0; i < aterms.Count; i++)
+                for (var i = 0; i < aterms.Count; i++)
                 {
                     var sa = aterms.ElementAt(i).Value;
 
@@ -1533,7 +1533,7 @@ namespace SymbolicAlgebra
 
         private static void AdjustZeroPowerTerms(SymbolicVariable svar)
         {
-            for (int i = svar.FusedSymbols.Count - 1; i >= 0; i--)
+            for (var i = svar.FusedSymbols.Count - 1; i >= 0; i--)
             {
                 if (svar.FusedSymbols.ElementAt(i).Value.IsZero || svar.FusedSymbols.ElementAt(i).Key == string.Empty)
                     svar.FusedSymbols.Remove(svar.FusedSymbols.ElementAt(i).Key);
@@ -1578,13 +1578,13 @@ namespace SymbolicAlgebra
         private static void AdjustZeroCoeffecientTerms(ref SymbolicVariable svar)
         {
             // check the added terms for zero coefficients and remove if necessary.
-            for (int i = svar.AddedTerms.Count - 1; i >= 0; i--)
+            for (var i = svar.AddedTerms.Count - 1; i >= 0; i--)
             {
                 if (svar.AddedTerms.ElementAt(i).Value.Coeffecient == 0)
                     svar.AddedTerms.Remove (svar.AddedTerms.ElementAt(i).Key);
             }
 
-            for (int i = svar.ExtraTerms.Count - 1; i >= 0; i--)
+            for (var i = svar.ExtraTerms.Count - 1; i >= 0; i--)
             {
                 if (svar.ExtraTerms.ElementAt(i).Term.Coeffecient == 0)
                     svar.ExtraTerms.RemoveAt(i);
@@ -1601,7 +1601,7 @@ namespace SymbolicAlgebra
                     //      |--  AddedTerms  1, 2, 3, .., n
                     //  so we need the first term to be the AddedTerm and rest of terms to be in the same collection
 
-                    SymbolicVariable priamry = svar.AddedTerms.ElementAt(0).Value;
+                    var priamry = svar.AddedTerms.ElementAt(0).Value;
                     svar.AddedTerms.Remove(svar.AddedTerms.ElementAt(0).Key);
 
                     Dictionary<string, SymbolicVariable> NewAddedTerms = svar.AddedTerms;
@@ -1612,7 +1612,7 @@ namespace SymbolicAlgebra
                 }
                 else if (svar.ExtraTerms.Count > 0)
                 {
-                    SymbolicVariable priamry = svar.ExtraTerms.ElementAt(0).Term;
+                    var priamry = svar.ExtraTerms.ElementAt(0).Term;
                     if (svar.ExtraTerms[0].Negative) priamry.Coeffecient *= -1;
                     svar.ExtraTerms.RemoveAt(0);
 
@@ -1771,8 +1771,8 @@ namespace SymbolicAlgebra
         {
             Func<string, string[]> pgh = (key) =>
             {
-                List<string> fs = new List<string> { key };
-                int i = 0;
+                List<string> fs = [key];
+                var i = 0;
                 while (i < fs.Count)
                 {
                     // this loop extract the inner parameters from the enclosed function calls as f(g(n(x)))
@@ -1789,7 +1789,7 @@ namespace SymbolicAlgebra
 
                         // many parameters may be  u, e, sin(f)  etc..
                         // add the extra parameter to the list of discovered symbols
-                        for (int vpi = 1; vpi < vps.Length; vpi++)
+                        for (var vpi = 1; vpi < vps.Length; vpi++)
                             fs.Add(vps[vpi]);
 
                         // we note here that the dynamic list of fs has been increased  and we 
@@ -1803,7 +1803,7 @@ namespace SymbolicAlgebra
                 return fs.Where(s => (string.IsNullOrEmpty(s) == false && s.StartsWith("%") == false)).ToArray();
             };
 
-            List<string> symbols = new List<string>();
+            List<string> symbols = [];
 
             if (_BaseVariable == null)
             {
@@ -1834,7 +1834,7 @@ namespace SymbolicAlgebra
 
                 if (fsm.Value.SymbolicVariable != null)
                 {
-                    foreach (string ss in fsm.Value.SymbolicVariable.InvolvedSymbols)
+                    foreach (var ss in fsm.Value.SymbolicVariable.InvolvedSymbols)
                     {
                         if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
                             symbols.Add(ss);
@@ -1845,7 +1845,7 @@ namespace SymbolicAlgebra
             // primary symbol
             if (SymbolPowerTerm != null)
             {
-                foreach (string ss in SymbolPowerTerm.InvolvedSymbols)
+                foreach (var ss in SymbolPowerTerm.InvolvedSymbols)
                 {
                     if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
                         symbols.Add(ss);
@@ -1857,7 +1857,7 @@ namespace SymbolicAlgebra
             {
                 if (fc.Value.SymbolicVariable != null)
                 {
-                    foreach (string ss in fc.Value.SymbolicVariable.InvolvedSymbols)
+                    foreach (var ss in fc.Value.SymbolicVariable.InvolvedSymbols)
                     {
                         if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
                             symbols.Add(ss);
@@ -1868,16 +1868,16 @@ namespace SymbolicAlgebra
             // coeffiecient power term
             if (CoeffecientPowerTerm != null)
             {
-                foreach (string ss in CoeffecientPowerTerm.InvolvedSymbols)
+                foreach (var ss in CoeffecientPowerTerm.InvolvedSymbols)
                 {
                     if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
                         symbols.Add(ss);
                 }
             }
 
-            foreach (SymbolicVariable term in AddedTerms.Values)
+            foreach (var term in AddedTerms.Values)
             {
-                foreach (string ss in term.InvolvedSymbols)
+                foreach (var ss in term.InvolvedSymbols)
                 {
                     if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
                         symbols.Add(ss);
@@ -1899,7 +1899,7 @@ namespace SymbolicAlgebra
         public SymbolicVariable Clone(bool excludeExtraTerms = false)
         {
             
-            SymbolicVariable clone = new SymbolicVariable(Symbol);
+            var clone = new SymbolicVariable(Symbol);
 
             //if (this._BaseVariable == null)  clone._Symbol = this._Symbol;
 

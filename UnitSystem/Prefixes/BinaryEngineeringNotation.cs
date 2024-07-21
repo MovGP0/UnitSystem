@@ -7,9 +7,9 @@ public static class BinaryEngineeringNotation
     {
         // Get the closest binary exponent
         const string NonBreakingSpace = "\u00A0";
-        int binaryExponent = GetClosestBinaryExponent(value);
+        var binaryExponent = GetClosestBinaryExponent(value);
         var prefix = BinaryPrefix.GetAll().Single(p => p.Base1024Exponent == binaryExponent);
-        double scaledValue = value * Math.Pow(2, -prefix.Base2Exponent);
+        var scaledValue = value * Math.Pow(2, -prefix.Base2Exponent);
         return (scaledValue.ToString("0.###,###", formatProvider ?? CultureInfo.InvariantCulture) + NonBreakingSpace + prefix.Symbol).TrimEnd();
     }
 

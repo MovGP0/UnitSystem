@@ -50,7 +50,7 @@ internal class UnitInterpreter
         _system = system;
         _dialect = dialect;
         _unitRegex = BuildUnitRegex();
-        _baseUnits = new List<KnownUnit>(_system.BaseUnits);
+        _baseUnits = [.._system.BaseUnits];
 
         foreach (var unit in system)
         {

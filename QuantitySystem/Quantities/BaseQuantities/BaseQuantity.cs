@@ -31,7 +31,7 @@
         /// </summary>
         public virtual BaseQuantity Invert()
         {
-            BaseQuantity bq = (BaseQuantity)MemberwiseClone();
+            var bq = (BaseQuantity)MemberwiseClone();
             bq.SetExponent(0 - _Exponent);
             
 
@@ -65,7 +65,7 @@
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            BaseQuantity bd = obj as BaseQuantity;
+            var bd = obj as BaseQuantity;
 
             if(bd!=null)
             {

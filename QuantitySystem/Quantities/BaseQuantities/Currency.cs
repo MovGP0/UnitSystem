@@ -33,9 +33,10 @@
 
         public static implicit operator Currency<T>(T value)
         {
-            Currency<T> Q = new Currency<T>();
-
-            Q.Value = value;
+            Currency<T> Q = new Currency<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

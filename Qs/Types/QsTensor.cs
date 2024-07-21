@@ -9,7 +9,7 @@ namespace Qs.Types
     public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     {
 
-        protected List<QsMatrix> MatrixLayers = new();
+        protected List<QsMatrix> MatrixLayers = [];
 
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Qs.Types
             else
             {
                 // Third rank tensor or more 
-                if (InnerTensors == null) InnerTensors = new List<QsTensor>();
+                if (InnerTensors == null) InnerTensors = [];
 
                 InnerTensors.Add(qsTensor);
             }

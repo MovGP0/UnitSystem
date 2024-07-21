@@ -8,7 +8,7 @@ namespace QsRoot
     /// <summary>
     /// Standard I/O for quantity system.
     /// </summary>
-    public static class IO
+    public static class Io
     {
 
         public static QsValue InputLine(string prompt)
@@ -30,7 +30,7 @@ namespace QsRoot
 
         public static QsValue ReadBinaryFile([QsParamInfo(QsParamType.Text)]QsParameter fileName)
         {
-            byte[] data = File.ReadAllBytes(fileName.UnknownValueText);
+            var data = File.ReadAllBytes(fileName.UnknownValueText);
 
             return data.ToQsVector();
         }
@@ -39,7 +39,7 @@ namespace QsRoot
             [QsParamInfo(QsParamType.Text)] QsParameter text
             )
         {
-            System.Speech.Synthesis.SpeechSynthesizer ss = new System.Speech.Synthesis.SpeechSynthesizer();
+            var ss = new System.Speech.Synthesis.SpeechSynthesizer();
 
             ss.SpeakAsync(text.UnknownValueText);
 
@@ -49,9 +49,9 @@ namespace QsRoot
 
         public static string DownloadString(string url)
         {
-            string result = string.Empty;
+            var result = string.Empty;
 
-            using (WebClient client = new WebClient()) // WebClient class inherits IDisposable
+            using (var client = new WebClient()) // WebClient class inherits IDisposable
             {
                 result = client.DownloadString(url);
             }

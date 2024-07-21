@@ -501,7 +501,7 @@
 
                 if (vec.Count != Count) throw new QsException("Not equal vector components");
 
-                List<QsVector> vcs = new();
+                List<QsVector> vcs = [];
                 foreach (var c in this)
                 {
                     var v = (QsVector)(c * vec);

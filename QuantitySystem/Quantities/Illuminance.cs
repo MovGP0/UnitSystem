@@ -16,9 +16,10 @@
 
         public static implicit operator Illuminance<T>(T value)
         {
-            Illuminance<T> Q = new Illuminance<T>();
-
-            Q.Value = value;
+            Illuminance<T> Q = new Illuminance<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

@@ -15,9 +15,10 @@
 
         public static implicit operator Pressure<T>(T value)
         {
-            Pressure<T> Q = new Pressure<T>();
-
-            Q.Value = value;
+            Pressure<T> Q = new Pressure<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

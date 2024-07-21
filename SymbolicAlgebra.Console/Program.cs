@@ -5,15 +5,15 @@ using SymbolicAlgebra.Console;
 
 const string Prompt = "SAC> ";
 
-string line = string.Empty;
-Type ts = typeof(SymbolicVariable);
+var line = string.Empty;
+var ts = typeof(SymbolicVariable);
 
 var assemblyVersion = ts.Assembly
     .GetCustomAttributes<AssemblyFileVersionAttribute>()
     .First()
     .Version;
 
-string copyright = string.Format(Resources.Copyright, assemblyVersion, DateTime.Now.Year);
+var copyright = string.Format(Resources.Copyright, assemblyVersion, DateTime.Now.Year);
 
 Console.WriteLine(copyright.Pastel(ConsoleColor.DarkYellow));
 Console.WriteLine();

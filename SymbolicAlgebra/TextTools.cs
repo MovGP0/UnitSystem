@@ -24,12 +24,12 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public static string[] Split(string expression, char splitter)
         {
-            int Split = 0;
-            List<string> all = new List<string>();
+            var Split = 0;
+            List<string> all = [];
 
-            int i = 0;
+            var i = 0;
 
-            StringBuilder SplitedText = new StringBuilder();
+            var SplitedText = new StringBuilder();
 
             while (i < expression.Length)
             {
@@ -62,8 +62,8 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public static bool TopLevelExist(string expression, char character)
         {
-            int i = 0;
-            int Split = 0;
+            var i = 0;
+            var Split = 0;
 
             while (i < expression.Length)
             {
@@ -88,18 +88,18 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public static string[] WordsFromExpression(string expression)
         {
-            char[] separators = { '^', '*', '/', '+', '-', '(', '|', '.', '<', '>', '=' };
-            char[] seps = { '^', '*', '/', '+', '-', '|', '.' };
+            char[] separators = ['^', '*', '/', '+', '-', '(', '|', '.', '<', '>', '='];
+            char[] seps = ['^', '*', '/', '+', '-', '|', '.'];
             expression = expression.Replace(" ", "");
 
-            List<string> results = new List<string>();
+            List<string> results = [];
 
-            StringBuilder TokenBuilder = new StringBuilder();
-            Stack<int> PLevels = new Stack<int>();
-            bool Inner = false;
-            bool FunctionContext = false;
+            var TokenBuilder = new StringBuilder();
+            var PLevels = new Stack<int>();
+            var Inner = false;
+            var FunctionContext = false;
 
-            for (int ix = 0; ix < expression.Length; ix++)
+            for (var ix = 0; ix < expression.Length; ix++)
             {
                 if (PLevels.Count == 0)
                 {

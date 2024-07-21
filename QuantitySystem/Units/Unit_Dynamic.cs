@@ -6,32 +6,32 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using QuantitySystem.Quantities.DimensionlessQuantities;
 
-namespace QuantitySystem.Units
+namespace QuantitySystem.Units;
+
+public partial class Unit
 {
-    public partial class Unit
+    #region Dynamically created unit
+
+    public List<Unit> SubUnits { get; private set; } //the list shouldn't been modified by sub classes
+
+    /// <summary>
+    /// Create the unit directly from the specfied dimension in its SI base units.
+    /// </summary>
+    /// <param name="dimension"></param>
+    public static Unit DiscoverUnit(QuantityDimension dimension)
     {
-        #region Dynamically created unit
-
-        public List<Unit> SubUnits { get; private set; } //the list shouldn't been modified by sub classes
-
-        /// <summary>
-        /// Create the unit directly from the specfied dimension in its SI base units.
-        /// </summary>
-        /// <param name="dimension"></param>
-        public static Unit DiscoverUnit(QuantityDimension dimension)
-        {
             
             return DiscoverUnit(dimension, "Metric.SI");
         }
 
 
-        /// <summary>
-        /// Create the unit directly from the specfied dimension based on the unit system given.
-        /// </summary>
-        /// <param name="dimension"></param>
-        public static Unit DiscoverUnit(QuantityDimension dimension, string unitSystem)
-        {
-            List<Unit> SubUnits = new List<Unit>();
+    /// <summary>
+    /// Create the unit directly from the specfied dimension based on the unit system given.
+    /// </summary>
+    /// <param name="dimension"></param>
+    public static Unit DiscoverUnit(QuantityDimension dimension, string unitSystem)
+    {
+            List<Unit> SubUnits = [];
 
             if (dimension.Currency.Exponent != 0)
             {
@@ -44,9 +44,9 @@ namespace QuantitySystem.Units
 
             if (dimension.Mass.Exponent != 0)
             {
-                Type UnitType = GetDefaultUnitTypeOf(typeof(Mass<>), unitSystem);
+                var UnitType = GetDefaultUnitTypeOf(typeof(Mass<>), unitSystem);
 
-                Unit u = (Unit)Activator.CreateInstance(UnitType);
+                var u = (Unit)Activator.CreateInstance(UnitType);
 
                 u.UnitExponent = dimension.Mass.Exponent;
                 u.UnitDimension = new QuantityDimension(dimension.Mass.Exponent, 0, 0);
@@ -56,9 +56,9 @@ namespace QuantitySystem.Units
 
             if (dimension.Length.Exponent != 0)
             {
-                Type UnitType = GetDefaultUnitTypeOf(typeof(Length<>), unitSystem);
+                var UnitType = GetDefaultUnitTypeOf(typeof(Length<>), unitSystem);
 
-                Unit u = (Unit)Activator.CreateInstance(UnitType);
+                var u = (Unit)Activator.CreateInstance(UnitType);
 
                 u.UnitExponent = dimension.Length.Exponent;
                 u.UnitDimension = new QuantityDimension() { Length = dimension.Length };
@@ -68,9 +68,9 @@ namespace QuantitySystem.Units
 
             if (dimension.Time.Exponent != 0)
             {
-                Type UnitType = GetDefaultUnitTypeOf(typeof(Time<>), unitSystem);
+                var UnitType = GetDefaultUnitTypeOf(typeof(Time<>), unitSystem);
 
-                Unit u = (Unit)Activator.CreateInstance(UnitType);
+                var u = (Unit)Activator.CreateInstance(UnitType);
 
                 u.UnitExponent = dimension.Time.Exponent;
                 u.UnitDimension = new QuantityDimension() { Time = dimension.Time };
@@ -80,9 +80,9 @@ namespace QuantitySystem.Units
 
             if (dimension.Temperature.Exponent != 0)
             {
-                Type UnitType = GetDefaultUnitTypeOf(typeof(Temperature<>), unitSystem);
+                var UnitType = GetDefaultUnitTypeOf(typeof(Temperature<>), unitSystem);
 
-                Unit u = (Unit)Activator.CreateInstance(UnitType);
+                var u = (Unit)Activator.CreateInstance(UnitType);
 
                 u.UnitExponent = dimension.Temperature.Exponent;
                 u.UnitDimension = new QuantityDimension() { Temperature = dimension.Temperature };
@@ -92,9 +92,9 @@ namespace QuantitySystem.Units
 
             if (dimension.LuminousIntensity.Exponent != 0)
             {
-                Type UnitType = GetDefaultUnitTypeOf(typeof(LuminousIntensity<>), unitSystem);
+                var UnitType = GetDefaultUnitTypeOf(typeof(LuminousIntensity<>), unitSystem);
 
-                Unit u = (Unit)Activator.CreateInstance(UnitType);
+                var u = (Unit)Activator.CreateInstance(UnitType);
 
                 u.UnitExponent = dimension.LuminousIntensity.Exponent;
                 u.UnitDimension = new QuantityDimension() { LuminousIntensity = dimension.LuminousIntensity };
@@ -104,9 +104,9 @@ namespace QuantitySystem.Units
 
             if (dimension.AmountOfSubstance.Exponent != 0)
             {
-                Type UnitType = GetDefaultUnitTypeOf(typeof(AmountOfSubstance<>), unitSystem);
+                var UnitType = GetDefaultUnitTypeOf(typeof(AmountOfSubstance<>), unitSystem);
 
-                Unit u = (Unit)Activator.CreateInstance(UnitType);
+                var u = (Unit)Activator.CreateInstance(UnitType);
 
                 u.UnitExponent = dimension.AmountOfSubstance.Exponent;
                 u.UnitDimension = new QuantityDimension(0, 0, 0, 0, 0, dimension.AmountOfSubstance.Exponent, 0);
@@ -116,9 +116,9 @@ namespace QuantitySystem.Units
 
             if (dimension.ElectricCurrent.Exponent != 0)
             {
-                Type UnitType = GetDefaultUnitTypeOf(typeof(ElectricalCurrent<>), unitSystem);
+                var UnitType = GetDefaultUnitTypeOf(typeof(ElectricalCurrent<>), unitSystem);
 
-                Unit u = (Unit)Activator.CreateInstance(UnitType);
+                var u = (Unit)Activator.CreateInstance(UnitType);
 
                 u.UnitExponent = dimension.ElectricCurrent.Exponent;
                 u.UnitDimension = new QuantityDimension() { ElectricCurrent = dimension.ElectricCurrent };
@@ -152,7 +152,7 @@ namespace QuantitySystem.Units
 
             try
             {
-                Type qType = QuantityDimension.QuantityTypeFrom(dimension);
+                var qType = QuantityDimension.QuantityTypeFrom(dimension);
                 un = new Unit(qType, SubUnits.ToArray());
             }
             catch (QuantityNotFoundException)
@@ -166,23 +166,23 @@ namespace QuantitySystem.Units
         }
 
 
-        /// <summary>
-        /// Construct a unit based on the quantity type in SI Base units.
-        /// Any Dimensionless quantity will return  in its unit.
-        /// </summary>
-        /// <param name="quantityType"></param>
-        public Unit(Type quantityType)
-        {
+    /// <summary>
+    /// Construct a unit based on the quantity type in SI Base units.
+    /// Any Dimensionless quantity will return  in its unit.
+    /// </summary>
+    /// <param name="quantityType"></param>
+    public Unit(Type quantityType)
+    {
 
-            SubUnits = new List<Unit>();
+            SubUnits = [];
 
             //try direct mapping first to get the unit
 
-            Type InnerUnitType = GetDefaultSIUnitTypeOf(quantityType);
+            var InnerUnitType = GetDefaultSIUnitTypeOf(quantityType);
 
             if (InnerUnitType == null)
             {
-                QuantityDimension dimension = QuantityDimension.DimensionFrom(quantityType);
+                var dimension = QuantityDimension.DimensionFrom(quantityType);
 
 
                 if (dimension.Mass.Exponent != 0)
@@ -273,7 +273,7 @@ namespace QuantitySystem.Units
                 //subclass of AnyQuantity
                 //use direct mapping with the exponent of the quantity
 
-                Unit un = (Unit)Activator.CreateInstance(InnerUnitType);
+                var un = (Unit)Activator.CreateInstance(InnerUnitType);
 
                 SubUnits.Add(un);
 
@@ -295,17 +295,17 @@ namespace QuantitySystem.Units
         }
 
 
-        /// <summary>
-        /// Construct a unit based on the default units of the internal quantities of passed quantity instance.
-        /// Dimensionless quantity will return their native sub quantities units.
-        /// this connstructor is useful like when you pass torque quantity it will return "N.m"
-        /// but when you use Energy Quantity it will return J.
-        /// </summary>
-        /// <param name="quantity"></param>
-        public static Unit DiscoverUnit(BaseQuantity quantity)
-        {
+    /// <summary>
+    /// Construct a unit based on the default units of the internal quantities of passed quantity instance.
+    /// Dimensionless quantity will return their native sub quantities units.
+    /// this connstructor is useful like when you pass torque quantity it will return "N.m"
+    /// but when you use Energy Quantity it will return J.
+    /// </summary>
+    /// <param name="quantity"></param>
+    public static Unit DiscoverUnit(BaseQuantity quantity)
+    {
 
-            Type m_QuantityType = quantity.GetType();
+            var m_QuantityType = quantity.GetType();
 
             var gen_q = m_QuantityType.GetGenericTypeDefinition() ;
 
@@ -322,7 +322,7 @@ namespace QuantitySystem.Units
 
             if (quantity.Dimension.IsDimensionless)
             {
-                Type QtyType = m_QuantityType;
+                var QtyType = m_QuantityType;
                 if (!QtyType.IsGenericTypeDefinition)
                 {
                     QtyType = QtyType.GetGenericTypeDefinition();
@@ -337,11 +337,11 @@ namespace QuantitySystem.Units
 
 
 
-            List<Unit> SubUnits = new List<Unit>();
+            List<Unit> SubUnits = [];
 
             //try direct mapping first to get the unit
 
-            Type InnerUnitType = GetDefaultSIUnitTypeOf(m_QuantityType);
+            var InnerUnitType = GetDefaultSIUnitTypeOf(m_QuantityType);
 
 
             if (InnerUnitType == null) //no direct mapping so get it from the inner quantities
@@ -351,7 +351,7 @@ namespace QuantitySystem.Units
                 //I can't cast BaseQuantity to AnyQuantity<object>  very annoying
                 //so I used reflection.
 
-                MethodInfo GIQ = m_QuantityType.GetMethod("GetInternalQuantities");
+                var GIQ = m_QuantityType.GetMethod("GetInternalQuantities");
 
                 //casted the array to BaseQuantity array also
                 InternalQuantities = GIQ.Invoke(quantity, null) as BaseQuantity[];
@@ -359,14 +359,14 @@ namespace QuantitySystem.Units
                 foreach (var InnerQuantity in InternalQuantities)
                 {
                     //try to get the quantity direct unit
-                    Type l2_InnerUnitType = GetDefaultSIUnitTypeOf(InnerQuantity.GetType());
+                    var l2_InnerUnitType = GetDefaultSIUnitTypeOf(InnerQuantity.GetType());
 
                     if (l2_InnerUnitType == null)
                     {
                         //this means for this quantity there is no direct mapping to SI Unit
                         // so we should create unit for this quantity
 
-                        Unit un = DiscoverUnit(InnerQuantity);
+                        var un = DiscoverUnit(InnerQuantity);
                         if (un.SubUnits != null && un.SubUnits.Count > 0)
                         {
                             SubUnits.AddRange(un.SubUnits);
@@ -380,7 +380,7 @@ namespace QuantitySystem.Units
                     {
                         //found :) create it with the exponent
 
-                        Unit un = (Unit)Activator.CreateInstance(l2_InnerUnitType);
+                        var un = (Unit)Activator.CreateInstance(l2_InnerUnitType);
                         un.UnitExponent = InnerQuantity.Exponent;
                         un.UnitDimension = InnerQuantity.Dimension;
 
@@ -395,7 +395,7 @@ namespace QuantitySystem.Units
                 //subclass of AnyQuantity
                 //use direct mapping with the exponent of the quantity
 
-                Unit un = (Unit)Activator.CreateInstance(InnerUnitType);
+                var un = (Unit)Activator.CreateInstance(InnerUnitType);
                 un.UnitExponent = quantity.Exponent;
                 un.UnitDimension = quantity.Dimension;
 
@@ -412,15 +412,15 @@ namespace QuantitySystem.Units
 
 
 
-        /// <summary>
-        /// This constructor creates a unit from several units.
-        /// </summary>
-        /// <param name="units"></param>
-        internal Unit(Type quantityType, params Unit[] units)
-        {
-            SubUnits = new List<Unit>();
+    /// <summary>
+    /// This constructor creates a unit from several units.
+    /// </summary>
+    /// <param name="units"></param>
+    internal Unit(Type quantityType, params Unit[] units)
+    {
+            SubUnits = [];
 
-            foreach (Unit un in units)
+            foreach (var un in units)
             {
                 SubUnits.Add(un);
             }
@@ -458,7 +458,7 @@ namespace QuantitySystem.Units
 
                 //get the unit dimension from the passed units.
                 _UnitDimension = QuantityDimension.Dimensionless;
-                foreach (Unit uu in SubUnits)
+                foreach (var uu in SubUnits)
                     _UnitDimension += uu.UnitDimension;
             }
 
@@ -469,17 +469,17 @@ namespace QuantitySystem.Units
 
 
 
-        #endregion
+    #endregion
 
-        /// <summary>
-        /// Take the sub units recursively and return all of in a flat list.
-        /// </summary>
-        /// <param name="units"></param>
-        /// <returns></returns>
-        private static List<Unit> FlattenUnits(List<Unit> units)
-        {
-            List<Unit> all = new List<Unit>();
-            foreach (Unit un in units)
+    /// <summary>
+    /// Take the sub units recursively and return all of in a flat list.
+    /// </summary>
+    /// <param name="units"></param>
+    /// <returns></returns>
+    private static List<Unit> FlattenUnits(List<Unit> units)
+    {
+            List<Unit> all = [];
+            foreach (var un in units)
             {
                 if (un.IsStronglyTyped)
                     all.Add(un);
@@ -490,23 +490,23 @@ namespace QuantitySystem.Units
         }
         
 
-        /// <summary>
-        /// Group all similar units to remove units that reached exponent zero
-        /// also keep track of prefixes of metric units.
-        /// </summary>
-        /// <param name="bulk_units"></param>
-        /// <returns></returns>
-        private List<Unit> GroupUnits(List<Unit> bulk_units)
-        {
+    /// <summary>
+    /// Group all similar units to remove units that reached exponent zero
+    /// also keep track of prefixes of metric units.
+    /// </summary>
+    /// <param name="bulk_units"></param>
+    /// <returns></returns>
+    private List<Unit> GroupUnits(List<Unit> bulk_units)
+    {
             List<Unit> units = FlattenUnits(bulk_units);
 
             if (units.Count == 1) return units;
 
-            List<Unit> GroupedUnits = new List<Unit>();
+            List<Unit> GroupedUnits = [];
 
             Dictionary<Tuple<Type, Type>, Unit> us = new Dictionary<Tuple<Type, Type>, Unit>();
 
-            foreach (Unit un in units)
+            foreach (var un in units)
             {
                 
                 if (us.ContainsKey(un.UniqueKey))
@@ -518,8 +518,8 @@ namespace QuantitySystem.Units
                     {
                         //check prefixes to consider milli+Mega for example for overflow
 
-                        MetricPrefix accumPrefix = ((MetricUnit)us[un.UniqueKey]).UnitPrefix;
-                        MetricPrefix sourcePrefix = ((MetricUnit)un).UnitPrefix;
+                        var accumPrefix = ((MetricUnit)us[un.UniqueKey]).UnitPrefix;
+                        var sourcePrefix = ((MetricUnit)un).UnitPrefix;
 
                         try
                         {
@@ -532,8 +532,7 @@ namespace QuantitySystem.Units
                             // for example km * cm = ?m^2
                             //  k*c = ?^2
                             //    so ? = (k+c)/2  ;)
-                            //  if there is a fraction remove the prefixes totally and substitute them 
-                            //  in the overflow flag.
+                            //  if there is a fraction remove the prefixes totally and substitute them      //  in the overflow flag.
 
                             // about division
                             // km / cm = ?<1>
@@ -545,7 +544,7 @@ namespace QuantitySystem.Units
                             double accumExponent = accumPrefix.Exponent * us[un.UniqueKey].unitExponent;
                             double sourceExponent = sourcePrefix.Exponent * un.unitExponent;
 
-                            double resultExponent = (accumExponent + sourceExponent);
+                            var resultExponent = accumExponent + sourceExponent;
 
                             if (!(us[un.UniqueKey].IsInverted ^ un.IsInverted))
                             {
@@ -555,15 +554,14 @@ namespace QuantitySystem.Units
                                 if (resultExponent % targetExponent == 0)
                                 {
                                     //we can get the symbol of the sqrt of this
-                                    double unknown = resultExponent / targetExponent;
+                                    var unknown = resultExponent / targetExponent;
 
                                     ((MetricUnit)us[un.UniqueKey]).UnitPrefix = MetricPrefix.FromExponent(unknown);
                                 }
                                 else
                                 {
                                     //we can't get the approriate symbol because we have a fraction
-                                    // like  kilo * centi = 3-2=1    1/2=0.5   or 1%2=1 
-                                    // so we will take the whole fraction and make an overflow
+                                    // like  kilo * centi = 3-2=1    1/2=0.5   or 1%2=1      // so we will take the whole fraction and make an overflow
 
                                     ((MetricUnit)us[un.UniqueKey]).UnitPrefix = MetricPrefix.None;
                                     if (resultExponent != 0)
@@ -606,7 +604,7 @@ namespace QuantitySystem.Units
                     us[un.UniqueKey] = (Unit)un.MemberwiseClone();
                 }
             }
-            foreach (Unit un in us.Values)
+            foreach (var un in us.Values)
             {
                 if (un.UnitExponent != 0)
                 {
@@ -619,7 +617,7 @@ namespace QuantitySystem.Units
                     //  if the unit is metric and deprecated the prefix should be taken into consideration
                     if (un is MetricUnit)
                     {
-                        MetricUnit mu = (MetricUnit)un;
+                        var mu = (MetricUnit)un;
                         if (mu.UnitPrefix.Exponent != 0)
                         {
                             _IsOverflowed = true;
@@ -632,41 +630,41 @@ namespace QuantitySystem.Units
             return GroupedUnits;
         }
 
-        #region overflow code
-        protected bool _IsOverflowed = false;
+    #region overflow code
+    protected bool _IsOverflowed = false;
 
-        /// <summary>
-        /// Overflow flag.
-        /// </summary>
-        public bool IsOverflowed { get { return _IsOverflowed; } }
+    /// <summary>
+    /// Overflow flag.
+    /// </summary>
+    public bool IsOverflowed { get { return _IsOverflowed; } }
 
-        protected double unitOverflow=0.0;
-        /// <summary>
-        /// This method get the overflow from multiplying/divding metric units with different 
-        /// prefixes and then the unit exponent goes to ZERO
-        ///     or when result prefix is over the 
-        /// the value should be used to be multiplied by the quantity that units were associated to.
-        /// after the execution of this method the overflow flag is reset again.
-        /// </summary>
-        public double GetUnitOverflow()
-        {    
-            double u =  unitOverflow;
+    protected double unitOverflow=0.0;
+    /// <summary>
+    /// This method get the overflow from multiplying/divding metric units with different 
+    /// prefixes and then the unit exponent goes to ZERO
+    ///     or when result prefix is over the 
+    /// the value should be used to be multiplied by the quantity that units were associated to.
+    /// after the execution of this method the overflow flag is reset again.
+    /// </summary>
+    public double GetUnitOverflow()
+    {    
+            var u =  unitOverflow;
             unitOverflow = 0.0;
             _IsOverflowed = false;
             return u;
         }
-        #endregion
+    #endregion
 
-        #region Unit Symbol processing
+    #region Unit Symbol processing
 
-        /// <summary>
-        /// adjust the symbol string.
-        /// </summary>
-        /// <returns></returns>
-        private string GenerateUnitSymbolFromSubBaseUnits()
-        {
-            string UnitNumerator="";
-            string UnitDenominator="";
+    /// <summary>
+    /// adjust the symbol string.
+    /// </summary>
+    /// <returns></returns>
+    private string GenerateUnitSymbolFromSubBaseUnits()
+    {
+            var UnitNumerator="";
+            var UnitDenominator="";
 
             Func<string, float, Object> ConcatenateUnit = delegate(string symbol, float exponent)
             {
@@ -687,8 +685,7 @@ namespace QuantitySystem.Units
 
                     UnitDenominator += symbol;
 
-                    //validate less than -1 
-                    if (exponent < -1) UnitDenominator += "^" + Math.Abs(exponent).ToString(CultureInfo.InvariantCulture);
+                    //validate less than -1      if (exponent < -1) UnitDenominator += "^" + Math.Abs(exponent).ToString(CultureInfo.InvariantCulture);
 
                     //validate between -1 and 0
                     if (exponent > -1 && exponent <0) UnitDenominator += "^" + Math.Abs(exponent).ToString(CultureInfo.InvariantCulture);
@@ -698,7 +695,7 @@ namespace QuantitySystem.Units
             };
 
 
-            foreach (Unit unit in SubUnits)
+            foreach (var unit in SubUnits)
             {
                 ConcatenateUnit(unit.Symbol, unit.UnitExponent);
             }
@@ -706,7 +703,7 @@ namespace QuantitySystem.Units
             //return <UnitNumerator / UnitDenominator>
             Func<string> FormatUnitSymbol = delegate()
             {
-               string UnitSymbol = "<";
+               var UnitSymbol = "<";
 
                 if (UnitNumerator.Length > 0) UnitSymbol += UnitNumerator;
                 else UnitSymbol += "1";
@@ -718,15 +715,11 @@ namespace QuantitySystem.Units
                 return UnitSymbol;
             };
 
-            string PreFinalSymbol =  FormatUnitSymbol();
+            var PreFinalSymbol =  FormatUnitSymbol();
 
-            string FinalSymbol = PreFinalSymbol;
+            var FinalSymbol = PreFinalSymbol;
 
-
-            //remove .<1/.  to be 
-            string pattern = @"\.<1/(.+?)>";
-
-            Match m = Regex.Match(PreFinalSymbol, pattern);
+            var m = UnitPatternRegex().Match(PreFinalSymbol);
 
             while (m.Success)
             {
@@ -735,13 +728,14 @@ namespace QuantitySystem.Units
             }
 
             return FinalSymbol;
-
         }
 
+    /// <summary>
+    /// Matches <c>.&lt;1/UNIT&gt;</c> for replacement.
+    /// </summary>
+    /// <returns></returns>
+    [GeneratedRegex(@"\.<1/(.+?)>", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    private static partial Regex UnitPatternRegex();
 
-        #endregion
-
-
-
-    }
+    #endregion
 }

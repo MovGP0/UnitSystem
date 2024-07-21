@@ -13,10 +13,10 @@ public static class EngineeringNotation
     public static string FromValue(double value, IFormatProvider? formatProvider = null)
     {
         var decimalExponent = GetDecimalExponent(value);
-        int metricExponent = GetClosestMetricExponent(decimalExponent);
+        var metricExponent = GetClosestMetricExponent(decimalExponent);
 
         // scale the value by the exponent
-        double scaledValue = value * Math.Pow(10, -metricExponent);
+        var scaledValue = value * Math.Pow(10, -metricExponent);
         var prefix = prefixes[metricExponent];
         const char NonBreakingSpace = (char)0xA0;
         return (scaledValue.ToString("0.###,###", formatProvider ?? CultureInfo.InvariantCulture) + NonBreakingSpace + prefix.Symbol).TrimEnd();

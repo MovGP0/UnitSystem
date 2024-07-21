@@ -111,7 +111,7 @@ namespace ParticleLexer
 
                 if (rxs.Length > 0)
                 {
-                    TokenPatternAttribute TPA = rxs[0] as TokenPatternAttribute;
+                    var TPA = rxs[0] as TokenPatternAttribute;
 
                     if (TPA != null)
                     {

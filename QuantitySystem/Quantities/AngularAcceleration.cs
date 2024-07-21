@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator AngularAcceleration<T>(T value)
         {
-            AngularAcceleration<T> Q = new AngularAcceleration<T>();
-
-            Q.Value = value;
+            AngularAcceleration<T> Q = new AngularAcceleration<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

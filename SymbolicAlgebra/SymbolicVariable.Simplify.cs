@@ -25,7 +25,7 @@ namespace SymbolicAlgebra
                 {
                     if (_NegativeSimplifyValue == null)
                     {
-                        string value = string.Format("-Sin({0})^2-Cos({0})^2+1", Parameter);
+                        var value = string.Format("-Sin({0})^2-Cos({0})^2+1", Parameter);
                         _NegativeSimplifyValue = Parse(value);
                     }
                     return _NegativeSimplifyValue;
@@ -89,7 +89,7 @@ namespace SymbolicAlgebra
 
 
             // coduct the third operation .. final calulcation
-            SymbolicVariable SimplifiedResult = sv.Clone();
+            var SimplifiedResult = sv.Clone();
             
 
             foreach (var pst in PSTS.Values)
@@ -123,15 +123,15 @@ namespace SymbolicAlgebra
 
             var factorized = FactorWithCommonFactor(sv);
 
-            SymbolicVariable total = Zero.Clone();
+            var total = Zero.Clone();
 
             // facorized expressions contain their terms in the multiplied symbols
-            for (int i = 0; i < factorized.TermsCount; i++)
+            for (var i = 0; i < factorized.TermsCount; i++)
             {
                 // go through each term 
                 var term = factorized[i];
 
-                for (int fui = 0; fui < term.FusedSymbols.Count; fui++)
+                for (var fui = 0; fui < term.FusedSymbols.Count; fui++)
                 {
                     var ss = term.GetFusedTerm(fui);
                     var sp = ss;
@@ -202,9 +202,10 @@ namespace SymbolicAlgebra
             //   b =>  2,3,4
             // then a*b => 2   and etc.
 
-            List<SymbolicVariable[]> bo2bo2 = new List<SymbolicVariable[]>();
-
-            bo2bo2.Add(GetMultipliedTerms());
+            List<SymbolicVariable[]> bo2bo2 =
+            [
+                GetMultipliedTerms()
+            ];
 
             if (_AddedTerms != null)
                 foreach (var aterm in _AddedTerms) bo2bo2.Add(aterm.Value.GetMultipliedTerms());
@@ -225,34 +226,36 @@ namespace SymbolicAlgebra
 
             // take each column components and compare to next columns components
             Dictionary<SymbolicVariable, List<int>> CommonFactorsMap = new Dictionary<SymbolicVariable, List<int>>();
-            for (int column = 0; column < bo2bo2.Count; column++)
+            for (var column = 0; column < bo2bo2.Count; column++)
             {
                 var components = bo2bo2[column];
 
 
-                for (int ix = 0; ix < components.Length; ix++)
+                for (var ix = 0; ix < components.Length; ix++)
                 {
                     // get the component.
-                    SymbolicVariable src_component = components[ix];
+                    var src_component = components[ix];
 
                     // once we this component we should write its existence in the list
                     List<int> indices;
                     if (!CommonFactorsMap.TryGetValue(src_component, out indices))
                     {
                         // new creation of the list
-                        indices = new List<int>();
-                        indices.Add(column);
+                        indices =
+                        [
+                            column
+                        ];
                         CommonFactorsMap.Add(src_component, indices);
                     }
 
 
-                    for (int nxc = column + 1; nxc < bo2bo2.Count ; nxc++)
+                    for (var nxc = column + 1; nxc < bo2bo2.Count ; nxc++)
                     {
                         var targetColumn = bo2bo2[nxc];
 
                         // compare it to the next column components
 
-                        for (int nx_i = 0; nx_i < targetColumn.Length; nx_i++)
+                        for (var nx_i = 0; nx_i < targetColumn.Length; nx_i++)
                         {
                             var trg_nx_compnent = targetColumn[nx_i];
                             if (src_component.Equals(trg_nx_compnent))
@@ -312,17 +315,20 @@ namespace SymbolicAlgebra
             
             // imagine a*x+a*y  result is a*(x+y)
 
-            SymbolicVariable result = One.Clone();
+            var result = One.Clone();
             
             var term_key = keys[0];  // the biggest values count   as shown above in the query statement
 
             var term_indices = map[term_key];
 
-            List<SymbolicVariable> Common_Factors_Keys = new List<SymbolicVariable>();
-            Common_Factors_Keys.Add(term_key);
+            List<SymbolicVariable> Common_Factors_Keys =
+            [
+                term_key
+                // find the other keys that has the same indices like this key
+            ];
 
             // find the other keys that has the same indices like this key
-            for (int i = 1; i < keys.Length; i++)
+            for (var i = 1; i < keys.Length; i++)
             {
                 var target_indices = map[keys[i]];
                 if (target_indices.Count == term_indices.Count)
@@ -344,16 +350,16 @@ namespace SymbolicAlgebra
 
             //Common_Factors_Keys  now contains the factors that I will work on it.
 
-            SymbolicVariable common_multipliers = Zero.Clone();
-            SymbolicVariable rest_multipliers = Zero.Clone();
+            var common_multipliers = Zero.Clone();
+            var rest_multipliers = Zero.Clone();
 
-            for (int i = 0; i < sv.TermsCount; i++)
+            for (var i = 0; i < sv.TermsCount; i++)
             {
                 if (term_indices.Contains(i))
                 {
                     // remove the common factor and add the result into the common_multipliers
                     var term = sv[i].Clone();
-                    foreach (SymbolicVariable ke in Common_Factors_Keys)
+                    foreach (var ke in Common_Factors_Keys)
                     {
                         term = Divide(term, ke);   // divide by factor to remove it from the term.
                         /*
@@ -404,7 +410,7 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public static SymbolicVariable ReOrderNegativeSymbols(SymbolicVariable sVariable, out SymbolicVariable reOrderedVariable)
         {
-            SymbolicVariable denominator = One.Clone();
+            var denominator = One.Clone();
 
             reOrderedVariable = sVariable.Clone();
 
@@ -459,13 +465,13 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public static SymbolicVariable[] SeparateWithDifferentDenominators(SymbolicVariable sv)
         {
-            List<SymbolicVariable> SeparatedVariabls = new List<SymbolicVariable>();
+            List<SymbolicVariable> SeparatedVariabls = [];
 
 
             var svclone = sv.Clone(true);
             var divisor = svclone._DividedTerm;
             svclone._DividedTerm = One;
-            for (int i = 0; i < svclone.TermsCount; i++)
+            for (var i = 0; i < svclone.TermsCount; i++)
             {
                 SymbolicVariable ordered;
                 ReOrderNegativeSymbols(svclone[i], out ordered);
@@ -506,7 +512,7 @@ namespace SymbolicAlgebra
         {
             var terms = SeparateWithDifferentDenominators(sv);
 
-            SymbolicVariable OrderedVariable = Zero;
+            var OrderedVariable = Zero;
 
             foreach (var exTerm in terms)
             {

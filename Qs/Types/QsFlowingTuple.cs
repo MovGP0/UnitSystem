@@ -84,7 +84,7 @@ public struct QsTupleValue
 /// </summary>
 public class QsFlowingTuple : QsValue
 {
-    private Flow ThisFlow = new();
+    private Flow ThisFlow = [];
 
     QsTupleValue[] InitialValues;
 

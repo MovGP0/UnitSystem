@@ -18,13 +18,12 @@
 
         public static implicit operator AmountOfSubstance<T>(T value)
         {
-            AmountOfSubstance<T> Q = new AmountOfSubstance<T>();
-
-            Q.Value = value;
+            AmountOfSubstance<T> Q = new AmountOfSubstance<T>
+            {
+                Value = value
+            };
 
             return Q;
         }
-
-
     }
 }

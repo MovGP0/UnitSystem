@@ -18,9 +18,10 @@
 
         public static implicit operator ElectricalCurrent<T>(T value)
         {
-            ElectricalCurrent<T> Q = new ElectricalCurrent<T>();
-
-            Q.Value = value;
+            ElectricalCurrent<T> Q = new ElectricalCurrent<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

@@ -21,9 +21,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator PolarVolume<T>(T value)
         {
-            PolarVolume<T> Q = new PolarVolume<T>();
-
-            Q.Value = value;
+            PolarVolume<T> Q = new PolarVolume<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

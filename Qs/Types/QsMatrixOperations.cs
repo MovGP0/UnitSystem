@@ -513,7 +513,7 @@ namespace Qs.Types
 
                 var result = new QsMatrix();
 
-                List<QsMatrix> lm = new();
+                List<QsMatrix> lm = [];
 
                 for (var i = 0; i < RowsCount; i++)
                 {

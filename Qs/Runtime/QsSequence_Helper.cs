@@ -201,9 +201,9 @@ namespace Qs.Runtime
                 var IndicesArea = t[nsidx + 1];
                 IndicesArea = IndicesArea.RemoveSpaceTokens().TrimStart<LeftSquareBracketToken>().TrimEnd<RightSquareBracketToken>();
 
-                List<string> indexes = new();
-                List<string> rangeStartNames = new();
-                List<string> rangeEndNames = new();
+                List<string> indexes = [];
+                List<string> rangeStartNames = [];
+                List<string> rangeEndNames = [];
 
                 if (!string.IsNullOrEmpty(IndicesArea.TokenValue))
                 {
@@ -257,7 +257,7 @@ namespace Qs.Runtime
 
 
                 // get parameters
-                string[] parameters = {}; //array with zero count :)
+                string[] parameters = []; //array with zero count :)
                 if (t[nsidx + 2].TokenClassType == typeof(ParenthesisGroupToken))
                 {
                     parameters = (from c in t[nsidx + 2]

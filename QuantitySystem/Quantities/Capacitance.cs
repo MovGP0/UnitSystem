@@ -15,9 +15,10 @@
 
         public static implicit operator Capacitance<T>(T value)
         {
-            Capacitance<T> Q = new Capacitance<T>();
-
-            Q.Value = value;
+            Capacitance<T> Q = new Capacitance<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

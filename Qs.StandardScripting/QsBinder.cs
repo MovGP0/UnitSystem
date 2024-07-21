@@ -25,7 +25,7 @@ namespace Qs.Scripting
             ContractUtils.RequiresNotNull(expr, "expr");
             ContractUtils.RequiresNotNull(toType, "toType");
 
-            Type exprType = expr.Type;
+            var exprType = expr.Type;
 
             if (toType == typeof(object))
             {

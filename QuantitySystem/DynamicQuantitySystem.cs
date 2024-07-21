@@ -19,7 +19,5 @@
         {
             DynamicSourceFunctions[name] = converter;
         }
-
-
     }
 }

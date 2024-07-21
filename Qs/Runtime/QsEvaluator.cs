@@ -517,7 +517,7 @@ namespace Qs.Runtime
                                 {
                                     #region Parameterized indexed Sequence
 
-                                    string[] parameters = { }; //array with zero count :)
+                                    string[] parameters = []; //array with zero count :)
                                     if (seq[nsidx + 2].TokenClassType == typeof(ParenthesisGroupToken))
                                     {
                                         parameters = (from c in seq[nsidx + 2]
@@ -575,7 +575,7 @@ namespace Qs.Runtime
                                     {
                                         #region Parametrized non indexed sequence
 
-                                        string[] parameters = { }; //array with zero count :)
+                                        string[] parameters = []; //array with zero count :)
                                         if (seq[nsidx + 2].TokenClassType == typeof(ParenthesisGroupToken))
                                         {
                                             parameters = (from c in seq[nsidx + 2]
@@ -627,10 +627,9 @@ namespace Qs.Runtime
                                             var qv = new QsVar(this, line);
 
                                             _obj.SetIndexedItem(
-                                                new QsParameter[] 
-                                                { 
-                                                    QsParameter.MakeParameter(n.ToQuantity().ToScalar(), SequenceParameter) 
-                                                }
+                                                [
+                                                    QsParameter.MakeParameter(n.ToQuantity().ToScalar(), SequenceParameter)
+                                                ]
                                                 , (QsValue)qv.Execute()
                                                 );
                                         }
@@ -649,7 +648,7 @@ namespace Qs.Runtime
                                     var qv = new QsVar(this, line);
 
                                     oinstance.SetIndexedItem(
-                                        new QsParameter[] { QsParameter.MakeParameter(new QsText(SequenceParameter), SequenceParameter) }
+                                        [QsParameter.MakeParameter(new QsText(SequenceParameter), SequenceParameter)]
                                         , (QsValue)qv.Execute()
                                         );
 
@@ -832,7 +831,7 @@ namespace Qs.Runtime
                                     throw new QsException("Tensor parsing to function is not supported yet");
 
   
-                                List<string> vparameters = new();
+                                List<string> vparameters = [];
                                 foreach(var c in AllComponents)
                                     if(c.ScalarType ==  ScalarTypes.SymbolicQuantity)
                                     {
@@ -1008,7 +1007,8 @@ namespace Qs.Runtime
                                 {
                                     // set the value to the indexed item.
                                     var parent = (QsObject)parent_object;
-                                    ParentPropertyInfo.SetValue(parent.ThisObject, qvResult, new object[] { ParentPropertyInfoIndexer.Value });
+                                    ParentPropertyInfo.SetValue(parent.ThisObject, qvResult, [ParentPropertyInfoIndexer.Value
+                                    ]);
                                     var q = parent.GetProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
                                     PrintQuantity(q);
                                     return q;
@@ -1028,10 +1028,11 @@ namespace Qs.Runtime
                                     var nativeValue = Root.QsToNativeConvert(IndexerProperty.PropertyType, qvResult);
                                     IndexerProperty.SetValue(InsidePropertyAsObject
                                         , nativeValue
-                                        , new object[] { ParentPropertyInfoIndexer.Value }
+                                        , [ParentPropertyInfoIndexer.Value]
                                     );
 
-                                    var q = IndexerProperty.GetValue(InsidePropertyAsObject, new object[] { ParentPropertyInfoIndexer.Value });
+                                    var q = IndexerProperty.GetValue(InsidePropertyAsObject, [ParentPropertyInfoIndexer.Value
+                                    ]);
                                     PrintQuantity(q);
                                     return q;
                                 }

@@ -62,17 +62,17 @@ namespace Qs.Scripting
         /// <returns></returns>
         public static ScriptRuntime CreateRuntime()
         {
-            string[] QsNames = { "QuantitySystem", "Qs" };
-            string[] QsExtensions = { ".Qs" };
-            string QsType = typeof(QsContext).FullName + ", " + typeof(QsContext).Assembly.FullName;
+            string[] QsNames = ["QuantitySystem", "Qs"];
+            string[] QsExtensions = [".Qs"];
+            var QsType = typeof(QsContext).FullName + ", " + typeof(QsContext).Assembly.FullName;
 
-            LanguageSetup QsSetup = new LanguageSetup(QsType, "Quantity System Runtime", QsNames, QsExtensions);
+            var QsSetup = new LanguageSetup(QsType, "Quantity System Runtime", QsNames, QsExtensions);
 
-            ScriptRuntimeSetup srs = new ScriptRuntimeSetup();
+            var srs = new ScriptRuntimeSetup();
 
             srs.LanguageSetups.Add(QsSetup);
 
-            ScriptRuntime sr = new ScriptRuntime(srs);
+            var sr = new ScriptRuntime(srs);
 
             return sr;
         }
@@ -86,8 +86,8 @@ namespace Qs.Scripting
         {
             if (target.Value is QsValue)
             {
-                QsValue v = (QsValue)target.Value;
-                int rvalue = 0;
+                var v = (QsValue)target.Value;
+                var rvalue = 0;
 
                 if (v is QsScalar) rvalue = (int)((QsScalar)v).NumericalQuantity.Value;
 

@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Force<T>(T value)
         {
-            Force<T> Q = new Force<T>();
-
-            Q.Value = value;
+            Force<T> Q = new Force<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

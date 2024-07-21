@@ -19,9 +19,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator CatalyticActivity<T>(T value)
         {
-            CatalyticActivity<T> Q = new CatalyticActivity<T>();
-
-            Q.Value = value;
+            CatalyticActivity<T> Q = new CatalyticActivity<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

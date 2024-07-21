@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator ElectricConductance<T>(T value)
         {
-            ElectricConductance<T> Q = new ElectricConductance<T>();
-
-            Q.Value = value;
+            ElectricConductance<T> Q = new ElectricConductance<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator AccelerationVector<T>(T value)
         {
-            AccelerationVector<T> Q = new AccelerationVector<T>();
-
-            Q.Value = value;
+            AccelerationVector<T> Q = new AccelerationVector<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

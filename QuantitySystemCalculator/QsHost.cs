@@ -1,22 +1,13 @@
 ﻿using Microsoft.Scripting.Hosting.Shell;
 
-
-internal class QsHost : ConsoleHost
+internal sealed class QsHost : ConsoleHost
 {
     protected override Type Provider
-    {
-        get
-        {
-            return typeof(Qs.Scripting.QsContext);
-        }
-    }
+        => typeof(Qs.Scripting.QsContext);
 
     protected override CommandLine CreateCommandLine()
-    {
-        return new QsCommandLine();
+        => new QsCommandLine();
 
-    }
-    
     [STAThread]
     public static int Main(string[] args)
     {
@@ -26,24 +17,10 @@ internal class QsHost : ConsoleHost
             Environment.SetEnvironmentVariable("TERM", "dumb");
         }
 
-        //Console.BackgroundColor = QsCommands.BackgroundColor;
-        //Console.ForegroundColor = QsCommands.ForegroundColor;
-        //Console.Clear();
-
-        //Console.WindowWidth = 110;
-        //Console.WindowHeight = 34;
-        
-        //Console.BufferWidth = 110;
-
         QsCommands.StartConsole();
-
 
         QuantitySystem.DynamicQuantitySystem.AddDynamicUnitConverterFunction("Currency", QsRoot.Currency.CurrencyConverter);
 
-
         return new QsHost().Run(args);
-
     }
-
-
 }

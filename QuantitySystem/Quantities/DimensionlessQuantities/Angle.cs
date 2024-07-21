@@ -18,9 +18,10 @@ namespace QuantitySystem.Quantities.DimensionlessQuantities
 
         public static implicit operator Angle<T>(T value)
         {
-            Angle<T> Q = new Angle<T>();
-
-            Q.Value = value;
+            Angle<T> Q = new Angle<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

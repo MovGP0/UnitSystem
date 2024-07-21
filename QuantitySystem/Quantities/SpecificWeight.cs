@@ -15,9 +15,10 @@
 
         public static implicit operator SpecificWeight<T>(T value)
         {
-            SpecificWeight<T> Q = new SpecificWeight<T>();
-
-            Q.Value = value;
+            SpecificWeight<T> Q = new SpecificWeight<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

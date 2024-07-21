@@ -66,7 +66,7 @@ namespace ParticleLexer
 
         #region structure & methods
 
-        private List<Token> childTokens = new List<Token>();
+        private List<Token> childTokens = [];
         public ICollection<Token> ChildTokens
         {
             get
@@ -89,7 +89,7 @@ namespace ParticleLexer
 
         public Token AppendSubToken(string value)
         {
-            Token token = new Token() { Value = value, ParentToken = this };
+            var token = new Token() { Value = value, ParentToken = this };
 
             childTokens.Add(token);
 
@@ -153,9 +153,9 @@ namespace ParticleLexer
                 {
                     if (childTokens.Count > 0)
                     {
-                        StringBuilder total = new StringBuilder();
+                        var total = new StringBuilder();
 
-                        foreach (Token t in childTokens)
+                        foreach (var t in childTokens)
                         {
                             total.Append( t.TokenValue);
                         }
@@ -226,9 +226,9 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token TrimStart(Type tokenType)
         {
-            Token Trimmed = new Token();
+            var Trimmed = new Token();
 
-            int ci = 0;
+            var ci = 0;
             while (ci < childTokens.Count)
             {
                 var tok = childTokens[ci];
@@ -266,9 +266,9 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token TrimEnd(Type tokenType)
         {
-            Token Trimmed = new Token();
+            var Trimmed = new Token();
 
-            int ci = childTokens.Count - 1;
+            var ci = childTokens.Count - 1;
             while (ci >= 0)
             {
                 var tok = childTokens[ci];
@@ -279,7 +279,7 @@ namespace ParticleLexer
                 else
                 {
                     //from here take the rest tokens
-                    for (int i = 0; i <= ci; i++)
+                    for (var i = 0; i <= ci; i++)
                     {
                         tok = childTokens[i];
                         Trimmed.AppendSubToken(tok);   
@@ -328,15 +328,15 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token MergeAllButSpaces<MergedTokenClass>(int startIndex = 0)
         {
-            Token first = this;
+            var first = this;
 
-            Token current = new Token();
+            var current = new Token();
 
             // walk on all tokens and accumulate them unitl you encounter separator
 
-            int ci = 0;
+            var ci = 0;
 
-            Token mergedTokens = new Token();
+            var mergedTokens = new Token();
 
             while (ci < first.Count)
             {
@@ -395,21 +395,21 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token MergeAllBut(int startIndex, Type mergedTokensClassType, params TokenClass[] tokenClasses)
         {
-            Token first = MergeTokens(tokenClasses[0]);
-            for (int i = 1; i < tokenClasses.Length; i++)
+            var first = MergeTokens(tokenClasses[0]);
+            for (var i = 1; i < tokenClasses.Length; i++)
             {
                 first = first.MergeTokens(tokenClasses[i]);
             }
             
             Debug.Assert(first != null);
 
-            Token current = new Token();
+            var current = new Token();
 
             // walk on all tokens and accumulate them unitl you encounter separator
 
-            int ci = 0;
+            var ci = 0;
 
-            Token mergedTokens = new Token();
+            var mergedTokens = new Token();
 
             while (ci < first.Count)
             {
@@ -467,17 +467,17 @@ namespace ParticleLexer
         /// <returns></returns>
         private  Token MergeTokens(TokenClass tokenClassType)
         {
-            Regex rx = tokenClassType.Regex;
-            Token current = new Token();
-            Token merged = new Token();
-            int tokIndex = 0;
+            var rx = tokenClassType.Regex;
+            var current = new Token();
+            var merged = new Token();
+            var tokIndex = 0;
 
             while (tokIndex < childTokens.Count)
             {
             loopHead:
-                Token tok = childTokens[tokIndex];
+                var tok = childTokens[tokIndex];
 
-                bool Matched = false;
+                var Matched = false;
                 
                 Matched = rx.Match(merged.TokenValue + tok.TokenValue).Success;
                 
@@ -512,8 +512,8 @@ namespace ParticleLexer
 
 
                         // inner sneaky loop. :)
-                        int rtokIndex = tokIndex;
-                        string AccumulatedInnerText = merged.TokenValue;
+                        var rtokIndex = tokIndex;
+                        var AccumulatedInnerText = merged.TokenValue;
 
                         while (rtokIndex < childTokens.Count)
                         {
@@ -534,7 +534,7 @@ namespace ParticleLexer
                                 }
 
                                 // second check: check letter by letter that they are identical
-                                for (int iai = 0; iai < AccumulatedInnerText.Length; iai++)
+                                for (var iai = 0; iai < AccumulatedInnerText.Length; iai++)
                                     if (AccumulatedInnerText[iai] != tokenClassType.OriginalPatternWord[iai]) goto WhileBreak;
                             }
                             else if (!string.IsNullOrEmpty(tokenClassType.ShouldBeginWith))
@@ -675,28 +675,28 @@ namespace ParticleLexer
             };
 
             // the required tokens are exact words that have a definite start and a definite end.
-            Token current = new Token();
-            Token merged = new Token();
-            int tokIndex = 0;
+            var current = new Token();
+            var merged = new Token();
+            var tokIndex = 0;
 
-            int TokenClassesIndex = 0;
-            TokenClass CurrentTokenClass = tokenClasses[TokenClassesIndex]; //the token that will be compared with.
+            var TokenClassesIndex = 0;
+            var CurrentTokenClass = tokenClasses[TokenClassesIndex]; //the token that will be compared with.
 
             while (tokIndex < childTokens.Count)
             {            
-                Token tok = childTokens[tokIndex];
+                var tok = childTokens[tokIndex];
 
                 while(TokenClassesIndex < tokenClasses.Count)
                 {
                     CurrentTokenClass = tokenClasses[TokenClassesIndex];
-                    int subTokIndex = tokIndex;
+                    var subTokIndex = tokIndex;
                     // the token in test should be less than the compare token.
                     if(CurrentTokenClass.OriginalPatternWord.StartsWith(tok.TokenValue, StringComparison.OrdinalIgnoreCase))
                     {
                         
                         while(subTokIndex < ChildTokens.Count)
                         {
-                            Token stok = childTokens[subTokIndex];
+                            var stok = childTokens[subTokIndex];
                             merged.AppendSubToken(stok);
 
 
@@ -791,11 +791,11 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token MergeRepetitiveTokens<MergedToken, RepeatedToken>()
         {
-            Token current = new Token();
+            var current = new Token();
 
-            Token merged = new Token() { TokenClassType = typeof(MergedToken) };
+            var merged = new Token() { TokenClassType = typeof(MergedToken) };
 
-            int tokIndex = 0;
+            var tokIndex = 0;
             while (tokIndex < childTokens.Count)
             {
                 if (childTokens[tokIndex].TokenClassType == typeof(RepeatedToken))
@@ -830,18 +830,18 @@ namespace ParticleLexer
         public Token MergeSequenceTokens<DesiredTokenClass>(params Type[] tokenTypes) where DesiredTokenClass : TokenClass, new()
         {
 
-            int ComparisonTokensNumber = tokenTypes.Length;
+            var ComparisonTokensNumber = tokenTypes.Length;
 
-            int CurrentTokenTypeIndex = 0;    // hold the current index of the required tokens
+            var CurrentTokenTypeIndex = 0;    // hold the current index of the required tokens
                                               // when the index reaches the ComparisonTokensNumber the compare ends and 
                                               //  the merge occure.
 
-            Token current = new Token();
+            var current = new Token();
 
-            Token merged = new Token() { TokenClassType = typeof(DesiredTokenClass) };
+            var merged = new Token() { TokenClassType = typeof(DesiredTokenClass) };
             
 
-            int tokIndex = 0;
+            var tokIndex = 0;
             while (tokIndex < childTokens.Count)
             {
                 if (childTokens[tokIndex].TokenClassType == tokenTypes[CurrentTokenTypeIndex])
@@ -891,7 +891,7 @@ namespace ParticleLexer
             {
                 // then tokens were run out before we know if we can merge this into current or not
                 // so take all tokens in merged and add it to current.
-                for (int i = 0; i < merged.Count; i++)
+                for (var i = 0; i < merged.Count; i++)
                     current.AppendSubToken(merged[i]);
 
                 merged = null;
@@ -909,8 +909,8 @@ namespace ParticleLexer
         /// <returns></returns>
         public static Token Zabbat(Token melakhbat)
         {
-            Token Metzabbat = new Token();
-            foreach (Token h in melakhbat)
+            var Metzabbat = new Token();
+            foreach (var h in melakhbat)
             {
                 if (h.Count == 1)
                 {
@@ -936,10 +936,10 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token RemoveTokens(params Type[] tokenTypes)
         {
-            Token first = new Token();
-            Token current = first;
+            var first = new Token();
+            var current = first;
 
-            int ci = 0;
+            var ci = 0;
             while (ci < childTokens.Count)
             {
                 var tok = childTokens[ci];
@@ -979,8 +979,8 @@ namespace ParticleLexer
         /// <returns></returns>
         public int IndexOf(Type tokenClassType)
         {
-            int idx = -1;
-            for (int i = 0; i < Count; i++)
+            var idx = -1;
+            for (var i = 0; i < Count; i++)
             {
                 if (this[i].TokenClassType == tokenClassType)
                 {
@@ -1011,12 +1011,12 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token RemoveTokenUntil(Type tokenType, Type untilToken)
         {
-            Token first = new Token();
-            Token current = first;
+            var first = new Token();
+            var current = first;
 
-            bool reached = false;  //specifiy if we reach the close token or not.
+            var reached = false;  //specifiy if we reach the close token or not.
 
-            int ci = 0;
+            var ci = 0;
             while (ci < childTokens.Count)
             {
                 var tok = childTokens[ci];
@@ -1049,10 +1049,10 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token RemoveSpaceTokens()
         {
-            Token first = new Token();
-            Token current = first;
+            var first = new Token();
+            var current = first;
 
-            int ci = 0;
+            var ci = 0;
             while (ci < childTokens.Count)
             {
                 var tok = childTokens[ci];
@@ -1081,10 +1081,10 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token RemoveAnySpaceTokens()
         {
-            Token first = new Token();
-            Token current = first;
+            var first = new Token();
+            var current = first;
 
-            int ci = 0;
+            var ci = 0;
             while (ci < childTokens.Count)
             {
                 var tok = childTokens[ci];
@@ -1113,10 +1113,10 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token RemoveNewLineTokens()
         {
-            Token first = new Token();
-            Token current = first;
+            var first = new Token();
+            var current = first;
 
-            int ci = 0;
+            var ci = 0;
             while (ci < childTokens.Count)
             {
                 var tok = childTokens[ci];
@@ -1148,8 +1148,8 @@ namespace ParticleLexer
         /// <returns></returns>
         public string SubTokensValue(int startIndex)
         {
-            int idx = startIndex;
-            string total = string.Empty;
+            var idx = startIndex;
+            var total = string.Empty;
             while (idx < Count)
             {
                 total += this[idx].TokenValue;
@@ -1168,11 +1168,11 @@ namespace ParticleLexer
         /// <returns>Return new token with sub tokens trimmed</returns>
         public Token TrimTokens(int leftIndex, int rightIndex)
         {
-            int count = Count;
+            var count = Count;
 
 
-            Token rtk = new Token();
-            for (int b = leftIndex; b < count - rightIndex; b++)
+            var rtk = new Token();
+            for (var b = leftIndex; b < count - rightIndex; b++)
             {
                 rtk.AppendSubToken(this[b]);
             }
@@ -1191,16 +1191,16 @@ namespace ParticleLexer
         public Token FuseTokens<FusedTokenClass>(string leftText, string rightText)
             where FusedTokenClass : TokenClass
         {
-            int count = Count;
+            var count = Count;
 
-            Token rtk = new Token();
+            var rtk = new Token();
 
             foreach (var t in ParseText(leftText))
             {
                 rtk.AppendSubToken(t);
             }
 
-            for (int b = 0; b < count; b++)
+            for (var b = 0; b < count; b++)
             {
                 rtk.AppendSubToken(this[b]);
             }
@@ -1211,7 +1211,7 @@ namespace ParticleLexer
 
             rtk.TokenClassType = typeof(FusedTokenClass);
 
-            Token tk = new Token();
+            var tk = new Token();
             tk.AppendSubToken(rtk);
 
             return tk;
@@ -1232,15 +1232,15 @@ namespace ParticleLexer
 
             tokens = tokens.MergeTokens<QuotationMarkEscapeToken>();
 
-            Token root = new Token();
+            var root = new Token();
 
-            Token runner = root;
+            var runner = root;
 
             //add every token until you encounter '
 
 
-            int ix = 0;
-            bool TextMode = false;
+            var ix = 0;
+            var TextMode = false;
             while (ix < tokens.Count)
             {
                 if (tokens[ix].TokenClassType == typeof(QuotationMarkToken))
@@ -1294,14 +1294,14 @@ namespace ParticleLexer
         /// <returns></returns>
         public static Token ParseText(string text)
         {
-            Token current = new Token();
+            var current = new Token();
 
-            int ci = 0;
+            var ci = 0;
             while (ci < text.Length)
             {
-                char c = text[ci];
+                var c = text[ci];
                 {
-                    Token tk = current.AppendSubToken(c);
+                    var tk = current.AppendSubToken(c);
                     tk.TokenClassType = GetTokenClassType(c);
                     tk._IndexInText = ci;
                 }

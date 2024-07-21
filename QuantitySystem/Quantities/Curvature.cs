@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Curvature<T>(T value)
         {
-            Curvature<T> Q = new Curvature<T>();
-
-            Q.Value = value;
+            Curvature<T> Q = new Curvature<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

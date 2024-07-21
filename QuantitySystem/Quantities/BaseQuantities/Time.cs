@@ -19,9 +19,10 @@
 
         public static implicit operator Time<T>(T value)
         {
-            Time<T> Q = new Time<T>();
-
-            Q.Value = value;
+            Time<T> Q = new Time<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

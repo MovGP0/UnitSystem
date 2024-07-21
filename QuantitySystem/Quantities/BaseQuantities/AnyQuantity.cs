@@ -36,8 +36,8 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
         public override string ToString()
         {
-            string qname = GetType().Name;
-            qname = qname.Substring(0, qname.Length - 2);
+            var qname = GetType().Name;
+            qname = qname[..^2];
 
             return qname + ": " + Value.ToString() + " " + (Unit != null ? Unit.Symbol : "");
         }
@@ -50,7 +50,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
         {
             get
             {
-                string un = string.Empty;
+                var un = string.Empty;
                 if (Unit != null)
                 {
                     un = Unit.Symbol.Trim();
@@ -100,7 +100,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
             Func<Q> aqf = cq.Compile();
 
             // execute the function
-            Q result = aqf();
+            var result = aqf();
 
             // return the result
             return result;
@@ -123,7 +123,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 Func<T> aqf = cq.Compile();
 
                 // execute the function
-                T result = aqf();
+                var result = aqf();
 
                 // return the result
                 return result;
@@ -141,7 +141,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
             Func<T> aqf = cq.Compile();
 
             // execute the function
-            T result = aqf();
+            var result = aqf();
 
             // return the result
             return result;
@@ -158,7 +158,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
             Func<T> aqf = cq.Compile();
 
             // execute the function
-            T result = aqf();
+            var result = aqf();
 
             // return the result
             return result;
@@ -174,12 +174,12 @@ namespace QuantitySystem.Quantities.BaseQuantities
         {
             if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
             {
-                return (T)(object)(Math.Pow((double)(object)value, factor));
+                return (T)(object)Math.Pow((double)(object)value, factor);
 
             }
             else
             {
-                var m = typeof(T).GetMethod("Pow", new Type[]{typeof(T), typeof(double)});
+                var m = typeof(T).GetMethod("Pow", [typeof(T), typeof(double)]);
                 var expr = Expression.Power(Expression.Constant(value), Expression.Constant(factor), m );
 
                 // Construct Lambda function which return one object.
@@ -189,7 +189,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 Func<T> aqf = cq.Compile();
 
                 // execute the function
-                T result = aqf();
+                var result = aqf();
 
                 // return the result
                 return result;
@@ -214,7 +214,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
             Func<T> aqf = cq.Compile();
 
             // execute the function
-            T result = aqf();
+            var result = aqf();
 
             // return the result
             return result;
@@ -239,7 +239,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
             Func<T> aqf = cq.Compile();
 
             // execute the function
-            T result = aqf();
+            var result = aqf();
 
             // return the result
             return result;
@@ -272,7 +272,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
         /// <returns></returns>
         public static AnyQuantity<T> Parse(string quantityName)
         {
-            Type QuantityType = QuantityDimension.QuantityTypeFrom(quantityName);
+            var QuantityType = QuantityDimension.QuantityTypeFrom(quantityName);
 
             if (QuantityType == null)
             {
@@ -295,8 +295,8 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
         public AnyQuantity<T> Clone()
         {
-            object t = MemberwiseClone();
-            var t2 = ((AnyQuantity<T>)t);
+            var t = MemberwiseClone();
+            var t2 = (AnyQuantity<T>)t;
             if (t2.Unit != null) t2.Unit = (Unit)Unit.Clone();
             return t2;
         }

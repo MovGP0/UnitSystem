@@ -18,9 +18,10 @@
 
         public static implicit operator Temperature<T>(T value)
         {
-            Temperature<T> Q = new Temperature<T>();
-
-            Q.Value = value;
+            Temperature<T> Q = new Temperature<T>
+            {
+                Value = value
+            };
 
             return Q;
         }

@@ -17,9 +17,10 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator PolarArea<T>(T value)
         {
-            PolarArea<T> Q = new PolarArea<T>();
-
-            Q.Value = value;
+            PolarArea<T> Q = new PolarArea<T>
+            {
+                Value = value
+            };
 
             return Q;
         }
