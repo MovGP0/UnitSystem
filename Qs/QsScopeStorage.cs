@@ -54,7 +54,7 @@
 
 
         /// <summary>
-        /// Trys to get a variable content by its name .. the function also calls an delegate function for 
+        /// Trys to get a variable content by its name .. the function also calls an delegate function for
         /// external variables if needed
         /// </summary>
         /// <param name="variable"></param>

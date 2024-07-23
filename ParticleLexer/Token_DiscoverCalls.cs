@@ -4,7 +4,7 @@ namespace ParticleLexer
 {
     public sealed partial class Token : IEnumerable<Token>
     {
-        
+
         /// <summary>
         /// Merge between known start token and different closing tokens with different merged tokens classes
         /// </summary>
@@ -12,7 +12,7 @@ namespace ParticleLexer
         /// <param name="closeTokenClasses">array of closing tokens</param>
         /// <param name="mergedTokenClasses">array of types of extracted token classes corresponds to closing tokens</param>
         /// <returns></returns>
-        public Token MergeTokensBetween(Type startTokenClass, Type[] closeTokenClasses, Type[] mergedTokenClasses) 
+        public Token MergeTokensBetween(Type startTokenClass, Type[] closeTokenClasses, Type[] mergedTokenClasses)
         {
             if (closeTokenClasses.Length != mergedTokenClasses.Length) throw new ArgumentException("Number of closing and merged token classes should be equal");
 
@@ -89,7 +89,7 @@ namespace ParticleLexer
 
 
         /// <summary>
-        /// Assemble single tokens into groups like open and close parenthesis 
+        /// Assemble single tokens into groups like open and close parenthesis
         ///     (()(())[[[][]])
         ///     <see cref="ParenthesisGroupToken"/>
         ///     <see cref="SquareBracketsGroupToken"/>
@@ -99,7 +99,7 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token MergeTokensInGroups(params GroupTokenClass[] groupsTokens)
         {
-            
+
             var first = new Token();
             var current = first;
 
@@ -117,7 +117,7 @@ namespace ParticleLexer
                         current = current.AppendSubToken();
 
                         // current now is a new container token
-                        
+
                         // put the open token in the container.
                         current.AppendSubToken(c);
 
@@ -153,7 +153,7 @@ namespace ParticleLexer
             return Zabbat(first);
         }
 
-        
+
         /// <summary>
         /// After merging words and grouping brackets
         /// this function try to discover the calls to sequences and functions.
@@ -181,13 +181,13 @@ namespace ParticleLexer
         /// <param name="wordTokensClasses">list of word tokens to be included in search</param>
         /// <param name="callTokensClasses"> list of call tokens classes that will be discovered like f[3,2] and g(3,f[3]) in the same time</param>
         /// <returns></returns>
-        public Token DiscoverCalls(StringComparer stringComparer, CallTokenClass[] callTokensClasses,Type[] wordTokensClasses, string[] ignoreWords) 
+        public Token DiscoverCalls(StringComparer stringComparer, CallTokenClass[] callTokensClasses,Type[] wordTokensClasses, string[] ignoreWords)
         {
-            
+
 
             var GroupsClassesTypes = (from gct in callTokensClasses
                                      select gct.GroupToken.Type).ToArray();
-            
+
 
             var first = new Token();
             var current = first;
@@ -205,10 +205,10 @@ namespace ParticleLexer
                 }
                 else
                 {
-                    //sub groups then test this token 
+                    //sub groups then test this token
                     if (
                         (
-                              wordTokensClasses.Contains(c.TokenClassType) 
+                              wordTokensClasses.Contains(c.TokenClassType)
                         )
                         && ignoreWords.Contains(c.TokenValue, stringComparer) == false         // and the whole value is not in  the ignore words
                         )
@@ -231,9 +231,9 @@ namespace ParticleLexer
                                 targetCallToken.TokenClassType = TargetCallClass.Type;
                                 targetCallToken.AppendSubToken(c);
 
-                                // look a further look inside the group see if it enclose 
+                                // look a further look inside the group see if it enclose
                                 //   other groups that needs to be looked out before we finish this call
-                                
+
                                 if (cnext.Contains(GroupsClassesTypes))
                                 {
                                     cnext = cnext.DiscoverCalls(stringComparer, callTokensClasses,wordTokensClasses, ignoreWords);
@@ -274,7 +274,7 @@ namespace ParticleLexer
         /// <returns></returns>
         public Token SplitParamerers(Token cnext, TokenClass separator)
         {
-            
+
             //here I must merge all but the parenthesis
             var temp = new Token();
 
@@ -297,7 +297,7 @@ namespace ParticleLexer
         }
 
 
-        
+
 
 
 

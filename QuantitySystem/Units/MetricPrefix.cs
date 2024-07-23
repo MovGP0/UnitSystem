@@ -28,6 +28,8 @@ public struct MetricPrefix
 
 
     #region Positive
+    public static MetricPrefix Quetta => new("quetta", "Q", 30);
+    public static MetricPrefix Ronna => new("ronna", "R", 27);
     public static MetricPrefix Yotta => new("yotta", "Y", 24);
     public static MetricPrefix Zetta => new("zetta", "Z", 21);
     public static MetricPrefix Exa => new("exa", "E", 18);
@@ -43,7 +45,7 @@ public struct MetricPrefix
 
     public static MetricPrefix None => new("", "", 0);
 
-    #region Negative 
+    #region Negative
     public static MetricPrefix Deci => new("deci", "d", -1);
     public static MetricPrefix Centi => new("centi", "c", -2);
     public static MetricPrefix Milli => new("milli", "m", -3);
@@ -54,17 +56,21 @@ public struct MetricPrefix
     public static MetricPrefix Atto => new("atto", "a", -18);
     public static MetricPrefix Zepto => new("zepto", "z", -21);
     public static MetricPrefix Yocto => new("yocto", "y", -24);
+    public static MetricPrefix Ronto => new("ronto", "Rt", -27);
+    public static MetricPrefix Quento => new("quento", "Qt", -30);
 
     #endregion
-    
+
     #endregion
 
     #region static constructor
     public static MetricPrefix GetPrefix(int index)
     {
-            
+
         switch (index)
         {
+            case 12: return Quetta;
+            case 11: return Ronna;
             case 10: return Yotta;
             case 9: return Zetta;
             case 8: return Exa;
@@ -88,7 +94,8 @@ public struct MetricPrefix
             case -8: return Atto;
             case -9: return Zepto;
             case -10: return Yocto;
-                
+            case -11: return Ronto;
+            case -12: return Quento;
         }
 
         throw new MetricPrefixException("Index out of range");
@@ -97,55 +104,36 @@ public struct MetricPrefix
     public static MetricPrefix FromExponent(double exponent)
     {
         CheckExponent(exponent);
-        var exp = (int)exponent; 
-        switch (exp)
+        var exp = (int)exponent;
+        return exp switch
         {
-            case -24:
-                return Yocto;
-            case -21:
-                return Zepto;
-            case -18:
-                return Atto;
-            case -15:
-                return Femto;
-            case -12:
-                return Pico;
-            case -9:
-                return Nano;
-            case -6:
-                return Micro;
-            case -3:
-                return Milli;
-            case -2:
-                return Centi;
-            case -1:
-                return Deci;
-            case 0:
-                return None;
-            case 1:
-                return Deka;
-            case 2:
-                return Hecto;
-            case 3:
-                return Kilo;
-            case 6:
-                return Mega;
-            case 9:
-                return Giga;
-            case 12:
-                return Tera;
-            case 15:
-                return Peta;
-            case 18:
-                return Exa;
-            case 21:
-                return Zetta;
-            case 24:
-                return Yotta;
-            default:
-                throw new MetricPrefixException("No SI Prefix found.") { WrongExponent = (int)exponent };
-
-        }
+            -30 => Quento,
+            -27 => Ronto,
+            -24 => Yocto,
+            -21 => Zepto,
+            -18 => Atto,
+            -15 => Femto,
+            -12 => Pico,
+            -9 => Nano,
+            -6 => Micro,
+            -3 => Milli,
+            -2 => Centi,
+            -1 => Deci,
+            0 => None,
+            1 => Deka,
+            2 => Hecto,
+            3 => Kilo,
+            6 => Mega,
+            9 => Giga,
+            12 => Tera,
+            15 => Peta,
+            18 => Exa,
+            21 => Zetta,
+            24 => Yotta,
+            27 => Ronna,
+            30 => Quetta,
+            _ => throw new MetricPrefixException("No SI Prefix found.") { WrongExponent = (int)exponent }
+        };
     }
 
     public static MetricPrefix FromPrefixName(string prefixName)
@@ -187,10 +175,7 @@ public struct MetricPrefix
     #endregion
 
     #region Operations
-    public MetricPrefix Invert()
-    {
-        return FromExponent(0 - _prefixExponent);
-    }
+    public MetricPrefix Invert() => FromExponent(0 - _prefixExponent);
 
     public static MetricPrefix Add(MetricPrefix firstPrefix, MetricPrefix secondPrefix)
     {
@@ -202,7 +187,7 @@ public struct MetricPrefix
     public static MetricPrefix operator +(MetricPrefix firstPrefix, MetricPrefix secondPrefix)
     {
         return Add(firstPrefix, secondPrefix);
-    }        
+    }
 
     public static MetricPrefix Subtract(MetricPrefix firstPrefix, MetricPrefix secondPrefix)
     {
@@ -247,7 +232,7 @@ public struct MetricPrefix
 
     /// <summary>
     /// Check the exponent if it can found or
-    /// if it exceeds 24 or precedes -25 <see cref="MetricPrefixException"/> occur with the closest 
+    /// if it exceeds 24 or precedes -25 <see cref="MetricPrefixException"/> occur with the closest
     /// <see cref="MetricPrefix"/> and overflow the rest of it.
     /// </summary>
     /// <param name="exp"></param>

@@ -10,7 +10,7 @@
             var SourceTerm = a.Clone();
 
             // if the divided term is more than on term
-            // x^2/(y-x)  ==>  
+            // x^2/(y-x)  ==>
             if (b.AddedTerms.Count > 0 || (b._ExtraTerms != null && b._ExtraTerms.Count > 0))
             {
                 if (a.Equals(b)) return new SymbolicVariable("1");
@@ -51,7 +51,7 @@
                     SourceTerm.SymbolPower = SourceTerm.SymbolPower - TargetSubTerm.SymbolPower;
                 }
 
-                
+
 
                 //fuse the fused symbols in b into sv
                 foreach (var bfv in TargetSubTerm.FusedSymbols)
@@ -69,11 +69,11 @@
                 if (string.IsNullOrEmpty(SourceTerm.Symbol))
                 {
                     #region First Case: Source primary symbol doesn't exist
-                    // the instance have an empty primary variable so we should add it 
-                    
+                    // the instance have an empty primary variable so we should add it
+
                     if (TargetSubTerm._BaseVariable != null) SourceTerm._BaseVariable = TargetSubTerm._BaseVariable;
-                    else SourceTerm.Symbol = TargetSubTerm.Symbol; 
-                    
+                    else SourceTerm.Symbol = TargetSubTerm.Symbol;
+
                     SourceTerm.SymbolPower = -1 * TargetSubTerm.SymbolPower;
                     if (TargetSubTerm.SymbolPowerTerm != null) SourceTerm._SymbolPowerTerm = -1 * TargetSubTerm.SymbolPowerTerm.Clone();
 
@@ -161,7 +161,7 @@
 
                         // however primary symbol in source still the same so we need to add it to the value in target (if applicable)
 
-                        // also 
+                        // also
 
                         // there are still some fused variables in source that weren't altered by the target fused symbols
                         // go through every symbol in fused symbols and add it to the source fused symbols
@@ -192,7 +192,7 @@
                                             SourceTerm._SymbolPower = -1;
                                         }
 
-                                        if(SourceTerm._SymbolPowerTerm.IsCoeffecientOnly) 
+                                        if(SourceTerm._SymbolPowerTerm.IsCoeffecientOnly)
                                         {
                                             SourceTerm._SymbolPower = SourceTerm._SymbolPowerTerm.Coeffecient;
                                             SourceTerm._SymbolPowerTerm = null;
@@ -231,7 +231,7 @@
                                 SourceTerm.FusedSymbols[fsv.Key] -= fsv.Value;
                             else
                             {
-                                // 1- if symbol is the same as priamry source 
+                                // 1- if symbol is the same as priamry source
                                 if (SourceTerm.Symbol.Equals(fsv.Key, StringComparison.OrdinalIgnoreCase))
                                 {
                                     if (fsv.Value.SymbolicVariable != null)
@@ -309,18 +309,18 @@
 
             while (subIndex < b.AddedTerms.Count)
             {
-                // we should multiply other parts also 
+                // we should multiply other parts also
                 // then add it to the current instance
 
-                // there are still terms to be consumed 
+                // there are still terms to be consumed
                 //   this new term is a sub term in b and will be added to all terms of a.
                 TargetSubTerm = b.AddedTerms.ElementAt(subIndex).Value.Clone();
 
                 TargetSubTerm.DividedTerm = b.DividedTerm;   // this line is important because I extracted this added term from a bigger term with the same divided term
-                                                            // and when I did this the extracted term lost its divided term 
+                                                            // and when I did this the extracted term lost its divided term
 
                 total = total + Divide(a, TargetSubTerm);
-                subIndex = subIndex + 1;  //increase     
+                subIndex = subIndex + 1;  //increase
             }
 
             // for extra terms  {terms that has different divided term}
@@ -343,7 +343,7 @@
             AdjustZeroCoeffecientTerms(ref total);
 
 
-            return total; 
+            return total;
         }
 
 
@@ -463,7 +463,7 @@
                     }
                 }
             }
-        }    
+        }
 
     }
 }

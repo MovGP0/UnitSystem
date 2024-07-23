@@ -17,7 +17,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Stiffness<T>(T value)
         {
-            Stiffness<T> Q = new Stiffness<T>
+            Stiffness<T> Q = new()
             {
                 Value = value
             };

@@ -90,7 +90,7 @@ namespace SymbolicAlgebra
 
             // coduct the third operation .. final calulcation
             var SimplifiedResult = sv.Clone();
-            
+
 
             foreach (var pst in PSTS.Values)
             {
@@ -118,7 +118,7 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public static SymbolicVariable? TrigSimplify(SymbolicVariable sv)
         {
-            if (sv.ExtraTerms.Count > 0) return sv.Clone(); //prevent simplification in case of extra terms 
+            if (sv.ExtraTerms.Count > 0) return sv.Clone(); //prevent simplification in case of extra terms
 
 
             var factorized = FactorWithCommonFactor(sv);
@@ -128,7 +128,7 @@ namespace SymbolicAlgebra
             // facorized expressions contain their terms in the multiplied symbols
             for (var i = 0; i < factorized.TermsCount; i++)
             {
-                // go through each term 
+                // go through each term
                 var term = factorized[i];
 
                 for (var fui = 0; fui < term.FusedSymbols.Count; fui++)
@@ -160,7 +160,7 @@ namespace SymbolicAlgebra
                 total = total + term;
             }
 
-            // so begin in the factorized 
+            // so begin in the factorized
             var tsimp = PartialTrigSimplify(total);
 
             return tsimp;
@@ -190,14 +190,14 @@ namespace SymbolicAlgebra
         public Dictionary<SymbolicVariable, List<int>> GetCommonFactorsMap()
         {
             // a*sin(x)+a*cos(x) + c
-            // loop through all terms 
-            //   begin with primary term 
+            // loop through all terms
+            //   begin with primary term
             //     see if it exists in added terms in primary or fusedsymbols
             // build a dictionary with the existence of this variable
             // repeat this for each fused variable
             // the dictionary will increase in its data
             //  once we are done       check the dictionary lenghs for each variable .. the one with more existence of 2 or more is what we need
-            // begin an analysis for the existence indices 
+            // begin an analysis for the existence indices
             //   a =>  2,5,9
             //   b =>  2,3,4
             // then a*b => 2   and etc.
@@ -288,7 +288,7 @@ namespace SymbolicAlgebra
                         where mk.Key.Equals(One) == false && mk.Value.Count > 1
                         select mk.Key).ToArray();
 
-            return keys.Length > 0;            
+            return keys.Length > 0;
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace SymbolicAlgebra
         {
             var map = sv.GetCommonFactorsMap();
 
-            
+
             // get all keys  sorted by number of elements
 
             var keys = (from mk in map
@@ -312,11 +312,11 @@ namespace SymbolicAlgebra
 
             if (keys.Length == 0) return sv.Clone();
             // ignore the 1 key
-            
+
             // imagine a*x+a*y  result is a*(x+y)
 
             var result = One.Clone();
-            
+
             var term_key = keys[0];  // the biggest values count   as shown above in the query statement
 
             var term_indices = map[term_key];
@@ -419,12 +419,12 @@ namespace SymbolicAlgebra
                 // transfer symbols into the divided term
                 denominator.SymbolPower = Math.Abs(sVariable.SymbolPower);
                 denominator.Symbol = sVariable.Symbol;
-                
+
                 if (sVariable._SymbolPowerTerm != null) //include the symbol power term also but invert its sign
                     denominator._SymbolPowerTerm = Multiply(NegativeOne, sVariable._SymbolPowerTerm);
 
 
-                // fix the reordered variable by removing this symbol information because it will appear later 
+                // fix the reordered variable by removing this symbol information because it will appear later
                 //   in the divided term.
 
                 reOrderedVariable.SymbolPower = 0 ;
@@ -504,7 +504,7 @@ namespace SymbolicAlgebra
         }
 
         /// <summary>
-        /// Works on expressions of extra terms to get an expression unified in denominator 
+        /// Works on expressions of extra terms to get an expression unified in denominator
         /// </summary>
         /// <param name="sv"></param>
         /// <returns></returns>
@@ -527,7 +527,7 @@ namespace SymbolicAlgebra
 
                     proTerm = Multiply(proTerm, unif.Denominator);
                 }
-                
+
                 // multipy the OrderedVariable divided term in the target extra term
 
                 var exNumerator = Multiply(OrderedVariable.DividedTerm, proTerm.Numerator);
@@ -539,10 +539,10 @@ namespace SymbolicAlgebra
                 OrderedVariable = Add(OrdNumerator, exNumerator);
 
                 OrderedVariable._DividedTerm = exDenominator;
-                
+
             }
 
-            
+
             return OrderedVariable;
         }
 
@@ -550,6 +550,6 @@ namespace SymbolicAlgebra
         {
             return UnifyDenominators(sv);
         }
-    
+
     }
 }

@@ -18,7 +18,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator AreaMomentOfInertia<T>(T value)
         {
-            AreaMomentOfInertia<T> Q = new AreaMomentOfInertia<T>
+            AreaMomentOfInertia<T> Q = new()
             {
                 Value = value
             };

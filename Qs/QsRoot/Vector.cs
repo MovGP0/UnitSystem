@@ -63,12 +63,12 @@ public static class Vector
         Contract.Requires(from.QsNativeValue is QsScalar);
         Contract.Requires(to.QsNativeValue is QsScalar);
         Contract.Requires(step.QsNativeValue is QsScalar);
-            
+
         if (from.QsNativeValue is not QsScalar fromScalar)
         {
             throw new ArgumentException("QsNativeValue is not QsScalar", nameof(from));
         }
-            
+
         if (to.QsNativeValue is not QsScalar toScalar)
         {
             throw new ArgumentException("QsNativeValue is not QsScalar", nameof(to));
@@ -135,12 +135,12 @@ public static class Vector
         {
             throw new ArgumentException("QsNativeValue is not QsScalar", nameof(count));
         }
-            
+
         if (constant.QsNativeValue is not QsScalar constantScalar)
         {
             throw new ArgumentException("QsNativeValue is not QsScalar", nameof(constant));
         }
-            
+
         var countd = countScalar.NumericalQuantity.Value;
 
         var icount = (int)countd;

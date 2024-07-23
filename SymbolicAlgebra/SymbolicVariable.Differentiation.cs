@@ -58,7 +58,7 @@
                     {
                         // here is the case when base and power are the same with the parameter we are differentiating with
                         //  i.e.  x^x|x
-                        // Logarithmic Differentiation   
+                        // Logarithmic Differentiation
                         var lnterm = new SymbolicVariable($"{FunctionOperation.LnText}(" + sv.ToString() + ")");
                         var dlnterm = lnterm.Differentiate(parameter);
                         sv = Multiply(sv, dlnterm);
@@ -75,7 +75,7 @@
             }
             else if (symbolpowercontainParameter)
             {
-                // this case is when the power term is the same 
+                // this case is when the power term is the same
                 var log = new SymbolicVariable(FunctionOperation.LnText + "(" + sv.Symbol + ")");
                 var dp = sv._SymbolPowerTerm.Differentiate(parameter);
                 sv = Multiply(log, Multiply(dp, sv));
@@ -137,7 +137,7 @@
                             var pa = fv._FunctionParameters[0];
                             var dpa = pa.Differentiate(parameter);
                             fv = Divide(dpa, pa);
-                            
+
                         }
                         else if(fv.FunctionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
                         {
@@ -156,7 +156,7 @@
                         }
                         else if (FunctionOperation.TrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
                         {
-                            // triogonometric functions 
+                            // triogonometric functions
                             bool IsNegativeResult;
                             string[] newfuntions = FunctionOperation.DiffTrigFunction(fv, out IsNegativeResult);
 
@@ -188,7 +188,7 @@
                         else
                         {
 
-                            
+
                             // the function is not a special function like sin, cos, and log.
                             // search for the function in the running context.
 
@@ -197,7 +197,7 @@
                             if (!string.IsNullOrEmpty(extendedFunction))
                             {
                                 string[] fps = extendedFunction.Substring(extendedFunction.IndexOf("(")).TrimStart('(').TrimEnd(')').Split(',');
-                                    
+
                                 if(fps.Length != fv._RawFunctionParameters.Length) throw new SymbolicException("Insufficient function parameters");
 
                                 // replace parameters
@@ -209,14 +209,14 @@
                                 }
 
                                 fv = Parse(dsf).Differentiate(parameter);
-                                    
+
                             }
                             else
                             {
 
                                 throw new SymbolicException("This function is not a special function, and it is not being defined before .. to define a user function write f(x):= x^2  or h(u,v):=u-v^2");
                             }
-                            
+
                         }
 
                         // second treat the function normally as if it is one big symbol
@@ -286,7 +286,7 @@
 
             List<SymbolicVariable> CalculatedDiffs = new List<SymbolicVariable>(MultipliedTerms.Count);
 
-            // get all differentials of all terms                       // x*y*z ==>  dx  dy  dz 
+            // get all differentials of all terms                       // x*y*z ==>  dx  dy  dz
             for (var ix = 0; ix < MultipliedTerms.Count; ix++)
             {
                 CalculatedDiffs.Add(DiffTerm(MultipliedTerms[ix].Term, parameter));

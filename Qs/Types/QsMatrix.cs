@@ -111,13 +111,13 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     /// Count of the matrix rows {m}
     /// </summary>
     public int RowsCount => Rows.Count;
-        
+
 
     /// <summary>
     /// Count of the matrix columns {n}
     /// </summary>
     public int ColumnsCount => Rows[0].Count;
-        
+
 
 
     /// <summary>
@@ -368,11 +368,11 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
                     }
 
                     tvec[tix] = tnum;
-                        
+
                 }
 
                 Total.AddRow(tvec);
-                    
+
             }
 
             return Total;
@@ -533,7 +533,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
             var sb = new StringBuilder();
             for (var IY = 0; IY < RowsCount; IY++)
-            {  
+            {
                 for (var IX = 0; IX < ColumnsCount; IX++)
                 {
                     var cell = cells[IY, IX];
@@ -715,9 +715,9 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             var v = new QsVector(n);
             for (var j = 0; j < n; j++)
             {
-                if (j == i) 
+                if (j == i)
                     v.AddComponent(QsScalar.One);
-                else 
+                else
                     v.AddComponent(QsScalar.Zero);
             }
             m.AddVector(v);

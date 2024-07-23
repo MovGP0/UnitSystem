@@ -18,7 +18,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator SpecificVolume<T>(T value)
         {
-            SpecificVolume<T> Q = new SpecificVolume<T>
+            SpecificVolume<T> Q = new()
             {
                 Value = value
             };

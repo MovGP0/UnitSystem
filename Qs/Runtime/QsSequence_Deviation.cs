@@ -23,7 +23,7 @@ namespace Qs.Runtime
                 Total = Total + pp2;
             }
             var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
-                
+
             return Total / count;
         }
 
@@ -31,7 +31,7 @@ namespace Qs.Runtime
         #region Average Functions
         public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0)
         {
-            
+
 
             var n = toIndex - fromIndex + 1;
             FixIndices(ref fromIndex, ref toIndex);
@@ -45,14 +45,14 @@ namespace Qs.Runtime
                 Total = Total + pp2;
             }
             var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
-            
+
             return Total / count;
         }
 
-        
+
         public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
         {
-            
+
 
             var n = toIndex - fromIndex + 1;
             FixIndices(ref fromIndex, ref toIndex);
@@ -66,12 +66,12 @@ namespace Qs.Runtime
                 Total = Total + pp2;
             }
             var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
-            
+
             return Total / count;
         }
         public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
         {
-            
+
 
             var n = toIndex - fromIndex + 1;
             FixIndices(ref fromIndex, ref toIndex);
@@ -85,12 +85,12 @@ namespace Qs.Runtime
                 Total = Total + pp2;
             }
             var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
-            
+
             return Total / count;
         }
         public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
         {
-            
+
 
             var n = toIndex - fromIndex + 1;
             FixIndices(ref fromIndex, ref toIndex);
@@ -104,12 +104,12 @@ namespace Qs.Runtime
                 Total = Total + pp2;
             }
             var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
-            
+
             return Total / count;
         }
         public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
         {
-            
+
 
             var n = toIndex - fromIndex + 1;
             FixIndices(ref fromIndex, ref toIndex);
@@ -123,12 +123,12 @@ namespace Qs.Runtime
                 Total = Total + pp2;
             }
             var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
-            
+
             return Total / count;
         }
         public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
         {
-            
+
 
             var n = toIndex - fromIndex + 1;
             FixIndices(ref fromIndex, ref toIndex);
@@ -142,13 +142,13 @@ namespace Qs.Runtime
                 Total = Total + pp2;
             }
             var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
-            
+
             return Total / count;
         }
 
         public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
         {
-            
+
 
             var n = toIndex - fromIndex + 1;
             FixIndices(ref fromIndex, ref toIndex);
@@ -162,10 +162,10 @@ namespace Qs.Runtime
                 Total = Total + pp2;
             }
             var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
-            
+
             return Total / count;
         }
-        
+
         #endregion
 
     }

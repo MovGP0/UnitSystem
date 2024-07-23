@@ -256,7 +256,7 @@
                 if (!ReferenceEquals(ts, this))
                 {
 
-                    // we need to test equality to 
+                    // we need to test equality to
 
                     if (InnerTensors != null)
                     {
@@ -298,7 +298,7 @@
             else value = vl;
 
 
-            
+
             QsTensor tensor;
 
             if (value is QsTensor) tensor = (QsTensor)value;
@@ -306,7 +306,7 @@
             else if (value is QsVector) tensor = new QsTensor(new QsMatrix((QsVector)value));
             else if (value is QsScalar) tensor = new QsTensor(new QsMatrix(new QsVector((QsScalar)value)));
             else throw new QsException("Tensor Operation with non mathematical type is not permitted");
-            
+
             if (tensor == null) throw new QsException("Must be a tensor for scalar product");
 
             if (Order > 3)
@@ -360,7 +360,7 @@
             }
 
             throw new NotImplementedException();
-            
+
         }
 
         public override QsValue CrossProductOperation(QsValue value)
@@ -387,7 +387,7 @@
         {
             var indices = new int[allIndices.Length];
 
-            for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;                
+            for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
 
             var dr = Order - indices.Count();
             if (dr < 0)

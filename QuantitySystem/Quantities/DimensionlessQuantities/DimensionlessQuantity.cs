@@ -8,7 +8,7 @@ namespace QuantitySystem.Quantities.DimensionlessQuantities
         public DimensionlessQuantity()
             : base(1)
         {
-            
+
         }
 
 
@@ -19,8 +19,8 @@ namespace QuantitySystem.Quantities.DimensionlessQuantities
         {
             InternalQuantities = internalQuantities;
 
-            
-            
+
+
         }
 
         public override QuantityDimension Dimension
@@ -43,18 +43,18 @@ namespace QuantitySystem.Quantities.DimensionlessQuantities
 
         public static implicit operator DimensionlessQuantity<T>(T value)
         {
-            DimensionlessQuantity<T> Q = new DimensionlessQuantity<T>
+            DimensionlessQuantity<T> Q = new()
             {
                 Value = value
             };
 
             return Q;
 
-            
+
         }
 
 
-        
+
 
 
 

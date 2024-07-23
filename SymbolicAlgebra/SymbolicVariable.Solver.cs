@@ -22,14 +22,14 @@
         /// <returns></returns>
         public SymbolicVariable? Solve(string variable)
         {
-            // "5*t1+3/t2"  ==>  5*t1 = -3/t2  ==>  t1  = (-3/t2)*5   
+            // "5*t1+3/t2"  ==>  5*t1 = -3/t2  ==>  t1  = (-3/t2)*5
 
-            if (_ExtraTerms != null && _ExtraTerms.Count > 0) 
+            if (_ExtraTerms != null && _ExtraTerms.Count > 0)
                 throw new SymbolicException("can't solve expression with extra terms that hold terms with different denominator");
 
             // Algorithm:
-            // search for the term with variable in it 
-            // don't accept more than one term 
+            // search for the term with variable in it
+            // don't accept more than one term
             // don't accept terms with power other than 1
             // solve
 
@@ -46,7 +46,7 @@
                 AdjustZeroCoeffecientTerms(ref RestTerm);  // this will adjust the internal structure of symbolic variabl
             }
             else
-            {   
+            {
                 foreach (var t in RestTerm.AddedTerms)
                 {
                     if (t.Value.Symbol.Equals(variable, StringComparison.OrdinalIgnoreCase))
@@ -80,7 +80,7 @@
         /// <returns></returns>
         public SymbolicVariable? Substitute(string variable, double value)
         {
-            
+
             var s = ToString();
             var ss = s.Replace(variable, "(" + value.ToString() + ")");
 

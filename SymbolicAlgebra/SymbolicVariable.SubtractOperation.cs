@@ -80,7 +80,7 @@
 
             //so the equality doesn't exits or this instance have other terms also
 
-            // there are two cases now 
+            // there are two cases now
             //  1- the symbolic can be added to one of the existing terms (which will be perfect)
             //  2- there are no compatible term so we have to add it to the addedvariables of this instance.
 
@@ -158,10 +158,10 @@
 
             if (b.AddedTerms.Count > 0)
             {
-                sub = sub + 1;  //increase 
+                sub = sub + 1;  //increase
                 if (sub < b.AddedTerms.Count)
                 {
-                    // there are still terms to be consumed 
+                    // there are still terms to be consumed
                     //   this new term is a sub term in b and will be added to all terms of a.
                     subB = b.AddedTerms.ElementAt(sub).Value;
                     goto NewPart;

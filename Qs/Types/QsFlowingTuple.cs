@@ -95,10 +95,10 @@ public class QsFlowingTuple : QsValue
 
     public QsFlowingTuple(params QsTupleValue[] values)
     {
-        // get the maximum id defined in the array 
+        // get the maximum id defined in the array
         // [to be the ground that will be increased whenever we find element without id]
 
-        var sid = values.Max(s => s.Id);  
+        var sid = values.Max(s => s.Id);
 
         foreach (var v in values)
         {
@@ -180,14 +180,14 @@ public class QsFlowingTuple : QsValue
             var arg = expression[1].TrimTokens(1, 1).TokenValue;
             if (expression[0].TokenValue.Equals("GetName", StringComparison.OrdinalIgnoreCase))
             {
-                // one parameter only 
+                // one parameter only
                 var ordinal = (int)((QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(arg)).NumericalQuantity.Value;
                 return new QsText(ThisFlow.FlowSteps[ordinal].Name);
             }
 
             if (expression[0].TokenValue.Equals("GetValue", StringComparison.OrdinalIgnoreCase))
             {
-                // one parameter only 
+                // one parameter only
                 var ordinal = (int)((QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(arg)).NumericalQuantity.Value;
                 return (QsValue?)ThisFlow.FlowSteps[ordinal].Value;
             }
@@ -220,7 +220,7 @@ public class QsFlowingTuple : QsValue
 
                 for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
                 {
-                    if (ThisFlow.FlowSteps[ix].Name.Equals(argtext, StringComparison.OrdinalIgnoreCase)) 
+                    if (ThisFlow.FlowSteps[ix].Name.Equals(argtext, StringComparison.OrdinalIgnoreCase))
                         return ix.ToScalarValue();
                 }
 
@@ -421,7 +421,7 @@ public class QsFlowingTuple : QsValue
             fefe[ix].Id = (int)values.GetValue(ix);
             fefe[ix].Value = ((int)values.GetValue(ix)).ToQuantity().ToScalarValue();
         }
-            
+
         return new QsFlowingTuple(fefe);
     }
 
@@ -450,7 +450,7 @@ public class QsFlowingTuple : QsValue
                 fefe[ix].SetLazyValue(StructProperty.GetValue(value, null));
             else
                 fefe[ix].Value = Root.NativeToQsConvert(StructProperty.GetValue(value, null));
-                
+
             id += 10;
         }
 
@@ -468,7 +468,7 @@ public class QsFlowingTuple : QsValue
             select o;
 
         var svt = Activator.CreateInstance(structType);
-        // fill the available names from this tuple and 
+        // fill the available names from this tuple and
         foreach (var step in ThisFlow.FlowSteps)
         {
             var prop = all.FirstOrDefault(p => p.Name.Equals(step.Name, StringComparison.OrdinalIgnoreCase));

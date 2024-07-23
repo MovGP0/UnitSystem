@@ -99,7 +99,7 @@ namespace Qs.Runtime
 
                 //clear the cache
                 CachedValues.Clear();
-            }   
+            }
         }
 
         /// <summary>
@@ -183,12 +183,12 @@ namespace Qs.Runtime
                 }
             }
 
-            
+
             if (Parameters.Length > 0)
             {
                 // this is a call to form symbolic element
                 // like g[n](x) ..> x^n
-                // and calling g[2] 
+                // and calling g[2]
                 //  the output should be x^2
                 //  and be parsed into function  (QsFunction)
                 var e = GetElement(index);
@@ -241,7 +241,7 @@ namespace Qs.Runtime
             var val = GetElement(index).Execute(index, arg0);
             return val;
         }
-        
+
         public QsValue GetElementValue(int index, QsParameter arg0, QsParameter arg1)
         {
             var val = GetElement(index).Execute(index, arg0, arg1);
@@ -277,7 +277,7 @@ namespace Qs.Runtime
             var val = GetElement(index).Execute(index, arg1, arg1, arg2, arg3, arg4, arg5, arg6);
             return val;
         }
-        
+
         #endregion
 
 
@@ -348,7 +348,7 @@ namespace Qs.Runtime
 
         }
 
-        
+
         public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
         {
             BeginRangeOperation(fromIndex, toIndex);
@@ -542,7 +542,7 @@ namespace Qs.Runtime
             }
 
         }
-        
+
         #endregion
 
 

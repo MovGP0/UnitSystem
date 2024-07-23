@@ -17,7 +17,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator MagneticPermeability<T>(T value)
         {
-            MagneticPermeability<T> Q = new MagneticPermeability<T>
+            MagneticPermeability<T> Q = new()
             {
                 Value = value
             };

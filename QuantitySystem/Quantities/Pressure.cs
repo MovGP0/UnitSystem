@@ -15,7 +15,7 @@
 
         public static implicit operator Pressure<T>(T value)
         {
-            Pressure<T> Q = new Pressure<T>
+            Pressure<T> Q = new()
             {
                 Value = value
             };

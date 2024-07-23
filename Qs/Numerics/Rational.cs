@@ -14,7 +14,7 @@ namespace Qs.Numerics
 
 
         /// <summary>
-        /// Simplify the output  
+        /// Simplify the output
         ///    for example if the result is 4/8  then it is simplified to 2/4 then 1/2
         /// </summary>
         /// <param name="num"></param>

@@ -8,66 +8,21 @@ namespace QsRoot;
 /// </summary>
 public static class Environment
 {
-    public static QsValue TickCount
-    {
-        get
-        {
-                
-            return System.Environment.TickCount.ToQuantity("ms").ToScalarValue();
-        }
-    }
+    public static QsValue TickCount => System.Environment.TickCount.ToQuantity("ms").ToScalarValue();
 
-    public static QsValue ProcessorCount
-    {
-        get
-        {
-            return System.Environment.ProcessorCount.ToQuantity().ToScalar();
-        }
-    }
+    public static QsValue ProcessorCount => System.Environment.ProcessorCount.ToQuantity().ToScalar();
 
 #if !WINRT
 
-    public static QsText CurrentDirectory
-    {
-        get
-        {
-                
-            return new QsText(System.Environment.CurrentDirectory);
-        }
-    }
+    public static QsText CurrentDirectory => new(System.Environment.CurrentDirectory);
 
-    public static QsText MachineName
-    {
-        get
-        {
-                
-            return new QsText(System.Environment.MachineName);
-        }
-    }
+    public static QsText MachineName => new(System.Environment.MachineName);
 
-    public static QsObject OsVersion
-    {
-        get
-        {
-            return  QsObject.CreateNativeObject( System.Environment.OSVersion);
-        }
-    }
+    public static QsObject OsVersion => QsObject.CreateNativeObject( System.Environment.OSVersion);
 
-    public static QsText SystemDirectory
-    {
-        get
-        {
-            return new QsText(System.Environment.SystemDirectory);
-        }
-    }
+    public static QsText SystemDirectory => new(System.Environment.SystemDirectory);
 
-    public static QsText UserName
-    {
-        get
-        {
-            return new QsText(System.Environment.UserName);
-        }
-    }
+    public static QsText UserName => new(System.Environment.UserName);
 
 #endif
 }

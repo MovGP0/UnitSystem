@@ -22,7 +22,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Density<T>(T value)
         {
-            Density<T> Q = new Density<T>
+            Density<T> Q = new()
             {
                 Value = value
             };

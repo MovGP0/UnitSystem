@@ -39,12 +39,12 @@ public partial class QsFunction : QsValue
     private LambdaExpression _FunctionExpression;
 
     public LambdaExpression FunctionExpression =>_FunctionExpression;
-        
+
 
     /// <summary>
     /// Tells if the function has an evaluated body that can be invoked.
     /// </summary>
-    public bool HasCode 
+    public bool HasCode
     {
         get
         {
@@ -61,14 +61,14 @@ public partial class QsFunction : QsValue
     public AnyQuantity<double> Invoke(params AnyQuantity<double>[] args)
     {
         var parms = (from arg in args
-            select 
+            select
                 QsParameter.MakeParameter(arg.ToScalarValue(), arg.ToShortString())).ToArray();
 
         return ((QsScalar)InvokeByQsParameters(parms)).NumericalQuantity;
     }
 
     /// <summary>
-    /// Level two function calling with Qs Values 
+    /// Level two function calling with Qs Values
     /// </summary>
     /// <param name="args"></param>
     /// <returns></returns>
@@ -79,7 +79,7 @@ public partial class QsFunction : QsValue
                 QsParameter.MakeParameter(arg, arg.ToString())).ToArray();
 
         return (QsScalar)InvokeByQsParameters(parms);
-            
+
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ public partial class QsFunction : QsValue
             }
             else if (Parameters[ip].Type == QsParamType.Raw)
             {
-                //don't evaluate the parameter 
+                //don't evaluate the parameter
                 // just take the text and pass it to the function as it is.
                 nakedParameter = Expression.Constant(QsParameter.MakeParameter(args[ip], args[ip]));
 
@@ -170,7 +170,7 @@ public partial class QsFunction : QsValue
             else
             {
                 //normal variable
-                    
+
                 nakedParameter = vario.ParseArithmatic(args[ip]);
 
                 // if this was another function name without like  v(c,g,8)  where g is a function name will be passed to c
@@ -483,7 +483,7 @@ public partial class QsFunction : QsValue
     public QsFunction(string functionBody)
     {
         FunctionDeclaration = functionBody;
-            
+
     }
 
     private readonly bool _IsReadOnly;
@@ -499,7 +499,7 @@ public partial class QsFunction : QsValue
     public QsFunction(string functionBody, bool isReadOnly)
     {
         FunctionDeclaration = functionBody;
-            
+
         _IsReadOnly = isReadOnly;
     }
 
@@ -536,7 +536,7 @@ public partial class QsFunction : QsValue
 
     public static QsFunction ParseFunction(QsEvaluator qse, string functionDeclaration)
     {
-        if (functionDeclaration.StartsWith("@")) return null; 
+        if (functionDeclaration.StartsWith("@")) return null;
 
         // fast check for function as = and ) before it.
         var eqIdx = functionDeclaration.IndexOf('=');
@@ -563,7 +563,7 @@ public partial class QsFunction : QsValue
 
         var functionToken = TokenizeFunction(functionDeclaration);
         return ParseFunction(qse, functionDeclaration, functionToken);
-            
+
     }
 
     public static QsFunction ParseFunction(QsEvaluator qse, string functionDeclaration, Token functionToken)
@@ -594,7 +594,7 @@ public partial class QsFunction : QsValue
             // will be the first token after excluding namespace.
 
             var functionName  = string.Empty;
-                
+
 
             functionName = functionToken[nsidx].TokenValue;
 
@@ -606,8 +606,8 @@ public partial class QsFunction : QsValue
             foreach (var c in functionToken[nsidx + 1])
             {
                 if (
-                    c.TokenValue.StartsWith("(") || 
-                    c.TokenValue.StartsWith(")") || 
+                    c.TokenValue.StartsWith("(") ||
+                    c.TokenValue.StartsWith(")") ||
                     c.TokenValue.StartsWith(",") ||
                     c.TokenClassType==typeof(MultipleSpaceToken)
                 )
@@ -634,7 +634,7 @@ public partial class QsFunction : QsValue
                 Parameters = prms.ToArray()
             };
 
-               
+
             //LambdaBuilder lb = Utils.Lambda(typeof(QsValue), functionName);
             var lb = SimpleLambdaBuilder.Create(typeof(QsValue), functionName);
 
@@ -691,12 +691,12 @@ public partial class QsFunction : QsValue
             var function = (QsFunction)MathNamespace.GetValueOrNull(functionName);
 
             // built int math functions will be overwrite any other functions
-            if (function != null) 
+            if (function != null)
                 return function;
             function = (QsFunction)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, functionName);
 
             return function;
-                
+
         }
 
         try
@@ -770,7 +770,7 @@ public partial class QsFunction : QsValue
         foreach (var p in paramNames) symbol += "_" + p.ToLowerInvariant();
         return symbol;
     }
-        
+
     /// <summary>
     /// Test if the name express a symbolic name for a function.
     /// </summary>

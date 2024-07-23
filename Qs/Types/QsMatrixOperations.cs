@@ -181,7 +181,7 @@ namespace Qs.Types
         }
 
         #endregion
-        
+
 
 
         #region Matrix oeprators
@@ -214,7 +214,7 @@ namespace Qs.Types
         {
             return a.SubtractMatrix(b);
         }
-        
+
         #endregion
 
 
@@ -524,12 +524,12 @@ namespace Qs.Types
                         var imat =  (QsMatrix)(tm * element);
                         if (rowM == null) rowM = imat;
                         else rowM = rowM.AppendRightMatrix(imat);
-                        
+
                     }
                     lm.Add(rowM);
                 }
 
-                // append vertically all matrices 
+                // append vertically all matrices
 
                 foreach (var rm in lm)
                 {
@@ -615,7 +615,7 @@ namespace Qs.Types
             {
                 if (RowsCount != m.RowsCount) return false;
                 if (ColumnsCount != m.ColumnsCount) return false;
-                
+
                 if (!ReferenceEquals(m, this))
                 {
 
@@ -640,7 +640,7 @@ namespace Qs.Types
 
         public override bool Inequality(QsValue value)
         {
-            
+
             throw new NotImplementedException();
         }
 
@@ -653,7 +653,7 @@ namespace Qs.Types
         public override QsValue GetIndexedItem(QsParameter[] allIndices)
         {
             var indices = new int[allIndices.Length];
-            for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;                
+            for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
 
             var icount = indices.Count();
             if (icount == 2)
@@ -747,7 +747,7 @@ namespace Qs.Types
                     for (var i = 0; i < RowsCount; i++)
                     {
                         var v = new QsVector(ColumnsCount);
-                        
+
                         for (var j = 0; j < ColumnsCount; j++)
                         {
                             var minor = RemoveRow(i).RemoveColumn(j);

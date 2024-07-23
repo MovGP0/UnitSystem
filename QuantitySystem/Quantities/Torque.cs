@@ -28,7 +28,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Torque<T>(T value)
         {
-            Torque<T> Q = new Torque<T>
+            Torque<T> Q = new()
             {
                 Value = value
             };

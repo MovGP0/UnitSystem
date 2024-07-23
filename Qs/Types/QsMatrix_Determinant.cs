@@ -128,27 +128,27 @@
         */
 
         // the code above is converted by  me Ahmed Sadek to support determinant in Qs  :)
-        //  I copied the code with the information about who made it to preserve the rights of the person 
+        //  I copied the code with the information about who made it to preserve the rights of the person
         //    who made this effort.
         //   Thank you
 
         public static QsScalar Determinant(QsMatrix a)
         {
             // code taken from: http://local.wasp.uwa.edu.au/~pbourke/miscellaneous/determinant/
-            
+
             var n = a.RowsCount;
             var det = default(QsScalar);
 
             if (n < 1) throw new QsException("Zero component matrix, are you crazy :)");                // error condition, should never get here
 
             if (n == 1)
-            {                 
+            {
                 // should not get here
                 det = a[0][0];
             }
 
             else if (n == 2)
-            {                
+            {
                 // basic 2X2 sub-matrix determinate
                 // definition. When n==2, this ends the
                 det = a[0][0] * a[1][1] - a[1][0] * a[0][1];// the recursion series
@@ -158,7 +158,7 @@
             else
             {                             // solve the next minor by building a
                 // sub matrix
-                
+
                 int i, j, j1, j2;
 
                 var m = MakeEmptySquareMatrix(n - 1);

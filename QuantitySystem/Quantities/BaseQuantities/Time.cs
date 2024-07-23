@@ -7,7 +7,7 @@
 
         public Time(float dimension) : base(dimension) { }
 
-        private static QuantityDimension _Dimension = new QuantityDimension(0, 0, 1);
+        private static QuantityDimension _Dimension = new(0, 0, 1);
         public override QuantityDimension Dimension
         {
             get
@@ -19,7 +19,7 @@
 
         public static implicit operator Time<T>(T value)
         {
-            Time<T> Q = new Time<T>
+            Time<T> Q = new()
             {
                 Value = value
             };

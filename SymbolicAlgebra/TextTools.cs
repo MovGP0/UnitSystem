@@ -55,7 +55,7 @@ namespace SymbolicAlgebra
         }
 
         /// <summary>
-        /// Finds explicit character in the string top level that is not in parenthesis 
+        /// Finds explicit character in the string top level that is not in parenthesis
         /// </summary>
         /// <param name="expression"></param>
         /// <param name="character"></param>
@@ -128,7 +128,7 @@ namespace SymbolicAlgebra
                         }
                         else
                         {
-                            // tokenize   when we reach any operator  or open '(' parenthesis 
+                            // tokenize   when we reach any operator  or open '(' parenthesis
                             if (Inner)
                             {
                                 results.AddRange(WordsFromExpression(TokenBuilder.ToString()));
@@ -166,7 +166,7 @@ namespace SymbolicAlgebra
                                 TokenBuilder.Append(expression[ix]);
                                 FunctionContext = false;
                                 Inner = false;   // because i am taking the function body as a whole in this parse pass.
-                                // then inner parameters of the function will be parsed again 
+                                // then inner parameters of the function will be parsed again
                             }
                         }
                         else
@@ -191,7 +191,7 @@ namespace SymbolicAlgebra
             {
                 results.Add(TokenBuilder.ToString());
 
-                
+
             }
             TokenBuilder = null;
 

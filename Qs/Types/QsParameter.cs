@@ -9,7 +9,7 @@ namespace Qs.Types
     public class QsParameter
     {
         /// <summary>
-        /// The parameter representation as a C# object 
+        /// The parameter representation as a C# object
         /// </summary>
         public object? ParameterValue { get; private set; }
 

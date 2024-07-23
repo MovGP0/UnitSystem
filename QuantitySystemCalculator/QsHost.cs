@@ -11,7 +11,7 @@ internal sealed class QsHost : ConsoleHost
     [STAThread]
     public static int Main(string[] args)
     {
-        
+
         if (Environment.GetEnvironmentVariable("TERM") == null)
         {
             Environment.SetEnvironmentVariable("TERM", "dumb");

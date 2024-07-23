@@ -92,7 +92,7 @@ namespace Qs.Types
             return fTokens;
         }
 
-        
+
         internal static Token JoinFunctionsBodiesTokensWithOperation(string operation, params QsFunction[] functions)
         {
 
@@ -136,7 +136,7 @@ namespace Qs.Types
                 var fn2 = (QsFunction)value;
 
                 var fParameters = RemoveRedundantParameters(ParametersNames.Union(fn2.ParametersNames).ToArray());
-                
+
                 var thisFunctionBody  = FunctionBody;
                 foreach(var p in ParametersNames)
                 {
@@ -197,7 +197,7 @@ namespace Qs.Types
 
                 if (svl.ScalarType == ScalarTypes.SymbolicQuantity)
                 {
-                    
+
                     List<string> newParametersList = [..functionParametersArray];
 
                     newParametersList.AddRange(svl.SymbolicQuantity.Value.InvolvedSymbols);
@@ -248,10 +248,10 @@ namespace Qs.Types
 
         public AnyQuantity<SymbolicVariable> ToSymbolicQuantity()
         {
-            
+
             var fv = SymbolicVariable.Parse(FunctionBody);
             return fv.ToQuantity();
-            
+
 
         }
 
@@ -260,11 +260,11 @@ namespace Qs.Types
         /// </summary>
         public QsScalar ToSymbolicScalar()
         {
-            
+
             //return (QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(SymbolicBodyText);
             var fv = SymbolicVariable.Parse(FunctionBody);
             return new QsScalar(ScalarTypes.SymbolicQuantity) { SymbolicQuantity = fv.ToQuantity() };
-            
+
         }
 
 
@@ -297,7 +297,7 @@ namespace Qs.Types
 
         public override QsValue MultiplyOperation(QsValue value)
         {
-            
+
             return FOperation(value, Operator.Multiply);
         }
 
@@ -442,7 +442,7 @@ namespace Qs.Types
                 var WholeFunction = string.Empty;
                 if (FunctionBodyToken[0].TokenClassType == typeof(CurlyBracketGroupToken))
                 {
-                    // vector differentiation 
+                    // vector differentiation
                     // take every term in the vector and differentiate it
                     var vcs = QsVar.VectorComponents(FunctionBodyToken[0]);
                     var sc = new StringBuilder();
@@ -473,7 +473,7 @@ namespace Qs.Types
                         nsv = nsv.Differentiate(dsv.Symbol);
                         times--;
                     }
-                    
+
                     WholeFunction = fname + "(" + RemoveRedundantParameters(ParametersNames) + ") = " + nsv;
                 }
 

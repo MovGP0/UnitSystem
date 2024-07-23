@@ -14,7 +14,7 @@
 
         public static implicit operator KinematicViscosity<T>(T value)
         {
-            KinematicViscosity<T> Q = new KinematicViscosity<T>
+            KinematicViscosity<T> Q = new()
             {
                 Value = value
             };

@@ -2,7 +2,7 @@
 {
     public abstract class BaseQuantity
     {
-        
+
 
         #region Construction
 
@@ -25,7 +25,7 @@
         {
             _Exponent = exp;
         }
-        
+
         /// <summary>
         /// make 1/x operation.
         /// </summary>
@@ -33,7 +33,7 @@
         {
             var bq = (BaseQuantity)MemberwiseClone();
             bq.SetExponent(0 - _Exponent);
-            
+
 
             return bq;
         }
@@ -99,7 +99,7 @@
         /// <summary>
         /// Holds the internal quantity types of specific strongly typed quantity type.
         /// </summary>
-        static Dictionary<Type, Tuple<Type, float>[]> QuantityTypeInternalQuantityTypes = new Dictionary<Type, Tuple<Type, float>[]>();
+        static Dictionary<Type, Tuple<Type, float>[]> QuantityTypeInternalQuantityTypes = new();
 
         public static Tuple<Type, float>[] GetInternalQuantities(Type quantity)
         {

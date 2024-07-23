@@ -16,7 +16,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator MolarMass<T>(T value)
         {
-            MolarMass<T> Q = new MolarMass<T>
+            MolarMass<T> Q = new()
             {
                 Value = value
             };

@@ -21,7 +21,7 @@ namespace Qs.Numerics
         {
             get
             {
-                
+
                 return _imaginary;
             }
         }
@@ -212,9 +212,9 @@ namespace Qs.Numerics
         public static Complex Pow(Complex a, Complex power)
         {
             return a.Power(power);
-        }        
-        
-        
+        }
+
+
         public static Complex Pow(Complex a, double power)
         {
             var result = a.Power(new Complex(power, 0));

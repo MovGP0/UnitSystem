@@ -15,7 +15,7 @@ namespace ParticleLexer.StandardTokens
 
         /// <summary>
         /// The token used to separate words in the group.
-        /// comma for example 
+        /// comma for example
         /// </summary>
         protected readonly TokenClass _ParameterSeparatorToken;
 

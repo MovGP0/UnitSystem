@@ -36,7 +36,7 @@ namespace Qs
             }
             set
             {
-                
+
                 _body = value;
             }
         }
@@ -104,7 +104,7 @@ namespace Qs
         /// <returns>New LambdaExpression instance.</returns>
         public LambdaExpression MakeLambda()
         {
-            
+
             var lambda = Expression.Lambda(
                 GetLambdaType(_returnType, _params),
                 _body,

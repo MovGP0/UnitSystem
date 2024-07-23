@@ -73,7 +73,7 @@ namespace Qs.Types
         {
             return new QsBoolean { Value = a.Value & b.Value };
         }
-        
+
 
         public override QsValue AddOperation(QsValue value)
         {

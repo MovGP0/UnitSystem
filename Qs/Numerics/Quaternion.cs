@@ -1,6 +1,6 @@
 ﻿
 
-//  Source code is translated from boost C++ to C# 
+//  Source code is translated from boost C++ to C#
 //  Translator: Ahmed Sadek
 
 
@@ -84,25 +84,25 @@ namespace Qs.Numerics
 
         public override string ToString()
         {
-            return "(" 
-                + a.ToString(CultureInfo.InvariantCulture) + ", " 
+            return "("
+                + a.ToString(CultureInfo.InvariantCulture) + ", "
                 + b.ToString(CultureInfo.InvariantCulture)
-                + "i, " 
-                + c.ToString(CultureInfo.InvariantCulture) 
-                + "j, " 
+                + "i, "
+                + c.ToString(CultureInfo.InvariantCulture)
+                + "j, "
                 + d.ToString(CultureInfo.InvariantCulture) + "k )";
         }
 
 
         public string ToQsSyntax()
         {
-            
+
                 return "H{ "
                 + a.ToString(CultureInfo.InvariantCulture) + ", "
                 + b.ToString(CultureInfo.InvariantCulture) + ", "
                 + c.ToString(CultureInfo.InvariantCulture) + ", "
                 + d.ToString(CultureInfo.InvariantCulture) + " }";
-            
+
         }
 
         #region The code is based on http://www.boost.org/doc/libs/1_43_0/boost/math/quaternion.hpp
@@ -181,8 +181,8 @@ namespace Qs.Numerics
             var at = lhs.a * ar - lhs.b * br;
             var bt = lhs.a * br + lhs.b * ar;
             var ct = lhs.c * ar + lhs.d * br;
-            var dt = -lhs.c * br + lhs.d * ar;                                             
-                                                                                 
+            var dt = -lhs.c * br + lhs.d * ar;
+
             var result = new Quaternion(at, bt, ct, dt);
             return result;
         }
@@ -201,7 +201,7 @@ namespace Qs.Numerics
             var dt = lhs.a * dr + lhs.b * cr - lhs.c * br + lhs.d * ar;
 
             var result = new Quaternion(at, bt, ct, dt);
-            
+
             return result;
         }
 
@@ -246,7 +246,7 @@ namespace Qs.Numerics
             var bt = (-lhs.a * br + lhs.b * ar - lhs.c * dr + lhs.d * cr) / denominator;    //((ar*b-a*br)+(cr*d-c*dr))/denominator;
             var ct = (-lhs.a * cr + lhs.b * dr + lhs.c * ar - lhs.d * br) / denominator;    //((ar*c-a*cr)+(dr*b-d*br))/denominator;
             var dt = (-lhs.a * dr - lhs.b * cr + lhs.c * br + lhs.d * ar) / denominator;    //((ar*d-a*dr)+(br*c-b*cr))/denominator;
-                
+
 
             var result = new Quaternion(at, bt, ct, dt);
 
@@ -277,14 +277,14 @@ namespace Qs.Numerics
                 var    m = n>>1;
 
                 var result = Pow(q, m);
-                
+
                 result *= result;
-                
+
                 if    (n != (m<<1))
                 {
                     result *= q; // n odd
                 }
-                
+
                 return(result);
             }
 
@@ -348,7 +348,7 @@ namespace Qs.Numerics
         /// <returns></returns>
         public QsMatrix To_3x3_RotationMatrix()
         {
-            
+
             var w = a;
             var x = i;
             var y = j;

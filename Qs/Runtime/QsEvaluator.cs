@@ -22,12 +22,12 @@ namespace Qs.Runtime
     {
 
         /// <summary>
-        /// Match unit 
+        /// Match unit
         /// </summary>
         public const string UnitExpression = @"^\s*<([\w\.\^\/!\$]+)>\s*$";
 
         /// <summary>
-        /// Match unit to unit 
+        /// Match unit to unit
         /// </summary>
         public const string UnitToUnitExpression = @"^\s*<(.+)>\s*[tT][oO]\s*<(.+)>\s*$";
 
@@ -155,11 +155,11 @@ namespace Qs.Runtime
                 var ns = QsNamespace.GetNamespace(Scope, nameSpace, true);
 
                 ns.SetValue(varName, varValue);
-                
-            }            
+
+            }
         }
 
-        
+
         /// <summary>
         /// Stack that reserve the SilentEvaluation during successive calls to the SilentEvaluate
         /// </summary>
@@ -185,7 +185,7 @@ namespace Qs.Runtime
         /// <returns></returns>
         public object SilentEvaluate(string line)
         {
-            
+
             SilentStack.Push(true);
             try
             {
@@ -193,7 +193,7 @@ namespace Qs.Runtime
                 return r;
             }
             finally
-            {   
+            {
                 SilentStack.Pop();
             }
         }
@@ -286,7 +286,7 @@ namespace Qs.Runtime
                 {
                     throw new QsException("Unit Not Found", e);
                 }
-                
+
             }
             #endregion
 
@@ -295,7 +295,7 @@ namespace Qs.Runtime
             #region Match variable Assignation with quantity "a=40[Acceleration]"
             //match variable assignation with quantity
             m = VariableQuantityRegex.Match(expr);
-            
+
             if (m.Success)
             {
                 //get the variable name
@@ -315,7 +315,7 @@ namespace Qs.Runtime
 
                         //get the quantity
 
-                        qty.NumericalQuantity.Unit = Unit.DiscoverUnit(qty.NumericalQuantity); 
+                        qty.NumericalQuantity.Unit = Unit.DiscoverUnit(qty.NumericalQuantity);
 
                     }
                     catch (QuantityNotFoundException)
@@ -329,7 +329,7 @@ namespace Qs.Runtime
                 qty.NumericalQuantity.Value = varVal;
 
                 SetVariable(varName, qty);
-                
+
                 PrintQuantity(qty);
                 return qty;
             }
@@ -428,7 +428,7 @@ namespace Qs.Runtime
             return IsSequence;
         }
 
-        
+
 
         internal object ExtraEvaluate(string line)
         {
@@ -437,7 +437,7 @@ namespace Qs.Runtime
 
             if (!ReferenceEquals(func, null))
             {
-                //store the expression for later use 
+                //store the expression for later use
                 StoreFunction(func);
                 return func;
             }
@@ -447,12 +447,12 @@ namespace Qs.Runtime
             var seqo = QsSequence.ParseSequence(this, line);
             if (seqo != null)
             {
-                //store the expression for later use 
+                //store the expression for later use
                 SetVariable(seqo.SequenceNamespace, seqo.SequenceSymbolicName, seqo);
-                
+
                 return seqo;
             }
-            
+
             #region expression evaluation with assignation or no assignation
 
             var varName = string.Empty;
@@ -461,20 +461,20 @@ namespace Qs.Runtime
 
             if (AssignOperatorIndex > 0)  //assign operator should always have something behind it.
             {
-                if (   
-                       line[AssignOperatorIndex - 1] == ':' // test for named argument :=  
+                if (
+                       line[AssignOperatorIndex - 1] == ':' // test for named argument :=
                     || line[AssignOperatorIndex - 1] == '>'  // >=
                     || line[AssignOperatorIndex - 1] == '<'  // <=
                     || line[AssignOperatorIndex - 1] == '!'  // !=
                     || line[AssignOperatorIndex + 1] == '='  // ==
-                    
-                    ) 
+
+                    )
                 {
                     //ignore
                 }
                 else
                 {
-                    //split to variable name that will be assigned 
+                    //split to variable name that will be assigned
                     varName = line.Substring(0, AssignOperatorIndex).Trim();
 
                     if (char.IsNumber(varName[0]))
@@ -605,9 +605,9 @@ namespace Qs.Runtime
                                     else
                                     {
                                         #region Parameterless Sequence or an object
-                                        
+
                                         // it doesn't really have to be a sequence name.
-                                        // the judgment here is to get the object 
+                                        // the judgment here is to get the object
                                         // if it was a QsObject then we deal with its indexer.
 
                                         var oname = seq[nsidx + 0].TokenValue;
@@ -633,16 +633,16 @@ namespace Qs.Runtime
                                                 , (QsValue)qv.Execute()
                                                 );
                                         }
-                                        
+
                                         #endregion
                                     }
                                 }
                                 else
                                 {
                                     // not a number may be  then it is a text :) :)
-                                    SequenceParameter = SequenceParameter.Trim('"');  // remove 
+                                    SequenceParameter = SequenceParameter.Trim('"');  // remove
                                     // get the name of this variable
-                                    
+
                                     var oname = seq[nsidx + 0].TokenValue;
                                     var oinstance = GetVariable(oname) as QsValue;
                                     var qv = new QsVar(this, line);
@@ -667,7 +667,7 @@ namespace Qs.Runtime
                     }
 
                     {
-                        
+
                         #region Normal Variable
 
                         //Normal Variable.
@@ -705,7 +705,7 @@ namespace Qs.Runtime
                                     if (fsc.ScalarType == ScalarTypes.FunctionQuantity)
                                     {
                                         // @f = @function which means we should assign f to qsfunction f
-                                            
+
                                         var qf = (QsFunction)((QsScalar)qvResult).FunctionQuantity.Value.Clone();
 
                                         qf.FunctionNamespace = vnToken[0][0].TokenValue;
@@ -745,14 +745,14 @@ namespace Qs.Runtime
                                 }
                                 else
                                 {
-                                        
+
                                     SetVariable(
                                         vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
                                         , vnToken[vnToken.Count - 1].TokenValue
                                         , qvResult
                                     );
 
-                                       
+
                                     var q = GetScopeQsValue(Scope
                                         , vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
                                         , vnToken[vnToken.Count - 1].TokenValue
@@ -830,7 +830,7 @@ namespace Qs.Runtime
                                 if(qvType == typeof(QsTensor))
                                     throw new QsException("Tensor parsing to function is not supported yet");
 
-  
+
                                 List<string> vparameters = [];
                                 foreach(var c in AllComponents)
                                     if(c.ScalarType ==  ScalarTypes.SymbolicQuantity)
@@ -938,7 +938,7 @@ namespace Qs.Runtime
                                                 else
                                                 {
                                                     // we had previous unresolved property info
-                                                    // so we get it as an object 
+                                                    // so we get it as an object
                                                     //   set this object as the parent
                                                     //  then get the sub property metadata again.
                                                     parent_object = parent.GetProperty(ParentPropertyInfo.Name);
@@ -1018,7 +1018,7 @@ namespace Qs.Runtime
                                 {
                                     // we are dealing with indexer
                                     // indexer should be called by the index
-                                            
+
                                     var parent = (QsObject)parent_object;
 
                                     var InsidePropertyAsObject = ParentPropertyInfo.GetValue(parent.ThisObject, null);
@@ -1063,7 +1063,7 @@ namespace Qs.Runtime
                 }
 
                 {
-                    // there is no assignation here  
+                    // there is no assignation here
                     // the code goes here when we don't find '=' equal sign.
 
                     var qv = new QsVar(this, line);
@@ -1214,7 +1214,7 @@ namespace Qs.Runtime
                     if (t.IsEnum)
                     {
                         // convert enum into Flowing Tuple and return it.
-                            
+
                         return Root.NativeToQsConvert(t);
                     }
                 }
@@ -1275,11 +1275,11 @@ namespace Qs.Runtime
                 return _CurrentEvaluator;
             }
         }
-         
+
         #endregion
 
 
-        #region Function Storage 
+        #region Function Storage
 
 
         /// <summary>
@@ -1288,25 +1288,25 @@ namespace Qs.Runtime
         /// <param name="function"></param>
         public void StoreFunction(QsFunction qsFunction)
         {
-            
+
             // 1- find the default function of this name.
             // 2- if default function exist declare non default function
             // 3- if default function does'nt exist declare default function.
             // Default function: is function declared without specifying its parameters in its name  f#2 f#4  are default functions.
 
-            var DefaultFunction = QsFunction.GetDefaultFunction(Scope, qsFunction.FunctionNamespace, 
+            var DefaultFunction = QsFunction.GetDefaultFunction(Scope, qsFunction.FunctionNamespace,
                 qsFunction.FunctionName, qsFunction.Parameters.Length);
 
             if (DefaultFunction == null)
             {
                 // then store the function
-                SetVariable(qsFunction.FunctionNamespace, 
+                SetVariable(qsFunction.FunctionNamespace,
                     QsFunction.FormFunctionSymbolicName(qsFunction.FunctionName, qsFunction.Parameters.Length),
                     qsFunction);
             }
             else
             {
-                // 1- find if function with the same parameters and name exist 
+                // 1- find if function with the same parameters and name exist
                 // 2- overwrite this function otherwise create new one.
 
                 var OverLoadedFunction = QsFunction.GetExactFunctionWithParameters(Scope,

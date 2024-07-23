@@ -8,8 +8,8 @@ namespace Qs.Scripting
 {
     public class QsBinder : DefaultBinder
     {
-        
-        
+
+
         public override Microsoft.Scripting.Actions.Calls.Candidate PreferConvert(Type t1, Type t2)
         {
             throw new NotImplementedException();

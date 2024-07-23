@@ -21,7 +21,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Viscosity<T>(T value)
         {
-            Viscosity<T> Q = new Viscosity<T>
+            Viscosity<T> Q = new()
             {
                 Value = value
             };

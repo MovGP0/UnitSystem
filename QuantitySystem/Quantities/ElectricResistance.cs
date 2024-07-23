@@ -17,7 +17,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator ElectricResistance<T>(T value)
         {
-            ElectricResistance<T> Q = new ElectricResistance<T>
+            ElectricResistance<T> Q = new()
             {
                 Value = value
             };

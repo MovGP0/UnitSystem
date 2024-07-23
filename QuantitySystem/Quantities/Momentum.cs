@@ -17,7 +17,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Momentum<T>(T value)
         {
-            Momentum<T> Q = new Momentum<T>
+            Momentum<T> Q = new()
             {
                 Value = value
             };

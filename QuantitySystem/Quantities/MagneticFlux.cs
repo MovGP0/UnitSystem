@@ -17,7 +17,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator MagneticFlux<T>(T value)
         {
-            MagneticFlux<T> Q = new MagneticFlux<T>
+            MagneticFlux<T> Q = new()
             {
                 Value = value
             };

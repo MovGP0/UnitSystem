@@ -5,7 +5,7 @@ namespace PassiveFlow;
 
 public class Flow : IEnumerable<Step>
 {
-        
+
     public event EventHandler<StepEventArgs>? StepChanged;
 
     //holding instance of every Step Field
@@ -101,7 +101,7 @@ public class Flow : IEnumerable<Step>
         fi.Name = stepName;
         fi.Id = stepId;
         fi.AssociatedTypes = stepAssociatedTypes;
-            
+
         fi.Skip = skip;
 
         innerSteps.Add(fi);
@@ -114,7 +114,7 @@ public class Flow : IEnumerable<Step>
         fi.Name = stepName;
         fi.Id = stepId;
         fi.AssociatedTypes = stepAssociatedTypes;
-            
+
         fi.Skip = skip;
         fi.AttachedActions = stepActions;
 
@@ -292,7 +292,7 @@ public class Flow : IEnumerable<Step>
         if (_Current_StepIndex + steps <= FlowSteps.GetUpperBound(0))
             _Current_StepIndex += steps;
 
-        // retry the sub if current step should be eleminated from the 
+        // retry the sub if current step should be eleminated from the
         // current cycle
         if (CurrentStep.Skip && CurrentStep.Id != LastStep.Id)
         {
@@ -317,7 +317,7 @@ public class Flow : IEnumerable<Step>
         if (_Current_StepIndex - steps >= FlowSteps.GetLowerBound(0))
             _Current_StepIndex -= steps;
 
-        // retry the sub if current step should be eleminated from the 
+        // retry the sub if current step should be eleminated from the
         // current cycle
         if (CurrentStep.Skip && CurrentStep.Id != FirstStep.Id)
         {
@@ -330,7 +330,7 @@ public class Flow : IEnumerable<Step>
 
 
     /// <summary>
-    /// go to the last step 
+    /// go to the last step
     /// </summary>
     public void StepLast()
     {
@@ -599,7 +599,7 @@ public class Flow : IEnumerable<Step>
 
 
     /// <summary>
-    /// get the latest action 
+    /// get the latest action
     /// in relation between active_step and last_active_step
     /// otherwise return null
     /// </summary>

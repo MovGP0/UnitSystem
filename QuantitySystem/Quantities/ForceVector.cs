@@ -17,7 +17,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator ForceVector<T>(T value)
         {
-            ForceVector<T> Q = new ForceVector<T>
+            ForceVector<T> Q = new()
             {
                 Value = value
             };

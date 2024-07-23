@@ -19,7 +19,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Luminous<T>(T value)
         {
-            Luminous<T> Q = new Luminous<T>
+            Luminous<T> Q = new()
             {
                 Value = value
             };

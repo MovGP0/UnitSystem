@@ -2,7 +2,7 @@
 {
     public partial class QsVector : QsValue, IEnumerable<QsScalar>
     {
-        
+
         #region Scalar Operations
 
         /// <summary>
@@ -163,8 +163,8 @@
 
             return v;
         }
-        
-        
+
+
         /// <summary>
         /// Divide vector component by component.
         /// </summary>
@@ -412,7 +412,7 @@
 
 
             if (value is QsScalar)
-            {   
+            {
                 return DifferentiateScalar((QsScalar)value);
             }
 
@@ -449,8 +449,8 @@
         /// <returns></returns>
         public override QsValue AbsOperation()
         {
-            return Magnitude();  
-            
+            return Magnitude();
+
             //this is according to wikipedia that |x| if x is vector is valid but discouraged
             //  the norm of vector should be ||x|| notation.
 
@@ -496,7 +496,7 @@
 
             if (value is QsVector)
             {
-                
+
                 var vec = (QsVector)value;
 
                 if (vec.Count != Count) throw new QsException("Not equal vector components");
@@ -527,9 +527,9 @@
 
             if (itimes > Count) itimes = itimes % Count;
 
-            
+
             var vec = new QsVector(Count);
-            
+
             for (var i = itimes; i < Count; i++)
             {
                 vec.AddComponent(this[i]);
@@ -693,7 +693,7 @@
             if (value is QsVector v)
             {
                 if (Count != v.Count) return false;
-                for(var i = 0; i < ListStorage.Count; i++) 
+                for(var i = 0; i < ListStorage.Count; i++)
                 {
                     if (!ListStorage[i].Equality(v.ListStorage[i])) return false;
                 }
@@ -731,9 +731,9 @@
         {
             if (allIndices.Count() > 1) throw new QsException("Vector have one index only");
             var indices = new int[allIndices.Length];
-            for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;                
+            for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
             var index = indices[0];
-            
+
             return this[index];
         }
 

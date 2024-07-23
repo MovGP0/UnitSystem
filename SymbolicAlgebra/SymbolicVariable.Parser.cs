@@ -41,7 +41,7 @@ namespace SymbolicAlgebra
 
             public Expression DynamicExpression;
         }
-        
+
         static readonly char[] parse_separators = ['^', '*', '/', '+', '-', '(', '|', '.'];
         static readonly char[] parse_seps       = ['^', '*', '/', '+', '-', '|', '.'];
 
@@ -52,12 +52,12 @@ namespace SymbolicAlgebra
         /// <returns></returns>
         public static SymbolicVariable? Parse(string expression)
         {
-            
+
 
             var r = from zr in expression.Split([":="], StringSplitOptions.RemoveEmptyEntries)
                     where string.IsNullOrWhiteSpace(zr)==false
                     select zr.Trim();
-            
+
             string[] rr = r.ToArray();
 
             var expr  = string.Empty;
@@ -76,7 +76,7 @@ namespace SymbolicAlgebra
 
             //if (expression.StartsWith("-") ||expression.StartsWith("+")) expression = expression.Insert(1,"1*");
 
-            // simple parsing 
+            // simple parsing
             // obeys the rules of priorities
 
             // Priorities
@@ -88,7 +88,7 @@ namespace SymbolicAlgebra
 
 
             var NextGroupIsNegativeSign = false;
-            
+
             // Tokenization is done by separating with operators
             var Root = new SymbolicExpressionOperator();
             var ep = Root;
@@ -181,7 +181,7 @@ namespace SymbolicAlgebra
                         }
                         else
                         {
-                            // tokenize   when we reach any operator  or open '(' parenthesis 
+                            // tokenize   when we reach any operator  or open '(' parenthesis
                             if (Inner)
                             {
                                 ep.SymbolicExpression = Parse(TokenBuilder.ToString());
@@ -230,12 +230,12 @@ namespace SymbolicAlgebra
                                 TokenBuilder.Append(expr[ix]);
                                 FunctionContext = false;
                                 Inner = false;   // because i am taking the function body as a whole in this parse pass.
-                                // then inner parameters of the function will be parsed again 
+                                // then inner parameters of the function will be parsed again
                             }
                         }
                         else
                         {
-                            TokenBuilder.Append(expr[ix]);    
+                            TokenBuilder.Append(expr[ix]);
                         }
                     }
                     else
@@ -278,8 +278,8 @@ namespace SymbolicAlgebra
 
             string[] Group1 =
             [
-                "*"   /* normal multiplication */, 
-                                "/"   /* normal division */, 
+                "*"   /* normal multiplication */,
+                                "/"   /* normal division */,
                                 "%"   /* modulus */
             ];
 
@@ -336,7 +336,7 @@ namespace SymbolicAlgebra
                 var fname = rr[0];
 
                 Functions[fname] = Root.SymbolicExpression;
-                
+
             }
 
             return Root.SymbolicExpression;
@@ -407,7 +407,7 @@ namespace SymbolicAlgebra
                 {
                     return SymbolicPower(left, right);
                 }
-                
+
             }
 
             if (op == "*") return Multiply(left, right);
@@ -503,7 +503,7 @@ namespace SymbolicAlgebra
 
             expression = expression.Replace(" ", "");
 
-            // simple parsing 
+            // simple parsing
             // obeys the rules of priorities
 
             // Priorities
@@ -513,7 +513,7 @@ namespace SymbolicAlgebra
             //    +  Addition
             //    -  Subtraction
 
-            
+
 
             // Tokenization is done by separating with operators
             var Root = new DynamicExpressionOperator();
@@ -530,9 +530,9 @@ namespace SymbolicAlgebra
                 // Last pass that escaped from the loop.
                 if (Inner)
                 {
-                    
+
                     ep.DynamicExpression = ParseDynamicExpression(ref parameters, TokenBuilder.ToString());
-                    
+
                     Inner = false;
                 }
                 else
@@ -548,7 +548,7 @@ namespace SymbolicAlgebra
                     }
                     else if (TokenBuilder[0] == '%')
                     {
-                        // constant 
+                        // constant
                         ep.DynamicExpression = Expression.Constant(MathConstants.Constant(TokenBuilder.ToString().TrimStart('%')), typeof(double));
                     }
                     else if (double.TryParse(TokenBuilder.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out constant))
@@ -563,7 +563,7 @@ namespace SymbolicAlgebra
                         // test if the parameter is a function
                         if (FMatch.Success)
                         {
-                            // take the function name and search for it 
+                            // take the function name and search for it
                             // if you found it take the inner parameters and parse it independently
                             var fname = FMatch.Groups["function"].Value;
 
@@ -588,7 +588,7 @@ namespace SymbolicAlgebra
 
                             if (targetfunction != null)
                             {
-                                // for now take the 
+                                // for now take the
                                 var fps = FMatch.Groups["parameters"].Value;
                                 string[] pss = TextTools.ComaSplit(fps);
                                 Expression[] tfparams = new Expression[pss.Length];
@@ -645,14 +645,14 @@ namespace SymbolicAlgebra
                     {
                         if ((expression[ix] == '-' || expression[ix] == '+') && ix == 0)
                         {
-                            // add first character if - or +  
+                            // add first character if - or +
                             TokenBuilder.Append(expression[ix]);
                         }
                         else if (ix > 1
                             && char.ToUpper(expression[ix - 1]) == 'E' && char.IsDigit(expression[ix - 2])
                             && (expression[ix] == '-' || expression[ix] == '+'))
                         {
-                            // test previous charachter if E    and charachter before it to be digit and current character is - or + 
+                            // test previous charachter if E    and charachter before it to be digit and current character is - or +
                             //    then we are in sceintific representation of number
 
                             // case of 3e+2 4e-2  all cases with e in it.
@@ -681,7 +681,7 @@ namespace SymbolicAlgebra
                         }
                         else
                         {
-                            // tokenize   when we reach any operator  or open '(' parenthesis 
+                            // tokenize   when we reach any operator  or open '(' parenthesis
 
                             redundantFunction(discoveredParameters);
 
@@ -691,7 +691,7 @@ namespace SymbolicAlgebra
 
                             if (expression[ix] == '<' || expression[ix] == '>')
                             {
-                                // check for equal sign after this 
+                                // check for equal sign after this
                                 if (expression[ix + 1] == '=')
                                 {
                                     ep.Operation += "=";
@@ -727,7 +727,7 @@ namespace SymbolicAlgebra
                                 TokenBuilder.Append(expression[ix]);
                                 FunctionContext = false;
                                 Inner = false;   // because i am taking the function body as a whole in this parse pass.
-                                // then inner parameters of the function will be parsed again 
+                                // then inner parameters of the function will be parsed again
                             }
                         }
                         else
@@ -755,8 +755,8 @@ namespace SymbolicAlgebra
 
             string[] Group1 =
             [
-                "*"   /* normal multiplication */, 
-                                "/"   /* normal division */, 
+                "*"   /* normal multiplication */,
+                                "/"   /* normal division */,
                                 "%"   /* modulus */
             ];
 
@@ -815,7 +815,7 @@ namespace SymbolicAlgebra
 
             if (NegativeExpression)
                 FinalExpression = Expression.Multiply(Expression.Constant(-1.0, typeof(double)), Root.DynamicExpression);
-            else 
+            else
                 FinalExpression = Root.DynamicExpression;
 
             return FinalExpression;
@@ -875,7 +875,7 @@ namespace SymbolicAlgebra
 
             if (parameters.Count != pcount) throw new SymbolicException("Number of arguments is not correct");
 
-            var FinalParams = (from pr in parameters 
+            var FinalParams = (from pr in parameters
                                    orderby pr.Key
                                    select pr.Value).ToArray();
 
@@ -929,7 +929,7 @@ namespace SymbolicAlgebra
         public double Execute(params Tuple<string, double>[] parameters)
         {
             Dictionary<string, double> FinalParams = new Dictionary<string, double>();
-            
+
             foreach (var p in parameters) FinalParams.Add(p.Item1, p.Item2);
 
             return Execute(FinalParams);
@@ -1010,6 +1010,6 @@ namespace SymbolicAlgebra
             throw new Exception("What is that call ???!!");
         }
 
-        
+
     }
 }

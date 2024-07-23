@@ -10,7 +10,7 @@ namespace ParticleLexer
         /// </summary>
         public Regex Regex
         {
-            get; 
+            get;
             private set;
         }
 
@@ -82,7 +82,7 @@ namespace ParticleLexer
         {
 
             _ThisTokenType = GetType();
-            
+
             Regex j;
 
             // Try Cached versions first
@@ -138,7 +138,7 @@ namespace ParticleLexer
 
 
         /// <summary>
-        /// Type of TokenClass 
+        /// Type of TokenClass
         /// </summary>
         public Type Type
         {

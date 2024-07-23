@@ -30,8 +30,7 @@ public static class Quantity
     /// <returns></returns>
     public static QsValue FromValue(QsParameter value)
     {
-        var s = value.QsNativeValue as QsScalar;
-        if (s != null)
+        if (value.QsNativeValue is QsScalar s)
         {
             var qt = s.Unit.QuantityType.Name;
             return new QsText(qt.Substring(0, qt.Length - 2));
@@ -48,9 +47,12 @@ public static class Quantity
     public static QsValue FromDimension(QsParameter dimension)
     {
         var ss = dimension.ParameterRawText;
-        if (dimension.QsNativeValue is QsText) ss = ((QsText)dimension.QsNativeValue).Text;
+        if (dimension.QsNativeValue is QsText qsText)
+        {
+            ss = qsText.Text;
+        }
         var q = QuantityDimension.Parse(ss);
-            
+
         var qt = QuantityDimension.GetQuantityTypeFrom(q).Name;
         return new QsText(qt.Substring(0, qt.Length - 2));
     }
@@ -64,15 +66,19 @@ public static class Quantity
     public static QsValue FromDimension(QsParameter dimension, QsParameter value)
     {
         var ss = dimension.ParameterRawText;
-        if (dimension.QsNativeValue is QsText) ss = ((QsText)dimension.QsNativeValue).Text;
+        if (dimension.QsNativeValue is QsText qsText)
+        {
+            ss = qsText.Text;
+        }
         var q = QuantityDimension.Parse(ss);
 
         var unit = Unit.DiscoverUnit(q);
         var qval = unit.GetThisUnitQuantity(double.Parse(value.ParameterRawText,  CultureInfo.InvariantCulture));
 
-        var qs = new QsScalar(ScalarTypes.NumericalQuantity) { NumericalQuantity = qval };
-
-        return qs;
+        return new QsScalar(ScalarTypes.NumericalQuantity)
+        {
+            NumericalQuantity = qval
+        };
     }
 
     public static QsValue FromName(QsParameter name, QsParameter value)
@@ -87,21 +93,23 @@ public static class Quantity
         qval.Unit = Unit.DiscoverUnit(qval);
         qval.Value = double.Parse(value.ParameterRawText, CultureInfo.InvariantCulture);
 
-        return new QsScalar(ScalarTypes.NumericalQuantity) { NumericalQuantity = qval };
+        return new QsScalar(ScalarTypes.NumericalQuantity)
+        {
+            NumericalQuantity = qval
+        };
     }
 
     public static QsValue Parse(string value) => QsValue.ParseScalar(value);
 
     public static QsValue InvertedDimension(QsParameter value)
     {
-        if (value.QsNativeValue is QsScalar s)
+        if (value.QsNativeValue is not QsScalar s)
         {
-            var InvertedDimension = s.Unit.UnitDimension.Invert();
-
-            return new QsText(InvertedDimension.ToString());
+            return new QsText("Works on scalar quantities");
         }
 
-        return new QsText("Works on scalar quantities");
+        var invertedDimension = s.Unit.UnitDimension.Invert();
+        return new QsText(invertedDimension.ToString());
     }
 
     public static QsValue Name(QsParameter value)
@@ -116,14 +124,13 @@ public static class Quantity
 
     public static QsValue InvertedQuantityName(QsParameter value)
     {
-        if (value.QsNativeValue is QsScalar s)
+        if (value.QsNativeValue is not QsScalar s)
         {
-            var InvertedDimension = s.Unit.UnitDimension.Invert();
-
-            var qp = QsParameter.MakeParameter(null, InvertedDimension.ToString());
-            return FromDimension(qp);
+            return new QsText("Works on scalar quantities");
         }
 
-        return new QsText("Works on scalar quantities");
+        var invertedDimension = s.Unit.UnitDimension.Invert();
+        var qp = QsParameter.MakeParameter(null, invertedDimension.ToString());
+        return FromDimension(qp);
     }
 }

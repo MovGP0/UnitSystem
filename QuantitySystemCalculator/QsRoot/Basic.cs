@@ -3,7 +3,7 @@
 /// <summary>
 /// The whole class is for testing new native binding of Qs
 /// However the Basic name which will be Qs Namespace is very nostalgic
-/// I may even put MSX basic commands in it 
+/// I may even put MSX basic commands in it
 /// I mean POKE, and PEEK   commands
 /// VPOKE, VPEEK  commands
 /// Yes

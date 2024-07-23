@@ -5,9 +5,9 @@
         /// <summary>
         /// Create Money object with dimension equals 1 M^1.
         /// </summary>
-        public Currency() : base(1) 
+        public Currency() : base(1)
         {
-            
+
         }
 
         /// <summary>
@@ -17,8 +17,8 @@
         public Currency(float exponent) : base(exponent) { }
 
 
-        private static QuantityDimension _Dimension = new QuantityDimension() 
-        {   
+        private static QuantityDimension _Dimension = new()
+        {
             Currency = new DimensionDescriptors.CurrencyDescriptor(1)
         };
 
@@ -33,7 +33,7 @@
 
         public static implicit operator Currency<T>(T value)
         {
-            Currency<T> Q = new Currency<T>
+            Currency<T> Q = new()
             {
                 Value = value
             };

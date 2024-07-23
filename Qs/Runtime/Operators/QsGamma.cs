@@ -115,7 +115,7 @@ namespace Qs.Runtime.Operators
         /// <returns></returns>
         public static double GammaFactorial(double number)
         {
-            //I checked this http://www.rskey.org/gamma.htm 
+            //I checked this http://www.rskey.org/gamma.htm
             // then this ...  http://www.luschny.de/System.Math/factorial/approx/SimpleCases.html
 
 
@@ -146,7 +146,7 @@ namespace Qs.Runtime.Operators
             var StieltjesFactorialHP = delegate(double x)
             {
                 var y = x; var p = 1.0;
-                while (y < 8)  
+                while (y < 8)
                 {
                     p = p*y;
                     y = y+1;
@@ -170,7 +170,7 @@ namespace Qs.Runtime.Operators
 
             };
 
-            
+
             return StieltjesFactorial(number);
 
         }

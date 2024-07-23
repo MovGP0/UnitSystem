@@ -18,10 +18,10 @@ namespace Qs.Types
             ListStorage = [];
         }
 
-        public QsVector(int count)            
+        public QsVector(int count)
         {
             ListStorage = new List<QsScalar>(count);
-            
+
         }
 
         public QsVector(params QsScalar[] scalars)
@@ -74,7 +74,7 @@ namespace Qs.Types
         /// <returns></returns>
         public QsScalar Magnitude()
         {
-            
+
 
             var v_dot_v = DotProductOperation(this) as QsScalar;
 
@@ -98,7 +98,7 @@ namespace Qs.Types
 
         #region Vector behaviour
         public int Count => ListStorage.Count;
-        
+
 
         public QsScalar this[int i]
         {

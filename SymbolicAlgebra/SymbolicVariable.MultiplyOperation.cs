@@ -28,11 +28,11 @@
             if (a.BaseEquals(TargetSubTerm))
             {
                 #region Symbols are Equal (I mean 2*x^3 = 2*X^3)
-                
+
 
                 MultiplyCoeffecients(ref SourceTerm, TargetSubTerm);
 
-                    
+
                 if (a.SymbolPowerTerm != null || TargetSubTerm.SymbolPowerTerm != null)
                 {
                     SourceTerm._SymbolPowerTerm = a.SymbolPowerTerm + TargetSubTerm.SymbolPowerTerm;
@@ -50,33 +50,33 @@
                     else
                         SourceTerm.FusedSymbols.Add(bfv.Key, bfv.Value);
                 }
-                
+
                 #endregion
             }
             else
             {
                 #region Symbols are Different
-                
+
                 if (string.IsNullOrEmpty(SourceTerm.Symbol))
                 {
                     #region First Case: Source primary symbol doesn't exist
-                    
+
                     //  so take the primary symbol from the target into source
                     //  and copy the symbol power to it  and symbolic power
                     // 
 
-                    // the instance have an empty primary variable so we should add it 
+                    // the instance have an empty primary variable so we should add it
                     if (TargetSubTerm._BaseVariable != null) SourceTerm._BaseVariable = TargetSubTerm._BaseVariable;
-                    else 
+                    else
                         SourceTerm.Symbol = TargetSubTerm.Symbol;
 
                     SourceTerm.SymbolPower = TargetSubTerm.SymbolPower;
-                    if (TargetSubTerm.SymbolPowerTerm != null) 
+                    if (TargetSubTerm.SymbolPowerTerm != null)
                         SourceTerm._SymbolPowerTerm = TargetSubTerm.SymbolPowerTerm.Clone();
-                    else 
+                    else
                         SourceTerm._SymbolPowerTerm = null;
 
-                    
+
 
 
                     //fuse the fused variables in target into source
@@ -98,7 +98,7 @@
 
                         // which means the difference is only in fused variables.
 
-                        // test for complex power (power that contains other symbolic variable) 
+                        // test for complex power (power that contains other symbolic variable)
                         if (SourceTerm._SymbolPowerTerm != null || TargetSubTerm._SymbolPowerTerm != null)
                         {
                             // make sure the object of symbol power term have values if they don't
@@ -152,7 +152,7 @@
                         // however primary symbol in source still the same so we need to add it to the value in target
                         //    (if exist in fused variables in target)
 
-                        // also 
+                        // also
 
                         // there are still some fused variables in source that weren't altered by the target fused symbols
                         // go through every symbol in fused symbols and add it to the source fused symbols
@@ -192,7 +192,7 @@
                             }
                         }
                         #endregion
-                    
+
                     }
                     else
                     {
@@ -204,8 +204,8 @@
                             {
                                 NumericalVariable = TargetSubTerm.SymbolPower,
                                 SymbolicVariable = TargetSubTerm.SymbolPowerTerm == null ? null : TargetSubTerm.SymbolPowerTerm.Clone()
-                            });                            
-                        
+                            });
+
 
                         // But the primary symbol of source may exist in the target fused variables.
 
@@ -215,7 +215,7 @@
                                 SourceTerm.FusedSymbols[fsv.Key] += fsv.Value;
                             else
                             {
-                                // 1- if symbol is the same as priamry source 
+                                // 1- if symbol is the same as priamry source
                                 if (SourceTerm.Symbol.Equals(fsv.Key, StringComparison.OrdinalIgnoreCase))
                                 {
                                     if (fsv.Value.SymbolicVariable != null)
@@ -251,7 +251,7 @@
                         }
                         #endregion
 
-                    
+
                     }
 
                     #endregion
@@ -274,7 +274,7 @@
                 {
                     // get rid of divided term here because I already include it for the source term above
                     var TSubTerm = TargetSubTerm.Numerator;
-                    
+
                     var newv = Multiply(vv.Value, TSubTerm);
 
                     newAddedVariables.Add(newv.WholeValueBaseKey, newv);
@@ -303,22 +303,22 @@
 
             while (subIndex < b.AddedTerms.Count)
             {
-                // we should multiply other parts also 
+                // we should multiply other parts also
                 // then add it to the current instance
 
-                // there are still terms to be consumed 
+                // there are still terms to be consumed
                 //   this new term is a sub term in b and will be added to all terms of a.
                 TargetSubTerm =  b.AddedTerms.ElementAt(subIndex).Value.Clone();
 
-                
+
                 TargetSubTerm.DividedTerm = b.DividedTerm;   // this line is important because I extracted this added term from a bigger term with the same divided term
-                                                             // and when I did this the extracted term lost its divided term 
+                                                             // and when I did this the extracted term lost its divided term
 
 
                 var TargetTermSubTotal = Multiply(a, TargetSubTerm);
                 total = Add(total, TargetTermSubTotal);
 
-                subIndex = subIndex + 1;  //increase 
+                subIndex = subIndex + 1;  //increase
             }
 
             // for extra terms  {terms that has different divided term}
@@ -333,7 +333,7 @@
                 extraIndex++;
             }
 
-            
+
             AdjustSpecialFunctions(ref total);
             AdjustZeroPowerTerms(total);
 
@@ -367,7 +367,7 @@
                     var hb = FusedConstants.ElementAt(i);
                     cvs[i + 1] = new CoeffecienttValue
                     {
-                        
+
                         ConstantValue = hb.Key,
                         ConstantPower = hb.Value.SymbolicVariable
                     };
@@ -388,7 +388,7 @@
             //      and only hold coeffecient itself.
             foreach (var cst in TargetSubTerm.Constants)
             {
-                
+
                 if (SourceTerm._CoeffecientPowerTerm == null && cst.ConstantPower == null)
                 {
                     SourceTerm.Coeffecient *= cst.ConstantValue;

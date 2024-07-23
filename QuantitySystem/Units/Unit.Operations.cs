@@ -6,7 +6,7 @@ namespace QuantitySystem.Units;
 public partial class Unit
 {
     /// <summary>
-    /// Creat units path from the current unit instance to the default unit of the current 
+    /// Creat units path from the current unit instance to the default unit of the current
     /// unit system in the current quantity dimension.
     /// if the unit in the current system have no default unit and direct reference to SI
     /// then the path is stopped on the unit itself and shouldn't bypass it.
@@ -17,33 +17,32 @@ public partial class Unit
         //from this unit get my path to the default unit.
         var path = new UnitPathStack();
 
-        if (ReferenceUnit != null) //check that first parent exist.
+        if (ReferenceUnit is not null) //check that first parent exist.
         {
-            var RefUnit = this;
-            double RefTimesNum = 1;
-            double RefTimesDen = 1;
+            var refUnit = this;
+            double refTimesNum = 1;
+            double refTimesDen = 1;
 
             //double RefShift = 0.0;
 
             // do the iteration until we reach the default unit.
-            while (RefUnit.IsDefaultUnit == false)
+            while (refUnit!.IsDefaultUnit == false)
             {
-
                 path.Push(
                     new UnitPathItem
                     {
-                        Unit = RefUnit,
-                        Numerator = RefTimesNum,
-                        Denominator = RefTimesDen,
+                        Unit = refUnit,
+                        Numerator = refTimesNum,
+                        Denominator = refTimesDen,
                         //Shift = RefShift
                     }
                 );
 
-                RefTimesNum = RefUnit.ReferenceUnitNumerator;  //get the value before changing the RefUnit
-                RefTimesDen = RefUnit.ReferenceUnitDenominator;
+                refTimesNum = refUnit.ReferenceUnitNumerator;  //get the value before changing the RefUnit
+                refTimesDen = refUnit.ReferenceUnitDenominator;
                 //RefShift = RefUnit.ReferenceUnitShift;
-                    
-                RefUnit = RefUnit.ReferenceUnit;
+
+                refUnit = refUnit.ReferenceUnit;
 
                 // check the reference unit system or (namespace) if different throw exception.
                 //  the exception prevent crossing the system boundary.
@@ -54,9 +53,9 @@ public partial class Unit
             path.Push(
                 new UnitPathItem
                 {
-                    Unit = RefUnit,
-                    Numerator = RefTimesNum,
-                    Denominator = RefTimesDen,
+                    Unit = refUnit,
+                    Numerator = refTimesNum,
+                    Denominator = refTimesDen,
                     //Shift = RefShift
                 }
             );
@@ -89,13 +88,12 @@ public partial class Unit
     /// <returns></returns>
     public UnitPathStack PathFromDefaultUnit()
     {
-        var Forward = PathToDefaultUnit();
+        var forward = PathToDefaultUnit();
+        var backward = new UnitPathStack();
 
-        var Backward = new UnitPathStack();
-
-        while (Forward.Count > 0)
+        while (forward.Count > 0)
         {
-            var upi = Forward.Pop();
+            var upi = forward.Pop();
 
             if (upi.Unit.IsDefaultUnit)
             {
@@ -110,10 +108,10 @@ public partial class Unit
                 //upi.Shift = 0 - upi.Unit.ReferenceUnitShift;
             }
 
-            Backward.Push(upi);
+            backward.Push(upi);
         }
 
-        return Backward;
+        return backward;
     }
 
     /// <summary>
@@ -124,7 +122,7 @@ public partial class Unit
     /// <returns></returns>
     public string UnitToUnitSymbol(Unit x, Unit y)
     {
-        var key =  "[" + x.Symbol + ":" + x.UnitDimension.ToString() + "]" + "__" + "[" + y.Symbol + ":" + y.UnitDimension.ToString() + "]";
+        var key =  "[" + x.Symbol + ":" + x.UnitDimension.ToString() + "]" + "__" + "[" + y.Symbol + ":" + y.UnitDimension + "]";
 
         if(x is DynamicUnit && y is DynamicUnit)
         {
@@ -134,9 +132,9 @@ public partial class Unit
         return key;
     }
 
-    private static readonly Dictionary<string, UnitPathStack> CachedPaths = new Dictionary<string, UnitPathStack>();
+    private static readonly Dictionary<string, UnitPathStack> CachedPaths = new();
 
-    public static event EventHandler CacheCleared;
+    public static event EventHandler? CacheCleared;
 
     public static void ClearDynamicUnitsCaching()
     {
@@ -160,27 +158,22 @@ public partial class Unit
             }
 
         }
-        if (CacheCleared != null)
-            CacheCleared(null, null);
-    }
 
+        CacheCleared?.Invoke(null, EventArgs.Empty);
+    }
 
     public static void ClearUnitsCaching()
     {
         lock (CachedPaths) CachedPaths.Clear();
         lock (CachedUnitsValues) CachedUnitsValues.Clear();
-        if (CacheCleared != null)
-            CacheCleared(null, null);
+        CacheCleared?.Invoke(null, EventArgs.Empty);
     }
 
     private static bool _EnableUnitsCaching = true;
 
     public static bool EnableUnitsCaching
     {
-        get
-        {
-            return _EnableUnitsCaching;
-        }
+        get => _EnableUnitsCaching;
         set
         {
             _EnableUnitsCaching = value;
@@ -206,8 +199,8 @@ public partial class Unit
                 {
                     return (UnitPathStack)cachedPath.Clone();   //<--- Clone
 
-                    //Why CLONE :D ??  because the unit path is a stack and I use Pop all the time 
-                    // during the application, and there were hidden error that poping from unit path in the 
+                    //Why CLONE :D ??  because the unit path is a stack and I use Pop all the time
+                    // during the application, and there were hidden error that poping from unit path in the
                     // cached store will not get them back again ;)
                     //  I MUST return cloned copy of the UnitPath.
 
@@ -215,14 +208,9 @@ public partial class Unit
             }
             #endregion
 
-
             #region Validity of Conversion
 
-            if (UnitDimension.IsDimensionless == true && unit.UnitDimension.IsDimensionless == true)
-            {
-
-            }
-            else
+            if (!UnitDimension.IsDimensionless || !unit.UnitDimension.IsDimensionless)
             {
                 //why I've tested dimensioless in begining??
                 //   because I want special dimensionless quantities like angle and solid angle to be treated
@@ -236,9 +224,8 @@ public partial class Unit
 
             #endregion
 
-            // Extra note after all this years  .. if the coming unit is inverted which mean exponent = -1  
+            // Extra note after all this years  .. if the coming unit is inverted which mean exponent = -1
             //   the units path  elements are also inverted like the source unit.
-
 
             //test if one of the units are not strongly typed
             //  because this needs special treatment. ;)
@@ -250,71 +237,69 @@ public partial class Unit
                 // Source unit ==> SI Base Units
                 // target unit ==> SI BaseUnits
 
-                var SourcePath = PathToSIBaseUnits();
-                var TargetPath = unit.PathToSIBaseUnits();
+                var sourcePath = PathToSIBaseUnits();
+                var targetPath = unit.PathToSIBaseUnits();
 
-                var Tito = new UnitPathStack();
+                var tito = new UnitPathStack();
 
-                while (SourcePath.Count > 0)
+                while (sourcePath.Count > 0)
                 {
-                    Tito.Push(SourcePath.Pop());
+                    tito.Push(sourcePath.Pop());
                 }
-                //we have to invert the target 
-                while (TargetPath.Count > 0)
+
+                //we have to invert the target
+                while (targetPath.Count > 0)
                 {
-                    var upi = TargetPath.Pop();
+                    var upi = targetPath.Pop();
                     upi.Invert();
-
-                    Tito.Push(upi);
-
+                    tito.Push(upi);
                 }
 
                 //first location in cache look below for the second location.
-
-                CachedPaths[UnitToUnitSymbol(this, unit)] = (UnitPathStack)Tito.Clone();
-                    
-
-                return Tito;
+                CachedPaths[UnitToUnitSymbol(this, unit)] = (UnitPathStack)tito.Clone();
+                return tito;
 
                 #endregion
             }
 
             // 1- Get Path default unit to current unit.
 
-            var FromMeToDefaultUnit = PathToDefaultUnit();
+            var fromMeToDefaultUnit = PathToDefaultUnit();
 
             // 2- Get Path From Default unit to the passed unit.
 
-            var FromDefaultUnitToTargetUnit = unit.PathFromDefaultUnit();
+            var fromDefaultUnitToTargetUnit = unit.PathFromDefaultUnit();
 
             // 3- check if the two units are in the same unit system
             //  if the units share the same parent don't jump
 
-            UnitPathStack SystemsPath = null;
+            UnitPathStack? systemsPath = null;
 
-            var NoBoundaryCross = false;
+            var noBoundaryCross = false;
 
             if (UnitSystem == unit.UnitSystem)
             {
-                NoBoundaryCross = true;
+                noBoundaryCross = true;
             }
             else
             {
                 //test for that units parents are the same
 
-                var ThisParent = UnitSystem.IndexOf('.') > -1 ?
+                var thisParent = UnitSystem.IndexOf('.') > -1 ?
                     UnitSystem[..UnitSystem.IndexOf('.')] :
                     UnitSystem;
 
-                var TargetParent = unit.UnitSystem.IndexOf('.') > -1 ?
+                var targetParent = unit.UnitSystem.IndexOf('.') > -1 ?
                     unit.UnitSystem[..unit.UnitSystem.IndexOf('.')] :
                     unit.UnitSystem;
 
-                if (ThisParent == TargetParent) NoBoundaryCross = true;
+                if (thisParent == targetParent)
+                {
+                    noBoundaryCross = true;
+                }
             }
 
-
-            if (NoBoundaryCross)
+            if (noBoundaryCross)
             {
                 //no boundary cross should occur
 
@@ -327,7 +312,7 @@ public partial class Unit
                 //then we must go out side the current unit system
                 //all default units are pointing to the SIUnit system this is a must and not option.
 
-                //get the default unit of target 
+                //get the default unit of target
 
 
                 // to cross the boundary
@@ -339,97 +324,90 @@ public partial class Unit
                 // 2- FromDefaultUnitToTargetUnit (where default unit is not SI)
                 //     and in this case we will take the last bottom unit of stack and get its reference
 
+                systemsPath = new UnitPathStack();
 
-                SystemsPath = new UnitPathStack();
+                UnitPathItem defaultPItem;
+                UnitPathItem refUpi;
 
-                UnitPathItem DefaultPItem;
-                UnitPathItem RefUPI;
+                var sourceDefaultUnit = fromMeToDefaultUnit.Peek().Unit;
 
-                var SourceDefaultUnit = FromMeToDefaultUnit.Peek().Unit;
-
-                if (SourceDefaultUnit.UnitSystem != "Metric.SI" && SourceDefaultUnit.GetType() != typeof(Shared.Second))
+                if (sourceDefaultUnit.UnitSystem != "Metric.SI" && sourceDefaultUnit.GetType() != typeof(Shared.Second))
                 {
                     //from source default unit to the si
-                    DefaultPItem = FromMeToDefaultUnit.Peek();
-                    RefUPI = new UnitPathItem
+                    defaultPItem = fromMeToDefaultUnit.Peek();
+                    refUpi = new UnitPathItem
                     {
-                        Numerator = DefaultPItem.Unit.ReferenceUnitNumerator,
-                        Denominator = DefaultPItem.Unit.ReferenceUnitDenominator,
+                        Numerator = defaultPItem.Unit.ReferenceUnitNumerator,
+                        Denominator = defaultPItem.Unit.ReferenceUnitDenominator,
                         //Shift = DefaultPItem.Unit.ReferenceUnitShift,
-                        Unit = DefaultPItem.Unit.ReferenceUnit
+                        Unit = defaultPItem.Unit.ReferenceUnit
                     };
                 }
                 else
                 {
                     // from target default unit to si
-                    DefaultPItem = FromDefaultUnitToTargetUnit.ElementAt(FromDefaultUnitToTargetUnit.Count - 1);
-                    RefUPI = new UnitPathItem
+                    defaultPItem = fromDefaultUnitToTargetUnit.ElementAt(fromDefaultUnitToTargetUnit.Count - 1);
+                    refUpi = new UnitPathItem
                     {
-                        //note the difference here 
+                        //note the difference here
                         //I made the opposite assignments because we are in reverse manner
 
-                        Numerator = DefaultPItem.Unit.ReferenceUnitDenominator, // <=== opposite
-                        Denominator = DefaultPItem.Unit.ReferenceUnitNumerator, // <===
+                        Numerator = defaultPItem.Unit.ReferenceUnitDenominator, // <=== opposite
+                        Denominator = defaultPItem.Unit.ReferenceUnitNumerator, // <===
                         //Shift = 0-DefaultPItem.Unit.ReferenceUnitShift,
-                        Unit = DefaultPItem.Unit.ReferenceUnit
+                        Unit = defaultPItem.Unit.ReferenceUnit
                     };
                 }
 
-
-                if (RefUPI.Unit != null)
+                if (refUpi.Unit != null)
                 {
-                    SystemsPath.Push(RefUPI);
+                    systemsPath.Push(refUpi);
                 }
-                else
-                {
-                    //both default units were SI units without references
 
-                    //note:
-                    // when define units in unit cloud for quantity
-                    //  either make all units reference SI units without default unit
-                    // or make one default unit and make the rest of units reference it.
-                }
+                // NOTE: if refUpi.Unit is null:
+                // both default units were SI units without references
+                // when define units in unit cloud for quantity
+                // either make all units reference SI units without default unit
+                // or make one default unit and make the rest of units reference it.
             }
-
 
             //combine the two paths
-            var Total = new UnitPathStack();
+            var total = new UnitPathStack();
 
-            //we are building the conversion stairs
+            // we are building the conversion stairs
             // will end like a stack
 
-
             //begin from me unit to default unit
-            for (var i = FromMeToDefaultUnit.Count - 1; i >= 0; i--)
+            for (var i = fromMeToDefaultUnit.Count - 1; i >= 0; i--)
             {
-                Total.Push(FromMeToDefaultUnit.ElementAt(i));
+                total.Push(fromMeToDefaultUnit.ElementAt(i));
             }
 
-            var One = new Unit(typeof(DimensionlessQuantity<>));
+            var one = new Unit(typeof(DimensionlessQuantity<>));
 
             //cross the system if we need to .
-            if (SystemsPath != null)
+            if (systemsPath != null)
             {
-                Total.Push(new UnitPathItem { Denominator = 1, Numerator = 1, Unit = One });
-                for (var i = SystemsPath.Count - 1; i >= 0; i--)
+                total.Push(new UnitPathItem { Denominator = 1, Numerator = 1, Unit = one });
+                for (var i = systemsPath.Count - 1; i >= 0; i--)
                 {
-                    Total.Push(SystemsPath.ElementAt(i));
+                    total.Push(systemsPath.ElementAt(i));
                 }
-                Total.Push(new UnitPathItem { Denominator = 1, Numerator = 1, Unit = One });
+                total.Push(new UnitPathItem { Denominator = 1, Numerator = 1, Unit = one });
             }
 
             // from default unit to target unit
-            for (var i = FromDefaultUnitToTargetUnit.Count - 1; i >= 0; i--)
+            for (var i = fromDefaultUnitToTargetUnit.Count - 1; i >= 0; i--)
             {
-                Total.Push(FromDefaultUnitToTargetUnit.ElementAt(i));
+                total.Push(fromDefaultUnitToTargetUnit.ElementAt(i));
             }
 
-            //another check if the units are inverted then 
+            //another check if the units are inverted then
             // go through all items in path and invert it also
 
             if (IsInverted && unit.IsInverted)
             {
-                foreach (var upi in Total)
+                foreach (var upi in total)
                 {
                     // only invert the item if it is already not inverted
                     if(!upi.IsInverted) upi.Invert();
@@ -437,10 +415,8 @@ public partial class Unit
             }
 
             //Second location in cache  look above for the first one in the same function here :D
-            CachedPaths[UnitToUnitSymbol(this, unit)] = Total.Clone();
-                
-
-            return Total;
+            CachedPaths[UnitToUnitSymbol(this, unit)] = total.Clone();
+            return total;
         }
     }
 
@@ -449,12 +425,14 @@ public partial class Unit
         if (IsStronglyTyped)
         {
             //get the corresponding unit in the SI System
-            var InnerUnitType = GetDefaultSIUnitTypeOf(QuantityType);
+            var innerUnitType = GetDefaultSIUnitTypeOf(QuantityType);
 
-            if (InnerUnitType == null && QuantityType == typeof(Displacement<>))
-                InnerUnitType = GetDefaultSIUnitTypeOf(typeof(Length<>));
+            if (innerUnitType == null && QuantityType == typeof(Displacement<>))
+            {
+                innerUnitType = GetDefaultSIUnitTypeOf(typeof(Length<>));
+            }
 
-            if (InnerUnitType == null)
+            if (innerUnitType == null)
             {
                 //some quantities don't have strongly typed si units
 
@@ -466,75 +444,63 @@ public partial class Unit
 
                 //then test the system of the current unit if it was other than Metric.SI
                 //    then we must jump to SI otherwise we are already in default SI
-                if (UnitSystem == "Metric.SI" && UnitExponent == 1)
+                if (UnitSystem == "Metric.SI" && UnitExponent == 1f)
                 {
-                        
                     //because no unit in SI with exponent = 1 don't have direct unit type
                     throw new NotImplementedException("Impossible reach by logic");
                 }
-                else
+
+                // We should cross the system boundary
+
+                var defaultPItem = path.Peek();
+                if (defaultPItem.Unit.ReferenceUnit is not null)
                 {
-                    // We should cross the system boundary 
-                    UnitPathItem DefaultPItem;
-                    UnitPathItem RefUPI;
-
-                    DefaultPItem = path.Peek();
-                    if (DefaultPItem.Unit.ReferenceUnit != null)
+                    var refUpi = new UnitPathItem
                     {
-                        RefUPI = new UnitPathItem
-                        {
-                            Numerator = DefaultPItem.Unit.ReferenceUnitNumerator,
-                            Denominator = DefaultPItem.Unit.ReferenceUnitDenominator,
-                            //Shift = DefaultPItem.Unit.ReferenceUnitShift,
-                            Unit = DefaultPItem.Unit.ReferenceUnit
-                        };
+                        Numerator = defaultPItem.Unit.ReferenceUnitNumerator,
+                        Denominator = defaultPItem.Unit.ReferenceUnitDenominator,
+                        //Shift = DefaultPItem.Unit.ReferenceUnitShift,
+                        Unit = defaultPItem.Unit.ReferenceUnit
+                    };
 
-                        path.Push(RefUPI);
-                    }
+                    path.Push(refUpi);
                 }
                 return path;
             }
-            else
+
+            var siUnit = (Unit)Activator.CreateInstance(innerUnitType)!;
+            siUnit.UnitExponent = UnitExponent;
+            siUnit.UnitDimension = UnitDimension;
+
+            var up = PathToUnit(siUnit);
+
+            if (!siUnit.IsBaseUnit)
             {
-
-                var SIUnit = (Unit)Activator.CreateInstance(InnerUnitType);
-                SIUnit.UnitExponent = UnitExponent;
-                SIUnit.UnitDimension = UnitDimension;
-
-                var up = PathToUnit(SIUnit);
-
-                if (!SIUnit.IsBaseUnit)
+                if (siUnit.UnitDimension.IsDimensionless && siUnit.IsStronglyTyped)
                 {
-                    if (SIUnit.UnitDimension.IsDimensionless && SIUnit.IsStronglyTyped)
-                    {
-                        //for dimensionless units like radian, stradian
-                        //do nothing.
-                    }
-                    else
-                    {
-
-                        //expand the unit 
-                        var expandedUnit = ExpandMetricUnit((MetricUnit)SIUnit);
-                        var expath = expandedUnit.PathToSIBaseUnits();
-
-                        while (expath.Count > 0)
-                            up.Push(expath.Pop());
-                    }
-
+                    //for dimensionless units like radian, stradian
+                    //do nothing.
                 }
+                else
+                {
+                    //expand the unit
+                    var expandedUnit = ExpandMetricUnit((MetricUnit)siUnit);
+                    var expath = expandedUnit.PathToSIBaseUnits();
 
-                return up;
-
+                    while (expath.Count > 0)
+                    {
+                        up.Push(expath.Pop());
+                    }
+                }
             }
+
+            return up;
         }
-            
-        
-        var Pathes = new UnitPathStack();
+
+        var paths = new UnitPathStack();
         foreach (var un in SubUnits)
         {
-            UnitPathStack up = null;
-
-            up = un.PathToSIBaseUnits();
+            var up = un.PathToSIBaseUnits();
 
             while (up.Count > 0)
             {
@@ -546,11 +512,10 @@ public partial class Unit
                     if (!upi.IsInverted) upi.Invert();
                 }
 
-                Pathes.Push(upi);
+                paths.Push(upi);
             }
-
-                
         }
-        return Pathes;
+
+        return paths;
     }
 }

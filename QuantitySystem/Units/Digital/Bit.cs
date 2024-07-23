@@ -6,7 +6,7 @@ namespace QuantitySystem.Units.Digital;
 [DefaultUnit("bit", typeof(Digital<>))]
 public sealed class Bit : Unit;
 
-#region decimal 
+#region decimal
 [Unit("kbit", typeof(Digital<>))]
 [ReferenceUnit(1000, UnitType = typeof(Bit))]
 public sealed class KiloBit : Unit;

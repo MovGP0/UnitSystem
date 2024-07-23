@@ -25,7 +25,7 @@ namespace SymbolicAlgebra
         /// the symbol name   a*x^2 I mean {x}
         /// Note: name will not contain any spaces
         /// </summary>
-        public string Symbol 
+        public string Symbol
         {
             private set
             {
@@ -78,7 +78,7 @@ namespace SymbolicAlgebra
         ///     -1 means -ve
         /// so it has a functionality after all
         /// </summary>
-        public double SymbolPower 
+        public double SymbolPower
         {
             private set
             {
@@ -86,7 +86,7 @@ namespace SymbolicAlgebra
             }
             get
             {
-                return _SymbolPower;   
+                return _SymbolPower;
             }
         }
 
@@ -117,7 +117,7 @@ namespace SymbolicAlgebra
                 }
                 else
                 {
-                    // always return one 
+                    // always return one
                     return "1";
                 }
             }
@@ -131,7 +131,7 @@ namespace SymbolicAlgebra
         public SymbolicVariable[]? FunctionParameters => _FunctionParameters;
         public string[] RawFunctionParameters => _RawFunctionParameters;
 
-        
+
         private readonly string _FunctionName;
 
         public string FunctionName => _FunctionName;
@@ -162,7 +162,7 @@ namespace SymbolicAlgebra
                     }
                 }
             }
-            
+
             var rem = Math.IEEERemainder(minuscount, 2);
 
             var expression = sb.ToString();
@@ -230,7 +230,7 @@ namespace SymbolicAlgebra
                     {
                         string[] oddfuncs = ["sin", "csc", "tan", "cot"];
                         string[] evenfuncs = ["cos", "sec"];
-                        
+
 
                         // for some triogonmetric functions like sin  sin(-x) = -sin(x)  // this is important
 
@@ -294,7 +294,7 @@ namespace SymbolicAlgebra
                                     {
                                         #region log(x*y)
                                         // we have parameter on the form x*y or y/x or whatever
-                                        // we take the power of each term and also fused constants 
+                                        // we take the power of each term and also fused constants
                                         // and we prepare an expanded expression of term1_power*log(term1)+ term2_power*log(term2)+...
 
                                         var logparam = _FunctionParameters[0];
@@ -403,7 +403,7 @@ namespace SymbolicAlgebra
                         if (log)
                         {
                         }
-                        else 
+                        else
                         {
                             Symbol = _FunctionName + "(";
                             for (var i = 0; i < _FunctionParameters.Length; i++)
@@ -463,7 +463,7 @@ namespace SymbolicAlgebra
 
             }
 
-            if (Symbol.EndsWith(",")) 
+            if (Symbol.EndsWith(","))
             {
                 Symbol = Symbol.TrimEnd(',');
                 iparms = iparms.TrimEnd(',');
@@ -605,7 +605,7 @@ namespace SymbolicAlgebra
             }
         }
 
-        
+
         /// <summary>
         /// Extra terms that couldn't be divided into the term.
         /// </summary>
@@ -688,7 +688,7 @@ namespace SymbolicAlgebra
             }
             else if (power != 0)
             {
-                // variable exist 
+                // variable exist
                 if (power != 1) result = variableName + "^" + power.ToString(CultureInfo.InvariantCulture);
                 else result = variableName;
             }
@@ -716,7 +716,7 @@ namespace SymbolicAlgebra
             }
             else if (power != 0)
             {
-                // variable exist 
+                // variable exist
                 if (Math.Abs(power) != 1) result = variableName + "^" + Math.Abs(power).ToString(CultureInfo.InvariantCulture);
                 else result = variableName;
             }
@@ -728,7 +728,7 @@ namespace SymbolicAlgebra
             return FusedConstants.ElementAt(i).Value.NumericalVariable;
         }
 
-        
+
 
         #endregion
 
@@ -739,9 +739,9 @@ namespace SymbolicAlgebra
         /// </summary>
         private string GetSymbolBaseValue(int i)
         {
-            
+
             var result = string.Empty;
-            
+
             var power = FusedSymbols.ElementAt(i).Value.NumericalVariable;
             var powerTerm = FusedSymbols.ElementAt(i).Value.SymbolicVariable;
 
@@ -756,7 +756,7 @@ namespace SymbolicAlgebra
             }
             else if (power != 0)
             {
-                // variable exist 
+                // variable exist
                 if (power != 1) result = variableName + "^" + power.ToString(CultureInfo.InvariantCulture);
                 else
                 {
@@ -766,8 +766,8 @@ namespace SymbolicAlgebra
                         result = variableName;
                 }
             }
-            
-            return result;    
+
+            return result;
         }
 
 
@@ -796,12 +796,12 @@ namespace SymbolicAlgebra
             }
             else if (power != 0)
             {
-                // variable exist 
+                // variable exist
                 if (Math.Abs(power) != 1) result = variableName + "^" + Math.Abs(power).ToString(CultureInfo.InvariantCulture);
                 else result = variableName;
             }
 
-            return result;    
+            return result;
         }
 
         /// <summary>
@@ -856,7 +856,7 @@ namespace SymbolicAlgebra
 
 
         /// <summary>
-        /// gets the current term without any additional fused or added terms 
+        /// gets the current term without any additional fused or added terms
         /// </summary>
         /// <returns></returns>
         public SymbolicVariable GetTheStrippedVariable()
@@ -916,7 +916,7 @@ namespace SymbolicAlgebra
         #endregion
 
         /// <summary>
-        /// from a*x^2  I mean {x^2} 
+        /// from a*x^2  I mean {x^2}
         /// a^3*x^2  ===>  a^3|x^2
         /// used as a key in AddedTerms hashtable.
         /// </summary>
@@ -926,7 +926,7 @@ namespace SymbolicAlgebra
             {
                 var result = string.Empty;
 
-                
+
                 // add the key of the coefficient only  when it has power term and coefficient itself is not zero.
                 if (CoeffecientPowerTerm != null && Coeffecient != 0) result = Coeffecient.ToString(CultureInfo.InvariantCulture) + "^" + CoeffecientPowerTerm.WholeValueBaseKey + "|";
 
@@ -944,7 +944,7 @@ namespace SymbolicAlgebra
                 {
                     if (SymbolPower != 0)
                     {
-                        // variable exist 
+                        // variable exist
                         if (SymbolPower != 1) result = Symbol + "^" + SymbolPower.ToString(CultureInfo.InvariantCulture);
                         else result = Symbol;
                     }
@@ -954,7 +954,7 @@ namespace SymbolicAlgebra
                 {
 
                     var pp = GetFusedPower(i);
-                   
+
                     if(string.IsNullOrEmpty(result))
                     {
                         if (pp >= 0)
@@ -985,10 +985,10 @@ namespace SymbolicAlgebra
 
                 if (g.Contains("|")) return g.Substring(g.IndexOf('|') + 1);
                 else return g;
-                
+
             }
         }
-        
+
 
         /// <summary>
         /// Gets the power part of this term
@@ -1006,7 +1006,7 @@ namespace SymbolicAlgebra
                 {
                     if (SymbolPower != 0)
                     {
-                        // variable exist 
+                        // variable exist
                         if (Math.Abs(SymbolPower) != 1)
                         {
                             return SymbolPower.ToString(CultureInfo.InvariantCulture);
@@ -1026,14 +1026,14 @@ namespace SymbolicAlgebra
         /// </summary>
         private  string GetFormattedSymbolicValue()
         {
-            
+
             var result = string.Empty;
 
             // first check the primary storage of the symbol and if it has value or noy
 
             if (!string.IsNullOrEmpty(Symbol))
             {
-                // include the power of instance 
+                // include the power of instance
                 if (string.IsNullOrEmpty(SymbolPowerText))
                 {
                     if (_SymbolPower == 0)
@@ -1165,7 +1165,7 @@ namespace SymbolicAlgebra
             }
 
             if (FusedConstants.Count > 0) if (result == "1") result = string.Empty;
-            
+
             // continue with the rest of constants
             for (var i = 0; i < FusedConstants.Count; i++)
             {
@@ -1189,7 +1189,7 @@ namespace SymbolicAlgebra
 
 
             return result;
-            
+
         }
 
         public string FinalText()
@@ -1233,15 +1233,15 @@ namespace SymbolicAlgebra
             {
                 if (eterm.Negative)
                 {
-                    
+
                     result += "-" + eterm.Term.FinalText();
                 }
                 else
                 {
                     var etv = eterm.Term.FinalText();
-                    if(etv.StartsWith("-")) 
+                    if(etv.StartsWith("-"))
                         result+=etv;
-                    else 
+                    else
                         result += "+" + etv ;
                 }
             }
@@ -1318,7 +1318,7 @@ namespace SymbolicAlgebra
             }
         }
 
-        
+
 
         /// <summary>
         /// Compare the symbol of current instance to the symbol of parameter instance
@@ -1337,9 +1337,9 @@ namespace SymbolicAlgebra
                 // the trick is to make sure that the same variables are exist in this instance and the target instance.
                 //
                 // Anatomy of symbolic value is VariableName  ==> hold the instance variable name
-                //    Fused variable  for any extra multiplied variables 
+                //    Fused variable  for any extra multiplied variables
                 // The algorithm is to compare all variables names of this instance to the target instance
-                // make a dictionary array 
+                // make a dictionary array
                 // put primary variable name with its power from this instance.
                 //   put the primart variable name with its power (as negative) from target instance.
                 // proceed with fuse variables in this and target instances  +ve  for this instance  -ve for target instance
@@ -1348,7 +1348,7 @@ namespace SymbolicAlgebra
 
                 Dictionary<string, HybridVariable> vvs = new Dictionary<string, HybridVariable>(StringComparer.OrdinalIgnoreCase);
 
-                //variable name of this instance    THE VARIABLE NAME which is x or y or xy  
+                //variable name of this instance    THE VARIABLE NAME which is x or y or xy
                 if (!string.IsNullOrEmpty(Symbol))
                 {
                     var hv = new HybridVariable { NumericalVariable = SymbolPower, SymbolicVariable = SymbolPowerTerm };
@@ -1445,7 +1445,7 @@ namespace SymbolicAlgebra
                     if (EqualTerms == count) return true;
                     else return false;   //whether it was more or less.
                 }
-            }   
+            }
             else
             {
                 if (IsMultiTerm == true || sv.IsMultiTerm == true) return false;
@@ -1499,12 +1499,12 @@ namespace SymbolicAlgebra
             if (sv.IsFunction && sv.FunctionName.Equals("sqrt", StringComparison.OrdinalIgnoreCase)&&sv.SymbolPower>1)
             {
                 var parameterPower = 0.5 * sv.SymbolPower;
-                
+
                 var newvalue = sv._FunctionParameters[0].Power(parameterPower);
                 newvalue.Coeffecient *= sv.Coeffecient;
 
                 sv = newvalue;
-                
+
             }
 
             if (aterms != null)
@@ -1517,7 +1517,7 @@ namespace SymbolicAlgebra
 
                     sv.AddedTerms.Add(sa.WholeValueBaseKey,sa);
                 }
-                
+
             }
 
             if (eterms != null)
@@ -1527,7 +1527,7 @@ namespace SymbolicAlgebra
                     AdjustSpecialFunctions(ref r.Term);
                     sv.ExtraTerms.Add(r);
                 }
-                
+
             }
         }
 
@@ -1537,7 +1537,7 @@ namespace SymbolicAlgebra
             {
                 if (svar.FusedSymbols.ElementAt(i).Value.IsZero || svar.FusedSymbols.ElementAt(i).Key == string.Empty)
                     svar.FusedSymbols.Remove(svar.FusedSymbols.ElementAt(i).Key);
-                
+
             }
 
             if (svar._SymbolPower == 0)
@@ -1640,7 +1640,7 @@ namespace SymbolicAlgebra
             get
             {
                 if (ToString() == "0") return true;
-                
+
                 return false;
             }
         }
@@ -1792,7 +1792,7 @@ namespace SymbolicAlgebra
                         for (var vpi = 1; vpi < vps.Length; vpi++)
                             fs.Add(vps[vpi]);
 
-                        // we note here that the dynamic list of fs has been increased  and we 
+                        // we note here that the dynamic list of fs has been increased  and we
                         // will conduct the test again of current fs[i] to see if it is a function or not.
                         // so we are adding undiscovered symbols to later passes when i is increasing after this loop.
                     }
@@ -1892,13 +1892,13 @@ namespace SymbolicAlgebra
         /// returns all the symbols involved in this object
         /// </summary>
         public string[] InvolvedSymbols => GetInvolvedSymbols();
-        
+
 
         #region ICloneable Members
 
         public SymbolicVariable Clone(bool excludeExtraTerms = false)
         {
-            
+
             var clone = new SymbolicVariable(Symbol);
 
             //if (this._BaseVariable == null)  clone._Symbol = this._Symbol;
@@ -1938,7 +1938,7 @@ namespace SymbolicAlgebra
                 }
             }
 
-            if(_DividedTerm!=null) 
+            if(_DividedTerm!=null)
                 clone._DividedTerm = _DividedTerm.Clone();
 
             return clone;

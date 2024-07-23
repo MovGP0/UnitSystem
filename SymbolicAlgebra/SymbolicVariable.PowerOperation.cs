@@ -20,7 +20,7 @@ public partial class SymbolicVariable
         else
         {
             #region full symbolic variable
-            // the power is symbolic variable 
+            // the power is symbolic variable
 
             // check if the base is one term
             if (IsOneTerm)
@@ -54,7 +54,7 @@ public partial class SymbolicVariable
                     an._CoeffecientPowerTerm = an._CoeffecientPowerTerm * b;
                 }
 
-                // raised the fused symbols 
+                // raised the fused symbols
 
                 for (var i = 0; i < FusedSymbols.Count; i++)
                 {
@@ -73,7 +73,7 @@ public partial class SymbolicVariable
             else
             {
                 // (x+y)^(3*x)
-                // to implement this 
+                // to implement this
                 // the whole symbolic variable should have Symbolic Term.
                 var thisBase = new SymbolicVariable(this);
                 if (_SymbolPowerTerm != null)

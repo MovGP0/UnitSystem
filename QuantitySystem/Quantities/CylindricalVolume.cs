@@ -5,7 +5,7 @@ namespace QuantitySystem.Quantities
 
     /// <summary>
     /// dV = r  dz dr d\theta
-    /// dV = PL RL PL RL/PL = PL RL RL    
+    /// dV = PL RL PL RL/PL = PL RL RL
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class CylindricalVolume<T> : DerivedQuantity<T>
@@ -23,7 +23,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator CylindricalVolume<T>(T value)
         {
-            CylindricalVolume<T> Q = new CylindricalVolume<T>
+            CylindricalVolume<T> Q = new()
             {
                 Value = value
             };

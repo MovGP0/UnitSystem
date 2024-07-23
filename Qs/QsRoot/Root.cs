@@ -15,11 +15,11 @@ namespace QsRoot;
 public class Root
 {
     static bool allrefloaded = false;
-        
+
     public static void LoadLibrary(string library)
     {
 #if WINRT
-            
+
 #else
         if (library.StartsWith("["))
         {
@@ -38,7 +38,7 @@ public class Root
 
     /// <summary>
     /// the function search for type name under the QsRoot namespace which serves as root for quantity system
-    /// if nothing happened it tries to get it from the calling assembly (that were cached in the first call of the engine) 
+    /// if nothing happened it tries to get it from the calling assembly (that were cached in the first call of the engine)
     ///    and rest types beside executing assembly.
     /// </summary>
     /// <param name="typeName"></param>
@@ -85,7 +85,7 @@ public class Root
 
             if (dt != null) break;
         }
-            
+
         return dt;
 #endif
     }
@@ -118,14 +118,13 @@ public class Root
 
                 if(paramInfos[iy].ParameterType.IsSubclassOf(typeof(QsValue)))
                 {
-                    // target is QsValue type so we make direct cast  
-
+                    // targe// target is QsValue type so we make direct cast
                     var nativeValue = Convert.ChangeType(scalar, paramInfos[iy].ParameterType, null);
                     NativeParameters.Add(nativeValue);
                 }
                 else if(paramInfos[iy].ParameterType.IsGenericType)
                 {
-                    // target is generic type which maybe AnyQuantity<double> 
+                    // targe// target is generic type which maybe AnyQuantity<double>
                     if (paramInfos[iy].ParameterType == typeof(AnyQuantity<double>))
                     {
                         // yes convert safely to the AnyQuantity<double>
@@ -139,7 +138,7 @@ public class Root
                 }
                 else if (paramInfos[iy].ParameterType == typeof(SymbolicVariable))
                 {
-                    // target is symbolic variable 
+                    // targe// target is symbolic variable
                     NativeParameters.Add(scalar.SymbolicQuantity.Value);
                 }
                 else
@@ -238,7 +237,7 @@ public class Root
 
         if (value.GetType().BaseType == typeof(Enum))
         {
-            // return the result as a flowing tuple instance 
+            // retur// return the result as a flowing tuple instance
             var ff = QsFlowingTuple.FromCSharpEnum(value.GetType());
             return ff[Enum.GetName(value.GetType(), value)];
         }
@@ -260,8 +259,7 @@ public class Root
         if (vType.BaseType == typeof(QsValue)) return (QsValue)value;
 
         if (vType.BaseType == typeof(AnyQuantity<double>)) return new QsScalar { NumericalQuantity = (AnyQuantity<double>)value };
-            
-        if (vType == typeof(int[]) || vType == typeof(double[]) || vType == typeof(Single[]) || vType == typeof(float[]) || vType == typeof(Int64[]) || vType == typeof(uint[]) || vType == typeof(UInt16[]) || vType == typeof(UInt64[]))
+         if (vType == typeof(int[]) || vType == typeof(double[]) || vType == typeof(Single[]) || vType == typeof(float[]) || vType == typeof(Int64[]) || vType == typeof(uint[]) || vType == typeof(UInt16[]) || vType == typeof(UInt64[]))
         {
             var rr = (Array)value;
             var v = new QsVector(rr.Length);
@@ -303,9 +301,6 @@ public class Root
         throw new QsException(vType + " doesn't have corresponding type in Quantity System");
     }
 
-
-
-
     /// <summary>
     /// Converts the value expression into the target type if needed.
     /// </summary>
@@ -325,11 +320,11 @@ public class Root
         {
             // checking for conversion for inner types in the scalar
             if (targetType == typeof(QsFunction)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "FunctionQuantity"), "Value"); 
-            if (targetType == typeof(Complex)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "ComplexQuantity"), "Value"); 
-            if (targetType == typeof(Quaternion)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "QuaternionQuantity"), "Value"); 
-            if (targetType == typeof(Rational)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "RationalQuantity"), "Value");
-            if (targetType == typeof(SymbolicVariable)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "SymbolicQuantity"), "Value");
-            if (targetType == typeof(double)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "NumericalQuantity"), "Value"); 
+           if (targetType == typeof(Complex)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "ComplexQuantity"), "Value"); 
+           if (targetType == typeof(Quaternion)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "QuaternionQuantity"), "Value"); 
+           if (targetType == typeof(Rational)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "RationalQuantity"), "Value");
+           if (targetType == typeof(SymbolicVariable)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "SymbolicQuantity"), "Value");
+           if (targetType == typeof(double)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "NumericalQuantity"), "Value"); 
         }
 
         if (targetType == typeof(QsValue) || targetType.BaseType == typeof(QsValue)) 
@@ -368,7 +363,6 @@ public class Root
         if (targetType == typeof(int[]) || targetType == typeof(double[]) || targetType == typeof(Single[]) || targetType == typeof(float[]) || targetType == typeof(Int64[]) || targetType == typeof(uint[]) || targetType == typeof(UInt16[]) || targetType == typeof(UInt64[]))
         {
             // then the value should be a qsvector or qsmatrix
-                
             var mi = typeof(Root).GetMethod("ToNumericArray", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(targetType.GetElementType());
 
             return Expression.Call(mi, value);
@@ -389,8 +383,7 @@ public class Root
             return Expression.Call(value, mi, Expression.Constant(targetType));
         }
 
-        // at last test if the target type may be an object 
-        // and the source may be a QsObject <===>  I can't test the type of the expression because everything is QsValue,
+        // at la// at last test if the target type may be an object // and the source may be a QsObject <===>  I can't test the type of the expression because everything is QsValue,
         // so I will make an assumption that the target type
         if (!targetType.IsSubclassOf(typeof(QsValue)) && !targetType.IsValueType)
         {
@@ -408,7 +401,6 @@ public class Root
     /// <returns></returns>
     private static Numeric[] ToNumericArray<Numeric>(QsValue value) where Numeric : struct
     {
-
         //var ParseMethod = typeof(Numeric).GetMethod("Parse", new Type[]{typeof(string)});
 
         if (value is QsVector vector)
@@ -471,8 +463,11 @@ public class Root
 
             var scalarValue = value as QsScalar;
 
-            if (scalarValue != null) 
+            if (scalarValue != null)
+            {
                 return scalarValue.NumericalQuantity;
+            }
+
             throw new QsException("Can't Convert " + value.GetType().Name + " into " + targetType.Name);
         }
 

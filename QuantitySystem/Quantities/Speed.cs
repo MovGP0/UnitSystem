@@ -3,7 +3,7 @@
 namespace QuantitySystem.Quantities
 {
 
-    
+
     public class Speed<T> : DerivedQuantity<T>
     {
         public Speed()
@@ -19,13 +19,13 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator Speed<T>(T value)
         {
-            Speed<T> Q = new Speed<T>
+            Speed<T> Q = new()
             {
                 Value = value
             };
 
             return Q;
         }
-        
+
     }
 }

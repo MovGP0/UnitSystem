@@ -6,7 +6,7 @@
 
         public LuminousIntensity(float exponent) : base(exponent) { }
 
-        private static QuantityDimension _Dimension = new QuantityDimension(0, 0, 0, 0, 0, 0, 1);
+        private static QuantityDimension _Dimension = new(0, 0, 0, 0, 0, 0, 1);
         public override QuantityDimension Dimension
         {
             get
@@ -18,7 +18,7 @@
 
         public static implicit operator LuminousIntensity<T>(T value)
         {
-            LuminousIntensity<T> Q = new LuminousIntensity<T>
+            LuminousIntensity<T> Q = new()
             {
                 Value = value
             };

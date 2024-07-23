@@ -16,7 +16,7 @@ namespace QuantitySystem.Quantities
             {
                 quantities.Add(new Mass<T>(dimension.Mass.Exponent));
             }
-            
+
             {
                 if (dimension.Length.ScalarExponent != 0)
                     quantities.Add(new Length<T>(dimension.Length.ScalarExponent));
@@ -86,7 +86,7 @@ namespace QuantitySystem.Quantities
             // Break the fucking caching HERE :S :S
             _Dimension = null;
         }
-        
+
 
         #endregion
 
@@ -144,8 +144,8 @@ namespace QuantitySystem.Quantities
 
             return dq;
         }
-        
-        
-        #endregion        
+
+
+        #endregion
     }
 }

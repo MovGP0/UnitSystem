@@ -1,7 +1,7 @@
 ﻿namespace Qs.Types;
 
 /// <summary>
-/// Enum of various types 
+/// Enum of various types
 /// </summary>
 public enum ScalarTypes
 {
@@ -21,7 +21,7 @@ public enum ScalarTypes
     QuaternionNumberQuantity = 20,
 
     /// <summary>
-    /// Symbolic variable 
+    /// Symbolic variable
     /// </summary>
     SymbolicQuantity = 100,
 

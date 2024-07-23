@@ -41,7 +41,7 @@
 
 
         /// <summary>
-        /// @|$value  will store this operation 
+        /// @|$value  will store this operation
         /// </summary>
         /// <param name="value"></param>
         /// <returns>Function Operation</returns>

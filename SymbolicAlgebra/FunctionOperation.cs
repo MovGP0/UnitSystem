@@ -130,15 +130,15 @@
 
 
             if (string.Equals(func, "asin", StringComparison.OrdinalIgnoreCase))
-            {                
-                //asin(x) → 1 / sqrt(1-x^2) 
-                
+            {
+                //asin(x) → 1 / sqrt(1-x^2)
+
                 return SymbolicVariable.Parse(dpa.ToString() + "/sqrt(1-(" + ps.ToString() + "))");
             }
 
             if (string.Equals(func, "acos", StringComparison.OrdinalIgnoreCase))
             {
-                
+
                 return SymbolicVariable.Parse("-" + dpa.ToString() + "/sqrt(1-(" + ps.ToString() + "))");
             }
 
@@ -167,7 +167,7 @@
             #region hyperbolic functions
             if (string.Equals(func, "asinh", StringComparison.OrdinalIgnoreCase))
             {
-                //asin(x) → 1 / sqrt(x^2+1) 
+                //asin(x) → 1 / sqrt(x^2+1)
 
                 return SymbolicVariable.Parse(dpa.ToString() + "/sqrt(" + ps.ToString() + "+1)");
             }
@@ -179,7 +179,7 @@
 
             if (string.Equals(func, "atanh", StringComparison.OrdinalIgnoreCase))
             {
-                
+
                 return SymbolicVariable.Parse(dpa.ToString() + "/(1-(" + ps.ToString() + "))");
             }
 
@@ -200,15 +200,15 @@
 
             #endregion
             throw new SymbolicException(fv.FunctionName + " differentiation not implemented yet");
-            
+
         }
-    
+
 
 
         public static SymbolicVariable? IntegTrigFunction(SymbolicVariable fv, string parameter)
         {
             var func = fv.FunctionName;
-            
+
             var spara = new SymbolicVariable(parameter);
 
             var pa =  fv.FunctionParameters[0];
@@ -279,7 +279,7 @@
             {
                 result = SymbolicVariable.Parse($"log(sinh({pa.ToString()}))");
             }
-            else 
+            else
             throw new SymbolicException(fv.FunctionName + " integration not implemented yet");
 
             if (divo.IsOne) return result;

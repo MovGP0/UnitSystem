@@ -60,7 +60,7 @@ namespace ParticleLexer
                 if (childTokens.Count(o => o.TokenClassType == tokenClassType) > 0)
                     return true;
             }
-            
+
             return false;
         }
 
@@ -282,7 +282,7 @@ namespace ParticleLexer
                     for (var i = 0; i <= ci; i++)
                     {
                         tok = childTokens[i];
-                        Trimmed.AppendSubToken(tok);   
+                        Trimmed.AppendSubToken(tok);
                     }
                     break;
                 }
@@ -349,7 +349,7 @@ namespace ParticleLexer
                 }
                 else
                 {
-                    if (c.TokenClassType == typeof (SingleSpaceToken)|| c.TokenClassType == typeof(MultipleSpaceToken))    
+                    if (c.TokenClassType == typeof (SingleSpaceToken)|| c.TokenClassType == typeof(MultipleSpaceToken))
                     {
                         //found a separator
                         if (mergedTokens.Count > 0)
@@ -400,7 +400,7 @@ namespace ParticleLexer
             {
                 first = first.MergeTokens(tokenClasses[i]);
             }
-            
+
             Debug.Assert(first != null);
 
             var current = new Token();
@@ -441,7 +441,7 @@ namespace ParticleLexer
 
                     }
                 }
-                
+
                 ci++;
             }
 
@@ -462,7 +462,7 @@ namespace ParticleLexer
 
 
         /// <summary>
-        /// Merge Single Tokens into one token guided by regular expression.        
+        /// Merge Single Tokens into one token guided by regular expression.
         /// </summary>
         /// <returns></returns>
         private  Token MergeTokens(TokenClass tokenClassType)
@@ -478,10 +478,10 @@ namespace ParticleLexer
                 var tok = childTokens[tokIndex];
 
                 var Matched = false;
-                
+
                 Matched = rx.Match(merged.TokenValue + tok.TokenValue).Success;
-                
-                
+
+
                 if (Matched)
                 {
                     //continue merge until merged value fail then last merged value is the desired value.
@@ -520,7 +520,7 @@ namespace ParticleLexer
                             AccumulatedInnerText += childTokens[rtokIndex].TokenValue;
 
                             //however if the token is marked in tokenclass as ExactWord
-                            //  then comparing more characters than actual ones is useless 
+                            //  then comparing more characters than actual ones is useless
                             //  and will result un-needed cycles.
                             if (tokenClassType.ExactWord)
                             {
@@ -545,8 +545,8 @@ namespace ParticleLexer
 
                                 if (!AccumulatedInnerText.StartsWith(tokenClassType.ShouldBeginWith, StringComparison.OrdinalIgnoreCase)) goto WhileBreak;
                             }
-                            
-                            
+
+
                             // terminate on specific conditions
 
                             // reaching new line:  if you reach new line then most probably we don't need to check more for that token
@@ -584,16 +584,16 @@ namespace ParticleLexer
                                 }
                             }
 
-                            
+
                             if (!string.IsNullOrEmpty(tokenClassType.ShouldEndWith))
                             {
                                 // Why we break here ??
                                 //   because the accumulated text is greedy and try to find a completion for the token that we are comparing with
-                                //   Accumulated text is grabbing the next token string and compare with the tokenclasstype 
+                                //   Accumulated text is grabbing the next token string and compare with the tokenclasstype
                                 //   when compare success in the above code regex match then every thing is ok
                                 //    however if match didn't occur we will continue consumeing tokens until the end of the tokens
                                 //   to prevent this we will chech for the ending of the accumulated text
-                                //    if we found the ending resemble the end string of target token class then we will assume that we don't have matching token suitable and 
+                                //    if we found the ending resemble the end string of target token class then we will assume that we don't have matching token suitable and
                                 //    we will end the loop to prevent unnecessary loops
                                 if (AccumulatedInnerText.EndsWith(tokenClassType.ShouldEndWith, StringComparison.OrdinalIgnoreCase)) goto WhileBreak;
                             }
@@ -609,7 +609,7 @@ namespace ParticleLexer
 
                 NoStartWith: ;
 
-                    // if merged token is not null put the merged value 
+                    // if merged token is not null put the merged value
                     //  continue to test the last token with next tokens to the same regex
                     if (!string.IsNullOrEmpty(merged.TokenValue))
                     {
@@ -623,8 +623,8 @@ namespace ParticleLexer
 
 
                         // for begining another test with the new token
-                        merged.AppendSubToken(tok);  
-                        
+                        merged.AppendSubToken(tok);
+
                         merged.TokenClassType = tok.TokenClassType;
                     }
                     else
@@ -635,7 +635,7 @@ namespace ParticleLexer
                     }
                 }
 
-            loopTail:                
+            loopTail:
                 tokIndex++;
 
             }
@@ -683,7 +683,7 @@ namespace ParticleLexer
             var CurrentTokenClass = tokenClasses[TokenClassesIndex]; //the token that will be compared with.
 
             while (tokIndex < childTokens.Count)
-            {            
+            {
                 var tok = childTokens[tokIndex];
 
                 while(TokenClassesIndex < tokenClasses.Count)
@@ -693,7 +693,7 @@ namespace ParticleLexer
                     // the token in test should be less than the compare token.
                     if(CurrentTokenClass.OriginalPatternWord.StartsWith(tok.TokenValue, StringComparison.OrdinalIgnoreCase))
                     {
-                        
+
                         while(subTokIndex < ChildTokens.Count)
                         {
                             var stok = childTokens[subTokIndex];
@@ -718,14 +718,14 @@ namespace ParticleLexer
                             subTokIndex++;
                         }
                     }
-                    
+
                     // condition failed either because the token value is greater than the compare or simple is not begining with this token
                     //  or we didn't get this token either.
                     // so we go for another tokenclass to compare
 
                     if (merged.Count > 0) merged = new Token(); //reset the merged object because it was modified
                     TokenClassesIndex++;
-                    
+
                 }
 
                 // we didn't find any match that this token can be merged into it
@@ -736,7 +736,7 @@ namespace ParticleLexer
                 tokIndex++;
                 TokenClassesIndex = 0;
             }
-                
+
             current.TokenClassType = TokenClassType;
             return Zabbat(current);
         }
@@ -833,13 +833,13 @@ namespace ParticleLexer
             var ComparisonTokensNumber = tokenTypes.Length;
 
             var CurrentTokenTypeIndex = 0;    // hold the current index of the required tokens
-                                              // when the index reaches the ComparisonTokensNumber the compare ends and 
+                                              // when the index reaches the ComparisonTokensNumber the compare ends and
                                               //  the merge occure.
 
             var current = new Token();
 
             var merged = new Token() { TokenClassType = typeof(DesiredTokenClass) };
-            
+
 
             var tokIndex = 0;
             while (tokIndex < childTokens.Count)
@@ -866,10 +866,10 @@ namespace ParticleLexer
                 {
                     if (CurrentTokenTypeIndex > 0)
                     {
-                        // failure after merging some tokens so we have to empty the merged token 
+                        // failure after merging some tokens so we have to empty the merged token
                         //  then roll back to the first token we were in to begin after that token again
                         //    illustration
-                        //      imagine we  merge Dollar Sign Token + Word Token 
+                        //      imagine we  merge Dollar Sign Token + Word Token
                         //      imagine we have this sequence   $$Hello  the second dollar will fail the comparison
                         //      so we have to start from the second dollar token :)
 
@@ -1044,7 +1044,7 @@ namespace ParticleLexer
 
         /// <summary>
         /// Search for <see cref="MultipleSpaceToken"/> tokens and remove them from the children tokens.
-        /// Used after Merging tokens with <see cref="MultipleSpaceToken"/> 
+        /// Used after Merging tokens with <see cref="MultipleSpaceToken"/>
         /// </summary>
         /// <returns></returns>
         public Token RemoveSpaceTokens()
@@ -1056,9 +1056,9 @@ namespace ParticleLexer
             while (ci < childTokens.Count)
             {
                 var tok = childTokens[ci];
-                
+
                 //make sure all chars in value are white spaces
-                
+
                 //if (tok.TokenValue.ToCharArray().Count(w => char.IsWhiteSpace(w)) == tok.TokenValue.Length)
                 if(tok.TokenClassType == typeof(MultipleSpaceToken))
                 {
@@ -1091,7 +1091,7 @@ namespace ParticleLexer
 
                 //make sure all chars in value are white spaces
 
-                
+
                 if (tok.TokenClassType == typeof(MultipleSpaceToken) || tok.TokenClassType == typeof(SingleSpaceToken))
                 {
                     //all string are white spaces
@@ -1160,8 +1160,8 @@ namespace ParticleLexer
         }
 
         /// <summary>
-        /// Get inner tokens from leftIndex to the rightIndex 
-        /// --->   tokens &lt; -- 
+        /// Get inner tokens from leftIndex to the rightIndex
+        /// --->   tokens &lt; --
         /// </summary>
         /// <param name="leftIndex"></param>
         /// <param name="rightIndex"></param>

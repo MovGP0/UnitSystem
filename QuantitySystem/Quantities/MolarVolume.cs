@@ -22,7 +22,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator MolarVolume<T>(T value)
         {
-            MolarVolume<T> Q = new MolarVolume<T>
+            MolarVolume<T> Q = new()
             {
                 Value = value
             };

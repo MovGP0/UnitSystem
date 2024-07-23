@@ -47,7 +47,7 @@ namespace Qs.Types
                 return _NativeObject.GetType();
             }
         }
-        
+
         public override  QsValue Execute(Token expression)
         {
             Expression ResultExpression = null;
@@ -57,7 +57,7 @@ namespace Qs.Types
                 var MethodName = expression[0].TokenValue;
                 string[] args = expression[1].TrimTokens(1, 1).TokenValue.Split(',');
                 var argn = args.Length;
-                
+
                 if (args.Length == 1 && args[0] == string.Empty) argn=0;
 
                 var d_method = InstanceType.GetMethods().First(
@@ -413,7 +413,7 @@ namespace Qs.Types
             throw new NotImplementedException("Operation between " + ToString() + " and " + value + " is not supported");
         }
 
-        
+
         public override QsValue PowerOperation(QsValue value)
         {
             throw new NotImplementedException();
@@ -490,18 +490,18 @@ namespace Qs.Types
         }
 
         public override QsValue GetIndexedItem(QsParameter[] indices)
-        {   
-            
-            
+        {
+
+
             var pi = InstanceType.GetProperty("Item"
-                , BindingFlags.Instance | BindingFlags.Public 
+                , BindingFlags.Instance | BindingFlags.Public
                 );
 
-            
+
 
             var r = Root.QsParametersToNativeValues(pi.GetGetMethod(), indices);
 
-            return Root.NativeToQsConvert(pi.GetValue(_NativeObject, r));   
+            return Root.NativeToQsConvert(pi.GetValue(_NativeObject, r));
         }
 
         public override void SetIndexedItem(QsParameter[] indices, QsValue value)
@@ -533,11 +533,11 @@ namespace Qs.Types
                 var mms = InstanceType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
                 var fefe = new QsTupleValue[mms.Length];
-            
+
                 for (var ix = 0; ix < mms.Length; ix++)
                 {
                     fefe[ix].Name = (string) mms[ix].Name;
-                    
+
                     fefe[ix].Value = new QsText(mms[ix].PropertyType.Name);
                 }
                 if (fefe.Length == 0) return new QsFlowingTuple();

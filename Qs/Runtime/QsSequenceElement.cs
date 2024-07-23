@@ -21,7 +21,7 @@ namespace Qs.Runtime
         /// <summary>
         /// The original text that the element took when created.
         /// </summary>
-        public string ElementDeclaration 
+        public string ElementDeclaration
         {
             get
             {
@@ -75,7 +75,7 @@ namespace Qs.Runtime
         /// This way every element know its position in the parent sequence.
         /// </summary>
         public int IndexInParentSequence { get; set; }
-        
+
 
         /// <summary>
         /// Execute the element by accepting the index of execution.
@@ -90,8 +90,7 @@ namespace Qs.Runtime
             {
 
                 return ((Func<int, QsValue>)ElementValue)(executionIndex);
-                
-            }
+             }
 
             if (ElementValue.GetType() == typeof(QsSequence))
             {
@@ -169,7 +168,7 @@ namespace Qs.Runtime
             el.ElementValue = sequence;
 
             el.IndexEvaluation = false;  
-            el.ParameterEvaluation = false;
+          el.ParameterEvaluation = false;
 
             return el;
         }
@@ -233,8 +232,7 @@ namespace Qs.Runtime
         public static QsSequenceElement Parse(string element, QsEvaluator qse, QsSequence sequence)
         {
             if (string.IsNullOrEmpty(element)) throw new QsException("Can't create element from empty string.");
-            
-            //try direct quantity
+             //try direct quantity
             AnyQuantity<double> v;
             if (Unit.TryParseQuantity(element, out v))
             {
@@ -247,16 +245,13 @@ namespace Qs.Runtime
             }
 
             var se = new QsSequenceElement();
-                
-            //try one index delegate without parameters
+             //try one index delegate without parameters
             //Create the lambda function that will pass the index and parameters to the expression.
             var lb = SimpleLambdaBuilder.Create(typeof(QsValue), "ElementValue");
 
             //add the index parameter
             lb.Parameter(typeof(int), sequence.SequenceIndexName);
-                
-                
-            //find the index parameter in line to know if it will be evaluated or not
+              //find the index parameter in line to know if it will be evaluated or not
             if (element.IndexOf(sequence.SequenceIndexName) > -1)
                 se.IndexEvaluation = true;
 
@@ -283,8 +278,7 @@ namespace Qs.Runtime
             return se;
 
             throw new QsException("Check me in sequence element :( :( :( ");
-            
-        }
+         }
 
         #endregion
 

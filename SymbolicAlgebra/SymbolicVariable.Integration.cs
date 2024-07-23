@@ -127,7 +127,7 @@
             }
             else if (symbolpowercontainParameter)
             {
-                // this case is when the power term is the same 
+                // this case is when the power term is the same
                 var log = new SymbolicVariable(FunctionOperation.LnText + "(" + sv.Symbol + ")");
                 var dp = sv._SymbolPowerTerm.Integrate(parameter);
                 sv = Divide(log, Divide(dp, sv));
@@ -201,14 +201,14 @@
 
                             // ∫u dv = uv − ∫v du
 
-                            // so  ∫ln(x) dx  by parts  is  
+                            // so  ∫ln(x) dx  by parts  is
 
-                            // u  = ln x 
+                            // u  = ln x
                             // dv = dx
-                            // v  = x 
-                            // uv = x ln x 
+                            // v  = x
+                            // uv = x ln x
                             // du = 1/x  dx
-                            // ∫v du   = ∫ x * 1/x dx 
+                            // ∫v du   = ∫ x * 1/x dx
                             //         = ∫ x/x dx
                             //         = ∫ 1 dx
                             //         =  x
@@ -220,13 +220,13 @@
                             // u = log(x^2+x)
                             // dv = dx
                             // v = x
-                            // uv = x*log(x^2+x) 
+                            // uv = x*log(x^2+x)
                             // du = (2*x+1)/(x^2+x) dx
-                            // ∫v du   = ∫ x * (2*x+1)/(x^2+x) dx 
+                            // ∫v du   = ∫ x * (2*x+1)/(x^2+x) dx
                             //         = ∫ (2*x^2+x)/(x^2+x) dx
-                            //         = 2*x-log(x+1)   
+                            //         = 2*x-log(x+1)
 
-                            // uv − ∫v du = x*log(x^2+x) - (2*x + log(x+1) ) 
+                            // uv − ∫v du = x*log(x^2+x) - (2*x + log(x+1) )
 
                             var u = fv.Clone();
                             var v = new SymbolicVariable(parameter);
@@ -263,18 +263,18 @@
                         }
                         else if (FunctionOperation.TrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
                         {
-                            // triogonometric functions 
-                            
+                            // triogonometric functions
+
                             fv = FunctionOperation.IntegTrigFunction(fv, parameter);
 
-                            
+
                         }
 
                         else
                         {
                             throw new NotImplementedException();
 
-                            
+
                             // the function is not a special function like sin, cos, and log.
                             // search for the function in the running context.
 
@@ -301,7 +301,7 @@
                             {
                                 throw new SymbolicException("This function is not a special function, and I haven't implemented storing user functions in the running context");
                             }
-                            
+
                         }
 
                         // second treat the function normally as if it is one big symbol
@@ -415,14 +415,14 @@
 
             // so for integration   we will deconstruct all functions and variables  then regrouping them according to the ilate priorities
             // this is essential for using the integration by parts
-            //  integration by parts is to represent the multiplied terms as u dv 
-            //  where u is the heighest term in the list 
+            //  integration by parts is to represent the multiplied terms as u dv
+            //  where u is the heighest term in the list
             // and dv is the rest of the multiplied terms together
 
-            // the result  will be  integ u dv = uv - integ v du   
+            // the result  will be  integ u dv = uv - integ v du
 
-            // the v du term will be enter to the integration again above  
-            //  and then we are acting in a recusrsive manner 
+            // the v du term will be enter to the integration again above
+            //  and then we are acting in a recusrsive manner
 
             // 
 
@@ -453,7 +453,7 @@
             var Trig_Term = One;
             var Exponential_Term = One;
 
-            
+
 
             // distribute everything
             foreach (var mt in MultipliedTerms)

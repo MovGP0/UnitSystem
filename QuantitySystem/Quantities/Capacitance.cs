@@ -15,7 +15,7 @@
 
         public static implicit operator Capacitance<T>(T value)
         {
-            Capacitance<T> Q = new Capacitance<T>
+            Capacitance<T> Q = new()
             {
                 Value = value
             };

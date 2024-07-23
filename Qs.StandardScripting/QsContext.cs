@@ -9,7 +9,7 @@ namespace Qs.Scripting
 {
     public sealed class QsContext : LanguageContext
     {
-        
+
         QsBinder _binder;
 
         public QsContext(ScriptDomainManager manager, IDictionary<string, object> options)
@@ -19,7 +19,7 @@ namespace Qs.Scripting
             _binder = new QsBinder();  // I have defined end statement to close the execution of the program.
                                               // the end statement will return null which in return the execution of current program will end.
                                               // always write end in the final line of your qs program.
-           
+
         }
 
 
@@ -27,7 +27,7 @@ namespace Qs.Scripting
         public override ConvertBinder CreateConvertBinder(Type toType, bool? explicitCast)
         {
 
-            
+
             if (toType == typeof(int))
                 return new QsIntegerConvertBinder();
 
@@ -40,7 +40,7 @@ namespace Qs.Scripting
 
         public override ScriptCode CompileSourceCode(SourceUnit sourceUnit, CompilerOptions options, ErrorSink errorSink)
         {
-            
+
             var sc = new QsScriptCode(sourceUnit);
 
             return sc;
@@ -51,7 +51,7 @@ namespace Qs.Scripting
         {
             get
             {
-                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;       
+                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             }
         }
 

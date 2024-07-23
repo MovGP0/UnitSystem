@@ -6,7 +6,7 @@ using Qs.Types;
 
 namespace QsGraphics
 {
-    
+
     public class Screen
     {
 
@@ -46,7 +46,7 @@ namespace QsGraphics
             _Form = new ScreenForm();
             _Form.Width = _Width;
             _Form.Height = _Height;
-            
+
             // show the form in separeate task i.e. thread
             _FormDialog = _Form.ShowDialog;
 
@@ -61,7 +61,7 @@ namespace QsGraphics
         public void End()
         {
             Reset();
-            
+
             var a = _Form.Close;
             if(_Form.IsHandleCreated)
                 _Form.Invoke(a);          //execute the code of the form in its running thread by invoke
@@ -69,7 +69,7 @@ namespace QsGraphics
 
         ~Screen()
         {
-            
+
             End();
         }
 
@@ -80,7 +80,7 @@ namespace QsGraphics
 
         List<Shape> Shapes = [];
 
-       
+
         /// <summary>
         /// Draw a circle on the screen.
         /// </summary>
@@ -167,7 +167,7 @@ namespace QsGraphics
             runningTasks.Add(t);
 
         }
-        
+
         public void UpdateForever()
         {
             var sw = new Stopwatch();

@@ -7,7 +7,7 @@ public class Step
     /// <summary>
     /// Name of the step.
     /// </summary>
-    public string Name; 
+    public string Name;
 
     /// <summary>
     /// Types associated to this step.
@@ -108,7 +108,7 @@ public class Step
     {
         get
         {
-                
+
 
             var Parent = CreateHostFlow();
             Parent.ReSetToStep(Id);
@@ -132,7 +132,7 @@ public class Step
         }
 
         return HostFlowCreationFunction();
-    
+
     }
 
     /// <summary>

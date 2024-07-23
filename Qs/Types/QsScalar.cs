@@ -24,7 +24,7 @@ namespace Qs.Types
         public ScalarTypes ScalarType
         {
             get { return _ScalarType; }
-        } 
+        }
 
         /// <summary>
         /// Quantity that its storage is symbol.
@@ -36,7 +36,7 @@ namespace Qs.Types
         }
 
         /// <summary>
-        /// Double Number Quantity 
+        /// Double Number Quantity
         /// Default behaviour.
         /// </summary>
         public AnyQuantity<double> NumericalQuantity
@@ -136,7 +136,7 @@ namespace Qs.Types
                         new SymbolicVariable(NumericalQuantity.Value.ToString(CultureInfo.InvariantCulture)));
                     return sv;
                 case ScalarTypes.RationalNumberQuantity:
-                    return 
+                    return
                         RationalQuantity.Unit.GetThisUnitQuantity<SymbolicVariable>(
                         new SymbolicVariable(RationalQuantity.Value.Value.ToString(CultureInfo.InvariantCulture)));
                 case ScalarTypes.SymbolicQuantity:
@@ -255,8 +255,8 @@ namespace Qs.Types
                     break;
 
                 case ScalarTypes.ComplexNumberQuantity:  // return C{Real, Imaginary}
-                    rv =  "C{" + ComplexQuantity.Value.Real.ToString(CultureInfo.InvariantCulture) + ", " 
-                        + ComplexQuantity.Value.Imaginary.ToString(CultureInfo.InvariantCulture) + "}" 
+                    rv =  "C{" + ComplexQuantity.Value.Real.ToString(CultureInfo.InvariantCulture) + ", "
+                        + ComplexQuantity.Value.Imaginary.ToString(CultureInfo.InvariantCulture) + "}"
                         + ComplexQuantity.UnitText;
                     break;
 
@@ -268,7 +268,7 @@ namespace Qs.Types
                         + QuaternionQuantity.UnitText;
                     break;
 
-                case ScalarTypes.SymbolicQuantity: // return symbolic quantity into parsable format 
+                case ScalarTypes.SymbolicQuantity: // return symbolic quantity into parsable format
                     //add $ before any symbol
                     var sq = SymbolicQuantity.Value.ToString();
                     foreach (var sym in SymbolicQuantity.Value.InvolvedSymbols)
@@ -743,7 +743,7 @@ namespace Qs.Types
                         case ScalarTypes.RationalNumberQuantity:
                             return new QsScalar(ScalarTypes.RationalNumberQuantity) { RationalQuantity = RationalQuantity / scalar.RationalQuantity };
                         case ScalarTypes.NumericalQuantity:
-                            return new QsScalar(ScalarTypes.RationalNumberQuantity) { 
+                            return new QsScalar(ScalarTypes.RationalNumberQuantity) {
                                 RationalQuantity = RationalQuantity / scalar.NumericalQuantity.ToRational()
                             };
                         case ScalarTypes.SymbolicQuantity:
@@ -799,7 +799,7 @@ namespace Qs.Types
                                 throw new QsException("Raising none dimensionless quantity to symbolic quantity is not supported");
                             }
                             case ScalarTypes.RationalNumberQuantity:
-                                return new QsScalar { NumericalQuantity = AnyQuantity<double>.Power(NumericalQuantity, power.RationalQuantity.Unit.GetThisUnitQuantity(power.RationalQuantity.Value.Value)) }; 
+                                return new QsScalar { NumericalQuantity = AnyQuantity<double>.Power(NumericalQuantity, power.RationalQuantity.Unit.GetThisUnitQuantity(power.RationalQuantity.Value.Value)) };
                             default:
                                 throw new NotImplementedException(_ScalarType + " ^ " + power.ScalarType);
                         }
@@ -814,7 +814,7 @@ namespace Qs.Types
                                 var dpower = power.NumericalQuantity.Value;
                                 var nsq = new QsScalar(ScalarTypes.SymbolicQuantity) { SymbolicQuantity = AnyQuantity<SymbolicVariable>.Power(SymbolicQuantity, power.NumericalQuantity) };
 
-                                return nsq;                                
+                                return nsq;
                             }
                             case ScalarTypes.SymbolicQuantity:
                             {
@@ -839,7 +839,7 @@ namespace Qs.Types
                             default:
                             throw new NotImplementedException("Raising Symbolic Quantity to " + power.ScalarType + " is not implemented yet");
                         }
-                        
+
                     }
 
                 case ScalarTypes.ComplexNumberQuantity:
@@ -878,8 +878,8 @@ namespace Qs.Types
                     switch (power.ScalarType)
                     {
                         case ScalarTypes.NumericalQuantity:
-                            return new QsScalar(ScalarTypes.RationalNumberQuantity) 
-                            { 
+                            return new QsScalar(ScalarTypes.RationalNumberQuantity)
+                            {
                                 RationalQuantity = AnyQuantity<Rational>.Power(RationalQuantity,  power.NumericalQuantity)
                             };
 
@@ -1270,7 +1270,7 @@ namespace Qs.Types
             if (_ScalarType == ScalarTypes.SymbolicQuantity && value is QsScalar sc && sc.ScalarType == ScalarTypes.SymbolicQuantity)
             {
 
-                
+
                 var fbody = "(" + SymbolicQuantity.Value + ")" + "." + "(" + sc.SymbolicQuantity.Value + ")";
 
                 var fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
@@ -1375,7 +1375,7 @@ namespace Qs.Types
 
 
         /// <summary>
-        /// Calculate the modulo of 
+        /// Calculate the modulo of
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -1442,7 +1442,7 @@ namespace Qs.Types
                 var mag = vector.Magnitude();
 
                 return ((QsScalar)AbsOperation()).NumericalQuantity < mag.NumericalQuantity;
-                
+
             }
             if (value is QsMatrix)
             {
@@ -1633,7 +1633,7 @@ namespace Qs.Types
             // -------------
             //  why I am doing this  ??
             //   because I was  want to be able to call the function directly after differentiating it
-            //   @f|$x[3]   
+            //   @f|$x[3]
             //  why I didn't use  normal brackets??
             //   because it is reserved to know the function itself by parameters (as I have overloaded functions by parameter names) not types
             //   @f(x,y)  !=  @f(u,v)    etc.
@@ -1823,13 +1823,13 @@ namespace Qs.Types
 
         public object ToType(Type conversionType, IFormatProvider? provider)
         {
-            if (conversionType == typeof(QsFunction)) 
+            if (conversionType == typeof(QsFunction))
                 return FunctionQuantity.Value;
             if (conversionType == typeof(Complex))
                 return ComplexQuantity.Value;
             if (conversionType == typeof(Quaternion))
                 return QuaternionQuantity.Value;
-            if (conversionType == typeof(Rational)) 
+            if (conversionType == typeof(Rational))
                 return RationalQuantity.Value;
             if (conversionType == typeof(SymbolicVariable))
                 return SymbolicQuantity.Value;
@@ -1889,7 +1889,7 @@ namespace Qs.Types
         /// <returns></returns>
         public static QsValue Constant(string name)
         {
-            if(name.Equals("i", StringComparison.OrdinalIgnoreCase)) 
+            if(name.Equals("i", StringComparison.OrdinalIgnoreCase))
             {
                 return new QsScalar(ScalarTypes.ComplexNumberQuantity)
                 {

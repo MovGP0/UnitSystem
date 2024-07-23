@@ -34,7 +34,7 @@
 
 
         /// <summary>
-        /// Indicates that the token is a whole continous unit, which can't be discrete or strictly speaking when mathcing fail for 
+        /// Indicates that the token is a whole continous unit, which can't be discrete or strictly speaking when mathcing fail for
         /// an extra text character the test shouldn't search for another success tokens after that.
         /// </summary>
         public bool ContinousToken { get; set; }

@@ -3,11 +3,11 @@
     /// <summary>
     /// QsOperation Type is a class that express special holders for certain known mathematical operation
     ///     how to describe it is something that should be illustrated
-    ///     it is indeed tough to describe it 
+    ///     it is indeed tough to describe it
     ///     it is a value to store operation :) thats it
     ///     which means the operation will take place later on the program flow
     ///     consider @|$x  which means Differentiate for x symbol or (operation that says I will differentiate the function later)
-    ///     @  contains the operation   | 
+    ///     @  contains the operation   |
     /// </summary>
     public class QsOperation : QsValue
     {
@@ -21,7 +21,7 @@
         {
             throw new NotImplementedException();
         }
-        
+
         public override string ToShortString()
         {
             return "QsOp";
@@ -35,8 +35,8 @@
             throw new QsException("Qs Base Operation Class cannot be cloned, It only occure in sub classes");
         }
 
-        #endregion   
-    
+        #endregion
+
         public override QsValue Identity
         {
             get { throw new NotImplementedException(); }

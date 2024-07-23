@@ -7,11 +7,11 @@
          // Add any type-specific logic, and supply the default message.
       }
 
-      public QsFunctionNotFoundException(string message): base(message) 
+      public QsFunctionNotFoundException(string message): base(message)
       {
          // Add any type-specific logic.
       }
-      public QsFunctionNotFoundException(string message, Exception innerException): 
+      public QsFunctionNotFoundException(string message, Exception innerException):
          base (message, innerException)
       {
          // Add any type-specific logic for inner exceptions.

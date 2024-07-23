@@ -40,7 +40,7 @@ public class StepAttribute : Attribute
     {
         _StepId = stepId;
         _ItemAssociatedTypes = associatedTypes;
-            
+
         Skip = skipStep;
     }
 }

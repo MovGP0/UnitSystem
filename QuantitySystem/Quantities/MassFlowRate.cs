@@ -17,7 +17,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator MassFlowRate<T>(T value)
         {
-            MassFlowRate<T> Q = new MassFlowRate<T>
+            MassFlowRate<T> Q = new()
             {
                 Value = value
             };

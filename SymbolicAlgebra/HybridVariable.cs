@@ -5,9 +5,9 @@
     /// Symbolic + Numerical  value
     /// currently used in Fused Variables as the power term for the symbol in dictionary.
     /// </summary>
-    internal struct HybridVariable 
+    internal struct HybridVariable
     {
-        
+
         public SymbolicVariable? SymbolicVariable;
         public double NumericalVariable;
 
@@ -99,13 +99,13 @@
             {
                 return SymbolicVariable.ToString();
             }
-            else 
+            else
             {
                 return NumericalVariable.ToString(CultureInfo.InvariantCulture);
             }
         }
 
-        
+
         public bool IsZero
         {
             get
@@ -138,7 +138,7 @@
                 }
                 else
                     return false;
-                
+
             }
         }
 

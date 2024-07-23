@@ -19,7 +19,7 @@ namespace QuantitySystem.Quantities
 
         public static implicit operator HeatCapacity<T>(T value)
         {
-            HeatCapacity<T> Q = new HeatCapacity<T>
+            HeatCapacity<T> Q = new()
             {
                 Value = value
             };

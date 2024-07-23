@@ -45,7 +45,7 @@ public abstract partial class MetricUnit : Unit
     public MetricPrefix DefaultUnitPrefix
     {
         get { return defaultUnitPrefix; }
-    } 
+    }
 
 
     private MetricPrefix unitPrefix;

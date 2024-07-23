@@ -205,7 +205,7 @@ namespace ParticleLexer.StandardTokens
     public class LineFeedToken : TokenClass
     {
     }
-    
+
 
 
 }
@@ -220,7 +220,7 @@ namespace ParticleLexer
 
     public sealed partial class Token : IEnumerable<Token>
     {
-        
+
 
 
 
@@ -272,7 +272,7 @@ namespace ParticleLexer
                     return typeof(CharToken);
             }
         }
-    
-    
+
+
     }
 }

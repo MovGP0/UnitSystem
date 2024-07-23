@@ -125,7 +125,7 @@ namespace Qs.Runtime
             {
                 // this is a call to form symbolic element
                 // like g[n](x) ..> x^n
-                // and calling g[0++2] 
+                // and calling g[0++2]
                 //  the output should be x^0 + x^1 + x^2
                 //  and be parsed into function  (QsFunction)
 
@@ -156,14 +156,14 @@ namespace Qs.Runtime
                 Total = Total + GetElementValue(i);
             }
 
-                
+
             return Total;
         }
 
         #region SumElements Functions
         public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -172,14 +172,14 @@ namespace Qs.Runtime
             {
                 Total = Total + GetElementValue(i, arg0);
             }
-            
+
             return Total;
         }
 
-        
+
         public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -188,12 +188,12 @@ namespace Qs.Runtime
             {
                 Total = Total + GetElementValue(i, arg0, arg1);
             }
-            
+
             return Total;
         }
         public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -202,12 +202,12 @@ namespace Qs.Runtime
             {
                 Total = Total + GetElementValue(i, arg0, arg1, arg2);
             }
-            
+
             return Total;
         }
         public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -216,12 +216,12 @@ namespace Qs.Runtime
             {
                 Total = Total + GetElementValue(i, arg0, arg1, arg2, arg3);
             }
-            
+
             return Total;
         }
         public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -230,12 +230,12 @@ namespace Qs.Runtime
             {
                 Total = Total + GetElementValue(i, arg0, arg1, arg2, arg3, arg4);
             }
-            
+
             return Total;
         }
         public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -244,12 +244,12 @@ namespace Qs.Runtime
             {
                 Total = Total + GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5);
             }
-            
+
             return Total;
         }
         public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -258,10 +258,10 @@ namespace Qs.Runtime
             {
                 Total = Total + GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
             }
-            
+
             return Total;
         }
-        
+
         #endregion
 
 
@@ -278,7 +278,7 @@ namespace Qs.Runtime
             {
                 // this is a call to form symbolic element
                 // like g[n](x) ..> x^n
-                // and calling g[0++2] 
+                // and calling g[0++2]
                 //  the output should be x^0 + x^1 + x^2
                 //  and be parsed into function  (QsFunction)
 
@@ -309,14 +309,14 @@ namespace Qs.Runtime
                 Total = Total * (QsValue)GetElementValue(i);
             }
 
-                
+
             return Total;
         }
 
         #region MulElements Functions
         public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -325,13 +325,13 @@ namespace Qs.Runtime
             {
                 Total = Total * GetElementValue(i, arg0);
             }
-            
+
             return Total;
         }
-        
+
         public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -340,12 +340,12 @@ namespace Qs.Runtime
             {
                 Total = Total * GetElementValue(i, arg0, arg1);
             }
-            
+
             return Total;
         }
         public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -354,12 +354,12 @@ namespace Qs.Runtime
             {
                 Total = Total * GetElementValue(i, arg0, arg1, arg2);
             }
-            
+
             return Total;
         }
         public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -368,12 +368,12 @@ namespace Qs.Runtime
             {
                 Total = Total * GetElementValue(i, arg0, arg1, arg2, arg3);
             }
-            
+
             return Total;
         }
         public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -382,12 +382,12 @@ namespace Qs.Runtime
             {
                 Total = Total * GetElementValue(i, arg0, arg1, arg2, arg3, arg4);
             }
-            
+
             return Total;
         }
         public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -396,12 +396,12 @@ namespace Qs.Runtime
             {
                 Total = Total * GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5);
             }
-            
+
             return Total;
         }
         public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
         {
-            
+
 
             FixIndices(ref fromIndex, ref toIndex);
 
@@ -410,10 +410,10 @@ namespace Qs.Runtime
             {
                 Total = Total * GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
             }
-            
+
             return Total;
         }
-        
+
         #endregion
 
 
@@ -439,16 +439,16 @@ namespace Qs.Runtime
                     for (var e_ix = fromIndex; e_ix >= toIndex; e_ix--)
                     {
                         var se = GetElement(e_ix);
-                        
+
                         // s[n](x) ..> $x*x^n+$n     # symbolic variables shouldn't be changed ($x, $n) we should take care.
 
                         // first preserve the symbolic variable with the same index name that we are going to change.
                         var se_text = se.ElementDeclaration.Replace("$" + SequenceIndexName, "`");
 
-                        // replace the index name with the 
+                        // replace the index name with the
                         se_text = se_text.Replace(SequenceIndexName, e_ix.ToString(CultureInfo.InvariantCulture));
 
-                        // get back the symbolic 
+                        // get back the symbolic
                         se_text = se_text.Replace("`", "$" + SequenceIndexName);
 
                         if (!string.IsNullOrEmpty(SequenceRangeStartName))
@@ -466,11 +466,11 @@ namespace Qs.Runtime
                         }
 
 
-                        // replace the parameters in declaration with the same 
+                        // replace the parameters in declaration with the same
                         foreach (var param in Parameters)
                         {
                             se_text = se_text.Replace("$" + param.Name, "`");
-                            
+
                             se_text = se_text.Replace(param.Name, "$" + param.Name);
 
                             se_text = se_text.Replace("`" , "$" + param.Name);
@@ -541,15 +541,15 @@ namespace Qs.Runtime
                 }
                 else
                 {
-                    
+
                     throw new QsException("This is enough, no more than matrix values please.");
                 }
 
-                
+
 
                 #endregion
 
-                
+
                 return Total;
             }
 
@@ -558,8 +558,8 @@ namespace Qs.Runtime
             {
                 //return vector
                 var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
-  
-                
+
+
                 #region Numerical Representation
                 Total.AddComponent((QsScalar)firstElement);
 
@@ -579,7 +579,7 @@ namespace Qs.Runtime
                 }
                 #endregion
 
-                
+
                 return Total;
             }
 
@@ -604,12 +604,12 @@ namespace Qs.Runtime
                     }
                 }
 
-                
+
                 return Total;
             }
             if (firstElement is QsMatrix)
             {
-                
+
                 throw new NotImplementedException();
             }
             throw new NotSupportedException();
@@ -618,7 +618,7 @@ namespace Qs.Runtime
         #region QsValueElements Functions
         public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0)
         {
-            
+
 
             var firstElement = GetElementValue(fromIndex, arg0);
             if (firstElement is QsScalar)
@@ -643,7 +643,7 @@ namespace Qs.Runtime
                     }
                 }
 
-                
+
                 return Total;
             }
 
@@ -668,22 +668,20 @@ namespace Qs.Runtime
                     }
                 }
 
-                
+
                 return Total;
             }
             if (firstElement is QsMatrix)
             {
-                
+
                 throw new NotImplementedException();
             }
             throw new NotSupportedException();
         }
-  
+
         public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
         {
-            
-
-            var firstElement = GetElementValue(fromIndex, arg0, arg1);
+              var firstElement = GetElementValue(fromIndex, arg0, arg1);
             if (firstElement is QsScalar)
             {
                 //return vector
@@ -705,8 +703,7 @@ namespace Qs.Runtime
                         Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
 
             if (firstElement is QsVector)
@@ -729,22 +726,18 @@ namespace Qs.Runtime
                         Total.AddVector((QsVector)GetElementValue(i, arg0, arg1));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
             if (firstElement is QsMatrix)
             {
-                
-                throw new NotImplementedException();
+                 throw new NotImplementedException();
             }
             throw new NotSupportedException();
         }
 
         public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
         {
-            
-
-            var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2);
+              var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2);
             if (firstElement is QsScalar)
             {
                 //return vector
@@ -766,8 +759,7 @@ namespace Qs.Runtime
                         Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1, arg2));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
 
             if (firstElement is QsVector)
@@ -790,21 +782,17 @@ namespace Qs.Runtime
                         Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
             if (firstElement is QsMatrix)
             {
-                
-                throw new NotImplementedException();
+                 throw new NotImplementedException();
             }
             throw new NotSupportedException();
         }
         public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
         {
-            
-
-            var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3);
+              var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3);
             if (firstElement is QsScalar)
             {
                 //return vector
@@ -827,8 +815,7 @@ namespace Qs.Runtime
                     }
                 }
 
-                
-                return Total;
+                 return Total;
             }
 
             if (firstElement is QsVector)
@@ -851,22 +838,18 @@ namespace Qs.Runtime
                         Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2, arg3));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
             if (firstElement is QsMatrix)
             {
-                
-                throw new NotImplementedException();
+                 throw new NotImplementedException();
             }
             throw new NotSupportedException();
         }
 
         public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
         {
-            
-
-            var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4);
+              var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4);
             if (firstElement is QsScalar)
             {
                 //return vector
@@ -888,8 +871,7 @@ namespace Qs.Runtime
                         Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1, arg2, arg3, arg4));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
 
             if (firstElement is QsVector)
@@ -912,22 +894,18 @@ namespace Qs.Runtime
                         Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2, arg3, arg4));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
             if (firstElement is QsMatrix)
             {
-                
-                throw new NotImplementedException();
+                 throw new NotImplementedException();
             }
             throw new NotSupportedException();
         }
 
         public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
         {
-            
-
-            var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5);
+              var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5);
             if (firstElement is QsScalar)
             {
                 //return vector
@@ -949,8 +927,7 @@ namespace Qs.Runtime
                         Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
 
             if (firstElement is QsVector)
@@ -973,21 +950,17 @@ namespace Qs.Runtime
                         Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
             if (firstElement is QsMatrix)
             {
-                
-                throw new NotImplementedException();
+                 throw new NotImplementedException();
             }
             throw new NotSupportedException();
         }
         public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
         {
-            
-
-            var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+              var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
             if (firstElement is QsScalar)
             {
                 //return vector
@@ -1009,8 +982,7 @@ namespace Qs.Runtime
                         Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
 
             if (firstElement is QsVector)
@@ -1033,13 +1005,11 @@ namespace Qs.Runtime
                         Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6));
                     }
                 }
-                
-                return Total;
+                 return Total;
             }
             if (firstElement is QsMatrix)
             {
-                
-                throw new NotImplementedException();
+                 throw new NotImplementedException();
             }
             throw new NotSupportedException();
         }

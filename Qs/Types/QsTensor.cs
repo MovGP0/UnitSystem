@@ -14,12 +14,12 @@ namespace Qs.Types
 
         /// <summary>
         /// As was indicated in wikipedia and some physics forms
-        /// It is good to visualize the 4th Tensor as a hyper cube 
-        /// Hyper cube is a structure with four indices 
+        /// It is good to visualize the 4th Tensor as a hyper cube
+        /// Hyper cube is a structure with four indices
         /// and it could be accessed by Einstein indexing method.
         /// ------------------------------
         /// However in the property we can store Sub Tensors which in turn can store sub tensors and etc.
-        /// this will permit us to store more tensor ranks as we want 
+        /// this will permit us to store more tensor ranks as we want
         /// </summary>
         protected List<QsTensor> InnerTensors;
 
@@ -94,7 +94,7 @@ namespace Qs.Types
 
 
         /// <summary>
-        /// Initiate adding tensor in current tensor 
+        /// Initiate adding tensor in current tensor
         /// and increase the rank of the tensor
         /// most probably inserting tensor as a sub tensor will increase rank starting from 4th rank.
         /// </summary>
@@ -163,7 +163,7 @@ namespace Qs.Types
             }
             else
             {
-                // Third rank tensor or more 
+                // Third rank tensor or more
                 if (InnerTensors == null) InnerTensors = [];
 
                 InnerTensors.Add(qsTensor);
@@ -307,7 +307,7 @@ namespace Qs.Types
 
 
 
-        #region This region for rotation of tensor 
+        #region This region for rotation of tensor
         // try to remember that rotation of tensor depend on the rank of the tensor
         //  I mean tensor of rank 0 (looks like scalar)  will have no dimention to rotate around
         //  tensor of 2nd rank will have two dimension to rotate around

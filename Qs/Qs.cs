@@ -284,7 +284,7 @@ namespace Qs
 
 
 
-        
+
         public static QsValue ToScalarValue(this string s)
         {
             return QsValue.ParseScalar(s);
@@ -313,7 +313,7 @@ namespace Qs
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static QsScalar[] ToScalars<T>(this T[] data) 
+        public static QsScalar[] ToScalars<T>(this T[] data)
         {
             QsScalar[] ss = new QsScalar[data.Length];
 
@@ -333,7 +333,7 @@ namespace Qs
             return vector;
         }
 
-        
+
         #endregion
 
 

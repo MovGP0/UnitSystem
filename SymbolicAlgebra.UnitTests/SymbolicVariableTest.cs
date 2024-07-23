@@ -197,12 +197,12 @@ public class SymbolicVariableTest
     [TestMethod]
     public void MiscTesting()
     {
-        
+
         var t = new SymbolicVariable("t");
         var po = _two * t + _one;
 
         Assert.AreEqual("2*t+1", po.ToString());
-        
+
         var po2 = po + po;
         Assert.AreEqual("4*t+2", po2.ToString());
 
@@ -414,7 +414,7 @@ public class SymbolicVariableTest
         var dgX = g.Differentiate("x");
 
         Assert.AreEqual("3*x^(z-1)*z-5*x^(y-2)*y+5*x^(y-2)", dgX.ToString());
-        
+
         var dfiveX = _five.Differentiate("u");
         Assert.AreEqual("0", dfiveX.ToString());
 
@@ -481,7 +481,7 @@ public class SymbolicVariableTest
         Assert.AreEqual("sum(a,b)", g[1].ToString());
 
 
-        
+
     }
 
     [TestMethod]
@@ -599,7 +599,7 @@ public class SymbolicVariableTest
         g = SymbolicVariable.Multiply(g, SymbolicVariable.Parse("3^u"));
         Assert.AreEqual("2^(x+z+v)*3^(x+y+u)", g.ToString());
 
-        
+
         var ns = SymbolicVariable.Parse("-6.6^w");
         Assert.AreEqual("-6.6^w", ns.ToString());
 
@@ -804,7 +804,7 @@ public class SymbolicVariableTest
     public void Issues9Testing()
     {
         // the following issues has been fixed by using ExtraTerms in Symbolic Variable
-        // Extra Term include the terms that is not divided by one 
+        // Extra Term include the terms that is not divided by one
 
         var v = SymbolicVariable.Parse("x+2/(x+8)");
         Assert.AreEqual("x+2/(x+8)", v.ToString());
@@ -949,7 +949,7 @@ public class SymbolicVariableTest
     [Issue(14)]
     public void Issues14Test()
     {
-        // operations on zero when muliplied or divided should return zero 
+        // operations on zero when muliplied or divided should return zero
         var bb = SymbolicVariable.Parse("0/(x+3)");
         Assert.AreEqual("0", bb.ToString());
 

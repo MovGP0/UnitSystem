@@ -36,13 +36,13 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
         public TensorRank LengthRank { get; set; }
 
-        public Length() : base(1) 
+        public Length() : base(1)
         {
             LengthRank = TensorRank.Scalar;
         }
 
         public Length(float exponent)
-            : base(exponent) 
+            : base(exponent)
         {
             LengthRank = TensorRank.Scalar;
         }
@@ -68,7 +68,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                         LengthDimension.Length = new LengthDescriptor(0,  Exponent);
                         break;
                 }
-                
+
                 return LengthDimension;
             }
         }
@@ -76,7 +76,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
         public static implicit operator Length<T>(T value)
         {
-            Length<T> Q = new Length<T>
+            Length<T> Q = new()
             {
                 Value = value
             };

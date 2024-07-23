@@ -6,7 +6,7 @@ namespace ParticleLexer.StandardTokens
     /// <summary>
     /// Groups that are recursive in each other.
     /// </summary>
-    public abstract class GroupTokenClass : TokenClass 
+    public abstract class GroupTokenClass : TokenClass
     {
         protected readonly TokenClass _openToken;
         protected readonly TokenClass _closeToken;
@@ -19,7 +19,7 @@ namespace ParticleLexer.StandardTokens
         public TokenClass CloseToken
         {
             get { return _closeToken; }
-        } 
+        }
 
         public GroupTokenClass(TokenClass openToken, TokenClass closeToken)
         {

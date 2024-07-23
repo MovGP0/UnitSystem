@@ -136,7 +136,6 @@ public class QsScope : IDynamicMetaObjectProvider
         return false;
     }
 
-
     public bool DeleteValue(string variable)
     {
         var deleted = false;

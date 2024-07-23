@@ -8,14 +8,13 @@ namespace Qs.Runtime
     public partial class QsSequence
     {
         private string _SequenceDeclaration;
-        public string SequenceDeclaration 
+        public string SequenceDeclaration
         {
             get
             {
                 //go through all elements and print their index: text
                 var gg = "";
-                
-                foreach (var v in Keys)
+                 foreach (var v in Keys)
                 {
                     gg += v.ToString(CultureInfo.InvariantCulture).Trim() + ": " + base[v].ElementDeclaration + "; ";
                 }
@@ -82,7 +81,7 @@ namespace Qs.Runtime
 
 
         /// <summary>
-        /// Parse the give sequence text and return <see cref="QsSequence"/> if succeeded 
+        /// Parse the give sequence text and return <see cref="QsSequence"/> if succeeded
         /// otherwise return null reference.
         /// </summary>
         /// <param name="qse"></param>
@@ -139,7 +138,7 @@ namespace Qs.Runtime
 
             var declaredNamespace = string.Empty;
 
-            
+
             foreach (var tok in t)
             {
                 if (tok.TokenClassType == typeof(NamespaceToken))
@@ -196,7 +195,7 @@ namespace Qs.Runtime
                 // s[]   found
                 var sequenceName = t[nsidx + 0].TokenValue;
 
-                
+
                 // Specify the index area  [k=m->n, l=i->j]
                 var IndicesArea = t[nsidx + 1];
                 IndicesArea = IndicesArea.RemoveSpaceTokens().TrimStart<LeftSquareBracketToken>().TrimEnd<RightSquareBracketToken>();
@@ -290,7 +289,7 @@ namespace Qs.Runtime
                 }
                 else
                 {
-                    //sequence exist 
+                    //sequence exist
                     if (SequenceTokenType == typeof(PositiveSequenceToken))
                     {
                         //it meanse I am defining the sequence again and overwrite the previous one
@@ -323,7 +322,7 @@ namespace Qs.Runtime
                 // take the right side arguments to be added into the sequence.
 
                 var seqoIndex = 5 + shift; // the argument with index 1
-                
+
                 var ix = 1;   //index of sequence.
 
                 if (SequenceTokenType == typeof(NegativeSequenceToken))
@@ -337,7 +336,7 @@ namespace Qs.Runtime
                     {
                         //assuming for now all entered values are quantities.
                         var seqoElement = QsSequenceElement.Parse(t[nsidx + seqoIndex].TokenValue, qse, seqo);
-                        
+
                         seqo[ix] = seqoElement;  //-5 bacause I am starting from 1 index
 
                         if (SequenceTokenType == typeof(NegativeSequenceToken))
@@ -393,7 +392,7 @@ namespace Qs.Runtime
             if (indexesCount == 0) indexesCount = 1;
 
             var sn = name + "%" + indexesCount.ToString(CultureInfo.InvariantCulture); // +"#" + parametersCount.ToString(CultureInfo.InvariantCulture);
-            
+
             return sn;
         }
     }

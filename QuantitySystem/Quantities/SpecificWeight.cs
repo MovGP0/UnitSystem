@@ -15,7 +15,7 @@
 
         public static implicit operator SpecificWeight<T>(T value)
         {
-            SpecificWeight<T> Q = new SpecificWeight<T>
+            SpecificWeight<T> Q = new()
             {
                 Value = value
             };

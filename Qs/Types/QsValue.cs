@@ -11,35 +11,35 @@ public abstract class QsValue: IComparable
     abstract public QsValue Identity{get;}
 
     /// <summary>
-    /// QsValue + QsValue 
+    /// QsValue + QsValue
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
     abstract public QsValue AddOperation(QsValue value);
 
     /// <summary>
-    /// QsValue - QsValue 
+    /// QsValue - QsValue
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
     abstract public QsValue SubtractOperation(QsValue value);
 
     /// <summary>
-    /// QsValue * QsValue 
+    /// QsValue * QsValue
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
     abstract public QsValue MultiplyOperation(QsValue value);
 
     /// <summary>
-    /// QsValue /  QsValue 
+    /// QsValue /  QsValue
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
     abstract public QsValue DivideOperation(QsValue value);
 
     /// <summary>
-    /// QsValue ^ QsValue 
+    /// QsValue ^ QsValue
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
@@ -82,7 +82,7 @@ public abstract class QsValue: IComparable
     #endregion
 
     /// <summary>
-    /// QsValue . QsValue 
+    /// QsValue . QsValue
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
@@ -109,7 +109,7 @@ public abstract class QsValue: IComparable
     }
 
     /// <summary>
-    /// QsValue x QsValue 
+    /// QsValue x QsValue
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
@@ -230,7 +230,7 @@ public abstract class QsValue: IComparable
 
     #region Relational operators
     public static bool operator <(QsValue a, QsValue b)
-    { 
+    {
         return a.LessThan(b);
     }
 
@@ -391,7 +391,7 @@ public abstract class QsValue: IComparable
         {
             if (values.Count() == 1) return values[0];
 
-            // in rare cases or event known cases by me Ahmed Sadek and because of parsing 
+            // in rare cases or event known cases by me Ahmed Sadek and because of parsing
             // sometimes I enclose tensor variable inside matrix  [g g <|4 3|> ]
             // so in this case i will the return as it is.
 
@@ -408,7 +408,7 @@ public abstract class QsValue: IComparable
 
 
         var m = new QsMatrix();
-            
+
         foreach (var v in values)
         {
             if (v is QsScalar)
@@ -490,7 +490,7 @@ public abstract class QsValue: IComparable
             if (val is QsVector)
             {
                 mat.AddVector((QsVector)val);
-            } 
+            }
             else if (val is QsMatrix)
             {
                 foreach (var vc in ((QsMatrix)val))

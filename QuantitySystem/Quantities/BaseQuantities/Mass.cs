@@ -5,9 +5,9 @@
         /// <summary>
         /// Create Mass object with dimension equals 1 M^1.
         /// </summary>
-        public Mass() : base(1) 
+        public Mass() : base(1)
         {
-            
+
         }
 
         /// <summary>
@@ -17,7 +17,7 @@
         public Mass(float exponent) : base(exponent) { }
 
 
-        private static QuantityDimension _Dimension = new QuantityDimension(1, 0, 0);
+        private static QuantityDimension _Dimension = new(1, 0, 0);
         public override QuantityDimension Dimension
         {
             get
@@ -29,7 +29,7 @@
 
         public static implicit operator Mass<T>(T value)
         {
-            Mass<T> Q = new Mass<T>
+            Mass<T> Q = new()
             {
                 Value = value
             };

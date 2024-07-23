@@ -25,7 +25,7 @@ public sealed class Planet
     public Planet()
     {
         _planets++;
-        Name = "Planet " + _planets;    
+        Name = "Planet " + _planets;
     }
 
     public Planet(PlanetElement pe)

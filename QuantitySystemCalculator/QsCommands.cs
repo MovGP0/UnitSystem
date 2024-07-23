@@ -100,7 +100,7 @@ public static class QsCommands
             {
                 Console.WriteLine("   Yes I am caching things.");
             }
-            else 
+            else
             {
                 if (commands[1] == "clear" )
                 {
@@ -200,7 +200,7 @@ public static class QsCommands
         var qscVer = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(Qs.Qs)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
 
         var symbVer = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(SymbolicAlgebra.SymbolicVariable)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
-            
+
         var calcVer = (AssemblyFileVersionAttribute)Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
 
 
@@ -347,7 +347,7 @@ public static class QsCommands
     {
         var varo = from item in QsEvaluator.CurrentEvaluator.Scope.GetItems()
                     select item.Key;
-        return varo;       
+        return varo;
     }
 
 
@@ -355,7 +355,7 @@ public static class QsCommands
     {
         object q;
         QsEvaluator.CurrentEvaluator.Scope.TryGetValue(varName, out q);
-        return q;   
+        return q;
     }
 
     /// <summary>
@@ -376,7 +376,7 @@ public static class QsCommands
                 foreach (var nsvar in ns.GetVariablesKeys())
                 {
                     Console.WriteLine("        " + nsvar + " = " + ns.GetValue(nsvar).ToString());
-                }                    
+                }
             }
             Console.WriteLine();
         }
@@ -464,7 +464,7 @@ public static class QsCommands
                     select ("    " + ut.Uname + " " + ut.Symbol + " " + ut.System + ut.Qtype);
             foreach (var ut in uts)
             {
-                    
+
                 Console.WriteLine(ut);
             }
         Console.ForegroundColor = ForegroundColor;

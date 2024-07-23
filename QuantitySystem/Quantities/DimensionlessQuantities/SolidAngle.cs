@@ -14,7 +14,7 @@
 
         public static implicit operator SolidAngle<T>(T value)
         {
-            SolidAngle<T> Q = new SolidAngle<T>
+            SolidAngle<T> Q = new()
             {
                 Value = value
             };

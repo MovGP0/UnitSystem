@@ -6,7 +6,7 @@
 
         public Temperature(float exponent) : base(exponent) { }
 
-        private static QuantityDimension _Dimension = new QuantityDimension(0, 0, 0, 1, 0, 0, 0);
+        private static QuantityDimension _Dimension = new(0, 0, 0, 1, 0, 0, 0);
         public override QuantityDimension Dimension
         {
             get
@@ -18,7 +18,7 @@
 
         public static implicit operator Temperature<T>(T value)
         {
-            Temperature<T> Q = new Temperature<T>
+            Temperature<T> Q = new()
             {
                 Value = value
             };

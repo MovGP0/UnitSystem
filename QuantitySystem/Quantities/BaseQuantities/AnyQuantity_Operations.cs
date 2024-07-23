@@ -148,7 +148,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 {
                     //factor from second unit to first unit
                     var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
-                    
+
                     secondVal = MultiplyScalarByGeneric<Q>(stof.ConversionFactor, secondVal);
                 }
 
@@ -315,7 +315,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
                 qresult.Value = MultiplyGenericByGeneric(firstQuantity.Value, secondQuantity.Value);
 
-                //check if any of the two quantities have a valid unit 
+                //check if any of the two quantities have a valid unit
                 // to be able to derive the current quantity
 
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
@@ -377,7 +377,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
                 qresult.Value = DivideGenericByGeneric(firstQuantity.Value, secondQuantity.Value);
 
-                //check if any of the two quantities have a valid unit 
+                //check if any of the two quantities have a valid unit
                 // to be able to derive the current quantity
 
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
@@ -407,9 +407,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 throw new QuantityException("Raising Quantity to a non dimensionless quantity is not implemented\nExpected Result is " + expectedResult, new NotImplementedException());
             }
 
-            
-            // and I am ignoring the units conversion also 
-            
+
+            // and I am ignoring the units conversion also
+
             var unit = quantity.Unit.RaiseUnitPower((float)exponent.Value);
 
 
@@ -448,9 +448,9 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
             AnyQuantity<T> result = new DimensionlessQuantities.DimensionlessQuantity<T>();
             result.Value = RaiseGenericByGeneric(quantity.Value, exponent.Value);
-            
+
             return result;
-                
+
         }
 
         public static AnyQuantity<T> Mod(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
@@ -584,7 +584,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
                 {
 
                     #region Custom Types
-                    
+
 
                     var firstVal = firstQuantity.Value;
 
@@ -661,7 +661,7 @@ namespace QuantitySystem.Quantities.BaseQuantities
 
 
                     #region Custom Types
-                    
+
 
 
                     var firstVal = firstQuantity.Value;

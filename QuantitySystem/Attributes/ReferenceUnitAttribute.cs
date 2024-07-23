@@ -1,9 +1,9 @@
 ﻿namespace QuantitySystem.Attributes;
 
 /// <summary>
-/// Make a relation between the attributed unit 
+/// Make a relation between the attributed unit
 /// and a parent unit.
-/// If UnitType omitted the reference unit will be the default SI unit 
+/// If UnitType omitted the reference unit will be the default SI unit
 /// of the QuantityType of the Unit or DefaultUnit Attribute
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
@@ -16,7 +16,6 @@ public sealed class ReferenceUnitAttribute : Attribute
     /// 
     /// </summary>
     /// <param name="numerator"></param>
-    /// <param name="denominator"></param>
     public ReferenceUnitAttribute(double numerator)
     {
         _numerator = numerator;
@@ -43,12 +42,12 @@ public sealed class ReferenceUnitAttribute : Attribute
     {
         _source = source;
         UnitType = unitType;
-            
+
         Denominator = 1;
 
         // the numerator will be calculated based on source value
 
-            
+
         var sourceFunctionName = source[..source.IndexOf('.')];
 
         if (!DynamicQuantitySystem.DynamicSourceFunctions.ContainsKey(sourceFunctionName))

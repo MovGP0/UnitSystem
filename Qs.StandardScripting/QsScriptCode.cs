@@ -17,8 +17,8 @@ namespace Qs.Scripting
             return Run(new Scope());
         }
 
-        public static string LastLine { get; set; }        
-        
+        public static string LastLine { get; set; }
+
         public override object Run(Scope scope)
         {
             var code = string.Empty;
@@ -41,7 +41,7 @@ namespace Qs.Scripting
             //catch(Exception xx)
             //{
             //    code = LastLine;   //workaround because Host have something weird in SourceTextReader that don't work linux mono
-            //} 
+            //}
 
             var qs = QsEvaluator.CurrentEvaluator;
 
@@ -62,17 +62,17 @@ namespace Qs.Scripting
                     if(line.TrimStart().StartsWith("#module"))
                     {
                         // this is a directive
-                        var dir = line.TrimStart();                       
+                        var dir = line.TrimStart();
                         QsRoot.Root.LoadLibrary(dir.Substring(8).Trim());
                     }
                     else if (!line.StartsWith("#"))
                     {
                         //I want to exclude # if it was between parentthesis.
-                        //  oo(ferwe#kd adflk ) # 
+                        //  oo(ferwe#kd adflk ) #
 
                         // first pass (from left to right): find the # char which is the comment.
                         var pc = 0; // for ()
-                        
+
                         var qcOpened = false;
                         var ix = 0;
 
@@ -98,7 +98,7 @@ namespace Qs.Scripting
                             {
                                 if (pc == 0 && qcOpened == false)
                                 {
-                                    // found the comment 
+                                    // found the comment
                                     //  break
                                     break;
                                 }

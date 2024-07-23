@@ -29,7 +29,7 @@ namespace Qs.Types.Operators
                 foreach (var x in Coordinates)
                 {
                     var dpo = new QsDifferentialOperation();
-                    
+
                     var dx = (QsScalar)dpo.DifferentiateOperation(new SymbolicVariable(x).ToQuantity().ToScalar());
                     if(Power>1)
                         for (var p = 1; p < Power; p++)
@@ -46,8 +46,8 @@ namespace Qs.Types.Operators
 
 
         /// <summary>
-        /// \/ * value  operation is called gradient 
-        ///     gradient over scalar field generate a vector 
+        /// \/ * value  operation is called gradient
+        ///     gradient over scalar field generate a vector
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -57,11 +57,11 @@ namespace Qs.Types.Operators
 
             if (!ReferenceEquals(fscalar, null))
             {
-                // Here we will multiply the nabla \/ *  with @function 
+                // Here we will multiply the nabla \/ *  with @function
                 if (!ReferenceEquals(fscalar.FunctionQuantity, null))
                 {
                     var f = fscalar.FunctionQuantity.Value;
-                    
+
                     string[] prms = f.ParametersNames;
 
                     var fsv = f.ToSymbolicVariable();
@@ -69,7 +69,7 @@ namespace Qs.Types.Operators
                     var GradientResult = new QsVector();
 
                     // we loop through the symbolic body and differentiate it with respect to the function parameters.
-                    // then accumulate the 
+                    // then accumulate the
                     foreach (var prm in prms)
                     {
                         GradientResult.AddComponent(fsv.Differentiate(prm).ToQuantity().ToScalar());
@@ -82,9 +82,9 @@ namespace Qs.Types.Operators
             {
                 return DelVector.MultiplyVector((QsVector)value);
             }
-            
+
             throw new NotImplementedException(@"Multiplication of \/ * " + value.GetType().Name +" Not implemented yet");
-            
+
         }
 
 

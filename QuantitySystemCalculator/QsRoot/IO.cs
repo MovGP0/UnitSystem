@@ -12,7 +12,7 @@ namespace QsRoot
     {
 
         public static QsValue InputLine(string prompt)
-        {           
+        {
             Console.Write(prompt);
             return InputLine();
         }
@@ -21,7 +21,7 @@ namespace QsRoot
         {
             return new QsText(Console.ReadLine());
         }
-    
+
         public static QsValue PrintLine([QsParamInfo(QsParamType.Text)] QsParameter val)
         {
             Console.WriteLine(val.UnknownValueText);

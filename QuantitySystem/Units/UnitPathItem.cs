@@ -2,18 +2,11 @@
 
 namespace QuantitySystem.Units;
 
-public class UnitPathItem
+public sealed partial class UnitPathItem
 {
-
     public Unit Unit { get; set; }
 
-    public double Times
-    {
-        get
-        {
-            return Numerator / Denominator;
-        }
-    }
+    public double Times => Numerator / Denominator;
 
     public double Numerator { get; set; }
 
@@ -26,35 +19,9 @@ public class UnitPathItem
     /// </summary>
     public void Invert()
     {
-        var num = Numerator;
-        Numerator = Denominator;
-        Denominator = num;
-
+        (Numerator, Denominator) = (Denominator, Numerator);
         Unit = Unit.Invert();
     }
 
-
-    public override bool Equals(object obj)
-    {
-        if (obj is UnitPathItem upi)
-        {
-            if (Unit.GetType() == upi.Unit.GetType()
-                && Numerator == upi.Numerator
-                && Denominator == upi.Denominator)
-                return true;
-            else
-                return false;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public override string ToString()
-    {
-
-        return Unit.Symbol + ": " + Times.ToString(CultureInfo.InvariantCulture);
-    }
-
+    public override string ToString() => Unit.Symbol + ": " + Times.ToString(CultureInfo.InvariantCulture);
 }

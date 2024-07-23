@@ -20,6 +20,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Currencies.tt</DependentUpon>
     </Compile>
+    <Compile Update="Units\Unit.*.cs">
+      <DependentUpon>Unit.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Units\UnitPathStack.Equatable.cs">
+      <DependentUpon>UnitPathStack.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Units\UnitPathItem.Equatable.cs">
+      <DependentUpon>UnitPathItem.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Units\MetricUnit.Helper.cs">
+      <DependentUpon>MetricUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Update="QuantityDimension.*.cs">
+      <DependentUpon>QuantityDimension.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>
