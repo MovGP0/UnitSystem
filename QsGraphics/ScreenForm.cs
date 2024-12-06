@@ -15,11 +15,5 @@ public partial class ScreenForm : Form
         _FormGraphics = CreateGraphics();
     }
 
-    public Graphics FormGraphics
-    {
-        get
-        {
-            return _FormGraphics;
-        }
-    }
+    public Graphics FormGraphics => _FormGraphics;
 }

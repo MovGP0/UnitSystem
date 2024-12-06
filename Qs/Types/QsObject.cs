@@ -28,24 +28,12 @@ public class QsObject : QsValue
         _NativeObject = nativeObject;
     }
 
-    public Object ThisObject
-    {
-        get
-        {
-            return _NativeObject;
-        }
-    }
+    public Object ThisObject => _NativeObject;
 
     /// <summary>
     /// Native Type.
     /// </summary>
-    public Type InstanceType
-    {
-        get
-        {
-            return _NativeObject.GetType();
-        }
-    }
+    public Type InstanceType => _NativeObject.GetType();
 
     public override  QsValue Execute(Token expression)
     {
@@ -218,10 +206,7 @@ public class QsObject : QsValue
 
 
     #region QsValue Implementation
-    public override QsValue Identity
-    {
-        get { throw new NotImplementedException(); }
-    }
+    public override QsValue Identity => throw new NotImplementedException();
 
     /*
 

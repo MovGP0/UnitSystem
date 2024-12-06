@@ -9,21 +9,9 @@ public class QsBoolean : QsValue
     static QsBoolean _QsTrue = new() { Value = true };
     static QsBoolean _QsFalse = new() { Value = false };
 
-    public static QsBoolean True
-    {
-        get
-        {
-            return _QsTrue;
-        }
-    }
+    public static QsBoolean True => _QsTrue;
 
-    public static  QsBoolean False
-    {
-        get
-        {
-            return _QsFalse;
-        }
-    }
+    public static  QsBoolean False => _QsFalse;
 
 
     public static implicit operator QsBoolean(bool b)
@@ -54,10 +42,7 @@ public class QsBoolean : QsValue
 #endif
     }
 
-    public override QsValue Identity
-    {
-        get { return True; }
-    }
+    public override QsValue Identity => True;
 
     public static QsBoolean operator +(QsBoolean a, QsBoolean b)
     {

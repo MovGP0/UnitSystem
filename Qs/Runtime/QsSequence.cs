@@ -153,10 +153,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             if (value == false)
                 CachedValues.Clear(); //clear the previous cached values.
         }
-        get
-        {
-            return _CachingEnabled;
-        }
+        get => _CachingEnabled;
     }
 
     /// <summary>

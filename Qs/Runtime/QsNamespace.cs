@@ -26,16 +26,10 @@ public class QsNamespace(string name)
     public string NameSpaceRoot { get; set; }
 
 
-    public string Name { get; private set; } = name;
+    public string Name { get; } = name;
 
     private Type _NamespaceType = null;
-    public Type NamespaceType
-    {
-        get
-        {
-            return _NamespaceType;
-        }
-    }
+    public Type NamespaceType => _NamespaceType;
 
 
     private Dictionary<string, object> Values = new(StringComparer.OrdinalIgnoreCase);

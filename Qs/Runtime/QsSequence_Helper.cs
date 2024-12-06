@@ -20,13 +20,10 @@ public partial class QsSequence
             }
             return _SequenceDeclaration + " ..> " + gg;
         }
-        set
-        {
-            _SequenceDeclaration = value;
-        }
+        set => _SequenceDeclaration = value;
     }
 
-    public QsParamInfo[] Parameters { get; private set; }
+    public QsParamInfo[] Parameters { get; }
 
     /// <summary>
     /// The index name of the sequence that used in elements
@@ -49,16 +46,11 @@ public partial class QsSequence
     private string _SequenceName;
     public string SequenceSymbolicName
     {
-        get
-        {
+        get =>
             //% indexes number.
             //# parameters number.
-            return FormSequenceSymbolicName(_SequenceName, 1, Parameters.Length);
-        }
-        private set
-        {
-            _SequenceName = value;
-        }
+            FormSequenceSymbolicName(_SequenceName, 1, Parameters.Length);
+        private set => _SequenceName = value;
     }
 
     /// <summary>

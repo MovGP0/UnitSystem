@@ -11,7 +11,6 @@ public abstract class TokenClass
     public Regex Regex
     {
         get;
-        private set;
     }
 
 
@@ -21,7 +20,6 @@ public abstract class TokenClass
     public bool ExactWord
     {
         get;
-        private set;
     }
 
     /// <summary>
@@ -30,21 +28,14 @@ public abstract class TokenClass
     public string RegexPattern
     {
         get;
-        private set;
     }
 
-    public string OriginalPatternWord
-    {
-        get
-        {
-            return Regex.Unescape(RegexPattern);
-        }
-    }
+    public string OriginalPatternWord => Regex.Unescape(RegexPattern);
 
     /// <summary>
     /// Condition for the comparing process to make sure that the target should begin with this value. otherwise the code will bypass the current process.
     /// </summary>
-    public string ShouldBeginWith { get; private set; }
+    public string ShouldBeginWith { get; }
 
     private bool _ContinueTestAfterSuccess = false;
 
@@ -54,13 +45,13 @@ public abstract class TokenClass
     /// </summary>
     public bool ContinueTestAfterSuccess
     {
-        get { return _ContinueTestAfterSuccess; }
-        set { _ContinueTestAfterSuccess = value; }
+        get => _ContinueTestAfterSuccess;
+        set => _ContinueTestAfterSuccess = value;
     }
 
     public bool ContinousToken { get; set; }
 
-    public string ShouldEndWith { get; private set; }
+    public string ShouldEndWith { get; }
 
 
     //cache token regexes
@@ -140,11 +131,5 @@ public abstract class TokenClass
     /// <summary>
     /// Type of TokenClass
     /// </summary>
-    public Type Type
-    {
-        get
-        {
-            return _ThisTokenType;
-        }
-    }
+    public Type Type => _ThisTokenType;
 }

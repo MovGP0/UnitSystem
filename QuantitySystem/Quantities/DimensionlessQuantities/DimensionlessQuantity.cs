@@ -13,15 +13,7 @@ public class DimensionlessQuantity<T>(float exponent, params AnyQuantity<T>[] in
     }
 
 
-    public override QuantityDimension Dimension
-    {
-        get
-        {
-            return QuantityDimension.Dimensionless;
-        }
-    }
-
-
+    public override QuantityDimension Dimension => QuantityDimension.Dimensionless;
 
 
     public AnyQuantity<T>[] GetInternalQuantities()

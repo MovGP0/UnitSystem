@@ -4,10 +4,7 @@ public partial class QsTensor : QsValue
 {
 
     #region QsValue operations
-    public override QsValue Identity
-    {
-        get { throw new NotImplementedException(); }
-    }
+    public override QsValue Identity => throw new NotImplementedException();
 
     public override QsValue AddOperation(QsValue vl)
     {

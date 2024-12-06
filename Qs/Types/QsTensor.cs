@@ -72,24 +72,12 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     /// <summary>
     /// Count of the face matrix rows {m}
     /// </summary>
-    public int FaceRowsCount
-    {
-        get
-        {
-            return MatrixLayers[0].RowsCount;
-        }
-    }
+    public int FaceRowsCount => MatrixLayers[0].RowsCount;
 
     /// <summary>
     /// Count of the face matrix columns {n}
     /// </summary>
-    public int FaceColumnsCount
-    {
-        get
-        {
-            return MatrixLayers[0].ColumnsCount;
-        }
-    }
+    public int FaceColumnsCount => MatrixLayers[0].ColumnsCount;
 
 
     /// <summary>
@@ -210,14 +198,8 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     /// <returns></returns>
     public QsScalar this[int face, int row, int column]
     {
-        get
-        {
-            return MatrixLayers[face][row, column];
-        }
-        set
-        {
-            MatrixLayers[face][row, column] = value;
-        }
+        get => MatrixLayers[face][row, column];
+        set => MatrixLayers[face][row, column] = value;
     }
 
     /// <summary>

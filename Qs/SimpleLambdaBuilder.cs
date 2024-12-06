@@ -23,15 +23,8 @@ class SimpleLambdaBuilder(string functionName, Type type)
     /// </summary>
     public Expression Body
     {
-        get
-        {
-            return _body;
-        }
-        set
-        {
-
-            _body = value;
-        }
+        get => _body;
+        set => _body = value;
     }
 
     /// <summary>
@@ -54,14 +47,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
     /// <summary>
     /// List of lambda's parameters for direct manipulation
     /// </summary>
-    public List<ParameterExpression> Parameters
-    {
-        get
-        {
-            return _params;
-        }
-    }
-
+    public List<ParameterExpression> Parameters => _params;
 
 
     private static Type GetLambdaType(Type returnType, IList<ParameterExpression> parameterList)

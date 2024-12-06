@@ -24,73 +24,31 @@ public sealed partial class SymbolicVariable
     private static SymbolicVariable _Eleven = new SymbolicVariable("11");
     private static SymbolicVariable _Twelve = new SymbolicVariable("12");
 
-    public static SymbolicVariable NegativeOne
-    {
-        get { return _NegativeOne.Clone(); }
-    }
+    public static SymbolicVariable NegativeOne => _NegativeOne.Clone();
 
-    public static SymbolicVariable Zero
-    {
-        get { return _Zero.Clone(); }
-    }
+    public static SymbolicVariable Zero => _Zero.Clone();
 
-    public static SymbolicVariable One
-    {
-        get { return _One.Clone(); }
-    }
+    public static SymbolicVariable One => _One.Clone();
 
-    public static SymbolicVariable Two
-    {
-        get { return _Two.Clone(); }
-    }
+    public static SymbolicVariable Two => _Two.Clone();
 
-    public static SymbolicVariable Three
-    {
-        get { return _Three.Clone(); }
-    }
+    public static SymbolicVariable Three => _Three.Clone();
 
-    public static SymbolicVariable Four
-    {
-        get { return _Four.Clone(); }
-    }
+    public static SymbolicVariable Four => _Four.Clone();
 
-    public static SymbolicVariable Five
-    {
-        get { return _Five.Clone(); }
-    }
+    public static SymbolicVariable Five => _Five.Clone();
 
-    public static SymbolicVariable Six
-    {
-        get { return _Six.Clone(); }
-    }
+    public static SymbolicVariable Six => _Six.Clone();
 
-    public static SymbolicVariable Seven
-    {
-        get { return _Seven.Clone(); }
-    }
+    public static SymbolicVariable Seven => _Seven.Clone();
 
-    public static SymbolicVariable Eight
-    {
-        get { return _Eight.Clone(); }
-    }
+    public static SymbolicVariable Eight => _Eight.Clone();
 
-    public static SymbolicVariable Nine
-    {
-        get { return _Nine.Clone(); }
-    }
+    public static SymbolicVariable Nine => _Nine.Clone();
 
-    public static SymbolicVariable Ten
-    {
-        get { return _Ten.Clone(); }
-    }
+    public static SymbolicVariable Ten => _Ten.Clone();
 
-    public static SymbolicVariable Eleven
-    {
-        get { return _Eleven.Clone(); }
-    }
+    public static SymbolicVariable Eleven => _Eleven.Clone();
 
-    public static SymbolicVariable Twelve
-    {
-        get { return _Twelve.Clone(); }
-    }
+    public static SymbolicVariable Twelve => _Twelve.Clone();
 }

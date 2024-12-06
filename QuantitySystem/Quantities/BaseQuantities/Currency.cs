@@ -22,13 +22,7 @@ public class Currency<T> : AnyQuantity<T>
         Currency = new DimensionDescriptors.CurrencyDescriptor(1)
     };
 
-    public override QuantityDimension Dimension
-    {
-        get
-        {
-            return _Dimension * Exponent;
-        }
-    }
+    public override QuantityDimension Dimension => _Dimension * Exponent;
 
 
     public static implicit operator Currency<T>(T value)

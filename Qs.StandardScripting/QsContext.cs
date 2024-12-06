@@ -45,13 +45,7 @@ public sealed class QsContext : LanguageContext
     }
 
 
-    public override Version LanguageVersion
-    {
-        get
-        {
-            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-        }
-    }
+    public override Version LanguageVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
 
     /// <summary>

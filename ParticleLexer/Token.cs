@@ -62,14 +62,7 @@ public sealed partial class Token : IEnumerable<Token>
     #region structure & methods
 
     private List<Token> childTokens = [];
-    public ICollection<Token> ChildTokens
-    {
-        get
-        {
-            return childTokens;
-        }
-    }
-
+    public ICollection<Token> ChildTokens => childTokens;
 
 
     public Token AppendSubToken()
@@ -112,24 +105,15 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public Token this[int index]
     {
-        get
-        {
-            return childTokens[index];
-        }
-        set
-        {
-            childTokens[index] = value;
-        }
+        get => childTokens[index];
+        set => childTokens[index] = value;
     }
 
 
     /// <summary>
     /// Count of child tokens.
     /// </summary>
-    public int Count
-    {
-        get { return childTokens.Count; }
-    }
+    public int Count => childTokens.Count;
 
     public Token ParentToken { get; set; }
 
@@ -167,13 +151,7 @@ public sealed partial class Token : IEnumerable<Token>
         }
     }
 
-    public int TokenValueLength
-    {
-        get
-        {
-            return TokenValue.Length;
-        }
-    }
+    public int TokenValueLength => TokenValue.Length;
 
 
     /// <summary>
@@ -192,13 +170,8 @@ public sealed partial class Token : IEnumerable<Token>
 
     #endregion
 
-    public string DebugView
-    {
-        get
-        {
-            return "[" + IndexInText.ToString() + ", "+TokenClassType.Name + "]: " + TokenValue;
-        }
-    }
+    public string DebugView => "[" + IndexInText.ToString() + ", "+TokenClassType.Name + "]: " + TokenValue;
+
     public override string ToString()
     {
         return DebugView;

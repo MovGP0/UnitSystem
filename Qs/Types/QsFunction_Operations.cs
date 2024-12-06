@@ -37,10 +37,7 @@ public partial class QsFunction
         return all.TrimStart(',');
     }
 
-    public override QsValue Identity
-    {
-        get { throw new NotImplementedException(); }
-    }
+    public override QsValue Identity => throw new NotImplementedException();
 
 
     /// <summary>

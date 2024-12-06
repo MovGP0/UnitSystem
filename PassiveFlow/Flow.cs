@@ -73,13 +73,7 @@ public class Flow : IEnumerable<Step>
         }
     }
 
-    public FieldInfo[] MyFields
-    {
-        get
-        {
-            return _MyFields.ToArray();
-        }
-    }
+    public FieldInfo[] MyFields => _MyFields.ToArray();
 
 
     #region Flowstep Add procedures
@@ -175,21 +169,10 @@ public class Flow : IEnumerable<Step>
 
 
 
-    public Step FirstStep
-    {
-        get
-        {
-            return FlowSteps[FlowSteps.GetLowerBound(0)];
-        }
-    }
+    public Step FirstStep => FlowSteps[FlowSteps.GetLowerBound(0)];
 
-    public Step LastStep
-    {
-        get
-        {
-            return FlowSteps[FlowSteps.GetUpperBound(0)];
-        }
-    }
+    public Step LastStep => FlowSteps[FlowSteps.GetUpperBound(0)];
+
     public Step GetFlowStep(int index)
     {
         return FlowSteps[index];
@@ -247,22 +230,13 @@ public class Flow : IEnumerable<Step>
         }
     }
 
-    public Step[] FlowSteps
-    {
-        get
-        {
-            return (Step[])innerSteps.ToArray();
-        }
-    }
+    public Step[] FlowSteps => (Step[])innerSteps.ToArray();
 
 
     protected int _Previous_StepIndex;
     protected int _Current_StepIndex;
 
-    public int CurrentStepIndex
-    {
-        get { return _Current_StepIndex; }
-    }
+    public int CurrentStepIndex => _Current_StepIndex;
 
     #region Flowstep Pointer Control
 
@@ -418,25 +392,13 @@ public class Flow : IEnumerable<Step>
     /// <summary>
     /// The step that was before the current active step.
     /// </summary>
-    public Step PreviousStep
-    {
-        get
-        {
-            return FlowSteps[_Previous_StepIndex];
-        }
-    }
+    public Step PreviousStep => FlowSteps[_Previous_StepIndex];
 
 
     /// <summary>
     /// Returns the current step that the flow is waiting at.
     /// </summary>
-    public Step CurrentStep
-    {
-        get
-        {
-            return FlowSteps[_Current_StepIndex];
-        }
-    }
+    public Step CurrentStep => FlowSteps[_Current_StepIndex];
 
 
     /// <summary>

@@ -767,21 +767,9 @@ public partial class QsMatrix : QsValue
     /// <summary>
     /// Transpose of Cofactors matrix
     /// </summary>
-    public QsMatrix Adjoint
-    {
-        get
-        {
-            return Cofactors.Transpose();
-        }
-    }
+    public QsMatrix Adjoint => Cofactors.Transpose();
 
-    public QsMatrix Inverse
-    {
-        get
-        {
-            return Adjoint.DivideScalar( Determinant(this));
-        }
-    }
+    public QsMatrix Inverse => Adjoint.DivideScalar( Determinant(this));
 
 
     public override QsValue Execute(Token expression)

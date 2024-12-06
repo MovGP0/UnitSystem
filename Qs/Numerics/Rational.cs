@@ -91,13 +91,7 @@ public struct Rational(float num, float den)
         return result;
     }
 
-    public double Value
-    {
-        get
-        {
-            return (double)num / den;
-        }
-    }
+    public double Value => (double)num / den;
 
     public override string ToString()
     {

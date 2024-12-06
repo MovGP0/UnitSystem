@@ -19,13 +19,7 @@ class QsVar
 
     private readonly QsEvaluator evaluator;
 
-    public QsEvaluator Evaluator
-    {
-        get
-        {
-            return evaluator;
-        }
-    }
+    public QsEvaluator Evaluator => evaluator;
 
 
     public class ExprOp
@@ -39,10 +33,7 @@ class QsVar
 
         public ExprOp Next
         {
-            get
-            {
-                return _Next;
-            }
+            get => _Next;
             set
             {
                 _Next = value;
@@ -1765,17 +1756,11 @@ class QsVar
     }
 
 
-    public QsScope Scope
-    {
-        get
-        {
-            return Evaluator.Scope;
-        }
-    }
+    public QsScope Scope => Evaluator.Scope;
 
     #endregion
 
-    public Type ScopeType { get { return Scope.GetType(); } }
+    public Type ScopeType => Scope.GetType();
 
     #region Expressions Generators
 

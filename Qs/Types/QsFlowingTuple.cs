@@ -93,13 +93,7 @@ public class QsFlowingTuple : QsValue
     /// <summary>
     /// Returns number of elements in tuple
     /// </summary>
-    public int Count
-    {
-        get
-        {
-            return ThisFlow.Count();
-        }
-    }
+    public int Count => ThisFlow.Count();
 
     public override QsValue? Execute(Token expression)
     {

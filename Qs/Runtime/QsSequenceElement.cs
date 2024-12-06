@@ -22,14 +22,8 @@ public class QsSequenceElement
     /// </summary>
     public string ElementDeclaration
     {
-        get
-        {
-            return elementDeclaration.Trim();
-        }
-        set
-        {
-            elementDeclaration = value;
-        }
+        get => elementDeclaration.Trim();
+        set => elementDeclaration = value;
     }
 
 

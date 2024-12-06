@@ -21,10 +21,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     /// </summary>
     private readonly ScalarTypes _ScalarType = scalarType;
 
-    public ScalarTypes ScalarType
-    {
-        get { return _ScalarType; }
-    }
+    public ScalarTypes ScalarType => _ScalarType;
 
     /// <summary>
     /// Quantity that its storage is symbol.

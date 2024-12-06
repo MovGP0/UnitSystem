@@ -98,15 +98,10 @@ public class QsParameter
     /// <summary>
     /// Get the parameter value string if exist or the parameter body itself
     /// </summary>
-    public string? UnknownValueText
-    {
-        get
-        {
-            return ParameterValue != null
-                ? ParameterValue.ToString()
-                : ParameterRawText;
-        }
-    }
+    public string? UnknownValueText =>
+        ParameterValue != null
+            ? ParameterValue.ToString()
+            : ParameterRawText;
 
     /// <summary>
     /// if we consider the <see cref="ParameterRawText"/> as a function name.

@@ -19,20 +19,7 @@ public abstract class CallTokenClass(GroupTokenClass groupToken, TokenClass para
     /// </summary>
     protected readonly TokenClass _ParameterSeparatorToken = parameterSeparatorToken;
 
-    public GroupTokenClass GroupToken
-    {
-        get
-        {
-            return _GroupToken;
-        }
-    }
+    public GroupTokenClass GroupToken => _GroupToken;
 
-    public TokenClass ParameterSeparatorToken
-    {
-        get
-        {
-            return _ParameterSeparatorToken;
-        }
-    }
-
+    public TokenClass ParameterSeparatorToken => _ParameterSeparatorToken;
 }

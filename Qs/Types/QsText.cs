@@ -20,10 +20,7 @@ public partial class QsText(string text) : QsValue
 
 
     #region QsValue Operations
-    public override QsValue Identity
-    {
-        get { throw new NotImplementedException(); }
-    }
+    public override QsValue Identity => throw new NotImplementedException();
 
     public override QsValue AddOperation(QsValue value)
     {

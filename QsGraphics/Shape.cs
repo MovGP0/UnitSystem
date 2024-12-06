@@ -14,11 +14,5 @@ public abstract class Shape
         Timer.Reset();
     }
 
-    public string Name
-    {
-        get
-        {
-            return GetType().Name;
-        }
-    }
+    public string Name => GetType().Name;
 }

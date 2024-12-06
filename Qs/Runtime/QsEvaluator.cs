@@ -61,14 +61,7 @@ public class QsEvaluator
 
     private QsScope _InternalScope = new();
 
-    public QsScope Scope
-    {
-        get
-        {
-            return _InternalScope;
-        }
-    }
-
+    public QsScope Scope => _InternalScope;
 
 
     public object GetVariable(string varName)
@@ -1253,13 +1246,7 @@ public class QsEvaluator
     }
 
     private static Assembly _CallingAssembly; // this will hold the calling assembly that called the current evaluator
-    public static Assembly CallingAssembly
-    {
-        get
-        {
-            return _CallingAssembly;
-        }
-    }
+    public static Assembly CallingAssembly => _CallingAssembly;
 
     private static QsEvaluator _CurrentEvaluator;
     public static QsEvaluator CurrentEvaluator

@@ -20,14 +20,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
     public string FunctionName
     {
-        get
-        {
-            return functionName;
-        }
-        internal set
-        {
-            functionName = value;
-        }
+        get => functionName;
+        internal set => functionName = value;
     }
 
     /// <summary>
@@ -266,115 +260,34 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                 _InternalFunctionDelegate = FunctionExpression.Compile();
             return _InternalFunctionDelegate;
         }
-        set
-        {
-            _InternalFunctionDelegate = value;
-        }
+        set => _InternalFunctionDelegate = value;
     }
 
-    private Func<QsValue> FunctionDelegate_0
-    {
-        get
-        {
-            return (Func<QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsValue> FunctionDelegate_0 => (Func<QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsValue> FunctionDelegate_1
-    {
-        get
-        {
-            return (Func<QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsValue> FunctionDelegate_1 => (Func<QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsValue> FunctionDelegate_2
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsValue> FunctionDelegate_2 => (Func<QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_3
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_3 => (Func<QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_4
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_4 => (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_5
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_5 => (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_6
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_6 => (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_7
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_7 => (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_8
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_8 => (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_9
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_9 => (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_10
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_10 => (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_11
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_11 => (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
-    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_12
-    {
-        get
-        {
-            return (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
-        }
-    }
+    private Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue> FunctionDelegate_12 => (Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)InternalFunctionDelegate;
 
     #endregion
 
@@ -412,13 +325,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <summary>
     /// Returns the parameters names in the function
     /// </summary>
-    public string[] ParametersNames
-    {
-        get
-        {
-            return (from p in Parameters select p.Name).ToArray();
-        }
-    }
+    public string[] ParametersNames => (from p in Parameters select p.Name).ToArray();
 
 
     /// <summary>
@@ -487,10 +394,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <summary>
     /// means you shouldn't modify the value of this function.
     /// </summary>
-    public bool IsReadOnly
-    {
-        get { return isReadOnly; }
-    }
+    public bool IsReadOnly => isReadOnly;
 
     public override string ToShortString()
     {

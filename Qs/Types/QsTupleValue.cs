@@ -25,13 +25,7 @@ public struct QsTupleValue
         _LazyValue = value;
     }
 
-    public bool IsLazyValue
-    {
-        get
-        {
-            return _LazyValue != null;
-        }
-    }
+    public bool IsLazyValue => _LazyValue != null;
 
     public QsTupleValue(QsValue value)
     {

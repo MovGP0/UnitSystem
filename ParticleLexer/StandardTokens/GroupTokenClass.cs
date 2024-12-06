@@ -9,13 +9,7 @@ public abstract class GroupTokenClass(TokenClass openToken, TokenClass closeToke
     protected readonly TokenClass _openToken = openToken;
     protected readonly TokenClass _closeToken = closeToken;
 
-    public TokenClass OpenToken
-    {
-        get { return _openToken; }
-    }
+    public TokenClass OpenToken => _openToken;
 
-    public TokenClass CloseToken
-    {
-        get { return _closeToken; }
-    }
+    public TokenClass CloseToken => _closeToken;
 }

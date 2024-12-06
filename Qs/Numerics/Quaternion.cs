@@ -29,13 +29,7 @@ public struct Quaternion : IEquatable<Quaternion>
     private double c;
     private double d;
 
-    public double Real
-    {
-        get
-        {
-            return a;
-        }
-    }
+    public double Real => a;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     public double i => b;

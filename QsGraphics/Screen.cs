@@ -15,8 +15,8 @@ public class Screen
 
     public double PixelPerMeter
     {
-        get { return _PixelPerMeter; }
-        set { _PixelPerMeter = value; }
+        get => _PixelPerMeter;
+        set => _PixelPerMeter = value;
     }
 
     private readonly ScreenForm _Form;
@@ -194,13 +194,5 @@ public class Screen
 
     }
 
-    public Shape this[int i]
-    {
-        get
-        {
-            return Shapes[i];
-        }
-    }
-
-
+    public Shape this[int i] => Shapes[i];
 }

@@ -80,14 +80,8 @@ public partial class SymbolicVariable
     /// </summary>
     public double SymbolPower
     {
-        private set
-        {
-            _SymbolPower = value;
-        }
-        get
-        {
-            return _SymbolPower;
-        }
+        private set => _SymbolPower = value;
+        get => _SymbolPower;
     }
 
     /*
@@ -99,13 +93,7 @@ public partial class SymbolicVariable
 
     private SymbolicVariable? _CoeffecientPowerTerm;
 
-    public SymbolicVariable? CoeffecientPowerTerm
-    {
-        get
-        {
-            return _CoeffecientPowerTerm;
-        }
-    }
+    public SymbolicVariable? CoeffecientPowerTerm => _CoeffecientPowerTerm;
 
     public string CoeffecientPowerText
     {
@@ -508,14 +496,8 @@ public partial class SymbolicVariable
     SymbolicVariable? _BaseVariable;
     public SymbolicVariable? BaseVariable
     {
-        get
-        {
-            return _BaseVariable;
-        }
-        internal set
-        {
-            _BaseVariable = value;
-        }
+        get => _BaseVariable;
+        internal set => _BaseVariable = value;
     }
 
     /// <summary>
@@ -616,10 +598,7 @@ public partial class SymbolicVariable
             if (_DividedTerm == null) _DividedTerm = new SymbolicVariable("1");
             return _DividedTerm;
         }
-        internal set
-        {
-            _DividedTerm = value;
-        }
+        internal set => _DividedTerm = value;
     }
 
     /// <summary>
@@ -635,13 +614,7 @@ public partial class SymbolicVariable
         }
     }
 
-    public SymbolicVariable Denominator
-    {
-        get
-        {
-            return DividedTerm;
-        }
-    }
+    public SymbolicVariable Denominator => DividedTerm;
 
     /// <summary>
     /// Multiplied terms in the term other that original symbol letter.

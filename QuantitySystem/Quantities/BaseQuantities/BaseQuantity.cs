@@ -8,13 +8,7 @@ public abstract class BaseQuantity(float exponent)
 
     private float _Exponent = exponent;
 
-    public float Exponent
-    {
-        get
-        {
-            return _Exponent;
-        }
-    }
+    public float Exponent => _Exponent;
 
     internal void SetExponent(float exp)
     {
@@ -37,14 +31,7 @@ public abstract class BaseQuantity(float exponent)
 
     #region M L T  processing
 
-    public virtual QuantityDimension Dimension
-    {
-        get
-        {
-            return new QuantityDimension();
-        }
-    }
-
+    public virtual QuantityDimension Dimension => new();
 
     #endregion
 

@@ -4,13 +4,7 @@ namespace Qs.Types;
 
 public class QsReference(string varname) : QsValue
 {
-    public string VariableName
-    {
-        get
-        {
-            return varname;
-        }
-    }
+    public string VariableName => varname;
 
     public QsValue ContentValue
     {
@@ -59,10 +53,7 @@ public class QsReference(string varname) : QsValue
     }
 
 
-    public override QsValue Identity
-    {
-        get { return ContentValue.Identity; }
-    }
+    public override QsValue Identity => ContentValue.Identity;
 
     public override QsValue AddOperation(QsValue value)
     {

@@ -9,22 +9,9 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 {
     private double _real = real, _imaginary = imaginary;
 
-    public double Real
-    {
-        get
-        {
-            return _real;
-        }
-    }
+    public double Real => _real;
 
-    public double Imaginary
-    {
-        get
-        {
-
-            return _imaginary;
-        }
-    }
+    public double Imaginary => _imaginary;
 
 
     public static readonly Complex Zero = new(0, 0);
@@ -83,13 +70,7 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
         return _real.GetHashCode() ^ _imaginary.GetHashCode();
     }
 
-    public bool IsZero
-    {
-        get
-        {
-            return _real == 0.0 && _imaginary == 0.0;
-        }
-    }
+    public bool IsZero => _real == 0.0 && _imaginary == 0.0;
 
 
     #region Operations

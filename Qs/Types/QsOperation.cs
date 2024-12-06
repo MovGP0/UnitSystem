@@ -37,10 +37,7 @@ public class QsOperation : QsValue
 
     #endregion
 
-    public override QsValue Identity
-    {
-        get { throw new NotImplementedException(); }
-    }
+    public override QsValue Identity => throw new NotImplementedException();
 
     public override QsValue AddOperation(QsValue value)
     {

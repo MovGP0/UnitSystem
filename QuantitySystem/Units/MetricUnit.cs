@@ -42,10 +42,7 @@ public abstract partial class MetricUnit : Unit
     /// <summary>
     /// Current unit default prefix.
     /// </summary>
-    public MetricPrefix DefaultUnitPrefix
-    {
-        get { return defaultUnitPrefix; }
-    }
+    public MetricPrefix DefaultUnitPrefix => defaultUnitPrefix;
 
 
     private MetricPrefix unitPrefix;
@@ -55,23 +52,15 @@ public abstract partial class MetricUnit : Unit
     /// </summary>
     public MetricPrefix UnitPrefix
     {
-        get { return unitPrefix; }
-        set { unitPrefix = value; }
+        get => unitPrefix;
+        set => unitPrefix = value;
     }
 
 
     /// <summary>
     /// unit symbol with prefix.
     /// </summary>
-    public override string Symbol
-    {
-        get
-        {
-            {
-                return unitPrefix.Symbol + base.Symbol;
-            }
-        }
-    }
+    public override string Symbol => unitPrefix.Symbol + base.Symbol;
 
     /// <summary>
     /// Tells if the current unit in default mode or not.
