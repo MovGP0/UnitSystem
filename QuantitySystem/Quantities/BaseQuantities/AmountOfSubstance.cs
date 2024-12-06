@@ -1,10 +1,8 @@
 ﻿namespace QuantitySystem.Quantities.BaseQuantities;
 
-public class AmountOfSubstance<T> : AnyQuantity<T>
+public class AmountOfSubstance<T>(float exponent) : AnyQuantity<T>(exponent)
 {
-    public AmountOfSubstance() : base(1) { }
-
-    public AmountOfSubstance(float exponent) : base(exponent) { }
+    public AmountOfSubstance() : this(1) { }
 
     private static readonly QuantityDimension dimension = new(0, 0, 0, 0, 0, 1, 0);
 

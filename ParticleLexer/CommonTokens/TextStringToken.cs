@@ -1,9 +1,6 @@
-﻿namespace ParticleLexer.CommonTokens
-{
-    /// <summary>
-    /// Text between two single qutation.
-    /// </summary>
-    public class TextStringToken : TokenClass
-    {
-    }
-}
+﻿namespace ParticleLexer.CommonTokens;
+
+/// <summary>
+/// Text between two single quotation.
+/// </summary>
+public class TextStringToken : TokenClass;

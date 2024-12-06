@@ -1,29 +1,26 @@
-﻿namespace QuantitySystem.Quantities.BaseQuantities
+﻿namespace QuantitySystem.Quantities.BaseQuantities;
+
+public class Temperature<T>(float exponent) : AnyQuantity<T>(exponent)
 {
-    public class Temperature<T> : AnyQuantity<T>
+    public Temperature() : this(1) { }
+
+    private static QuantityDimension _Dimension = new(0, 0, 0, 1, 0, 0, 0);
+    public override QuantityDimension Dimension
     {
-        public Temperature() : base(1) { }
-
-        public Temperature(float exponent) : base(exponent) { }
-
-        private static QuantityDimension _Dimension = new(0, 0, 0, 1, 0, 0, 0);
-        public override QuantityDimension Dimension
+        get
         {
-            get
-            {
-                return _Dimension * Exponent;
-            }
+            return _Dimension * Exponent;
         }
+    }
 
 
-        public static implicit operator Temperature<T>(T value)
+    public static implicit operator Temperature<T>(T value)
+    {
+        Temperature<T> Q = new()
         {
-            Temperature<T> Q = new()
-            {
-                Value = value
-            };
+            Value = value
+        };
 
-            return Q;
-        }
+        return Q;
     }
 }

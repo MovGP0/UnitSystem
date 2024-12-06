@@ -1,15 +1,10 @@
 ﻿namespace QuantitySystem.DimensionDescriptors;
 
-public struct TemperatureDescriptor :
+public struct TemperatureDescriptor(float exponent) :
     IDimensionDescriptor<TemperatureDescriptor>,
     IEquatable<TemperatureDescriptor>
 {
-    public TemperatureDescriptor(float exponent):this()
-    {
-        Exponent = exponent;
-    }
-
-    public float Exponent { get; set; }
+    public float Exponent { get; set; } = exponent;
 
     public TemperatureDescriptor Add(TemperatureDescriptor dimensionDescriptor)
     {

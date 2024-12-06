@@ -1,26 +1,20 @@
 ﻿namespace PassiveFlow;
 
-public class StepEventArgs : EventArgs
+public class StepEventArgs(Step previousStep, Step currentStep, StepAction? stepAction)
+    : EventArgs
 {
     /// <summary>
     /// The step right before the current step.
     /// </summary>
-    public Step PreviousStep { get; set; }
+    public Step PreviousStep { get; set; } = previousStep;
 
     /// <summary>
     /// The current step.
     /// </summary>
-    public Step CurrentStep { get; set; }
+    public Step CurrentStep { get; set; } = currentStep;
 
     /// <summary>
     /// The action that were associated to this jump.
     /// </summary>
-    public StepAction? StepAction { get; set; }
-
-    public StepEventArgs(Step previousStep, Step currentStep, StepAction? stepAction)
-    {
-        PreviousStep = previousStep;
-        CurrentStep = currentStep;
-        StepAction = stepAction;
-    }
+    public StepAction? StepAction { get; set; } = stepAction;
 }

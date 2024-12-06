@@ -3,397 +3,396 @@ using ParticleLexer.StandardTokens;
 using System.Globalization;
 using ParticleLexer.QsTokens;
 
-namespace Qs.Runtime
+namespace Qs.Runtime;
+
+public partial class QsSequence
 {
-    public partial class QsSequence
+    private string _SequenceDeclaration;
+    public string SequenceDeclaration
     {
-        private string _SequenceDeclaration;
-        public string SequenceDeclaration
+        get
         {
-            get
+            //go through all elements and print their index: text
+            var gg = "";
+            foreach (var v in Keys)
             {
-                //go through all elements and print their index: text
-                var gg = "";
-                 foreach (var v in Keys)
-                {
-                    gg += v.ToString(CultureInfo.InvariantCulture).Trim() + ": " + base[v].ElementDeclaration + "; ";
-                }
-                return _SequenceDeclaration + " ..> " + gg;
+                gg += v.ToString(CultureInfo.InvariantCulture).Trim() + ": " + base[v].ElementDeclaration + "; ";
             }
-            set
+            return _SequenceDeclaration + " ..> " + gg;
+        }
+        set
+        {
+            _SequenceDeclaration = value;
+        }
+    }
+
+    public QsParamInfo[] Parameters { get; private set; }
+
+    /// <summary>
+    /// The index name of the sequence that used in elements
+    /// </summary>
+    public string SequenceIndexName { get; set; }
+
+    /// <summary>
+    /// When applying a range operator like summation or multiplication
+    /// this is the variable that will hold the start value 0..10 (I mean 0)
+    /// </summary>
+    public string SequenceRangeStartName { get; set; }
+
+    /// <summary>
+    /// When applying a range operator like summation or multiplication
+    /// this is the variable that will hold the end value  0..10  (I mean 10)
+    /// </summary>
+    public string SequenceRangeEndName { get; set; }
+
+
+    private string _SequenceName;
+    public string SequenceSymbolicName
+    {
+        get
+        {
+            //% indexes number.
+            //# parameters number.
+            return FormSequenceSymbolicName(_SequenceName, 1, Parameters.Length);
+        }
+        private set
+        {
+            _SequenceName = value;
+        }
+    }
+
+    /// <summary>
+    /// The default index name in the sequence without explicitly declared index name.
+    /// </summary>
+    public const string DefaultIndexName = "_1";
+
+    public QsSequence(string indexName, string[] parameters)
+    {
+        if (!string.IsNullOrEmpty(indexName))
+            SequenceIndexName = indexName;
+        else
+            SequenceIndexName = DefaultIndexName;
+
+        Parameters = (from v in parameters select new QsParamInfo { Name = v }).ToArray();
+
+        if (parameters.Length == 0) CachingEnabled = true;  //Allow caching for parameterless sequence.
+    }
+
+
+
+    /// <summary>
+    /// Parse the give sequence text and return <see cref="QsSequence"/> if succeeded
+    /// otherwise return null reference.
+    /// </summary>
+    /// <param name="qse"></param>
+    /// <param name="sequence">Sequence Text on the form S[i,j,k, ...]() ..> 40;50&lt;kg>; ..  </param>
+    /// <returns></returns>
+    public static QsSequence ParseSequence(QsEvaluator qse, string sequence)
+    {
+        if (sequence.IndexOf("..>") < 0)
+        {
+            // no forward operator
+            if (sequence.IndexOf("<..") < 0)
             {
-                _SequenceDeclaration = value;
+                // no backward operator.
+                return null;    //fast check because sequence have
             }
         }
 
-        public QsParamInfo[] Parameters { get; private set; }
+        var t = Token.ParseText(sequence);
 
-        /// <summary>
-        /// The index name of the sequence that used in elements
-        /// </summary>
-        public string SequenceIndexName { get; set; }
+        t = t.MergeTokens<MultipleSpaceToken>();
 
-        /// <summary>
-        /// When applying a range operator like summation or multiplication
-        /// this is the variable that will hold the start value 0..10 (I mean 0)
-        /// </summary>
-        public string SequenceRangeStartName { get; set; }
-
-        /// <summary>
-        /// When applying a range operator like summation or multiplication
-        /// this is the variable that will hold the end value  0..10  (I mean 10)
-        /// </summary>
-        public string SequenceRangeEndName { get; set; }
+        t = t.MergeTokens<PositiveSequenceToken>();  //    ..>  start from 0 index to +ve
+        t = t.MergeTokens<NegativeSequenceToken>();  //    <..  start from -1 index to -ve
 
 
-        private string _SequenceName;
-        public string SequenceSymbolicName
+        if (t.IndexOf(typeof(PositiveSequenceToken)) > -1)
         {
-            get
-            {
-                //% indexes number.
-                //# parameters number.
-                return FormSequenceSymbolicName(_SequenceName, 1, Parameters.Length);
-            }
-            private set
-            {
-                _SequenceName = value;
-            }
+            t = t.RemoveTokenUntil(typeof(MultipleSpaceToken), typeof(PositiveSequenceToken));
+        }
+        else if (t.IndexOf(typeof(NegativeSequenceToken)) > -1)
+        {
+            t = t.RemoveTokenUntil(typeof(MultipleSpaceToken), typeof(PositiveSequenceToken));
+        }
+        else
+        {
+            return null;
         }
 
-        /// <summary>
-        /// The default index name in the sequence without explicitly declared index name.
-        /// </summary>
-        public const string DefaultIndexName = "_1";
+        // the sequence full declaration syntax in future should look like this
+        //   S[k=n->m, l=i->j] ..> k+l/((m-n)*(j-i))
+        //   however I only support one index this time.
 
-        public QsSequence(string indexName, string[] parameters)
+        t = t.MergeTokens<PointerOperatorToken>();
+        t = t.MergeTokens<WordToken>();
+        t = t.MergeTokens<NumberToken>();
+        t = t.MergeTokens<UnitizedNumberToken>();
+
+        t = t.MergeTokens<NamespaceToken>();
+
+        t = t.MergeTokensInGroups(new ParenthesisGroupToken(), new SquareBracketsGroupToken());
+        t = t.RemoveSpaceTokens();
+
+        var nsidx = 0; // surve as a base for indexing token if there is namespace it will be 1 otherwise remain 0
+
+        var declaredNamespace = string.Empty;
+
+
+        foreach (var tok in t)
         {
-            if (!string.IsNullOrEmpty(indexName))
-                SequenceIndexName = indexName;
+            if (tok.TokenClassType == typeof(NamespaceToken))
+            {
+                nsidx++;
+                declaredNamespace += tok.TokenValue;
+            }
             else
-                SequenceIndexName = DefaultIndexName;
-
-            Parameters = (from v in parameters select new QsParamInfo { Name = v }).ToArray();
-
-            if (parameters.Length == 0) CachingEnabled = true;  //Allow caching for parameterless sequence.
+                break;
         }
 
+        declaredNamespace = declaredNamespace.TrimEnd(':');
 
 
-        /// <summary>
-        /// Parse the give sequence text and return <see cref="QsSequence"/> if succeeded
-        /// otherwise return null reference.
-        /// </summary>
-        /// <param name="qse"></param>
-        /// <param name="sequence">Sequence Text on the form S[i,j,k, ...]() ..> 40;50&lt;kg>; ..  </param>
-        /// <returns></returns>
-        public static QsSequence ParseSequence(QsEvaluator qse, string sequence)
+        if (t[nsidx + 0].TokenClassType == typeof(WordToken)
+            && (t.Count > 1 ? t[nsidx + 1].TokenClassType == typeof(SquareBracketsGroupToken) : false)     // test for second tokek to be [] group
+           )
         {
-            if (sequence.IndexOf("..>") < 0)
+
+            Type SequenceTokenType = null;
+
+            var shift = 0;
+
+            if ((nsidx + t.Count) > 2)
             {
-                // no forward operator
-                if (sequence.IndexOf("<..") < 0)
+                //check for sequence operator
+                if (t[nsidx + 2].TokenClassType == typeof(PositiveSequenceToken) || t[nsidx + 2].TokenClassType == typeof(NegativeSequenceToken))
                 {
-                    // no backward operator.
-                    return null;    //fast check because sequence have
+                    //reaching here means the sequence doesn't have parameters only indexers.
+                    SequenceTokenType = t[nsidx + 2].TokenClassType;
                 }
-            }
-
-            var t = Token.ParseText(sequence);
-
-            t = t.MergeTokens<MultipleSpaceToken>();
-
-            t = t.MergeTokens<PositiveSequenceToken>();  //    ..>  start from 0 index to +ve
-            t = t.MergeTokens<NegativeSequenceToken>();  //    <..  start from -1 index to -ve
-
-
-            if (t.IndexOf(typeof(PositiveSequenceToken)) > -1)
-            {
-                t = t.RemoveTokenUntil(typeof(MultipleSpaceToken), typeof(PositiveSequenceToken));
-            }
-            else if (t.IndexOf(typeof(NegativeSequenceToken)) > -1)
-            {
-                t = t.RemoveTokenUntil(typeof(MultipleSpaceToken), typeof(PositiveSequenceToken));
+                else if ((nsidx + t.Count) > 4)
+                {
+                    if (t[nsidx + 3].TokenClassType == typeof(PositiveSequenceToken) || t[nsidx + 3].TokenClassType == typeof(NegativeSequenceToken))
+                    {
+                        //reaching here means the sequence has parameterized arguments.
+                        SequenceTokenType = t[nsidx + 3].TokenClassType;
+                        //shift = nsidx + 1;
+                        shift = 1;
+                    }
+                    else return null;
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
                 return null;
             }
 
-            // the sequence full declaration syntax in future should look like this
-            //   S[k=n->m, l=i->j] ..> k+l/((m-n)*(j-i))
-            //   however I only support one index this time.
 
-            t = t.MergeTokens<PointerOperatorToken>();
-            t = t.MergeTokens<WordToken>();
-            t = t.MergeTokens<NumberToken>();
-            t = t.MergeTokens<UnitizedNumberToken>();
-
-            t = t.MergeTokens<NamespaceToken>();
-
-            t = t.MergeTokensInGroups(new ParenthesisGroupToken(), new SquareBracketsGroupToken());
-            t = t.RemoveSpaceTokens();
-
-            var nsidx = 0; // surve as a base for indexing token if there is namespace it will be 1 otherwise remain 0
-
-            var declaredNamespace = string.Empty;
+            // s[]   found
+            var sequenceName = t[nsidx + 0].TokenValue;
 
 
-            foreach (var tok in t)
+            // Specify the index area  [k=m->n, l=i->j]
+            var IndicesArea = t[nsidx + 1];
+            IndicesArea = IndicesArea.RemoveSpaceTokens().TrimStart<LeftSquareBracketToken>().TrimEnd<RightSquareBracketToken>();
+
+            List<string> indexes = [];
+            List<string> rangeStartNames = [];
+            List<string> rangeEndNames = [];
+
+            if (!string.IsNullOrEmpty(IndicesArea.TokenValue))
             {
-                if (tok.TokenClassType == typeof(NamespaceToken))
+                // 
+                IndicesArea = IndicesArea.MergeAllBut<MergedToken>(new CommaToken());
+
+                // validate the syntax and extract the information
+                foreach (var m in IndicesArea)
                 {
-                    nsidx++;
-                    declaredNamespace += tok.TokenValue;
-                }
-                else
-                    break;
-            }
-
-            declaredNamespace = declaredNamespace.TrimEnd(':');
-
-
-            if (t[nsidx + 0].TokenClassType == typeof(WordToken)
-                && (t.Count > 1 ? t[nsidx + 1].TokenClassType == typeof(SquareBracketsGroupToken) : false)     // test for second tokek to be [] group
-                )
-            {
-
-                Type SequenceTokenType = null;
-
-                var shift = 0;
-
-                if ((nsidx + t.Count) > 2)
-                {
-                    //check for sequence operator
-                    if (t[nsidx + 2].TokenClassType == typeof(PositiveSequenceToken) || t[nsidx + 2].TokenClassType == typeof(NegativeSequenceToken))
+                    if (m.Count == 1)
                     {
-                        //reaching here means the sequence doesn't have parameters only indexers.
-                        SequenceTokenType = t[nsidx + 2].TokenClassType;
-                    }
-                    else if ((nsidx + t.Count) > 4)
-                    {
-                        if (t[nsidx + 3].TokenClassType == typeof(PositiveSequenceToken) || t[nsidx + 3].TokenClassType == typeof(NegativeSequenceToken))
-                        {
-                            //reaching here means the sequence has parameterized arguments.
-                            SequenceTokenType = t[nsidx + 3].TokenClassType;
-                            //shift = nsidx + 1;
-                            shift = 1;
-                        }
-                        else return null;
+                        indexes.Add(m[0].TokenValue);
+                        rangeStartNames.Add(string.Empty);
+                        rangeEndNames.Add(string.Empty);
                     }
                     else
                     {
-                        return null;
-                    }
-                }
-                else
-                {
-                    return null;
-                }
-
-
-                // s[]   found
-                var sequenceName = t[nsidx + 0].TokenValue;
-
-
-                // Specify the index area  [k=m->n, l=i->j]
-                var IndicesArea = t[nsidx + 1];
-                IndicesArea = IndicesArea.RemoveSpaceTokens().TrimStart<LeftSquareBracketToken>().TrimEnd<RightSquareBracketToken>();
-
-                List<string> indexes = [];
-                List<string> rangeStartNames = [];
-                List<string> rangeEndNames = [];
-
-                if (!string.IsNullOrEmpty(IndicesArea.TokenValue))
-                {
-                    // 
-                    IndicesArea = IndicesArea.MergeAllBut<MergedToken>(new CommaToken());
-
-                    // validate the syntax and extract the information
-                    foreach (var m in IndicesArea)
-                    {
-                        if (m.Count == 1)
+                        var SyntaxErrorMessage = "Sequence syntax error in indexer declaration: Correct Declaration looks like S[k] or S[k=m->n]";
+                        if (m.Count == 5)
                         {
-                            indexes.Add(m[0].TokenValue);
-                            rangeStartNames.Add(string.Empty);
-                            rangeEndNames.Add(string.Empty);
-                        }
-                        else
-                        {
-                            var SyntaxErrorMessage = "Sequence syntax error in indexer declaration: Correct Declaration looks like S[k] or S[k=m->n]";
-                            if (m.Count == 5)
+
+                            if (m[0].TokenClassType == typeof(WordToken)
+                                && m[1].TokenClassType == typeof(EqualToken)
+                                && m[2].TokenClassType == typeof(WordToken)
+                                && m[3].TokenClassType == typeof(PointerOperatorToken)
+                                && m[4].TokenClassType == typeof(WordToken))
                             {
-
-                                if (m[0].TokenClassType == typeof(WordToken)
-                                   && m[1].TokenClassType == typeof(EqualToken)
-                                   && m[2].TokenClassType == typeof(WordToken)
-                                   && m[3].TokenClassType == typeof(PointerOperatorToken)
-                                   && m[4].TokenClassType == typeof(WordToken))
-                                {
-                                    indexes.Add(m[0].TokenValue);
-                                    rangeStartNames.Add(m[2].TokenValue);
-                                    rangeEndNames.Add(m[4].TokenValue);
-                                }
-                                else
-                                {
-                                    throw new QsSyntaxErrorException(SyntaxErrorMessage);
-                                }
+                                indexes.Add(m[0].TokenValue);
+                                rangeStartNames.Add(m[2].TokenValue);
+                                rangeEndNames.Add(m[4].TokenValue);
                             }
                             else
                             {
                                 throw new QsSyntaxErrorException(SyntaxErrorMessage);
                             }
                         }
+                        else
+                        {
+                            throw new QsSyntaxErrorException(SyntaxErrorMessage);
+                        }
                     }
                 }
-                else
+            }
+            else
+            {
+                rangeStartNames.Add(string.Empty);
+                rangeEndNames.Add(string.Empty);
+            }
+
+            if (indexes.Count > 1) throw new QsException("Sequences with more than one index are not supported now");
+
+
+            // get parameters
+            string[] parameters = []; //array with zero count :)
+            if (t[nsidx + 2].TokenClassType == typeof(ParenthesisGroupToken))
+            {
+                parameters = (from c in t[nsidx + 2]
+                    where c.TokenClassType == typeof(WordToken)
+                    select c.TokenValue).ToArray();
+            }
+
+
+            //make all things between ';' be a whole word.
+
+            t = t.MergeAllBut(nsidx + 3 + shift, typeof(SequenceElementToken), new SemiColonToken());
+
+            var seqo = GetSequence(qse.Scope, declaredNamespace, FormSequenceSymbolicName(sequenceName, indexes.Count, parameters.Length));
+
+            if (seqo == null)
+            {
+                if (SequenceTokenType == typeof(NegativeSequenceToken))
                 {
-                    rangeStartNames.Add(string.Empty);
-                    rangeEndNames.Add(string.Empty);
+                    throw new QsException("You can't initialize negative sequence elements without inititialize positive sequence element(s) first");
                 }
 
-                if (indexes.Count > 1) throw new QsException("Sequences with more than one index are not supported now");
-
-
-                // get parameters
-                string[] parameters = []; //array with zero count :)
-                if (t[nsidx + 2].TokenClassType == typeof(ParenthesisGroupToken))
+                seqo = new QsSequence(indexes.Count > 0 ? indexes[0] : string.Empty, parameters)
                 {
-                    parameters = (from c in t[nsidx + 2]
-                                  where c.TokenClassType == typeof(WordToken)
-                                  select c.TokenValue).ToArray();
-                }
-
-
-                //make all things between ';' be a whole word.
-
-                t = t.MergeAllBut(nsidx + 3 + shift, typeof(SequenceElementToken), new SemiColonToken());
-
-                var seqo = GetSequence(qse.Scope, declaredNamespace, FormSequenceSymbolicName(sequenceName, indexes.Count, parameters.Length));
-
-                if (seqo == null)
+                    SequenceSymbolicName = sequenceName,
+                    SequenceDeclaration = t[nsidx + 0].TokenValue + t[nsidx + 1].TokenValue + (parameters.Length > 0 ? t[nsidx + shift + 1].TokenValue : ""), //(shift == nsidx + 1 ? t[nsidx + 2].TokenValue : ""),
+                    SequenceNamespace = declaredNamespace,
+                    SequenceRangeStartName = rangeStartNames[0],
+                    SequenceRangeEndName = rangeEndNames[0]
+                };
+            }
+            else
+            {
+                //sequence exist
+                if (SequenceTokenType == typeof(PositiveSequenceToken))
                 {
-                    if (SequenceTokenType == typeof(NegativeSequenceToken))
-                    {
-                        throw new QsException("You can't initialize negative sequence elements without inititialize positive sequence element(s) first");
-                    }
+                    //it meanse I am defining the sequence again and overwrite the previous one
 
                     seqo = new QsSequence(indexes.Count > 0 ? indexes[0] : string.Empty, parameters)
                     {
                         SequenceSymbolicName = sequenceName,
-                        SequenceDeclaration = t[nsidx + 0].TokenValue + t[nsidx + 1].TokenValue + (parameters.Length > 0 ? t[nsidx + shift + 1].TokenValue : ""), //(shift == nsidx + 1 ? t[nsidx + 2].TokenValue : ""),
-                        SequenceNamespace = declaredNamespace,
+                        SequenceDeclaration = t[nsidx + 0].TokenValue + t[nsidx + 1].TokenValue + (shift == nsidx + 1 ? t[nsidx + 2].TokenValue : ""),
+
                         SequenceRangeStartName = rangeStartNames[0],
                         SequenceRangeEndName = rangeEndNames[0]
+
                     };
                 }
                 else
                 {
-                    //sequence exist
-                    if (SequenceTokenType == typeof(PositiveSequenceToken))
-                    {
-                        //it meanse I am defining the sequence again and overwrite the previous one
-
-                        seqo = new QsSequence(indexes.Count > 0 ? indexes[0] : string.Empty, parameters)
-                        {
-                            SequenceSymbolicName = sequenceName,
-                            SequenceDeclaration = t[nsidx + 0].TokenValue + t[nsidx + 1].TokenValue + (shift == nsidx + 1 ? t[nsidx + 2].TokenValue : ""),
-
-                            SequenceRangeStartName = rangeStartNames[0],
-                            SequenceRangeEndName = rangeEndNames[0]
-
-                        };
-                    }
-                    else
-                    {
-                        seqo.CachedValues.Clear();  //clear all cache because we are defining extra elements.
-                    }
+                    seqo.CachedValues.Clear();  //clear all cache because we are defining extra elements.
                 }
-
-                //beginElement is zero index element in positive sequence and -1 index element in negative sequence.
-
-                var beginElement = QsSequenceElement.Parse(t[nsidx + 3 + shift].TokenValue, qse, seqo);
-
-                if (SequenceTokenType == typeof(PositiveSequenceToken))
-                    seqo[0] = beginElement;
-                else
-                    seqo[-1] = beginElement;
-
-                // take the right side arguments to be added into the sequence.
-
-                var seqoIndex = 5 + shift; // the argument with index 1
-
-                var ix = 1;   //index of sequence.
-
-                if (SequenceTokenType == typeof(NegativeSequenceToken))
-                {
-                    ix = -2;
-                }
-
-                while ((nsidx + seqoIndex) < t.Count)
-                {
-                    if (t[nsidx + seqoIndex].TokenClassType != typeof(SemiColonToken))
-                    {
-                        //assuming for now all entered values are quantities.
-                        var seqoElement = QsSequenceElement.Parse(t[nsidx + seqoIndex].TokenValue, qse, seqo);
-
-                        seqo[ix] = seqoElement;  //-5 bacause I am starting from 1 index
-
-                        if (SequenceTokenType == typeof(NegativeSequenceToken))
-                            ix--;
-                        else
-                            ix++;
-                    }
-                    seqoIndex++;
-                }
-
-                return seqo;
-
             }
 
-            return null;
-        }
+            //beginElement is zero index element in positive sequence and -1 index element in negative sequence.
 
-        public override string ToString()
-        {
-            return SequenceDeclaration;
-        }
+            var beginElement = QsSequenceElement.Parse(t[nsidx + 3 + shift].TokenValue, qse, seqo);
 
-        /// <summary>
-        /// Get sequence object from the scope memory.
-        /// </summary>
-        /// <param name="scope"></param>
-        /// <param name="qsNamespace"></param>
-        /// <param name="sequenceName"></param>
-        /// <returns></returns>
-        public static QsSequence GetSequence(QsScope scope, string qsNamespace, string sequenceName)
-        {
-            if (string.IsNullOrEmpty(qsNamespace))
+            if (SequenceTokenType == typeof(PositiveSequenceToken))
+                seqo[0] = beginElement;
+            else
+                seqo[-1] = beginElement;
+
+            // take the right side arguments to be added into the sequence.
+
+            var seqoIndex = 5 + shift; // the argument with index 1
+
+            var ix = 1;   //index of sequence.
+
+            if (SequenceTokenType == typeof(NegativeSequenceToken))
             {
-                // no namespace included then it is from the local scope.
-                var seq = (QsSequence)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, sequenceName);
-                return seq;
+                ix = -2;
             }
 
-            var ns = QsNamespace.GetNamespace(scope, qsNamespace);
-            return (QsSequence)ns.GetValueOrNull(sequenceName);
+            while ((nsidx + seqoIndex) < t.Count)
+            {
+                if (t[nsidx + seqoIndex].TokenClassType != typeof(SemiColonToken))
+                {
+                    //assuming for now all entered values are quantities.
+                    var seqoElement = QsSequenceElement.Parse(t[nsidx + seqoIndex].TokenValue, qse, seqo);
+
+                    seqo[ix] = seqoElement;  //-5 bacause I am starting from 1 index
+
+                    if (SequenceTokenType == typeof(NegativeSequenceToken))
+                        ix--;
+                    else
+                        ix++;
+                }
+                seqoIndex++;
+            }
+
+            return seqo;
+
         }
 
+        return null;
+    }
 
-        /// <summary>
-        /// Helper function to create the scope memory name of the sequence.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="indexesCount"></param>
-        /// <param name="parametersCount"></param>
-        /// <returns></returns>
-        public static string FormSequenceSymbolicName(string name, int indexesCount, int parametersCount)
+    public override string ToString()
+    {
+        return SequenceDeclaration;
+    }
+
+    /// <summary>
+    /// Get sequence object from the scope memory.
+    /// </summary>
+    /// <param name="scope"></param>
+    /// <param name="qsNamespace"></param>
+    /// <param name="sequenceName"></param>
+    /// <returns></returns>
+    public static QsSequence GetSequence(QsScope scope, string qsNamespace, string sequenceName)
+    {
+        if (string.IsNullOrEmpty(qsNamespace))
         {
-            if (indexesCount == 0) indexesCount = 1;
-
-            var sn = name + "%" + indexesCount.ToString(CultureInfo.InvariantCulture); // +"#" + parametersCount.ToString(CultureInfo.InvariantCulture);
-
-            return sn;
+            // no namespace included then it is from the local scope.
+            var seq = (QsSequence)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, sequenceName);
+            return seq;
         }
+
+        var ns = QsNamespace.GetNamespace(scope, qsNamespace);
+        return (QsSequence)ns.GetValueOrNull(sequenceName);
+    }
+
+
+    /// <summary>
+    /// Helper function to create the scope memory name of the sequence.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="indexesCount"></param>
+    /// <param name="parametersCount"></param>
+    /// <returns></returns>
+    public static string FormSequenceSymbolicName(string name, int indexesCount, int parametersCount)
+    {
+        if (indexesCount == 0) indexesCount = 1;
+
+        var sn = name + "%" + indexesCount.ToString(CultureInfo.InvariantCulture); // +"#" + parametersCount.ToString(CultureInfo.InvariantCulture);
+
+        return sn;
     }
 }

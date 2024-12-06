@@ -13,7 +13,7 @@ namespace Qs.Types;
 /// <summary>
 /// Function that declared in Qs
 /// </summary>
-public partial class QsFunction : QsValue
+public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 {
     private string functionName;
 
@@ -401,7 +401,7 @@ public partial class QsFunction : QsValue
     /// <summary>
     /// The function declaration text
     /// </summary>
-    public string FunctionDeclaration { get; set; }
+    public string FunctionDeclaration { get; set; } = functionBody;
 
 
     /// <summary>
@@ -480,27 +480,16 @@ public partial class QsFunction : QsValue
     }
 
 
-    public QsFunction(string functionBody)
+    public QsFunction(string functionBody) : this(functionBody, false)
     {
-        FunctionDeclaration = functionBody;
-
     }
-
-    private readonly bool _IsReadOnly;
 
     /// <summary>
     /// means you shouldn't modify the value of this function.
     /// </summary>
     public bool IsReadOnly
     {
-        get { return _IsReadOnly; }
-    }
-
-    public QsFunction(string functionBody, bool isReadOnly)
-    {
-        FunctionDeclaration = functionBody;
-
-        _IsReadOnly = isReadOnly;
+        get { return isReadOnly; }
     }
 
     public override string ToShortString()

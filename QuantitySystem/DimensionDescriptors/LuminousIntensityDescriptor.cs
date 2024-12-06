@@ -1,16 +1,11 @@
 ﻿namespace QuantitySystem.DimensionDescriptors;
 
-public struct LuminousIntensityDescriptor :
+public struct LuminousIntensityDescriptor(float exponent) :
     IDimensionDescriptor<LuminousIntensityDescriptor>,
     IEquatable<LuminousIntensityDescriptor>,
     IComparable<LuminousIntensityDescriptor>, IComparable
 {
-    public LuminousIntensityDescriptor(float exponent):this()
-    {
-        Exponent = exponent;
-    }
-
-    public float Exponent { get; set; }
+    public float Exponent { get; set; } = exponent;
 
     public LuminousIntensityDescriptor Add(LuminousIntensityDescriptor dimensionDescriptor)
     {

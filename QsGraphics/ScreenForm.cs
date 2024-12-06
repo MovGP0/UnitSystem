@@ -1,26 +1,25 @@
-﻿namespace QsGraphics
+﻿namespace QsGraphics;
+
+public partial class ScreenForm : Form
 {
-    public partial class ScreenForm : Form
+    public ScreenForm()
     {
-        public ScreenForm()
+        InitializeComponent();
+    }
+
+
+    private Graphics _FormGraphics;
+
+    private void ScreenForm_Load(object sender, EventArgs e)
+    {
+        _FormGraphics = CreateGraphics();
+    }
+
+    public Graphics FormGraphics
+    {
+        get
         {
-            InitializeComponent();
-        }
-
-
-        private Graphics _FormGraphics;
-
-        private void ScreenForm_Load(object sender, EventArgs e)
-        {
-            _FormGraphics = CreateGraphics();
-        }
-
-        public Graphics FormGraphics
-        {
-            get
-            {
-                return _FormGraphics;
-            }
+            return _FormGraphics;
         }
     }
 }

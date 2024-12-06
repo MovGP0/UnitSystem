@@ -1,30 +1,27 @@
-﻿namespace QuantitySystem.Quantities.BaseQuantities
+﻿namespace QuantitySystem.Quantities.BaseQuantities;
+
+public class LuminousIntensity<T>(float exponent) : AnyQuantity<T>(exponent)
 {
-    public class LuminousIntensity<T> : AnyQuantity<T>
+    public LuminousIntensity() : this(1) { }
+
+    private static QuantityDimension _Dimension = new(0, 0, 0, 0, 0, 0, 1);
+    public override QuantityDimension Dimension
     {
-        public LuminousIntensity() : base(1) { }
-
-        public LuminousIntensity(float exponent) : base(exponent) { }
-
-        private static QuantityDimension _Dimension = new(0, 0, 0, 0, 0, 0, 1);
-        public override QuantityDimension Dimension
+        get
         {
-            get
-            {
-                return  _Dimension * Exponent;
-            }
+            return  _Dimension * Exponent;
         }
-
-
-        public static implicit operator LuminousIntensity<T>(T value)
-        {
-            LuminousIntensity<T> Q = new()
-            {
-                Value = value
-            };
-
-            return Q;
-        }
-
     }
+
+
+    public static implicit operator LuminousIntensity<T>(T value)
+    {
+        LuminousIntensity<T> Q = new()
+        {
+            Value = value
+        };
+
+        return Q;
+    }
+
 }

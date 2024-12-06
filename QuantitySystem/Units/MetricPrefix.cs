@@ -1,18 +1,9 @@
 ﻿namespace QuantitySystem.Units;
 
-public struct MetricPrefix
+public struct MetricPrefix(string prefix, string symbol, int exponent)
 {
-    public string Prefix { get; }
-    public string Symbol { get; }
-
-    private readonly int _prefixExponent;
-
-    public MetricPrefix(string prefix, string symbol, int exponent)
-    {
-        Prefix = prefix;
-        Symbol = symbol;
-        _prefixExponent = exponent;
-    }
+    public string Prefix { get; } = prefix;
+    public string Symbol { get; } = symbol;
 
     /// <summary>
     /// Gets the factor to convert to the required prefix.
@@ -168,14 +159,14 @@ public struct MetricPrefix
     #endregion
 
     #region Properties
-    public int Exponent => _prefixExponent;
+    public int Exponent => exponent;
 
-    public double Factor => Math.Pow(10, _prefixExponent);
+    public double Factor => Math.Pow(10, exponent);
 
     #endregion
 
     #region Operations
-    public MetricPrefix Invert() => FromExponent(0 - _prefixExponent);
+    public MetricPrefix Invert() => FromExponent(0 - exponent);
 
     public static MetricPrefix Add(MetricPrefix firstPrefix, MetricPrefix secondPrefix)
     {

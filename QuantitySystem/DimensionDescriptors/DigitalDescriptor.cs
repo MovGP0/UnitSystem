@@ -1,18 +1,12 @@
 ﻿namespace QuantitySystem.DimensionDescriptors;
 
-public struct DigitalDescriptor :
+public struct DigitalDescriptor(float exponent) :
     IDimensionDescriptor<DigitalDescriptor>,
     IEquatable<DigitalDescriptor>,
     IComparable<DigitalDescriptor>,
     IComparable
 {
-    public DigitalDescriptor(float exponent)
-        : this()
-    {
-        Exponent = exponent;
-    }
-
-    public float Exponent { get; set; }
+    public float Exponent { get; set; } = exponent;
 
     public DigitalDescriptor Add(DigitalDescriptor dimensionDescriptor)
     {

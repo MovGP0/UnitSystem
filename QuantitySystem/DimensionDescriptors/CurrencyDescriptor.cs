@@ -1,17 +1,12 @@
 ﻿namespace QuantitySystem.DimensionDescriptors;
 
-public struct CurrencyDescriptor :
+public struct CurrencyDescriptor(float exponent) :
     IDimensionDescriptor<CurrencyDescriptor>,
     IEquatable<CurrencyDescriptor>,
     IComparable<CurrencyDescriptor>,
     IComparable
 {
-    public CurrencyDescriptor(float exponent):this()
-    {
-        Exponent = exponent;
-    }
-
-    public float Exponent { get; set; }
+    public float Exponent { get; set; } = exponent;
 
     public CurrencyDescriptor Add(CurrencyDescriptor dimensionDescriptor)
     {

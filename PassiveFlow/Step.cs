@@ -2,78 +2,60 @@
 
 namespace PassiveFlow;
 
-public class Step
+public class Step(Flow flow)
 {
     /// <summary>
     /// Name of the step.
     /// </summary>
-    public string Name;
+    public string Name = "";
 
     /// <summary>
     /// Types associated to this step.
     /// </summary>
-    public Type[]? AssociatedTypes;
+    public Type[]? AssociatedTypes = null;
 
     /// <summary>
     /// Step Id: is a number that explicitly unique to the step.
     /// </summary>
-    public int Id;
+    public int Id = 0;
 
 
     /// <summary>
     /// Value of the step could be any arbitary thing.
     /// </summary>
-    public object? Value;
+    public object? Value = null;
 
     /// <summary>
     /// Indicates if this stage should be skipped during automatic transition of the flow host.
     /// </summary>
-    public bool Skip;
+    public bool Skip = false;
 
     /// <summary>
     /// Describe the step
     /// </summary>
-    public string Description_1;
+    public string Description_1 = "";
 
     /// <summary>
     /// Describe the stage
     /// </summary>
-    public string Description_2;
+    public string Description_2 = "";
 
 
     /// <summary>
     /// The host type of this step
     /// </summary>
-    public readonly Type FlowHostType;
+    public readonly Type FlowHostType = flow.GetType();
 
     /// <summary>
     /// the host object that host this step.
     /// </summary>
-    public readonly Flow FlowContainer;
+    public readonly Flow FlowContainer = flow;
 
     /// <summary>
     /// The actions of this step.
     /// Used when the step be an active step in the host.
     /// </summary>
-    public StepAction[]? AttachedActions;
-
-    public Step(Flow flow)
-    {
-        FlowContainer = flow;
-
-        FlowHostType = flow.GetType();
-
-        Name = "";
-        AssociatedTypes = null;
-        Id = 0;
-        Skip = false;
-
-        Value = null;
-
-        AttachedActions = null;
-        Description_1 = ""; Description_2 = "";
-
-    }
+    public StepAction[]? AttachedActions = null;
 
     public override string ToString()
     {

@@ -1,29 +1,28 @@
 ﻿using QuantitySystem.Quantities.BaseQuantities;
 
-namespace QuantitySystem.Quantities
+namespace QuantitySystem.Quantities;
+
+public class MagneticPermeability<T>  : DerivedQuantity<T>
 {
-    public class MagneticPermeability<T>  : DerivedQuantity<T>
+    public MagneticPermeability()
+        : base(1, new Inductance<T>(), new Length<T>(-1))
     {
-        public MagneticPermeability()
-            : base(1, new Inductance<T>(), new Length<T>(-1))
-        {
-        }
-
-        public MagneticPermeability(float exponent)
-            : base(exponent, new Inductance<T>(exponent), new Length<T>(-1 * exponent))
-        {
-        }
-
-
-        public static implicit operator MagneticPermeability<T>(T value)
-        {
-            MagneticPermeability<T> Q = new()
-            {
-                Value = value
-            };
-
-            return Q;
-        }
-
     }
+
+    public MagneticPermeability(float exponent)
+        : base(exponent, new Inductance<T>(exponent), new Length<T>(-1 * exponent))
+    {
+    }
+
+
+    public static implicit operator MagneticPermeability<T>(T value)
+    {
+        MagneticPermeability<T> Q = new()
+        {
+            Value = value
+        };
+
+        return Q;
+    }
+
 }

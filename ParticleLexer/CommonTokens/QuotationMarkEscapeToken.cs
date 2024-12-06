@@ -1,14 +1,7 @@
-﻿namespace ParticleLexer.CommonTokens
-{
+﻿namespace ParticleLexer.CommonTokens;
 
-    /// <summary>
-    /// Mathches \"
-    /// </summary>
-    [TokenPattern(RegexPattern = @"\\""", ExactWord = true)]
-    public class QuotationMarkEscapeToken : TokenClass
-    {
-
-    }
-
-
-}
+/// <summary>
+/// Matches <c>"\</c>
+/// </summary>
+[TokenPattern(RegexPattern = @"\\""", ExactWord = true)]
+public class QuotationMarkEscapeToken : TokenClass;

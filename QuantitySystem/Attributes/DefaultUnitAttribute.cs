@@ -7,10 +7,4 @@
 /// also default unit serve as the entry point of the Units Cloud of the Quantity
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
-public sealed class DefaultUnitAttribute : UnitAttribute
-{
-    public DefaultUnitAttribute(string symbol, Type quantityType)
-        : base(symbol, quantityType)
-    {
-    }
-}
+public sealed class DefaultUnitAttribute(string symbol, Type quantityType) : UnitAttribute(symbol, quantityType);

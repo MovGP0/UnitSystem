@@ -4,284 +4,282 @@ using QuantitySystem.Quantities.BaseQuantities;
 using QuantitySystem.Units;
 
 
-namespace Qs.Runtime
+namespace Qs.Runtime;
+
+/// <summary>
+/// Like Variant in vb in old days :)
+/// AnyQuantity
+/// Function
+/// Sequence
+/// </summary>
+public class QsSequenceElement
 {
 
+    private string elementDeclaration;
+
     /// <summary>
-    /// Like Variant in vb in old days :)
-    /// AnyQuantity
-    /// Function
-    /// Sequence
+    /// The original text that the element took when created.
     /// </summary>
-    public class QsSequenceElement
+    public string ElementDeclaration
+    {
+        get
+        {
+            return elementDeclaration.Trim();
+        }
+        set
+        {
+            elementDeclaration = value;
+        }
+    }
+
+
+    // I want to know if specific element will have to evaluate index or parameter
+    // this information will be usefull later when planning the caching of the sequence.
+
+    /// <summary>
+    /// If true the element has an index that evaluated at runtime.
+    /// </summary>
+    public bool IndexEvaluation { get; set; }
+
+    /// <summary>
+    /// If true the element has one or more parameters that evaluated at runtime.
+    /// </summary>
+    public bool ParameterEvaluation { get; set; }
+
+
+    /// <summary>
+    /// Contains the DLR expression of the evaluation of this element.
+    /// </summary>
+    public Expression ElementExpression { get; set; }
+
+
+    /// <summary>
+    /// The value of the sequence element.
+    /// - AnyQuantity &lt;double>
+    /// - Another Sequence
+    /// - Delegate to code passing index.
+    /// - Delegate to code passing index and parameters.
+    /// </summary>
+    public object ElementValue { get; set; }
+
+
+
+    /// <summary>
+    /// The parent sequence that hold this element.
+    /// </summary>
+    public QsSequence ParentSequence { get; set; }
+
+    /// <summary>
+    /// This element index in the parent sequence.
+    /// This way every element know its position in the parent sequence.
+    /// </summary>
+    public int IndexInParentSequence { get; set; }
+
+
+    /// <summary>
+    /// Execute the element by accepting the index of execution.
+    /// index of execution may differ on IndexInParentSequence.
+    /// </summary>
+    /// <param name="executionIndex">The real calling index.</param>
+    /// <returns></returns>
+    public QsValue Execute(int executionIndex)
     {
 
-        private string elementDeclaration;
-
-        /// <summary>
-        /// The original text that the element took when created.
-        /// </summary>
-        public string ElementDeclaration
+        if (ElementValue.GetType() == typeof(Func<int, QsValue>))
         {
-            get
-            {
-                return elementDeclaration.Trim();
-            }
-            set
-            {
-                elementDeclaration = value;
-            }
+
+            return ((Func<int, QsValue>)ElementValue)(executionIndex);
         }
 
-
-        // I want to know if specific element will have to evaluate index or parameter
-        // this information will be usefull later when planning the caching of the sequence.
-
-        /// <summary>
-        /// If true the element has an index that evaluated at runtime.
-        /// </summary>
-        public bool IndexEvaluation { get; set; }
-
-        /// <summary>
-        /// If true the element has one or more parameters that evaluated at runtime.
-        /// </summary>
-        public bool ParameterEvaluation { get; set; }
-
-
-        /// <summary>
-        /// Contains the DLR expression of the evaluation of this element.
-        /// </summary>
-        public Expression ElementExpression { get; set; }
-
-
-        /// <summary>
-        /// The value of the sequence element.
-        /// - AnyQuantity &lt;double>
-        /// - Another Sequence
-        /// - Delegate to code passing index.
-        /// - Delegate to code passing index and parameters.
-        /// </summary>
-        public object ElementValue { get; set; }
-
-
-
-        /// <summary>
-        /// The parent sequence that hold this element.
-        /// </summary>
-        public QsSequence ParentSequence { get; set; }
-
-        /// <summary>
-        /// This element index in the parent sequence.
-        /// This way every element know its position in the parent sequence.
-        /// </summary>
-        public int IndexInParentSequence { get; set; }
-
-
-        /// <summary>
-        /// Execute the element by accepting the index of execution.
-        /// index of execution may differ on IndexInParentSequence.
-        /// </summary>
-        /// <param name="executionIndex">The real calling index.</param>
-        /// <returns></returns>
-        public QsValue Execute(int executionIndex)
+        if (ElementValue.GetType() == typeof(QsSequence))
         {
+            var seq = (QsSequence)ElementValue;
 
-            if (ElementValue.GetType() == typeof(Func<int, QsValue>))
-            {
+            return (QsValue)seq.GetElementValue(executionIndex);
+        }
+        return (QsValue)ElementValue;
+    }
 
-                return ((Func<int, QsValue>)ElementValue)(executionIndex);
-             }
-
-            if (ElementValue.GetType() == typeof(QsSequence))
-            {
-                var seq = (QsSequence)ElementValue;
-
-                return (QsValue)seq.GetElementValue(executionIndex);
-            }
+    public QsValue Execute(int executionIndex, params QsParameter[] args)
+    {
+        if (ElementValue is QsValue)
             return (QsValue)ElementValue;
-        }
-
-        public QsValue Execute(int executionIndex, params QsParameter[] args)
+        switch (args.Length)
         {
-            if (ElementValue is QsValue)
-                return (QsValue)ElementValue;
-            switch (args.Length)
-            {
 
-                case 0:
-                    return Execute(executionIndex);
-                case 1:
-                    return ((Func<int, QsParameter, QsValue>)ElementValue)(executionIndex, args[0]);
-                case 2:
-                    return ((Func<int, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1]);
-                case 3:
-                    return ((Func<int, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2]);
-                case 4:
-                    return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3]);
-                case 5:
-                    return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3], args[4]);
-                case 6:
-                    return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3], args[4], args[5]);
-                case 7:
-                    return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+            case 0:
+                return Execute(executionIndex);
+            case 1:
+                return ((Func<int, QsParameter, QsValue>)ElementValue)(executionIndex, args[0]);
+            case 2:
+                return ((Func<int, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1]);
+            case 3:
+                return ((Func<int, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2]);
+            case 4:
+                return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3]);
+            case 5:
+                return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3], args[4]);
+            case 6:
+                return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3], args[4], args[5]);
+            case 7:
+                return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
 
-            }
-            throw new QsException("Parameters Exeeded the limits");
         }
+        throw new QsException("Parameters Exeeded the limits");
+    }
 
 
-        public override string ToString()
+    public override string ToString()
+    {
+        return ElementDeclaration;
+    }
+
+    #region Helper Functions
+
+    /// <summary>
+    /// Creates element from quantity.
+    /// </summary>
+    /// <param name="quantity"></param>
+    /// <returns></returns>
+    public static QsSequenceElement FromQuantity(QsValue quantity)
+    {
+        var el = new QsSequenceElement();
+        el.ElementValue = quantity;
+        el.ElementDeclaration = quantity.ToString();
+
+        el.IndexEvaluation = false;
+        el.ParameterEvaluation = false;
+
+        return el;
+
+    }
+
+    /// <summary>
+    /// Creates element from sequence.
+    /// The element will return the target sequence with the same index.
+    /// </summary>
+    /// <param name="sequence"></param>
+    /// <returns></returns>
+    public static QsSequenceElement FromSequenceAccess(QsSequence sequence)
+    {
+
+        var el = new QsSequenceElement();
+        el.ElementValue = sequence;
+
+        el.IndexEvaluation = false;  
+        el.ParameterEvaluation = false;
+
+        return el;
+    }
+
+    /// <summary>
+    /// Create element that point to delegate of one index and no parameters.
+    /// </summary>
+    /// <param name="function"></param>
+    /// <returns></returns>
+    public static QsSequenceElement FromDelegate(Func<int, QsValue> function)
+    {
+        var el = new QsSequenceElement();
+        el.ElementValue = function;
+
+        return el;
+    }
+
+    /// <summary>
+    /// Create an element that point to delegate of one index and one Parameter.
+    /// </summary>
+    /// <param name="function"></param>
+    /// <returns></returns>
+    public static QsSequenceElement FromDelegate(Func<int, QsValue, QsValue> function)
+    {
+        var el = new QsSequenceElement();
+        el.ElementValue = function;
+        return el;
+    }
+
+    /// <summary>
+    /// Two parameters.
+    /// </summary>
+    /// <param name="function"></param>
+    /// <returns></returns>
+    public static QsSequenceElement FromDelegate(Func<int, QsValue, QsValue, QsValue> function)
+    {
+        var el = new QsSequenceElement();
+        el.ElementValue = function;
+        return el;
+    }
+
+    /// <summary>
+    /// Three parameters.
+    /// </summary>
+    /// <param name="function"></param>
+    /// <returns></returns>
+    public static QsSequenceElement FromDelegate(Func<int, QsValue, QsValue, QsValue, QsValue> function)
+    {
+        var el = new QsSequenceElement();
+        el.ElementValue = function;
+
+        return el;
+    }
+
+
+    /// <summary>
+    /// Parse the element text and make the element point to delegate which evaluate the text if necessary.
+    /// </summary>
+    /// <param name="element"></param>
+    /// <returns></returns>
+    public static QsSequenceElement Parse(string element, QsEvaluator qse, QsSequence sequence)
+    {
+        if (string.IsNullOrEmpty(element)) throw new QsException("Can't create element from empty string.");
+        //try direct quantity
+        AnyQuantity<double> v;
+        if (Unit.TryParseQuantity(element, out v))
         {
-            return ElementDeclaration;
-        }
-
-        #region Helper Functions
-
-        /// <summary>
-        /// Creates element from quantity.
-        /// </summary>
-        /// <param name="quantity"></param>
-        /// <returns></returns>
-        public static QsSequenceElement FromQuantity(QsValue quantity)
-        {
-            var el = new QsSequenceElement();
-            el.ElementValue = quantity;
-            el.ElementDeclaration = quantity.ToString();
+            var el = FromQuantity(new QsScalar { NumericalQuantity = v });
+            el.ElementDeclaration = element;
 
             el.IndexEvaluation = false;
             el.ParameterEvaluation = false;
-
-            return el;
-
-        }
-
-        /// <summary>
-        /// Creates element from sequence.
-        /// The element will return the target sequence with the same index.
-        /// </summary>
-        /// <param name="sequence"></param>
-        /// <returns></returns>
-        public static QsSequenceElement FromSequenceAccess(QsSequence sequence)
-        {
-
-            var el = new QsSequenceElement();
-            el.ElementValue = sequence;
-
-            el.IndexEvaluation = false;  
-          el.ParameterEvaluation = false;
-
             return el;
         }
 
-        /// <summary>
-        /// Create element that point to delegate of one index and no parameters.
-        /// </summary>
-        /// <param name="function"></param>
-        /// <returns></returns>
-        public static QsSequenceElement FromDelegate(Func<int, QsValue> function)
-        {
-            var el = new QsSequenceElement();
-            el.ElementValue = function;
+        var se = new QsSequenceElement();
+        //try one index delegate without parameters
+        //Create the lambda function that will pass the index and parameters to the expression.
+        var lb = SimpleLambdaBuilder.Create(typeof(QsValue), "ElementValue");
 
-            return el;
+        //add the index parameter
+        lb.Parameter(typeof(int), sequence.SequenceIndexName);
+        //find the index parameter in line to know if it will be evaluated or not
+        if (element.IndexOf(sequence.SequenceIndexName) > -1)
+            se.IndexEvaluation = true;
+
+
+        //make the sequence parameters.
+        foreach (var seqParam in sequence.Parameters)
+        {
+            //lb.Parameter(typeof(QsValue), seqParam.Name);
+            lb.Parameter(typeof(QsParameter), seqParam.Name);
+            if (element.IndexOf(seqParam.Name) > -1)
+                se.ParameterEvaluation = true;
         }
 
-        /// <summary>
-        /// Create an element that point to delegate of one index and one Parameter.
-        /// </summary>
-        /// <param name="function"></param>
-        /// <returns></returns>
-        public static QsSequenceElement FromDelegate(Func<int, QsValue, QsValue> function)
-        {
-            var el = new QsSequenceElement();
-            el.ElementValue = function;
-            return el;
-        }
+        var pvar = new QsVar(qse, element, sequence, lb);
 
-        /// <summary>
-        /// Two parameters.
-        /// </summary>
-        /// <param name="function"></param>
-        /// <returns></returns>
-        public static QsSequenceElement FromDelegate(Func<int, QsValue, QsValue, QsValue> function)
-        {
-            var el = new QsSequenceElement();
-            el.ElementValue = function;
-            return el;
-        }
+        lb.Body = pvar.ResultExpression;
 
-        /// <summary>
-        /// Three parameters.
-        /// </summary>
-        /// <param name="function"></param>
-        /// <returns></returns>
-        public static QsSequenceElement FromDelegate(Func<int, QsValue, QsValue, QsValue, QsValue> function)
-        {
-            var el = new QsSequenceElement();
-            el.ElementValue = function;
+        var le = lb.MakeLambda();
 
-            return el;
-        }
+        se.ElementDeclaration = element;
+        se.ElementExpression = pvar.ResultExpression;
+        se.ElementValue = le.Compile();
 
+        return se;
 
-        /// <summary>
-        /// Parse the element text and make the element point to delegate which evaluate the text if necessary.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <returns></returns>
-        public static QsSequenceElement Parse(string element, QsEvaluator qse, QsSequence sequence)
-        {
-            if (string.IsNullOrEmpty(element)) throw new QsException("Can't create element from empty string.");
-             //try direct quantity
-            AnyQuantity<double> v;
-            if (Unit.TryParseQuantity(element, out v))
-            {
-                var el = FromQuantity(new QsScalar { NumericalQuantity = v });
-                el.ElementDeclaration = element;
-
-                el.IndexEvaluation = false;
-                el.ParameterEvaluation = false;
-                return el;
-            }
-
-            var se = new QsSequenceElement();
-             //try one index delegate without parameters
-            //Create the lambda function that will pass the index and parameters to the expression.
-            var lb = SimpleLambdaBuilder.Create(typeof(QsValue), "ElementValue");
-
-            //add the index parameter
-            lb.Parameter(typeof(int), sequence.SequenceIndexName);
-              //find the index parameter in line to know if it will be evaluated or not
-            if (element.IndexOf(sequence.SequenceIndexName) > -1)
-                se.IndexEvaluation = true;
-
-
-            //make the sequence parameters.
-            foreach (var seqParam in sequence.Parameters)
-            {
-                //lb.Parameter(typeof(QsValue), seqParam.Name);
-                lb.Parameter(typeof(QsParameter), seqParam.Name);
-                if (element.IndexOf(seqParam.Name) > -1)
-                    se.ParameterEvaluation = true;
-            }
-
-            var pvar = new QsVar(qse, element, sequence, lb);
-
-            lb.Body = pvar.ResultExpression;
-
-            var le = lb.MakeLambda();
-
-            se.ElementDeclaration = element;
-            se.ElementExpression = pvar.ResultExpression;
-            se.ElementValue = le.Compile();
-
-            return se;
-
-            throw new QsException("Check me in sequence element :( :( :( ");
-         }
-
-        #endregion
-
-
+        throw new QsException("Check me in sequence element :( :( :( ");
     }
+
+    #endregion
+
+
 }

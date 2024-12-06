@@ -1,16 +1,11 @@
 ﻿namespace QuantitySystem.DimensionDescriptors;
 
-public struct MassDescriptor :
+public struct MassDescriptor(float exponent) :
     IDimensionDescriptor<MassDescriptor>,
     IEquatable<MassDescriptor>,
     IComparable<MassDescriptor>, IComparable
 {
-    public MassDescriptor(float exponent):this()
-    {
-        Exponent = exponent;
-    }
-
-    public float Exponent { get; set; }
+    public float Exponent { get; set; } = exponent;
 
     public MassDescriptor Add(MassDescriptor dimensionDescriptor)
     {

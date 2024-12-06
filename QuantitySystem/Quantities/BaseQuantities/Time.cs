@@ -1,30 +1,27 @@
-﻿namespace QuantitySystem.Quantities.BaseQuantities
+﻿namespace QuantitySystem.Quantities.BaseQuantities;
+
+public class Time<T>(float dimension) : AnyQuantity<T>(dimension)
 {
-    public class Time<T> : AnyQuantity<T>
+
+    public Time() : this(1) { }
+
+    private static QuantityDimension _Dimension = new(0, 0, 1);
+    public override QuantityDimension Dimension
     {
-
-        public Time() : base(1) { }
-
-        public Time(float dimension) : base(dimension) { }
-
-        private static QuantityDimension _Dimension = new(0, 0, 1);
-        public override QuantityDimension Dimension
+        get
         {
-            get
-            {
-                return  _Dimension * Exponent;
-            }
+            return  _Dimension * Exponent;
         }
+    }
 
 
-        public static implicit operator Time<T>(T value)
+    public static implicit operator Time<T>(T value)
+    {
+        Time<T> Q = new()
         {
-            Time<T> Q = new()
-            {
-                Value = value
-            };
+            Value = value
+        };
 
-            return Q;
-        }
+        return Q;
     }
 }

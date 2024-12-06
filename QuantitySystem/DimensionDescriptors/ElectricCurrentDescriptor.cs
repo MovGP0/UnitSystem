@@ -1,17 +1,12 @@
 ﻿namespace QuantitySystem.DimensionDescriptors;
 
-public struct ElectricCurrentDescriptor :
+public struct ElectricCurrentDescriptor(float exponent) :
     IDimensionDescriptor<ElectricCurrentDescriptor>,
     IEquatable<ElectricCurrentDescriptor>,
     IComparable<ElectricCurrentDescriptor>,
     IComparable
 {
-    public ElectricCurrentDescriptor(float exponent):this()
-    {
-        Exponent = exponent;
-    }
-
-    public float Exponent { [Pure] get; set; }
+    public float Exponent { [Pure] get; set; } = exponent;
 
     public ElectricCurrentDescriptor Add(ElectricCurrentDescriptor dimensionDescriptor)
     {

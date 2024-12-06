@@ -1,17 +1,12 @@
 ﻿namespace QuantitySystem.DimensionDescriptors;
 
-public struct TimeDescriptor :
+public struct TimeDescriptor(float exponent) :
     IDimensionDescriptor<TimeDescriptor>,
     IEquatable<TimeDescriptor>,
     IComparable<TimeDescriptor>,
     IComparable
 {
-    public TimeDescriptor(float exponent):this()
-    {
-        Exponent = exponent;
-    }
-
-    public float Exponent { [Pure] get; set; }
+    public float Exponent { [Pure] get; set; } = exponent;
 
     [Pure]
     public TimeDescriptor Add(TimeDescriptor dimensionDescriptor)

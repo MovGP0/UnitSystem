@@ -1,10 +1,8 @@
 ﻿namespace QuantitySystem.Quantities.BaseQuantities;
 
-public class Digital<T> : AnyQuantity<T>
+public class Digital<T>(float exponent) : AnyQuantity<T>(exponent)
 {
-    public Digital() : base(1) { }
-
-    public Digital(float exponent) : base(exponent) { }
+    public Digital() : this(1) { }
 
     private static QuantityDimension _Dimension = new()
     {

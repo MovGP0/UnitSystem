@@ -1,89 +1,58 @@
 ﻿using QuantitySystem.DimensionDescriptors;
 
-namespace QuantitySystem.Quantities.BaseQuantities
+namespace QuantitySystem.Quantities.BaseQuantities;
+
+public class Length<T> : AnyQuantity<T>
 {
 
-    public enum TensorRank
+    public TensorRank LengthRank { get; set; }
+
+    public Length() : base(1)
     {
-        /// <summary>
-        /// Rank 0
-        /// </summary>
-        Scalar,
-
-        /// <summary>
-        /// Rank 1
-        /// </summary>
-        Vector,
-
-        /// <summary>
-        /// Rank 2
-        /// </summary>
-        Matrix,
-
-        /// <summary>
-        /// Rank 3
-        /// </summary>
-        MV,
-
-        /// <summary>
-        /// Rank 4
-        /// </summary>
-        MM
+        LengthRank = TensorRank.Scalar;
     }
 
-    public class Length<T> : AnyQuantity<T>
+    public Length(float exponent)
+        : base(exponent)
     {
+        LengthRank = TensorRank.Scalar;
+    }
 
-        public TensorRank LengthRank { get; set; }
+    public Length(float exponent, TensorRank lengthType)
+        : base(exponent)
+    {
+        LengthRank = lengthType;
+    }
 
-        public Length() : base(1)
+    public override QuantityDimension Dimension
+    {
+        get
         {
-            LengthRank = TensorRank.Scalar;
-        }
+            var LengthDimension = new QuantityDimension();
 
-        public Length(float exponent)
-            : base(exponent)
-        {
-            LengthRank = TensorRank.Scalar;
-        }
-
-        public Length(float exponent, TensorRank lengthType)
-            : base(exponent)
-        {
-            LengthRank = lengthType;
-        }
-
-        public override QuantityDimension Dimension
-        {
-            get
+            switch (LengthRank)
             {
-                var LengthDimension = new QuantityDimension();
-
-                switch (LengthRank)
-                {
-                    case TensorRank.Scalar:
-                        LengthDimension.Length = new LengthDescriptor(Exponent,  0);
-                        break;
-                    case TensorRank.Vector:
-                        LengthDimension.Length = new LengthDescriptor(0,  Exponent);
-                        break;
-                }
-
-                return LengthDimension;
+                case TensorRank.Scalar:
+                    LengthDimension.Length = new LengthDescriptor(Exponent,  0);
+                    break;
+                case TensorRank.Vector:
+                    LengthDimension.Length = new LengthDescriptor(0,  Exponent);
+                    break;
             }
+
+            return LengthDimension;
         }
+    }
 
 
-        public static implicit operator Length<T>(T value)
+    public static implicit operator Length<T>(T value)
+    {
+        Length<T> Q = new()
         {
-            Length<T> Q = new()
-            {
-                Value = value
-            };
+            Value = value
+        };
 
-            return Q;
-        }
-
+        return Q;
     }
 
 }

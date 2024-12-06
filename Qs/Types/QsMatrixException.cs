@@ -1,21 +1,20 @@
-﻿namespace Qs.Types
+﻿namespace Qs.Types;
+
+public class QsMatrixException : QsException
 {
-    public class QsMatrixException : QsException
-    {
-      public QsMatrixException()
-      {
-         // Add any type-specific logic, and supply the default message.
-      }
+   public QsMatrixException()
+   {
+      // Add any type-specific logic, and supply the default message.
+   }
 
-      public QsMatrixException(string message): base(message)
-      {
-         // Add any type-specific logic.
-      }
-      public QsMatrixException(string message, Exception innerException):
-         base (message, innerException)
-      {
-         // Add any type-specific logic for inner exceptions.
-      }
+   public QsMatrixException(string message): base(message)
+   {
+      // Add any type-specific logic.
+   }
+   public QsMatrixException(string message, Exception innerException):
+      base (message, innerException)
+   {
+      // Add any type-specific logic for inner exceptions.
+   }
 
-    }
 }

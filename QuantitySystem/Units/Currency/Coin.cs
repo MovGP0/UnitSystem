@@ -7,6 +7,3 @@ namespace QuantitySystem.Units.Currency;
 public sealed class Coin : DynamicUnit;
 
 //codes.Add("USD: United States Dollar");
-[Unit("USD", typeof(Currency<>))]
-[ReferenceUnit(1, UnitType = typeof(Coin))]
-public sealed class United_States_Dollar : DynamicUnit;

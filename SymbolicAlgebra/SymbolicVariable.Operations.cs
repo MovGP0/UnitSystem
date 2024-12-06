@@ -1,107 +1,98 @@
-﻿namespace SymbolicAlgebra
+﻿namespace SymbolicAlgebra;
+
+public partial class SymbolicVariable
 {
-    public partial class SymbolicVariable
+
+    internal struct MultipliedTerm(SymbolicVariable term, bool divided)
     {
 
-        internal struct MultipliedTerm
+        public SymbolicVariable Term = term;
+        public bool Divided = divided;
+        public MultipliedTerm(SymbolicVariable term) : this(term, false)
         {
+        }
+    }
 
-            public SymbolicVariable Term;
-            public bool Divided;
-            public MultipliedTerm(SymbolicVariable term)
+    /// <summary>
+    /// This deconstruct the fused variables inside the symbolic variable into independent symbolic variables objects
+    /// </summary>
+    /// <param name="sv"></param>
+    /// <returns></returns>
+    internal static List<MultipliedTerm> DeConstruct(SymbolicVariable sv)
+    {
+        var MultipliedTermsCount = sv.FusedSymbols.Count + sv.FusedConstants.Count + 1; // last one is the basic symbol and coeffecient in the instant
+
+        // separate all terms into array by flatting them
+        var MultipliedTerms = new List<MultipliedTerm>(MultipliedTermsCount);
+
+        Action<SymbolicVariable> SpliBaseTerm = (rr) =>
+        {
+            var basicterm = rr.Clone();
+            basicterm._FusedConstants = null;
+            basicterm._FusedSymbols = null;
+
+            // split coeffecient and its associated symbol
+
+            if (basicterm.CoeffecientPowerTerm != null)
             {
-                Term = term;
-                Divided = false;
+                // coefficient
+                var CoeffecientOnly = new SymbolicVariable("");
+                CoeffecientOnly._CoeffecientPowerTerm = basicterm.CoeffecientPowerTerm;
+                CoeffecientOnly.Coeffecient = basicterm.Coeffecient;
+                MultipliedTerms.Add(new MultipliedTerm(CoeffecientOnly));
+
+                // multiplied symbol
+                if (!string.IsNullOrEmpty(basicterm.SymbolBaseKey))
+                    MultipliedTerms.Add(new MultipliedTerm(Parse(basicterm.WholeValueBaseKey)));
+            }
+            else
+            {
+                MultipliedTerms.Add(new MultipliedTerm(basicterm));
             }
 
-            public MultipliedTerm(SymbolicVariable term, bool divided)
-            {
-                Term = term;
-                Divided = divided;
-            }
-        }
+        };
 
-        /// <summary>
-        /// This deconstruct the fused variables inside the symbolic variable into independent symbolic variables objects
-        /// </summary>
-        /// <param name="sv"></param>
-        /// <returns></returns>
-        internal static List<MultipliedTerm> DeConstruct(SymbolicVariable sv)
+        Action<SymbolicVariable> SpliFusedConstants = (rr) =>
         {
-            var MultipliedTermsCount = sv.FusedSymbols.Count + sv.FusedConstants.Count + 1; // last one is the basic symbol and coeffecient in the instant
+            var basicterm = rr.Clone();
 
-            // separate all terms into array by flatting them
-            var MultipliedTerms = new List<MultipliedTerm>(MultipliedTermsCount);
+            var FCConstants = basicterm._FusedConstants;
 
-            Action<SymbolicVariable> SpliBaseTerm = (rr) =>
+            // Key  is the coefficient
+            //  value contains the power  which always will be symbolic power or null
+            foreach (var FC in FCConstants)
             {
-                var basicterm = rr.Clone();
-                basicterm._FusedConstants = null;
-                basicterm._FusedSymbols = null;
+                var CoeffecientOnly = new SymbolicVariable("");
+                CoeffecientOnly._CoeffecientPowerTerm = FC.Value.SymbolicVariable.Clone();
+                CoeffecientOnly.Coeffecient = FC.Key;
 
-                // split coeffecient and its associated symbol
+                MultipliedTerms.Add(new MultipliedTerm(CoeffecientOnly));
+            }
+        };
 
-                if (basicterm.CoeffecientPowerTerm != null)
-                {
-                    // coefficient
-                    var CoeffecientOnly = new SymbolicVariable("");
-                    CoeffecientOnly._CoeffecientPowerTerm = basicterm.CoeffecientPowerTerm;
-                    CoeffecientOnly.Coeffecient = basicterm.Coeffecient;
-                    MultipliedTerms.Add(new MultipliedTerm(CoeffecientOnly));
+        Action<SymbolicVariable> SplitFusedSymbols = (rr) =>
+        {
+            var basicterm = rr.Clone();
 
-                    // multiplied symbol
-                    if (!string.IsNullOrEmpty(basicterm.SymbolBaseKey))
-                        MultipliedTerms.Add(new MultipliedTerm(Parse(basicterm.WholeValueBaseKey)));
-                }
-                else
-                {
-                    MultipliedTerms.Add(new MultipliedTerm(basicterm));
-                }
+            var FSymbols = basicterm._FusedSymbols;
 
-            };
-
-            Action<SymbolicVariable> SpliFusedConstants = (rr) =>
+            // Key  is the coefficient
+            //  value contains the power  which always will be symbolic power or null
+            foreach (var FS in FSymbols)
             {
-                var basicterm = rr.Clone();
+                var ss = new SymbolicVariable(FS.Key);
+                ss.SymbolPower = FS.Value.NumericalVariable;
+                if (FS.Value.SymbolicVariable != null)
+                    ss._SymbolPowerTerm = FS.Value.SymbolicVariable.Clone();
 
-                var FCConstants = basicterm._FusedConstants;
+                MultipliedTerms.Add(new MultipliedTerm(ss));
+            }
+        };
 
-                // Key  is the coefficient
-                //  value contains the power  which always will be symbolic power or null
-                foreach (var FC in FCConstants)
-                {
-                    var CoeffecientOnly = new SymbolicVariable("");
-                    CoeffecientOnly._CoeffecientPowerTerm = FC.Value.SymbolicVariable.Clone();
-                    CoeffecientOnly.Coeffecient = FC.Key;
+        SpliBaseTerm(sv);
+        if (sv.FusedConstants.Count > 0) SpliFusedConstants(sv);
+        if (sv.FusedSymbols.Count > 0) SplitFusedSymbols(sv);
 
-                    MultipliedTerms.Add(new MultipliedTerm(CoeffecientOnly));
-                }
-            };
-
-            Action<SymbolicVariable> SplitFusedSymbols = (rr) =>
-            {
-                var basicterm = rr.Clone();
-
-                var FSymbols = basicterm._FusedSymbols;
-
-                // Key  is the coefficient
-                //  value contains the power  which always will be symbolic power or null
-                foreach (var FS in FSymbols)
-                {
-                    var ss = new SymbolicVariable(FS.Key);
-                    ss.SymbolPower = FS.Value.NumericalVariable;
-                    if (FS.Value.SymbolicVariable != null)
-                        ss._SymbolPowerTerm = FS.Value.SymbolicVariable.Clone();
-
-                    MultipliedTerms.Add(new MultipliedTerm(ss));
-                }
-            };
-
-            SpliBaseTerm(sv);
-            if (sv.FusedConstants.Count > 0) SpliFusedConstants(sv);
-            if (sv.FusedSymbols.Count > 0) SplitFusedSymbols(sv);
-
-            return MultipliedTerms;
-        }
+        return MultipliedTerms;
     }
 }

@@ -1,29 +1,21 @@
 ﻿namespace QuantitySystem.DimensionDescriptors;
 
-public struct LengthDescriptor :
-    IDimensionDescriptor<LengthDescriptor>,
-    IEquatable<LengthDescriptor>,
-    IComparable<LengthDescriptor>,
-    IComparable
+public struct LengthDescriptor(float normalExponent, float polarExponent, float matrixExponent)
+    :
+        IDimensionDescriptor<LengthDescriptor>,
+        IEquatable<LengthDescriptor>,
+        IComparable<LengthDescriptor>,
+        IComparable
 {
-    public LengthDescriptor(float normalExponent, float polarExponent):this()
+    public LengthDescriptor(float normalExponent, float polarExponent): this(normalExponent, polarExponent, 0)
     {
-        ScalarExponent = normalExponent;
-        VectorExponent = polarExponent;
     }
 
-    public LengthDescriptor(float normalExponent, float polarExponent, float matrixExponent):this()
-    {
-        ScalarExponent = normalExponent;
-        VectorExponent = polarExponent;
-        MatrixExponent = matrixExponent;
-    }
+    public float ScalarExponent { get; set; } = normalExponent;
 
-    public float ScalarExponent { get; set; }
+    public float VectorExponent { get; set; } = polarExponent;
 
-    public float VectorExponent { get; set; }
-
-    public float MatrixExponent { get; set; }
+    public float MatrixExponent { get; set; } = matrixExponent;
 
     public float Exponent
     {

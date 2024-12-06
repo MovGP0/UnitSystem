@@ -1,20 +1,19 @@
-﻿namespace Qs.Runtime
-{
-    public class QsFunctionNotFoundException : QsException
-    {
-      public QsFunctionNotFoundException()
-      {
-         // Add any type-specific logic, and supply the default message.
-      }
+﻿namespace Qs.Runtime;
 
-      public QsFunctionNotFoundException(string message): base(message)
-      {
-         // Add any type-specific logic.
-      }
-      public QsFunctionNotFoundException(string message, Exception innerException):
-         base (message, innerException)
-      {
-         // Add any type-specific logic for inner exceptions.
-      }
-     }
+public class QsFunctionNotFoundException : QsException
+{
+   public QsFunctionNotFoundException()
+   {
+      // Add any type-specific logic, and supply the default message.
+   }
+
+   public QsFunctionNotFoundException(string message): base(message)
+   {
+      // Add any type-specific logic.
+   }
+   public QsFunctionNotFoundException(string message, Exception innerException):
+      base (message, innerException)
+   {
+      // Add any type-specific logic for inner exceptions.
+   }
 }

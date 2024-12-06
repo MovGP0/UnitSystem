@@ -14,13 +14,6 @@ using ParticleLexer.CommonTokens;
 
 namespace Qs.Runtime;
 
-enum QsVarParseModes
-{
-    None,
-    Function,
-    Sequence
-}
-
 class QsVar
 {
 

@@ -1,6 +1,5 @@
 ﻿using Qs.Runtime;
 using Qs.Types;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Qs;
 
@@ -54,20 +53,4 @@ public static class Windows
         System.Media.SystemSounds.Beep.Play();
         return null;
     }
-}
-
-/// <summary>
-/// to get the console window
-/// </summary>
-internal class ForegroundWindow : IWin32Window
-{
-    private static ForegroundWindow _window = new();
-    private ForegroundWindow() { }
-
-    public static IWin32Window Instance => _window;
-
-    [LibraryImport("user32.dll")]
-    private static extern IntPtr GetForegroundWindow();
-
-    IntPtr IWin32Window.Handle => GetForegroundWindow();
 }

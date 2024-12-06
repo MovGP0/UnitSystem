@@ -1,10 +1,7 @@
 namespace PassiveFlow.UnitTests;
 
 #region Types involved in the food order
-public class HungryCustomer;
-public class FoodCallCenter;
-public class Kitchen;
-public class DeliveryBoy;
+
 #endregion
 
 public class FoodOrder : Flow

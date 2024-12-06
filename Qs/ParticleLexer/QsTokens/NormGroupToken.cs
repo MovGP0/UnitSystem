@@ -2,10 +2,4 @@
 
 namespace ParticleLexer.QsTokens;
 
-public class NormGroupToken : GroupTokenClass
-{
-    public NormGroupToken()
-        : base(new LeftNormToken(), new RightNormToken())
-    {
-    }
-}
+public class NormGroupToken() : GroupTokenClass(new LeftNormToken(), new RightNormToken());

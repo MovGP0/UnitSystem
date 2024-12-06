@@ -1,14 +1,12 @@
 ﻿namespace QuantitySystem.DimensionDescriptors;
 
-public struct AmountOfSubstanceDescriptor:
+public struct AmountOfSubstanceDescriptor(float exponent) :
     IDimensionDescriptor<AmountOfSubstanceDescriptor>,
     IEquatable<AmountOfSubstanceDescriptor>,
     IComparable<AmountOfSubstanceDescriptor>,
     IComparable
 {
-    public AmountOfSubstanceDescriptor(float exponent):this() => Exponent = exponent;
-
-    public float Exponent { get; set; }
+    public float Exponent { get; set; } = exponent;
 
     public AmountOfSubstanceDescriptor Add(AmountOfSubstanceDescriptor dimensionDescriptor)
     {

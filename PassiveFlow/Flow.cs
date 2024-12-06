@@ -8,10 +8,14 @@ public class Flow : IEnumerable<Step>
 
     public event EventHandler<StepEventArgs>? StepChanged;
 
-    //holding instance of every Step Field
+    /// <summary>
+    /// holding instance of every Step Field
+    /// </summary>
     private List<Step> innerSteps = [];
 
-    //holding the field types
+    /// <summary>
+    /// holding the field types
+    /// </summary>
     private List<FieldInfo> _MyFields = [];
 
     /// <summary>
@@ -39,10 +43,13 @@ public class Flow : IEnumerable<Step>
                     StepAction[] acts = new StepAction[aas.Length];
                     for (var i = 0; i < aas.Length; i++)
                     {
-                        var aa = new StepAction();
-                        aa.ActionId = aas[i].ActionID;
-                        aa.ActionText = aas[i].ActionText;
-                        if (aas[i].GetType().Equals(typeof(StepActionAttribute)))
+                        var aa = new StepAction
+                        {
+                            ActionId = aas[i].ActionID,
+                            ActionText = aas[i].ActionText
+                        };
+
+                        if (aas[i].GetType() == typeof(StepActionAttribute))
                             aa.TargetStepName = aas[i].TargetStepName;
                         else
                             aa.TargetPosition = aas[i].RelativeIndex;

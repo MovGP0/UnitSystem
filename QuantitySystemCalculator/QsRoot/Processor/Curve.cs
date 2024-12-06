@@ -4,24 +4,13 @@ using Qs;
 
 namespace QsRoot.Processor;
 
-public class Curve
+public class Curve(SymbolicVariable fx, SymbolicVariable fy, SymbolicVariable fz)
 {
-    readonly SymbolicVariable _fx;
-    readonly SymbolicVariable _fy;
-    readonly SymbolicVariable _fz;
-
-    public Curve(SymbolicVariable x, SymbolicVariable y, SymbolicVariable z)
-    {
-        _fx = x;
-        _fy = y;
-        _fz = z;
-    }
-
     public QsVector Point(double t)
     {
-        var x = _fx.Execute(t);
-        var y = _fy.Execute(t);
-        var z = _fz.Execute(t);
+        var x = fx.Execute(t);
+        var y = fy.Execute(t);
+        var z = fz.Execute(t);
 
         return new QsVector(x.ToQuantity().ToScalar(), y.ToQuantity().ToScalar(), z.ToQuantity().ToScalar());
 
