@@ -207,12 +207,6 @@ internal sealed class UnitSystem : IUnitSystem
     private void RegisterKnownUnit(KnownUnit unit)
     {
         EnsureSymbolAvailable(unit.Symbol);
-        if (unit.Factor == 0 || double.IsNaN(unit.Factor) || double.IsInfinity(unit.Factor)
-            || double.IsNaN(unit.Offset) || double.IsInfinity(unit.Offset))
-        {
-            throw new ArgumentException("A registered unit requires a finite, invertible conversion.", nameof(unit));
-        }
-
         var key = (unit.Factor, unit.Offset, unit.Dimension);
         if (_units.TryGetValue(key, out var collision))
         {

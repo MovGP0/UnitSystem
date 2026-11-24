@@ -128,6 +128,22 @@ public sealed class UnitSystemRegressionTests
     }
 
     [TestMethod]
+    public void ShouldRejectNoninvertibleUnitTransforms()
+    {
+        var system = SISystem.System;
+        var dimension = SISystem.m.Dimension;
+
+        Should.Throw<ArgumentOutOfRangeException>(() => system.CreateUnit(0, dimension));
+        Should.Throw<ArgumentOutOfRangeException>(() => system.CreateUnit(double.PositiveInfinity, dimension));
+        Should.Throw<ArgumentOutOfRangeException>(() => system.CreateUnit(1, double.NaN, dimension));
+        Should.Throw<ArgumentOutOfRangeException>(() => new KnownUnit(system, double.NaN, 0, dimension, "x", "invalid"));
+        Should.Throw<ArgumentOutOfRangeException>(() => SISystem.m / 0);
+        Should.Throw<FormatException>(() => system.Parse("0 m"));
+        Should.Throw<FormatException>(() => system.Parse("1@NaN m"));
+        Unit.Ln(SISystem.NoUnit).ShouldBe(0.0);
+    }
+
+    [TestMethod]
     public void ShouldRefreshCustomRegistrationsWithoutPartialChangesOnFailure()
     {
         var system = UnitSystemFactory.CreateSystem("test");
@@ -149,7 +165,7 @@ public sealed class UnitSystemRegressionTests
         var custom = system.AddBaseUnit("two words", "custom unit");
         var product = custom * second;
         system.Parse(system.Display(product)).ShouldBe(product);
-        Should.Throw<ArgumentException>(() => system.AddDerivedUnit("zero", "zero", 0 * unit));
-        system["zero"].ShouldBeNull();
+        Should.Throw<ArgumentOutOfRangeException>(() => system.AddDerivedUnit("invalid", "invalid", unit, double.NaN));
+        system["invalid"].ShouldBeNull();
     }
 }

@@ -136,7 +136,14 @@ internal sealed class UnitInterpreter
 
         if (factor.Equals(1.0) && offset.Equals(0.0)) return unit;
         Check.EnsureAbsoluteUnit(unit);
-        return _system.CreateUnit(factor * unit.Factor, offset, unit.Dimension);
+        try
+        {
+            return _system.CreateUnit(factor * unit.Factor, offset, unit.Dimension);
+        }
+        catch (ArgumentOutOfRangeException exception)
+        {
+            throw new FormatException(Messages.UnitExpressionInvalid.FormatWith(unitExpression), exception);
+        }
     }
 
     private static bool TryParseTransform(string token, out double factor, out double offset)

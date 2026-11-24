@@ -10,7 +10,7 @@ The library is based on the [Physics library](https://github.com/Tsjunne/Physics
 
 The following adoptions have been made:
 - added documentation
-- added support for fractional/logarithmic unit bases
+- added fractional powers and numeric logarithms of dimensionless unit scales
 - added partial support for binary prefixes
 - added support for CGS and imperial unit system
   - based all unit systems on the SI system to facilitate conversion

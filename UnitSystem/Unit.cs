@@ -20,6 +20,15 @@ public abstract partial class Unit : IEquatable<Unit>
     internal Unit(IUnitSystem system, double factor, double offset, Dimension dimension)
     {
         Check.Argument(dimension, nameof(dimension)).IsNotNull();
+        if (factor == 0 || double.IsNaN(factor) || double.IsInfinity(factor))
+        {
+            throw new ArgumentOutOfRangeException(nameof(factor), "A unit requires a finite, nonzero scale factor.");
+        }
+
+        if (double.IsNaN(offset) || double.IsInfinity(offset))
+        {
+            throw new ArgumentOutOfRangeException(nameof(offset), "A unit requires a finite offset.");
+        }
 
         System = system;
         Dimension = dimension;
