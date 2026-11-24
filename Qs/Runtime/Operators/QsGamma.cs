@@ -120,14 +120,15 @@ public static class QsGamma
         // then this ...  http://www.luschny.de/System.Math/factorial/approx/SimpleCases.html
 
         //the used function  near to the windows calculator
-        var StieltjesFactorial = delegate(double x)
+        var StieltjesFactorial = (double x) =>
         {
             var y = x + 1;
             var p = 1.0;
             while (y < 7)
-                {
+            {
                 p = p * y;
-                y = y + 1; }
+                y = y + 1;
+            }
 
             var r = Math.Exp(y * Math.Log(y) - y + 1 / (12 * y + 2 / (5 * y + 53 / (42 * y))));
             if (x < 7)
@@ -138,7 +139,7 @@ public static class QsGamma
             return r * Math.Sqrt(2 * Math.PI / y);
         };
 
-        var StieltjesLnFactorial = delegate(double z)
+        var StieltjesLnFactorial = (double z) =>
         {
             var a0 = 1 / 12;
             var a1 = 1 / 30;
@@ -154,14 +155,14 @@ public static class QsGamma
         };
 
         //gives value of the normal factorial :S
-        var StieltjesFactorialHP = delegate(double x)
+        var StieltjesFactorialHP = (double x) =>
         {
             var y = x;
             var p = 1.0;
             while (y < 8)
             {
-                p = p*y;
-                y = y+1;
+                p = p * y;
+                y = y + 1;
             }
 
 ;
@@ -169,14 +170,14 @@ public static class QsGamma
 
             if (x < 8)
             {
-                return  (r * x) / (p * y);
+                return (r * x) / (p * y);
             }
 
             return r;
         };
 
         //gives value less the normal factorial :(
-        var Nemes = delegate(double x)
+        var Nemes = (double x) =>
         {
             var temp = x;
             temp += (1 / 12) * (1 / x);

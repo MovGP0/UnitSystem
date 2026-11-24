@@ -2385,7 +2385,7 @@ class QsVar
 
         #region Helper delegates
         //delegate to check if the function name in the Function object of the current function expression formation or if parsemode = function
-        Func<string, Expression?> ParameterFunction = delegate(string funcName)
+        Func<string, Expression?> ParameterFunction = (string funcName) =>
         {
             //this anonymous function is calling the function dynamically from the passed function argument.
 
@@ -2409,7 +2409,7 @@ class QsVar
                 QsParamInfo pinfo; //the parameter in the parent function that hold the function name.
                 if (ParseMode == QsVarParseModes.Function)
                 {
-                    pinfo = Function.Parameters.Single(c => c.Name.Equals( funcName, StringComparison.OrdinalIgnoreCase));
+                    pinfo = Function.Parameters.Single(c => c.Name.Equals(funcName, StringComparison.OrdinalIgnoreCase));
                 }
                 else if (ParseMode == QsVarParseModes.Sequence)
                 {
