@@ -8,11 +8,11 @@ internal struct UnitValues
 
     public bool _IsBaseUnit;
 
-    public Type _QuantityType;
+    public Type? _QuantityType;
 
     public QuantityDimension _UnitDimension;
 
-    public Unit _ReferenceUnit;
+    public Unit? _ReferenceUnit;
 
     public double _ReferenceUnitNumerator;
 

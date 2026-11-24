@@ -140,7 +140,8 @@ public class QsSequenceElement
     {
         var el = new QsSequenceElement();
         el.ElementValue = quantity;
-        el.ElementDeclaration = quantity.ToString();
+        el.ElementDeclaration = quantity.ToString()
+            ?? throw new QsException("A sequence element must have a textual representation.");
 
         el.IndexEvaluation = false;
         el.ParameterEvaluation = false;

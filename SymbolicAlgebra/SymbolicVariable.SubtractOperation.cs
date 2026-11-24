@@ -26,7 +26,8 @@ public partial class SymbolicVariable
                 {
                     if (a_b.ExtraTerms[iet].Term.DividedTerm.Equals(b.DividedTerm))
                     {
-                        a_b.ExtraTerms[iet].Term = Subtract(a_b.ExtraTerms[iet].Term, b);
+                        a_b.ExtraTerms[iet].Term = Subtract(a_b.ExtraTerms[iet].Term, b)
+                            ?? throw new SymbolicException("Could not combine the terms.");
                         econsumed = true;
                         break;
                     }
@@ -149,7 +150,9 @@ public partial class SymbolicVariable
             {
                 //exist before add it to this variable.
 
-                sv.AddedTerms[subB.WholeValueBaseKey] = Subtract(sv.AddedTerms[subB.WholeValueBaseKey], subB);
+                sv.AddedTerms[subB.WholeValueBaseKey] = Subtract(sv.AddedTerms[subB.WholeValueBaseKey], subB)
+
+                    ?? throw new SymbolicException("Could not combine the terms.");
             }
         }
 
@@ -183,7 +186,7 @@ public partial class SymbolicVariable
             }
         }
 
-        AdjustSpecialFunctions(ref sv);
+        sv = AdjustSpecialFunctions(sv);
         AdjustZeroPowerTerms(sv);
         AdjustZeroCoeffecientTerms(ref sv);
 

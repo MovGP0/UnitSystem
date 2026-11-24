@@ -381,7 +381,7 @@ public partial class QsFunction
         return !(a == b);
     }
 
-    static PropertyInfo ExpressionDebugView = typeof(Expression).GetProperty("DebugView", BindingFlags.Instance | BindingFlags.NonPublic);
+    static PropertyInfo? ExpressionDebugView = typeof(Expression).GetProperty("DebugView", BindingFlags.Instance | BindingFlags.NonPublic);
 
     public override bool Equality(QsValue value)
     {

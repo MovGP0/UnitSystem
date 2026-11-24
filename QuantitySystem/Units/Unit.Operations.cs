@@ -328,45 +328,21 @@ public partial class Unit
 
                 systemsPath = new UnitPathStack();
 
-                UnitPathItem defaultPItem;
-                UnitPathItem refUpi;
-
                 var sourceDefaultUnit = fromMeToDefaultUnit.Peek().Unit;
-
-                if (sourceDefaultUnit.UnitSystem != "Metric.SI" && sourceDefaultUnit.GetType() != typeof(Shared.Second))
+                var useSourceDefault = sourceDefaultUnit.UnitSystem != "Metric.SI" && sourceDefaultUnit.GetType() != typeof(Shared.Second);
+                var defaultUnit = useSourceDefault ? sourceDefaultUnit : fromDefaultUnitToTargetUnit.Last().Unit;
+                var referenceUnit = defaultUnit.ReferenceUnit;
+                if (referenceUnit is not null)
                 {
-                    //from source default unit to the si
-                    defaultPItem = fromMeToDefaultUnit.Peek();
-                    refUpi = new UnitPathItem
+                    systemsPath.Push(new UnitPathItem
                     {
-                        Numerator = defaultPItem.Unit.ReferenceUnitNumerator,
-                        Denominator = defaultPItem.Unit.ReferenceUnitDenominator,
-                        //Shift = DefaultPItem.Unit.ReferenceUnitShift,
-                        Unit = defaultPItem.Unit.ReferenceUnit
-                    };
-                }
-                else
-                {
-                    // from target default unit to si
-                    defaultPItem = fromDefaultUnitToTargetUnit.ElementAt(fromDefaultUnitToTargetUnit.Count - 1);
-                    refUpi = new UnitPathItem
-                    {
-                        //note the difference here
-                        //I made the opposite assignments because we are in reverse manner
-
-                        Numerator = defaultPItem.Unit.ReferenceUnitDenominator, // <=== opposite
-                        Denominator = defaultPItem.Unit.ReferenceUnitNumerator, // <===
-                        //Shift = 0-DefaultPItem.Unit.ReferenceUnitShift,
-                        Unit = defaultPItem.Unit.ReferenceUnit
-                    };
+                        Numerator = useSourceDefault ? defaultUnit.ReferenceUnitNumerator : defaultUnit.ReferenceUnitDenominator,
+                        Denominator = useSourceDefault ? defaultUnit.ReferenceUnitDenominator : defaultUnit.ReferenceUnitNumerator,
+                        Unit = referenceUnit
+                    });
                 }
 
-                if (refUpi.Unit != null)
-                {
-                    systemsPath.Push(refUpi);
-                }
-
-                // NOTE: if refUpi.Unit is null:
+                // A missing reference means the default unit is already in SI.
                 // both default units were SI units without references
                 // when define units in unit cloud for quantity
                 // either make all units reference SI units without default unit

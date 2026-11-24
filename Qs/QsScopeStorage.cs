@@ -1,4 +1,6 @@
-﻿namespace Qs;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Qs;
 
 /// <summary>
 /// Serves the storage for the scope.
@@ -44,7 +46,7 @@ public class QsScopeStorage : IQsStorageProvider
     /// <param name="variable"></param>
     /// <param name="q"></param>
     /// <returns></returns>
-    public bool TryGetValue(string variable, out object q)
+    public bool TryGetValue(string variable, [MaybeNullWhen(false)] out object q)
     {
         return _Storage.TryGetValue(variable, out q);
     }

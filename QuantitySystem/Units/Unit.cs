@@ -19,7 +19,7 @@ public partial class Unit : ICloneable
 
     private readonly bool _IsBaseUnit;
 
-    protected Type _QuantityType;
+    protected Type? _QuantityType;
 
     /// <summary>
     /// the reference unit information.
@@ -147,12 +147,12 @@ public partial class Unit : ICloneable
     /// Returns a unique key for the unit based on the unit type and the representative quantity type
     /// Also m! and m  while they are the same unit, but they represent Polar and Regular lengths respectively.
     /// </summary>
-    public Tuple<Type, Type> UniqueKey => new(GetType(), QuantityType);
+    public Tuple<Type, Type?> UniqueKey => new(GetType(), QuantityType);
 
     /// <summary>
     /// The Type of the Quantity of this unit.
     /// </summary>
-    public Type QuantityType
+    public Type? QuantityType
     {
         get => _QuantityType;
         internal set

@@ -12,7 +12,7 @@ public partial class SymbolicVariable
 
         public SymbolicExpressionOperator? Next;
 
-        public SymbolicVariable SymbolicExpression;
+        public SymbolicVariable? SymbolicExpression;
 
         public string DebugView
         {
@@ -344,7 +344,10 @@ public partial class SymbolicVariable
             // there was a function defintion
             var fname = rr[0];
 
-            Functions[fname] = Root.SymbolicExpression;
+            if (Root.SymbolicExpression is { } definition)
+            {
+                Functions[fname] = definition;
+            }
         }
 
         return Root.SymbolicExpression;

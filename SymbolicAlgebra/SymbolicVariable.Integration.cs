@@ -506,7 +506,7 @@ public partial class SymbolicVariable
             }
         }
 
-        AdjustSpecialFunctions(ref result);
+        result = AdjustSpecialFunctions(result);
 
         AdjustZeroPowerTerms(result);
 

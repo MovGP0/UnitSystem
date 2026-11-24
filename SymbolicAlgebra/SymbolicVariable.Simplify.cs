@@ -17,7 +17,7 @@ public partial class SymbolicVariable
 
         public int Cos_2_Count;
 
-        SymbolicVariable _NegativeSimplifyValue;
+        SymbolicVariable? _NegativeSimplifyValue;
 
         public SymbolicVariable? NegativeSimplifyValue
         {

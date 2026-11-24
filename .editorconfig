@@ -192,7 +192,7 @@ dotnet_diagnostic.CS0693.severity = warning
 dotnet_diagnostic.CS8600.severity = warning
 
 # Avoid assigning a possibly null value to a nonnullable target
-dotnet_diagnostic.CS8601.severity = suggestion
+dotnet_diagnostic.CS8601.severity = warning
 
 # Check a possibly null reference before dereferencing it
 dotnet_diagnostic.CS8602.severity = suggestion

@@ -22,7 +22,7 @@ class QsVar
 
     public class ExprOp
     {
-        public Expression QuantityExpression { get; set; }
+        public Expression? QuantityExpression { get; set; }
 
         public string Operation { get; set; }
 
@@ -1122,19 +1122,12 @@ class QsVar
         }
 
 #if WINRT
-            discoveredType = Root.GetInternalType(cls);
+        var resolvedType = Root.GetInternalType(cls);
 #else
-        discoveredType = Type.GetType(cls, false);
-        if (discoveredType == null)
-        {
-            discoveredType = Root.GetExternalType(cls);
-        }
+        var resolvedType = Type.GetType(cls, false) ?? Root.GetExternalType(cls);
 #endif
 
-        if (discoveredType == null)
-        {
-            throw new QsException(string.Format("[{0}] type doesn't exist.", cls));
-        }
+        discoveredType = resolvedType ?? throw new QsException($"[{cls}] type doesn't exist.");
 
         if (args.Length == 0)
         {

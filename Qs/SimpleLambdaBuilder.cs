@@ -52,7 +52,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
 
     private static Type GetLambdaType(Type returnType, IList<ParameterExpression> parameterList)
     {
-        Contract.Requires(returnType != null);
+        ArgumentNullException.ThrowIfNull(returnType);
 
         var action = returnType == typeof(void);
         var paramCount = parameterList == null ? 0 : parameterList.Count;

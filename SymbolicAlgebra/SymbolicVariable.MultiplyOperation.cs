@@ -341,7 +341,7 @@ public partial class SymbolicVariable
                 }
 
                 var newe = Multiply(eterm, TargetSubTerm);
-                newExtraTerms.Add(new ExtraTerm { Term = newe });
+                newExtraTerms.Add(new ExtraTerm { Term = newe ?? throw new SymbolicException("Could not calculate the extra term.") });
             }
 
             SourceTerm._ExtraTerms = newExtraTerms;
@@ -385,7 +385,7 @@ public partial class SymbolicVariable
             extraIndex++;
         }
 
-        AdjustSpecialFunctions(ref total);
+        total = AdjustSpecialFunctions(total);
         AdjustZeroPowerTerms(total);
 
         AdjustZeroCoeffecientTerms(ref total);
@@ -397,7 +397,7 @@ public partial class SymbolicVariable
     {
         public double ConstantValue;
 
-        public SymbolicVariable ConstantPower;
+        public SymbolicVariable? ConstantPower;
     }
 
     public CoeffecienttValue[] Constants

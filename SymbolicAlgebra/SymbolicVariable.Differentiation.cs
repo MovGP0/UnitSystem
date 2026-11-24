@@ -353,7 +353,8 @@ public partial class SymbolicVariable
             }
 
             // term *mt
-            CalculatedDiffs[ix] = Multiply(mt, term);
+            CalculatedDiffs[ix] = Multiply(mt, term)
+                ?? throw new SymbolicException("Could not combine the terms.");
         }
 
         //       dx*y*z     dy*x*z       dz*x*y
@@ -416,7 +417,7 @@ public partial class SymbolicVariable
             }
         }
 
-        AdjustSpecialFunctions(ref result);
+        result = AdjustSpecialFunctions(result);
 
         AdjustZeroPowerTerms(result);
 

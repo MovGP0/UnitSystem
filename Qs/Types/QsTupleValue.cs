@@ -16,7 +16,7 @@ public struct QsTupleValue
 
     public object? LazyValue => _LazyValue;
 
-    public QsValue Value;
+    public QsValue? Value;
 
     /// <summary>
     /// Set the tuple value to a value that will be evaluated when value accessed first time

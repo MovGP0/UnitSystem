@@ -472,7 +472,7 @@ public partial class Unit
 
         List<Unit> groupedUnits = [];
 
-        Dictionary<Tuple<Type, Type>, Unit> us = new();
+        Dictionary<Tuple<Type, Type?>, Unit> us = new();
 
         foreach (var un in units)
         {

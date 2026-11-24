@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Qs;
 
 public interface IQsStorageProvider : IDisposable
@@ -14,7 +16,7 @@ public interface IQsStorageProvider : IDisposable
 
     void SetValue(string variable, object value);
 
-    bool TryGetValue(string variable, out object q);
+    bool TryGetValue(string variable, [MaybeNullWhen(false)] out object q);
 
     bool DeleteValue(string variable);
 

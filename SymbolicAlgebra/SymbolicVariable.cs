@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace SymbolicAlgebra;
@@ -227,7 +228,8 @@ public partial class SymbolicVariable
                     _FunctionParameters = new SymbolicVariable[_RawFunctionParameters.Length];
                     for (var i = 0; i < _RawFunctionParameters.Length; i++)
                     {
-                        _FunctionParameters[i] = Parse(_RawFunctionParameters[i]);
+                        _FunctionParameters[i] = Parse(_RawFunctionParameters[i])
+                            ?? throw new SymbolicException("A function argument must contain an expression.");
                     }
                 }
 
@@ -602,6 +604,7 @@ public partial class SymbolicVariable
     /// <summary>
     /// Extra terms that couldn't be divided into the term.
     /// </summary>
+    [AllowNull]
     public SymbolicVariable DividedTerm
     {
         get
@@ -1621,8 +1624,10 @@ public partial class SymbolicVariable
     /// This function is mainly taking the sqrt(x)^2 and product x  instead of it.
     /// </summary>
     /// <param name="sv"></param>
-    private static void AdjustSpecialFunctions(ref SymbolicVariable sv)
+    private static SymbolicVariable AdjustSpecialFunctions(SymbolicVariable? sv)
     {
+        ArgumentNullException.ThrowIfNull(sv);
+
         // if you found sqrt(x)^2 get the parameter of the function
 
         var aterms = sv._AddedTerms;
@@ -1634,7 +1639,8 @@ public partial class SymbolicVariable
         {
             var parameterPower = 0.5 * sv.SymbolPower;
 
-            var newvalue = sv._FunctionParameters[0].Power(parameterPower);
+            var newvalue = sv._FunctionParameters[0].Power(parameterPower)
+                ?? throw new SymbolicException("The square-root argument could not be raised to its power.");
             newvalue.Coeffecient *= sv.Coeffecient;
 
             sv = newvalue;
@@ -1644,9 +1650,7 @@ public partial class SymbolicVariable
         {
             for (var i = 0; i < aterms.Count; i++)
             {
-                var sa = aterms.ElementAt(i).Value;
-
-                AdjustSpecialFunctions(ref sa);
+                var sa = AdjustSpecialFunctions(aterms.ElementAt(i).Value);
 
                 sv.AddedTerms.Add(sa.WholeValueBaseKey,sa);
             }
@@ -1656,10 +1660,12 @@ public partial class SymbolicVariable
         {
             foreach (var r in eterms)
             {
-                AdjustSpecialFunctions(ref r.Term);
+                r.Term = AdjustSpecialFunctions(r.Term);
                 sv.ExtraTerms.Add(r);
             }
         }
+
+        return sv;
     }
 
     private static void AdjustZeroPowerTerms(SymbolicVariable svar)

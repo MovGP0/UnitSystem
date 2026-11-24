@@ -177,7 +177,8 @@ public class QsNamespace(string name)
             var prm = new QsParamInfo();
 
             //parameter name
-            prm.Name = miParam.Name;
+            prm.Name = miParam.Name
+                ?? throw new QsException($"Method '{methodInfo.Name}' has a parameter without a name.");
 
             var pis = miParam.GetCustomAttributes(typeof(QsParamInfoAttribute), true);
 
