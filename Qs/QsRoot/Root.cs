@@ -110,7 +110,7 @@ public class Root
     /// <param name="method"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    public static object[] QsParametersToNativeValues(MethodInfo method, params QsParameter[] parameters)
+    public static object?[] QsParametersToNativeValues(MethodInfo method, params QsParameter[] parameters)
     {
         List<object?> NativeParameters = [];
 
