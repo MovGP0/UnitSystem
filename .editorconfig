@@ -759,7 +759,7 @@ dotnet_diagnostic.CA1068.severity = warning
 dotnet_diagnostic.CA1069.severity = warning
 
 # Do not declare event fields as virtual
-# dotnet_diagnostic.CA1070.severity = warning
+dotnet_diagnostic.CA1070.severity = warning
 
 # P/Invokes should not be visible
 # dotnet_diagnostic.CA1401.severity = warning
