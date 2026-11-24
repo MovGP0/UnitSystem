@@ -505,7 +505,7 @@ public sealed class QsEvaluator
 
                     if (seq[nsidx + 1].TokenClassType == typeof(SquareBracketsGroupToken))
                     {
-                        if (seq[nsidx + 1].Contains(typeof(ColonToken)))
+                        if (seq[nsidx + 1].Contains<ColonToken>())
                         {
                             #region indexed sequence.
                             //a[n:1] = n!    the form that we expect.
@@ -687,7 +687,7 @@ public sealed class QsEvaluator
                         vnToken = vnToken.MergeTokens<NamespaceToken>();
                         vnToken = vnToken.MergeSequenceTokens<WordToken>(typeof(AtSignToken), typeof(WordToken));
 
-                        if (vnToken.Contains(typeof(NamespaceToken)))
+                        if (vnToken.Contains<NamespaceToken>())
                         {
                             var qvResult = qv.Execute();
                             if (qvResult is QsFunction)

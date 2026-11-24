@@ -635,7 +635,7 @@ class QsVar
                 // so we will extract the last
                 OperatorTokenText = ":";    // make colon an operation
 
-                var mtk = tokens[ix].TrimEnd(typeof(ColonToken)); // removce the latest colon from the tokens.
+                var mtk = tokens[ix].TrimEnd<ColonToken>(); // removce the latest colon from the tokens.
 
                 if (eop?.Operation == "->")
                 {
@@ -1177,10 +1177,10 @@ class QsVar
             cn = complexToken;
         }
 
-        var token = cn.TrimStart(typeof(WordToken)).TrimStart(typeof(LeftCurlyBracketToken));
-        token = token.TrimEnd(typeof(RightCurlyBracketToken));
+        var token = cn.TrimStart<WordToken>().TrimStart<LeftCurlyBracketToken>();
+        token = token.TrimEnd<RightCurlyBracketToken>();
 
-        token = token.MergeAllBut(typeof(MergedToken), new CommaToken(), new MultipleSpaceToken());
+        token = token.MergeAllBut<MergedToken>();
         token = token.RemoveTokens(typeof(CommaToken), typeof(MultipleSpaceToken));
 
         var nums = new List<float>();
@@ -1230,10 +1230,10 @@ class QsVar
             cn = quaternionToken;
         }
 
-        var token = cn.TrimStart(typeof(WordToken)).TrimStart(typeof(LeftCurlyBracketToken));
-        token = token.TrimEnd(typeof(RightCurlyBracketToken));
+        var token = cn.TrimStart<WordToken>().TrimStart<LeftCurlyBracketToken>();
+        token = token.TrimEnd<RightCurlyBracketToken>();
 
-        token = token.MergeAllBut(typeof(MergedToken), new CommaToken(), new MultipleSpaceToken());
+        token = token.MergeAllBut<MergedToken>();
         token = token.RemoveTokens(typeof(CommaToken), typeof(MultipleSpaceToken));
 
         var nums = new List<double>();
@@ -1293,10 +1293,10 @@ class QsVar
             cn = complexToken;
         }
 
-        var token = cn.TrimStart(typeof(WordToken)).TrimStart(typeof(LeftCurlyBracketToken));
-        token = token.TrimEnd(typeof(RightCurlyBracketToken));
+        var token = cn.TrimStart<WordToken>().TrimStart<LeftCurlyBracketToken>();
+        token = token.TrimEnd<RightCurlyBracketToken>();
 
-        token = token.MergeAllBut(typeof(MergedToken), new CommaToken(), new MultipleSpaceToken());
+        token = token.MergeAllBut<MergedToken>();
         token = token.RemoveTokens(typeof(CommaToken), typeof(MultipleSpaceToken));
 
         var nums = new List<double>();
@@ -1377,10 +1377,10 @@ class QsVar
         }
 
         List<string> qtyExpressions = [];
-        var token = tok.TrimStart(typeof(LeftCurlyBracketToken));
-        token = token.TrimEnd(typeof(RightCurlyBracketToken));
+        var token = tok.TrimStart<LeftCurlyBracketToken>();
+        token = token.TrimEnd<RightCurlyBracketToken>();
 
-        token = token.MergeAllBut(typeof(MergedToken), new CommaToken(), new MultipleSpaceToken());
+        token = token.MergeAllBut<MergedToken>();
         token = token.RemoveTokens(typeof(CommaToken), typeof(MultipleSpaceToken));
 
         for (var i = 0; i < token.Count; i++)
@@ -1402,10 +1402,10 @@ class QsVar
     private MethodCallExpression ParseVector(Token tok)
     {
         List<Expression> qtyExpressions = [];
-        var token = tok.TrimStart(typeof(LeftCurlyBracketToken));
-        token = token.TrimEnd(typeof(RightCurlyBracketToken));
+        var token = tok.TrimStart<LeftCurlyBracketToken>();
+        token = token.TrimEnd<RightCurlyBracketToken>();
 
-        token = token.MergeAllBut(typeof(MergedToken), new CommaToken(), new MultipleSpaceToken());
+        token = token.MergeAllBut<MergedToken>();
         token = token.RemoveTokens(typeof(CommaToken), typeof(MultipleSpaceToken));
 
         for (var i = 0; i < token.Count ;i++ )
@@ -1435,14 +1435,14 @@ class QsVar
     {
         List<Expression> vctExpressions = [];
 
-        var token = tok.TrimStart(typeof(LeftSquareBracketToken));
+        var token = tok.TrimStart<LeftSquareBracketToken>();
 
-        token = token.TrimEnd(typeof(RightSquareBracketToken));
+        token = token.TrimEnd<RightSquareBracketToken>();
 
         // first split between semi colon tokens.
         // then use every splitted token to
 
-        token = token.MergeAllBut(typeof(MergedToken), new SemiColonToken());
+        token = token.MergeAllBut<MergedToken>();
 
         // now the tokens are scalars or vectors followed by semi colon;
         // put them beside each other
@@ -1456,7 +1456,7 @@ class QsVar
 
                 List<Expression> componentsExpressions = [];
 
-                var stoks = token[i].MergeAllBut(typeof(MergedToken), new CommaToken(), new MultipleSpaceToken());
+                var stoks = token[i].MergeAllBut<MergedToken>();
 
                 foreach (var vtk in stoks)
                 {
@@ -1492,14 +1492,14 @@ class QsVar
     {
         List<Expression> vctExpressions = [];
 
-        var token = tok.TrimStart(typeof(LeftTensorToken));
+        var token = tok.TrimStart<LeftTensorToken>();
 
-        token = token.TrimEnd(typeof(RightTensorToken));
+        token = token.TrimEnd<RightTensorToken>();
 
         // first split between semi colon tokens.
         // then use every splitted token to
 
-        token = token.MergeAllBut(typeof(MergedToken), new VerticalBarToken());
+        token = token.MergeAllBut<MergedToken>();
 
         for (var i = 0; i < token.Count; i++)
         {
@@ -2035,7 +2035,7 @@ class QsVar
         itok = itok.RemoveSpaceTokens();
         itok = itok.MergeTokens<WordToken>();
 
-        itok = itok.MergeAllBut(typeof(WordToken), new SequenceRangeToken());
+        itok = itok.MergeAllBut<WordToken>();
 
         if (itok.Count == 3 && itok[1].TokenClassType == typeof(SequenceRangeToken))
         {

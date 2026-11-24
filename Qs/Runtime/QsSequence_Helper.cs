@@ -106,13 +106,13 @@ public partial class QsSequence
         t = t.MergeTokens<PositiveSequenceToken>();  //    ..>  start from 0 index to +ve
         t = t.MergeTokens<NegativeSequenceToken>();  //    <..  start from -1 index to -ve
 
-        if (t.IndexOf(typeof(PositiveSequenceToken)) > -1)
+        if (t.IndexOf<PositiveSequenceToken>() > -1)
         {
-            t = t.RemoveTokenUntil(typeof(MultipleSpaceToken), typeof(PositiveSequenceToken));
+            t = t.RemoveTokenUntil<MultipleSpaceToken, PositiveSequenceToken>();
         }
-        else if (t.IndexOf(typeof(NegativeSequenceToken)) > -1)
+        else if (t.IndexOf<NegativeSequenceToken>() > -1)
         {
-            t = t.RemoveTokenUntil(typeof(MultipleSpaceToken), typeof(PositiveSequenceToken));
+            t = t.RemoveTokenUntil<MultipleSpaceToken, PositiveSequenceToken>();
         }
         else
         {

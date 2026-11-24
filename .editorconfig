@@ -1092,7 +1092,7 @@ dotnet_diagnostic.CA2261.severity = warning
 dotnet_diagnostic.CA2262.severity = warning
 
 # Prefer generic overload when type is known
-# dotnet_diagnostic.CA2263.severity = warning
+dotnet_diagnostic.CA2263.severity = warning
 
 # Do not pass a non-nullable value to 'ArgumentNullException.ThrowIfNull'
 dotnet_diagnostic.CA2264.severity = warning
