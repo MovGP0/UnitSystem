@@ -227,7 +227,7 @@ public partial class Unit
 
         var unitVectorModifier = false;
 
-        if (unit.EndsWith("!", StringComparison.Ordinal))
+        if (unit.EndsWith('!'))
         {
             //it is intended of Radius length
             unit = unit.TrimEnd('!');
