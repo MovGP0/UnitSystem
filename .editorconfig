@@ -936,7 +936,7 @@ dotnet_diagnostic.CA1868.severity = warning
 dotnet_diagnostic.CA1869.severity = warning
 
 # Use a cached 'SearchValues' instance
-# dotnet_diagnostic.CA1870.severity = warning
+dotnet_diagnostic.CA1870.severity = warning
 
 # Do not pass a nullable struct to 'ArgumentNullException.ThrowIfNull'
 # dotnet_diagnostic.CA1871.severity = warning
