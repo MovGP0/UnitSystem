@@ -339,10 +339,8 @@ public partial class SymbolicVariable
                                         logparam.FusedSymbols[logparam.FusedSymbols.ElementAt(i).Key] = new HybridVariable { NumericalVariable = 1 };
                                     }
 
-                                    SymbolicVariable? final = null;
-
                                     // first coefficient power * log(coefficient)
-                                    final = Multiply(first_constant, new SymbolicVariable("log(" + logparam.Coeffecient.ToString(CultureInfo.InvariantCulture) + ")"));
+                                    SymbolicVariable? final = Multiply(first_constant, new SymbolicVariable("log(" + logparam.Coeffecient.ToString(CultureInfo.InvariantCulture) + ")"));
                                     for (var i = 0; i < logparam.FusedConstants.Count; i++)
                                     {
                                         final = Add(final, Multiply(fusedConstants[i], new SymbolicVariable("log(" + logparam.FusedConstants.ElementAt(i).Key.ToString(CultureInfo.InvariantCulture) + ")")));

@@ -128,9 +128,7 @@ class QsVar
 
         //tok = tok.MergeTokens(new PowerCrossToken()); removed
 
-        tok = tok.MergeTokens<TensorProductToken>();
-
-        return tok;
+        return tok.MergeTokens<TensorProductToken>();
     }
 
     internal Expression ParseArithmatic(string codeLine)
@@ -1348,9 +1346,7 @@ class QsVar
         // parsing within absolute will re-execute the parsing
         var rr = ParseArithmatic(token.TrimTokens(1, 1));
 
-        rr = Expression.Call(rr, typeof(QsValue).GetMethod("AbsOperation"));
-
-        return rr;
+        return Expression.Call(rr, typeof(QsValue).GetMethod("AbsOperation"));
     }
 
     /// <summary>
@@ -1365,9 +1361,7 @@ class QsVar
         // parsing within absolute will re-execute the parsing
         var rr = ParseArithmatic(token.TrimTokens(1, 1));
 
-        rr = Expression.Call(rr, typeof(QsValue).GetMethod("NormOperation"));
-
-        return rr;
+        return Expression.Call(rr, typeof(QsValue).GetMethod("NormOperation"));
     }
 
     #region QsValue Parsers

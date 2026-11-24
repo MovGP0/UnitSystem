@@ -419,8 +419,7 @@ public partial class Unit
                 chobits[iy] = (Unit)finalUnit.MemberwiseClone();
             }
 
-            Type? uQType = null;
-            uQType = QuantityDimension.GetQuantityTypeFrom(ud);
+            Type? uQType = QuantityDimension.GetQuantityTypeFrom(ud);
             finalUnit = new Unit(uQType, chobits);
         }
 

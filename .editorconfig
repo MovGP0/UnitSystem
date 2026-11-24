@@ -569,7 +569,7 @@ dotnet_diagnostic.RCS1210.severity = warning
 # dotnet_diagnostic.RCS1211.severity = silent
 
 # Remove redundant assignment
-# dotnet_diagnostic.RCS1212.severity = warning
+dotnet_diagnostic.RCS1212.severity = warning
 
 # Remove unused member declaration
 # dotnet_diagnostic.RCS1213.severity = warning

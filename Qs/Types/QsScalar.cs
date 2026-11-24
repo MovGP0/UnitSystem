@@ -455,16 +455,14 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.ComplexNumberQuantity:
                     {
-                        AnyQuantity<Complex>? result = null;
-                        result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
+                        AnyQuantity<Complex>? result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
                             result += scalar.ComplexQuantity;
                         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = result };
                     }
 
                     case ScalarTypes.QuaternionNumberQuantity:
                     {
-                        AnyQuantity<Quaternion>? result = null;
-                        result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
+                        AnyQuantity<Quaternion>? result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
                             result += scalar.QuaternionQuantity;
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = result };
                     }

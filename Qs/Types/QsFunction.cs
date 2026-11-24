@@ -583,14 +583,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             var function = (QsFunction?)MathNamespace.GetValueOrNull(functionName);
 
             // built int math functions will be overwrite any other functions
-            if (function != null)
-            {
-                return function;
-            }
-
-            function = (QsFunction?)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, functionName);
-
-            return function;
+            return function ?? (QsFunction?)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, functionName);
         }
 
         try
