@@ -62,7 +62,7 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
                     var dir = line.TrimStart();
                     QsRoot.Root.LoadLibrary(dir.Substring(8).Trim());
                 }
-                else if (!line.StartsWith("#"))
+                else if (!line.StartsWith('#'))
                 {
                     //I want to exclude # if it was between parentthesis.
                     //  oo(ferwe#kd adflk ) #
@@ -121,7 +121,7 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
                     var l2 = sb.ToString().Trim();  // text without comment.
 
                     //check the last charachter
-                    if (l2.EndsWith(";"))
+                    if (l2.EndsWith(';'))
                     {
                         //trim the ';' and silent evaluate the expression.
                         ret = qs.SilentEvaluate(l2.Trim(';'));

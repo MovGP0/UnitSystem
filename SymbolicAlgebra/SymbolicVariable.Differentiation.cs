@@ -209,7 +209,7 @@ public partial class SymbolicVariable
                     var extendedFunction = Functions.Keys.FirstOrDefault(c => c.StartsWith(fv.FunctionName, StringComparison.OrdinalIgnoreCase));
                     if (!string.IsNullOrEmpty(extendedFunction))
                     {
-                        string[] fps = extendedFunction.Substring(extendedFunction.IndexOf("(")).TrimStart('(').TrimEnd(')').Split(',');
+                        string[] fps = extendedFunction.Substring(extendedFunction.IndexOf('(')).TrimStart('(').TrimEnd(')').Split(',');
 
                         if (fps.Length != fv._RawFunctionParameters.Length)
                         {

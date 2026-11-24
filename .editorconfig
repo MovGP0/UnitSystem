@@ -927,7 +927,7 @@ dotnet_diagnostic.CA1864.severity = warning
 dotnet_diagnostic.CA1865.severity = warning
 
 # Use char overload
-# dotnet_diagnostic.CA1866.severity = warning
+dotnet_diagnostic.CA1866.severity = warning
 
 # Unnecessary call to 'Contains(item)'
 # dotnet_diagnostic.CA1868.severity = warning

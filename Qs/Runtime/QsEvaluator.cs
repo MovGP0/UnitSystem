@@ -700,7 +700,7 @@ public sealed class QsEvaluator
                                 return qvResult;
                             }
 
-                            if (vnToken[vnToken.Count - 1].TokenValue.StartsWith("@") && qvResult.GetType() == typeof(QsScalar))
+                            if (vnToken[vnToken.Count - 1].TokenValue.StartsWith('@') && qvResult.GetType() == typeof(QsScalar))
                             {
                                 var fsc = (QsScalar)qvResult;
                                 if (fsc.ScalarType == ScalarTypes.FunctionQuantity)
@@ -739,7 +739,7 @@ public sealed class QsEvaluator
                                 throw new QsException("Cannot store scalar " + fsc.ScalarType + " into function variable");
                             }
 
-                            if (vnToken[vnToken.Count - 2].TokenValue.StartsWith("&") && qvResult is QsValue)
+                            if (vnToken[vnToken.Count - 2].TokenValue.StartsWith('&') && qvResult is QsValue)
                             {
                                 // store the reference of the value to the same name here
                                 //  &b = a   it means that b and a will point to the same variable.
@@ -788,7 +788,7 @@ public sealed class QsEvaluator
                             return qvResult;
                         }
 
-                        if (varName.StartsWith("@") && qvResult.GetType() == typeof(QsScalar))
+                        if (varName.StartsWith('@') && qvResult.GetType() == typeof(QsScalar))
                         {
                             #region Variable starts with @ and the result is scalar function or symbolic quantity
                             var fsc = (QsScalar)qvResult;
@@ -826,7 +826,7 @@ public sealed class QsEvaluator
                             #endregion
                         }
 
-                        if(varName.StartsWith("@") && (qvResult.GetType()==typeof(QsVector) || qvResult.GetType()==typeof(QsMatrix)||qvResult.GetType()==typeof(QsTensor)))
+                        if(varName.StartsWith('@') && (qvResult.GetType()==typeof(QsVector) || qvResult.GetType()==typeof(QsMatrix)||qvResult.GetType()==typeof(QsTensor)))
                         {
                             #region Variable starts with @ and result is complex qs type vector, matrix, or tensor to be converted into the corresponding field i.e. vector field or matrix field
                             varName = varName.Substring(1); // remove @
@@ -917,7 +917,7 @@ public sealed class QsEvaluator
                             #endregion
                         }
 
-                        if (varName.StartsWith("&") && qvResult is QsValue)
+                        if (varName.StartsWith('&') && qvResult is QsValue)
                         {
                             var existValue = GetVariable(line.Trim());
                             var q = AddReference(string.Empty, varName.Substring(1), line.Trim());

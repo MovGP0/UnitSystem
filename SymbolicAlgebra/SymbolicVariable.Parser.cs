@@ -550,7 +550,7 @@ public partial class SymbolicVariable
 
         var NegativeExpression = false;
 
-        if (expression.StartsWith("-"))
+        if (expression.StartsWith('-'))
         {
             NegativeExpression = true;
             expression = expression.TrimStart('-');  // remove any trailing minuses

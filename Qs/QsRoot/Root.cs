@@ -22,9 +22,9 @@ public class Root
 #if WINRT
 
 #else
-        if (library.StartsWith("["))
+        if (library.StartsWith('['))
         {
-            if (library.EndsWith("]"))
+            if (library.EndsWith(']'))
             {
                 try
                 {

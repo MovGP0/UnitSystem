@@ -422,7 +422,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
     public static QsFunction? ParseFunction(QsEvaluator qse, string functionDeclaration)
     {
-        if (functionDeclaration.StartsWith("@"))
+        if (functionDeclaration.StartsWith('@'))
         {
             return null;
         }
@@ -505,9 +505,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             foreach (var c in functionToken[nsidx + 1])
             {
                 if (
-                    c.TokenValue.StartsWith("(")
-                        || c.TokenValue.StartsWith(")")
-                        || c.TokenValue.StartsWith(",")
+                    c.TokenValue.StartsWith('(')
+                        || c.TokenValue.StartsWith(')')
+                        || c.TokenValue.StartsWith(',')
                         || c.TokenClassType==typeof(MultipleSpaceToken)
                 )
                 {

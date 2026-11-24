@@ -413,7 +413,7 @@ public partial class SymbolicVariable
                             Symbol += argument + ",";
                         }
 
-                        if (Symbol.EndsWith(","))
+                        if (Symbol.EndsWith(','))
                         {
                             Symbol = Symbol.TrimEnd(',');
                         }
@@ -466,7 +466,7 @@ public partial class SymbolicVariable
             iparms += p + ",";
         }
 
-        if (Symbol.EndsWith(","))
+        if (Symbol.EndsWith(','))
         {
             Symbol = Symbol.TrimEnd(',');
             iparms = iparms.TrimEnd(',');
@@ -1253,7 +1253,7 @@ public partial class SymbolicVariable
             {
                 if (sv.Coeffecient != 0)
                 {
-                    if (sv.FormSymbolTextValue().StartsWith("-"))
+                    if (sv.FormSymbolTextValue().StartsWith('-'))
                     {
                         result += sv.FormSymbolTextValue();
                     }
@@ -1302,7 +1302,7 @@ public partial class SymbolicVariable
             else
             {
                 var etv = eterm.Term.FinalText();
-                if(etv.StartsWith("-"))
+                if(etv.StartsWith('-'))
                 {
                     result +=etv;
                 }
@@ -1825,7 +1825,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            return Symbol.StartsWith("%");
+            return Symbol.StartsWith('%');
         }
     }
 
@@ -1913,7 +1913,7 @@ public partial class SymbolicVariable
             }
 
             // return all words that are not null and doesn't start with percentage sign
-            return fs.Where(s => !string.IsNullOrEmpty(s) && !s.StartsWith("%")).ToArray();
+            return fs.Where(s => !string.IsNullOrEmpty(s) && !s.StartsWith('%')).ToArray();
         };
 
         List<string> symbols = [];

@@ -617,7 +617,7 @@ class QsVar
             {
                 var g = tokens[ix].TrimTokens(2, 1);
                 var funcbody = g.TokenValue;
-                if (funcbody.StartsWith("("))
+                if (funcbody.StartsWith('('))
                 {
                     funcbody = "_" + funcbody;
                 }
@@ -846,7 +846,7 @@ class QsVar
                         }
                         else if (loopIteratorContainer.Count > 0
                             && tokens[ix].TokenValue.Length > 1
-                            && tokens[ix].TokenValue.StartsWith("_")
+                            && tokens[ix].TokenValue.StartsWith('_')
                             && loopIteratorContainer.Contains(tokens[ix].TokenValue.Substring(1))
                                 )
                         {
@@ -868,7 +868,7 @@ class QsVar
                     }
                     else if (loopIteratorContainer.Count > 0
                         && tokens[ix].TokenValue.Length > 1
-                        && tokens[ix].TokenValue.StartsWith("_")
+                        && tokens[ix].TokenValue.StartsWith('_')
                         && loopIteratorContainer.Contains(tokens[ix].TokenValue.Substring(1))
                             )
                     {
@@ -1562,7 +1562,7 @@ class QsVar
             var ns = name.TokenValue.Substring(0, name.TokenValue.LastIndexOf(':'));
             var nsvar = var[var.Length - 1];
 
-            if (nsvar.StartsWith("@"))
+            if (nsvar.StartsWith('@'))
             {
                 // referring to a function in the namespace.
                 return GetFunctionAsQuantity(
@@ -1634,7 +1634,7 @@ class QsVar
                 pp
             );
         }
-        else if (functionValueToken.TokenValue.StartsWith("@"))
+        else if (functionValueToken.TokenValue.StartsWith('@'))
         {
             f = QsFunction.GetFirstDeclaredFunction(
                 Scope,
