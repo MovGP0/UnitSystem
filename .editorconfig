@@ -464,7 +464,7 @@ dotnet_diagnostic.RCS1169.severity = warning
 dotnet_diagnostic.RCS1170.severity = warning
 
 # Simplify lazy initialization
-# dotnet_diagnostic.RCS1171.severity = warning
+dotnet_diagnostic.RCS1171.severity = warning
 
 # Use 'is' operator instead of 'as' operator
 # dotnet_diagnostic.RCS1172.severity = warning

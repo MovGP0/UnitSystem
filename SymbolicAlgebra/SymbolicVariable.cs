@@ -577,12 +577,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (_AddedTerms == null)
-            {
-                _AddedTerms = new Dictionary<string, SymbolicVariable>(StringComparer.OrdinalIgnoreCase);
-            }
-
-            return _AddedTerms;
+            return _AddedTerms ??= new Dictionary<string, SymbolicVariable>(StringComparer.OrdinalIgnoreCase);
         }
     }
 
@@ -595,12 +590,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (_ExtraTerms == null)
-            {
-                _ExtraTerms = [];
-            }
-
-            return _ExtraTerms;
+            return _ExtraTerms ??= [];
         }
     }
 
@@ -612,12 +602,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (_DividedTerm == null)
-            {
-                _DividedTerm = new SymbolicVariable("1");
-            }
-
-            return _DividedTerm;
+            return _DividedTerm ??= new SymbolicVariable("1");
         }
         internal set => _DividedTerm = value;
     }
@@ -644,12 +629,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (_FusedSymbols == null)
-            {
-                _FusedSymbols = new Dictionary<string, HybridVariable>(StringComparer.OrdinalIgnoreCase);
-            }
-
-            return _FusedSymbols;
+            return _FusedSymbols ??= new Dictionary<string, HybridVariable>(StringComparer.OrdinalIgnoreCase);
         }
     }
 
@@ -660,12 +640,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (_FusedConstants == null)
-            {
-                _FusedConstants = new Dictionary<double, HybridVariable>();
-            }
-
-            return _FusedConstants;
+            return _FusedConstants ??= new Dictionary<double, HybridVariable>();
         }
     }
 
@@ -1421,12 +1396,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (_Functions == null)
-            {
-                _Functions = new Dictionary<string, SymbolicVariable>(StringComparer.OrdinalIgnoreCase);
-            }
-
-            return _Functions;
+            return _Functions ??= new Dictionary<string, SymbolicVariable>(StringComparer.OrdinalIgnoreCase);
         }
     }
 
@@ -1912,12 +1882,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (_IsFunction == null)
-            {
-                _IsFunction = false;
-            }
-
-            return _IsFunction.Value;
+            return _IsFunction ??= false;
         }
     }
 
