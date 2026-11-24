@@ -320,7 +320,7 @@ dotnet_diagnostic.RCS1098.severity = warning
 dotnet_diagnostic.RCS1099.severity = warning
 
 # Make class static
-# dotnet_diagnostic.RCS1102.severity = warning
+dotnet_diagnostic.RCS1102.severity = warning
 
 # Convert 'if' to assignment
 # dotnet_diagnostic.RCS1103.severity = warning
