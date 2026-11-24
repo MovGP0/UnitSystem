@@ -295,7 +295,8 @@ public partial class SymbolicVariable
         var keys = (from mk in map
             orderby mk.Value.Count descending
             where mk.Key.Equals(One) == false && mk.Value.Count > 1
-            select mk.Key).ToArray();
+            select mk.Key)
+            .ToArray();
 
         return keys.Length > 0;
     }
@@ -315,7 +316,8 @@ public partial class SymbolicVariable
         var keys = (from mk in map
             orderby mk.Value.Count descending
             where mk.Key.Equals(One) == false && mk.Value.Count > 1 && mk.Key.IsCoeffecientOnly == false
-            select mk.Key).ToArray();
+            select mk.Key)
+            .ToArray();
 
 
 

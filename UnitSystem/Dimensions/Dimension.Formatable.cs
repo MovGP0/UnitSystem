@@ -39,7 +39,8 @@ public sealed partial class Dimension
 
                 var symbol = symbols[index + 1];
                 return value == Rational.One ? symbol : $"{symbol}^{FormatExponent(value, format, formatProvider)}";
-            }).Where(value => value.Length != 0));
+            })
+                .Where(value => value.Length != 0));
     }
 
     private static string FormatExponent(Rational exponent, string? format, IFormatProvider? formatProvider)

@@ -27,6 +27,7 @@ public sealed partial class Dimension
     {
         ArgumentNullException.ThrowIfNull(dimension);
         return new Dimension(dimension.Select(exponent =>
-            exponent == Rational.Zero ? Rational.Zero : Rational.From(logarithm(exponent.ToDouble()))).ToArray());
+            exponent == Rational.Zero ? Rational.Zero : Rational.From(logarithm(exponent.ToDouble())))
+            .ToArray());
     }
 }

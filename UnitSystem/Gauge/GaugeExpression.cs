@@ -21,7 +21,8 @@ public sealed class GaugeExpression
             ["L_L"] = new LeftHandedLeptonDoublet(),
             ["e_R"] = new RightHandedChargedLepton(),
             ["H"] = new Higgs(),
-        }.ToFrozenDictionary(field => field.Key, field => field.Value.Representation, StringComparer.Ordinal);
+        }
+            .ToFrozenDictionary(field => field.Key, field => field.Value.Representation, StringComparer.Ordinal);
 
     private static readonly Func<string, Node> ParseExpression = CreateParser();
 

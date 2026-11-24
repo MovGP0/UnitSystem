@@ -525,7 +525,8 @@ public class QsEvaluator
                                 {
                                     parameters = (from c in seq[nsidx + 2]
                                         where c.TokenClassType == typeof(WordToken)
-                                        select c.TokenValue).ToArray();
+                                        select c.TokenValue)
+                                        .ToArray();
                                 }
                                 else
                                 {
@@ -583,7 +584,8 @@ public class QsEvaluator
                                     {
                                         parameters = (from c in seq[nsidx + 2]
                                             where c.TokenClassType == typeof(WordToken)
-                                            select c.TokenValue).ToArray();
+                                            select c.TokenValue)
+                                            .ToArray();
                                     }
                                     else
                                     {

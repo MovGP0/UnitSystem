@@ -594,7 +594,8 @@ class QsVar
                 string[] xi = (
                     from x in tokens[ix].TrimTokens(1, 1).TokenValue.Split(' ', ',')
                     where x.Trim() != string.Empty
-                    select x.Trim()).ToArray();
+                    select x.Trim())
+                    .ToArray();
 
                 var oo = new QsScalar(ScalarTypes.QsOperation)
                 {
@@ -1615,7 +1616,8 @@ class QsVar
 
             // put the parameter names in array
             string[] pp = (from p in (fpp.Substring(1, fpp.Length - 2).Split(','))
-                select p.Trim()).ToArray();
+                select p.Trim())
+                .ToArray();
 
 
             if (pp.Length == 1 && string.IsNullOrEmpty(pp[0]))
@@ -1695,7 +1697,8 @@ class QsVar
             var fpp = functionValueToken.SubTokensValue(2);
 
             string[] pp = (from p in (fpp.Substring(1, fpp.Length - 2).Split(','))
-                select p.Trim()).ToArray();
+                select p.Trim())
+                .ToArray();
 
             if (pp.Length == 1 && string.IsNullOrEmpty(pp[0]))
                 pp = null;

@@ -34,7 +34,8 @@ internal sealed class UnitInterpreter
         _prefixedBases = _baseUnits.Where(unit => unit.BaseSymbol != unit.Symbol)
             .ToDictionary(unit => unit.BaseSymbol, StringComparer.Ordinal);
         _prefixes = MetricPrefix.GetAll().Where(prefix => prefix.Symbol.Length != 0)
-            .OrderByDescending(prefix => prefix.Symbol.Length).ToArray();
+            .OrderByDescending(prefix => prefix.Symbol.Length)
+            .ToArray();
         _division = (string[])dialect.Division;
         _multiplication = dialect.Multiplication.First();
         _explicitMultiplication = dialect.Multiplication.Where(token => token != " ").ToArray();
@@ -52,7 +53,8 @@ internal sealed class UnitInterpreter
         {
             unit.Factor.ToString("G17", CultureInfo.InvariantCulture),
             unit.Offset.ToString("G17", CultureInfo.InvariantCulture)
-        }.Concat(unit.Dimension.Select(DimensionExponent.Format));
+        }
+            .Concat(unit.Dimension.Select(DimensionExponent.Format));
         return CanonicalPrefix + string.Join(" ", values);
     }
 

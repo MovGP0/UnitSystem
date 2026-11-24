@@ -260,7 +260,8 @@ public partial class QsSequence
             {
                 parameters = (from c in t[nsidx + 2]
                     where c.TokenClassType == typeof(WordToken)
-                    select c.TokenValue).ToArray();
+                    select c.TokenValue)
+                    .ToArray();
             }
 
 

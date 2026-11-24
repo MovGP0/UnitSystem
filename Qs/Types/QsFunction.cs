@@ -57,7 +57,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     {
         var parms = (from arg in args
             select
-                QsParameter.MakeParameter(arg.ToScalarValue(), arg.ToShortString())).ToArray();
+                QsParameter.MakeParameter(arg.ToScalarValue(), arg.ToShortString()))
+            .ToArray();
 
         return ((QsScalar)InvokeByQsParameters(parms)).NumericalQuantity;
     }
@@ -71,7 +72,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     {
         var parms = (from arg in args
             select
-                QsParameter.MakeParameter(arg, arg.ToString())).ToArray();
+                QsParameter.MakeParameter(arg, arg.ToString()))
+            .ToArray();
 
         return (QsScalar)InvokeByQsParameters(parms);
 

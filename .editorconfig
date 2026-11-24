@@ -102,7 +102,7 @@ roslynator_equals_token_new_line = before
 dotnet_diagnostic.RCS0053.severity = warning
 
 # Use consistent line breaks in call chains
-# dotnet_diagnostic.RCS0054.severity = warning
+dotnet_diagnostic.RCS0054.severity = warning
 
 # Use consistent line breaks in binary expression chains
 # dotnet_diagnostic.RCS0055.severity = warning

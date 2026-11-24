@@ -914,7 +914,8 @@ public partial class SymbolicVariable
 
         var FinalParams = (from pr in parameters
             orderby pr.Key
-            select pr.Value).ToArray();
+            select pr.Value)
+            .ToArray();
 
 
         if (pcount == 0)

@@ -190,7 +190,8 @@ public sealed partial class Token : IEnumerable<Token>
 
 
         var GroupsClassesTypes = (from gct in callTokensClasses
-            select gct.GroupToken.Type).ToArray();
+            select gct.GroupToken.Type)
+            .ToArray();
 
 
         var first = new Token();
