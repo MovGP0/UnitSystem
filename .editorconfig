@@ -873,7 +873,7 @@ dotnet_diagnostic.CA1841.severity = warning
 dotnet_diagnostic.CA1842.severity = warning
 
 # Do not use 'WaitAll' with a single task
-# dotnet_diagnostic.CA1843.severity = warning
+dotnet_diagnostic.CA1843.severity = warning
 
 # Provide memory-based overrides of async methods when subclassing 'Stream'
 # dotnet_diagnostic.CA1844.severity = warning
