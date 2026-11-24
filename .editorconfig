@@ -470,7 +470,7 @@ dotnet_diagnostic.RCS1171.severity = warning
 dotnet_diagnostic.RCS1172.severity = warning
 
 # Use coalesce expression instead of 'if'
-# dotnet_diagnostic.RCS1173.severity = warning
+dotnet_diagnostic.RCS1173.severity = warning
 
 # Remove redundant async/await
 # dotnet_diagnostic.RCS1174.severity = none
