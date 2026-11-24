@@ -290,7 +290,7 @@ dotnet_diagnostic.RCS1077.severity = warning
 # dotnet_diagnostic.RCS1081.severity = none
 
 # Use coalesce expression instead of conditional expression
-# dotnet_diagnostic.RCS1084.severity = warning
+dotnet_diagnostic.RCS1084.severity = warning
 
 # Use auto-implemented property
 # dotnet_diagnostic.RCS1085.severity = warning
