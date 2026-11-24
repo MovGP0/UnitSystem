@@ -611,7 +611,7 @@ dotnet_diagnostic.RCS1225.severity = warning
 dotnet_diagnostic.RCS1226.severity = warning
 
 # Validate arguments correctly
-# dotnet_diagnostic.RCS1227.severity = warning
+dotnet_diagnostic.RCS1227.severity = warning
 
 # Unused element in a documentation comment
 # dotnet_diagnostic.RCS1228.severity = silent
