@@ -254,7 +254,7 @@ dotnet_diagnostic.RCS1059.severity = warning
 # dotnet_diagnostic.RCS1061.severity = silent
 
 # Simplify logical negation
-# dotnet_diagnostic.RCS1068.severity = warning
+dotnet_diagnostic.RCS1068.severity = warning
 
 # Remove unnecessary case label
 # dotnet_diagnostic.RCS1069.severity = silent
