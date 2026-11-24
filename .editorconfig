@@ -951,7 +951,7 @@ dotnet_diagnostic.CA1873.severity = warning
 dotnet_diagnostic.CA1874.severity = warning
 
 # Use 'Regex.Count'
-# dotnet_diagnostic.CA1875.severity = warning
+dotnet_diagnostic.CA1875.severity = warning
 
 # Do not use 'AsParallel' in 'foreach'
 # dotnet_diagnostic.CA1876.severity = warning
