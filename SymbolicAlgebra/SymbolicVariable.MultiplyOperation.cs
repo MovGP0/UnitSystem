@@ -370,8 +370,9 @@ public partial class SymbolicVariable
         }
 
         // for extra terms  {terms that has different divided term}
-        var extraIndex = 0;
-        while (extraIndex < b.ExtraTerms.Count)
+        for (
+        // for extra terms  {terms that has different divided term}
+        var extraIndex = 0; extraIndex < b.ExtraTerms.Count; extraIndex++)
         {
             var eTerm = b.ExtraTerms[extraIndex];
             TargetSubTerm = eTerm.Term;
@@ -382,7 +383,6 @@ public partial class SymbolicVariable
 
             var TargetTermSubTotal = Multiply(a, TargetSubTerm);
             total = Add(total, TargetTermSubTotal);
-            extraIndex++;
         }
 
         total = AdjustSpecialFunctions(total);

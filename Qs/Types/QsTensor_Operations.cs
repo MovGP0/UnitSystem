@@ -511,8 +511,7 @@ public partial class QsTensor : QsValue
         {
             // return tensor
             var t = this;
-            var ix = 0;
-            while (ix < indices.Length)
+            for (var ix = 0; ix < indices.Length; ix++)
             {
                 var idx = indices[ix];
                 if (idx < 0)
@@ -521,7 +520,6 @@ public partial class QsTensor : QsValue
                 }
 
                 t = t.InnerTensors[idx];
-                ix++;
             }
 
             return t;

@@ -189,8 +189,7 @@ public sealed partial class Token : IEnumerable<Token>
     {
         var Trimmed = new Token();
 
-        var ci = 0;
-        while (ci < childTokens.Count)
+        for (var ci = 0; ci < childTokens.Count; ci++)
         {
             var tok = childTokens[ci];
             if (tok.TokenClassType == tokenType)
@@ -209,8 +208,6 @@ public sealed partial class Token : IEnumerable<Token>
 
                 break;
             }
-
-            ci++;
         }
 
         return Trimmed;
@@ -757,8 +754,7 @@ public sealed partial class Token : IEnumerable<Token>
 
         var merged = new Token() { TokenClassType = typeof(MergedToken) };
 
-        var tokIndex = 0;
-        while (tokIndex < childTokens.Count)
+        for (var tokIndex = 0; tokIndex < childTokens.Count; tokIndex++)
         {
             if (childTokens[tokIndex].TokenClassType == typeof(RepeatedToken))
             {
@@ -775,8 +771,6 @@ public sealed partial class Token : IEnumerable<Token>
                 // add the current index.
                 current.AppendSubToken(childTokens[tokIndex]);
             }
-
-            tokIndex++;
         }
 
         return Zabbat(current);
@@ -800,8 +794,7 @@ public sealed partial class Token : IEnumerable<Token>
 
         var merged = new Token() { TokenClassType = typeof(DesiredTokenClass) };
 
-        var tokIndex = 0;
-        while (tokIndex < childTokens.Count)
+        for (var tokIndex = 0; tokIndex < childTokens.Count; tokIndex++)
         {
             if (childTokens[tokIndex].TokenClassType == tokenTypes[CurrentTokenTypeIndex])
             {
@@ -841,8 +834,6 @@ public sealed partial class Token : IEnumerable<Token>
                 // add the current index.
                 current.AppendSubToken(childTokens[tokIndex]);
             }
-
-            tokIndex++;
         }
 
         if (merged.Count > 0)
@@ -903,8 +894,7 @@ public sealed partial class Token : IEnumerable<Token>
         var first = new Token();
         var current = first;
 
-        var ci = 0;
-        while (ci < childTokens.Count)
+        for (var ci = 0; ci < childTokens.Count; ci++)
         {
             var tok = childTokens[ci];
 
@@ -918,8 +908,6 @@ public sealed partial class Token : IEnumerable<Token>
             {
                 current.AppendSubToken(tok);
             }
-
-            ci++;
         }
 
         return first;
@@ -980,8 +968,7 @@ public sealed partial class Token : IEnumerable<Token>
 
         var reached = false;  //specifiy if we reach the close token or not.
 
-        var ci = 0;
-        while (ci < childTokens.Count)
+        for (var ci = 0; ci < childTokens.Count; ci++)
         {
             var tok = childTokens[ci];
 
@@ -1001,8 +988,6 @@ public sealed partial class Token : IEnumerable<Token>
                 //not the required token add it to the return value.
                 current.AppendSubToken(tok);
             }
-
-            ci++;
         }
 
         return first;
@@ -1018,15 +1003,14 @@ public sealed partial class Token : IEnumerable<Token>
         var first = new Token();
         var current = first;
 
-        var ci = 0;
-        while (ci < childTokens.Count)
+        for (var ci = 0; ci < childTokens.Count; ci++)
         {
             var tok = childTokens[ci];
 
             //make sure all chars in value are white spaces
 
             //if (tok.TokenValue.ToCharArray().Count(w => char.IsWhiteSpace(w)) == tok.TokenValue.Length)
-            if(tok.TokenClassType == typeof(MultipleSpaceToken))
+            if (tok.TokenClassType == typeof(MultipleSpaceToken))
             {
                 //all string are white spaces
             }
@@ -1034,8 +1018,6 @@ public sealed partial class Token : IEnumerable<Token>
             {
                 current.AppendSubToken(tok);
             }
-
-            ci++;
         }
 
         return first;
@@ -1050,8 +1032,7 @@ public sealed partial class Token : IEnumerable<Token>
         var first = new Token();
         var current = first;
 
-        var ci = 0;
-        while (ci < childTokens.Count)
+        for (var ci = 0; ci < childTokens.Count; ci++)
         {
             var tok = childTokens[ci];
 
@@ -1065,8 +1046,6 @@ public sealed partial class Token : IEnumerable<Token>
             {
                 current.AppendSubToken(tok);
             }
-
-            ci++;
         }
 
         return first;
@@ -1081,8 +1060,7 @@ public sealed partial class Token : IEnumerable<Token>
         var first = new Token();
         var current = first;
 
-        var ci = 0;
-        while (ci < childTokens.Count)
+        for (var ci = 0; ci < childTokens.Count; ci++)
         {
             var tok = childTokens[ci];
 
@@ -1096,8 +1074,6 @@ public sealed partial class Token : IEnumerable<Token>
             {
                 current.AppendSubToken(tok);
             }
-
-            ci++;
         }
 
         return first;
@@ -1246,8 +1222,7 @@ public sealed partial class Token : IEnumerable<Token>
     {
         var current = new Token();
 
-        var ci = 0;
-        while (ci < text.Length)
+        for (var ci = 0; ci < text.Length; ci++)
         {
             var c = text[ci];
             {
@@ -1255,8 +1230,6 @@ public sealed partial class Token : IEnumerable<Token>
                 tk.TokenClassType = GetTokenClassType(c);
                 tk._IndexInText = ci;
             }
-
-            ci++;
         }
 
         return current;

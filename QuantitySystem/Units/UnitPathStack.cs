@@ -7,11 +7,9 @@ public partial class UnitPathStack : Stack<UnitPathItem>, ICloneable
         get
         {
             double cf = 1;
-            var ix = 0;
-            while (ix < Count)
+            for (var ix = 0; ix < Count; ix++)
             {
                 cf *= this.ElementAt(ix).Times;
-                ix++;
             }
 
             return cf;

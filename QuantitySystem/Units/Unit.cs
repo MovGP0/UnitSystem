@@ -343,17 +343,13 @@ public partial class Unit : ICloneable
 
             var ns = SubUnits[0].UnitSystem;
 
-            var suidx = 1;
-
-            while (suidx < SubUnits.Count)
+            for (var suidx = 1; suidx < SubUnits.Count; suidx++)
             {
                 if (SubUnits[suidx].UnitSystem != ns && SubUnits[suidx].UnitSystem != "Shared")
                 {
                     ns = MixedSystem;
                     break;
                 }
-
-                suidx++;
             }
 
             return ns;

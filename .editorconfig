@@ -644,7 +644,7 @@ dotnet_diagnostic.RCS1236.severity = warning
 # dotnet_diagnostic.RCS1238.severity = silent
 
 # Use 'for' statement instead of 'while' statement
-# dotnet_diagnostic.RCS1239.severity = warning
+dotnet_diagnostic.RCS1239.severity = warning
 
 # Operator is unnecessary
 # dotnet_diagnostic.RCS1240.severity = warning

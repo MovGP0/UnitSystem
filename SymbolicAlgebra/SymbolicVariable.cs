@@ -1883,8 +1883,7 @@ public partial class SymbolicVariable
         Func<string, string[]> pgh = (key) =>
         {
             List<string> fs = [key];
-            var i = 0;
-            while (i < fs.Count)
+            for (var i = 0; i < fs.Count; i++)
             {
                 // this loop extract the inner parameters from the enclosed function calls as f(g(n(x)))
                 while (FunctionRegex.Match(fs[i]).Success)
@@ -1913,8 +1912,6 @@ public partial class SymbolicVariable
                     // will conduct the test again of current fs[i] to see if it is a function or not.
                     // so we are adding undiscovered symbols to later passes when i is increasing after this loop.
                 }
-
-                i++;
             }
 
             // return all words that are not null and doesn't start with percentage sign
