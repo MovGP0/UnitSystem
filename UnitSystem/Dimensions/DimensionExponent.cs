@@ -37,7 +37,7 @@ internal static class DimensionExponent
         var signLength = !text.IsEmpty && text[0] is '+' or '-' ? 1 : 0;
         if (text[signLength..].StartsWith(".", StringComparison.Ordinal))
         {
-            text = string.Concat(text[..signLength], "0", text[signLength..]);
+            text = $"{text[..signLength]}0{text[signLength..]}";
         }
 
         return Rational.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out value)
