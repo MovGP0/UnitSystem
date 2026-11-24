@@ -49,7 +49,8 @@ public partial class QsSequence
 
     public string SequenceSymbolicName
     {
-        get =>
+        get
+        =>
             //% indexes number.
             //# parameters number.
             FormSequenceSymbolicName(_SequenceName, 1, Parameters.Length);

@@ -99,8 +99,8 @@ public class QsParameter
     /// <summary>
     /// Get the parameter value string if exist or the parameter body itself
     /// </summary>
-    public string? UnknownValueText =>
-        ParameterValue != null
+    public string? UnknownValueText
+        => ParameterValue != null
             ? ParameterValue.ToString()
             : ParameterRawText;
 

@@ -11,8 +11,8 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(OrientedQuantity))]
 public sealed class OrientedQuantityTests
 {
-    public static IEnumerable<object[]> OrientationProducts =>
-    [
+    public static IEnumerable<object[]> OrientationProducts
+        => [
         [Orientationless, X, X],
         [X, X, Orientationless],
         [Y, Y, Orientationless],

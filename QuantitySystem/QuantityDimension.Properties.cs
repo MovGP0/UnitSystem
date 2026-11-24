@@ -89,8 +89,8 @@ public sealed partial class QuantityDimension
         }
     }
 
-    public bool IsDimensionless =>
-        Mass.Exponent == 0
+    public bool IsDimensionless
+        => Mass.Exponent == 0
         && Length.Exponent == 0
         && Time.Exponent == 0
         && ElectricCurrent.Exponent == 0

@@ -65,7 +65,7 @@ dotnet_diagnostic.RCS0030.severity = warning
 dotnet_diagnostic.RCS0031.severity = warning
 
 # Control where wrapped arrows appear
-# dotnet_diagnostic.RCS0032.severity = warning
+dotnet_diagnostic.RCS0032.severity = warning
 roslynator_arrow_token_new_line = before
 
 # Put each statement on its own line
