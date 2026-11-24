@@ -1163,7 +1163,7 @@ dotnet_diagnostic.CS8629.severity = warning
 dotnet_diagnostic.CS8764.severity = warning
 
 # Match parameter nullability on overrides
-dotnet_diagnostic.CS8765.severity = suggestion
+dotnet_diagnostic.CS8765.severity = warning
 
 # Replace obsolete WebRequest and WebClient APIs
 dotnet_diagnostic.SYSLIB0014.severity = suggestion

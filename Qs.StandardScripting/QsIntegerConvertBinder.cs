@@ -7,7 +7,7 @@ namespace Qs.Scripting;
 
 public sealed class QsIntegerConvertBinder() : ConvertBinder(typeof(int), false)
 {
-    public override DynamicMetaObject FallbackConvert(DynamicMetaObject target, DynamicMetaObject errorSuggestion)
+    public override DynamicMetaObject FallbackConvert(DynamicMetaObject target, DynamicMetaObject? errorSuggestion)
     {
         var value = target.Value switch
         {

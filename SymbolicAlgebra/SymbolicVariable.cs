@@ -1573,18 +1573,8 @@ public partial class SymbolicVariable
         return false;
     }
 
-    public override bool Equals(object obj)
-    {
-        if (obj.GetType() == typeof(SymbolicVariable))
-        {
-            var sv = (SymbolicVariable)obj;
-            return Equals(sv);
-        }
-        else
-        {
-            return false;
-        }
-    }
+    public override bool Equals(object? obj)
+        => obj is SymbolicVariable sv && sv.GetType() == typeof(SymbolicVariable) && Equals(sv);
 
     public override int GetHashCode()
     {
