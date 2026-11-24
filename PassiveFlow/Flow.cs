@@ -504,9 +504,18 @@ public class Flow : IEnumerable<Step>
         }
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
-        var fl2 = (Flow)obj;
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (obj is not Flow fl2)
+        {
+            return false;
+        }
+
         if (GetType().Equals(fl2.GetType()))
         {
             if (CurrentStep.Id == fl2.CurrentStep.Id)
@@ -522,6 +531,16 @@ public class Flow : IEnumerable<Step>
         {
             return false;
         }
+    }
+
+    public override int GetHashCode()
+    {
+        if (_Current_StepIndex >= 0 && _Current_StepIndex < innerSteps.Count)
+        {
+            return HashCode.Combine(GetType(), innerSteps[_Current_StepIndex].Id);
+        }
+
+        return GetType().GetHashCode();
     }
 
     public static bool operator !=(Flow fl1, Flow fl2)

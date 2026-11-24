@@ -281,6 +281,9 @@ public abstract class QsValue: IComparable
         return false;
     }
 
+    // Derived values can compare equal across types. There is no common value to hash.
+    public override int GetHashCode() => 0;
+
     #endregion
 
     #endregion

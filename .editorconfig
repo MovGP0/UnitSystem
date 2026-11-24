@@ -177,7 +177,7 @@ dotnet_diagnostic.CS0168.severity = warning
 dotnet_diagnostic.CS0618.severity = warning
 
 # Provide a hash code when overriding equality
-dotnet_diagnostic.CS0659.severity = suggestion
+dotnet_diagnostic.CS0659.severity = warning
 
 # Override object equality when defining equality operators
 dotnet_diagnostic.CS0660.severity = suggestion
