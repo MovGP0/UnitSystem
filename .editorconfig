@@ -719,7 +719,7 @@ dotnet_diagnostic.RCS1263.severity = warning
 # dotnet_diagnostic.RCS1264.severity = none
 
 # Remove redundant catch block
-# dotnet_diagnostic.RCS1265.severity = warning
+dotnet_diagnostic.RCS1265.severity = warning
 
 # Use raw string literal
 # dotnet_diagnostic.RCS1266.severity = warning
