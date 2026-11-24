@@ -518,7 +518,7 @@ dotnet_diagnostic.RCS1193.severity = warning
 dotnet_diagnostic.RCS1194.severity = warning
 
 # Use ^ operator
-# dotnet_diagnostic.RCS1195.severity = warning
+dotnet_diagnostic.RCS1195.severity = warning
 
 # Call extension method as instance method
 # dotnet_diagnostic.RCS1196.severity = warning
