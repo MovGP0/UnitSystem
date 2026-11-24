@@ -1056,7 +1056,7 @@ dotnet_diagnostic.CA2248.severity = warning
 dotnet_diagnostic.CA2249.severity = warning
 
 # Use 'ThrowIfCancellationRequested'
-# dotnet_diagnostic.CA2250.severity = warning
+dotnet_diagnostic.CA2250.severity = warning
 
 # This API requires opting into preview features
 dotnet_diagnostic.CA2252.severity = error
