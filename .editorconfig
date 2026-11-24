@@ -656,7 +656,7 @@ dotnet_diagnostic.RCS1240.severity = warning
 dotnet_diagnostic.RCS1242.severity = warning
 
 # Duplicate word in a comment
-# dotnet_diagnostic.RCS1243.severity = warning
+dotnet_diagnostic.RCS1243.severity = warning
 
 # Simplify 'default' expression
 # dotnet_diagnostic.RCS1244.severity = silent
