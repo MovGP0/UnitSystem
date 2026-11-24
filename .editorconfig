@@ -698,7 +698,7 @@ dotnet_diagnostic.RCS1256.severity = warning
 dotnet_diagnostic.RCS1257.severity = warning
 
 # Unnecessary enum flag
-# dotnet_diagnostic.RCS1258.severity = warning
+dotnet_diagnostic.RCS1258.severity = warning
 
 # Remove empty syntax
 # dotnet_diagnostic.RCS1259.severity = warning
