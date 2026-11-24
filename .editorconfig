@@ -653,7 +653,7 @@ dotnet_diagnostic.RCS1240.severity = warning
 # dotnet_diagnostic.RCS1241.severity = silent
 
 # Do not pass non-read-only struct by read-only reference
-# dotnet_diagnostic.RCS1242.severity = warning
+dotnet_diagnostic.RCS1242.severity = warning
 
 # Duplicate word in a comment
 # dotnet_diagnostic.RCS1243.severity = warning
