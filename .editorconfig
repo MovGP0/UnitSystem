@@ -1035,7 +1035,7 @@ dotnet_diagnostic.CA2231.severity = warning
 dotnet_diagnostic.CA2241.severity = warning
 
 # Test for NaN correctly
-# dotnet_diagnostic.CA2242.severity = warning
+dotnet_diagnostic.CA2242.severity = warning
 
 # Do not duplicate indexed element initializations
 # dotnet_diagnostic.CA2244.severity = warning
