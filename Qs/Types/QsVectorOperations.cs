@@ -123,7 +123,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         for (var ix = 0; ix < Count; ix++)
         {
-            v[ix] = v[ix] + vector[ix];
+            v[ix] += vector[ix];
         }
 
         return v;
@@ -146,7 +146,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         for (var ix = 0; ix < Count; ix++)
         {
-            v[ix] = v[ix] - vector[ix];
+            v[ix] -= vector[ix];
         }
 
         return v;
@@ -190,7 +190,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         for (var ix = 0; ix < Count; ix++)
         {
-            v[ix] = v[ix] / vector[ix];
+            v[ix] /= vector[ix];
         }
 
         return v;
@@ -207,7 +207,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         for (var ix = 0; ix < Count; ix++)
         {
-            v[ix] = v[ix] % vector[ix];
+            v[ix] %= vector[ix];
         }
 
         return v;
@@ -235,7 +235,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         for (var i = 1; i < Count; i++)
         {
-            Total = Total + (this[i] * vector[i]);
+            Total += (this[i] * vector[i]);
         }
 
         return Total ;
@@ -609,7 +609,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         if (itimes > Count)
         {
-            itimes = itimes % Count;
+            itimes %= Count;
         }
 
         var vec = new QsVector(Count);
@@ -643,7 +643,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         if (itimes > Count)
         {
-            itimes = itimes % Count;
+            itimes %= Count;
         }
 
         // 1 2 3 4 5 >> 2  == 4 5 1 2 3

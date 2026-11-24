@@ -51,7 +51,7 @@ public partial class SymbolicVariable
             }
             else
             {
-                SourceTerm.SymbolPower = SourceTerm.SymbolPower - TargetSubTerm.SymbolPower;
+                SourceTerm.SymbolPower -= TargetSubTerm.SymbolPower;
             }
 
             //fuse the fused symbols in b into sv
@@ -343,8 +343,8 @@ public partial class SymbolicVariable
             TargetSubTerm.DividedTerm = b.DividedTerm;   // this line is important because I extracted this added term from a bigger term with the same divided term
             // and when I did this the extracted term lost its divided term
 
-            total = total + Divide(a, TargetSubTerm);
-            subIndex = subIndex + 1;  //increase
+            total += Divide(a, TargetSubTerm);
+            subIndex += 1;  //increase
         }
 
         // for extra terms  {terms that has different divided term}

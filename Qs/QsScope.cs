@@ -130,7 +130,7 @@ public class QsScope : IDynamicMetaObjectProvider
         {
             var sprov = StorageProviders.Values.ElementAt(i - 1);
 
-            result = result | sprov.TryGetValue(variable, out q);
+            result |= sprov.TryGetValue(variable, out q);
 
             if (result)
             {

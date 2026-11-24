@@ -48,7 +48,7 @@ public class SymbolicVariableTest
         r = _x * _y - (_y * _x) + _one;
         r.ShouldNotBeNull().IsZero.ShouldBeFalse();
 
-        r = r - _one;
+        r -= _one;
         r.ShouldNotBeNull().IsZero.ShouldBeTrue();
     }
 

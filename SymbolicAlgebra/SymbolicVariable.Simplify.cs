@@ -163,7 +163,7 @@ public partial class SymbolicVariable
                 }
             }
 
-            total = total + term;
+            total += term;
         }
 
         // so begin in the factorized
@@ -410,7 +410,7 @@ public partial class SymbolicVariable
 
         result.FusedSymbols.Add(common_multipliers.ToString(), new HybridVariable { NumericalVariable=1.0 });
 
-        result = result + rest_multipliers;
+        result += rest_multipliers;
 
         return result;
     }

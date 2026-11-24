@@ -251,7 +251,7 @@ public partial class SymbolicVariable
                         if (_FunctionParameters[0].IsNegative)
                         {
                             Coeffecient *= -1;
-                            _FunctionParameters[0].Coeffecient = _FunctionParameters[0].Coeffecient * (-1);
+                            _FunctionParameters[0].Coeffecient *= (-1);
                         }
                     }
 
@@ -261,7 +261,7 @@ public partial class SymbolicVariable
                         // 
                         if (_FunctionParameters[0].IsNegative)
                         {
-                            _FunctionParameters[0].Coeffecient = _FunctionParameters[0].Coeffecient * (-1);
+                            _FunctionParameters[0].Coeffecient *= (-1);
                         }
                     }
 

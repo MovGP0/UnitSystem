@@ -90,7 +90,7 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
         var total = this[0];
         for (var i = 1; i < Count; i++)
         {
-            total = total + this[i];
+            total += this[i];
         }
 
         return total;

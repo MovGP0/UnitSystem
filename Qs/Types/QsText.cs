@@ -56,7 +56,7 @@ public partial class QsText(string text) : QsValue
 
         if (itimes > Text.Length)
         {
-            itimes = itimes % Text.Length;
+            itimes %= Text.Length;
         }
 
         var vec = new StringBuilder(Text.Length);
@@ -80,7 +80,7 @@ public partial class QsText(string text) : QsValue
 
         if (itimes > Text.Length)
         {
-            itimes = itimes % Text.Length;
+            itimes %= Text.Length;
         }
 
         // 1 2 3 4 5 >> 2  == 4 5 1 2 3

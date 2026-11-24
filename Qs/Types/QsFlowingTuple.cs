@@ -260,7 +260,7 @@ public class QsFlowingTuple : QsValue
 
         if (itimes > c)
         {
-            itimes = itimes % c;
+            itimes %= c;
         }
 
         var NewValues = new QsTupleValue[c];
@@ -299,7 +299,7 @@ public class QsFlowingTuple : QsValue
 
         if (itimes > c)
         {
-            itimes = itimes % c;
+            itimes %= c;
         }
 
         var NewValues = new QsTupleValue[c];

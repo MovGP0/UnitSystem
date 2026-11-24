@@ -403,7 +403,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
                     for (var i = 1; i < snum.Length; i++)
                     {
-                        tnum = tnum + snum[i];
+                        tnum += snum[i];
                     }
 
                     tvec[tix] = tnum;

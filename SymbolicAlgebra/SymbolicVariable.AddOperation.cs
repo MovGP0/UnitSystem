@@ -97,7 +97,7 @@ public partial class SymbolicVariable
 
                 if (iv.CoeffecientPowerTerm == null && subB.CoeffecientPowerTerm == null)
                 {
-                    iv.Coeffecient = iv.Coeffecient + subB.Coeffecient;
+                    iv.Coeffecient += subB.Coeffecient;
                     sv.AddedTerms[av.Key] = iv;
                     consumed = true;
                 }
@@ -159,7 +159,7 @@ public partial class SymbolicVariable
 
         if (b.AddedTerms.Count > 0)
         {
-            sub = sub + 1;  //increase
+            sub += 1;  //increase
             if (sub < b.AddedTerms.Count)
             {
                 // there are still terms to be consumed

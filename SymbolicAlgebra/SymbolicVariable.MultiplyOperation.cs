@@ -54,7 +54,7 @@ public partial class SymbolicVariable
             }
             else
             {
-                SourceTerm.SymbolPower = SourceTerm.SymbolPower + TargetSubTerm.SymbolPower;
+                SourceTerm.SymbolPower += TargetSubTerm.SymbolPower;
             }
 
             //fuse the fused variables in b into sv
@@ -366,7 +366,7 @@ public partial class SymbolicVariable
             var TargetTermSubTotal = Multiply(a, TargetSubTerm);
             total = Add(total, TargetTermSubTotal);
 
-            subIndex = subIndex + 1;  //increase
+            subIndex += 1;  //increase
         }
 
         // for extra terms  {terms that has different divided term}

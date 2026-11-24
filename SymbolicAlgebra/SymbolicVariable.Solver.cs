@@ -74,7 +74,7 @@ public partial class SymbolicVariable
             throw new SymbolicException("Variables with higher powers is not solvable for now");
         }
 
-        RestTerm = RestTerm * NegativeOne; // this will transfer the rest value from left to right
+        RestTerm *= NegativeOne; // this will transfer the rest value from left to right
 
         // now we have extracted term as  3*x [Extracted Term] =  5*y [Rest Term]
 

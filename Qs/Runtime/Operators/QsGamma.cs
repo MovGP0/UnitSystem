@@ -91,7 +91,7 @@ public static class QsGamma
         for (var i = v; i > 1; i--)
         {
             num.Value--;
-            Total = Total * num.Value;
+            Total *= num.Value;
         }
 
         //   Raise the power of the unit.
@@ -126,14 +126,14 @@ public static class QsGamma
             var p = 1.0;
             while (y < 7)
             {
-                p = p * y;
-                y = y + 1;
+                p *= y;
+                y += 1;
             }
 
             var r = Math.Exp(y * Math.Log(y) - y + 1 / (12 * y + 2 / (5 * y + 53 / (42 * y))));
             if (x < 7)
             {
-                r = r / p;
+                r /= p;
             }
 
             return r * Math.Sqrt(2 * Math.PI / y);
@@ -161,8 +161,8 @@ public static class QsGamma
             var p = 1.0;
             while (y < 8)
             {
-                p = p * y;
-                y = y + 1;
+                p *= y;
+                y += 1;
             }
 
 ;

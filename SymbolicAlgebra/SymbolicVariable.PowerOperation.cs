@@ -31,7 +31,7 @@ public partial class SymbolicVariable
                     {
                         if (b.IsOneTerm & b.IsCoeffecientOnly)
                         {
-                            an.SymbolPower = an.SymbolPower * b.Coeffecient;
+                            an.SymbolPower *= b.Coeffecient;
                         }
                         else
                         {
@@ -41,7 +41,7 @@ public partial class SymbolicVariable
                 }
                 else
                 {
-                    an._SymbolPowerTerm = an._SymbolPowerTerm * b;
+                    an._SymbolPowerTerm *= b;
                 }
 
                 if (an._CoeffecientPowerTerm == null)
@@ -54,7 +54,7 @@ public partial class SymbolicVariable
                 }
                 else
                 {
-                    an._CoeffecientPowerTerm = an._CoeffecientPowerTerm * b;
+                    an._CoeffecientPowerTerm *= b;
                 }
 
                 // raised the fused symbols
@@ -69,7 +69,7 @@ public partial class SymbolicVariable
                     }
                     else
                     {
-                        fusedItem.SymbolicVariable = fusedItem.SymbolicVariable * b;
+                        fusedItem.SymbolicVariable *= b;
                     }
 
                     an.FusedSymbols[FusedSymbols.ElementAt(i).Key] = fusedItem;

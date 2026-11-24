@@ -162,7 +162,7 @@ public partial class QsSequence
 
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total + GetElementValue(i);
+            Total += GetElementValue(i);
         }
 
         return Total;
@@ -176,7 +176,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total + GetElementValue(i, arg0);
+            Total += GetElementValue(i, arg0);
         }
 
         return Total;
@@ -189,7 +189,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total + GetElementValue(i, arg0, arg1);
+            Total += GetElementValue(i, arg0, arg1);
         }
 
         return Total;
@@ -201,7 +201,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total + GetElementValue(i, arg0, arg1, arg2);
+            Total += GetElementValue(i, arg0, arg1, arg2);
         }
 
         return Total;
@@ -213,7 +213,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total + GetElementValue(i, arg0, arg1, arg2, arg3);
+            Total += GetElementValue(i, arg0, arg1, arg2, arg3);
         }
 
         return Total;
@@ -225,7 +225,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total + GetElementValue(i, arg0, arg1, arg2, arg3, arg4);
+            Total += GetElementValue(i, arg0, arg1, arg2, arg3, arg4);
         }
 
         return Total;
@@ -237,7 +237,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total + GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5);
+            Total += GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5);
         }
 
         return Total;
@@ -249,7 +249,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total + GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            Total += GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
         }
 
         return Total;
@@ -294,7 +294,7 @@ public partial class QsSequence
 
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total * (QsValue)GetElementValue(i);
+            Total *= (QsValue)GetElementValue(i);
         }
 
         return Total;
@@ -308,7 +308,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total * GetElementValue(i, arg0);
+            Total *= GetElementValue(i, arg0);
         }
 
         return Total;
@@ -321,7 +321,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total * GetElementValue(i, arg0, arg1);
+            Total *= GetElementValue(i, arg0, arg1);
         }
 
         return Total;
@@ -333,7 +333,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total * GetElementValue(i, arg0, arg1, arg2);
+            Total *= GetElementValue(i, arg0, arg1, arg2);
         }
 
         return Total;
@@ -345,7 +345,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total * GetElementValue(i, arg0, arg1, arg2, arg3);
+            Total *= GetElementValue(i, arg0, arg1, arg2, arg3);
         }
 
         return Total;
@@ -357,7 +357,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total * GetElementValue(i, arg0, arg1, arg2, arg3, arg4);
+            Total *= GetElementValue(i, arg0, arg1, arg2, arg3, arg4);
         }
 
         return Total;
@@ -369,7 +369,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total * GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5);
+            Total *= GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5);
         }
 
         return Total;
@@ -381,7 +381,7 @@ public partial class QsSequence
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
         for (var i = fromIndex + 1; i <= toIndex; i++)
         {
-            Total = Total * GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            Total *= GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
         }
 
         return Total;

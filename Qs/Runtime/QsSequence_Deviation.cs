@@ -20,7 +20,7 @@ public partial class QsSequence
         {
             var p = GetElementValue(i) - mean;
             var pp2 = p.PowerOperation(Two);
-            Total = Total + pp2;
+            Total += pp2;
         }
 
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
@@ -40,7 +40,7 @@ public partial class QsSequence
         {
             var p = GetElementValue(i, arg0) - mean;
             var pp2 = p.PowerOperation(Two);
-            Total = Total + pp2;
+            Total += pp2;
         }
 
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
@@ -59,7 +59,7 @@ public partial class QsSequence
         {
             var p = GetElementValue(i, arg0, arg1) - mean;
             var pp2 = p.PowerOperation(Two);
-            Total = Total + pp2;
+            Total += pp2;
         }
 
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
@@ -77,7 +77,7 @@ public partial class QsSequence
         {
             var p = GetElementValue(i, arg0, arg1, arg2) - mean;
             var pp2 = p.PowerOperation(Two);
-            Total = Total + pp2;
+            Total += pp2;
         }
 
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
@@ -95,7 +95,7 @@ public partial class QsSequence
         {
             var p = GetElementValue(i, arg0, arg1, arg2, arg3) - mean;
             var pp2 = p.PowerOperation(Two);
-            Total = Total + pp2;
+            Total += pp2;
         }
 
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
@@ -113,7 +113,7 @@ public partial class QsSequence
         {
             var p = GetElementValue(i, arg0, arg1, arg2, arg3, arg4) - mean;
             var pp2 = p.PowerOperation(Two);
-            Total = Total + pp2;
+            Total += pp2;
         }
 
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
@@ -131,7 +131,7 @@ public partial class QsSequence
         {
             var p = GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5) - mean;
             var pp2 = p.PowerOperation(Two);
-            Total = Total + pp2;
+            Total += pp2;
         }
 
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
@@ -150,7 +150,7 @@ public partial class QsSequence
         {
             var p = GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6) - mean;
             var pp2 = p.PowerOperation(Two);
-            Total = Total + pp2;
+            Total += pp2;
         }
 
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };

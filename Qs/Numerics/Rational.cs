@@ -18,8 +18,8 @@ public struct Rational(float num, float den)
         {
             if ((num % fac == 0) && (den % fac == 0))
             {
-                num = num / fac;
-                den = den / fac;
+                num /= fac;
+                den /= fac;
                 break;
             }
         }

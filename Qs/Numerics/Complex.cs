@@ -167,10 +167,10 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
             {
                 if ((power & 1) != 0)
                 {
-                    result = result * factor;
+                    result *= factor;
                 }
 
-                factor = factor * factor;
+                factor *= factor;
                 power >>= 1;
             }
 
