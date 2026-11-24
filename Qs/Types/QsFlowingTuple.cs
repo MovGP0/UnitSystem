@@ -391,8 +391,9 @@ public class QsFlowingTuple : QsValue
         for (var ix = 0; ix < names.Length; ix++)
         {
             fefe[ix].Name = (string) names[ix];
-            fefe[ix].Id = (int)values.GetValue(ix);
-            fefe[ix].Value = ((int)values.GetValue(ix)).ToQuantity().ToScalarValue();
+            var enumValue = (int)(values.GetValue(ix) ?? throw new InvalidOperationException("An enum member must have a value."));
+            fefe[ix].Id = enumValue;
+            fefe[ix].Value = enumValue.ToQuantity().ToScalarValue();
         }
 
         return new QsFlowingTuple(fefe);

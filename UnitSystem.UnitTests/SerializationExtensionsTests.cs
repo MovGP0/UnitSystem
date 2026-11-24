@@ -57,7 +57,7 @@ public static class SerializationExtensionsTests
             QuantityInfo<double> deserializedInfo;
             using (var reader = XmlReader.Create(new StringReader(builder.ToString())))
             {
-                deserializedInfo = (QuantityInfo<double>)serializer.ReadObject(reader);
+                deserializedInfo = serializer.ReadObject(reader).ShouldBeOfType<QuantityInfo<double>>();
             }
 
             var result = SISystem.System.FromInfo(deserializedInfo);

@@ -57,11 +57,14 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
 
     #region Generic Helper Calculations
 
+    private static double UnboxDouble(T value)
+        => (double)((object?)value ?? throw new InvalidOperationException("A numeric quantity must have a value."));
+
     public static T DivideScalarByGeneric(double factor, T value)
     {
         if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
         {
-            return (T)(object)(factor / (double)(object?)value);
+            return (T)(object)(factor / UnboxDouble(value));
         }
 
         var expr = Expression.Divide(Expression.Constant(factor), Expression.Constant(value));
@@ -123,7 +126,7 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
     {
         if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
         {
-            return (T)(object)Math.Pow((double)(object?)value, factor);
+            return (T)(object)Math.Pow(UnboxDouble(value), factor);
         }
 
         var m = typeof(T).GetMethod("Pow", [typeof(T), typeof(double)]);
