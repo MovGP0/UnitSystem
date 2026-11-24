@@ -738,7 +738,7 @@ dotnet_diagnostic.RCS1268.severity = warning
 dotnet_diagnostic.CA1016.severity = warning
 
 # Mark attributes with AttributeUsageAttribute
-# dotnet_diagnostic.CA1018.severity = warning
+dotnet_diagnostic.CA1018.severity = warning
 
 # Provide ObsoleteAttribute message
 # dotnet_diagnostic.CA1041.severity = warning
