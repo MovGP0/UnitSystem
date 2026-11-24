@@ -1053,7 +1053,7 @@ dotnet_diagnostic.CA2247.severity = warning
 dotnet_diagnostic.CA2248.severity = warning
 
 # Consider using 'string.Contains' instead of 'string.IndexOf'
-# dotnet_diagnostic.CA2249.severity = warning
+dotnet_diagnostic.CA2249.severity = warning
 
 # Use 'ThrowIfCancellationRequested'
 # dotnet_diagnostic.CA2250.severity = warning
