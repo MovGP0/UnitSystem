@@ -153,7 +153,7 @@ public partial class QsSequence
         declaredNamespace = declaredNamespace.TrimEnd(':');
 
         if (t[nsidx + 0].TokenClassType == typeof(WordToken)
-            && (t.Count > 1 ? t[nsidx + 1].TokenClassType == typeof(SquareBracketsGroupToken) : false)     // test for second tokek to be [] group
+            && (t.Count > 1 && t[nsidx + 1].TokenClassType == typeof(SquareBracketsGroupToken))     // test for second tokek to be [] group
            )
         {
             Type? SequenceTokenType = null;

@@ -141,7 +141,7 @@ public partial class SymbolicVariable
                     else if (expr[ix] == '(')
                     {
                         PLevels.Push(1);
-                        var bb = ix > 0 ? parse_separators.Contains(expr[ix - 1]) : true;
+                        var bb = ix <= 0 || parse_separators.Contains(expr[ix - 1]);
                         if (!bb)
                         {
                             //the previous charachter is normal word which indicates we reached a function
@@ -733,7 +733,7 @@ public partial class SymbolicVariable
                         PLevels.Push(1);
 
                         // test for something other than separator in previous charachter
-                        var OperatorBehind = ix > 0 ? separators.Contains(expression[ix - 1]) : true;
+                        var OperatorBehind = ix <= 0 || separators.Contains(expression[ix - 1]);
 
                         if (!OperatorBehind)
                         {

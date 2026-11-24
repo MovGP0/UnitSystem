@@ -486,8 +486,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
         if (
             functionToken[nsidx].TokenClassType == typeof(WordToken)
-                && (functionToken.Count > (nsidx + 1) ? functionToken[nsidx + 1].TokenClassType == typeof(ParenthesisGroupToken) : false)
-                && (functionToken.Count > (nsidx + 2) ? functionToken[nsidx + 2].TokenClassType == typeof(EqualToken) : false)
+                && (functionToken.Count > (nsidx + 1) && functionToken[nsidx + 1].TokenClassType == typeof(ParenthesisGroupToken))
+                && (functionToken.Count > (nsidx + 2) && functionToken[nsidx + 2].TokenClassType == typeof(EqualToken))
         )
         {
             //get function name

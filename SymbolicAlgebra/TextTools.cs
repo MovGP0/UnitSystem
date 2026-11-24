@@ -131,7 +131,7 @@ public static class TextTools
                     else if (expression[ix] == '(')
                     {
                         PLevels.Push(1);
-                        var bb = ix > 0 ? separators.Contains(expression[ix - 1]) : true;
+                        var bb = ix <= 0 || separators.Contains(expression[ix - 1]);
                         if (!bb)
                         {
                             //the previous charachter is normal word which indicates we reached a function
