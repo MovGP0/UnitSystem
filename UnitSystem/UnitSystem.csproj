@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <NeutralLanguage>en</NeutralLanguage>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
     <IsTestProject>false</IsTestProject>
     <RootNamespace>UnitSystem</RootNamespace>
