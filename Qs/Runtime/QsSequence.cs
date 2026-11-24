@@ -277,7 +277,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
 
     public QsValue GetElementValue(int index, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
     {
-        var val = GetElement(index).Execute(index, arg1, arg1, arg2, arg3, arg4, arg5, arg6);
+        var val = GetElement(index).Execute(index, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
         return val;
     }
 

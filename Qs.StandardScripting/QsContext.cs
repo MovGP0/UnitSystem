@@ -9,8 +9,10 @@ public sealed class QsContext : LanguageContext
 {
     QsBinder _binder;
 
+#pragma warning disable RCS1163 // DLR activation requires this constructor signature.
     public QsContext(ScriptDomainManager manager, IDictionary<string, object> options)
         : base(manager)
+#pragma warning restore RCS1163
     {
         _binder = new QsBinder();  // I have defined end statement to close the execution of the program.
         // the end statement will return null which in return the execution of current program will end.

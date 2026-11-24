@@ -399,12 +399,14 @@ public partial class QsSequence
     /// <returns></returns>
     public static string FormSequenceSymbolicName(string name, int indexesCount, int parametersCount)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(parametersCount);
+
         if (indexesCount == 0)
         {
             indexesCount = 1;
         }
 
-        var sn = name + "%" + indexesCount.ToString(CultureInfo.InvariantCulture); // +"#" + parametersCount.ToString(CultureInfo.InvariantCulture);
+        var sn = name + "%" + indexesCount.ToString(CultureInfo.InvariantCulture);
 
         return sn;
     }

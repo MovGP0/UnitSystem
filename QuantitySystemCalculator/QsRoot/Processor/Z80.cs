@@ -48,7 +48,9 @@ public sealed class Z80 : EightBitProcessor
     public double Accumulate(params double[] all)
         => all.Sum();
 
+#pragma warning disable RCS1163 // The sample exercises the scripting binder with native and Qs object arguments.
     public Z80 GetZ80(int pc, Z80 z)
+#pragma warning restore RCS1163
     {
         return new()
         {

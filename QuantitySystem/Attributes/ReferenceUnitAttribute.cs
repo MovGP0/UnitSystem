@@ -52,7 +52,7 @@ public sealed class ReferenceUnitAttribute : Attribute
 
         if (!DynamicQuantitySystem.DynamicSourceFunctions.ContainsKey(sourceFunctionName))
         {
-            DynamicQuantitySystem.DynamicSourceFunctions[sourceFunctionName] = (u) => 1.0;   // always return 1.0;
+            DynamicQuantitySystem.DynamicSourceFunctions[sourceFunctionName] = static _ => 1.0;
         }
     }
 
