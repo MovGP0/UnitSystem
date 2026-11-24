@@ -915,7 +915,7 @@ dotnet_diagnostic.CA1859.severity = warning
 dotnet_diagnostic.CA1860.severity = warning
 
 # Avoid constant arrays as arguments
-# dotnet_diagnostic.CA1861.severity = warning
+dotnet_diagnostic.CA1861.severity = warning
 
 # Use the 'StringComparison' method overloads to perform case-insensitive string comparisons
 # dotnet_diagnostic.CA1862.severity = warning

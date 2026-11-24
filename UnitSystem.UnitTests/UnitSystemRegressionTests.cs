@@ -55,7 +55,7 @@ public sealed class UnitSystemRegressionTests
 
         pointInfo.Amount.ShouldBe(273.15);
         differenceInfo.Amount.ShouldBe(10);
-        pointInfo.Unit.Keys.ShouldBe(new[] { "K" });
+        pointInfo.Unit.Keys.Single().ShouldBe("K");
 
         var json = JsonConvert.SerializeObject(differenceInfo);
         var decoded = JsonConvert.DeserializeObject<QuantityInfo<double>>(json);

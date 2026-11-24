@@ -265,7 +265,7 @@ internal sealed class UnitInterpreter
 
     private Unit ParseCanonical(string expression)
     {
-        var values = expression.Substring(CanonicalPrefix.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        var values = expression.Substring(CanonicalPrefix.Length).Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (values.Length < 2
             || !double.TryParse(values[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var factor)
             || !double.TryParse(values[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var offset))
@@ -320,7 +320,7 @@ internal sealed class UnitInterpreter
         Unit? product = null;
         foreach (var segment in expression.Split(_explicitMultiplication, StringSplitOptions.None))
         {
-            var words = segment.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var words = segment.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (words.Length == 0)
             {
                 throw InvalidExpression(expression);
