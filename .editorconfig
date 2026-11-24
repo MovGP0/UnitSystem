@@ -245,7 +245,7 @@ dotnet_diagnostic.RCS1049.severity = warning
 dotnet_diagnostic.RCS1058.severity = warning
 
 # Avoid locking on publicly accessible instance
-# dotnet_diagnostic.RCS1059.severity = warning
+dotnet_diagnostic.RCS1059.severity = warning
 
 # Declare each type in separate file
 # dotnet_diagnostic.RCS1060.severity = none
