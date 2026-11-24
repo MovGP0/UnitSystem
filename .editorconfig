@@ -533,7 +533,7 @@ dotnet_diagnostic.RCS1197.severity = warning
 dotnet_diagnostic.RCS1199.severity = warning
 
 # Call 'Enumerable.ThenBy' instead of 'Enumerable.OrderBy'
-# dotnet_diagnostic.RCS1200.severity = warning
+dotnet_diagnostic.RCS1200.severity = warning
 
 # Use method chaining
 # dotnet_diagnostic.RCS1201.severity = silent
