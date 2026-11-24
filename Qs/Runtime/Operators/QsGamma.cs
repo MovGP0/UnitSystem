@@ -127,9 +127,12 @@ public static class QsGamma
         //the used function  near to the windows calculator
         var StieltjesFactorial = delegate(double x)
         {
-            var y = x + 1; var p = 1.0;
+            var y = x + 1;
+            var p = 1.0;
             while (y < 7)
-                { p = p * y; y = y + 1; }
+                {
+                p = p * y;
+                y = y + 1; }
 
             var r = Math.Exp(y * Math.Log(y) - y + 1 / (12 * y + 2 / (5 * y + 53 / (42 * y))));
             if (x < 7)
@@ -140,8 +143,12 @@ public static class QsGamma
 
         var StieltjesLnFactorial = delegate(double z)
         {
-            var a0 = 1 / 12; var a1 = 1 / 30; var a2 = 53 / 210; var a3 = 195 / 371;
-            var a4 = 22999 / 22737; var a5 = 29944523 / 19733142;
+            var a0 = 1 / 12;
+            var a1 = 1 / 30;
+            var a2 = 53 / 210;
+            var a3 = 195 / 371;
+            var a4 = 22999 / 22737;
+            var a5 = 29944523 / 19733142;
             var a6 = 109535241009 / 48264275462;
             var Z = z + 1;
 
@@ -152,7 +159,8 @@ public static class QsGamma
         //gives value of the normal factorial :S
         var StieltjesFactorialHP = delegate(double x)
         {
-            var y = x; var p = 1.0;
+            var y = x;
+            var p = 1.0;
             while (y < 8)
             {
                 p = p*y;
