@@ -35,6 +35,10 @@ public class QsDifferentialOperation : QsOperation
 
             return true;
         }
+
+        public override bool Equals(object? obj) => obj is InnerOperation other && Equals(other);
+
+        public override int GetHashCode() => HashCode.Combine(Operation);
     }
 
     private readonly List<InnerOperation> operations = [];
