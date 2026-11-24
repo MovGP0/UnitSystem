@@ -165,7 +165,6 @@ public static class QsGamma
                 y++;
             }
 
-;
             var r = Math.Exp(StieltjesLnFactorial(y));
 
             if (x < 8)

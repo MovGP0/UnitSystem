@@ -110,9 +110,6 @@ public partial class SymbolicVariable
                         }
                     }
                 }
-                else
-                {
-                }
             }
         }
 

@@ -1,9 +1,5 @@
 namespace PassiveFlow.UnitTests;
 
-#region Types involved in the food order
-
-#endregion
-
 public class FoodOrder : Flow
 {
     /// <summary>

@@ -701,7 +701,7 @@ dotnet_diagnostic.RCS1257.severity = warning
 dotnet_diagnostic.RCS1258.severity = warning
 
 # Remove empty syntax
-# dotnet_diagnostic.RCS1259.severity = warning
+dotnet_diagnostic.RCS1259.severity = warning
 
 # Add/remove trailing comma
 # dotnet_diagnostic.RCS1260.severity = none

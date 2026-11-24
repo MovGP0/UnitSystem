@@ -629,8 +629,6 @@ public sealed partial class Token : IEnumerable<Token>
             tokenClasses.Add(tc);
         }
 
-;
-
         // the required tokens are exact words that have a definite start and a definite end.
         var current = new Token();
         var merged = new Token();
