@@ -1,4 +1,5 @@
-﻿using UnitSystem.Quantities;
+﻿using UnitSystem.Extensions;
+using UnitSystem.Quantities;
 
 namespace UnitSystem.Serialization;
 
@@ -40,8 +41,14 @@ public static class SerializationExtensions
     public static QuantityInfo<double> ToInfo(this ScalarQuantity scalarQuantity)
     {
         var coherentUnit = scalarQuantity.CoherentUnit;
-        var units = coherentUnit.System.BaseUnits
-            .Zip(coherentUnit.Dimension, (unit, exponent) => new { unit.Symbol, Exponent = exponent })
+        var system = coherentUnit.System;
+        var baseUnits = system.BaseUnits.ToArray();
+        if (baseUnits.Length < coherentUnit.Dimension.Count)
+        {
+            throw new InvalidOperationException(Messages.DimensionUnknown.FormatWith(system.Name, baseUnits.Length));
+        }
+
+        var units = baseUnits.Zip(coherentUnit.Dimension, (unit, exponent) => new { unit.Symbol, Exponent = exponent })
             .Where(component => component.Exponent != 0)
             .ToDictionary(component => component.Symbol, component => component.Exponent);
 

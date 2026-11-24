@@ -28,6 +28,7 @@ public sealed class UnitFactory : IUnitFactory
         string name,
         string inherentPrefix)
     {
+        Check.SystemKnowsDimension(system, dimension);
         return new(system, factor, offset, dimension, symbol, name, inherentPrefix);
     }
 

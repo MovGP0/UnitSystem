@@ -70,7 +70,7 @@ internal sealed class UnitSystem : IUnitSystem
             EnsureMutable();
             var exponents = new float[_baseUnits.Count + 1];
             exponents[exponents.Length - 1] = 1;
-            var unit = _unitFactory.CreateUnit(
+            var unit = new KnownUnit(
                 this,
                 1.0,
                 0.0,

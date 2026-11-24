@@ -27,7 +27,7 @@ public sealed class KnownUnit : Unit
         string name)
         : this(system, factor, offset, dimension, symbol, name, string.Empty)
     {
-        Symbol = symbol;
+        Check.SystemKnowsDimension(system, dimension);
     }
 
     /// <summary>

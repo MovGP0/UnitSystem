@@ -1,10 +1,12 @@
 ﻿using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
+using UnitSystem.Dimensions;
 using UnitSystem.Quantities;
 using UnitSystem.Serialization;
 using UnitSystem.Systems;
 using Newtonsoft.Json;
+using NSubstitute;
 using Shouldly;
 using static UnitSystem.Systems.SISystem;
 
@@ -13,6 +15,25 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(SerializationExtensions))]
 public static class SerializationExtensionsTests
 {
+    [TestClass]
+    [TestOf(typeof(SerializationExtensions), nameof(SerializationExtensions.ToInfo))]
+    public sealed class ToInfoTests
+    {
+        [TestMethod]
+        public void ShouldRejectAQuantityWhenItsCatalogCannotNameAllDimensions()
+        {
+            var system = Substitute.For<IUnitSystem>();
+            system.Name.Returns("invalid catalog");
+            system.NumberOfDimensions.Returns(1);
+            system.BaseUnits.Returns(Array.Empty<KnownUnit>());
+            system.MakeCoherent(Arg.Any<Unit>()).Returns(call => call.Arg<Unit>());
+            var unit = new KnownUnit(system, 1, 0, new Dimension(1), "m", "metre");
+            var quantity = new ScalarQuantity(12, unit);
+
+            Should.Throw<InvalidOperationException>(() => quantity.ToInfo());
+        }
+    }
+
     [TestClass]
     [TestOf(typeof(SerializationExtensions), nameof(SerializationExtensions.FromInfo))]
     public sealed class FromInfoTests
