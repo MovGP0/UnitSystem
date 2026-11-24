@@ -11,6 +11,7 @@ public class UnitsNotDimensionallyEqualException : UnitException
    {
       // Add any type-specific logic.
    }
+
    public UnitsNotDimensionallyEqualException(string message, Exception innerException):
       base (message, innerException)
    {

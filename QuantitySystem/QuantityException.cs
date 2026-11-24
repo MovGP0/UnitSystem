@@ -11,6 +11,7 @@ public class QuantityException : Exception
    {
       // Add any type-specific logic.
    }
+
    public QuantityException(string message, Exception innerException):
       base (message, innerException)
    {

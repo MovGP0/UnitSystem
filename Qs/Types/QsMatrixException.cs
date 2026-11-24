@@ -11,6 +11,7 @@ public class QsMatrixException : QsException
    {
       // Add any type-specific logic.
    }
+
    public QsMatrixException(string message, Exception innerException):
       base (message, innerException)
    {

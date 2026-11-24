@@ -144,6 +144,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
 
 
     private bool _CachingEnabled;
+
     /// <summary>
     /// If true the sequence ability to to be cached is available.
     /// </summary>

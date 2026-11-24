@@ -11,6 +11,7 @@ public class QsIncompleteExpression : QsException
    {
       // Add any type-specific logic.
    }
+
    public QsIncompleteExpression(string message, Exception innerException):
       base (message, innerException)
    {

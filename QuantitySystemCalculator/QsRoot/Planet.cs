@@ -42,6 +42,7 @@ public sealed class Planet
     public Planet NextPlanet => GetNextPlanet();
 
     readonly Dictionary<string, Planet> _subPlanets = new();
+
     public Planet this[string planetName]
     {
         get => _subPlanets[planetName];

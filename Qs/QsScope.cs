@@ -14,6 +14,7 @@ public class QsScope : IDynamicMetaObjectProvider
     }
 
     Dictionary<string, IQsStorageProvider> StorageProviders = new(StringComparer.OrdinalIgnoreCase);
+
     public QsScope()
     {
         StorageProviders["PrimaryStorage"] = new QsScopeStorage();

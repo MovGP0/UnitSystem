@@ -18,7 +18,7 @@ dotnet_diagnostic.RCS0008.severity = warning
 dotnet_diagnostic.RCS0009.severity = warning
 
 # Separate declarations with a blank line
-# dotnet_diagnostic.RCS0010.severity = warning
+dotnet_diagnostic.RCS0010.severity = warning
 
 # Control spacing between single-line accessors
 # dotnet_diagnostic.RCS0011.severity = warning

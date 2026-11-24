@@ -11,6 +11,7 @@ public class QsVariableNotFoundException : QsException
    {
       // Add any type-specific logic.
    }
+
    public QsVariableNotFoundException(string message, Exception innerException):
       base (message, innerException)
    {

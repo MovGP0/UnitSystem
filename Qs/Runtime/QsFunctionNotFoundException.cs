@@ -11,6 +11,7 @@ public class QsFunctionNotFoundException : QsException
    {
       // Add any type-specific logic.
    }
+
    public QsFunctionNotFoundException(string message, Exception innerException):
       base (message, innerException)
    {

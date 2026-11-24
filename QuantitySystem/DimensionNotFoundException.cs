@@ -11,6 +11,7 @@ public class DimensionNotFoundException : QuantityException
    {
       // Add any type-specific logic.
    }
+
    public DimensionNotFoundException(string message, Exception innerException):
       base (message, innerException)
    {

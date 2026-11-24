@@ -11,6 +11,7 @@ public class QsInvalidInputException : QsException
    {
       // Add any type-specific logic.
    }
+
    public QsInvalidInputException(string message, Exception innerException):
       base (message, innerException)
    {

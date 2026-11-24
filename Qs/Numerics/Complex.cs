@@ -23,6 +23,7 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
     {
         return "(" + Real.ToString(CultureInfo.InvariantCulture) + ", " + Imaginary.ToString(CultureInfo.InvariantCulture) + "i)";
     }
+
     public string ToQsSyntax()
     {
         return "C{" + Real.ToString(CultureInfo.InvariantCulture) + ", " + Imaginary.ToString(CultureInfo.InvariantCulture) + "}";

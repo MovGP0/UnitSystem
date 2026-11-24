@@ -344,6 +344,7 @@ public partial class QsFunction
     {
         throw new NotImplementedException();
     }
+
     public static bool operator ==(QsFunction a, QsFunction b)
     {
         // If both are null, or both are same instance, return true.

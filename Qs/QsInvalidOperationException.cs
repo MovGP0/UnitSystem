@@ -11,6 +11,7 @@ public class QsInvalidOperationException : QsException
    {
       // Add any type-specific logic.
    }
+
    public QsInvalidOperationException(string message, Exception innerException):
       base (message, innerException)
    {

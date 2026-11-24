@@ -145,6 +145,7 @@ public class Screen
     }
 
     List<Task> runningTasks = [];
+
     public void UpdateFor(Time<double> time)
     {
         var sw = new Stopwatch();

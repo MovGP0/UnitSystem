@@ -19,6 +19,7 @@ public partial class SymbolicVariable
 
 
         SymbolicVariable _NegativeSimplifyValue;
+
         public SymbolicVariable? NegativeSimplifyValue
         {
             get

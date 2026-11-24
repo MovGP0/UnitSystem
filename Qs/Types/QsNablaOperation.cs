@@ -117,6 +117,7 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
 
 
     private int Power = 1;
+
     public override QsValue PowerOperation(QsValue value)
     {
         var p = (int)((QsScalar)value).NumericalQuantity.Value;

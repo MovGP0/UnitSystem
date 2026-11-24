@@ -8,6 +8,7 @@ namespace Qs.Runtime;
 public partial class QsSequence
 {
     private string _SequenceDeclaration;
+
     public string SequenceDeclaration
     {
         get
@@ -45,6 +46,7 @@ public partial class QsSequence
 
 
     private string _SequenceName;
+
     public string SequenceSymbolicName
     {
         get =>

@@ -14,6 +14,7 @@ public class QsBinder : DefaultBinder
     {
         throw new NotImplementedException();
     }
+
     public override bool CanConvertFrom(Type fromType, Type toType, bool toNotNullable, Microsoft.Scripting.Actions.Calls.NarrowingLevel level)
     {
         throw new NotImplementedException();

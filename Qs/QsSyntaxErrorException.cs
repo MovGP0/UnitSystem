@@ -11,6 +11,7 @@ public class QsSyntaxErrorException : QsException
    {
       // Add any type-specific logic.
    }
+
    public QsSyntaxErrorException(string message, Exception innerException):
       base (message, innerException)
    {

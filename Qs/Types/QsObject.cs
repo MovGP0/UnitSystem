@@ -23,6 +23,7 @@ public class QsObject : QsValue
     }
 
     private readonly object _NativeObject;
+
     private QsObject(object nativeObject)
     {
         _NativeObject = nativeObject;

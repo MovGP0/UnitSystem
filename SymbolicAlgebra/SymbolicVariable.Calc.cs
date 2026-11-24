@@ -32,6 +32,7 @@ public partial class SymbolicVariable
         var sv = new SymbolicVariable(a.ToString(CultureInfo.InvariantCulture)) * b;
         return sv;
     }
+
     public static SymbolicVariable? operator *(long a, SymbolicVariable b)
     {
         var sv = new SymbolicVariable(a.ToString(CultureInfo.InvariantCulture)) * b;
