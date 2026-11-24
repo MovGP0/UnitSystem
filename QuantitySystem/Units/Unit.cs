@@ -336,7 +336,7 @@ public partial class Unit : ICloneable
             // mixed system
             // check all derived units if their unit system is the same then return it
 
-            if (SubUnits.Count <= 0)
+            if (SubUnits.Count == 0)
             {
                 return "Unknown";
             }

@@ -647,7 +647,7 @@ dotnet_diagnostic.RCS1236.severity = warning
 dotnet_diagnostic.RCS1239.severity = warning
 
 # Operator is unnecessary
-# dotnet_diagnostic.RCS1240.severity = warning
+dotnet_diagnostic.RCS1240.severity = warning
 
 # Implement non-generic counterpart
 # dotnet_diagnostic.RCS1241.severity = silent
