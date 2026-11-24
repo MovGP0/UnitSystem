@@ -1556,7 +1556,7 @@ class QsVar
     public Expression GetQsVariable(Token name)
     {
         //string GetterFunction = isObject ? "GetScopeValue" : "GetScopeQsValue";
-        var GetterFunction = "GetScopeQsValue";
+        const string GetterFunction = "GetScopeQsValue";
 
         var ScopeType = Evaluator.Scope.GetType();
 

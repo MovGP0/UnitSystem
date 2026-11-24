@@ -52,7 +52,7 @@ public partial class QsFunction
     /// <returns></returns>
     internal static Token JoinFunctionsArrayTokensWithOperation(string operation, out string functionDeclaration, params QsFunction[] functions)
     {
-        var fname = "_";
+        const string fname = "_";
 
         var fbody = "";
         List<string> fparamList = [];
@@ -177,7 +177,7 @@ public partial class QsFunction
         {
             var svl = (QsScalar)value;
 
-            var fname = "_";
+            const string fname = "_";
 
             var fbody = FunctionBody;
             if (svl.ScalarType == ScalarTypes.SymbolicQuantity)
@@ -460,7 +460,7 @@ public partial class QsFunction
         {
             var dsv = sval.SymbolicQuantity.Value;
 
-            var fname = "_";
+            const string fname = "_";
             var WholeFunction = string.Empty;
             if (FunctionBodyToken[0].TokenClassType == typeof(CurlyBracketGroupToken))
             {

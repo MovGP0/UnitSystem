@@ -124,7 +124,7 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
 
     public override string ToShortString()
     {
-        var nb = @"\";
+        const string nb = @"\";
 
         var ccs = string.Empty;
 

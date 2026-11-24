@@ -353,7 +353,7 @@ dotnet_diagnostic.RCS1113.severity = warning
 dotnet_diagnostic.RCS1114.severity = warning
 
 # Mark local variable as const
-# dotnet_diagnostic.RCS1118.severity = warning
+dotnet_diagnostic.RCS1118.severity = warning
 
 # Add parentheses when necessary
 # dotnet_diagnostic.RCS1123.severity = warning

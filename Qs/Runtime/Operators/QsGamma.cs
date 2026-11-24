@@ -141,13 +141,13 @@ public static class QsGamma
 
         var StieltjesLnFactorial = (double z) =>
         {
-            var a0 = 1 / 12;
-            var a1 = 1 / 30;
-            var a2 = 53 / 210;
-            var a3 = 195 / 371;
-            var a4 = 22999 / 22737;
-            var a5 = 29944523 / 19733142;
-            var a6 = 109535241009 / 48264275462;
+            const int a0 = 1 / 12;
+            const int a1 = 1 / 30;
+            const int a2 = 53 / 210;
+            const int a3 = 195 / 371;
+            const int a4 = 22999 / 22737;
+            const int a5 = 29944523 / 19733142;
+            const long a6 = 109535241009 / 48264275462;
             var Z = z + 1;
 
             return (1 / 2) * Math.Log(2 * Math.PI) + (Z - 1 / 2) * Math.Log(Z) - Z

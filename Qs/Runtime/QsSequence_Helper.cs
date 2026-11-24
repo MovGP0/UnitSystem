@@ -219,7 +219,7 @@ public partial class QsSequence
                     }
                     else
                     {
-                        var SyntaxErrorMessage = "Sequence syntax error in indexer declaration: Correct Declaration looks like S[k] or S[k=m->n]";
+                        const string SyntaxErrorMessage = "Sequence syntax error in indexer declaration: Correct Declaration looks like S[k] or S[k=m->n]";
                         if (m.Count == 5)
                         {
                             if (m[0].TokenClassType == typeof(WordToken)

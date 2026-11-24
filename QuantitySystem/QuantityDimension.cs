@@ -290,7 +290,7 @@ public sealed partial class QuantityDimension
     /// <returns></returns>
     private static int ExponentOfMass(string mlt)
     {
-        var m_index = 0;
+        const int m_index = 0;
         var l_index = mlt.IndexOf('L');
         return int.Parse(mlt.Substring(m_index + 1, l_index - m_index - 1), CultureInfo.InvariantCulture);
     }

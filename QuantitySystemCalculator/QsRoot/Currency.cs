@@ -28,7 +28,7 @@ public static class Currency
 
     static void DownloadExchangeFile()
     {
-        var web = "https://quantitysystem.azurewebsites.net/api/ExchangeRates";
+        const string web = "https://quantitysystem.azurewebsites.net/api/ExchangeRates";
 
         var wc = new System.Net.WebClient();
         var xch = wc.DownloadData(web);
