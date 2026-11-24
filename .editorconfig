@@ -741,7 +741,7 @@ dotnet_diagnostic.CA1016.severity = warning
 dotnet_diagnostic.CA1018.severity = warning
 
 # Provide ObsoleteAttribute message
-# dotnet_diagnostic.CA1041.severity = warning
+dotnet_diagnostic.CA1041.severity = warning
 
 # Declare types in namespaces
 # dotnet_diagnostic.CA1050.severity = warning
