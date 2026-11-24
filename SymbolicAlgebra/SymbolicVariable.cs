@@ -52,7 +52,7 @@ public partial class SymbolicVariable
             }
             else
             {
-                return "(" + _BaseVariable.ToString() + ")";
+                return "(" + _BaseVariable + ")";
             }
         }
     }
@@ -398,7 +398,7 @@ public partial class SymbolicVariable
                                 else
                                 {
                                     //nothing
-                                    Symbol = _FunctionName + "(" + _FunctionParameters[0].ToString() + ")";
+                                    Symbol = _FunctionName + "(" + _FunctionParameters[0] + ")";
                                 }
                             }
                         }
@@ -415,7 +415,7 @@ public partial class SymbolicVariable
                         Symbol = _FunctionName + "(";
                         foreach (var argument in FunctionArguments)
                         {
-                            Symbol += argument.ToString() + ",";
+                            Symbol += argument + ",";
                         }
 
                         if (Symbol.EndsWith(","))
@@ -467,8 +467,8 @@ public partial class SymbolicVariable
 
         foreach (var p in FunctionArguments)
         {
-            Symbol += p.ToString() + ",";
-            iparms += p.ToString() + ",";
+            Symbol += p + ",";
+            iparms += p + ",";
         }
 
         if (Symbol.EndsWith(","))
@@ -1307,22 +1307,22 @@ public partial class SymbolicVariable
         {
             if (TermsCount > 1)
             {
-                result = "(" + result + ")/(" + DividedTerm.ToString() + ")";
+                result = "(" + result + ")/(" + DividedTerm + ")";
             }
             else
             {
-                result = result + "/(" + DividedTerm.ToString() + ")";
+                result = result + "/(" + DividedTerm + ")";
             }
         }
         else if (DividedTerm.FormSymbolTextValue() != "1")
         {
             if (TermsCount > 1)
             {
-                result = "(" + result + ")/(" + DividedTerm.ToString() + ")";
+                result = "(" + result + ")/(" + DividedTerm + ")";
             }
             else
             {
-                result = result + "/(" + DividedTerm.ToString() + ")";
+                result = result + "/(" + DividedTerm + ")";
             }
         }
 

@@ -105,7 +105,7 @@ public partial class SymbolicVariable
     public SymbolicVariable? Substitute(string variable, SymbolicVariable value)
     {
         var s = ToString();
-        var ss = s.Replace(variable, "(" + value.ToString() + ")");
+        var ss = s.Replace(variable, "(" + value + ")");
 
         return Parse(ss);
     }

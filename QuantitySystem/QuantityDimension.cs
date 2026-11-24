@@ -279,7 +279,7 @@ public sealed partial class QuantityDimension
                 return Dimensionless;
             }
 
-            throw new DimensionNotFoundException("UnExpected Exception. TypeOf<" + quantityType.ToString() + "> have no dimension associate with it", ex);
+            throw new DimensionNotFoundException("UnExpected Exception. TypeOf<" + quantityType + "> have no dimension associate with it", ex);
         }
     }
 

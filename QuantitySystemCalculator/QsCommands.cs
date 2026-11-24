@@ -390,7 +390,7 @@ public static class QsCommands
         List<string> quats = [];
         foreach (var qType in QuantitySystem.QuantityDimension.AllQuantitiesTypes)
         {
-            quats.Add ("    " + qType.Name.Substring(0, qType.Name.Length - 2).PadRight(30) + "    " + QuantitySystem.QuantityDimension.DimensionFrom(qType).ToString());
+            quats.Add ("    " + qType.Name.Substring(0, qType.Name.Length - 2).PadRight(30) + "    " + QuantitySystem.QuantityDimension.DimensionFrom(qType));
         }
 
         var qss = from q in quats orderby q select q;

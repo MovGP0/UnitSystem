@@ -311,7 +311,7 @@ dotnet_diagnostic.RCS1093.severity = warning
 # dotnet_diagnostic.RCS1096.severity = none
 
 # Remove redundant 'ToString' call
-# dotnet_diagnostic.RCS1097.severity = warning
+dotnet_diagnostic.RCS1097.severity = warning
 
 # Constant values should be placed on right side of comparisons
 # dotnet_diagnostic.RCS1098.severity = warning

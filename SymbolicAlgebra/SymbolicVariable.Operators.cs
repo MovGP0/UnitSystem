@@ -64,12 +64,12 @@ public partial class SymbolicVariable
         {
             // return sqrt function of the multi term
 
-            return new SymbolicVariable("Sqrt(" + p.ToString() + ")");
+            return new SymbolicVariable("Sqrt(" + p + ")");
         }
         else if (power > 0 && power < 1)
         {
             // I don't have solution for this now
-            throw new SymbolicException("I don't have solution for this type of power " + p.ToString() + "^ (" + power.ToString() + ")");
+            throw new SymbolicException("I don't have solution for this type of power " + p + "^ (" + power.ToString() + ")");
         }
         else
         {

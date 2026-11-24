@@ -113,7 +113,7 @@ public partial class SymbolicVariable
                 // here is the case when base and power are the same with the parameter we are differentiating with
                 //  i.e.  x^x . x
                 // Logarithmic integration
-                var lnterm = new SymbolicVariable($"{FunctionOperation.LnText}(" + sv.ToString() + ")");
+                var lnterm = new SymbolicVariable($"{FunctionOperation.LnText}(" + sv + ")");
                 var dlnterm = lnterm.Integrate(parameter);
                 sv = Divide(sv, dlnterm);
                 throw new NotImplementedException();

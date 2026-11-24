@@ -127,32 +127,32 @@ internal static class FunctionOperation
         {
             //asin(x) → 1 / sqrt(1-x^2)
 
-            return SymbolicVariable.Parse(dpa.ToString() + "/sqrt(1-(" + ps.ToString() + "))");
+            return SymbolicVariable.Parse(dpa + "/sqrt(1-(" + ps + "))");
         }
 
         if (string.Equals(func, "acos", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse("-" + dpa.ToString() + "/sqrt(1-(" + ps.ToString() + "))");
+            return SymbolicVariable.Parse("-" + dpa + "/sqrt(1-(" + ps + "))");
         }
 
         if (string.Equals(func, "atan", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse(dpa.ToString() + "/(" + ps.ToString() + "+1)");
+            return SymbolicVariable.Parse(dpa + "/(" + ps + "+1)");
         }
 
         if (string.Equals(func, "acot", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse("-" + dpa.ToString() + "/(" + ps.ToString() + "+1)");
+            return SymbolicVariable.Parse("-" + dpa + "/(" + ps + "+1)");
         }
 
         if (string.Equals(func, "asec", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse(dpa.ToString() + "/(sqrt(1-1/(" + ps.ToString() + "))*" + ps.ToString() + ")");
+            return SymbolicVariable.Parse(dpa + "/(sqrt(1-1/(" + ps + "))*" + ps + ")");
         }
 
         if (string.Equals(func, "acsc", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse("-" + dpa.ToString() + "/(sqrt(1-1/(" + ps.ToString() + "))*" + ps.ToString() + ")");
+            return SymbolicVariable.Parse("-" + dpa + "/(sqrt(1-1/(" + ps + "))*" + ps + ")");
         }
 
         #region hyperbolic functions
@@ -160,32 +160,32 @@ internal static class FunctionOperation
         {
             //asin(x) → 1 / sqrt(x^2+1)
 
-            return SymbolicVariable.Parse(dpa.ToString() + "/sqrt(" + ps.ToString() + "+1)");
+            return SymbolicVariable.Parse(dpa + "/sqrt(" + ps + "+1)");
         }
 
         if (string.Equals(func, "acosh", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse("-" + dpa.ToString() + "/sqrt(" + ps.ToString() + "-1)");
+            return SymbolicVariable.Parse("-" + dpa + "/sqrt(" + ps + "-1)");
         }
 
         if (string.Equals(func, "atanh", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse(dpa.ToString() + "/(1-(" + ps.ToString() + "))");
+            return SymbolicVariable.Parse(dpa + "/(1-(" + ps + "))");
         }
 
         if (string.Equals(func, "acoth", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse("-" + dpa.ToString() + "/(" + ps.ToString() + "-1)");
+            return SymbolicVariable.Parse("-" + dpa + "/(" + ps + "-1)");
         }
 
         if (string.Equals(func, "asech", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse("-" + dpa.ToString() + "/(sqrt(1/" + ps.ToString() + "-1)*" + ps.ToString() + ")");
+            return SymbolicVariable.Parse("-" + dpa + "/(sqrt(1/" + ps + "-1)*" + ps + ")");
         }
 
         if (string.Equals(func, "acsch", StringComparison.OrdinalIgnoreCase))
         {
-            return SymbolicVariable.Parse("-" + dpa.ToString() + "/(sqrt(1/" + ps.ToString() + "+1)*" + ps.ToString() + ")");
+            return SymbolicVariable.Parse("-" + dpa + "/(sqrt(1/" + ps + "+1)*" + ps + ")");
         }
 
         #endregion
@@ -206,53 +206,53 @@ internal static class FunctionOperation
 
         if (string.Equals(func, "sin", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"cos({pa.ToString()})");
+            result = SymbolicVariable.Parse($"cos({pa})");
             result = SymbolicVariable.Multiply(SymbolicVariable.NegativeOne, result);
         }
         else if (string.Equals(func, "sinh", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"cosh({pa.ToString()})");
+            result = SymbolicVariable.Parse($"cosh({pa})");
         }
         else if (string.Equals(func, "cos", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"sin({pa.ToString()})");
+            result = SymbolicVariable.Parse($"sin({pa})");
         }
         else if (string.Equals(func, "cosh", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"sinh({pa.ToString()})");
+            result = SymbolicVariable.Parse($"sinh({pa})");
         }
         else if (string.Equals(func, "tan", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"log(cos({pa.ToString()}))");
+            result = SymbolicVariable.Parse($"log(cos({pa}))");
             result = SymbolicVariable.Multiply(SymbolicVariable.NegativeOne, result);
         }
         else if (string.Equals(func, "tanh", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"log(cosh({pa.ToString()}))");
+            result = SymbolicVariable.Parse($"log(cosh({pa}))");
         }
         else if (string.Equals(func, "sec", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"log(cos({pa.ToString()}/2) + sin({pa.ToString()}/2)) - log(cos({pa.ToString()}/2) - sin({pa.ToString()}/2))");
+            result = SymbolicVariable.Parse($"log(cos({pa}/2) + sin({pa}/2)) - log(cos({pa}/2) - sin({pa}/2))");
         }
         else if (string.Equals(func, "sech", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"2*atan(tanh({pa.ToString()}/2))");
+            result = SymbolicVariable.Parse($"2*atan(tanh({pa}/2))");
         }
         else if (string.Equals(func, "csc", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"log(sin({pa.ToString()}/2))-log(cos({pa.ToString()}/2))");
+            result = SymbolicVariable.Parse($"log(sin({pa}/2))-log(cos({pa}/2))");
         }
         else if (string.Equals(func, "csch", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"log(tanh({pa.ToString()}/2))");
+            result = SymbolicVariable.Parse($"log(tanh({pa}/2))");
         }
         else if (string.Equals(func, "cot", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"log(sin({pa.ToString()}))");
+            result = SymbolicVariable.Parse($"log(sin({pa}))");
         }
         else if (string.Equals(func, "coth", StringComparison.OrdinalIgnoreCase))
         {
-            result = SymbolicVariable.Parse($"log(sinh({pa.ToString()}))");
+            result = SymbolicVariable.Parse($"log(sinh({pa}))");
         }
         else
         {
@@ -285,37 +285,37 @@ internal static class FunctionOperation
         {
             var pa2 = pa.Power(2).RequireExpression();
 
-            result = SymbolicVariable.Parse($"{pa.ToString()}*asin({pa.ToString()})+sqrt(1-{pa2.ToString()})");
+            result = SymbolicVariable.Parse($"{pa}*asin({pa})+sqrt(1-{pa2})");
         }
         else if (string.Equals(func, "acos", StringComparison.OrdinalIgnoreCase))
         {
             var pa2 = pa.Power(2).RequireExpression();
 
-            result = SymbolicVariable.Parse($"{pa.ToString()}*acos({pa.ToString()})-sqrt(1-{pa2.ToString()})");
+            result = SymbolicVariable.Parse($"{pa}*acos({pa})-sqrt(1-{pa2})");
         }
         else if (string.Equals(func, "atan", StringComparison.OrdinalIgnoreCase))
         {
             var pa2 = pa.Power(2).RequireExpression();
 
-            result = SymbolicVariable.Parse($"{pa.ToString()}*atan({pa.ToString()})-log({pa2.ToString()}+1)/2");
+            result = SymbolicVariable.Parse($"{pa}*atan({pa})-log({pa2}+1)/2");
         }
         else if (string.Equals(func, "asinh", StringComparison.OrdinalIgnoreCase))
         {
             var pa2 = pa.Power(2).RequireExpression();
 
-            result = SymbolicVariable.Parse($"{pa.ToString()}*asinh({pa.ToString()})-sqrt({pa2.ToString()}+1)");
+            result = SymbolicVariable.Parse($"{pa}*asinh({pa})-sqrt({pa2}+1)");
         }
         else if (string.Equals(func, "acosh", StringComparison.OrdinalIgnoreCase))
         {
             var pa2 = pa.Power(2).RequireExpression();
 
-            result = SymbolicVariable.Parse($"{pa.ToString()}*acosh({pa.ToString()})-sqrt({pa2.ToString()}-1)");
+            result = SymbolicVariable.Parse($"{pa}*acosh({pa})-sqrt({pa2}-1)");
         }
         else if (string.Equals(func, "atanh", StringComparison.OrdinalIgnoreCase))
         {
             var pa2 = pa.Power(2).RequireExpression();
 
-            result = SymbolicVariable.Parse($"{pa.ToString()}*atan({pa.ToString()})-log(1-{pa2.ToString()})/2");
+            result = SymbolicVariable.Parse($"{pa}*atan({pa})-log(1-{pa2})/2");
         }
         else if (string.Equals(func, "asec", StringComparison.OrdinalIgnoreCase))
         {
