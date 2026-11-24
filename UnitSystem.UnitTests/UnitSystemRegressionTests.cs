@@ -16,7 +16,7 @@ public sealed class UnitSystemRegressionTests
     {
         var freezingCelsius = new ScalarQuantity(0, SISystem.degC);
         var freezingFahrenheit = new ScalarQuantity(32, ImperialSystem.degF);
-        Quantity<double> freezingKelvin = new ScalarQuantity(273.15, SISystem.K);
+        var freezingKelvin = new ScalarQuantity(273.15, SISystem.K);
 
         freezingCelsius.Convert(SISystem.K).Amount.ShouldBe(273.15);
         freezingFahrenheit.Convert(SISystem.K).Amount.ShouldBe(273.15);

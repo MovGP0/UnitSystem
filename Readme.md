@@ -22,6 +22,8 @@ The following adoptions have been made:
 SI, CGS, and Imperial units share a read-only catalog and a common conversion basis. Use
 `UnitSystemFactory.CreateSystem` to register units and symbols in a custom catalog.
 
+`ScalarQuantity` stores amounts as `double`.
+
 Temperature quantities default to points on a scale. Pass `isPoint: false` to the
 `ScalarQuantity` constructor for a temperature difference. Subtracting two points
 produces a difference. Adding a difference to a point produces a point.

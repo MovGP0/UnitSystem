@@ -1,15 +1,15 @@
 ﻿namespace UnitSystem.Quantities;
 
 /// <summary>
-/// Represents a scalar measurement or a point on an affine scale.
+/// Represents a double-precision measurement or a point on an affine scale.
 /// </summary>
-public sealed partial class ScalarQuantity : Quantity<double>
+public sealed partial class ScalarQuantity
 {
     /// <summary>
     /// Creates a quantity. Units in an affine dimension, including kelvin, construct points by default.
     /// </summary>
     public ScalarQuantity(double amount, Unit unit)
-        : base(amount, unit)
+        : this(amount, unit, unit.SupportsPoints)
     {
     }
 
@@ -18,21 +18,46 @@ public sealed partial class ScalarQuantity : Quantity<double>
     /// Use <c>false</c> for intervals such as a change of ten degrees Celsius.
     /// </summary>
     public ScalarQuantity(double amount, Unit unit, bool isPoint)
-        : base(amount, unit, isPoint)
+        : this(amount, unit, isPoint, unit.System.MakeCoherent(unit), unit.ToCoherent(amount, isPoint))
     {
     }
 
-    private ScalarQuantity(double amount, Unit unit, Quantity<double> coherent)
-        : base(amount, unit, coherent)
+    private ScalarQuantity(double amount, Unit unit, bool isPoint, Unit coherentUnit, double coherentAmount)
     {
+        Amount = amount;
+        Unit = unit;
+        IsPoint = isPoint;
+        CoherentUnit = coherentUnit;
+        CoherentAmount = coherentAmount;
     }
 
-    /// <inheritdoc />
-    [Pure]
-    protected override Quantity<double> CreateQuantity(double amount, Unit unit, Quantity<double> coherent)
-        => new ScalarQuantity(amount, unit, coherent);
+    /// <summary>
+    /// Gets the amount in <see cref="Unit"/>.
+    /// </summary>
+    public double Amount { get; }
 
-    /// <inheritdoc cref="Quantity{T}.Convert(Unit)"/>
+    /// <summary>
+    /// Gets the unit of the amount.
+    /// </summary>
+    public Unit Unit { get; }
+
+    /// <summary>
+    /// Gets whether the quantity represents a point on an affine scale, such as a temperature reading.
+    /// </summary>
+    public bool IsPoint { get; }
+
+    internal double CoherentAmount { get; }
+    internal Unit CoherentUnit { get; }
+
+    /// <summary>
+    /// Converts the quantity to a compatible unit, preserving its point or difference semantics.
+    /// </summary>
     [Pure]
-    new public ScalarQuantity Convert(Unit unit) => (ScalarQuantity)base.Convert(unit);
+    public ScalarQuantity Convert(Unit unit)
+    {
+        Check.UnitsAreSameDimension(Unit, unit);
+        if (Unit == unit) return this;
+
+        return new ScalarQuantity(unit.FromCoherent(CoherentAmount, IsPoint), unit, IsPoint, CoherentUnit, CoherentAmount);
+    }
 }

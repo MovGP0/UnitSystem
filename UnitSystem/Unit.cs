@@ -1,5 +1,4 @@
 using UnitSystem.Dimensions;
-using UnitSystem.Quantities;
 
 namespace UnitSystem;
 
@@ -64,16 +63,16 @@ public abstract partial class Unit : IEquatable<Unit>
 
     internal bool SupportsPoints => !IsAbsoluteUnit || System is UnitSystem system && system.IsAffineDimension(Dimension);
 
-    internal T ToCoherent<T>(T amount, bool isPoint) where T : struct
+    internal double ToCoherent(double amount, bool isPoint)
     {
-        var scaled = Factor.Equals(1.0) ? amount : amount.Multiply(Factor);
-        return isPoint && !IsAbsoluteUnit ? scaled.Add(Offset) : scaled;
+        var scaled = amount * Factor;
+        return isPoint && !IsAbsoluteUnit ? scaled + Offset : scaled;
     }
 
-    internal T FromCoherent<T>(T amount, bool isPoint) where T : struct
+    internal double FromCoherent(double amount, bool isPoint)
     {
-        var shifted = isPoint && !IsAbsoluteUnit ? amount.Subtract(Offset) : amount;
-        return Factor.Equals(1.0) ? shifted : shifted.Divide(Factor);
+        var shifted = isPoint && !IsAbsoluteUnit ? amount - Offset : amount;
+        return shifted / Factor;
     }
 
     /// <summary>

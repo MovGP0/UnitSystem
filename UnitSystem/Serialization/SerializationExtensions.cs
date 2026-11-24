@@ -33,13 +33,11 @@ public static class SerializationExtensions
     }
 
     /// <summary>
-    /// Serializes an <see cref="Quantity{T}"/> into a <see cref="QuantityInfo{T}"/>.
+    /// Serializes a <see cref="ScalarQuantity"/> into a <see cref="QuantityInfo{Double}"/>.
     /// </summary>
-    /// <typeparam name="T">The type of the quantity amount.</typeparam>
     /// <param name="scalarQuantity">The quantity to serialize.</param>
-    /// <returns>A <see cref="QuantityInfo{T}"/> representing the serialized quantity.</returns>
-    public static QuantityInfo<T> ToInfo<T>(this Quantity<T> scalarQuantity)
-        where T : struct
+    /// <returns>The canonical amount and unit components.</returns>
+    public static QuantityInfo<double> ToInfo(this ScalarQuantity scalarQuantity)
     {
         var coherentUnit = scalarQuantity.CoherentUnit;
         var units = coherentUnit.System.BaseUnits
@@ -47,7 +45,7 @@ public static class SerializationExtensions
             .Where(component => component.Exponent != 0)
             .ToDictionary(component => component.Symbol, component => component.Exponent);
 
-        return new QuantityInfo<T>(scalarQuantity.CoherentAmount, units,
+        return new QuantityInfo<double>(scalarQuantity.CoherentAmount, units,
             scalarQuantity.IsPoint || scalarQuantity.Unit.SupportsPoints || coherentUnit.SupportsPoints
                 ? scalarQuantity.IsPoint
                 : null);
