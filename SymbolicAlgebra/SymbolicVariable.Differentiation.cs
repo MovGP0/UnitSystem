@@ -417,7 +417,7 @@ public partial class SymbolicVariable
             }
         }
 
-        result = AdjustSpecialFunctions(result);
+        result = AdjustSpecialFunctions(result.RequireExpression());
 
         AdjustZeroPowerTerms(result);
 

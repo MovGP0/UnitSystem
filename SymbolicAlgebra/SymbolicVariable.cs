@@ -1593,10 +1593,8 @@ public partial class SymbolicVariable
     /// This function is mainly taking the sqrt(x)^2 and product x  instead of it.
     /// </summary>
     /// <param name="sv"></param>
-    private static SymbolicVariable AdjustSpecialFunctions(SymbolicVariable? sv)
+    private static SymbolicVariable AdjustSpecialFunctions(SymbolicVariable sv)
     {
-        ArgumentNullException.ThrowIfNull(sv);
-
         // if you found sqrt(x)^2 get the parameter of the function
 
         var aterms = sv._AddedTerms;

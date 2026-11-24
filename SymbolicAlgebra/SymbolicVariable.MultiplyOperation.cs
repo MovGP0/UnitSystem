@@ -385,7 +385,7 @@ public partial class SymbolicVariable
             total = Add(total, TargetTermSubTotal);
         }
 
-        total = AdjustSpecialFunctions(total);
+        total = AdjustSpecialFunctions(total.RequireExpression());
         AdjustZeroPowerTerms(total);
 
         AdjustZeroCoeffecientTerms(ref total);

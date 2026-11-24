@@ -692,7 +692,7 @@ dotnet_diagnostic.RCS1254.severity = warning
 # dotnet_diagnostic.RCS1255.severity = none
 
 # Invalid argument null check
-# dotnet_diagnostic.RCS1256.severity = warning
+dotnet_diagnostic.RCS1256.severity = warning
 
 # Use enum field explicitly
 # dotnet_diagnostic.RCS1257.severity = warning
