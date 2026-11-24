@@ -630,13 +630,11 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public Token MergeMultipleWordTokens(params Type[] tokenClassesTypes)
     {
-#if NET35
-            if (tokenClassesTypes == null) throw new ArgumentException("Null parameters");
-            if (tokenClassesTypes.Length < 1) throw new ArgumentException("No parameter passed");
-#else
-        Contract.Requires(tokenClassesTypes != null);
-        Contract.Requires(tokenClassesTypes.Length > 0);
-#endif
+        ArgumentNullException.ThrowIfNull(tokenClassesTypes);
+        if (tokenClassesTypes.Length == 0)
+        {
+            throw new ArgumentException("At least one token class is required.", nameof(tokenClassesTypes));
+        }
 
         List<TokenClass> tokenClasses = new List<TokenClass>(tokenClassesTypes.Length);
         foreach(var tt in tokenClassesTypes)

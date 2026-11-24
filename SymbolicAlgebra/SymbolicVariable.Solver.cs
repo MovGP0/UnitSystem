@@ -14,7 +14,7 @@ public partial class SymbolicVariable
             return 0;
         }
 
-        return Solve(InvolvedSymbols[0]).Coeffecient;
+        return Solve(InvolvedSymbols[0]).RequireExpression().Coeffecient;
     }
 
     /// <summary>

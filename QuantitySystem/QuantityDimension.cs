@@ -153,7 +153,7 @@ public sealed partial class QuantityDimension
             }
 
             //make sure not to include Dimensionless quantities due to they are F0L0T0
-            if (quantityType.BaseType.Name == typeof(DimensionlessQuantity<>).Name)
+            if (quantityType.BaseType?.Name == typeof(DimensionlessQuantity<>).Name)
             {
                 continue;
             }
@@ -274,7 +274,7 @@ public sealed partial class QuantityDimension
             // if key not found and quantityType is really Quantity
             // then return dimensionless Quantity
 
-            if (quantityType.BaseType.GetGenericTypeDefinition() == typeof(DimensionlessQuantity<>))
+            if (quantityType.BaseType is { IsGenericType: true } baseType && baseType.GetGenericTypeDefinition() == typeof(DimensionlessQuantity<>))
             {
                 return Dimensionless;
             }

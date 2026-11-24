@@ -392,10 +392,12 @@ public partial class QsFunction
                 return true;
             }
 
-            var thisDebugView = ExpressionDebugView.GetValue(_FunctionExpression.Body) as string;
-            var funcDebugView = ExpressionDebugView.GetValue(func._FunctionExpression.Body) as string;
+            var debugView = ExpressionDebugView
+                ?? throw new NotSupportedException("Expression debug views are unavailable on this runtime.");
+            var thisDebugView = debugView.GetValue(_FunctionExpression.Body) as string;
+            var funcDebugView = debugView.GetValue(func._FunctionExpression.Body) as string;
 
-            return thisDebugView.Equals(funcDebugView);
+            return string.Equals(thisDebugView, funcDebugView, StringComparison.Ordinal);
         }
 
         return false;
@@ -466,7 +468,8 @@ public partial class QsFunction
                 sc.Append("{ ");
                 foreach (var c in vcs)
                 {
-                    var nsv = SymbolicVariable.Parse(c);
+                    var nsv = SymbolicVariable.Parse(c)
+                        ?? throw new QsException("Cannot differentiate an empty vector component.");
                     var times = (int)dsv.SymbolPower;
                     while (times > 0)
                     {

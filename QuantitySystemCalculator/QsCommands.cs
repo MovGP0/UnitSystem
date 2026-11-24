@@ -193,22 +193,24 @@ public static class QsCommands
         Console.ForegroundColor = ForegroundColor;
     }
 
+    private static string GetVersion(Assembly assembly)
+        => assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version
+            ?? assembly.GetName().Version?.ToString()
+            ?? "unknown";
+
     internal static void PrintCopyright()
     {
         Console.ForegroundColor = HelpColor;
 
-        var libVer = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(QuantitySystem.QuantityDimension)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
+        var libVer = GetVersion(typeof(QuantitySystem.QuantityDimension).Assembly);
+        var qscVer = GetVersion(typeof(Qs.Qs).Assembly);
+        var symbVer = GetVersion(typeof(SymbolicAlgebra.SymbolicVariable).Assembly);
+        var calcVer = GetVersion(typeof(QsCommands).Assembly);
 
-        var qscVer = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(Qs.Qs)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
-
-        var symbVer = (AssemblyFileVersionAttribute)Assembly.GetAssembly(typeof(SymbolicAlgebra.SymbolicVariable)).GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
-
-        var calcVer = (AssemblyFileVersionAttribute)Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
-
-        Console.WriteLine("Quantity System Framework  ver " + libVer.Version);
-        Console.WriteLine("Quantity System DLR        ver " + qscVer.Version);
-        Console.WriteLine("Symbolic Algebra Library   ver " + symbVer.Version);
-        Console.WriteLine("Quantity System Calculator ver " + calcVer.Version);
+        Console.WriteLine("Quantity System Framework  ver " + libVer);
+        Console.WriteLine("Quantity System DLR        ver " + qscVer);
+        Console.WriteLine("Symbolic Algebra Library   ver " + symbVer);
+        Console.WriteLine("Quantity System Calculator ver " + calcVer);
 
         var qscCwr = Assembly
             .GetEntryAssembly()
@@ -360,7 +362,7 @@ public static class QsCommands
         foreach (var var in GetVariablesKeys())
         {
             var v = GetVariable(var);
-            Console.WriteLine("    " + var + " = " + v.ToString());
+            Console.WriteLine("    " + var + " = " + (v?.ToString() ?? "nil"));
             if (v is QsNamespace)
             {
                 var ns = (QsNamespace)v;
@@ -430,9 +432,12 @@ public static class QsCommands
                 var symbol = "<" + ua.Symbol + ">";
                 symbol = symbol.PadRight(10);
 
-                var system = utype.Namespace.Substring("QuantitySystem.Units".Length + 1).PadRight(18);
-
-                var qtype = ua.QuantityType.ToString().Substring(ua.QuantityType.Namespace.Length + 1).TrimEnd("`1[T]".ToCharArray());
+                const string unitsNamespace = "QuantitySystem.Units.";
+                var unitNamespace = utype.Namespace ?? string.Empty;
+                var system = unitNamespace.StartsWith(unitsNamespace, StringComparison.Ordinal)
+                    ? unitNamespace[unitsNamespace.Length..].PadRight(18)
+                    : unitNamespace.PadRight(18);
+                var qtype = ua.QuantityType.Name.TrimEnd('`', '1');
 
                 if (string.IsNullOrEmpty(quantity))
                 {

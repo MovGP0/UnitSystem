@@ -58,14 +58,14 @@ public partial class SymbolicVariable
         {
             var basicterm = rr.Clone();
 
-            var FCConstants = basicterm._FusedConstants;
+            var FCConstants = basicterm.FusedConstants;
 
             // Key  is the coefficient
             //  value contains the power  which always will be symbolic power or null
             foreach (var FC in FCConstants)
             {
                 var CoeffecientOnly = new SymbolicVariable("");
-                CoeffecientOnly._CoeffecientPowerTerm = FC.Value.SymbolicVariable.Clone();
+                CoeffecientOnly._CoeffecientPowerTerm = FC.Value.SymbolicVariable?.Clone();
                 CoeffecientOnly.Coeffecient = FC.Key;
 
                 MultipliedTerms.Add(new MultipliedTerm(CoeffecientOnly));
@@ -76,7 +76,7 @@ public partial class SymbolicVariable
         {
             var basicterm = rr.Clone();
 
-            var FSymbols = basicterm._FusedSymbols;
+            var FSymbols = basicterm.FusedSymbols;
 
             // Key  is the coefficient
             //  value contains the power  which always will be symbolic power or null

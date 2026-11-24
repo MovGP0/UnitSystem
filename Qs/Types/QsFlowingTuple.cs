@@ -89,7 +89,7 @@ public class QsFlowingTuple : QsValue
 
             if (s.Value != null)
             {
-                sb.Append(ValueToQsValue(s.Value).ToShortString());
+                sb.Append(ValueToQsValue(s.Value)?.ToShortString() ?? "nil");
             }
             else
             {
@@ -222,7 +222,7 @@ public class QsFlowingTuple : QsValue
                 if (
                     ThisFlow.FlowSteps[ix].Name.Equals(ft.ThisFlow.FlowSteps[ix].Name, StringComparison.OrdinalIgnoreCase) == false
                         || ThisFlow.FlowSteps[ix].Id != ft.ThisFlow.FlowSteps[ix].Id
-                        || ThisFlow.FlowSteps[ix].Value.Equals(ft.ThisFlow.FlowSteps[ix].Value) == false
+                        || !Equals(ThisFlow.FlowSteps[ix].Value, ft.ThisFlow.FlowSteps[ix].Value)
                 )
                 {
                     return false;
@@ -332,7 +332,7 @@ public class QsFlowingTuple : QsValue
         }
         // or get the integer number from this parameter and get the value associated of this step index
 
-        var ix = (int)((QsScalar?)indices[0].QsNativeValue).NumericalQuantity.Value;
+        var ix = indices[0].GetScalarIndex();
         if (ix < 0)
         {
             ix = ThisFlow.FlowSteps.Length + ix;

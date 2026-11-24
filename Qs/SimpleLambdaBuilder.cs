@@ -53,9 +53,10 @@ class SimpleLambdaBuilder(string functionName, Type type)
     private static Type GetLambdaType(Type returnType, IList<ParameterExpression> parameterList)
     {
         ArgumentNullException.ThrowIfNull(returnType);
+        ArgumentNullException.ThrowIfNull(parameterList);
 
         var action = returnType == typeof(void);
-        var paramCount = parameterList == null ? 0 : parameterList.Count;
+        var paramCount = parameterList.Count;
 
         Type[] typeArgs = new Type[paramCount + (action ? 0 : 1)];
         for (var i = 0; i < paramCount; i++)

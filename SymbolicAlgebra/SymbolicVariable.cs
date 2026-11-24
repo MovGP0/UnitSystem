@@ -115,6 +115,9 @@ public partial class SymbolicVariable
     private string[] _RawFunctionParameters;
 
     public SymbolicVariable[]? FunctionParameters => _FunctionParameters;
+
+    internal SymbolicVariable[] FunctionArguments => _FunctionParameters ?? [];
+
     public string[] RawFunctionParameters => _RawFunctionParameters;
 
     private readonly string _FunctionName;
@@ -283,7 +286,7 @@ public partial class SymbolicVariable
                                     if (_FunctionParameters[0].FunctionName.Equals("exp", StringComparison.OrdinalIgnoreCase))
                                     {
                                         // take the inner of exp and put it as a symbolic variable
-                                        ReplaceCurrentValuesWith(_FunctionParameters[0]._FunctionParameters[0]);
+                                        ReplaceCurrentValuesWith(_FunctionParameters[0].FunctionArguments[0]);
 
                                         _FunctionParameters = null;
                                     }
@@ -410,9 +413,9 @@ public partial class SymbolicVariable
                     else
                     {
                         Symbol = _FunctionName + "(";
-                        for (var i = 0; i < _FunctionParameters.Length; i++)
+                        foreach (var argument in FunctionArguments)
                         {
-                            Symbol += _FunctionParameters[i].ToString() + ",";
+                            Symbol += argument.ToString() + ",";
                         }
 
                         if (Symbol.EndsWith(","))
@@ -462,7 +465,7 @@ public partial class SymbolicVariable
 
         var iparms = string.Empty;
 
-        foreach (var p in _FunctionParameters)
+        foreach (var p in FunctionArguments)
         {
             Symbol += p.ToString() + ",";
             iparms += p.ToString() + ",";
@@ -714,7 +717,7 @@ public partial class SymbolicVariable
 
         if (powerTerm != null)
         {
-            var powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).ToString() : powerTerm.ToString();
+            var powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).RequireExpression().ToString() : powerTerm.ToString();
             if (powerTermText.Length > 1)
             {
                 result = variableName + "^(" + powerTermText + ")";
@@ -806,7 +809,7 @@ public partial class SymbolicVariable
 
         if (powerTerm != null)
         {
-            var powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).ToString() : powerTerm.ToString();
+            var powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).RequireExpression().ToString() : powerTerm.ToString();
 
             if (powerTermText.Length > 1)
             {
@@ -860,6 +863,10 @@ public partial class SymbolicVariable
     {
         var fs = FusedSymbols.ElementAt(i);
         var ft = Parse(fs.Key);
+        if (ft is null)
+        {
+            return null;
+        }
 
         if (fs.Value.SymbolicVariable != null)
         {
@@ -1185,7 +1192,7 @@ public partial class SymbolicVariable
             if (_CoeffecientPowerTerm != null)
             {
                 // coeffecient part  like 3^x  {remember coeffecient may be raised to symbol}
-                if (CoeffecientPowerTerm.IsMultiValue || CoeffecientPowerTerm.IsMultiTerm)
+                if (_CoeffecientPowerTerm.IsMultiValue || _CoeffecientPowerTerm.IsMultiTerm)
                 {
                     rr = rr + "^(" + CoeffecientPowerText + ")";
                 }
@@ -1552,7 +1559,7 @@ public partial class SymbolicVariable
         if (IsMultiTerm && sv.IsMultiTerm)
         {
             // make sure added terms are equal in count.
-            if (_AddedTerms.Count == sv._AddedTerms.Count && _AddedTerms.Count > 0)
+            if (_AddedTerms is { Count: > 0 } addedTerms && addedTerms.Count == sv._AddedTerms?.Count)
             {
                 //ok there are another tests to be done.
                 var EqualTerms = 0;
@@ -1639,7 +1646,7 @@ public partial class SymbolicVariable
         {
             var parameterPower = 0.5 * sv.SymbolPower;
 
-            var newvalue = sv._FunctionParameters[0].Power(parameterPower)
+            var newvalue = sv.FunctionArguments[0].Power(parameterPower)
                 ?? throw new SymbolicException("The square-root argument could not be raised to its power.");
             newvalue.Coeffecient *= sv.Coeffecient;
 

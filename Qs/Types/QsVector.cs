@@ -74,7 +74,7 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     /// <returns></returns>
     public QsScalar Magnitude()
     {
-        var v_dot_v = DotProductOperation(this) as QsScalar;
+        var v_dot_v = (QsScalar)DotProductOperation(this);
 
         var sqrt_v_dot_v = v_dot_v.PowerScalar("0.5".ToScalar());
 

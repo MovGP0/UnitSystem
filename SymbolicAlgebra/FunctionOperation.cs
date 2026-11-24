@@ -115,9 +115,9 @@ internal static class FunctionOperation
     /// <exception cref="SymbolicException"></exception>
     public static SymbolicVariable? DiffInversedTrigFunction(SymbolicVariable fv, string parameter)
     {
-        var pa = fv.FunctionParameters[0];
+        var pa = fv.FunctionArguments[0];
 
-        var ps = SymbolicVariable.Multiply(pa, pa);
+        var ps = SymbolicVariable.Multiply(pa, pa).RequireExpression();
 
         var func = fv.FunctionName;
 
@@ -198,9 +198,9 @@ internal static class FunctionOperation
 
         var spara = new SymbolicVariable(parameter);
 
-        var pa =  fv.FunctionParameters[0];
+        var pa =  fv.FunctionArguments[0];
 
-        var divo = SymbolicVariable.Divide(pa, spara);
+        var divo = SymbolicVariable.Divide(pa, spara).RequireExpression();
 
         SymbolicVariable? result = null;
 
@@ -275,45 +275,45 @@ internal static class FunctionOperation
 
         var spara = new SymbolicVariable(parameter);
 
-        var pa = fv.FunctionParameters[0];
+        var pa = fv.FunctionArguments[0];
 
-        var divo = SymbolicVariable.Divide(pa, spara);
+        var divo = SymbolicVariable.Divide(pa, spara).RequireExpression();
 
         SymbolicVariable? result = null;
 
         if (string.Equals(func, "asin", StringComparison.OrdinalIgnoreCase))
         {
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa.ToString()}*asin({pa.ToString()})+sqrt(1-{pa2.ToString()})");
         }
         else if (string.Equals(func, "acos", StringComparison.OrdinalIgnoreCase))
         {
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa.ToString()}*acos({pa.ToString()})-sqrt(1-{pa2.ToString()})");
         }
         else if (string.Equals(func, "atan", StringComparison.OrdinalIgnoreCase))
         {
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa.ToString()}*atan({pa.ToString()})-log({pa2.ToString()}+1)/2");
         }
         else if (string.Equals(func, "asinh", StringComparison.OrdinalIgnoreCase))
         {
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa.ToString()}*asinh({pa.ToString()})-sqrt({pa2.ToString()}+1)");
         }
         else if (string.Equals(func, "acosh", StringComparison.OrdinalIgnoreCase))
         {
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa.ToString()}*acosh({pa.ToString()})-sqrt({pa2.ToString()}-1)");
         }
         else if (string.Equals(func, "atanh", StringComparison.OrdinalIgnoreCase))
         {
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa.ToString()}*atan({pa.ToString()})-log(1-{pa2.ToString()})/2");
         }
@@ -323,7 +323,7 @@ internal static class FunctionOperation
 
             //(x*y*asec(x*y)-log(sqrt(1-1/(x^2*y^2))+1)/2+log(1-sqrt(1-1/(x^2*y^2)))/2)/y
 
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa}*asec({pa})-log(sqrt(1-1/({pa2}))+1)/2+log(1-sqrt(1-1/({pa2})))/2");
         }
@@ -331,7 +331,7 @@ internal static class FunctionOperation
         {
             //(x*y*acsc(x*y)+log(sqrt(1-1/(x^2*y^2))+1)/2-log(1-sqrt(1-1/(x^2*y^2)))/2)/y
 
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa}*acsc({pa})+log(sqrt(1-1/({pa2}))+1)/2-log(1-sqrt(1-1/({pa2})))/2");
         }
@@ -339,7 +339,7 @@ internal static class FunctionOperation
         {
             //(log(x^2*y^2+1)/2+x*y*acot(x*y))/y
 
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa}*acot({pa})+(log({pa2}+1)/2");
         }
@@ -347,7 +347,7 @@ internal static class FunctionOperation
         {
             //(x*y*asech(x*y)-atan(sqrt(1/(x^2*y^2)-1)))/y
 
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa}*asech({pa})-atan(sqrt(1/({pa2})-1))");
         }
@@ -355,7 +355,7 @@ internal static class FunctionOperation
         {
             //(x*y*acsch(x*y)+log(sqrt(1/(x^2*y^2)+1)+1)/2-log(sqrt(1/(x^2*y^2)+1)-1)/2)/y
 
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa}*acsch({pa})+log(sqrt(1/({pa2})+1)+1)/2-log(1-sqrt(1/({pa2})+1)-1)/2");
         }
@@ -363,7 +363,7 @@ internal static class FunctionOperation
         {
             //(log(1-x^2*y^2)/2+x*y*acoth(x*y))/y
 
-            var pa2 = pa.Power(2);
+            var pa2 = pa.Power(2).RequireExpression();
 
             result = SymbolicVariable.Parse($"{pa}*acoth({pa})+(log(1-{pa2})/2");
         }

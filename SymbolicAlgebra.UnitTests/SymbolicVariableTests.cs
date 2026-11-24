@@ -45,7 +45,7 @@ public static class SymbolicVariableTests
             var ooo = SymbolicVariable.FactorWithCommonFactor(variable!);
 
             // assert
-            ooo.ToString().ShouldBe("x*(x+1)");
+            ooo.ShouldNotBeNull().ToString().ShouldBe("x*(x+1)");
         }
     }
 
@@ -64,7 +64,7 @@ public static class SymbolicVariableTests
             var symbolicExpression = SymbolicVariable.Parse(expression);
 
             // act
-            var integratedExpression = symbolicExpression.Integrate(variable);
+            var integratedExpression = symbolicExpression.ShouldNotBeNull().Integrate(variable);
 
             // assert
             integratedExpression.ToString().ShouldBe(expectedResult);
@@ -106,7 +106,7 @@ public static class SymbolicVariableTests
             var v = SymbolicVariable.Parse("z*x/(x^2+y^2+z^2)^(1.5)");
 
             // assert
-            v.ToString().ShouldBe("z*x/(x^2+y^2+z^2)^(1.5)");
+            v.ShouldNotBeNull().ToString().ShouldBe("z*x/(x^2+y^2+z^2)^(1.5)");
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ public static class SymbolicVariableTests
             var result = SymbolicVariable.Parse("-Sin(x)^2");
 
             // assert
-            result.ToString().ShouldBe("-Sin(x)^2");
+            result.ShouldNotBeNull().ToString().ShouldBe("-Sin(x)^2");
         }
 
         [TestCase("4*x^-(h^6-4*x^2)", "4*x^(-h^6+4*x^2)")]
@@ -130,7 +130,7 @@ public static class SymbolicVariableTests
             var symbolicExpression = SymbolicVariable.Parse(expression);
 
             // assert
-            symbolicExpression.ToString().ShouldBe(expectedResult);
+            symbolicExpression.ShouldNotBeNull().ToString().ShouldBe(expectedResult);
         }
 
         [TestCase("y^2/x^4/(y^4/x^4+2*y^2/x^2+1)", "y^2/x^4/(y^4/x^4+2*y^2/x^2+1)")]
@@ -140,7 +140,7 @@ public static class SymbolicVariableTests
             var result = SymbolicVariable.Parse(expression);
 
             // assert
-            result.ToString().ShouldBe(expectedResult);
+            result.ShouldNotBeNull().ToString().ShouldBe(expectedResult);
         }
 
         [Ignore("Test is not working in original version either")]
@@ -153,7 +153,7 @@ public static class SymbolicVariableTests
             var result = SymbolicVariable.Parse(expression);
 
             // assert
-            result.ToString().ShouldBe(expectedResult);
+            result.ShouldNotBeNull().ToString().ShouldBe(expectedResult);
         }
     }
 
@@ -169,7 +169,7 @@ public static class SymbolicVariableTests
             var variable = SymbolicVariable.Parse(expression);
 
             // act
-            var result = variable.Solve();
+            var result = variable.ShouldNotBeNull().Solve();
 
             // assert
             result.ShouldBe(expected);
@@ -187,10 +187,10 @@ public static class SymbolicVariableTests
             var symbolicExpression = SymbolicVariable.Parse(expression);
 
             // act
-            var solvedExpression = symbolicExpression.Solve(variableToSolveFor);
+            var solvedExpression = symbolicExpression.ShouldNotBeNull().Solve(variableToSolveFor);
 
             // assert
-            solvedExpression.ToString().ShouldBe(expectedResult);
+            solvedExpression.ShouldNotBeNull().ToString().ShouldBe(expectedResult);
         }
     }
 
@@ -267,7 +267,7 @@ public static class SymbolicVariableTests
             var simplifiedExpression = SymbolicVariable.TrigSimplify(symbolicExpression!);
 
             // assert
-            simplifiedExpression.ToString().ShouldBe(expectedResult);
+            simplifiedExpression.ShouldNotBeNull().ToString().ShouldBe(expectedResult);
         }
 
         [TestCase("cos(x)^2+sin(x)^2", "1")]
@@ -285,7 +285,7 @@ public static class SymbolicVariableTests
             var simplified = SymbolicVariable.TrigSimplify(test);
 
             // assert
-            simplified.ToString().ShouldBe(expectedOutput);
+            simplified.ShouldNotBeNull().ToString().ShouldBe(expectedOutput);
         }
     }
 
@@ -297,7 +297,7 @@ public static class SymbolicVariableTests
         {
             var term = _x - _y + _z;
             var result = term * _one;
-            result.ToString().ShouldBe("x-y+z");
+            result.ShouldNotBeNull().ToString().ShouldBe("x-y+z");
         }
 
         [Test]
@@ -305,7 +305,7 @@ public static class SymbolicVariableTests
         {
             var term = _x - _y + _z;
             var result = _one * term;
-            result.ToString().ShouldBe("x-y+z");
+            result.ShouldNotBeNull().ToString().ShouldBe("x-y+z");
         }
     }
 
@@ -320,7 +320,7 @@ public static class SymbolicVariableTests
             var ii = SymbolicVariable.Parse("Int(x)");
 
             // act
-            var actual = ii.Execute(3.0/4.0);
+            var actual = ii.ShouldNotBeNull().Execute(3.0/4.0);
 
             // assert
             actual.ShouldBe(0);
@@ -342,7 +342,7 @@ public static class SymbolicVariableTests
             var iif = SymbolicVariable.Parse(expression);
 
             // act
-            var result = iif.Execute(inputValue);
+            var result = iif.ShouldNotBeNull().Execute(inputValue);
 
             // assert
             result.ShouldBe(expectedOutput);
@@ -379,8 +379,8 @@ public static class SymbolicVariableTests
 
             // Assert
             "result".ShouldSatisfyAllConditions(
-                () => a.ToString().ShouldBe("x^2+2*y*x+y^2"),
-                () => a2.ToString().ShouldBe("x^2-y^2"),
+                () => a.ShouldNotBeNull().ToString().ShouldBe("x^2+2*y*x+y^2"),
+                () => a2.ShouldNotBeNull().ToString().ShouldBe("x^2-y^2"),
                 () => r.ToString().ShouldBe("2*y^2*x"),
                 () => mx2.ToString().ShouldBe("2*y^2*x-0.5*y*x"),
                 () => pr.ToString().ShouldBe("2*y^3/x"),
@@ -389,10 +389,10 @@ public static class SymbolicVariableTests
                 () => tr.ToString().ShouldBe("y^2*x-1.5*y*x"),
                 () => nx.ToString().ShouldBe("y^2*x-2.5*y*x"),
                 () => nx2.ToString().ShouldBe("-y^2*x-2.5*y*x"),
-                () => tx.ToString().ShouldBe("y^2*x-3*y*x"),
-                () => ll2.ToString().ShouldBe("3/y*x"),
+                () => tx.ShouldNotBeNull().ToString().ShouldBe("y^2*x-3*y*x"),
+                () => ll2.ShouldNotBeNull().ToString().ShouldBe("3/y*x"),
                 () => ll.ToString().ShouldBe("3/y"),
-                () => h.ToString().ShouldBe("1.5+y/x"),
+                () => h.ShouldNotBeNull().ToString().ShouldBe("1.5+y/x"),
                 () => mx.ToString().ShouldBe("y^2*x-0.5*y*x"));
         }
     }
@@ -409,7 +409,7 @@ public static class SymbolicVariableTests
             var v = SymbolicVariable.Parse("acos(x^2+y^2)");
 
             // act
-            var result = v.Differentiate("x");
+            var result = v.ShouldNotBeNull().Differentiate("x");
 
             // assert
             result.ToString().ShouldBe("-2*x/sqrt(1-x^4-2*y^2*x^2-y^4)");
@@ -424,7 +424,7 @@ public static class SymbolicVariableTests
             var v = SymbolicVariable.Parse("acos(z/sqrt(x^2+y^2+z^2))");
 
             // act
-            var result = v.Differentiate("x");
+            var result = v.ShouldNotBeNull().Differentiate("x");
 
             // assert
             result.ToString().ShouldBe("z*x/(x^2+y^2+z^2)^(1.5)/sqrt(1-z^2/(x^2+y^2+z^2))");
@@ -447,7 +447,7 @@ public static class SymbolicVariableTests
 
             var p = SymbolicVariable.Parse(expression);
 
-            p.InvolvedSymbols.ShouldSatisfyAllConditions(
+            p.ShouldNotBeNull().InvolvedSymbols.ShouldSatisfyAllConditions(
                 () => p.InvolvedSymbols.Length.ShouldBe(expectedCount),
                 () => p.InvolvedSymbols.ShouldBe(symbols)
             );
@@ -457,10 +457,10 @@ public static class SymbolicVariableTests
         public void TestInvolvedSymbolsExtraction()
         {
             var b = 2 * _u * _w + _v + _w;
-            var tv2 = (_x + _y + _z).RaiseToSymbolicPower(b);
-            var tv4 = tv2.RaiseToSymbolicPower(3 * _x);
+            var tv2 = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(b);
+            var tv4 = tv2.ShouldNotBeNull().RaiseToSymbolicPower(3 * _x);
 
-            string[] gg = tv4.InvolvedSymbols;
+            string[] gg = tv4.ShouldNotBeNull().InvolvedSymbols;
 
             gg.ShouldSatisfyAllConditions(
                 () => gg[0].ShouldBe("u"),
@@ -479,7 +479,7 @@ public static class SymbolicVariableTests
             var pp = o.RaiseToSymbolicPower(_x);
 
             // act
-            string[] ppP = pp.InvolvedSymbols;
+            string[] ppP = pp.ShouldNotBeNull().InvolvedSymbols;
 
             // assert
             ppP.ShouldSatisfyAllConditions(
@@ -509,7 +509,7 @@ public static class SymbolicVariableTests
             var tv1 = _x.RaiseToSymbolicPower(b);
 
             // assert
-            tv1.ToString().ShouldBe("x^(2*u*w+v+w)");
+            tv1.ShouldNotBeNull().ToString().ShouldBe("x^(2*u*w+v+w)");
         }
 
         [Test]
@@ -519,10 +519,10 @@ public static class SymbolicVariableTests
             var b = 2 * _u * _w + _v + _w;
 
             // act
-            var tv2 = (_x + _y + _z).RaiseToSymbolicPower(b);
+            var tv2 = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(b);
 
             // assert
-            tv2.ToString().ShouldBe("(x+y+z)^(2*u*w+v+w)");
+            tv2.ShouldNotBeNull().ToString().ShouldBe("(x+y+z)^(2*u*w+v+w)");
         }
 
         [Test]
@@ -530,13 +530,13 @@ public static class SymbolicVariableTests
         {
             // arrange
             var b = 2 * _u * _w + _v + _w;
-            var tv2 = (_x + _y + _z).RaiseToSymbolicPower(b);
+            var tv2 = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(b);
 
             // act
-            var tv4 = tv2.RaiseToSymbolicPower(3 * _x);
+            var tv4 = tv2.ShouldNotBeNull().RaiseToSymbolicPower(3 * _x);
 
             // assert
-            tv4.ToString().ShouldBe("(x+y+z)^(6*u*w*x+3*v*x+3*w*x)");
+            tv4.ShouldNotBeNull().ToString().ShouldBe("(x+y+z)^(6*u*w*x+3*v*x+3*w*x)");
         }
     }
 
@@ -549,13 +549,13 @@ public static class SymbolicVariableTests
         {
             // arrange
             var b = 2 * _u * _w + _v + _w;
-            var tv2 = (_x + _y + _z).RaiseToSymbolicPower(b);
+            var tv2 = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(b);
 
             // act
-            var tv3 = tv2.Power(2);
+            var tv3 = tv2.ShouldNotBeNull().Power(2);
 
             // assert
-            tv3.ToString().ShouldBe("(x+y+z)^(4*u*w+2*v+2*w)");
+            tv3.ShouldNotBeNull().ToString().ShouldBe("(x+y+z)^(4*u*w+2*v+2*w)");
         }
     }
 
@@ -571,7 +571,7 @@ public static class SymbolicVariableTests
             var p = _x + _x.Power(5);
 
             // assert
-            p.ToString().ShouldBe("x+x^5");
+            p.ShouldNotBeNull().ToString().ShouldBe("x+x^5");
         }
 
         [Test]
@@ -589,7 +589,7 @@ public static class SymbolicVariableTests
             var c = a + b;
 
             // assert
-            c.ToString().ShouldBe("d^r+d^(2*r)");
+            c.ShouldNotBeNull().ToString().ShouldBe("d^r+d^(2*r)");
         }
     }
 }

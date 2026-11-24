@@ -123,7 +123,7 @@ public partial class SymbolicVariable
             return sv.Clone(); //prevent simplification in case of extra terms
         }
 
-        var factorized = FactorWithCommonFactor(sv);
+        var factorized = FactorWithCommonFactor(sv).RequireExpression();
 
         var total = Zero.Clone();
 
@@ -135,30 +135,30 @@ public partial class SymbolicVariable
 
             for (var fui = 0; fui < term.FusedSymbols.Count; fui++)
             {
-                var ss = term.GetFusedTerm(fui);
+                var ss = term.GetFusedTerm(fui).RequireExpression();
                 var sp = ss;
                 if (!ss.IsOneTerm)
                 {
                     if (ss.CanBeFactored())
                     {
-                        sp = TrigSimplify(ss);
+                        sp = TrigSimplify(ss).RequireExpression();
                     }
                     else
                     {
-                        sp = PartialTrigSimplify(ss);
+                        sp = PartialTrigSimplify(ss).RequireExpression();
                     }
 
                     if (sp.IsOne)  // if equals 1  then remove it
                     {
                         // remove this fused symbol from the structure
-                        term._FusedSymbols.Remove(term.GetFusedKey(fui));
+                        term.FusedSymbols.Remove(term.GetFusedKey(fui));
                     }
                     else
                     {
                         // replace with the new value in the fused symbols.
-                        term._FusedSymbols.Add(sp.ToString(), term._FusedSymbols[term.GetFusedKey(fui)]);
+                        term.FusedSymbols.Add(sp.ToString(), term.FusedSymbols[term.GetFusedKey(fui)]);
 
-                        term._FusedSymbols.Remove(term.GetFusedKey(fui));
+                        term.FusedSymbols.Remove(term.GetFusedKey(fui));
                     }
                 }
             }
@@ -388,12 +388,12 @@ public partial class SymbolicVariable
                     else
                     {
                         // remove from the fused symbols
-                        term._FusedSymbols.Remove(ke.ToString());
+                        term.FusedSymbols.Remove(ke.ToString());
                     }
                     */
                 }
 
-                common_multipliers += term;
+                common_multipliers = Add(common_multipliers, term).RequireExpression();
             }
             else
             {
@@ -405,7 +405,7 @@ public partial class SymbolicVariable
         // at last alter the symbolic variable instant so that it contains the new shape
         foreach (var ke in Common_Factors_Keys)
         {
-            result = result * ke;
+            result = Multiply(result, ke).RequireExpression();
         }
 
         result.FusedSymbols.Add(common_multipliers.ToString(), new HybridVariable { NumericalVariable=1.0 });
@@ -533,15 +533,15 @@ public partial class SymbolicVariable
         foreach (var exTerm in terms)
         {
             var proTerm = exTerm.Clone();
-            if (exTerm._DividedTerm.ExtraTerms.Count > 0)
+            if (exTerm._DividedTerm is { } denominator && denominator.ExtraTerms.Count > 0)
             {
                 // the denominator needs to be unified also
 
-                var unif = UnifyDenominators(exTerm._DividedTerm);
+                var unif = UnifyDenominators(denominator);
 
                 proTerm._DividedTerm = unif.Numerator;
 
-                proTerm = Multiply(proTerm, unif.Denominator);
+                proTerm = Multiply(proTerm, unif.Denominator).RequireExpression();
             }
 
             // multipy the OrderedVariable divided term in the target extra term
@@ -551,7 +551,7 @@ public partial class SymbolicVariable
 
             var OrdNumerator = Multiply(proTerm.Denominator, OrderedVariable.Numerator);
 
-            OrderedVariable = Add(OrdNumerator, exNumerator);
+            OrderedVariable = Add(OrdNumerator, exNumerator).RequireExpression();
 
             OrderedVariable._DividedTerm = exDenominator;
         }

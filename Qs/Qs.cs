@@ -12,6 +12,9 @@ public static class Qs
 {
     #region Extensions and helper methods
 
+    internal static Unit RequireUnit<T>(this AnyQuantity<T> quantity)
+        => quantity.Unit ?? throw new QsException("This operation requires a quantity with a unit.");
+
     /// <summary>
     /// Force to return integer value from <see cref="AnyQuantity<double>"/>
     /// used mainly for calculated indexes for sequences.
@@ -218,7 +221,7 @@ public static class Qs
     /// <returns></returns>
     public static AnyQuantity<Complex> ToComplex(this AnyQuantity<double> qty)
     {
-        var converted = qty.Unit.GetThisUnitQuantity<Complex>(qty.Value);
+        var converted = qty.RequireUnit().GetThisUnitQuantity<Complex>(qty.Value);
         return converted;
     }
 
@@ -229,13 +232,13 @@ public static class Qs
     /// <returns></returns>
     public static AnyQuantity<Quaternion> ToQuaternion(this AnyQuantity<double> qty)
     {
-        var converted = qty.Unit.GetThisUnitQuantity<Quaternion>(qty.Value);
+        var converted = qty.RequireUnit().GetThisUnitQuantity<Quaternion>(qty.Value);
         return converted;
     }
 
     public static AnyQuantity<Rational> ToRational(this AnyQuantity<double> qty)
     {
-        var converted = qty.Unit.GetThisUnitQuantity(new Rational((float)qty.Value, 1));
+        var converted = qty.RequireUnit().GetThisUnitQuantity(new Rational((float)qty.Value, 1));
         return converted;
     }
 
@@ -246,7 +249,7 @@ public static class Qs
     /// <returns></returns>
     public static AnyQuantity<Quaternion> ToQuaternion(this AnyQuantity<Complex> qty)
     {
-        var converted = qty.Unit.GetThisUnitQuantity<Quaternion>(qty.Value);
+        var converted = qty.RequireUnit().GetThisUnitQuantity<Quaternion>(qty.Value);
         return converted;
     }
 

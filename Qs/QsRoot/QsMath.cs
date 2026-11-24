@@ -23,7 +23,7 @@ public static partial class QsMath
 
                 if (q.Dimension.IsDimensionless)
                 {
-                    var r = Math.Log(q.Value, ((QsScalar?)newBase.ParameterValue).NumericalQuantity.Value);
+                    var r = Math.Log(q.Value, newBase.GetRequiredScalar().NumericalQuantity.Value);
                     return r.ToQuantity().ToScalarValue();
                 }
 
@@ -38,7 +38,7 @@ public static partial class QsMath
                 {
                     if (var.NumericalQuantity.Dimension.IsDimensionless)
                     {
-                        var r = Math.Log(var.NumericalQuantity.Value, ((QsScalar?)newBase.ParameterValue).NumericalQuantity.Value);
+                        var r = Math.Log(var.NumericalQuantity.Value, newBase.GetRequiredScalar().NumericalQuantity.Value);
                         rv.AddComponent(r.ToQuantity().ToScalar());
                     }
                     else

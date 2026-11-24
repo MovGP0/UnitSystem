@@ -23,7 +23,7 @@ public partial class SymbolicVariable
                 //
                 var parameterpower = power * 0.5;
 
-                total = _FunctionParameters[0].Power(parameterpower);
+                total = FunctionArguments[0].Power(parameterpower);
 
                 pw = 0; // to end the loop
             }

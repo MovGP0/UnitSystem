@@ -322,7 +322,8 @@ public partial class Unit
             // I can't cast BaseQuantity to AnyQuantity<object> very annoying
             // so I used reflection.
 
-            var GIQ = m_QuantityType.GetMethod("GetInternalQuantities");
+            var GIQ = m_QuantityType.GetMethod("GetInternalQuantities")
+                ?? throw new MissingMethodException(m_QuantityType.FullName, "GetInternalQuantities");
 
             // casted the array to BaseQuantity array also
             var InternalQuantities = (BaseQuantity[]?)GIQ.Invoke(quantity, null)

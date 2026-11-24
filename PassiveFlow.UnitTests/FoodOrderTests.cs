@@ -30,6 +30,6 @@ public sealed class FoodOrderTests
         return;
 
         void Log(object? sender, StepEventArgs args)
-            => log.AppendLine(args.StepAction.ToString());
+            => log.AppendLine(args.StepAction?.ToString());
     }
 }

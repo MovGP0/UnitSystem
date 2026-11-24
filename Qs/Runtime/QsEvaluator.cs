@@ -292,25 +292,16 @@ public class QsEvaluator
             varName = m.Groups[1].Value;
             var varVal = double.Parse(m.Groups[2].Value, CultureInfo.InvariantCulture);
 
-            QsScalar? qty = null;
-
-            if (!string.IsNullOrEmpty(m.Groups[5].Value))
+            QsScalar qty;
+            try
             {
-                try
-                {
-                    //get the quantity
-
-                    qty = new QsScalar { NumericalQuantity = AnyQuantity<double>.Parse(m.Groups[6].Value) };
-
-                    //get the quantity
-
-                    qty.NumericalQuantity.Unit = Unit.DiscoverUnit(qty.NumericalQuantity);
-                }
-                catch (QuantityNotFoundException)
-                {
-                    Console.Error.WriteLine("Quantity Not Found");
-                    return null;
-                }
+                qty = new QsScalar { NumericalQuantity = AnyQuantity<double>.Parse(m.Groups[6].Value) };
+                qty.NumericalQuantity.Unit = Unit.DiscoverUnit(qty.NumericalQuantity);
+            }
+            catch (QuantityNotFoundException)
+            {
+                Console.Error.WriteLine("Quantity Not Found");
+                return null;
             }
 
             qty.NumericalQuantity.Value = varVal;
@@ -658,7 +649,8 @@ public class QsEvaluator
                                 // get the name of this variable
 
                                 var oname = seq[nsidx + 0].TokenValue;
-                                var oinstance = GetVariable(oname) as QsValue;
+                                var oinstance = GetVariable(oname) as QsValue
+                                    ?? throw new QsVariableNotFoundException($"Variable '{oname}' was not found or cannot be indexed.");
                                 var qv = new QsVar(this, line);
 
                                 oinstance.SetIndexedItem(
@@ -845,23 +837,13 @@ public class QsEvaluator
                             // the parsing to function should know the symbolic variables in the expression
                             //  and get the parameters required arranged by alphabet ofcourse
 
-                            QsScalar[]? AllComponents = null;
                             var qvType = qvResult.GetType();
-
-                            if(qvType == typeof(QsVector))
+                            var AllComponents = qvResult switch
                             {
-                                AllComponents = ((QsVector)qvResult).ToArray();
-                            }
-
-                            if (qvType == typeof(QsMatrix))
-                            {
-                                AllComponents = ((QsMatrix)qvResult).ToArray();
-                            }
-
-                            if (qvType == typeof(QsTensor))
-                            {
-                                throw new QsException("Tensor parsing to function is not supported yet");
-                            }
+                                QsVector vector => vector.ToArray(),
+                                QsMatrix matrix => matrix.ToArray(),
+                                _ => throw new QsException("Tensor parsing to function is not supported yet")
+                            };
 
                             List<string> vparameters = [];
                             foreach(var c in AllComponents)
@@ -1071,9 +1053,11 @@ public class QsEvaluator
                                 var parent = (QsObject?)parent_object
                                     ?? throw new QsException("Cannot access a property on a null value.");
 
-                                var InsidePropertyAsObject = ParentPropertyInfo.GetValue(parent.ThisObject, null);
+                                var InsidePropertyAsObject = ParentPropertyInfo.GetValue(parent.ThisObject, null)
+                                    ?? throw new QsException($"Property '{ParentPropertyInfo.Name}' has no value to index.");
                                 var InsidePropertyObjectType = InsidePropertyAsObject.GetType();
-                                var IndexerProperty = InsidePropertyObjectType.GetProperty("Item");
+                                var IndexerProperty = InsidePropertyObjectType.GetProperty("Item")
+                                    ?? throw new MissingMemberException(InsidePropertyObjectType.FullName, "Item");
 
                                 var nativeValue = Root.QsToNativeConvert(IndexerProperty.PropertyType, qvResult);
                                 IndexerProperty.SetValue(

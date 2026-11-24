@@ -105,13 +105,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         {
             case ScalarTypes.NumericalQuantity:
                 var sv
-                    = NumericalQuantity.Unit.GetThisUnitQuantity(
+                    = NumericalQuantity.RequireUnit().GetThisUnitQuantity(
                         new SymbolicVariable(NumericalQuantity.Value.ToString(CultureInfo.InvariantCulture)));
                 return sv;
 
             case ScalarTypes.RationalNumberQuantity:
                 return
-                    RationalQuantity.Unit.GetThisUnitQuantity<SymbolicVariable>(
+                    RationalQuantity.RequireUnit().GetThisUnitQuantity<SymbolicVariable>(
                         new SymbolicVariable(RationalQuantity.Value.Value.ToString(CultureInfo.InvariantCulture)));
 
             case ScalarTypes.SymbolicQuantity:
@@ -376,7 +376,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = NumericalQuantity.ToQuaternion() + scalar.QuaternionQuantity };
 
                     case ScalarTypes.RationalNumberQuantity:
-                        return new QsScalar { NumericalQuantity = NumericalQuantity + scalar.RationalQuantity.Unit.GetThisUnitQuantity(scalar.RationalQuantity.Value.Value) };
+                        return new QsScalar { NumericalQuantity = NumericalQuantity + scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(scalar.RationalQuantity.Value.Value) };
 
                     default:
                         throw new NotImplementedException(_ScalarType + " + " + scalar.ScalarType);
@@ -415,7 +415,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.RationalNumberQuantity:
                     {
-                        var result = scalar.RationalQuantity.Unit.GetThisUnitQuantity(new Complex((double)scalar.RationalQuantity.Value.Value, 0.0));
+                        var result = scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)scalar.RationalQuantity.Value.Value, 0.0));
                         result = ComplexQuantity + result;
                         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = result };
                     }
@@ -441,7 +441,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.RationalNumberQuantity:
                     {
-                        var result = scalar.RationalQuantity.Unit.GetThisUnitQuantity(new Quaternion((double)scalar.RationalQuantity.Value.Value, 0.0, 0, 0));
+                        var result = scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)scalar.RationalQuantity.Value.Value, 0.0, 0, 0));
                         result = QuaternionQuantity + result;
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = result };
                     }
@@ -470,7 +470,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                     case ScalarTypes.ComplexNumberQuantity:
                     {
                         AnyQuantity<Complex>? result = null;
-                        result = RationalQuantity.Unit.GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
+                        result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
                         result = result + scalar.ComplexQuantity;
                         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = result };
                     }
@@ -478,7 +478,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                     case ScalarTypes.QuaternionNumberQuantity:
                     {
                         AnyQuantity<Quaternion>? result = null;
-                        result = RationalQuantity.Unit.GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
+                        result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
                         result = result + scalar.QuaternionQuantity;
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = result };
                     }
@@ -512,7 +512,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = NumericalQuantity.ToQuaternion() - scalar.QuaternionQuantity };
 
                     case ScalarTypes.RationalNumberQuantity:
-                        return new QsScalar { NumericalQuantity = NumericalQuantity - scalar.RationalQuantity.Unit.GetThisUnitQuantity(scalar.RationalQuantity.Value.Value) };
+                        return new QsScalar { NumericalQuantity = NumericalQuantity - scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(scalar.RationalQuantity.Value.Value) };
 
                     default:
                         throw new NotImplementedException(_ScalarType + " + " + scalar.ScalarType);
@@ -551,7 +551,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.RationalNumberQuantity:
                     {
-                        var result = scalar.RationalQuantity.Unit.GetThisUnitQuantity(new Complex((double)scalar.RationalQuantity.Value.Value, 0.0));
+                        var result = scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)scalar.RationalQuantity.Value.Value, 0.0));
                         result = ComplexQuantity - result;
                         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = result };
                     }
@@ -574,7 +574,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.RationalNumberQuantity:
                     {
-                        var result = scalar.RationalQuantity.Unit.GetThisUnitQuantity(new Quaternion((double)scalar.RationalQuantity.Value.Value, 0.0, 0, 0));
+                        var result = scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)scalar.RationalQuantity.Value.Value, 0.0, 0, 0));
                         result = QuaternionQuantity - result;
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = result };
                     }
@@ -602,14 +602,14 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.ComplexNumberQuantity:
                     {
-                        var result = RationalQuantity.Unit.GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
+                        var result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
                         result = result - scalar.ComplexQuantity;
                         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = result };
                     }
 
                     case ScalarTypes.QuaternionNumberQuantity:
                     {
-                        var result = RationalQuantity.Unit.GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
+                        var result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
                         result = result - scalar.QuaternionQuantity;
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = result };
                     }
@@ -651,7 +651,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                         return ((QsFunction)scalar.FunctionQuantity.Value.MultiplyOperation(this)).ToQuantity().ToScalar();
 
                     case ScalarTypes.RationalNumberQuantity:
-                        return new QsScalar { NumericalQuantity = NumericalQuantity * scalar.RationalQuantity.Unit.GetThisUnitQuantity(scalar.RationalQuantity.Value.Value) };
+                        return new QsScalar { NumericalQuantity = NumericalQuantity * scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(scalar.RationalQuantity.Value.Value) };
 
                     default:
                         throw new NotImplementedException(_ScalarType + " * " + scalar.ScalarType);
@@ -692,7 +692,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.RationalNumberQuantity:
                     {
-                        var result = scalar.RationalQuantity.Unit.GetThisUnitQuantity(new Complex((double)scalar.RationalQuantity.Value.Value, 0.0));
+                        var result = scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)scalar.RationalQuantity.Value.Value, 0.0));
                         result = ComplexQuantity * result;
                         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = result };
                     }
@@ -715,7 +715,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.RationalNumberQuantity:
                     {
-                        var result = scalar.RationalQuantity.Unit.GetThisUnitQuantity(new Quaternion((double)scalar.RationalQuantity.Value.Value, 0.0, 0, 0));
+                        var result = scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)scalar.RationalQuantity.Value.Value, 0.0, 0, 0));
                         result = QuaternionQuantity * result;
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = result };
                     }
@@ -750,14 +750,14 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.ComplexNumberQuantity:
                     {
-                        var result = RationalQuantity.Unit.GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
+                        var result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
                         result = result * scalar.ComplexQuantity;
                         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = result };
                     }
 
                     case ScalarTypes.QuaternionNumberQuantity:
                     {
-                        var result = RationalQuantity.Unit.GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
+                        var result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
                         result = result * scalar.QuaternionQuantity;
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = result };
                     }
@@ -794,7 +794,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = NumericalQuantity.ToQuaternion() / scalar.QuaternionQuantity };
 
                     case ScalarTypes.RationalNumberQuantity:
-                        return new QsScalar { NumericalQuantity = NumericalQuantity / scalar.RationalQuantity.Unit.GetThisUnitQuantity(scalar.RationalQuantity.Value.Value) };
+                        return new QsScalar { NumericalQuantity = NumericalQuantity / scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(scalar.RationalQuantity.Value.Value) };
 
                     default:
                         throw new NotImplementedException(_ScalarType + " / " + scalar.ScalarType);
@@ -833,7 +833,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.RationalNumberQuantity:
                     {
-                        var result = scalar.RationalQuantity.Unit.GetThisUnitQuantity(new Complex((double)scalar.RationalQuantity.Value.Value, 0.0));
+                        var result = scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)scalar.RationalQuantity.Value.Value, 0.0));
                         result = ComplexQuantity / result;
                         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = result };
                     }
@@ -856,7 +856,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.RationalNumberQuantity:
                     {
-                        var result = scalar.RationalQuantity.Unit.GetThisUnitQuantity(new Quaternion((double)scalar.RationalQuantity.Value.Value, 0.0, 0, 0));
+                        var result = scalar.RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)scalar.RationalQuantity.Value.Value, 0.0, 0, 0));
                         result = QuaternionQuantity / result;
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = result };
                     }
@@ -886,14 +886,14 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                     case ScalarTypes.ComplexNumberQuantity:
                     {
-                        var result = RationalQuantity.Unit.GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
+                        var result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Complex((double)RationalQuantity.Value.Value, 0.0));
                         result = result / scalar.ComplexQuantity;
                         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = result };
                     }
 
                     case ScalarTypes.QuaternionNumberQuantity:
                     {
-                        var result = RationalQuantity.Unit.GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
+                        var result = RationalQuantity.RequireUnit().GetThisUnitQuantity(new Quaternion((double)RationalQuantity.Value.Value, 0.0, 0, 0));
                         result = result / scalar.QuaternionQuantity;
                         return new QsScalar(ScalarTypes.QuaternionNumberQuantity) { QuaternionQuantity = result };
                     }
@@ -938,7 +938,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                     }
 
                     case ScalarTypes.RationalNumberQuantity:
-                        return new QsScalar { NumericalQuantity = AnyQuantity<double>.Power(NumericalQuantity, power.RationalQuantity.Unit.GetThisUnitQuantity(power.RationalQuantity.Value.Value)) };
+                        return new QsScalar { NumericalQuantity = AnyQuantity<double>.Power(NumericalQuantity, power.RationalQuantity.RequireUnit().GetThisUnitQuantity(power.RationalQuantity.Value.Value)) };
 
                     default:
                         throw new NotImplementedException(_ScalarType + " ^ " + power.ScalarType);
@@ -1302,18 +1302,16 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return AddVector(b);
         }
 
-        if (value is QsText)
+        if (value is QsText text)
         {
-            var text = value as QsText;
             var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
             return AddOperation(qt);
         }
 
-        if (value is QsFunction)
+        if (value is QsFunction fn)
         {
             if (ScalarType == ScalarTypes.SymbolicQuantity)
             {
-                var fn = value as QsFunction;
                 return AddScalar(fn.ToSymbolicScalar());
             }
 
@@ -1353,18 +1351,16 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return SubtractMatrix(m);
         }
 
-        if (value is QsText)
+        if (value is QsText text)
         {
-            var text = value as QsText;
             var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
             return SubtractOperation(qt);
         }
 
-        if (value is QsFunction)
+        if (value is QsFunction fn)
         {
             if (ScalarType == ScalarTypes.SymbolicQuantity)
             {
-                var fn = value as QsFunction;
                 return SubtractScalar(fn.ToSymbolicScalar());
             }
 
@@ -1415,18 +1411,16 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return MultiplyMatrix(m);
         }
 
-        if (value is QsText)
+        if (value is QsText text)
         {
-            var text = value as QsText;
             var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
             return MultiplyOperation(qt);
         }
 
-        if (value is QsFunction)
+        if (value is QsFunction fn)
         {
             if (ScalarType == ScalarTypes.SymbolicQuantity)
             {
-                var fn = value as QsFunction;
                 return MultiplyScalar(fn.ToSymbolicScalar());
             }
 
@@ -1507,18 +1501,16 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return DivideScalar((QsScalar)value);
         }
 
-        if (value is QsText)
+        if (value is QsText text)
         {
-            var text = value as QsText;
             var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
             return DivideOperation(qt);
         }
 
-        if (value is QsFunction)
+        if (value is QsFunction fn)
         {
             if (ScalarType == ScalarTypes.SymbolicQuantity)
             {
-                var fn = value as QsFunction;
                 return DivideScalar(fn.ToSymbolicScalar());
             }
 
@@ -1929,7 +1921,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             case ScalarTypes.SymbolicQuantity:
             {
                 var svalue = (SymbolicVariable)SymbolicQuantity.Value.Clone();
-                var sq = SymbolicQuantity.Unit.GetThisUnitQuantity(svalue);
+                var sq = SymbolicQuantity.RequireUnit().GetThisUnitQuantity(svalue);
                 n.SymbolicQuantity = sq;
             }
                 break;
@@ -1945,7 +1937,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             case ScalarTypes.FunctionQuantity:
             {
                 var fvalue = (QsFunction)FunctionQuantity.Value.Clone();
-                var fq = FunctionQuantity.Unit.GetThisUnitQuantity<QsFunction>(fvalue);
+                var fq = FunctionQuantity.RequireUnit().GetThisUnitQuantity<QsFunction>(fvalue);
                 n.FunctionQuantity = fq;
             }
                 break;

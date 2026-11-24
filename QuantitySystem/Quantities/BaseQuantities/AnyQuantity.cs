@@ -229,7 +229,7 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
 
         if (q.Unit is not null)
         {
-            q.Unit = Unit.Invert();
+            q.Unit = q.Unit.Invert();
         }
 
         return q;
@@ -267,7 +267,7 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
         var t2 = (AnyQuantity<T>)t;
         if (t2.Unit != null)
         {
-            t2.Unit = (Unit)Unit.Clone();
+            t2.Unit = (Unit)t2.Unit.Clone();
         }
 
         return t2;

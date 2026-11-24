@@ -69,7 +69,7 @@ public partial class SymbolicVariable
         else if (sv.IsFunction && symbolpowercontainParameter == true)
         {
             // search if a parameter contains the same parameter
-            foreach (var pf in sv._FunctionParameters)
+            foreach (var pf in sv.FunctionArguments)
             {
                 if (pf.Symbol.Equals(parameter, StringComparison.OrdinalIgnoreCase))
                 {
@@ -129,7 +129,7 @@ public partial class SymbolicVariable
         {
             // this case is when the power term is the same
             var log = new SymbolicVariable(FunctionOperation.LnText + "(" + sv.Symbol + ")");
-            var dp = sv._SymbolPowerTerm.Integrate(parameter);
+            var dp = sv._SymbolPowerTerm.RequireExpression().Integrate(parameter);
             sv = Divide(log, Divide(dp, sv));
             throw new NotImplementedException();
         }
@@ -144,7 +144,7 @@ public partial class SymbolicVariable
                     if(hv.NumericalVariable + 1 == 0)
                     {
                         hv.NumericalVariable = 1;
-                        hv.SymbolicVariable._Symbol = $"{FunctionOperation.LnText}({parameter.ToLowerInvariant()})";
+                        hv.SymbolicVariable = new SymbolicVariable($"{FunctionOperation.LnText}({parameter.ToLowerInvariant()})");
                     }
                     else
                     {
@@ -152,14 +152,14 @@ public partial class SymbolicVariable
                         sv.Coeffecient = sv.Coeffecient / hv.NumericalVariable;
                     }
 
-                    sv._FusedSymbols[parameter] = hv;
+                    sv.FusedSymbols[parameter] = hv;
                 }
                 else
                 {
                     // symbol power term exist
 
                     hv.SymbolicVariable = Add(hv.SymbolicVariable, One);
-                    sv._FusedSymbols[parameter] = hv;
+                    sv.FusedSymbols[parameter] = hv;
 
                     sv = Divide(sv, hv.SymbolicVariable);
                 }
@@ -175,7 +175,7 @@ public partial class SymbolicVariable
 
                 if (fv.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (fv._FunctionParameters.Length != 1)
+                    if (fv.FunctionArguments.Length != 1)
                     {
                         throw new SymbolicException("Exp function must have one parameter for differentiation to be done.");
                     }
@@ -185,9 +185,9 @@ public partial class SymbolicVariable
 
                     var spara = new SymbolicVariable(parameter);
 
-                    var pa = fv.FunctionParameters[0];
+                    var pa = fv.FunctionArguments[0];
 
-                    var divo = Divide(pa, spara);
+                    var divo = Divide(pa, spara).RequireExpression();
 
                     if (divo.IsOne)
                     {
@@ -200,7 +200,7 @@ public partial class SymbolicVariable
                 }
                 else if (fv.FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (fv._FunctionParameters.Length != 1)
+                    if (fv.FunctionArguments.Length != 1)
                     {
                         throw new SymbolicException("Log function must have one parameter for differentiation to be done.");
                     }
@@ -240,7 +240,7 @@ public partial class SymbolicVariable
                     var uv = Multiply(u, v);
 
                     var du = u.Differentiate(parameter);
-                    var vdu = Multiply(v, du);
+                    var vdu = Multiply(v, du).RequireExpression();
                     var ivdu = vdu.Integrate(parameter);
 
                     fv = Subtract(uv, ivdu);
@@ -346,7 +346,7 @@ public partial class SymbolicVariable
             var uv = Multiply(u, v);
 
             var du = u.Differentiate(parameter);
-            var vdu = Multiply(v, du);
+            var vdu = Multiply(v, du).RequireExpression();
 
             var ivdu = vdu.Integrate(parameter);
 
@@ -419,25 +419,25 @@ public partial class SymbolicVariable
             {
                 if (mt.Term.FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
                 {
-                    Logarithms_Term = Multiply(Logarithms_Term, mt.Term);
+                    Logarithms_Term = Multiply(Logarithms_Term, mt.Term).RequireExpression();
                 }
 
                 if (mt.Term.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
                 {
-                    Exponential_Term = Multiply(Exponential_Term, mt.Term);
+                    Exponential_Term = Multiply(Exponential_Term, mt.Term).RequireExpression();
                 }
                 else if (FunctionOperation.InversedTrigFunctions.Contains(mt.Term.FunctionName, StringComparer.OrdinalIgnoreCase))
                 {
-                    InversedTrig_Term = Multiply(InversedTrig_Term, mt.Term);
+                    InversedTrig_Term = Multiply(InversedTrig_Term, mt.Term).RequireExpression();
                 }
                 else if (FunctionOperation.TrigFunctions.Contains(mt.Term.FunctionName, StringComparer.OrdinalIgnoreCase))
                 {
-                    Trig_Term = Multiply(Trig_Term, mt.Term);
+                    Trig_Term = Multiply(Trig_Term, mt.Term).RequireExpression();
                 }
             }
             else
             {
-                Algebra_Term = Multiply(Algebra_Term, mt.Term);
+                Algebra_Term = Multiply(Algebra_Term, mt.Term).RequireExpression();
             }
         }
 

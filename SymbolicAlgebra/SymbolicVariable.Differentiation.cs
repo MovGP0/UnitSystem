@@ -33,7 +33,7 @@ public partial class SymbolicVariable
         else if (sv.IsFunction && symbolpowercontainParameter == true)
         {
             // search if a parameter contains the same parameter
-            foreach (var pf in sv._FunctionParameters)
+            foreach (var pf in sv.FunctionArguments)
             {
                 if (pf.Symbol.Equals(parameter, StringComparison.OrdinalIgnoreCase))
                 {
@@ -80,7 +80,7 @@ public partial class SymbolicVariable
         {
             // this case is when the power term is the same
             var log = new SymbolicVariable(FunctionOperation.LnText + "(" + sv.Symbol + ")");
-            var dp = sv._SymbolPowerTerm.Differentiate(parameter);
+            var dp = sv._SymbolPowerTerm.RequireExpression().Differentiate(parameter);
             sv = Multiply(log, Multiply(dp, sv));
         }
         else
@@ -95,11 +95,11 @@ public partial class SymbolicVariable
                     hv.NumericalVariable -= 1;
                     if (hv.NumericalVariable == 0)
                     {
-                        sv._FusedSymbols.Remove(parameter);
+                        sv.FusedSymbols.Remove(parameter);
                     }
                     else
                     {
-                        sv._FusedSymbols[parameter] = hv;
+                        sv.FusedSymbols[parameter] = hv;
                     }
                 }
                 else
@@ -108,7 +108,7 @@ public partial class SymbolicVariable
                     var oldPower = hv.SymbolicVariable;
 
                     hv.SymbolicVariable = Subtract(hv.SymbolicVariable, One);
-                    sv._FusedSymbols[parameter] = hv;
+                    sv.FusedSymbols[parameter] = hv;
 
                     sv = Multiply(sv, oldPower);
                 }
@@ -124,7 +124,7 @@ public partial class SymbolicVariable
 
                 if (fv.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (fv._FunctionParameters.Length != 1)
+                    if (fv.FunctionArguments.Length != 1)
                     {
                         throw new SymbolicException("Exp function must have one parameter for differentiation to be done.");
                     }
@@ -132,32 +132,32 @@ public partial class SymbolicVariable
                     // d/dx e^x = e^x
                     // d/dx e^(x^2) = 2*x*e^(x^2)
 
-                    var pa = fv._FunctionParameters[0];
+                    var pa = fv.FunctionArguments[0];
                     var presult = pa.Differentiate(parameter);
                     fv = Multiply(presult, fv);
                 }
                 else if (fv.FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (fv._FunctionParameters.Length != 1)
+                    if (fv.FunctionArguments.Length != 1)
                     {
                         throw new SymbolicException("Log function must have one parameter for differentiation to be done.");
                     }
 
                     // d/dx ( ln( g(x) ) ) = g'(x)/g(x)
 
-                    var pa = fv._FunctionParameters[0];
+                    var pa = fv.FunctionArguments[0];
                     var dpa = pa.Differentiate(parameter);
                     fv = Divide(dpa, pa);
                 }
                 else if (fv.FunctionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
                 {
                     // d/dx ( sqrt( g(x) ) ) = g'(x) / 2* sqrt(g(x))
-                    if (fv._FunctionParameters.Length != 1)
+                    if (fv.FunctionArguments.Length != 1)
                     {
                         throw new SymbolicException("Sqrt function must have one parameter for differentiation to be done.");
                     }
 
-                    var pa = fv._FunctionParameters[0];
+                    var pa = fv.FunctionArguments[0];
                     var dpa = pa.Differentiate(parameter);
                     var den = Multiply(Two, fv);
                     fv = Divide(dpa, den);
@@ -176,13 +176,13 @@ public partial class SymbolicVariable
                     {
                         //if(IsNegative)
                         // get the parameters in the function and differentiate them
-                        if (fv._FunctionParameters.Length == 0)
+                        if (fv.FunctionArguments.Length == 0)
                         {
                             throw new SymbolicException("Special function without any parameters is not suitable for differentiation");
                         }
-                        else if (fv._FunctionParameters.Length == 1)
+                        else if (fv.FunctionArguments.Length == 1)
                         {
-                            var pa = fv._FunctionParameters[0];
+                            var pa = fv.FunctionArguments[0];
                             var presult = pa.Differentiate(parameter);
                             fv.SetFunctionName(newfuntions);
 
@@ -224,7 +224,7 @@ public partial class SymbolicVariable
                             dsf = dsf.Replace(fps[ipxf], fv._RawFunctionParameters[ipxf]);
                         }
 
-                        fv = Parse(dsf).Differentiate(parameter);
+                        fv = Parse(dsf).RequireExpression().Differentiate(parameter);
                     }
                     else
                     {
@@ -274,7 +274,7 @@ public partial class SymbolicVariable
                 sv._Symbol = string.Empty;
                 if (sv._SymbolPowerTerm != null)
                 {
-                    sv._FusedSymbols.Clear();
+                    sv._FusedSymbols?.Clear();
                     sv._FusedSymbols = null;
                 }
             }
@@ -367,7 +367,7 @@ public partial class SymbolicVariable
                 continue;
             }
 
-            total = Add(total, cc);
+            total = Add(total, cc).RequireExpression();
         }
 
         if (!SvDividedTerm.IsOne)

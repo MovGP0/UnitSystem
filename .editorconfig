@@ -195,7 +195,7 @@ dotnet_diagnostic.CS8600.severity = warning
 dotnet_diagnostic.CS8601.severity = warning
 
 # Check a possibly null reference before dereferencing it
-dotnet_diagnostic.CS8602.severity = suggestion
+dotnet_diagnostic.CS8602.severity = warning
 
 # Make possible null returns match the declared return type
 dotnet_diagnostic.CS8603.severity = suggestion

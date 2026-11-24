@@ -141,7 +141,8 @@ public class QsObject : QsValue
 
     public void SetProperty(string propertyName, object value)
     {
-        var pi = InstanceType.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
+        var pi = InstanceType.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase)
+            ?? throw new MissingMemberException(InstanceType.FullName, propertyName);
 
         var vc = Root.QsToNativeConvert(pi.PropertyType, value);
 
@@ -477,9 +478,11 @@ public class QsObject : QsValue
             "Item"
             ,
             BindingFlags.Instance | BindingFlags.Public
-        );
+        )
+            ?? throw new MissingMemberException(InstanceType.FullName, "Item");
 
-        var r = Root.QsParametersToNativeValues(pi.GetGetMethod(), indices);
+        var getter = pi.GetGetMethod() ?? throw new MissingMethodException(InstanceType.FullName, "get_Item");
+        var r = Root.QsParametersToNativeValues(getter, indices);
 
         return Root.NativeToQsConvert(pi.GetValue(_NativeObject, r));
     }
@@ -490,8 +493,9 @@ public class QsObject : QsValue
             "Item"
             ,
             BindingFlags.Instance | BindingFlags.Public
-        );
-        var gs = pi.GetSetMethod();
+        )
+            ?? throw new MissingMemberException(InstanceType.FullName, "Item");
+        var gs = pi.GetSetMethod() ?? throw new MissingMethodException(InstanceType.FullName, "set_Item");
 
         var r = Root.QsParametersToNativeValues(gs, indices);
 
@@ -503,12 +507,12 @@ public class QsObject : QsValue
 
     public override QsValue ExclamationOperator(QsValue key)
     {
-        if (key.ToString().Equals("TypeName", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(key.ToString(), "TypeName", StringComparison.OrdinalIgnoreCase))
         {
             return new QsText(InstanceType.Name);
         }
 
-        if (key.ToString().Equals("Properties", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(key.ToString(), "Properties", StringComparison.OrdinalIgnoreCase))
         {
             var f = new QsFlowingTuple();
             var mms = InstanceType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -530,7 +534,7 @@ public class QsObject : QsValue
             return new QsFlowingTuple(fefe);
         }
 
-        if (key.ToString().Equals("Methods", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(key.ToString(), "Methods", StringComparison.OrdinalIgnoreCase))
         {
             var f = new QsFlowingTuple();
             var mms = from m in InstanceType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
@@ -554,7 +558,7 @@ public class QsObject : QsValue
             return new QsFlowingTuple(fefe);
         }
 
-        if (key.ToString().Equals("Type", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(key.ToString(), "Type", StringComparison.OrdinalIgnoreCase))
         {
             return new QsObject(InstanceType);
         }

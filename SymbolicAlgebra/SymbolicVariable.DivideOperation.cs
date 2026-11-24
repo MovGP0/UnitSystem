@@ -127,7 +127,7 @@ public partial class SymbolicVariable
                         TargetSubTerm.SymbolPower = -1; // the target will always be dominator
                     }
 
-                    SourceTerm._SymbolPowerTerm -= TargetSubTerm._SymbolPowerTerm;
+                    SourceTerm._SymbolPowerTerm = Subtract(SourceTerm._SymbolPowerTerm, TargetSubTerm._SymbolPowerTerm).RequireExpression();
 
                     if (SourceTerm._SymbolPowerTerm.IsCoeffecientOnly)
                     {
@@ -189,7 +189,7 @@ public partial class SymbolicVariable
                     if (SourceTerm.FusedSymbols.ContainsKey(tfs.Key))
                     {
                         // symbol exist so accumulate it
-                        SourceTerm._FusedSymbols[tfs.Key] -= tfs.Value;
+                        SourceTerm.FusedSymbols[tfs.Key] -= tfs.Value;
                     }
                     else
                     {
@@ -201,12 +201,12 @@ public partial class SymbolicVariable
                             {
                                 if (SourceTerm._SymbolPowerTerm != null)
                                 {
-                                    SourceTerm._SymbolPowerTerm -= tfs.Value.SymbolicVariable;
+                                    SourceTerm._SymbolPowerTerm = Subtract(SourceTerm._SymbolPowerTerm, tfs.Value.SymbolicVariable).RequireExpression();
                                 }
                                 else
                                 {
                                     // sum the value in the numerical part to the value in symbolic part
-                                    SourceTerm._SymbolPowerTerm = new SymbolicVariable(SourceTerm._SymbolPower.ToString(CultureInfo.InvariantCulture)) - tfs.Value.SymbolicVariable;
+                                    SourceTerm._SymbolPowerTerm = (new SymbolicVariable(SourceTerm._SymbolPower.ToString(CultureInfo.InvariantCulture)) - tfs.Value.SymbolicVariable).RequireExpression();
                                     // reset the value in numerical part
                                     SourceTerm._SymbolPower = -1;
                                 }
@@ -302,7 +302,7 @@ public partial class SymbolicVariable
                 // get rid of divided term here because I already include it for the source term above
                 var TSubTerm = TargetSubTerm.Numerator;
 
-                var newv = Divide(vv.Value, TSubTerm);
+                var newv = Divide(vv.Value, TSubTerm).RequireExpression();
                 newAddedVariables.Add(newv.WholeValueBaseKey, newv);
             }
 

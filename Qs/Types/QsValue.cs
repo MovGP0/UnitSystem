@@ -365,9 +365,8 @@ public abstract class QsValue: IComparable
             {
                 vec.AddComponent((QsScalar)val);
             }
-            else if (val is QsVector)
+            else if (val is QsVector vc)
             {
-                var vc = val as QsVector;
                 foreach (var component in vc)
                 {
                     vec.AddComponent(component);

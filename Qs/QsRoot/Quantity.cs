@@ -1,4 +1,5 @@
-﻿using Qs.Types;
+﻿using Qs;
+using Qs.Types;
 using QuantitySystem;
 using QuantitySystem.Quantities.BaseQuantities;
 using QuantitySystem.Units;
@@ -32,7 +33,7 @@ public static class Quantity
     {
         if (value.QsNativeValue is QsScalar s)
         {
-            var qt = s.Unit.QuantityType.Name;
+            var qt = s.Unit.QuantityTypeName ?? throw new QsException("The unit has no associated quantity type.");
             return new QsText(qt.Substring(0, qt.Length - 2));
         }
 
@@ -118,7 +119,8 @@ public static class Quantity
     {
         if (value.QsNativeValue is QsScalar s)
         {
-            return new QsText(s.Unit.QuantityType.Name.TrimEnd('`','1'));
+            var quantityTypeName = s.Unit.QuantityTypeName ?? throw new QsException("The unit has no associated quantity type.");
+            return new QsText(quantityTypeName.TrimEnd('`', '1'));
         }
 
         return new QsText("Works on scalar quantities");

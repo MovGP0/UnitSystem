@@ -383,7 +383,8 @@ public abstract partial class AnyQuantity<T>
 
         // and I am ignoring the units conversion also
 
-        var unit = quantity.Unit.RaiseUnitPower((float)exponent.Value);
+        var sourceUnit = quantity.Unit ?? throw new QuantityException("Raising a quantity to a power requires a unit.");
+        var unit = sourceUnit.RaiseUnitPower((float)exponent.Value);
 
         AnyQuantity<T>? result = null;
 
@@ -398,7 +399,7 @@ public abstract partial class AnyQuantity<T>
             result.Unit = unit;
         }
 
-        Debug.Assert(result.Dimension.Equals(result.Unit.UnitDimension), "Dimensions are not equal after power");
+        Debug.Assert(result.Unit is { } resultUnit && result.Dimension.Equals(resultUnit.UnitDimension), "Dimensions are not equal after power");
         return result;
     }
 

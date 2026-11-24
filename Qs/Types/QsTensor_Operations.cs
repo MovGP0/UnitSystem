@@ -41,9 +41,8 @@ public partial class QsTensor : QsValue
             return NewTensor;
         }
 
-        if (value is QsTensor)
+        if (value is QsTensor tensor)
         {
-            var tensor = value as QsTensor;
             if (Order != (tensor.Order))
             {
                 throw new QsException("Adding two different ranked tensors are not supported");
@@ -121,9 +120,8 @@ public partial class QsTensor : QsValue
             return NewTensor;
         }
 
-        if (value is QsTensor)
+        if (value is QsTensor tensor)
         {
-            var tensor = value as QsTensor;
             if (Order != (tensor.Order))
             {
                 throw new QsException("Adding two different ranked tensors are not supported");

@@ -955,7 +955,7 @@ class QsVar
             ix += 2;
         }
 
-        if (eop.Next == null && string.IsNullOrEmpty(eop.Operation) == false)
+        if (eop == null || (eop.Next == null && !string.IsNullOrEmpty(eop.Operation)))
         {
             //eop hold the last node to be evaluated
             // if the next of eop is null then it means an operation without right term
@@ -2428,7 +2428,7 @@ class QsVar
                 // Prepare the expression that will execute this function dynamically
 
                 // Get the function name from the parameter
-                Expression FunctionParameter = lambdaBuilder.Parameters.Single(c => c.Name.Equals(functionName, StringComparison.OrdinalIgnoreCase));
+                Expression FunctionParameter = lambdaBuilder.Parameters.Single(c => string.Equals(c.Name, functionName, StringComparison.OrdinalIgnoreCase));
 
                 Expression FunctionParameterName = Expression.Call(
                     FunctionParameter,
@@ -2457,7 +2457,7 @@ class QsVar
                     Expression rw;
                     try
                     {
-                        rw = lambdaBuilder.Parameters.Single(c => c.Name.Equals( prm, StringComparison.OrdinalIgnoreCase));
+                        rw = lambdaBuilder.Parameters.Single(c => string.Equals(c.Name, prm, StringComparison.OrdinalIgnoreCase));
                         rw = Expression.Property(rw, "ParameterRawText");  //raw value that was send with this parameter.
                     }
                     catch
@@ -2639,7 +2639,7 @@ class QsVar
 
         try
         {
-            Expression eu = lambdaBuilder.Parameters.Single(c => c.Name.Equals(parameterName, StringComparison.OrdinalIgnoreCase));
+            Expression eu = lambdaBuilder.Parameters.Single(c => string.Equals(c.Name, parameterName, StringComparison.OrdinalIgnoreCase));
 
             // parameter is having quantity in normal cases
             Expression directQuantity = Expression.Property(eu, "QsNativeValue");

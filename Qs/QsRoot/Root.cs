@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Qs.Types;
 using Qs;
 using System.Linq.Expressions;
@@ -56,7 +57,7 @@ public class Root
 
         var a
             = from t in executingTypes.Union(callingTypes)
-            where t.FullName.Equals(typeName, StringComparison.OrdinalIgnoreCase)
+            where string.Equals(t.FullName, typeName, StringComparison.OrdinalIgnoreCase)
             select t;
 
         var ns = a.FirstOrDefault();
@@ -170,7 +171,8 @@ public class Root
                 {
                     // target is array
                     var vec = (QsVector)p.QsNativeValue;
-                    var ArrayType = Type.GetType(paramInfos[iy].ParameterType.FullName.Trim('[', ']'));
+                    var ArrayType = paramInfos[iy].ParameterType.GetElementType()
+                        ?? throw new QsException("The native array parameter has no element type.");
                     var arr = Array.CreateInstance(ArrayType, vec.Count);
                     for (var i = 0; i < vec.Count; i++)
                     {
@@ -221,6 +223,7 @@ public class Root
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
+    [return: NotNullIfNotNull(nameof(value))]
     public static QsValue? NativeToQsConvert(object? value)
     {
         if (value == null)
@@ -348,7 +351,7 @@ public class Root
 
         if (value is ConstantExpression ce)
         {
-            SourceType = ce.Value.GetType();
+            SourceType = ce.Value?.GetType() ?? ce.Type;
         }
 
         if (SourceType == typeof(QsScalar))
@@ -427,7 +430,7 @@ public class Root
         if (targetType == typeof(int[]) || targetType == typeof(double[]) || targetType == typeof(float[]) || targetType == typeof(float[]) || targetType == typeof(long[]) || targetType == typeof(uint[]) || targetType == typeof(ushort[]) || targetType == typeof(ulong[]))
         {
             // then the value should be a qsvector or qsmatrix
-            var mi = typeof(Root).GetMethod("ToNumericArray", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(targetType.GetElementType());
+            var mi = GetNumericArrayConverter(targetType);
 
             return Expression.Call(mi, value);
         }
@@ -456,6 +459,15 @@ public class Root
         }
 
         throw new QsException("Couldn't convert the value (" + value.Type + ") expression to the target type (" + targetType + ")");
+    }
+
+    private static MethodInfo GetNumericArrayConverter(Type targetType)
+    {
+        var elementType = targetType.GetElementType()
+            ?? throw new ArgumentException("The target type must be an array.", nameof(targetType));
+        var method = typeof(Root).GetMethod(nameof(ToNumericArray), BindingFlags.Static | BindingFlags.NonPublic)
+            ?? throw new MissingMethodException(typeof(Root).FullName, nameof(ToNumericArray));
+        return method.MakeGenericMethod(elementType);
     }
 
     /// <summary>
@@ -594,7 +606,7 @@ public class Root
             // then the value should be a qsvector or qsmatrix
             if (value is QsValue vs)
             {
-                var mi = typeof(Root).GetMethod("ToNumericArray", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(targetType.GetElementType());
+                var mi = GetNumericArrayConverter(targetType);
                 return mi.Invoke(null, [vs]);
             }
 

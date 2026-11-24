@@ -199,7 +199,7 @@ public partial class SymbolicVariable
                         if (SourceTerm.FusedSymbols.ContainsKey(tfs.Key))
                         {
                             // symbol exist so accumulate it
-                            SourceTerm._FusedSymbols[tfs.Key] += tfs.Value;
+                            SourceTerm.FusedSymbols[tfs.Key] += tfs.Value;
                         }
                         else
                         {
@@ -320,7 +320,7 @@ public partial class SymbolicVariable
                 // get rid of divided term here because I already include it for the source term above
                 var TSubTerm = TargetSubTerm.Numerator;
 
-                var newv = Multiply(vv.Value, TSubTerm);
+                var newv = Multiply(vv.Value, TSubTerm).RequireExpression();
 
                 newAddedVariables.Add(newv.WholeValueBaseKey, newv);
             }

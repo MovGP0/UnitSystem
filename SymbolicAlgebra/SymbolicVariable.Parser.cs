@@ -18,7 +18,7 @@ public partial class SymbolicVariable
         {
             get
             {
-                var gg = SymbolicExpression.ToString();
+                var gg = SymbolicExpression?.ToString() ?? string.Empty;
 
                 gg += Operation;
 
@@ -317,9 +317,9 @@ public partial class SymbolicVariable
                     {
                         while (skip > 0)
                         {
-                            eop.Operation = eop.Next.Operation;
-
-                            eop.Next = eop.Next.Next;
+                            var next = eop.Next ?? throw new SymbolicException("An operator is missing an operand.");
+                            eop.Operation = next.Operation;
+                            eop.Next = next.Next;
 
                             skip--;
                         }
@@ -355,9 +355,10 @@ public partial class SymbolicVariable
 
     private static SymbolicVariable? ArithExpression(SymbolicExpressionOperator eop, out short skip)
     {
-        var left = eop.SymbolicExpression;
+        var next = eop.Next ?? throw new SymbolicException("An operator is missing an operand.");
+        var left = eop.SymbolicExpression.RequireExpression();
         var op = eop.Operation;
-        var right = eop.Next.SymbolicExpression;
+        var right = next.SymbolicExpression.RequireExpression();
 
         skip = 1;
 
@@ -448,7 +449,7 @@ public partial class SymbolicVariable
     {
         var left = eop.DynamicExpression;
         var op = eop.Operation;
-        var right = eop.Next.DynamicExpression;
+        var right = eop.Next?.DynamicExpression ?? throw new SymbolicException("An operator is missing an operand.");
 
         skip = 1;
 
@@ -854,9 +855,9 @@ public partial class SymbolicVariable
                     {
                         while (skip > 0)
                         {
-                            eop.Operation = eop.Next.Operation;
-
-                            eop.Next = eop.Next.Next;
+                            var next = eop.Next ?? throw new SymbolicException("An operator is missing an operand.");
+                            eop.Operation = next.Operation;
+                            eop.Next = next.Next;
 
                             skip--;
                         }

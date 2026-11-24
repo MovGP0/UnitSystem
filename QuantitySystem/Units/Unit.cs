@@ -256,7 +256,8 @@ public partial class Unit : ICloneable
     {
         AnyQuantity<T>? Quantity = null;
 
-        var qt = QuantityType.MakeGenericType(typeof(T));
+        var quantityType = QuantityType ?? throw new UnitException("The unit has no associated quantity type.");
+        var qt = quantityType.MakeGenericType(typeof(T));
 
         if (Qcach.TryGetValue(qt, out var j))
         {
@@ -327,8 +328,9 @@ public partial class Unit : ICloneable
 
             if (IsStronglyTyped)
             {
-                var unitType = GetType();
-                return unitType.Namespace![(unitType.Namespace.LastIndexOf("Units.", StringComparison.Ordinal) + 6)..];
+                var unitNamespace = GetType().Namespace ?? string.Empty;
+                var unitsIndex = unitNamespace.LastIndexOf("Units.", StringComparison.Ordinal);
+                return unitsIndex >= 0 ? unitNamespace[(unitsIndex + "Units.".Length)..] : unitNamespace;
             }
 
             // mixed system
@@ -369,7 +371,7 @@ public partial class Unit : ICloneable
 
     public string Name => GetType().Name;
 
-    public string QuantityTypeName => QuantityType.Name;
+    public string? QuantityTypeName => QuantityType?.Name;
 
     public override string ToString() => Name + " " + Symbol;
 

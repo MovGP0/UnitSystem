@@ -140,8 +140,9 @@ public partial class Unit
             // prepare the query that we will search in
             var systemUnitTypes
                 = from ut in UnitTypes
-                where ut.Namespace.ToUpperInvariant().EndsWith(currentUnitSystem, StringComparison.Ordinal)
-                    || ut.Namespace.ToUpperInvariant().EndsWith("SHARED", StringComparison.Ordinal)
+                where ut.Namespace is { } ns
+                    && (ns.EndsWith(currentUnitSystem, StringComparison.OrdinalIgnoreCase)
+                        || ns.EndsWith("SHARED", StringComparison.OrdinalIgnoreCase))
                 select ut;
 
             // select the default by predictor from the query
@@ -187,8 +188,9 @@ public partial class Unit
         // don't forget to include second in si units it is shared between all metric systems
         var siUnitTypes
             = from si in UnitTypes
-            where si.Namespace.ToUpperInvariant().EndsWith("SI", StringComparison.Ordinal)
-                || si.Namespace.ToUpperInvariant().EndsWith("SHARED", StringComparison.Ordinal)
+            where si.Namespace is { } ns
+                && (ns.EndsWith("SI", StringComparison.OrdinalIgnoreCase)
+                    || ns.EndsWith("SHARED", StringComparison.OrdinalIgnoreCase))
             select si;
 
         bool SearchForQuantityType(Type unitType)

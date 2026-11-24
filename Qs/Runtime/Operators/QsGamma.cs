@@ -33,10 +33,8 @@ public static class QsGamma
             throw new QsException("Unsupported scalar object");
         }
 
-        if (value is QsVector)
+        if (value is QsVector vec)
         {
-            var vec = value as QsVector;
-
             var rvec = new QsVector(vec.Count);
 
             foreach (var v in vec)
@@ -47,9 +45,8 @@ public static class QsGamma
             return rvec;
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix mat)
         {
-            var mat = value as QsMatrix;
             var Total = new QsMatrix();
 
             for (var IY = 0; IY < mat.RowsCount; IY++)
@@ -99,7 +96,7 @@ public static class QsGamma
 
         //   Raise the power of the unit.
         //    I think 3.5<kg>! = 11.631728<kg^3> is wrong and of course not <kg^4>  but it is <kg^3.5>
-        var TotalUnit = num.Unit.RaiseUnitPower((float)number.Value);
+        var TotalUnit = num.RequireUnit().RaiseUnitPower((float)number.Value);
 
         // if we have fraction correct the calculation with Gamma Factorial.
         if (number.Value > v)

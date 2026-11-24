@@ -41,7 +41,7 @@ internal struct HybridVariable
         HybridVariable nhv;
         nhv.NumericalVariable = hv.NumericalVariable;
         nhv.SymbolicVariable = hv.SymbolicVariable - num;
-        if (nhv.SymbolicVariable.IsCoeffecientOnly)
+        if (nhv.SymbolicVariable is { IsCoeffecientOnly: true })
         {
             nhv.NumericalVariable = nhv.SymbolicVariable.Coeffecient;
             nhv.SymbolicVariable = null;
