@@ -563,7 +563,7 @@ dotnet_diagnostic.RCS1206.severity = warning
 dotnet_diagnostic.RCS1209.severity = warning
 
 # Return completed task instead of returning null
-# dotnet_diagnostic.RCS1210.severity = warning
+dotnet_diagnostic.RCS1210.severity = warning
 
 # Remove unnecessary 'else'
 # dotnet_diagnostic.RCS1211.severity = silent
