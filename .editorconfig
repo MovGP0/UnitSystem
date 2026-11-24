@@ -317,7 +317,7 @@ dotnet_diagnostic.RCS1097.severity = warning
 dotnet_diagnostic.RCS1098.severity = warning
 
 # Default label should be the last label in a switch section
-# dotnet_diagnostic.RCS1099.severity = warning
+dotnet_diagnostic.RCS1099.severity = warning
 
 # Make class static
 # dotnet_diagnostic.RCS1102.severity = warning
