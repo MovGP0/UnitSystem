@@ -42,7 +42,7 @@ dotnet_diagnostic.RCS0021.severity = none
 roslynator_block_braces_style = multi_line
 
 # Put type declaration braces on their own lines
-# dotnet_diagnostic.RCS0023.severity = warning
+dotnet_diagnostic.RCS0023.severity = warning
 
 # Start each full accessor on its own line
 # dotnet_diagnostic.RCS0025.severity = warning
