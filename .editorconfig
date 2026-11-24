@@ -21,7 +21,7 @@ dotnet_diagnostic.RCS0009.severity = warning
 dotnet_diagnostic.RCS0010.severity = warning
 
 # Control spacing between single-line accessors
-# dotnet_diagnostic.RCS0011.severity = warning
+dotnet_diagnostic.RCS0011.severity = warning
 roslynator_blank_line_between_single_line_accessors = false
 
 # Separate neighboring single-line declarations of different kinds
