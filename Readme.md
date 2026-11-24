@@ -77,6 +77,41 @@ orientation alone cannot recover the original axis. Use the underlying
 
 [Siano, Orientational Analysis I](https://doi.org/10.1016/0016-0032%2885%2990031-6)
 
+## Standard Model gauge checker prototype
+
+`UnitSystem.Gauge` analyzes the gauge representations of products of fields under
+color SU(3), weak SU(2), and weak hypercharge U(1). It tracks exact hypercharge
+using the convention `Q = T3 + Y` and reports each irreducible channel and its
+multiplicity. [Standard Model representations](https://arxiv.org/abs/1705.01853)
+
+```csharp
+using UnitSystem.Gauge;
+
+var product = GaugeExpression.Analyze("conj(Q_L) * H * d_R");
+// product.HasSinglet is true. The uncontracted product also has nonsinglet channels.
+var invariant = GaugeExpression.Analyze("singlet(conj(Q_L) * H * d_R)");
+// invariant.IsGaugeInvariant is true.
+
+var higgsQuartic = GaugeExpression.Analyze("singlet(conj(H) * H) * singlet(conj(H) * H)");
+// Each Higgs pair is projected to its own singlet.
+```
+
+The grammar accepts products of named fields and up to 64 nested pairs of
+parentheses. Use `conj(expression)` to conjugate any subexpression and
+`singlet(expression)` to select its unique singlet. The default field names are
+`Q_L`, `u_R`, `d_R`, `L_L`, `e_R`, and `H`. [FParsec.CSharp](https://github.com/bert2/FParsec.CSharp)
+
+Call `Parse` once and run `Analyze` with a field map to check the same expression
+against different representations. `StandardModelGaugeRepresentations` is a
+C# 15 union of the six built-in multiplets. Its `Representation` property gives
+the gauge representation for the active case. Pass it to `GaugeProduct.Analyze`,
+which also accepts custom representations. Color inputs may be singlets,
+triplets, antitriplets, or octets.
+
+Singlet selection is symbolic and requires exactly one independent contraction.
+The prototype checks internal gauge symmetry. Lorentz indices and field
+statistics require their own checks.
+
 ## Open issues
 
 - Explore oriented angles and tensor components from
