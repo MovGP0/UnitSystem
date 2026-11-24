@@ -990,7 +990,7 @@ dotnet_diagnostic.CA2018.severity = warning
 dotnet_diagnostic.CA2019.severity = warning
 
 # Prevent behavioral change
-# dotnet_diagnostic.CA2020.severity = warning
+dotnet_diagnostic.CA2020.severity = warning
 
 # Do not call Enumerable.Cast<T> or Enumerable.OfType<T> with incompatible types
 dotnet_diagnostic.CA2021.severity = warning
