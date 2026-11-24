@@ -1,6 +1,4 @@
-﻿
-
-//  Source code is translated from boost C++ to C#
+﻿//  Source code is translated from boost C++ to C#
 //  Translator: Ahmed Sadek
 
 

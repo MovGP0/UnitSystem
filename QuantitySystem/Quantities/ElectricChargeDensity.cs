@@ -1,6 +1,4 @@
-﻿
-
-namespace QuantitySystem.Quantities;
+﻿namespace QuantitySystem.Quantities;
 
 public class ElectricChargeDensity<T> : DerivedQuantity<T>
 {

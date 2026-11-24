@@ -1,6 +1,4 @@
-﻿
-
-using QuantitySystem.Quantities.BaseQuantities;
+﻿using QuantitySystem.Quantities.BaseQuantities;
 
 namespace QuantitySystem.Quantities;
 

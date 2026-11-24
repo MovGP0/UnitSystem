@@ -1,5 +1,4 @@
-﻿
-namespace ParticleLexer.StandardTokens;
+﻿namespace ParticleLexer.StandardTokens;
 
 /// <summary>
 /// Groups that are recursive in each other.

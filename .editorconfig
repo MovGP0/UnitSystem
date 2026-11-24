@@ -113,7 +113,7 @@ roslynator_max_line_length = 1024
 roslynator_tab_length = 4
 
 # Remove leading whitespace at the start of a source file
-# dotnet_diagnostic.RCS0057.severity = warning
+dotnet_diagnostic.RCS0057.severity = warning
 
 # Control trailing whitespace and the final newline
 # dotnet_diagnostic.RCS0058.severity = warning

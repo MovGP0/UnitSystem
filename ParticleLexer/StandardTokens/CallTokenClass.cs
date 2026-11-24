@@ -1,5 +1,4 @@
-﻿
-namespace ParticleLexer.StandardTokens;
+﻿namespace ParticleLexer.StandardTokens;
 
 /// <summary>
 /// Any word followed by group token will be a call token

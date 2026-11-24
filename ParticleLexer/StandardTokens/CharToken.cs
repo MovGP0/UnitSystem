@@ -1,5 +1,4 @@
-﻿
-namespace ParticleLexer.StandardTokens;
+﻿namespace ParticleLexer.StandardTokens;
 
 /// <summary>
 /// Any character
