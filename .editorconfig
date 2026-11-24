@@ -572,7 +572,7 @@ dotnet_diagnostic.RCS1210.severity = warning
 dotnet_diagnostic.RCS1212.severity = warning
 
 # Remove unused member declaration
-# dotnet_diagnostic.RCS1213.severity = warning
+dotnet_diagnostic.RCS1213.severity = warning
 
 # Unnecessary interpolated string
 # dotnet_diagnostic.RCS1214.severity = warning

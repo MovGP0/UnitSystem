@@ -15,6 +15,7 @@ public struct QuantityInfo<T>
 {
     private ReadOnlyDictionary<string, Rational>? _unit;
 
+#pragma warning disable RCS1213 // DataContractSerializer accesses these members.
     [DataMember(EmitDefaultValue = false)]
     private Dictionary<string, string>? RationalUnit
     {
@@ -40,6 +41,7 @@ public struct QuantityInfo<T>
             }
         }
     }
+#pragma warning restore RCS1213
 
     /// <summary>
     /// Initializes quantity information from single-precision unit exponents.

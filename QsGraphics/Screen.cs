@@ -67,8 +67,6 @@ public class Screen
     {
         End();
     }
-
-    private readonly AnyQuantity<double> zm = Unit.ParseQuantity("0<m>");
     //private AnyQuantity<double> zrm = Unit.ParseQuantity("0<m!>");
 
     readonly List<Shape> Shapes = [];

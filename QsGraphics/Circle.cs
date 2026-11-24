@@ -59,9 +59,6 @@ public class Circle : Shape
 
     private readonly Length<double> zm = (Length<double>)Unit.ParseQuantity("0<m>");
 
-    // milli second quantity
-    private readonly AnyQuantity<double> zmt = Unit.ParseQuantity("0<m/ms>");
-
     public override void Draw(Graphics graphics, float pixelPerMeter)
     {
         var p1 = new PointF();
