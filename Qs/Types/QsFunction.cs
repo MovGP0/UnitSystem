@@ -672,7 +672,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <returns></returns>
     public static bool IsItFunctionSymbolicName(string name)
     {
-        return Regex.Match(name, @".+#.+").Success;
+        return Regex.Match(name, ".+#.+").Success;
     }
 
     /// <summary>

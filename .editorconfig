@@ -509,7 +509,7 @@ dotnet_diagnostic.RCS1190.severity = warning
 dotnet_diagnostic.RCS1191.severity = warning
 
 # Unnecessary usage of verbatim string literal
-# dotnet_diagnostic.RCS1192.severity = warning
+dotnet_diagnostic.RCS1192.severity = warning
 
 # Overriding member should not change 'params' modifier
 # dotnet_diagnostic.RCS1193.severity = warning
