@@ -168,7 +168,7 @@ roslynator_array_creation_type_style = implicit
 # Existing compiler diagnostics. Raise one rule at a time as its findings are fixed.
 
 # Remove unreachable code
-dotnet_diagnostic.CS0162.severity = suggestion
+dotnet_diagnostic.CS0162.severity = warning
 
 # Remove unused local variable declarations
 dotnet_diagnostic.CS0168.severity = suggestion

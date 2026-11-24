@@ -255,16 +255,6 @@ public partial class SymbolicVariable
                 else if (fv.FunctionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
                 {
                     throw new NotImplementedException();
-                    // d/dx ( sqrt( g(x) ) ) = g'(x) / 2* sqrt(g(x))
-                    if (fv._FunctionParameters.Length != 1)
-                    {
-                        throw new SymbolicException("Sqrt function must have one parameter for differentiation to be done.");
-                    }
-
-                    var pa = fv._FunctionParameters[0];
-                    var dpa = pa.Differentiate(parameter);
-                    var den = Multiply(Two, fv);
-                    fv = Divide(dpa, den);
                 }
                 else if (FunctionOperation.InversedTrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
                 {
@@ -279,34 +269,6 @@ public partial class SymbolicVariable
                 else
                 {
                     throw new NotImplementedException();
-
-                    // the function is not a special function like sin, cos, and log.
-                    // search for the function in the running context.
-
-                    var extendedFunction = Functions.Keys.FirstOrDefault(c => c.StartsWith(fv.FunctionName, StringComparison.OrdinalIgnoreCase));
-                    if (!string.IsNullOrEmpty(extendedFunction))
-                    {
-                        string[] fps = extendedFunction.Substring(extendedFunction.IndexOf("(")).TrimStart('(').TrimEnd(')').Split(',');
-
-                        if (fps.Length != fv._RawFunctionParameters.Length)
-                        {
-                            throw new SymbolicException("Insufficient function parameters");
-                        }
-
-                        // replace parameters
-                        var dsf = Functions[extendedFunction].ToString();
-
-                        for (var ipxf = 0; ipxf < fps.Length; ipxf++)
-                        {
-                            dsf = dsf.Replace(fps[ipxf], fv._RawFunctionParameters[ipxf]);
-                        }
-
-                        fv = Parse(dsf).Differentiate(parameter);
-                    }
-                    else
-                    {
-                        throw new SymbolicException("This function is not a special function, and I haven't implemented storing user functions in the running context");
-                    }
                 }
 
                 // second treat the function normally as if it is one big symbol
@@ -332,13 +294,6 @@ public partial class SymbolicVariable
             else if (sv.IsCoeffecientOnly && sv._CoeffecientPowerTerm != null)
             {
                 throw new NotImplementedException();
-
-                // hint: the coeffecient only term has power of 1 or symbolic power should exist in case of raise to symbolic power
-
-                // get log(coeffeniect)
-                var log = new SymbolicVariable(FunctionOperation.LnText + "(" + sv.Coeffecient.ToString(CultureInfo.InvariantCulture) + ")");
-                var dp = sv._CoeffecientPowerTerm.Differentiate(parameter);
-                sv = Multiply(log, Multiply(dp, sv));
             }
             else
             {
@@ -446,7 +401,6 @@ public partial class SymbolicVariable
 
         */
 
-        var SvDividedTerm = sv.DividedTerm;  // here we isolate the divided term for later calculations
         sv.DividedTerm = One;
 
         var MultipliedTerms = DeConstruct(sv);
@@ -516,61 +470,6 @@ public partial class SymbolicVariable
         var result = IntegByParts(parameter, OrderedVariables.Pop(), OrderedVariables);
 
         return result;
-
-        List<SymbolicVariable> CalculatedIntegs = new List<SymbolicVariable>(1);
-
-        //for (int ix = 0; ix < MultipliedTerms.Count; ix++)
-        //{
-        //CalculatedIntegs.Add(IntegTerm(MultipliedTerms[ix].Term, parameter));
-
-        /*
-        if (integrationDone == false && MultipliedTerms[ix].Term.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase) == true)
-        {
-            CalculatedIntegs.Add(IntegTerm(MultipliedTerms[ix].Term, parameter));
-            integrationDone = true;
-        }
-        else
-        {
-            CalculatedIntegs.Add(MultipliedTerms[ix].Term);
-        }*/
-        //}
-
-        // what about divided term ??
-        if (!SvDividedTerm.IsOne)
-        {
-            throw new NotImplementedException();
-            /*
-             * diff(f(x)*g(x)/h(x),x);
-             *      -(f(x)*g(x)*('diff(h(x),x,1)))/h(x)^2       <== notice the negative sign here and the squared denominator
-             *      +(f(x)*('diff(g(x),x,1)))/h(x)
-             *      +(g(x)*('diff(f(x),x,1)))/h(x)
-             */
-            var dvr = Subtract(Zero, SvDividedTerm.Integrate(parameter));  //differential of divided takes minus sign because it wil
-            CalculatedIntegs.Add(dvr);
-
-            // add the divided term but in negative  value because it is divided and in differentiation it will have -ve power
-            MultipliedTerms.Add(new MultipliedTerm(SvDividedTerm, true));
-        }
-
-        //       dx*y*z     dy*x*z       dz*x*y
-        var total = Zero;
-
-        foreach (var cc in CalculatedIntegs)
-        {
-            if (cc.IsZero)
-            {
-                continue;
-            }
-
-            total = Add(total, cc);
-        }
-
-        if (!SvDividedTerm.IsOne)
-        {
-            total.DividedTerm = Multiply(SvDividedTerm, SvDividedTerm);
-        }
-
-        return total;
     }
 
     public SymbolicVariable Integrate(string parameter)
