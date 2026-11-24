@@ -78,7 +78,7 @@ dotnet_diagnostic.RCS0034.severity = warning
 dotnet_diagnostic.RCS0041.severity = warning
 
 # Keep automatic accessors on one line
-# dotnet_diagnostic.RCS0042.severity = warning
+dotnet_diagnostic.RCS0042.severity = warning
 
 # Use LF line endings in C# files
 # dotnet_diagnostic.RCS0045.severity = warning

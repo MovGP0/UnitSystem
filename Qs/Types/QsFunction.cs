@@ -297,20 +297,12 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <summary>
     /// Function text after '=' equal sign.
     /// </summary>
-    public string FunctionBody
-    {
-        get;
-        private set;
-    }
+    public string FunctionBody { get; private set; }
 
     /// <summary>
     /// Hold the tokens of function after '=' equal sign
     /// </summary>
-    public Token FunctionBodyToken
-    {
-        get;
-        private set;
-    }
+    public Token FunctionBodyToken { get; private set; }
 
     /// <summary>
     /// The function declaration text

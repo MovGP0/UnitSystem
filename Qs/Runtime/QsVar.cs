@@ -2868,11 +2868,7 @@ class QsVar
     /// <summary>
     /// The final result of the parsing and expression tree construction.
     /// </summary>
-    internal Expression ResultExpression
-    {
-        get;
-        set;
-    }
+    internal Expression ResultExpression { get; set; }
     #endregion
 
 }

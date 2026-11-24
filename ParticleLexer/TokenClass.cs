@@ -8,27 +8,18 @@ public abstract class TokenClass
     /// <summary>
     /// The pattern that we will use to tokenizing and merging tokens.
     /// </summary>
-    public Regex Regex
-    {
-        get;
-    }
+    public Regex Regex { get; }
 
 
     /// <summary>
     /// Tells if the regex is an exact word without regex classes.
     /// </summary>
-    public bool ExactWord
-    {
-        get;
-    }
+    public bool ExactWord { get; }
 
     /// <summary>
     /// The pattern text.
     /// </summary>
-    public string RegexPattern
-    {
-        get;
-    }
+    public string RegexPattern { get; }
 
     public string OriginalPatternWord => Regex.Unescape(RegexPattern);
 

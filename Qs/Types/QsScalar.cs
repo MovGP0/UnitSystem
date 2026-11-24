@@ -26,67 +26,39 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     /// <summary>
     /// Quantity that its storage is symbol.
     /// </summary>
-    public AnyQuantity<SymbolicVariable> SymbolicQuantity
-    {
-        get;
-        set;
-    }
+    public AnyQuantity<SymbolicVariable> SymbolicQuantity { get; set; }
 
     /// <summary>
     /// Double Number Quantity
     /// Default behaviour.
     /// </summary>
-    public AnyQuantity<double> NumericalQuantity
-    {
-        get;
-        set;
-    }
+    public AnyQuantity<double> NumericalQuantity { get; set; }
 
     /// <summary>
     /// Quantity that its storage is a complex number
     /// </summary>
-    public AnyQuantity<Complex> ComplexQuantity
-    {
-        get;
-        set;
-    }
+    public AnyQuantity<Complex> ComplexQuantity { get; set; }
 
     /// <summary>
     /// Quantity that its storage is a Quaternion number
     /// </summary>
-    public AnyQuantity<Quaternion> QuaternionQuantity
-    {
-        get;
-        set;
-    }
+    public AnyQuantity<Quaternion> QuaternionQuantity { get; set; }
 
 
     /// <summary>
     /// Quantity that its storage is a Function.
     /// </summary>
-    public AnyQuantity<QsFunction> FunctionQuantity
-    {
-        get;
-        set;
-    }
+    public AnyQuantity<QsFunction> FunctionQuantity { get; set; }
 
     /// <summary>
     /// Hold qs operations like @ and \/ operations
     /// </summary>
-    public QsOperation Operation
-    {
-        get;
-        set;
-    }
+    public QsOperation Operation { get; set; }
 
     /// <summary>
     /// Rational Number Quantity.
     /// </summary>
-    public AnyQuantity<Rational> RationalQuantity
-    {
-        get;
-        set;
-    }
+    public AnyQuantity<Rational> RationalQuantity { get; set; }
 
     #endregion
 

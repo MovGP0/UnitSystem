@@ -26,11 +26,7 @@ public sealed class Planet
         Element = pe;
     }
 
-    public QsScalar Volume
-    {
-        get;
-        set;
-    }
+    public QsScalar Volume { get; set; }
 
     public string Name { get; set; }
 
