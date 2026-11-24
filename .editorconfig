@@ -335,7 +335,7 @@ dotnet_diagnostic.RCS1105.severity = warning
 dotnet_diagnostic.RCS1107.severity = warning
 
 # Add 'static' modifier to all partial class declarations
-# dotnet_diagnostic.RCS1108.severity = warning
+dotnet_diagnostic.RCS1108.severity = warning
 
 # Declare type inside namespace
 # dotnet_diagnostic.RCS1110.severity = warning
