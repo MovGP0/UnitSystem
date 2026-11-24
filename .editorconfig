@@ -1050,7 +1050,7 @@ dotnet_diagnostic.CA2246.severity = warning
 dotnet_diagnostic.CA2247.severity = warning
 
 # Provide correct 'enum' argument to 'Enum.HasFlag'
-# dotnet_diagnostic.CA2248.severity = warning
+dotnet_diagnostic.CA2248.severity = warning
 
 # Consider using 'string.Contains' instead of 'string.IndexOf'
 # dotnet_diagnostic.CA2249.severity = warning
