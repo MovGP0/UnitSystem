@@ -912,7 +912,7 @@ dotnet_diagnostic.CA1858.severity = warning
 dotnet_diagnostic.CA1859.severity = warning
 
 # Avoid using 'Enumerable.Any()' extension method
-# dotnet_diagnostic.CA1860.severity = warning
+dotnet_diagnostic.CA1860.severity = warning
 
 # Avoid constant arrays as arguments
 # dotnet_diagnostic.CA1861.severity = warning
