@@ -966,7 +966,7 @@ dotnet_diagnostic.CA2009.severity = warning
 dotnet_diagnostic.CA2011.severity = warning
 
 # Use ValueTasks correctly
-# dotnet_diagnostic.CA2012.severity = warning
+dotnet_diagnostic.CA2012.severity = warning
 
 # Do not use ReferenceEquals with value types
 dotnet_diagnostic.CA2013.severity = warning
