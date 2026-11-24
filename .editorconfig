@@ -212,7 +212,7 @@ dotnet_diagnostic.RCS1037.severity = warning
 # dotnet_diagnostic.RCS1043.severity = silent
 
 # Remove original exception from throw statement
-# dotnet_diagnostic.RCS1044.severity = warning
+dotnet_diagnostic.RCS1044.severity = warning
 
 # Asynchronous method name should end with 'Async'
 # dotnet_diagnostic.RCS1046.severity = none
