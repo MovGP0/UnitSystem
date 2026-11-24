@@ -792,7 +792,7 @@ dotnet_diagnostic.CA1507.severity = warning
 dotnet_diagnostic.CA1510.severity = warning
 
 # Use ArgumentException throw helper
-# dotnet_diagnostic.CA1511.severity = warning
+dotnet_diagnostic.CA1511.severity = warning
 
 # Use ArgumentOutOfRangeException throw helper
 # dotnet_diagnostic.CA1512.severity = warning
