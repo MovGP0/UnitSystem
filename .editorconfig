@@ -88,7 +88,7 @@ end_of_line = lf
 dotnet_diagnostic.RCS0046.severity = warning
 
 # Separate the first top-level declaration from any preceding directive
-# dotnet_diagnostic.RCS0050.severity = warning
+dotnet_diagnostic.RCS0050.severity = warning
 
 # Control the line break before a do statement's while clause
 # dotnet_diagnostic.RCS0051.severity = warning
