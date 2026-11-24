@@ -1,6 +1,7 @@
 ﻿using Qs.Runtime;
 using Qs.Types;
 using Qs;
+using FluentFTP;
 using System.Net;
 
 namespace QsRoot;
@@ -66,13 +67,32 @@ public static class Io
 
         if (uri.Scheme == Uri.UriSchemeFtp)
         {
-#pragma warning disable SYSLIB0014 // Preserve FTP downloads, which HttpClient does not support.
-            using var ftpClient = new WebClient();
-#pragma warning restore SYSLIB0014
-            return ftpClient.DownloadString(uri);
+            return DownloadFtpString(uri);
         }
 
         return DownloadClient.GetStringAsync(uri).GetAwaiter().GetResult();
+    }
+
+    private static string DownloadFtpString(Uri uri)
+    {
+        using var ftpClient = new FtpClient { Host = uri.IdnHost, Port = uri.Port };
+        if (uri.UserInfo.Length > 0)
+        {
+            var credentials = uri.UserInfo.Split(':', 2);
+            var user = Uri.UnescapeDataString(credentials[0]);
+            var password = credentials.Length == 2 ? Uri.UnescapeDataString(credentials[1]) : string.Empty;
+            ftpClient.Credentials = new NetworkCredential(user, password);
+        }
+
+        ftpClient.Connect();
+        if (!ftpClient.DownloadBytes(out var bytes, Uri.UnescapeDataString(uri.AbsolutePath)))
+        {
+            throw new IOException("The FTP download did not complete.");
+        }
+
+        using var content = new MemoryStream(bytes);
+        using var reader = new StreamReader(content);
+        return reader.ReadToEnd();
     }
 
     internal static byte[] DownloadBytes(string url)
