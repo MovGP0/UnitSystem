@@ -70,7 +70,8 @@ internal static class Check
     {
         if (system.NumberOfDimensions < dimension.Count)
         {
-            throw new InvalidOperationException(Messages.DimensionUnknown.FormatWith(system.Name,
+            throw new InvalidOperationException(Messages.DimensionUnknown.FormatWith(
+                system.Name,
                 system.NumberOfDimensions));
         }
     }

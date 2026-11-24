@@ -403,7 +403,8 @@ public partial class SymbolicVariable
                     short iskip;
                     var powerResult = SymbolicPower(
                         left
-                        , ArithExpression(eop.Next, out iskip)
+                        ,
+                        ArithExpression(eop.Next, out iskip)
                     );
 
                     skip += iskip;
@@ -457,7 +458,8 @@ public partial class SymbolicVariable
                     short iskip;
                     var powerResult = Expression.Power(
                         left
-                        , ArithExpression(eop.Next, out iskip)
+                        ,
+                        ArithExpression(eop.Next, out iskip)
                     );
 
                     skip += iskip;
@@ -598,17 +600,21 @@ public partial class SymbolicVariable
                         if (CoMath.AvailableFunctions.Contains(fname, StringComparer.OrdinalIgnoreCase))
                             targetfunction = typeof(CoMath).GetMethod(
                                 fname
-                                , BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static
+                                ,
+                                BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static
                             );
                         else if (fname.Equals("log", StringComparison.OrdinalIgnoreCase))
                             targetfunction = typeof(Math).GetMethod("Log", [typeof(double)]);
                         else if (fname.Equals("iif", StringComparison.OrdinalIgnoreCase))
-                            targetfunction = typeof(CoLogic).GetMethod("IIF", [typeof(bool), typeof(double), typeof(double)
-                            ]);
+                            targetfunction = typeof(CoLogic).GetMethod(
+                                "IIF",
+                                [typeof(bool), typeof(double), typeof(double)
+                                    ]);
                         else
                             targetfunction = typeof(Math).GetMethod(
                                 fname
-                                , BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static
+                                ,
+                                BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static
                             );
 
                         if (targetfunction != null)

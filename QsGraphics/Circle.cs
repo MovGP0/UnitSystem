@@ -127,7 +127,8 @@ public class Circle : Shape
 
         graphics.DrawEllipse(
             Pens.Blue
-            , rc
+            ,
+            rc
         );
 
         // start the timer after drawing the first round

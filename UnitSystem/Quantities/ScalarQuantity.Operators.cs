@@ -17,7 +17,9 @@ public sealed partial class ScalarQuantity
             throw new InvalidOperationException("Two points cannot be added.");
         }
 
-        return new ScalarQuantity(left.CoherentAmount + right.CoherentAmount, left.CoherentUnit,
+        return new ScalarQuantity(
+            left.CoherentAmount + right.CoherentAmount,
+            left.CoherentUnit,
             isPoint: left.IsPoint || right.IsPoint);
     }
 
@@ -33,7 +35,9 @@ public sealed partial class ScalarQuantity
             throw new InvalidOperationException("A point cannot be subtracted from a difference.");
         }
 
-        return new ScalarQuantity(left.CoherentAmount - right.CoherentAmount, left.CoherentUnit,
+        return new ScalarQuantity(
+            left.CoherentAmount - right.CoherentAmount,
+            left.CoherentUnit,
             isPoint: left.IsPoint && !right.IsPoint);
     }
 
@@ -45,7 +49,9 @@ public sealed partial class ScalarQuantity
     {
         left.EnsureLinear();
         right.EnsureLinear();
-        return new ScalarQuantity(left.CoherentAmount * right.CoherentAmount, left.CoherentUnit * right.CoherentUnit,
+        return new ScalarQuantity(
+            left.CoherentAmount * right.CoherentAmount,
+            left.CoherentUnit * right.CoherentUnit,
             isPoint: false);
     }
 
@@ -71,7 +77,9 @@ public sealed partial class ScalarQuantity
     {
         left.EnsureLinear();
         right.EnsureLinear();
-        return new ScalarQuantity(left.CoherentAmount / right.CoherentAmount, left.CoherentUnit / right.CoherentUnit,
+        return new ScalarQuantity(
+            left.CoherentAmount / right.CoherentAmount,
+            left.CoherentUnit / right.CoherentUnit,
             isPoint: false);
     }
 

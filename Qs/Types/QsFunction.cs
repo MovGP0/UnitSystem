@@ -150,7 +150,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                 nakedParameter = Expression.Constant(args[ip]);  // and I will postpone the evaluation until we process the function.
 
                 //expression to make parameter from the corresponding naked parameter
-                parameters.Add(Expression.Call(typeof(QsParameter).GetMethod("MakeParameter"),
+                parameters.Add(Expression.Call(
+                    typeof(QsParameter).GetMethod("MakeParameter"),
                     nakedParameter,
                     rawParameter));
             }
@@ -171,7 +172,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                 // if this was another function name without like  v(c,g,8)  where g is a function name will be passed to c
                 //  then excpetion will occur in GetQuantity that variable was not found in the scope
 
-                Expression tryBody = Expression.Call(typeof(QsParameter).GetMethod("MakeParameter"),
+                Expression tryBody = Expression.Call(
+                    typeof(QsParameter).GetMethod("MakeParameter"),
                     nakedParameter,
                     rawParameter);
 
@@ -179,7 +181,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                 // -> Catch(QsVariableNotFoundException e) {QsParameter.MakeParameter(e.ExtraData, args[ip])}
 
                 var e = Expression.Parameter(typeof(QsVariableNotFoundException), "e");
-                Expression catchBody = Expression.Call(typeof(QsParameter).GetMethod("MakeParameter"),
+                Expression catchBody = Expression.Call(
+                    typeof(QsParameter).GetMethod("MakeParameter"),
                     Expression.Property(e, "ExtraData"),
                     rawParameter);
 

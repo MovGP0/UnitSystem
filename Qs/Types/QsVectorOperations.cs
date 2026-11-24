@@ -252,8 +252,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         var mat = new QsMatrix(
             new QsVector(QsScalar.One, QsScalar.One, QsScalar.One)
-            , this
-            , v2);
+            ,
+            this
+            ,
+            v2);
 
         return mat.Determinant();
 

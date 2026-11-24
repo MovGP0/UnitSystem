@@ -57,8 +57,10 @@ public sealed class GaugeExpression
     }
 
     private static void CollectFactors(
-        Node expression, IReadOnlyDictionary<string, GaugeRepresentation> fields,
-        List<GaugeRepresentation> factors, bool conjugated)
+        Node expression,
+        IReadOnlyDictionary<string, GaugeRepresentation> fields,
+        List<GaugeRepresentation> factors,
+        bool conjugated)
     {
         switch (expression)
         {

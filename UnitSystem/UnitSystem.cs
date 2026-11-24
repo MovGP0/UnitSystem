@@ -91,7 +91,7 @@ internal sealed class UnitSystem : IUnitSystem
                 name,
                 inherentPrefix);
             if (unit.BaseSymbol != unit.Symbol && _baseUnits.Any(existing =>
-                    existing.BaseSymbol != existing.Symbol && existing.BaseSymbol == unit.BaseSymbol))
+                existing.BaseSymbol != existing.Symbol && existing.BaseSymbol == unit.BaseSymbol))
             {
                 throw new InvalidOperationException(Messages.UnitSymbolAlreadyKnown.FormatWith(unit.BaseSymbol));
             }

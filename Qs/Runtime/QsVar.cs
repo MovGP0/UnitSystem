@@ -281,7 +281,8 @@ class QsVar
         //tokens = tokens.RemoveSpaceTokens();                           //remove all spaces
         tokens = tokens.RemoveAnySpaceTokens();
 
-        tokens = tokens.DiscoverQsCalls(StringComparer.OrdinalIgnoreCase,
+        tokens = tokens.DiscoverQsCalls(
+            StringComparer.OrdinalIgnoreCase,
             ["When", "Otherwise", "And", "Or", "Loop", "On"]
         );
 
@@ -714,10 +715,12 @@ class QsVar
                             Expression.LessThan(counter, Expression.Constant(count)),
                             Expression.Block(
                                 Expression.Call(result, fltAdd, ParseArithmatic(tokens[ix][1]))
-                                , Expression.PostIncrementAssign(counter)
+                                ,
+                                Expression.PostIncrementAssign(counter)
                             ),
                             Expression.Break(LoopBreakLabel, result)
-                        ), LoopBreakLabel)
+                        ),
+                        LoopBreakLabel)
                 );
 
                 loopIteratorContainer.Pop();
@@ -804,9 +807,12 @@ class QsVar
 
                         var lip = Expression.Call(ItoQsv, vp);
 
-                        var IndexArg = Expression.Call(mpm
-                            , Expression.Convert(lip, typeof(object))
-                            , Expression.Constant("Counter_" + s));
+                        var IndexArg = Expression.Call(
+                            mpm
+                            ,
+                            Expression.Convert(lip, typeof(object))
+                            ,
+                            Expression.Constant("Counter_" + s));
 
                         quantityExpression = Expression.Call(quantityExpression, mix, Expression.NewArrayInit(typeof(QsParameter), IndexArg));
                     };
@@ -1076,9 +1082,13 @@ class QsVar
 
         var ex = Expression.Constant(Evaluator);
 
-        return Expression.Call(ex, typeof(QsEvaluator).GetMethod("DeleteQsValue")
-            , Expression.Constant(string.Empty)
-            , Expression.Constant(token.TokenValue)
+        return Expression.Call(
+            ex,
+            typeof(QsEvaluator).GetMethod("DeleteQsValue")
+            ,
+            Expression.Constant(string.Empty)
+            ,
+            Expression.Constant(token.TokenValue)
         );
 
     }
@@ -1160,8 +1170,10 @@ class QsVar
                 // we have to check the corresponding parameter type to make convertion if needed.
                 var targetType = d_ctor_params[ctorArgIndex].ParameterType;
 
-                var exprArg = Expression.Convert(Root.QsToNativeConvert(targetType, expr)
-                    , targetType);
+                var exprArg = Expression.Convert(
+                    Root.QsToNativeConvert(targetType, expr)
+                    ,
+                    targetType);
                 Arguments.Add(exprArg);
                 ctorArgIndex++;
             }
@@ -1638,7 +1650,8 @@ class QsVar
             else
             {
                 //namespace included
-                f = QsFunction.GetFirstDeclaredFunction(Scope,
+                f = QsFunction.GetFirstDeclaredFunction(
+                    Scope,
                     functionValueToken.TokenValue.Substring(0, functionValueToken.TokenValue.LastIndexOf(':')),
                     functionValueToken.TokenValue.Substring(functionValueToken.TokenValue.LastIndexOf(':') + 2));
             }
@@ -1671,7 +1684,8 @@ class QsVar
             else
             {
                 //namespace included
-                f = QsFunction.GetFirstDeclaredFunction(Scope,
+                f = QsFunction.GetFirstDeclaredFunction(
+                    Scope,
                     functionValueToken[1][0][0].TokenValue,
                     functionValueToken[1][1].TokenValue);
             }
@@ -1889,7 +1903,8 @@ class QsVar
             );
         }
 
-        Expression result = Expression.Call(Expression.Constant(value),
+        Expression result = Expression.Call(
+            Expression.Constant(value),
             mi,
             Expression.NewArrayInit(typeof(QsParameter), ExpressionParameters));
 
@@ -1922,7 +1937,8 @@ class QsVar
             );
         }
 
-        Expression result = Expression.Call(value,
+        Expression result = Expression.Call(
+            value,
             mi,
             Expression.NewArrayInit(typeof(QsParameter), ExpressionParameters));
 
@@ -1972,7 +1988,8 @@ class QsVar
                     // if this was another function name without like  v(c,g,8)  where g is a function name will be passed to c
                     //  then excpetion will occur in GetQuantity that variable was not found in the scope
 
-                    Expression tryBody = Expression.Call(typeof(QsParameter).GetMethod("MakeParameter"),
+                    Expression tryBody = Expression.Call(
+                        typeof(QsParameter).GetMethod("MakeParameter"),
                         nakedParameter,
                         rawParameter);
 
@@ -1980,7 +1997,8 @@ class QsVar
                     // -> Catch(QsVariableNotFoundException e) {QsParameter.MakeParameter(e.ExtraData, args[ip])}
 
                     var e = Expression.Parameter(typeof(QsVariableNotFoundException), "e");
-                    Expression catchBody = Expression.Call(typeof(QsParameter).GetMethod("MakeParameter"),
+                    Expression catchBody = Expression.Call(
+                        typeof(QsParameter).GetMethod("MakeParameter"),
                         Expression.Property(e, "ExtraData"),
                         rawParameter);
 
@@ -2011,7 +2029,8 @@ class QsVar
 
         //get the sequence dynamically because sequence can be recursive :)
 
-        Expression QsSequExpression = Expression.Call(typeof(QsSequence).GetMethod("GetSequence"),
+        Expression QsSequExpression = Expression.Call(
+            typeof(QsSequence).GetMethod("GetSequence"),
             Expression.Constant(Evaluator.Scope),
             Expression.Constant(sequenceNamespace),
             Expression.Constant(seqo)
@@ -2084,28 +2103,40 @@ class QsVar
                     mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter)]);
                     break;
                 case 2:
-                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        methodName,
+                        [typeof(int), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 3:
-                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        methodName,
+                        [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 4:
-                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        methodName,
+                        [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 5:
-                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        methodName,
+                        [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 6:
-                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        methodName,
+                        [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 7:
-                    mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        methodName,
+                        [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 default:
                     throw new QsException("Number of sequence parameters exceed the built in functionality");
@@ -2125,32 +2156,46 @@ class QsVar
                     mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int)]);
                     break;
                 case 1:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        RangeOperation,
+                        [typeof(string), typeof(int), typeof(int), typeof(QsParameter)
+                            ]);
                     break;
                 case 2:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        RangeOperation,
+                        [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 3:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        RangeOperation,
+                        [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 4:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        RangeOperation,
+                        [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 5:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        RangeOperation,
+                        [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 6:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        RangeOperation,
+                        [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 case 7:
-                    mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
-                    ]);
+                    mi = typeof(QsSequence).GetMethod(
+                        RangeOperation,
+                        [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
+                            ]);
                     break;
                 default:
                     throw new QsException("Number of sequence parameters exceed the built in functionality");
@@ -2165,9 +2210,12 @@ class QsVar
 
         #endregion
 
-        var finale = Expression.Call(QsSequExpression
-            , mi
-            , parameters.ToArray()
+        var finale = Expression.Call(
+            QsSequExpression
+            ,
+            mi
+            ,
+            parameters.ToArray()
         );
 
         return finale;
@@ -2347,13 +2395,15 @@ class QsVar
                 // Get the function name from the parameter
                 Expression FunctionParameter = lambdaBuilder.Parameters.Single(c => c.Name.Equals(functionName, StringComparison.OrdinalIgnoreCase));
 
-                Expression FunctionParameterName = Expression.Call(FunctionParameter,
+                Expression FunctionParameterName = Expression.Call(
+                    FunctionParameter,
                     typeof(QsParameter).GetMethod("GetTrueFunctionName"),
                     Expression.Constant(ArgumentTokens.Count)
                 );
 
                 // Get the Function object.
-                Expression Functor = Expression.Call(typeof(QsFunction).GetMethod("GetFunctionAndThrowIfNotFound"),
+                Expression Functor = Expression.Call(
+                    typeof(QsFunction).GetMethod("GetFunctionAndThrowIfNotFound"),
                     Expression.Constant(Scope),
                     FunctionParameterName
                 );
@@ -2406,7 +2456,8 @@ class QsVar
                             rw                                //Raw Value
                         )
                         ,
-                        Expression.Catch(typeof(QsVariableNotFoundException),
+                        Expression.Catch(
+                            typeof(QsVariableNotFoundException),
                             Expression.Call(
                                 typeof(QsParameter).GetMethod("MakeParameter"),
                                 Expression.Constant(null),                                //no value
@@ -2421,7 +2472,8 @@ class QsVar
                 }
 
                 // expression to call the function QsFunction.GetInvoke  is used here
-                Expression CallExpression = Expression.Call(Functor,
+                Expression CallExpression = Expression.Call(
+                    Functor,
                     typeof(QsFunction).GetMethod("GetInvoke"),
                     Expression.NewArrayInit(typeof(QsParameter), FunctorParams)
                 );
@@ -2638,10 +2690,13 @@ class QsVar
                 if (eop.Next.Operation == "^")
                 {
                     short iskip;
-                    var powerResult = Expression.Power(left, ArithExpression
-                    (
-                        eop.Next, out iskip
-                    ), aqType.GetMethod("Pow"));
+                    var powerResult = Expression.Power(
+                        left,
+                        ArithExpression
+                            (
+                                eop.Next, out iskip
+                            ),
+                        aqType.GetMethod("Pow"));
 
                     skip += iskip;
                     return powerResult;

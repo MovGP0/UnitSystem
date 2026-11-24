@@ -34,7 +34,10 @@ public static class ImperialSystem
         system.AddDerivedUnit("btu", "British thermal unit", 778.169 * ft * lbf);
 
         const double fahrenheitScale = 5.0 / 9.0;
-        system.AddDerivedUnit("°F", "degrees Fahrenheit", fahrenheitScale * SISystem.K,
+        system.AddDerivedUnit(
+            "°F",
+            "degrees Fahrenheit",
+            fahrenheitScale * SISystem.K,
             offset: 273.15 - 32 * fahrenheitScale);
     }
 

@@ -633,7 +633,8 @@ public class QsEvaluator
                                             [
                                                 QsParameter.MakeParameter(n.ToQuantity().ToScalar(), SequenceParameter)
                                             ]
-                                            , (QsValue)qv.Execute()
+                                            ,
+                                            (QsValue)qv.Execute()
                                         );
                                     }
 
@@ -652,7 +653,8 @@ public class QsEvaluator
 
                                 oinstance.SetIndexedItem(
                                     [QsParameter.MakeParameter(new QsText(SequenceParameter), SequenceParameter)]
-                                    , (QsValue)qv.Execute()
+                                    ,
+                                    (QsValue)qv.Execute()
                                 );
 
                             }
@@ -753,14 +755,19 @@ public class QsEvaluator
 
                                 SetVariable(
                                     vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
-                                    , vnToken[vnToken.Count - 1].TokenValue
-                                    , qvResult
+                                    ,
+                                    vnToken[vnToken.Count - 1].TokenValue
+                                    ,
+                                    qvResult
                                 );
 
 
-                                var q = GetScopeQsValue(Scope
-                                    , vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
-                                    , vnToken[vnToken.Count - 1].TokenValue
+                                var q = GetScopeQsValue(
+                                    Scope
+                                    ,
+                                    vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
+                                    ,
+                                    vnToken[vnToken.Count - 1].TokenValue
                                 );
                                 PrintQuantity(q);
                                 return q;
@@ -1021,8 +1028,11 @@ public class QsEvaluator
                             {
                                 // set the value to the indexed item.
                                 var parent = (QsObject)parent_object;
-                                ParentPropertyInfo.SetValue(parent.ThisObject, qvResult, [ParentPropertyInfoIndexer.Value
-                                ]);
+                                ParentPropertyInfo.SetValue(
+                                    parent.ThisObject,
+                                    qvResult,
+                                    [ParentPropertyInfoIndexer.Value
+                                        ]);
                                 var q = parent.GetProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
                                 PrintQuantity(q);
                                 return q;
@@ -1040,13 +1050,18 @@ public class QsEvaluator
                                 var IndexerProperty = InsidePropertyObjectType.GetProperty("Item");
 
                                 var nativeValue = Root.QsToNativeConvert(IndexerProperty.PropertyType, qvResult);
-                                IndexerProperty.SetValue(InsidePropertyAsObject
-                                    , nativeValue
-                                    , [ParentPropertyInfoIndexer.Value]
+                                IndexerProperty.SetValue(
+                                    InsidePropertyAsObject
+                                    ,
+                                    nativeValue
+                                    ,
+                                    [ParentPropertyInfoIndexer.Value]
                                 );
 
-                                var q = IndexerProperty.GetValue(InsidePropertyAsObject, [ParentPropertyInfoIndexer.Value
-                                ]);
+                                var q = IndexerProperty.GetValue(
+                                    InsidePropertyAsObject,
+                                    [ParentPropertyInfoIndexer.Value
+                                        ]);
                                 PrintQuantity(q);
                                 return q;
                             }
@@ -1305,13 +1320,17 @@ public class QsEvaluator
         // 3- if default function does'nt exist declare default function.
         // Default function: is function declared without specifying its parameters in its name  f#2 f#4  are default functions.
 
-        var DefaultFunction = QsFunction.GetDefaultFunction(Scope, qsFunction.FunctionNamespace,
-            qsFunction.FunctionName, qsFunction.Parameters.Length);
+        var DefaultFunction = QsFunction.GetDefaultFunction(
+            Scope,
+            qsFunction.FunctionNamespace,
+            qsFunction.FunctionName,
+            qsFunction.Parameters.Length);
 
         if (DefaultFunction == null)
         {
             // then store the function
-            SetVariable(qsFunction.FunctionNamespace,
+            SetVariable(
+                qsFunction.FunctionNamespace,
                 QsFunction.FormFunctionSymbolicName(qsFunction.FunctionName, qsFunction.Parameters.Length),
                 qsFunction);
         }
@@ -1320,7 +1339,8 @@ public class QsEvaluator
             // 1- find if function with the same parameters and name exist
             // 2- overwrite this function otherwise create new one.
 
-            var OverLoadedFunction = QsFunction.GetExactFunctionWithParameters(Scope,
+            var OverLoadedFunction = QsFunction.GetExactFunctionWithParameters(
+                Scope,
                 qsFunction.FunctionNamespace,
                 qsFunction.FunctionName,
                 qsFunction.ParametersNames);
@@ -1328,7 +1348,8 @@ public class QsEvaluator
             if (OverLoadedFunction == null)
             {
                 // store new overloaded function with parameters.
-                SetVariable(qsFunction.FunctionNamespace,
+                SetVariable(
+                    qsFunction.FunctionNamespace,
                     QsFunction.FormFunctionSymbolicName(qsFunction.FunctionName, qsFunction.ParametersNames),
                     qsFunction);
             }
@@ -1340,7 +1361,8 @@ public class QsEvaluator
                 {
                     //overwrite default function.
 
-                    SetVariable(DefaultFunction.FunctionNamespace,
+                    SetVariable(
+                        DefaultFunction.FunctionNamespace,
                         QsFunction.FormFunctionSymbolicName(qsFunction.FunctionName, DefaultFunction.ParametersNames.Length),
                         qsFunction);
                 }
@@ -1348,7 +1370,8 @@ public class QsEvaluator
                 {
                     // overwrite overloaded function
 
-                    SetVariable(DefaultFunction.FunctionNamespace,
+                    SetVariable(
+                        DefaultFunction.FunctionNamespace,
                         QsFunction.FormFunctionSymbolicName(qsFunction.FunctionName, OverLoadedFunction.ParametersNames),
                         qsFunction);
                 }

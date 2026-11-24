@@ -14,11 +14,12 @@ public sealed partial class QuantityDimension : IFormattable
 
         if (Length.VectorExponent != 0)
         {
-            dim.Append(string.Format("L{0}(S{1}V{2}M{3})",
-                    Length.Exponent.ToString(format, formatProvider),
-                    Length.ScalarExponent.ToString(format, formatProvider),
-                    Length.VectorExponent.ToString(format, formatProvider),
-                    Length.MatrixExponent.ToString(format, formatProvider)
+            dim.Append(string.Format(
+                "L{0}(S{1}V{2}M{3})",
+                Length.Exponent.ToString(format, formatProvider),
+                Length.ScalarExponent.ToString(format, formatProvider),
+                Length.VectorExponent.ToString(format, formatProvider),
+                Length.MatrixExponent.ToString(format, formatProvider)
                 ));
         }
         else

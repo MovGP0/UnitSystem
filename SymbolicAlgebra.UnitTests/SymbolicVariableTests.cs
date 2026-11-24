@@ -226,7 +226,8 @@ public static class SymbolicVariableTests
             "(x*a+y*a+x*b-y*b)/(x^2-y^2)")]
         [TestCase(
             "z^2*x^2/(x^2+y^2+z^2)^3/sqrt(1-z^2/(x^2+y^2+z^2))^2",
-            "(x^2*z^2)/((x^2+y^2)*(x^2+y^2+z^2)^2)", true)]
+            "(x^2*z^2)/((x^2+y^2)*(x^2+y^2+z^2)^2)",
+            true)]
         public void UnifyDenominatorsTest(string inputExpression, string expectedResult, bool disabled = false)
         {
             if (disabled)

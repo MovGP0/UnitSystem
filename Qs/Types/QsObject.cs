@@ -68,7 +68,8 @@ public class QsObject : QsValue
                 {
                     var qv = new Runtime.QsVar(
                         Runtime.QsEvaluator.CurrentEvaluator
-                        , tk);
+                        ,
+                        tk);
 
                     // evaluate the expresion
                     var expr = qv.ResultExpression;  // the return value is QsValue
@@ -84,8 +85,10 @@ public class QsObject : QsValue
             // parameters has been prepared.
             ResultExpression = Expression.Call(
                 Expression.Constant(ThisObject)
-                , d_method
-                , Arguments.ToArray()
+                ,
+                d_method
+                ,
+                Arguments.ToArray()
             );
 
             if (d_method.ReturnType == typeof(void))
@@ -480,8 +483,10 @@ public class QsObject : QsValue
     {
 
 
-        var pi = InstanceType.GetProperty("Item"
-            , BindingFlags.Instance | BindingFlags.Public
+        var pi = InstanceType.GetProperty(
+            "Item"
+            ,
+            BindingFlags.Instance | BindingFlags.Public
         );
 
 
@@ -493,8 +498,10 @@ public class QsObject : QsValue
 
     public override void SetIndexedItem(QsParameter[] indices, QsValue value)
     {
-        var pi = InstanceType.GetProperty("Item"
-            , BindingFlags.Instance | BindingFlags.Public
+        var pi = InstanceType.GetProperty(
+            "Item"
+            ,
+            BindingFlags.Instance | BindingFlags.Public
         );
         var gs = pi.GetSetMethod();
 

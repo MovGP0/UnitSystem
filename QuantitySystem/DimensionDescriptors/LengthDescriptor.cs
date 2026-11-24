@@ -2,10 +2,10 @@
 
 public struct LengthDescriptor(float normalExponent, float polarExponent, float matrixExponent)
     :
-        IDimensionDescriptor<LengthDescriptor>,
-        IEquatable<LengthDescriptor>,
-        IComparable<LengthDescriptor>,
-        IComparable
+    IDimensionDescriptor<LengthDescriptor>,
+    IEquatable<LengthDescriptor>,
+    IComparable<LengthDescriptor>,
+    IComparable
 {
     public LengthDescriptor(float normalExponent, float polarExponent)
         : this(normalExponent, polarExponent, 0)

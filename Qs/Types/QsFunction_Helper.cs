@@ -68,9 +68,12 @@ public partial class QsFunction
             return GetDefaultFunction(scope, nameSpace, functionName, 0);
         }
 
-        var funcs = FindFunctionByParameters(scope,
-            nameSpace, functionName,
-            parametersNames.Length, parametersNames);
+        var funcs = FindFunctionByParameters(
+            scope,
+            nameSpace,
+            functionName,
+            parametersNames.Length,
+            parametersNames);
 
         foreach (var func in funcs)
         {

@@ -28,16 +28,18 @@ public sealed partial class Dimension
     public string ToString(IUnitSystem system, string? format, IFormatProvider? formatProvider)
     {
         var symbols = system.DimensionSymbols;
-        return string.Join(NonBreakingSpace, this.Select((value, index) =>
-        {
-            if (value == Rational.Zero)
+        return string.Join(
+            NonBreakingSpace,
+            this.Select((value, index) =>
             {
-                return "";
-            }
+                if (value == Rational.Zero)
+                {
+                    return "";
+                }
 
-            var symbol = symbols[index + 1];
-            return value == Rational.One ? symbol : $"{symbol}^{FormatExponent(value, format, formatProvider)}";
-        }).Where(value => value.Length != 0));
+                var symbol = symbols[index + 1];
+                return value == Rational.One ? symbol : $"{symbol}^{FormatExponent(value, format, formatProvider)}";
+            }).Where(value => value.Length != 0));
     }
 
     private static string FormatExponent(Rational exponent, string? format, IFormatProvider? formatProvider)

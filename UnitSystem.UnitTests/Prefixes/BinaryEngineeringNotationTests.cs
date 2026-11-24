@@ -9,14 +9,17 @@ public sealed class BinaryEngineeringNotationTests
     [Test]
     public void ShouldFormatConcurrently()
     {
-        Parallel.For(0, 128, index =>
-        {
-            var exponent = index % 11;
-            var prefix = BinaryPrefix.GetAll().Single(candidate => candidate.Base1024Exponent == exponent);
-            var expected = prefix.Symbol.Length == 0 ? "1" : $"1\u00A0{prefix.Symbol}";
+        Parallel.For(
+            0,
+            128,
+            index =>
+            {
+                var exponent = index % 11;
+                var prefix = BinaryPrefix.GetAll().Single(candidate => candidate.Base1024Exponent == exponent);
+                var expected = prefix.Symbol.Length == 0 ? "1" : $"1\u00A0{prefix.Symbol}";
 
-            BinaryEngineeringNotation.FromValue(prefix.Factor).ShouldBe(expected);
-        });
+                BinaryEngineeringNotation.FromValue(prefix.Factor).ShouldBe(expected);
+            });
     }
 
     [TestCase(5, "5")]

@@ -397,9 +397,16 @@ public sealed partial class QuantityDimension
             if (!edps.ContainsKey('D'))
                 edps['D'] = 0;
 
-            var qd = new QuantityDimension(edps['M']
-                , edps['L'], edps['T'], edps['I'], edps['O']
-                , edps['N'], edps['J'])
+            var qd = new QuantityDimension(
+                edps['M']
+                ,
+                edps['L'],
+                edps['T'],
+                edps['I'],
+                edps['O']
+                ,
+                edps['N'],
+                edps['J'])
             {
                 Currency = new CurrencyDescriptor(edps['C']),
                 Digital = new DigitalDescriptor(edps['D'])

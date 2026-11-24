@@ -52,7 +52,9 @@ public static class SerializationExtensions
             .Where(component => component.Exponent != 0)
             .ToDictionary(component => component.Symbol, component => component.Exponent);
 
-        return new QuantityInfo<double>(scalarQuantity.CoherentAmount, units,
+        return new QuantityInfo<double>(
+            scalarQuantity.CoherentAmount,
+            units,
             scalarQuantity.IsPoint || scalarQuantity.Unit.SupportsPoints || coherentUnit.SupportsPoints
                 ? scalarQuantity.IsPoint
                 : null);

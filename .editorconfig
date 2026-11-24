@@ -99,7 +99,7 @@ dotnet_diagnostic.RCS0052.severity = warning
 roslynator_equals_token_new_line = before
 
 # Align items in a multiline list
-# dotnet_diagnostic.RCS0053.severity = warning
+dotnet_diagnostic.RCS0053.severity = warning
 
 # Use consistent line breaks in call chains
 # dotnet_diagnostic.RCS0054.severity = warning
