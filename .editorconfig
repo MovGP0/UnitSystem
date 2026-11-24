@@ -147,7 +147,7 @@ dotnet_diagnostic.RCS1002.severity = none
 dotnet_diagnostic.RCS1003.severity = warning
 
 # Remove optional braces from if-else branches
-# dotnet_diagnostic.RCS1004.severity = disabled
+dotnet_diagnostic.RCS1004.severity = none
 
 # Combine nested using statements
 # dotnet_diagnostic.RCS1005.severity = warning
