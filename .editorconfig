@@ -132,7 +132,7 @@ dotnet_diagnostic.RCS0061.severity = warning
 roslynator_blank_line_between_switch_sections = include
 
 # Control whether an expression body starts on a new line
-# dotnet_diagnostic.RCS0062.severity = disabled
+dotnet_diagnostic.RCS0062.severity = none
 
 # Remove redundant blank lines
 # dotnet_diagnostic.RCS0063.severity = warning
