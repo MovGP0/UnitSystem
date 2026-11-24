@@ -10,7 +10,9 @@ public partial class SymbolicVariable
     public double Solve()
     {
         if (InvolvedSymbols.Length == 0)
+        {
             return 0;
+        }
 
         return Solve(InvolvedSymbols[0]).Coeffecient;
     }
@@ -25,7 +27,9 @@ public partial class SymbolicVariable
         // "5*t1+3/t2"  ==>  5*t1 = -3/t2  ==>  t1  = (-3/t2)*5
 
         if (_ExtraTerms != null && _ExtraTerms.Count > 0)
+        {
             throw new SymbolicException("can't solve expression with extra terms that hold terms with different denominator");
+        }
 
         // Algorithm:
         // search for the term with variable in it
@@ -61,10 +65,14 @@ public partial class SymbolicVariable
         }
 
         if (ExtractedTerm == null)
+        {
             throw new SymbolicException("the variable (" + variable + ") of solving not found");
+        }
 
         if (ExtractedTerm.SymbolPower != 1)
+        {
             throw new SymbolicException("Variables with higher powers is not solvable for now");
+        }
 
         RestTerm = RestTerm * NegativeOne; // this will transfer the rest value from left to right
 
@@ -114,7 +122,9 @@ public partial class SymbolicVariable
         if (Symbol.Equals(variable, StringComparison.OrdinalIgnoreCase))
         {
             if (CoeffecientPowerTerm == null)
+            {
                 cf = Coeffecient;
+            }
         }
 
         if (!cf.HasValue)
@@ -124,7 +134,9 @@ public partial class SymbolicVariable
                 if (t.Value.Symbol.Equals(variable, StringComparison.OrdinalIgnoreCase))
                 {
                     if (t.Value.CoeffecientPowerTerm == null)
+                    {
                         cf = t.Value.Coeffecient;
+                    }
                 }
             }
         }
@@ -145,7 +157,9 @@ public partial class SymbolicVariable
         if (Symbol.Equals(variable, StringComparison.OrdinalIgnoreCase) && SymbolPower == power)
         {
             if (CoeffecientPowerTerm == null)
+            {
                 cf = Coeffecient;
+            }
         }
 
         if (!cf.HasValue)
@@ -155,7 +169,9 @@ public partial class SymbolicVariable
                 if (t.Value.Symbol.Equals(variable, StringComparison.OrdinalIgnoreCase) && t.Value.SymbolPower == power)
                 {
                     if (t.Value.CoeffecientPowerTerm == null)
+                    {
                         cf = t.Value.Coeffecient;
+                    }
                 }
             }
         }

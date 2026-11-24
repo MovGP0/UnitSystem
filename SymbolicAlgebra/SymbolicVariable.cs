@@ -32,7 +32,9 @@ public partial class SymbolicVariable
                 foreach (var vc in value)
                 {
                     if (!char.IsWhiteSpace(vc))
+                    {
                         _Symbol += vc;
+                    }
                 }
             }
             else
@@ -158,9 +160,14 @@ public partial class SymbolicVariable
             coe = double.PositiveInfinity;
             Symbol = string.Empty;
             if (rem != 0.0)
+            {
                 Coeffecient = -1 * coe;
+            }
             else
+            {
                 Coeffecient = coe;
+            }
+
             SymbolPower = 0;
         }
         // then try Not a Number NaN   second
@@ -175,9 +182,14 @@ public partial class SymbolicVariable
         {
             Symbol = string.Empty;
             if (rem != 0.0)
+            {
                 Coeffecient = -1 * coe;
+            }
             else
+            {
                 Coeffecient = coe;
+            }
+
             SymbolPower = 0;
         }
         else
@@ -185,9 +197,13 @@ public partial class SymbolicVariable
             // not number then take the whole string as a symbol
             Symbol = expression;
             if (rem != 0.0)
+            {
                 Coeffecient = -1;     // in case of minus before symbol  -x or -sin(x)
+            }
             else
+            {
                 Coeffecient = 1;
+            }
 
             SymbolPower = 1;
         }
@@ -398,7 +414,10 @@ public partial class SymbolicVariable
                         }
 
                         if (Symbol.EndsWith(","))
+                        {
                             Symbol = Symbol.TrimEnd(',');
+                        }
+
                         Symbol += ")";
                     }
                 }
@@ -554,7 +573,10 @@ public partial class SymbolicVariable
         get
         {
             if (_AddedTerms == null)
+            {
                 _AddedTerms = new Dictionary<string, SymbolicVariable>(StringComparer.OrdinalIgnoreCase);
+            }
+
             return _AddedTerms;
         }
     }
@@ -569,7 +591,10 @@ public partial class SymbolicVariable
         get
         {
             if (_ExtraTerms == null)
+            {
                 _ExtraTerms = [];
+            }
+
             return _ExtraTerms;
         }
     }
@@ -582,7 +607,10 @@ public partial class SymbolicVariable
         get
         {
             if (_DividedTerm == null)
+            {
                 _DividedTerm = new SymbolicVariable("1");
+            }
+
             return _DividedTerm;
         }
         internal set => _DividedTerm = value;
@@ -611,7 +639,10 @@ public partial class SymbolicVariable
         get
         {
             if (_FusedSymbols == null)
+            {
                 _FusedSymbols = new Dictionary<string, HybridVariable>(StringComparer.OrdinalIgnoreCase);
+            }
+
             return _FusedSymbols;
         }
     }
@@ -624,7 +655,10 @@ public partial class SymbolicVariable
         get
         {
             if (_FusedConstants == null)
+            {
                 _FusedConstants = new Dictionary<double, HybridVariable>();
+            }
+
             return _FusedConstants;
         }
     }
@@ -642,17 +676,25 @@ public partial class SymbolicVariable
         {
             var powerTermText = powerTerm.ToString();
             if (powerTermText.Length > 1)
+            {
                 result = variableName + "^(" + powerTermText + ")";
+            }
             else
+            {
                 result = variableName + "^" + powerTermText;
+            }
         }
         else if (power != 0)
         {
             // variable exist
             if (power != 1)
+            {
                 result = variableName + "^" + power.ToString(CultureInfo.InvariantCulture);
+            }
             else
+            {
                 result = variableName;
+            }
         }
 
         return result;
@@ -671,17 +713,25 @@ public partial class SymbolicVariable
         {
             var powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).ToString() : powerTerm.ToString();
             if (powerTermText.Length > 1)
+            {
                 result = variableName + "^(" + powerTermText + ")";
+            }
             else
+            {
                 result = variableName + "^" + powerTermText;
+            }
         }
         else if (power != 0)
         {
             // variable exist
             if (Math.Abs(power) != 1)
+            {
                 result = variableName + "^" + Math.Abs(power).ToString(CultureInfo.InvariantCulture);
+            }
             else
+            {
                 result = variableName;
+            }
         }
 
         return result;
@@ -710,9 +760,13 @@ public partial class SymbolicVariable
         {
             var powerTermText = powerTerm.ToString();
             if (powerTermText.Length > 1)
+            {
                 result = variableName + "^(" + powerTermText + ")";
+            }
             else
+            {
                 result = variableName + "^" + powerTermText;
+            }
         }
         else if (power != 0)
         {
@@ -752,17 +806,25 @@ public partial class SymbolicVariable
             var powerTermText = powerTerm.IsNegative ? Multiply(NegativeOne, powerTerm).ToString() : powerTerm.ToString();
 
             if (powerTermText.Length > 1)
+            {
                 result = variableName + "^(" + powerTermText + ")";
+            }
             else
+            {
                 result = variableName + "^" + powerTermText;
+            }
         }
         else if (power != 0)
         {
             // variable exist
             if (Math.Abs(power) != 1)
+            {
                 result = variableName + "^" + Math.Abs(power).ToString(CultureInfo.InvariantCulture);
+            }
             else
+            {
                 result = variableName;
+            }
         }
 
         return result;
@@ -797,9 +859,13 @@ public partial class SymbolicVariable
         var ft = Parse(fs.Key);
 
         if (fs.Value.SymbolicVariable != null)
+        {
             return ft.RaiseToSymbolicPower(fs.Value.SymbolicVariable);
+        }
         else
+        {
             return ft.Power(fs.Value.NumericalVariable);
+        }
     }
 
     /// <summary>
@@ -813,9 +879,13 @@ public partial class SymbolicVariable
         var ft = new SymbolicVariable(fs.Key.ToString(CultureInfo.InvariantCulture));
 
         if (fs.Value.SymbolicVariable != null)
+        {
             return ft.RaiseToSymbolicPower(fs.Value.SymbolicVariable);
+        }
         else
+        {
             return ft.Power(fs.Value.NumericalVariable);
+        }
     }
 
     /// <summary>
@@ -829,7 +899,9 @@ public partial class SymbolicVariable
         stripped._SymbolPower = _SymbolPower;
 
         if (_SymbolPowerTerm != null)
+        {
             stripped._SymbolPowerTerm = _SymbolPowerTerm.Clone();
+        }
 
         return stripped;
     }
@@ -843,7 +915,9 @@ public partial class SymbolicVariable
         var stripped =  new SymbolicVariable(Coeffecient.ToString(CultureInfo.InvariantCulture));
 
         if (_CoeffecientPowerTerm != null)
+        {
             stripped._CoeffecientPowerTerm = _CoeffecientPowerTerm.Clone();
+        }
 
         return stripped;
     }
@@ -888,7 +962,9 @@ public partial class SymbolicVariable
 
             // add the key of the coefficient only  when it has power term and coefficient itself is not zero.
             if (CoeffecientPowerTerm != null && Coeffecient != 0)
+            {
                 result = Coeffecient.ToString(CultureInfo.InvariantCulture) + "^" + CoeffecientPowerTerm.WholeValueBaseKey + "|";
+            }
 
             if (_SymbolPowerTerm != null)
             {
@@ -904,9 +980,13 @@ public partial class SymbolicVariable
             {
                 // variable exist
                 if (SymbolPower != 1)
+                {
                     result = Symbol + "^" + SymbolPower.ToString(CultureInfo.InvariantCulture);
+                }
                 else
+                {
                     result = Symbol;
+                }
             }
 
             for (var i = 0; i < FusedSymbols.Count; i++)
@@ -916,9 +996,13 @@ public partial class SymbolicVariable
                 if (string.IsNullOrEmpty(result))
                 {
                     if (pp >= 0)
+                    {
                         result += GetSymbolBaseValue(i);
+                    }
                     else
+                    {
                         result += "1/" + GetSymbolAbsoluteBaseValue(i);
+                    }
                 }
                 else if (pp >= 0)
                 {
@@ -941,9 +1025,13 @@ public partial class SymbolicVariable
             var g = WholeValueBaseKey;
 
             if (g.Contains("|"))
+            {
                 return g.Substring(g.IndexOf('|') + 1);
+            }
             else
+            {
                 return g;
+            }
         }
     }
 
@@ -996,9 +1084,13 @@ public partial class SymbolicVariable
             if (string.IsNullOrEmpty(SymbolPowerText))
             {
                 if (_SymbolPower == 0)
+                {
                     result = "1";                  // x^0     will result in 1
+                }
                 else
+                {
                     result = Symbol;               //  x  the symbol itself
+                }
             }
             else
             {
@@ -1007,9 +1099,13 @@ public partial class SymbolicVariable
                 if (SymbolPower >= 0)
                 {
                     if (SymbolPowerText.Length > 1)
+                    {
                         result = Symbol + "^(" + SymbolPowerText + ")";               // x^(power)
+                    }
                     else
+                    {
                         result = Symbol + "^" + SymbolPowerText;                      //  x^power
+                    }
                 }
                 else if (_SymbolPowerTerm == null)
                 {
@@ -1034,9 +1130,13 @@ public partial class SymbolicVariable
             {
                 // if there were no powers in the main symbol storage  {this case shouldn't happen from calculation} because I always transfer any fused symbol inside the main storage
                 if (pp >= 0)
+                {
                     result += GetSymbolBaseValue(i);
+                }
                 else
+                {
                     result += "1/" + GetSymbolAbsoluteBaseValue(i);
+                }
             }
             else if (pp >= 0)
             {
@@ -1060,7 +1160,9 @@ public partial class SymbolicVariable
         var result = GetFormattedSymbolicValue();
 
         if (Coeffecient == 0)
+        {
             return "0";                 // this cancel all the symbolic variable because of 0 in coeffecient
+        }
 
         if (Coeffecient == 1)
         {
@@ -1090,9 +1192,13 @@ public partial class SymbolicVariable
                 }
 
                 if (!string.IsNullOrEmpty(result))
+                {
                     result = rr + "*" + result;
+                }
                 else
+                {
                     result = rr;
+                }
             }
             else
             {
@@ -1126,7 +1232,9 @@ public partial class SymbolicVariable
         if (FusedConstants.Count > 0)
         {
             if (result == "1")
-            result = string.Empty;
+            {
+                result = string.Empty;
+            }
         }
 
         // continue with the rest of constants
@@ -1137,9 +1245,13 @@ public partial class SymbolicVariable
             if (string.IsNullOrEmpty(result))
             {
                 if (pp >= 0)
+                {
                     result += GetConstantBaseValue(i);
+                }
                 else
+                {
                     result += "1/" + GetConstantAbsoluteBaseValue(i);
+                }
             }
             else if (pp >= 0)
             {
@@ -1174,7 +1286,9 @@ public partial class SymbolicVariable
                     }
 
                     if (!sv.DividedTerm.IsOne)
+                    {
                         result += "/(" + sv.DividedTerm.FinalText() + ")";
+                    }
                 }
             }
         }
@@ -1182,16 +1296,24 @@ public partial class SymbolicVariable
         if (DividedTerm.IsOneTerm == false)
         {
             if (TermsCount > 1)
+            {
                 result = "(" + result + ")/(" + DividedTerm.ToString() + ")";
+            }
             else
+            {
                 result = result + "/(" + DividedTerm.ToString() + ")";
+            }
         }
         else if (DividedTerm.FormSymbolTextValue() != "1")
         {
             if (TermsCount > 1)
+            {
                 result = "(" + result + ")/(" + DividedTerm.ToString() + ")";
+            }
             else
+            {
                 result = result + "/(" + DividedTerm.ToString() + ")";
+            }
         }
 
         foreach (var eterm in ExtraTerms)
@@ -1204,9 +1326,13 @@ public partial class SymbolicVariable
             {
                 var etv = eterm.Term.FinalText();
                 if(etv.StartsWith("-"))
-                    result+=etv;
+                {
+                    result +=etv;
+                }
                 else
+                {
                     result += "+" + etv ;
+                }
             }
         }
 
@@ -1236,7 +1362,10 @@ public partial class SymbolicVariable
             if (ix > 0)
             {
                 if (_AddedTerms == null)
+                {
                     throw new IndexOutOfRangeException();
+                }
+
                 return _AddedTerms.Values.ElementAt(ix - 1);
             }
             else if (ix < 0)
@@ -1262,9 +1391,13 @@ public partial class SymbolicVariable
         get
         {
             if (_AddedTerms == null)
+            {
                 return 1;
+            }
             else
+            {
                 return 1 + _AddedTerms.Count;
+            }
         }
     }
 
@@ -1279,7 +1412,10 @@ public partial class SymbolicVariable
         get
         {
             if (_Functions == null)
+            {
                 _Functions = new Dictionary<string, SymbolicVariable>(StringComparer.OrdinalIgnoreCase);
+            }
+
             return _Functions;
         }
     }
@@ -1294,7 +1430,9 @@ public partial class SymbolicVariable
     public bool BaseEquals(SymbolicVariable sv)
     {
         if (!DividedTerm.Equals(sv.DividedTerm))
+        {
             return false;
+        }
 
         if (FusedSymbols.Count > 0 || sv.FusedSymbols.Count > 0)
         {
@@ -1338,24 +1476,34 @@ public partial class SymbolicVariable
             foreach (var cv in FusedSymbols)
             {
                 if (vvs.ContainsKey(cv.Key))
+                {
                     vvs[cv.Key] += cv.Value;
+                }
                 else
+                {
                     vvs.Add(cv.Key, cv.Value);
+                }
             }
 
             // fused variables of the target instance.
             foreach (var tv in sv.FusedSymbols)
             {
                 if (vvs.ContainsKey(tv.Key))
+                {
                     vvs[tv.Key] -= tv.Value;
+                }
                 else
+                {
                     vvs.Add(tv.Key, tv.Value);
+                }
             }
 
             foreach (var rv in vvs)
             {
                 if (!rv.Value.IsZero)
+                {
                     return false;
+                }
             }
 
             return true;
@@ -1369,7 +1517,9 @@ public partial class SymbolicVariable
             else if (_SymbolPowerTerm != null && sv._SymbolPowerTerm != null)
             {
                 if (_SymbolPowerTerm.Equals(sv._SymbolPowerTerm))
+                {
                     return true;
+                }
             }
             else if (SymbolPower != sv.SymbolPower)
             {
@@ -1380,7 +1530,9 @@ public partial class SymbolicVariable
                 // one of the terms is  null or the both are numbers.
 
                 if (SymbolPowerText.Equals(sv.SymbolPowerText, StringComparison.OrdinalIgnoreCase))
+                {
                     return true;
+                }
             }
         }
 
@@ -1409,20 +1561,29 @@ public partial class SymbolicVariable
                     for (var iy = 0; iy < count; iy++)
                     {
                         if (this[ix].Equals(sv[iy]))
+                        {
                             EqualTerms++;
+                        }
                     }
                 }
 
                 if (EqualTerms == count)
+                {
                     return true;
+                }
                 else
+                {
                     return false;   //whether it was more or less.
+                }
             }
         }
         else
         {
             if (IsMultiTerm == true || sv.IsMultiTerm == true)
+            {
                 return false;
+            }
+
             if (Symbol.Equals(sv.Symbol, StringComparison.OrdinalIgnoreCase))
             {
                 if (SymbolPower == sv.SymbolPower)
@@ -1506,7 +1667,9 @@ public partial class SymbolicVariable
         for (var i = svar.FusedSymbols.Count - 1; i >= 0; i--)
         {
             if (svar.FusedSymbols.ElementAt(i).Value.IsZero || svar.FusedSymbols.ElementAt(i).Key == string.Empty)
+            {
                 svar.FusedSymbols.Remove(svar.FusedSymbols.ElementAt(i).Key);
+            }
         }
 
         if (svar._SymbolPower == 0)
@@ -1538,7 +1701,9 @@ public partial class SymbolicVariable
         }
 
         foreach (var r in svar.AddedTerms.Values)
+        {
             AdjustZeroPowerTerms(r);
+        }
     }
 
     /// <summary>
@@ -1551,13 +1716,17 @@ public partial class SymbolicVariable
         for (var i = svar.AddedTerms.Count - 1; i >= 0; i--)
         {
             if (svar.AddedTerms.ElementAt(i).Value.Coeffecient == 0)
+            {
                 svar.AddedTerms.Remove (svar.AddedTerms.ElementAt(i).Key);
+            }
         }
 
         for (var i = svar.ExtraTerms.Count - 1; i >= 0; i--)
         {
             if (svar.ExtraTerms.ElementAt(i).Term.Coeffecient == 0)
+            {
                 svar.ExtraTerms.RemoveAt(i);
+            }
         }
 
         // then check the priamry term.
@@ -1584,7 +1753,10 @@ public partial class SymbolicVariable
             {
                 var priamry = svar.ExtraTerms.ElementAt(0).Term;
                 if (svar.ExtraTerms[0].Negative)
+                {
                     priamry.Coeffecient *= -1;
+                }
+
                 svar.ExtraTerms.RemoveAt(0);
 
                 var NewExtraTerms = svar.ExtraTerms;
@@ -1609,7 +1781,9 @@ public partial class SymbolicVariable
         get
         {
             if (ToString() == "0")
+            {
                 return true;
+            }
 
             return false;
         }
@@ -1623,7 +1797,9 @@ public partial class SymbolicVariable
         get
         {
             if (ToString() == "1")
+            {
                 return true;
+            }
 
             return false;
         }
@@ -1637,7 +1813,9 @@ public partial class SymbolicVariable
         get
         {
             if (ToString() == "-1")
+            {
                 return true;
+            }
 
             return false;
         }
@@ -1653,7 +1831,9 @@ public partial class SymbolicVariable
             if (_AddedTerms != null)
             {
                 if (_AddedTerms.Count > 0)
+                {
                     return false;
+                }
             }
 
             return true;
@@ -1688,7 +1868,10 @@ public partial class SymbolicVariable
         get
         {
             if (Symbol.StartsWith("%"))
+            {
                 return true;
+            }
+
             return false;
         }
     }
@@ -1698,7 +1881,10 @@ public partial class SymbolicVariable
         get
         {
             if (AddedTerms.Count == 0 && ExtraTerms.Count == 0)
+            {
                 return false;
+            }
+
             return true;
         }
     }
@@ -1714,7 +1900,9 @@ public partial class SymbolicVariable
             if (Math.Abs(Coeffecient) != 1)
             {
                 if (!string.IsNullOrEmpty(Symbol))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -1726,9 +1914,13 @@ public partial class SymbolicVariable
         get
         {
             if (Coeffecient < 0)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
     }
 
@@ -1740,7 +1932,10 @@ public partial class SymbolicVariable
         get
         {
             if (_IsFunction == null)
+            {
                 _IsFunction = false;
+            }
+
             return _IsFunction.Value;
         }
     }
@@ -1761,14 +1956,20 @@ public partial class SymbolicVariable
                     var vps = TextTools.ExtractFunctionParameters(fs[i]);
 
                     if (vps.Length > 0)
+                    {
                         fs[i] = vps[0]; //first parameter
+                    }
                     else
+                    {
                         fs[i] = string.Empty;
+                    }
 
                     // many parameters may be  u, e, sin(f)  etc..
                     // add the extra parameter to the list of discovered symbols
                     for (var vpi = 1; vpi < vps.Length; vpi++)
+                    {
                         fs.Add(vps[vpi]);
+                    }
 
                     // we note here that the dynamic list of fs has been increased  and we
                     // will conduct the test again of current fs[i] to see if it is a function or not.
@@ -1792,7 +1993,9 @@ public partial class SymbolicVariable
                 foreach (var f in fs)
                 {
                     if (!symbols.Contains(f, StringComparer.OrdinalIgnoreCase))
+                    {
                         symbols.Add(f);
+                    }
                 }
             }
         }
@@ -1808,7 +2011,9 @@ public partial class SymbolicVariable
             foreach (var f in fs)
             {
                 if (!symbols.Contains(f, StringComparer.OrdinalIgnoreCase))
+                {
                     symbols.Add(f);
+                }
             }
 
             if (fsm.Value.SymbolicVariable != null)
@@ -1816,7 +2021,9 @@ public partial class SymbolicVariable
                 foreach (var ss in fsm.Value.SymbolicVariable.InvolvedSymbols)
                 {
                     if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
+                    {
                         symbols.Add(ss);
+                    }
                 }
             }
         }
@@ -1827,7 +2034,9 @@ public partial class SymbolicVariable
             foreach (var ss in SymbolPowerTerm.InvolvedSymbols)
             {
                 if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
+                {
                     symbols.Add(ss);
+                }
             }
         }
 
@@ -1839,7 +2048,9 @@ public partial class SymbolicVariable
                 foreach (var ss in fc.Value.SymbolicVariable.InvolvedSymbols)
                 {
                     if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
+                    {
                         symbols.Add(ss);
+                    }
                 }
             }
         }
@@ -1850,7 +2061,9 @@ public partial class SymbolicVariable
             foreach (var ss in CoeffecientPowerTerm.InvolvedSymbols)
             {
                 if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
+                {
                     symbols.Add(ss);
+                }
             }
         }
 
@@ -1859,7 +2072,9 @@ public partial class SymbolicVariable
             foreach (var ss in term.InvolvedSymbols)
             {
                 if (!symbols.Contains(ss, StringComparer.OrdinalIgnoreCase))
+                {
                     symbols.Add(ss);
+                }
             }
         }
 
@@ -1884,13 +2099,19 @@ public partial class SymbolicVariable
         clone._SymbolPower = _SymbolPower;
 
         if (_SymbolPowerTerm != null)
+        {
             clone._SymbolPowerTerm = _SymbolPowerTerm.Clone();
+        }
 
         if (_CoeffecientPowerTerm != null)
+        {
             clone._CoeffecientPowerTerm = _CoeffecientPowerTerm.Clone();
+        }
 
         if (_BaseVariable != null)
+        {
             clone._BaseVariable = _BaseVariable.Clone();
+        }
 
         foreach (var av in AddedTerms)
         {
@@ -1916,7 +2137,9 @@ public partial class SymbolicVariable
         }
 
         if(_DividedTerm!=null)
+        {
             clone._DividedTerm = _DividedTerm.Clone();
+        }
 
         return clone;
     }

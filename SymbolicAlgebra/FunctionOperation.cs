@@ -260,9 +260,13 @@ internal static class FunctionOperation
         }
 
         if (divo.IsOne)
+        {
             return result;
+        }
         else
+        {
             return SymbolicVariable.Divide(result, divo);
+        }
     }
 
     public static SymbolicVariable? IntegInversedTrigFunction(SymbolicVariable fv, string parameter)
@@ -369,8 +373,12 @@ internal static class FunctionOperation
         }
 
         if (divo.IsOne)
+        {
             return result;
+        }
         else
+        {
             return SymbolicVariable.Divide(result, divo);
+        }
     }
 }

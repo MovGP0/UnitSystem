@@ -96,9 +96,13 @@ public class QsEvaluator
         {
             var r = GetVariable(varName) as QsReference;
             if (r == null)
+            {
                 Scope.SetValue(varName, varValue);
+            }
             else
+            {
                 r.ContentValue = (QsValue)varValue;
+            }
         }
         else
         {
@@ -156,7 +160,10 @@ public class QsEvaluator
         get
         {
             if (SilentStack.Count > 0)
+            {
                 return true;
+            }
+
             return false;
         }
     }
@@ -188,7 +195,10 @@ public class QsEvaluator
 #if WINRT
 #else
         if (string.IsNullOrEmpty(expr))
+        {
             return null;
+        }
+
         Match m = null;
 
         #region Match <unit> to <unit>
@@ -228,7 +238,9 @@ public class QsEvaluator
                 var cf = "    Conversion Factor => " + ConversionFactor.ToString(CultureInfo.InvariantCulture);
 
                 foreach (var upi in up)
+                {
                     Console.WriteLine("    -> {0}", upi);
+                }
 
                 var dashes = "    ".PadRight(cf.Length, '-');
 
@@ -334,25 +346,43 @@ public class QsEvaluator
         while (ix < sl)
         {
             if (m[ix] == '(')
+            {
                 scs++;
+            }
+
             if (m[ix] == ')')
+            {
                 scs--;
+            }
+
             if (m[ix] == '[')
+            {
                 bcs++;
+            }
+
             if (m[ix] == ']')
+            {
                 bcs--;
+            }
 
             if (m[ix] == '{')
+            {
                 rcs++;
+            }
+
             if (m[ix] == '}')
+            {
                 rcs--;
+            }
 
             if (m[ix] == '"')
             {
                 if (ix > 0)
                 {
                     if (m[ix - 1] != '\\') // not escape character for qoutation mark
+                    {
                         InText = !InText;
+                    }
                 }
                 else
                 {
@@ -361,7 +391,9 @@ public class QsEvaluator
             }
 
             if (m[ix] == '=' && scs == 0 && rcs == 0 && bcs == 0 && InText == false)
+            {
                 return ix;
+            }
 
             ix++;
         }
@@ -464,7 +496,9 @@ public class QsEvaluator
                 }
 
                 if (varName.Contains(" ") || varName.Contains("\t"))
+                {
                     throw (new QsSyntaxErrorException("Variable shouldn't contain spaces"));
+                }
 
                 line = line.Substring(AssignOperatorIndex + 1, line.Length - AssignOperatorIndex - 1);
             }
@@ -700,7 +734,10 @@ public class QsEvaluator
                                 {
                                     var fh = "_(";
                                     foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols)
+                                    {
                                         fh += p + ", ";
+                                    }
+
                                     fh = fh.TrimEnd(',', ' ') + ") = ";
 
                                     var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value);
@@ -783,7 +820,10 @@ public class QsEvaluator
                             {
                                 var fh = "_(";
                                 foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols)
+                                {
                                     fh += p + ", ";
+                                }
+
                                 fh = fh.TrimEnd(',', ' ') + ") = ";
 
                                 var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value);
@@ -811,12 +851,19 @@ public class QsEvaluator
                             var qvType = qvResult.GetType();
 
                             if(qvType == typeof(QsVector))
+                            {
                                 AllComponents = ((QsVector)qvResult).ToArray();
-                            if(qvType == typeof(QsMatrix))
-                                AllComponents = ((QsMatrix)qvResult).ToArray();
+                            }
 
-                            if(qvType == typeof(QsTensor))
+                            if (qvType == typeof(QsMatrix))
+                            {
+                                AllComponents = ((QsMatrix)qvResult).ToArray();
+                            }
+
+                            if (qvType == typeof(QsTensor))
+                            {
                                 throw new QsException("Tensor parsing to function is not supported yet");
+                            }
 
                             List<string> vparameters = [];
                             foreach(var c in AllComponents)
@@ -826,14 +873,19 @@ public class QsEvaluator
                                     foreach (var sym in c.SymbolicQuantity.Value.InvolvedSymbols)
                                     {
                                         if (!vparameters.Contains(sym))
+                                        {
                                             vparameters.Add(sym);
+                                        }
                                     }
                                 }
                             }
 
                             var fh = "_(";
                             foreach (var p in vparameters)
+                            {
                                 fh += p + ", ";
+                            }
+
                             fh = fh.TrimEnd(',', ' ') + ") = ";
                             if(qvType == typeof(QsVector))
                             {
@@ -1067,7 +1119,10 @@ public class QsEvaluator
                 //only print the result.
                 var q = qv.Execute();
                 if (q != null)
+                {
                     PrintQuantity(q);
+                }
+
                 return q;
             }
         }
@@ -1231,7 +1286,10 @@ public class QsEvaluator
         if (string.IsNullOrEmpty(qsNamespace))
         {
             if (!Scope.DeleteValue(name))
+            {
                 throw new QsException("Can't delete the variable");
+            }
+
             GC.Collect();
         }
 

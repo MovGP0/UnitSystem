@@ -26,7 +26,10 @@ public class QsParameter
         {
             string[] rv = ParameterRawText.Split(':');
             if (rv.Length == 2)
+            {
                 return rv[0];
+            }
+
             return "";
         }
     }
@@ -40,7 +43,10 @@ public class QsParameter
         {
             string[] rv = ParameterRawText.Split(':');
             if (rv.Length == 2)
+            {
                 return rv[1];
+            }
+
             return rv[0];
         }
     }
@@ -89,7 +95,10 @@ public class QsParameter
         get
         {
             if (ParameterValue is QsValue)
+            {
                 return true;
+            }
+
             return false;
         }
     }

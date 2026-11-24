@@ -106,7 +106,9 @@ public class QsScope : IDynamicMetaObjectProvider
             var sprov = StorageProviders.Values.ElementAt(i - 1);
 
             if (sprov.HasValue(variable))
+            {
                 return sprov.GetValue(variable);
+            }
         }
 
         throw new QsException("variable not found in any storage provider");
@@ -131,7 +133,9 @@ public class QsScope : IDynamicMetaObjectProvider
             result = result | sprov.TryGetValue(variable, out q);
 
             if (result)
+            {
                 return true;
+            }
         }
 
         q = null;

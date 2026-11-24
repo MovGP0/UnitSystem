@@ -49,9 +49,14 @@ public class Flow : IEnumerable<Step>
                         };
 
                         if (aas[i].GetType() == typeof(StepActionAttribute))
+                        {
                             aa.TargetStepName = aas[i].TargetStepName;
+                        }
                         else
+                        {
                             aa.TargetPosition = aas[i].RelativeIndex;
+                        }
+
                         aa.ActionStatus = aas[i].StageStatusID;
                         acts[i] = aa;
                     }
@@ -65,7 +70,10 @@ public class Flow : IEnumerable<Step>
 
                 fli.Description_1 = fi.Name;
                 if (fia[0].Descriptor_1 != "")
+                {
                     fli.Description_1 = fia[0].Descriptor_1;
+                }
+
                 fli.Description_2 = fia[0].Descriptor_2;
                 innerSteps[innerSteps.Count - 1] = fli;
 
@@ -159,7 +167,9 @@ public class Flow : IEnumerable<Step>
         foreach (var fi in this)
         {
             if (fi.Id == stepId)
+            {
                 return fi.Name;
+            }
         }
 
         return "";
@@ -190,15 +200,21 @@ public class Flow : IEnumerable<Step>
                 foreach (var tp in fli.AssociatedTypes)
                 {
                     if (tp == associatedType || associatedType.IsSubclassOf(tp))
+                    {
                         al.Add(fli);
+                    }
                 }
             }
         }
 
         if (al.Count > 0)
+        {
             return al.ToArray();
+        }
         else
+        {
             return null;
+        }
     }
 
     public Step this[int index]
@@ -208,7 +224,9 @@ public class Flow : IEnumerable<Step>
             foreach (var fi in innerSteps)
             {
                 if (fi.Id == index)
+                {
                     return fi;
+                }
             }
 
             throw new StepException("Flow step not found");
@@ -222,7 +240,9 @@ public class Flow : IEnumerable<Step>
             foreach (var fi in innerSteps)
             {
                 if (fi.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                {
                     return fi;
+                }
             }
 
             throw new StepException("Flow step not found");
@@ -248,7 +268,9 @@ public class Flow : IEnumerable<Step>
         _Current_StepIndex = FlowSteps.GetLowerBound(0);
 
         if (StepChanged != null)
+        {
             StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+        }
     }
 
     /// <summary>
@@ -269,7 +291,9 @@ public class Flow : IEnumerable<Step>
 
         skipping:
         if (_Current_StepIndex + steps <= FlowSteps.GetUpperBound(0))
+        {
             _Current_StepIndex += steps;
+        }
 
         // retry the sub if current step should be eleminated from the
         // current cycle
@@ -280,7 +304,9 @@ public class Flow : IEnumerable<Step>
         }
 
         if (StepChanged != null)
+        {
             StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+        }
     }
 
     public void StepBack()
@@ -294,7 +320,9 @@ public class Flow : IEnumerable<Step>
 
         skipping:
         if (_Current_StepIndex - steps >= FlowSteps.GetLowerBound(0))
+        {
             _Current_StepIndex -= steps;
+        }
 
         // retry the sub if current step should be eleminated from the
         // current cycle
@@ -305,7 +333,9 @@ public class Flow : IEnumerable<Step>
         }
 
         if (StepChanged != null)
+        {
             StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+        }
     }
 
     /// <summary>
@@ -333,7 +363,9 @@ public class Flow : IEnumerable<Step>
             _Current_StepIndex = stepIndex;
 
             if (StepChanged != null)
+            {
                 StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+            }
         }
     }
 
@@ -358,7 +390,9 @@ public class Flow : IEnumerable<Step>
         }
 
         if (StepChanged != null)
+        {
             StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+        }
     }
 
     /// <summary>
@@ -456,9 +490,13 @@ public class Flow : IEnumerable<Step>
         if (fl1.GetType().Equals(fl2.GetType()))
         {
             if (fl1.CurrentStep.Id == fl2.CurrentStep.Id)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         else
         {
@@ -472,9 +510,13 @@ public class Flow : IEnumerable<Step>
         if (GetType().Equals(fl2.GetType()))
         {
             if (CurrentStep.Id == fl2.CurrentStep.Id)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         else
         {
@@ -487,9 +529,13 @@ public class Flow : IEnumerable<Step>
         if (fl1.GetType().Equals(fl2.GetType()))
         {
             if (fl1.CurrentStep.Id != fl2.CurrentStep.Id)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         else
         {
@@ -502,9 +548,13 @@ public class Flow : IEnumerable<Step>
         if (fl1.GetType().Equals(fl2.GetType()))
         {
             if (fl1.CurrentStep.StepIndex > fl2.CurrentStep.StepIndex)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         else
         {
@@ -517,9 +567,13 @@ public class Flow : IEnumerable<Step>
         if (fl1.GetType().Equals(fl2.GetType()))
         {
             if (fl1.CurrentStep.StepIndex < fl2.CurrentStep.StepIndex)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         else
         {
@@ -532,9 +586,13 @@ public class Flow : IEnumerable<Step>
         if (fl1.GetType().Equals(fl2.GetType()))
         {
             if (fl1.CurrentStep.StepIndex >= fl2.CurrentStep.StepIndex)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         else
         {
@@ -547,9 +605,13 @@ public class Flow : IEnumerable<Step>
         if (fl1.GetType().Equals(fl2.GetType()))
         {
             if (fl1.CurrentStep.StepIndex <= fl2.CurrentStep.StepIndex)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         else
         {
@@ -580,7 +642,9 @@ public class Flow : IEnumerable<Step>
                     {
                         var RequiredFlowStep = this[flact.TargetStepName];
                         if (CurrentStep.Id == RequiredFlowStep.Id)
+                        {
                             return flact;
+                        }
                     }
                     else if (flact.TargetPosition == delta)
                     {

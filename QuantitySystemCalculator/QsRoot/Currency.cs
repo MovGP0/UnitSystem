@@ -82,9 +82,13 @@ public static class Currency
     public static double CurrencyConverter(string currency)
     {
         if (_currentCurrencies.TryGetValue(currency, out var result))
+        {
             return 1.0 / result;
+        }
         else
+        {
             return double.NaN;
+        }
     }
 
     /// <summary>

@@ -64,14 +64,20 @@ public partial class QsSequence
     public QsSequence(string indexName, string[] parameters)
     {
         if (!string.IsNullOrEmpty(indexName))
+        {
             SequenceIndexName = indexName;
+        }
         else
+        {
             SequenceIndexName = DefaultIndexName;
+        }
 
         Parameters = (from v in parameters select new QsParamInfo { Name = v }).ToArray();
 
         if (parameters.Length == 0)
+        {
             CachingEnabled = true;  //Allow caching for parameterless sequence.
+        }
     }
 
     /// <summary>
@@ -245,7 +251,9 @@ public partial class QsSequence
             }
 
             if (indexes.Count > 1)
+            {
                 throw new QsException("Sequences with more than one index are not supported now");
+            }
 
             // get parameters
             string[] parameters = []; //array with zero count :)
@@ -306,9 +314,13 @@ public partial class QsSequence
             var beginElement = QsSequenceElement.Parse(t[nsidx + 3 + shift].TokenValue, qse, seqo);
 
             if (SequenceTokenType == typeof(PositiveSequenceToken))
+            {
                 seqo[0] = beginElement;
+            }
             else
+            {
                 seqo[-1] = beginElement;
+            }
 
             // take the right side arguments to be added into the sequence.
 
@@ -331,9 +343,13 @@ public partial class QsSequence
                     seqo[ix] = seqoElement;  //-5 bacause I am starting from 1 index
 
                     if (SequenceTokenType == typeof(NegativeSequenceToken))
+                    {
                         ix--;
+                    }
                     else
+                    {
                         ix++;
+                    }
                 }
 
                 seqoIndex++;
@@ -380,7 +396,9 @@ public partial class QsSequence
     public static string FormSequenceSymbolicName(string name, int indexesCount, int parametersCount)
     {
         if (indexesCount == 0)
+        {
             indexesCount = 1;
+        }
 
         var sn = name + "%" + indexesCount.ToString(CultureInfo.InvariantCulture); // +"#" + parametersCount.ToString(CultureInfo.InvariantCulture);
 

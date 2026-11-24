@@ -78,14 +78,18 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
                     {
                         var c = line[ix];
                         if (c == '(')
+                        {
                             pc++;
+                        }
 
                         if (line[ix] == '"')
                         {
                             if (ix > 0)
                             {
                                 if (line[ix - 1] != '\\') // not escape charachter for qoutation mark
+                                {
                                     qcOpened = !qcOpened;
+                                }
                             }
                             else
                             {
@@ -105,7 +109,9 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
                         }
 
                         if (c == ')')
+                        {
                             pc--;
+                        }
 
                         sb.Append(c);
 

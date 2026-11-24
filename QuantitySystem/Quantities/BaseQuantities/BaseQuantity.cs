@@ -91,6 +91,8 @@ public abstract class BaseQuantity(float exponent)
     public static void SetInternalQuantities(Type quantity, Tuple<Type, float>[] internalQuantities)
     {
         if (!QuantityTypeInternalQuantityTypes.ContainsKey(quantity))
+        {
             QuantityTypeInternalQuantityTypes[quantity] = internalQuantities;
+        }
     }
 }

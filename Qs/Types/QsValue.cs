@@ -274,7 +274,9 @@ public abstract class QsValue: IComparable
     public override bool Equals(object? obj)
     {
         if (obj is QsValue v)
+        {
             return Equality(v);
+        }
 
         return false;
     }
@@ -390,7 +392,9 @@ public abstract class QsValue: IComparable
         if (values[0] is QsTensor)
         {
             if (values.Count() == 1)
+            {
                 return values[0];
+            }
 
             // in rare cases or event known cases by me Ahmed Sadek and because of parsing
             // sometimes I enclose tensor variable inside matrix  [g g <|4 3|> ]
@@ -400,7 +404,10 @@ public abstract class QsValue: IComparable
             foreach (var inTensor in values)
             {
                 if (inTensor.GetType() != typeof(QsTensor))
+                {
                     throw new QsException("Non Tensor in a matrix of tensors is not valid expression.");
+                }
+
                 tensor.AddInnerTensor((QsTensor)inTensor);
             }
 
@@ -473,14 +480,19 @@ public abstract class QsValue: IComparable
         if (values[0] is QsTensor)
         {
             if (values.Count() == 1)
+            {
                 return values[0];
+            }
 
             // treat the case of tensors
             var tensor = new QsTensor();
             foreach (var tn in values)
             {
                 if (tn.GetType() != typeof(QsTensor))
+                {
                     throw new QsException("Non Tensor in a matrix of tensors is not valid expression.");
+                }
+
                 tensor.AddInnerTensor((QsTensor)tn);
             }
 
@@ -558,11 +570,20 @@ public abstract class QsValue: IComparable
         if (obj != null)
         {
             if (LessThan(value))
+            {
                 return -1;
+            }
+
             if (Equality(value))
+            {
                 return 0;
+            }
+
             if (GreaterThan(value))
+            {
                 return 1;
+            }
+
             throw new QsException("Comparison failed between " + GetType().Name + " and " + value.GetType().Name);
         }
 

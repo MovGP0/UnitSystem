@@ -61,9 +61,13 @@ public class QsNamespace(string name)
                 Values.TryGetValue(name, out o);
                 var r = o as QsReference;
                 if (r == null)
+                {
                     Values[name] = value;
+                }
                 else
+                {
                     r.ContentValue = (QsValue)value;
+                }
             }
         }
         else
@@ -84,7 +88,9 @@ public class QsNamespace(string name)
             if (QsFunction.IsItFunctionSymbolicName(name))
             {
                 if (HardCodedMethods == null)
+                {
                     HardCodedMethods = GetQsNamespaceMethods();
+                }
 
                 if (HardCodedMethods.ContainsKey(name))
                 {
@@ -107,7 +113,10 @@ public class QsNamespace(string name)
         Values.TryGetValue(name, out o);
 
         if (o == null)
+        {
             throw new QsVariableNotFoundException("Variable '" + name + "' not found in '" + Name + "' namespace.");
+        }
+
         return o;
     }
 
@@ -118,7 +127,9 @@ public class QsNamespace(string name)
             if (QsFunction.IsItFunctionSymbolicName(name))
             {
                 if (HardCodedMethods == null)
+                {
                     HardCodedMethods = GetQsNamespaceMethods();
+                }
 
                 if (HardCodedMethods.ContainsKey(name))
                 {
@@ -174,9 +185,13 @@ public class QsNamespace(string name)
             var pis = miParam.GetCustomAttributes(typeof(QsParamInfoAttribute), true);
 
             if (pis.Length > 0)
+            {
                 prm.Type = ((QsParamInfoAttribute)pis[0]).ParameterType;
+            }
             else
+            {
                 prm.Type = QsParamType.Value;
+            }
 
             prms.Add(prm);
         }
@@ -185,9 +200,15 @@ public class QsNamespace(string name)
         QsModFunc.FunctionDeclaration += "(";
         var sb = new StringBuilder();
         foreach (var p in prms)
+        {
             sb.Append(", " + p.Name);
+        }
+
         if (sb.Length > 0)
+        {
             QsModFunc.FunctionDeclaration += sb.ToString().TrimStart(',', ' ');
+        }
+
         QsModFunc.FunctionDeclaration += ")";
 
         QsModFunc.InternalFunctionDelegate = FormNativeFunctionDelegate(methodInfo);
@@ -358,9 +379,13 @@ public class QsNamespace(string name)
         var cls = qsNamespace;
 
         if (cls.StartsWith(".."))
+        {
             cls = cls.Replace("..", ""); // indicates that we used root operator in namespace  ::
+        }
         else
+        {
             cls = "QsRoot." + cls;
+        }
 
         //try the current assembly
 #if WINRT
@@ -473,7 +498,9 @@ public class QsNamespace(string name)
         var DecorateNativeFunction = false;
 
         if (method.ReturnType != typeof(QsValue))
+        {
             DecorateNativeFunction = true;
+        }
         //construct the lambda
 
         var lb = SimpleLambdaBuilder.Create(typeof(QsValue), method.Name);
@@ -484,7 +511,10 @@ public class QsNamespace(string name)
         foreach (var prm in parameters)
         {
             if (prm.ParameterType != typeof(QsParameter))
+            {
                 DecorateNativeFunction = true;
+            }
+
             lb.Parameter(typeof(QsParameter), prm.Name);
         }
 

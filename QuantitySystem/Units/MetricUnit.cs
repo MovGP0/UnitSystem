@@ -70,9 +70,13 @@ public abstract partial class MetricUnit : Unit
             {
                 //means I am native SI unit.
                 if (unitPrefix.Exponent == defaultUnitPrefix.Exponent)
+                {
                     return true;
+                }
                 else
+                {
                     return false;
+                }
             }
             else
             {
@@ -124,9 +128,13 @@ public abstract partial class MetricUnit : Unit
             if (_ReferenceUnit == null)
             {
                 if (IsDefaultUnit)
+                {
                     return 0;
+                }
                 else
+                {
                     return 1;
+                }
             }
             else
             {
@@ -149,9 +157,13 @@ public abstract partial class MetricUnit : Unit
             if (_ReferenceUnit == null)
             {
                 if (IsDefaultUnit)
+                {
                     return 0;
+                }
                 else
+                {
                     return Math.Pow(defaultUnitPrefix.GetFactorForConvertTo(UnitPrefix), UnitExponent);
+                }
             }
             else
             {
@@ -176,8 +188,12 @@ public abstract partial class MetricUnit : Unit
     public override string ToString()
     {
         if (unitPrefix.Exponent == 0)
+        {
             return GetType().Name + " " + Symbol;
+        }
         else
+        {
             return UnitPrefix.Prefix + GetType().Name.ToLower() + " " + Symbol;
+        }
     }
 }

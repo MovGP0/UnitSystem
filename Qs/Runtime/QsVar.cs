@@ -37,7 +37,9 @@ class QsVar
             {
                 _Next = value;
                 if (value != null)
+                {
                     value.Previous = this;
+                }
             }
         }
     }
@@ -384,11 +386,17 @@ class QsVar
                     var afterTok = ix + 2 < tokens.Count ? tokens[ix + 2] : null;
 
                     if (afterTok == null)
+                    {
                         FactorialPostfix = true;
+                    }
                     else if (afterTok.TokenClassType == typeof(WordToken) || afterTok.TokenClassType == typeof(TextStringToken) || afterTok.TokenClassType == typeof(SequenceCallToken) || afterTok.TokenClassType == typeof(NamespaceToken))  //either direct word or text i.e. o!word or o!"Word"
+                    {
                         FactorialPostfix = false;
+                    }
                     else
+                    {
                         FactorialPostfix = true;
+                    }
                 }
 
                 if (OperatorTokenText == "%")
@@ -398,11 +406,17 @@ class QsVar
                     var afterTok = ix + 2 < tokens.Count ? tokens[ix + 2] : null;
 
                     if (afterTok == null)
+                    {
                         PercentagePostfix = true;
+                    }
                     else if (afterTok.TokenClassType == typeof(NumberToken) || afterTok.TokenClassType == typeof(UnitizedNumberToken) || afterTok.TokenClassType == typeof(WordToken) || afterTok.TokenClassType == typeof(TextStringToken) || afterTok.TokenClassType == typeof(SequenceCallToken) || afterTok.TokenClassType == typeof(NamespaceToken))  //either direct word or text i.e. o!word or o!"Word"
+                    {
                         PercentagePostfix = false;
+                    }
                     else
+                    {
                         PercentagePostfix = true;
+                    }
                 }
             }
 
@@ -608,7 +622,9 @@ class QsVar
                 var g = tokens[ix].TrimTokens(2, 1);
                 var funcbody = g.TokenValue;
                 if (funcbody.StartsWith("("))
+                {
                     funcbody = "_" + funcbody;
+                }
 
                 var sf = new QsScalar(ScalarTypes.FunctionQuantity)
                 {
@@ -645,26 +661,41 @@ class QsVar
                 --ix;   //decrease ix with one because operator was fused in this token.
             }
             else if (tokens[ix].TokenClassType == typeof(TrueToken))
+            {
                 quantityExpression = Expression.Constant(QsBoolean.True);
+            }
             else if (tokens[ix].TokenClassType == typeof(FalseToken))
+            {
                 quantityExpression = Expression.Constant(QsBoolean.False);
+            }
             else if (tokens[ix].TokenClassType == typeof(LoopBodyToken))
             {
                 // get the count of the loop
                 var v = Evaluator.GetVariable(tokens[ix][3].TokenValue) as QsValue;
 
                 if (v == null)
+                {
                     throw new QsException(tokens[ix][3].TokenValue + " doesn't exist in memoir");
+                }
+
                 var count = 0;
 
                 if (v is QsVector)
+                {
                     count = ((QsVector)v).Count;
+                }
                 else if (v is QsFlowingTuple)
+                {
                     count = ((QsFlowingTuple)v).Count;
+                }
                 else if (v is QsText)
+                {
                     count = ((QsText)v).Text.Length;
+                }
                 else
+                {
                     throw new QsException(tokens[ix][3].TokenValue + " of type " + v.GetType().Name + " is not supported");
+                }
 
                 // expression that hold the counter.
                 var counter = Expression.Parameter(typeof(int), "Counter_" + loopIteratorContainer.Count);
@@ -982,9 +1013,14 @@ class QsVar
             var IdExist = false;
 
             if( t.Count(el => el.TokenClassType == typeof(ExclamationToken))>0)
-                NameExist=true;
-            if( t.Count(el => el.TokenClassType == typeof(ColonToken))>0)
-                IdExist=true;
+            {
+                NameExist =true;
+            }
+
+            if ( t.Count(el => el.TokenClassType == typeof(ColonToken))>0)
+            {
+                IdExist =true;
+            }
 
             if (NameExist && IdExist)
             {
@@ -1077,20 +1113,28 @@ class QsVar
         cls = cls.Replace(':','.');
 
         if (cls.StartsWith(".."))
+        {
             cls = cls.Replace("..", ""); // indicates that we used root operator in namespace  ::
+        }
         else
+        {
             cls = "QsRoot." + cls;
+        }
 
 #if WINRT
             discoveredType = Root.GetInternalType(cls);
 #else
         discoveredType = Type.GetType(cls, false);
         if (discoveredType == null)
+        {
             discoveredType = Root.GetExternalType(cls);
+        }
 #endif
 
         if (discoveredType == null)
+        {
             throw new QsException(string.Format("[{0}] type doesn't exist.", cls));
+        }
 
         if (args.Length == 0)
         {
@@ -1138,9 +1182,13 @@ class QsVar
     {
         Token cn = null;
         if (complexToken.TokenClassType == typeof(RationalQuantityToken))
+        {
             cn = complexToken[0];
+        }
         else
+        {
             cn = complexToken;
+        }
 
         var token = cn.TrimStart(typeof(WordToken)).TrimStart(typeof(LeftCurlyBracketToken));
         token = token.TrimEnd(typeof(RightCurlyBracketToken));
@@ -1160,16 +1208,25 @@ class QsVar
         float num = 0, den = 0;
 
         if (nums.Count > 0)
+        {
             num = nums[0];
+        }
+
         if (nums.Count > 1)
+        {
             den = nums[1];
+        }
 
         var c = new Rational(num, den);
         QsScalar sc = null;
         if (complexToken.TokenClassType == typeof(RationalQuantityToken)) // there is a unit
+        {
             sc = c.ToQuantity(complexToken[1].TokenValue.Trim('<', '>')).ToScalar();
+        }
         else
+        {
             sc = c.ToQuantity().ToScalar();
+        }
 
         return Expression.Constant(sc, typeof(QsScalar));
     }
@@ -1178,9 +1235,13 @@ class QsVar
     {
         Token cn = null;
         if (quaternionToken.TokenClassType == typeof(QuaternionQuantityToken))
+        {
             cn = quaternionToken[0];
+        }
         else
+        {
             cn = quaternionToken;
+        }
 
         var token = cn.TrimStart(typeof(WordToken)).TrimStart(typeof(LeftCurlyBracketToken));
         token = token.TrimEnd(typeof(RightCurlyBracketToken));
@@ -1200,20 +1261,35 @@ class QsVar
         double real = 0, im = 0, j = 0, k = 0;
 
         if (nums.Count > 0)
+        {
             real = nums[0];
+        }
+
         if (nums.Count > 1)
+        {
             im = nums[1];
+        }
+
         if (nums.Count > 2)
+        {
             j = nums[2];
+        }
+
         if (nums.Count > 3)
+        {
             k = nums[3];
+        }
 
         var c = new Quaternion(real, im, j, k);
         QsScalar sc = null;
         if (quaternionToken.TokenClassType == typeof(QuaternionQuantityToken)) // there is a unit
+        {
             sc = c.ToQuantity(quaternionToken[1].TokenValue.Trim('<', '>')).ToScalar();
+        }
         else
+        {
             sc = c.ToQuantity().ToScalar();
+        }
 
         return Expression.Constant(sc, typeof(QsScalar));
     }
@@ -1222,9 +1298,13 @@ class QsVar
     {
         Token cn = null;
         if (complexToken.TokenClassType == typeof(ComplexQuantityToken))
+        {
             cn = complexToken[0];
+        }
         else
+        {
             cn = complexToken;
+        }
 
         var token = cn.TrimStart(typeof(WordToken)).TrimStart(typeof(LeftCurlyBracketToken));
         token = token.TrimEnd(typeof(RightCurlyBracketToken));
@@ -1244,16 +1324,25 @@ class QsVar
         double real = 0, imaginary = 0;
 
         if(nums.Count>0)
+        {
             real = nums[0];
-        if(nums.Count>1)
+        }
+
+        if (nums.Count>1)
+        {
             imaginary = nums[1];
+        }
 
         var c = new Complex(real, imaginary);
         QsScalar sc = null;
         if (complexToken.TokenClassType == typeof(ComplexQuantityToken)) // there is a unit
+        {
             sc = c.ToQuantity(complexToken[1].TokenValue.Trim('<', '>')).ToScalar();
+        }
         else
+        {
             sc = c.ToQuantity().ToScalar();
+        }
 
         return Expression.Constant(sc, typeof(QsScalar));
     }
@@ -1300,7 +1389,9 @@ class QsVar
     public static ICollection<string> VectorComponents(Token tok)
     {
         if (tok.TokenClassType != typeof(CurlyBracketGroupToken))
+        {
             throw new QsException("The passed token type is not curly bracket group token, it is " + tok.TokenClassType.Name);
+        }
 
         List<string> qtyExpressions = [];
         var token = tok.TrimStart(typeof(LeftCurlyBracketToken));
@@ -1538,12 +1629,17 @@ class QsVar
                 .ToArray();
 
             if (pp.Length == 1 && string.IsNullOrEmpty(pp[0]))
+            {
                 pp = null;
+            }
 
             var ns = string.Empty;
 
             if (functionValueToken.TokenValue.Contains(":"))
+            {
                 ns = functionValueToken.TokenValue.Substring(0, functionValueToken.TokenValue.LastIndexOf(':'));
+            }
+
             var nsfnname = functionValueToken.TokenValue.Substring(functionValueToken.TokenValue.LastIndexOf(':') + 2);
             nsfnname = nsfnname.Substring(0, nsfnname.IndexOf('('));
 
@@ -1610,7 +1706,9 @@ class QsVar
                 .ToArray();
 
             if (pp.Length == 1 && string.IsNullOrEmpty(pp[0]))
+            {
                 pp = null;
+            }
 
             if (functionValueToken[1].TokenClassType == typeof(WordToken))
             {
@@ -1657,16 +1755,24 @@ class QsVar
         if (token.TokenClassType == typeof(SymbolicToken))
         {
             if (token.TokenValue.StartsWith("${"))
+            {
                 s = token.TokenValue.Substring(2).TrimEnd('}');
+            }
             else
+            {
                 s = token[1].TokenValue;
+            }
         }
         else
         {
             if (token[0].TokenValue.StartsWith("${"))
+            {
                 s = token[0].TokenValue.Substring(2).TrimEnd('}');
+            }
             else
+            {
                 s = token[0][1].TokenValue;
+            }
 
             unit = token[1].TokenValue.Trim('<', '>');
         }
@@ -1730,7 +1836,9 @@ class QsVar
 
         var ns = string.Empty;
         if (valueName.LastIndexOf(':') > -1)
+        {
             ns = valueName.Substring(0, valueName.LastIndexOf(':'));
+        }
 
         var valName = valueName.Substring(valueName.LastIndexOf(':') + 1);
 
@@ -1854,11 +1962,15 @@ class QsVar
     {
         //discover the index
         if (indexes.Count > 3)
+        {
             throw new QsException("Calling sequence with more than one index is not supported yet.");
+        }
 
         var indexText = indexes[1].TokenValue; //this is parameter between [.]  to be evaluated later
         if (indexText == "]") // empty square brackets
+        {
             indexText = QsSequence.DefaultIndexName;
+        }
 
         // discover sequence parameters.
         List<Expression> parameters = [];
@@ -1910,7 +2022,9 @@ class QsVar
 
         var sequenceNamespace = string.Empty;
         if (sequenceName.IndexOf(':') > -1)
+        {
             sequenceNamespace = sequenceName.Substring(0, sequenceName.LastIndexOf(':'));
+        }
 
         var seqCallName = sequenceName.Substring(sequenceName.LastIndexOf(':') + 1);
 
@@ -1949,15 +2063,25 @@ class QsVar
             ToExpression = Expression.Call(typeof(Qs).GetMethod("IntegerFromQsValue"), ParseArithmatic(itok[2].TokenValue));
 
             if (itok[1].TokenValue == "++")
+            {
                 methodName = "SumElements";
+            }
             else if (itok[1].TokenValue == "!!")
+            {
                 methodName = "Average";
+            }
             else if (itok[1].TokenValue == "**")
+            {
                 methodName = "MulElements";
+            }
             else if (itok[1].TokenValue == "..")
+            {
                 methodName = "QsValueElements";
+            }
             else if (itok[1].TokenValue == "!%")
+            {
                 methodName = "StdDeviation";
+            }
             #endregion
         }
         else if (int.TryParse(indexText, out n))
@@ -2151,7 +2275,9 @@ class QsVar
         var functionNameSpace = "";
 
         if (functionName.LastIndexOf(':') > -1)
+        {
             functionNameSpace = functionName.Substring(0, functionName.LastIndexOf(':'));
+        }
 
         // function name part after namespace
         var funcCallName = functionName.Substring(functionName.LastIndexOf(':') + 1);
@@ -2226,16 +2352,25 @@ class QsVar
                     }
 
                     if (include)
+                    {
                         Pass2Functions.Add(func);
+                    }
                 }
 
                 if (Pass2Functions.Count == 0)
+                {
                     throw new QsFunctionNotFoundException("No function from the (" + DiscoveredFunctions.Length.ToString(CultureInfo.InvariantCulture) + ") discovered is having suitable parameters order");
+                }
+
                 if (Pass2Functions.Count == 1)
+                {
                     TargetFunction = Pass2Functions[0];
+                }
                 else
+                {
                     throw new QsFunctionNotFoundException("(" + Pass2Functions.Count.ToString(CultureInfo.InvariantCulture) + ") functions, please specify more named arguments. ");
-                #endregion
+                }
+            #endregion
 
             }
             else
@@ -2264,21 +2399,33 @@ class QsVar
             //but may be the function name should be retrieved from a parameter.
             int parametersCount;
             if (ParseMode == QsVarParseModes.Function)
+            {
                 parametersCount = Function.Parameters.Count(c => c.Name.Equals(funcName, StringComparison.OrdinalIgnoreCase));
+            }
             else if (ParseMode == QsVarParseModes.Sequence)
+            {
                 parametersCount = Sequence.Parameters.Count(c => c.Name.Equals(funcName, StringComparison.OrdinalIgnoreCase));
+            }
             else
+            {
                 throw new QsException("Parse mode is not known to evaluate this function");
+            }
 
             if (parametersCount > 0)
             {
                 QsParamInfo pinfo; //the parameter in the parent function that hold the function name.
                 if (ParseMode == QsVarParseModes.Function)
+                {
                     pinfo = Function.Parameters.Single(c => c.Name.Equals( funcName, StringComparison.OrdinalIgnoreCase));
+                }
                 else if (ParseMode == QsVarParseModes.Sequence)
+                {
                     pinfo = Sequence.Parameters.Single(c => c.Name.Equals(funcName, StringComparison.OrdinalIgnoreCase));
+                }
                 else
+                {
                     throw new QsException("Parse mode is not known to evaluate this function");
+                }
 
                 //Yes the function should be retrieved dynamically from the passed parameter name.
 
@@ -2397,7 +2544,9 @@ class QsVar
 
                 var FunP = ParameterFunction(functionName); //caling the helper delegate.
                 if (FunP != null)
+                {
                     return FunP;
+                }
             }
 
             #region Adjusting (ReArranging) the named arguments order to the real function parameter order
@@ -2434,9 +2583,13 @@ class QsVar
                     if (fParameters.ContainsKey(paramName))
                     {
                         if (!setParameters[paramName]) //check if the parameter was set before.
+                        {
                             fParameters[paramName] = paramVal;  //put the value in its corresponding parameter.
+                        }
                         else
+                        {
                             throw new QsException("Parameter '" + paramName + "' was set before");
+                        }
 
                         setParameters[paramName] = true;
                     }
@@ -2450,7 +2603,10 @@ class QsVar
                 else
                 {
                     if (NamedArgumentOccured)
+                    {
                         throw new QsException("Normal argument after named argument is not permitted");
+                    }
+
                     setParameters[TargetFunction.Parameters[i].Name] = true;
                 }
             }
@@ -2469,7 +2625,9 @@ class QsVar
             var FunP = ParameterFunction(functionName); //try to get the function from the parameter
 
             if (FunP != null)
+            {
                 return FunP;
+            }
         }
 
         throw new QsFunctionNotFoundException(functionName + " Can't be found.");
@@ -2542,19 +2700,29 @@ class QsVar
         var aqType = typeof(QsValue);
 
         if (op == ":")
+        {
             return Expression.Call(left, aqType.GetMethod("ColonOperator"), right);
+        }
 
         if (op == "!")
+        {
             return Expression.Call(left, aqType.GetMethod("ExclamationOperator"), right);
+        }
 
         if (op == "->")
+        {
             return Expression.Call(left, aqType.GetMethod("Execute"), right);
+        }
 
         if (op == "..")
+        {
             return Expression.Call(left, aqType.GetMethod("RangeOperation"), right);
+        }
 
         if (op == "_h*")
+        {
             return Expression.Multiply(left, right);  // higher multiplication priority in case of 5^-3 to be 5^(-1*3) == 5^-1_h*3
+        }
 
         if (op == "^")
         {
@@ -2585,59 +2753,109 @@ class QsVar
         }
 
         if (op == "^.")
+        {
             return Expression.Power(left, right, aqType.GetMethod("PowDot"));
+        }
 
         if (op.Equals("^x", StringComparison.OrdinalIgnoreCase))
+        {
             return Expression.Power(left, right, aqType.GetMethod("PowCross"));
+        }
 
         if (op.Equals("|"))
+        {
             return Expression.Call(left, aqType.GetMethod("DifferentiateOperation"), right);
+        }
 
         if (op == "*")
+        {
             return Expression.Multiply(left, right);
+        }
 
         if (op == ".")
+        {
             return Expression.Multiply(left, right, aqType.GetMethod("DotProduct"));
+        }
 
         if (op.Equals("x", StringComparison.OrdinalIgnoreCase))
+        {
             return Expression.Multiply(left, right, aqType.GetMethod("CrossProduct"));
+        }
 
         if (op.Equals("(*)", StringComparison.OrdinalIgnoreCase))
+        {
             return Expression.Multiply(left, right, aqType.GetMethod("TensorProduct"));
+        }
 
         if (op == "/")
+        {
             return Expression.Divide(left, right);
+        }
+
         if (op == "%")
+        {
             return Expression.Modulo(left, right);
+        }
+
         if (op == "+")
+        {
             return Expression.Add(left, right);
+        }
+
         if (op == "-")
+        {
             return Expression.Subtract(left, right);
+        }
 
         if (op == "<<")
+        {
             return Expression.LeftShift(left, right, aqType.GetMethod("LeftShiftOperator"));
+        }
+
         if (op == ">>")
+        {
             return Expression.RightShift(left, right, aqType.GetMethod("RightShiftOperator"));
+        }
 
         if (op == "<")
+        {
             return Expression.LessThan(left, right);
+        }
+
         if (op == ">")
+        {
             return Expression.GreaterThan(left, right);
+        }
+
         if (op == "<=")
+        {
             return Expression.LessThanOrEqual(left, right);
+        }
+
         if (op == ">=")
+        {
             return Expression.GreaterThanOrEqual(left, right);
+        }
 
         if (op == "==")
+        {
             return Expression.Equal(left, right, true, aqType.GetMethod("op_Equality"));
+        }
+
         if (op == "!=")
+        {
             return Expression.NotEqual(left, right, true, aqType.GetMethod("op_Inequality"));
+        }
 
         if (op.Equals("and", StringComparison.OrdinalIgnoreCase))
+        {
             return Expression.And(left, right);
+        }
 
         if (op.Equals("or", StringComparison.OrdinalIgnoreCase))
+        {
             return Expression.Or(left, right);
+        }
 
         if (op.Equals("when", StringComparison.OrdinalIgnoreCase))
         {

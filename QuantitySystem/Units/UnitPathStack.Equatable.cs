@@ -5,10 +5,14 @@ public partial class UnitPathStack : IEquatable<UnitPathStack>
     public bool Equals(UnitPathStack? up)
     {
         if (up == null)
+        {
             return false;
+        }
 
         if (up.Count != Count)
+        {
             return false;
+        }
 
         for (var ix = 0; ix < Count; ix++)
         {

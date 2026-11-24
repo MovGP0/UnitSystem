@@ -23,7 +23,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
         List<QsVector> copiedVectors = [];
         foreach (var v in vectors)
+        {
             copiedVectors.Add(QsVector.CopyVector(v));
+        }
+
         Rows.AddRange(copiedVectors);
     }
 
@@ -144,7 +147,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         get
         {
             if (row < 0)
+            {
                 row = Rows.Count + row;
+            }
+
             return Rows[row];
         }
     }
@@ -160,20 +166,30 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         get
         {
             if (row < 0)
+            {
                 row = Rows.Count + row;
+            }
+
             var required_row = Rows[row];
             if (column < 0)
+            {
                 column = required_row.Count + column;
+            }
 
             return required_row[column];
         }
         set
         {
             if (row < 0)
+            {
                 row = Rows.Count + row;
+            }
+
             var required_row = Rows[row];
             if (column < 0)
+            {
                 column = required_row.Count + column;
+            }
 
             required_row[column] = value;
         }
@@ -428,7 +444,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
         var m = CopyMatrix(this);
         foreach (var column in matrix.Columns)
+        {
             m.AddColumnVector(column);
+        }
+
         return m;
     }
 
@@ -436,7 +455,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
         var m = CopyMatrix(this);
         foreach (var vector in matrix)
+        {
             m.AddVector(vector);
+        }
+
         return m;
     }
 
@@ -452,7 +474,9 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     public QsVector GetVector(int rowIndex)
     {
         if (rowIndex > RowsCount)
+        {
             throw new QsMatrixException("Index '" + rowIndex + "' Exceeds the rows limits '" + RowsCount + "'");
+        }
 
         return QsVector.CopyVector(Rows[rowIndex]);
     }
@@ -460,7 +484,9 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     public QsMatrix GetVectorMatrix(int rowIndex)
     {
         if (rowIndex > RowsCount)
+        {
             throw new QsMatrixException("Index '" + rowIndex + "' Exceeds the rows limits '" + RowsCount + "'");
+        }
 
         var mat = new QsMatrix();
 
@@ -477,7 +503,9 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     public QsVector GetColumnVector(int columnIndex)
     {
         if (columnIndex > ColumnsCount)
+        {
             throw new QsMatrixException("Index '" + columnIndex + "' Exceeds the columns limits '" + ColumnsCount + "'");
+        }
 
         QsScalar[] col = new QsScalar[RowsCount];
         var nc = 0;
@@ -607,7 +635,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         get
         {
             if (RowsCount == 1)
+            {
                 return true;
+            }
+
             return false;
         }
     }
@@ -617,7 +648,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         get
         {
             if (ColumnsCount == 1)
+            {
                 return true;
+            }
+
             return false;
         }
     }
@@ -627,7 +661,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         get
         {
             if (RowsCount == 1 && ColumnsCount == 1)
+            {
                 return true;
+            }
+
             return false;
         }
     }
@@ -640,7 +677,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         get
         {
             if (RowsCount == ColumnsCount)
+            {
                 return true;
+            }
+
             return false;
         }
     }
@@ -705,7 +745,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     public bool DimensionEquals(QsMatrix matrix)
     {
         if (matrix== null)
+        {
             return false;
+        }
+
         if (RowsCount == matrix.RowsCount)
         {
             if (ColumnsCount == matrix.ColumnsCount)
@@ -733,9 +776,13 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             for (var j = 0; j < n; j++)
             {
                 if (j == i)
+                {
                     v.AddComponent(QsScalar.One);
+                }
                 else
+                {
                     v.AddComponent(QsScalar.Zero);
+                }
             }
 
             m.AddVector(v);

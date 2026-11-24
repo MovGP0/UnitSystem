@@ -32,10 +32,14 @@ public static class QsCommands
 
         //remove unnessacary spaces.
         for (var i = 0; i < commands.Length; i++)
+        {
             commands[i] = commands[i].Trim();
+        }
 
         if (commands[0] == "quit")
+        {
             return false;
+        }
 
         if (commands[0] == "exit")
         {
@@ -61,7 +65,9 @@ public static class QsCommands
             else
             {
                 if (commands[1] == "quantities")
+                {
                     ListQuantities();
+                }
 
                 if (commands[1] == "units")
                 {
@@ -391,7 +397,9 @@ public static class QsCommands
 
         var qss = from q in quats orderby q select q;
         foreach (var qq in qss)
+        {
             Console.WriteLine(qq);
+        }
 
         Console.ForegroundColor = ForegroundColor;
     }
@@ -446,7 +454,9 @@ public static class QsCommands
                 {
                     //print if only the unit is for this quantity
                     if (qtype.Equals(quantity, StringComparison.InvariantCultureIgnoreCase))
+                    {
                         Console.WriteLine("    " + uname + " " + symbol + " " + system + qtype);
+                    }
                 }
             }
         }

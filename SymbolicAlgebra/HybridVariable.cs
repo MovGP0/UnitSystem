@@ -147,7 +147,10 @@ internal struct HybridVariable
         var hv = new HybridVariable();
         hv.NumericalVariable = NumericalVariable;
         if (SymbolicVariable != null)
+        {
             hv.SymbolicVariable = SymbolicVariable.Clone();
+        }
+
         return hv;
     }
 

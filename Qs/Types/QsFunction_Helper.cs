@@ -77,7 +77,9 @@ public partial class QsFunction
             if (func.Parameters.Length == parametersNames.Length)
             {
                 if (func.ContainsParameters(parametersNames))
+                {
                     return func;
+                }
             }
         }
 

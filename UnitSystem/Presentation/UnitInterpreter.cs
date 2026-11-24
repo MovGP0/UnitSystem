@@ -47,7 +47,9 @@ internal sealed class UnitInterpreter
     {
         var expression = DisplayExpression(unit);
         if (RoundTrips(expression, unit))
+        {
             return expression;
+        }
 
         var values = new[]
         {
@@ -117,7 +119,9 @@ internal sealed class UnitInterpreter
         foreach (var baseUnit in _baseUnits)
         {
             if (!unit.Dimension.Equals(baseUnit.Dimension))
+            {
                 continue;
+            }
 
             foreach (var prefix in _prefixes)
             {
@@ -136,11 +140,16 @@ internal sealed class UnitInterpreter
     private string DisplayFactor(string symbol, Rational exponent)
     {
         if (exponent == Rational.One)
+        {
             return symbol;
+        }
 
         var power = DimensionExponent.Format(exponent);
         if (!exponent.Denominator.IsOne)
+        {
             power = $"({power})";
+        }
+
         return symbol + _exponentiation[0] + power;
     }
 
@@ -155,11 +164,19 @@ internal sealed class UnitInterpreter
         Check.Argument(unitExpression, nameof(unitExpression)).IsNotNull();
         var expression = unitExpression.Trim();
         if (expression.Length == 0)
+        {
             return _system.NoUnit;
+        }
+
         if (expression.StartsWith(CanonicalPrefix, StringComparison.Ordinal))
+        {
             return ParseCanonical(expression);
+        }
+
         if (_system[expression] is { } known)
+        {
             return known;
+        }
 
         double factor = 1, offset = 0;
         var separator = expression.IndexOf(' ');
@@ -188,7 +205,10 @@ internal sealed class UnitInterpreter
         }
 
         if (factor.Equals(1.0) && offset.Equals(0.0))
+        {
             return unit;
+        }
+
         Check.EnsureAbsoluteUnit(unit);
         return CreateParsedUnit(unitExpression, factor * unit.Factor, offset, unit.Dimension);
     }
@@ -209,7 +229,9 @@ internal sealed class UnitInterpreter
             foreach (var token in _division)
             {
                 if (!expression.AsSpan(index).StartsWith(token, StringComparison.Ordinal))
+                {
                     continue;
+                }
 
                 terms.Add(expression[start..index]);
                 start = index + token.Length;
@@ -291,14 +313,18 @@ internal sealed class UnitInterpreter
     private Unit ParseProduct(string expression)
     {
         if (TryParseTerm(expression) is { } single)
+        {
             return single;
+        }
 
         Unit? product = null;
         foreach (var segment in expression.Split(_explicitMultiplication, StringSplitOptions.None))
         {
             var words = segment.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (words.Length == 0)
+            {
                 throw InvalidExpression(expression);
+            }
 
             for (var index = 0; index < words.Length;)
             {
@@ -328,7 +354,9 @@ internal sealed class UnitInterpreter
     private Unit? TryParseTerm(string expression)
     {
         if (TryParseSymbol(expression) is { } unit)
+        {
             return unit;
+        }
 
         var power = expression.Split(_exponentiation, StringSplitOptions.None);
         if (power.Length == 2 && TryParseSymbol(power[0]) is { } basis)
@@ -351,9 +379,15 @@ internal sealed class UnitInterpreter
     private Unit? TryParseSymbol(string symbol)
     {
         if (symbol == "1")
+        {
             return _system.NoUnit;
+        }
+
         if (_system[symbol] is { } known)
+        {
             return known;
+        }
+
         if (_prefixedBases.TryGetValue(symbol, out var prefixedBase))
         {
             return prefixedBase / prefixedBase.InherentFactor;
@@ -362,7 +396,9 @@ internal sealed class UnitInterpreter
         foreach (var prefix in _prefixes)
         {
             if (!symbol.StartsWith(prefix.Symbol, StringComparison.Ordinal))
+            {
                 continue;
+            }
 
             var suffix = symbol.Substring(prefix.Symbol.Length);
             if (_prefixedBases.TryGetValue(suffix, out prefixedBase))

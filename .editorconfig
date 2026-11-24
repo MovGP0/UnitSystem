@@ -156,7 +156,7 @@ dotnet_diagnostic.RCS1005.severity = warning
 dotnet_diagnostic.RCS1006.severity = warning
 
 # Require braces around embedded statements
-# dotnet_diagnostic.RCS1007.severity = warning
+dotnet_diagnostic.RCS1007.severity = warning
 
 # Use C# keywords for predefined types
 # dotnet_diagnostic.RCS1013.severity = warning

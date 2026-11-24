@@ -14,7 +14,9 @@ public sealed partial class Token : IEnumerable<Token>
     public Token MergeTokensBetween(Type startTokenClass, Type[] closeTokenClasses, Type[] mergedTokenClasses)
     {
         if (closeTokenClasses.Length != mergedTokenClasses.Length)
+        {
             throw new ArgumentException("Number of closing and merged token classes should be equal");
+        }
 
         var first = new Token();
         var current = first;
@@ -33,7 +35,10 @@ public sealed partial class Token : IEnumerable<Token>
                     // we didn't encounter ending token   so we put the current tokens into its parents
                     var p = current.ParentToken;
                     foreach (var t in current)
+                    {
                         p.AppendSubToken(t);
+                    }
+
                     current = p;
                     InComplete = false;
                 }
@@ -83,7 +88,10 @@ public sealed partial class Token : IEnumerable<Token>
             // we didn't encounter ending token   so we put the current tokens into its parents
             var p = current.ParentToken;
             foreach (var t in current)
+            {
                 p.AppendSubToken(t);
+            }
+
             current = null;
         }
 
@@ -274,7 +282,9 @@ public sealed partial class Token : IEnumerable<Token>
         var temp = new Token();
 
         for (var iy = 1; iy < cnext.Count - 1; iy++)
+        {
             temp.AppendSubToken(cnext[iy]);
+        }
 
         temp = temp.MergeAllBut<ParameterToken>(separator);
 
@@ -283,7 +293,9 @@ public sealed partial class Token : IEnumerable<Token>
         tmp2.AppendSubToken(cnext[0]);
 
         foreach (var itmp in temp)
+        {
             tmp2.AppendSubToken(itmp);
+        }
 
         tmp2.AppendSubToken(cnext[cnext.Count - 1]);
 

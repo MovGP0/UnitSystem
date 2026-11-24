@@ -33,9 +33,14 @@ public static class TextTools
         while (i < expression.Length)
         {
             if (expression[i] == '(')
+            {
                 Split++;
+            }
+
             if (expression[i] == ')')
+            {
                 Split--;
+            }
 
             if (Split == 0 & expression[i] == splitter)
             {
@@ -46,7 +51,9 @@ public static class TextTools
             {
                 // add charachter
                 if (!char.IsWhiteSpace(expression[i]))
+                {
                     SplitedText.Append(expression[i]);
+                }
             }
 
             i++;
@@ -71,9 +78,14 @@ public static class TextTools
         while (i < expression.Length)
         {
             if (expression[i] == '(')
+            {
                 Split++;
+            }
+
             if (expression[i] == ')')
+            {
                 Split--;
+            }
 
             if (Split == 0 & expression[i] == character)
             {
@@ -214,7 +226,9 @@ public static class TextTools
         List<string> final = new List<string>(firstpass.Length);
 
         foreach (var fp in firstpass)
+        {
             final.AddRange(WordsFromExpression(fp));
+        }
 
         return final.ToArray();
     }

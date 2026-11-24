@@ -47,7 +47,9 @@ public partial class SymbolicVariable
                 if (an._CoeffecientPowerTerm == null)
                 {
                     if (Math.Abs(an.Coeffecient) != 1)
+                    {
                         an._CoeffecientPowerTerm = b;
+                    }
                     // because 1^(Any Thing) equals == 1 :)
                 }
                 else
@@ -80,9 +82,13 @@ public partial class SymbolicVariable
                 // the whole symbolic variable should have Symbolic Term.
                 var thisBase = new SymbolicVariable(this);
                 if (_SymbolPowerTerm != null)
+                {
                     thisBase._SymbolPowerTerm = _SymbolPowerTerm * b;
+                }
                 else
+                {
                     thisBase._SymbolPowerTerm = b;
+                }
 
                 return thisBase;
             }

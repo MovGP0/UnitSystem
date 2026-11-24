@@ -21,9 +21,13 @@ public sealed class QsContext : LanguageContext
     public override ConvertBinder CreateConvertBinder(Type toType, bool? explicitCast)
     {
         if (toType == typeof(int))
+        {
             return new QsIntegerConvertBinder();
+        }
         else
+        {
             return base.CreateConvertBinder(toType, explicitCast);
+        }
     }
 
     public override ScriptCode CompileSourceCode(SourceUnit sourceUnit, CompilerOptions options, ErrorSink errorSink)

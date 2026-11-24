@@ -29,7 +29,9 @@ while (!line.Equals(":Q", StringComparison.OrdinalIgnoreCase))
     if (!string.IsNullOrEmpty(line))
     {
         if (line.Equals(":Q", StringComparison.OrdinalIgnoreCase))
+        {
             break;
+        }
 
         try
         {

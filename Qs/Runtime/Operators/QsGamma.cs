@@ -81,7 +81,9 @@ public static class QsGamma
 
         //if (v > 170) throw new ArgumentOutOfRangeException("Number", number, "Number is greater than 170");
         if (v < 0)
+        {
             throw new ArgumentOutOfRangeException("Number", "Number is less than 0");
+        }
 
         var num = (AnyQuantity<double>)number.Clone();
         num.Value = Math.Floor(num.Value);
@@ -132,7 +134,10 @@ public static class QsGamma
 
             var r = Math.Exp(y * Math.Log(y) - y + 1 / (12 * y + 2 / (5 * y + 53 / (42 * y))));
             if (x < 7)
+            {
                 r = r / p;
+            }
+
             return r * Math.Sqrt(2 * Math.PI / y);
         };
 
@@ -166,7 +171,10 @@ public static class QsGamma
             var r = Math.Exp(StieltjesLnFactorial(y));
 
             if (x < 8)
+            {
                 return  (r * x) / (p * y);
+            }
+
             return r;
         };
 

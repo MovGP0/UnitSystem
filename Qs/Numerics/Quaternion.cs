@@ -319,7 +319,10 @@ public struct Quaternion : IEquatable<Quaternion>
     public override bool Equals(object? obj)
     {
         if (obj is Quaternion rhs)
+        {
             return Equals(rhs);
+        }
+
         return false;
     }
 

@@ -23,7 +23,10 @@ public partial class SymbolicVariable
                 gg += Operation;
 
                 if (Next != null)
+                {
                     gg += " ...";
+                }
+
                 return gg;
             }
         }
@@ -62,7 +65,10 @@ public partial class SymbolicVariable
 
         var expr  = string.Empty;
         if (rr.Length == 0)
+        {
             return null;
+        }
+
         if (rr.Length > 1)
         {
             //function
@@ -413,13 +419,24 @@ public partial class SymbolicVariable
         }
 
         if (op == "*")
+        {
             return Multiply(left, right);
+        }
+
         if (op == "/")
+        {
             return Divide(left, right);
+        }
+
         if (op == "+")
+        {
             return Add(left, right);
+        }
+
         if (op == "-")
+        {
             return Subtract(left, right);
+        }
 
         throw new NotSupportedException("Not Supported Operator '" + op + "'");
     }
@@ -463,26 +480,54 @@ public partial class SymbolicVariable
         }
 
         if (op == "*")
+        {
             return Expression.Multiply(left, right);
+        }
+
         if (op == "/")
+        {
             return Expression.Divide(left, right);
+        }
+
         if (op == "+")
+        {
             return Expression.Add(left, right);
+        }
+
         if (op == "-")
+        {
             return Expression.Subtract(left, right);
+        }
 
         if (op == "<")
+        {
             return Expression.LessThan(left, right);
+        }
+
         if (op == ">")
+        {
             return Expression.GreaterThan(left, right);
+        }
+
         if (op == "<=")
+        {
             return Expression.LessThanOrEqual(left, right);
+        }
+
         if (op == ">=")
+        {
             return Expression.GreaterThanOrEqual(left, right);
+        }
+
         if (op == "=")
+        {
             return Expression.Equal(left, right);
+        }
+
         if (op == "<>")
+        {
             return Expression.NotEqual(left, right);
+        }
 
         throw new NotSupportedException("Not Supported Operator '" + op + "'");
     }
@@ -832,9 +877,13 @@ public partial class SymbolicVariable
         Expression FinalExpression;
 
         if (NegativeExpression)
+        {
             FinalExpression = Expression.Multiply(Expression.Constant(-1.0, typeof(double)), Root.DynamicExpression);
+        }
         else
+        {
             FinalExpression = Root.DynamicExpression;
+        }
 
         return FinalExpression;
     }
@@ -890,7 +939,9 @@ public partial class SymbolicVariable
         var pcount = InvolvedSymbols.Length;
 
         if (parameters.Count != pcount)
+        {
             throw new SymbolicException("Number of arguments is not correct");
+        }
 
         var FinalParams = (from pr in parameters
             orderby pr.Key
@@ -898,7 +949,9 @@ public partial class SymbolicVariable
             .ToArray();
 
         if (pcount == 0)
+        {
             return ((Func<double>)FunctionDelegate)();
+        }
 
         if (pcount == 1)
         {
@@ -986,7 +1039,9 @@ public partial class SymbolicVariable
         Dictionary<string, double> FinalParams = new Dictionary<string, double>();
 
         foreach (var p in parameters)
+        {
             FinalParams.Add(p.Item1, p.Item2);
+        }
 
         return Execute(FinalParams);
     }
@@ -1021,7 +1076,9 @@ public partial class SymbolicVariable
         }
 
         if (pcount == 0)
+        {
             return ((Func<double>)FunctionDelegate)();
+        }
 
         if (pcount == 1)
         {

@@ -88,7 +88,9 @@ public partial class SymbolicVariable
         if (sv._AddedTerms != null)
         {
             foreach (var term in sv._AddedTerms.Values)
-            Loop2(term);
+            {
+                Loop2(term);
+            }
         }
 
         // coduct the third operation .. final calulcation
@@ -118,7 +120,9 @@ public partial class SymbolicVariable
     public static SymbolicVariable? TrigSimplify(SymbolicVariable sv)
     {
         if (sv.ExtraTerms.Count > 0)
+        {
             return sv.Clone(); //prevent simplification in case of extra terms
+        }
 
         var factorized = FactorWithCommonFactor(sv);
 
@@ -137,9 +141,14 @@ public partial class SymbolicVariable
                 if (!ss.IsOneTerm)
                 {
                     if (ss.CanBeFactored())
+                    {
                         sp = TrigSimplify(ss);
+                    }
                     else
+                    {
                         sp = PartialTrigSimplify(ss);
+                    }
+
                     if (sp.IsOne)  // if equals 1  then remove it
                     {
                         // remove this fused symbol from the structure
@@ -208,7 +217,9 @@ public partial class SymbolicVariable
         if (_AddedTerms != null)
         {
             foreach (var aterm in _AddedTerms)
+            {
                 bo2bo2.Add(aterm.Value.GetMultipliedTerms());
+            }
         }
 
         // now i have the matrix of multiplied terms.
@@ -261,7 +272,9 @@ public partial class SymbolicVariable
                         {
                             // bingo we found a match   .. write this information
                             if(!indices.Contains(nxc))
+                            {
                                 indices.Add(nxc);
+                            }
                         }
                     }
                 }
@@ -308,7 +321,9 @@ public partial class SymbolicVariable
             .ToArray();
 
         if (keys.Length == 0)
+        {
             return sv.Clone();
+        }
         // ignore the 1 key
 
         // imagine a*x+a*y  result is a*(x+y)
@@ -335,7 +350,9 @@ public partial class SymbolicVariable
                 foreach (var idc in term_indices)
                 {
                     if (!target_indices.Contains(idc))
+                    {
                         continue;
+                    }
                 }
 
                 // reaching this line indicates that the two arrays contains the same indices
@@ -345,7 +362,9 @@ public partial class SymbolicVariable
             }
 
             if (target_indices.Count < term_indices.Count)
+            {
                 break; // the array is ordered from higher count to low count so there is no point in comparing more results .. break the loop
+            }
         }
 
         //Common_Factors_Keys  now contains the factors that I will work on it.
@@ -419,7 +438,9 @@ public partial class SymbolicVariable
             denominator.Symbol = sVariable.Symbol;
 
             if (sVariable._SymbolPowerTerm != null) //include the symbol power term also but invert its sign
+            {
                 denominator._SymbolPowerTerm = Multiply(NegativeOne, sVariable._SymbolPowerTerm);
+            }
 
             // fix the reordered variable by removing this symbol information because it will appear later
             //   in the divided term.

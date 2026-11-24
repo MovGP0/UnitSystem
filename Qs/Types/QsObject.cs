@@ -46,7 +46,9 @@ public class QsObject : QsValue
             var argn = args.Length;
 
             if (args.Length == 1 && args[0] == string.Empty)
-                argn=0;
+            {
+                argn =0;
+            }
 
             var d_method = InstanceType.GetMethods().First(
                 c => c.GetParameters().Length == argn
@@ -520,7 +522,10 @@ public class QsObject : QsValue
             }
 
             if (fefe.Length == 0)
+            {
                 return new QsFlowingTuple();
+            }
+
             return new QsFlowingTuple(fefe);
         }
 
@@ -541,7 +546,10 @@ public class QsObject : QsValue
             }
 
             if (fefe.Length == 0)
+            {
                 return new QsFlowingTuple();
+            }
+
             return new QsFlowingTuple(fefe);
         }
 

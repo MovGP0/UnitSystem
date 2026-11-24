@@ -97,9 +97,14 @@ public abstract partial class Unit : IEquatable<Unit>
     public bool Equals(Unit? other)
     {
         if (ReferenceEquals(this, other))
+        {
             return true;
+        }
+
         if (other is null)
+        {
             return false;
+        }
 
         return HasSameDimension(other)
             && Offset.Equals(other.Offset)
@@ -291,9 +296,14 @@ public abstract partial class Unit : IEquatable<Unit>
     public static bool operator ==(Unit? unit1, Unit? unit2)
     {
         if (ReferenceEquals(unit1, unit2))
+        {
             return true;
+        }
+
         if (unit1 is null || unit2 is null)
+        {
             return false;
+        }
 
         return unit1.HasSameDimension(unit2)
             && unit1.Factor.Equals(unit2.Factor)

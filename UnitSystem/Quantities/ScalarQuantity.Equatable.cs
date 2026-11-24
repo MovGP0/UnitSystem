@@ -18,7 +18,9 @@ public sealed partial class ScalarQuantity : IEquatable<ScalarQuantity>
     public bool Equals(ScalarQuantity? other)
     {
         if (other is null)
+        {
             return false;
+        }
 
         return IsPoint == other.IsPoint
             && CoherentUnit == other.CoherentUnit
@@ -44,9 +46,14 @@ public sealed partial class ScalarQuantity : IEquatable<ScalarQuantity>
     public static bool operator ==(ScalarQuantity? quantity1, ScalarQuantity? quantity2)
     {
         if (ReferenceEquals(quantity1, quantity2))
+        {
             return true;
+        }
+
         if (quantity1 is null)
+        {
             return false;
+        }
 
         return quantity1.Equals(quantity2);
     }

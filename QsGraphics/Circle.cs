@@ -30,19 +30,31 @@ public class Circle : Shape
     public Circle(QsScalar x, QsScalar y, QsScalar radius)
     {
         if (x.ScalarType == ScalarTypes.FunctionQuantity)
+        {
             xfunc = x.FunctionQuantity.Value;
+        }
         else
+        {
             _x = x.NumericalQuantity;
+        }
 
         if (y.ScalarType == ScalarTypes.FunctionQuantity)
+        {
             yfunc = y.FunctionQuantity.Value;
+        }
         else
+        {
             _y = y.NumericalQuantity;
+        }
 
         if (radius.ScalarType == ScalarTypes.FunctionQuantity)
+        {
             radfunc = radius.FunctionQuantity.Value;
+        }
         else
+        {
             _radius = radius.NumericalQuantity;
+        }
     }
 
     private Length<double> zm = (Length<double>)Unit.ParseQuantity("0<m>");
@@ -60,7 +72,9 @@ public class Circle : Shape
 
         // prepare for time
         if (Timer.IsRunning)
+        {
             TQ = (Time<double>)MetricUnit.Milli<Second>(Timer.ElapsedMilliseconds);
+        }
 
         Length<double> ActualRadius;
 
@@ -125,6 +139,8 @@ public class Circle : Shape
 
         // start the timer after drawing the first round
         if (!Timer.IsRunning)
+        {
             Timer.Start();
+        }
     }
 }

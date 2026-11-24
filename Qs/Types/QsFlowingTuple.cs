@@ -32,14 +32,20 @@ public class QsFlowingTuple : QsValue
         foreach (var v in values)
         {
             if (v.Id == 0)
+            {
                 sid += 10;
+            }
 
             var st = ThisFlow.Add(v.Name, v.Id == 0 ? sid : v.Id);
 
             if (v.IsLazyValue)
+            {
                 st.Value = v.LazyValue;
+            }
             else
+            {
                 st.Value = v.Value;
+            }
         }
 
         InitialValues = values;
@@ -77,12 +83,19 @@ public class QsFlowingTuple : QsValue
         foreach (var s in ThisFlow)
         {
             if (!string.IsNullOrEmpty(s.Name))
+            {
                 sb.Append(s.Name + "!");
+            }
 
             if (s.Value != null)
+            {
                 sb.Append(ValueToQsValue(s.Value).ToShortString());
+            }
             else
+            {
                 sb.Append("nil");
+            }
+
             sb.Append(", ");
         }
 
@@ -103,7 +116,9 @@ public class QsFlowingTuple : QsValue
     public override QsValue? Execute(Token expression)
     {
         if (expression.TokenValue.Equals("COUNT", StringComparison.OrdinalIgnoreCase))
+        {
             return Count.ToScalarValue();
+        }
 
         if (expression.TokenClassType == typeof(ParenthesisCallToken))
         {
@@ -141,7 +156,9 @@ public class QsFlowingTuple : QsValue
                     for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
                     {
                         if (ThisFlow.FlowSteps[ix].Id == id)
+                        {
                             return ix.ToScalarValue();
+                        }
                     }
 
                     return QsScalar.NegativeOne;
@@ -152,7 +169,9 @@ public class QsFlowingTuple : QsValue
                 for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
                 {
                     if (ThisFlow.FlowSteps[ix].Name.Equals(argtext, StringComparison.OrdinalIgnoreCase))
+                    {
                         return ix.ToScalarValue();
+                    }
                 }
 
                 return QsScalar.NegativeOne;
@@ -189,9 +208,15 @@ public class QsFlowingTuple : QsValue
         if (value is QsFlowingTuple ft)
         {
             if (ReferenceEquals(ft, this))
+            {
                 return true;
-            if(Count != ft.Count)
+            }
+
+            if (Count != ft.Count)
+            {
                 return false;
+            }
+
             for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
             {
                 if (
@@ -233,7 +258,9 @@ public class QsFlowingTuple : QsValue
         var c = InitialValues.Count();
 
         if (itimes > c)
+        {
             itimes = itimes % c;
+        }
 
         var NewValues = new QsTupleValue[c];
 
@@ -270,7 +297,9 @@ public class QsFlowingTuple : QsValue
         var c = InitialValues.Count();
 
         if (itimes > c)
+        {
             itimes = itimes % c;
+        }
 
         var NewValues = new QsTupleValue[c];
 
@@ -305,7 +334,9 @@ public class QsFlowingTuple : QsValue
 
         var ix = (int)((QsScalar?)indices[0].QsNativeValue).NumericalQuantity.Value;
         if (ix < 0)
+        {
             ix = ThisFlow.FlowSteps.Length + ix;
+        }
 
         return ValueToQsValue(ThisFlow.FlowSteps[ix].Value);
     }
@@ -387,9 +418,13 @@ public class QsFlowingTuple : QsValue
             fefe[ix].Id = id;
 
             if (StructProperty.PropertyType.IsValueType)
+            {
                 fefe[ix].SetLazyValue(StructProperty.GetValue(value, null));
+            }
             else
+            {
                 fefe[ix].Value = Root.NativeToQsConvert(StructProperty.GetValue(value, null));
+            }
 
             id += 10;
         }

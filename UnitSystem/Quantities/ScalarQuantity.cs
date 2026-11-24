@@ -58,7 +58,9 @@ public sealed partial class ScalarQuantity
     {
         Check.UnitsAreSameDimension(Unit, unit);
         if (Unit == unit)
+        {
             return this;
+        }
 
         return new ScalarQuantity(unit.FromCoherent(CoherentAmount, IsPoint), unit, IsPoint, CoherentUnit, CoherentAmount);
     }

@@ -103,9 +103,14 @@ public sealed class GaugeProduct
             // Add each of the three fundamental weights and keep dominant weights.
             AddChannel(new ColorRepresentation(checked(p + 1), q));
             if (p > 0)
+            {
                 AddChannel(new ColorRepresentation(p - 1, checked(q + 1)));
+            }
+
             if (q > 0)
+            {
                 AddChannel(new ColorRepresentation(p, q - 1));
+            }
 
             void AddChannel(ColorRepresentation channel)
                 => AddMultiplicity(result, conjugate ? channel.Conjugate() : channel, multiplicity);

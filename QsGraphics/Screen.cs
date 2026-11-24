@@ -64,7 +64,9 @@ public class Screen
 
         var a = _Form.Close;
         if(_Form.IsHandleCreated)
+        {
             _Form.Invoke(a);          //execute the code of the form in its running thread by invoke
+        }
     }
 
     ~Screen()
@@ -111,7 +113,10 @@ public class Screen
     {
         loop = false;
         foreach (var sh in Shapes)
+        {
             sh.Reset();
+        }
+
         Task.WaitAll(runningTasks.ToArray());
     }
 
@@ -130,7 +135,9 @@ public class Screen
 
         // draw the shapes
         foreach (var sp in Shapes)
+        {
             sp.Draw(OffGraphics, (float)_PixelPerMeter);
+        }
 
         // draw the offscreen into the displayed screen
 
@@ -153,7 +160,9 @@ public class Screen
         var t = Task.Factory.StartNew(() =>
         {
             while (sw.ElapsedMilliseconds < mtime.Value && loop==true)
+            {
                 Update();
+            }
 
             //stop the timer.
             sw.Stop();
@@ -173,7 +182,9 @@ public class Screen
         var t = Task.Factory.StartNew(() =>
         {
             while (loop)
+            {
                 Update();
+            }
 
             //stop the timer.
             sw.Stop();

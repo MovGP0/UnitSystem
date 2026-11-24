@@ -26,12 +26,16 @@ public partial class QsFunction
         foreach (var prm in parameters)
         {
             if (!rp.ContainsKey(prm))
+            {
                 rp[prm] = true;
+            }
         }
 
         var all = string.Empty;
         foreach (var k in rp.Keys)
+        {
             all += "," + k;
+        }
 
         return all.TrimStart(',');
     }
@@ -82,7 +86,9 @@ public partial class QsFunction
             }
 
             if (i < functions.Length - 1)
+            {
                 fTokens.AppendSubToken(Token.ParseText(operation.Trim())[0]);  //operation is only one charachter
+            }
         }
 
         return fTokens;
@@ -109,7 +115,9 @@ public partial class QsFunction
             }
 
             if (i < functions.Length - 1)
+            {
                 fTokens.AppendSubToken(Token.ParseText(operation.Trim())[0]);  //operation is only one charachter
+            }
         }
 
         return fTokens;
@@ -171,23 +179,37 @@ public partial class QsFunction
 
             var fbody = FunctionBody;
             if (svl.ScalarType == ScalarTypes.SymbolicQuantity)
+            {
                 fbody = "(" + fbody + ")" + operation + "(" + svl.SymbolicQuantity.Value + ")";
+            }
             else if (svl.ScalarType == ScalarTypes.NumericalQuantity)
+            {
                 fbody = "(" + fbody + ")" + operation + svl.NumericalQuantity.Value;
+            }
             else if (svl.ScalarType == ScalarTypes.RationalNumberQuantity)
+            {
                 fbody = "(" + fbody + ")" + operation + svl.RationalQuantity.Value.Value;
+            }
             else if (svl.ScalarType == ScalarTypes.FunctionQuantity)
+            {
                 fbody = "(" + fbody + ")" + operation + "(" + svl.FunctionQuantity.Value.FunctionBody + ")";
+            }
             else
+            {
                 throw new QsException("Operation '" + operation + "' for the target scalar type (" + svl.ScalarType + ") is not supported");
+            }
 
             var fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
 
             var FuncBody = string.Empty;
             if(fb.ScalarType == ScalarTypes.SymbolicQuantity)
+            {
                 FuncBody = fb.SymbolicQuantity.Value.ToString().Replace("__FAC__", "!");
+            }
             else
+            {
                 FuncBody = fb.ToExpressionParsableString();
+            }
 
             string[] functionParametersArray = ParametersNames; // this is the available parameters for the original function.
 
@@ -362,7 +384,9 @@ public partial class QsFunction
         if(value is QsFunction func)
         {
             if (ReferenceEquals(func, this))
+            {
                 return true;
+            }
 
             var thisDebugView = ExpressionDebugView.GetValue(_FunctionExpression.Body) as string;
             var funcDebugView = ExpressionDebugView.GetValue(func._FunctionExpression.Body) as string;

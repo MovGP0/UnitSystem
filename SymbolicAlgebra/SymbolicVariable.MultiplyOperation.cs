@@ -11,17 +11,29 @@ public partial class SymbolicVariable
     public static SymbolicVariable? Multiply(SymbolicVariable a, SymbolicVariable b)
     {
         if (a == null || b == null)
+        {
             return null;
+        }
 
         if (a.IsZero)
+        {
             return new SymbolicVariable("0");
+        }
+
         if (b.IsZero)
+        {
             return new SymbolicVariable("0");
+        }
 
         if (a.IsOne)
+        {
             return b.Clone();
+        }
+
         if (b.IsOne)
+        {
             return a.Clone();
+        }
 
         var TargetSubTerm = b.Clone();
 
@@ -49,9 +61,13 @@ public partial class SymbolicVariable
             foreach (var bfv in TargetSubTerm.FusedSymbols)
             {
                 if (SourceTerm.FusedSymbols.ContainsKey(bfv.Key))
+                {
                     SourceTerm.FusedSymbols[bfv.Key] += bfv.Value;
+                }
                 else
+                {
                     SourceTerm.FusedSymbols.Add(bfv.Key, bfv.Value);
+                }
             }
 
             #endregion
@@ -70,23 +86,35 @@ public partial class SymbolicVariable
 
                 // the instance have an empty primary variable so we should add it
                 if (TargetSubTerm._BaseVariable != null)
+                {
                     SourceTerm._BaseVariable = TargetSubTerm._BaseVariable;
+                }
                 else
+                {
                     SourceTerm.Symbol = TargetSubTerm.Symbol;
+                }
 
                 SourceTerm.SymbolPower = TargetSubTerm.SymbolPower;
                 if (TargetSubTerm.SymbolPowerTerm != null)
+                {
                     SourceTerm._SymbolPowerTerm = TargetSubTerm.SymbolPowerTerm.Clone();
+                }
                 else
+                {
                     SourceTerm._SymbolPowerTerm = null;
+                }
 
                 //fuse the fused variables in target into source
                 foreach (var fv in TargetSubTerm.FusedSymbols)
                 {
                     if (SourceTerm.FusedSymbols.ContainsKey(fv.Key))
+                    {
                         SourceTerm.FusedSymbols[fv.Key] += fv.Value;
+                    }
                     else
+                    {
                         SourceTerm.FusedSymbols.Add(fv.Key, fv.Value);
+                    }
                 }
                 #endregion
             }
@@ -129,9 +157,13 @@ public partial class SymbolicVariable
                     foreach (var fv in TargetSubTerm.FusedSymbols)
                     {
                         if (SourceTerm.FusedSymbols.ContainsKey(fv.Key))
+                        {
                             SourceTerm.FusedSymbols[fv.Key] += fv.Value;
+                        }
                         else
+                        {
                             SourceTerm.FusedSymbols.Add(fv.Key, fv.Value);
+                        }
                     }
                     #endregion
 
@@ -271,9 +303,13 @@ public partial class SymbolicVariable
         }
 
         if (SourceTerm.DividedTerm.IsOne)
+        {
             SourceTerm.DividedTerm = TargetSubTerm.DividedTerm;
+        }
         else
+        {
             SourceTerm.DividedTerm = Multiply(SourceTerm.DividedTerm, TargetSubTerm.DividedTerm);
+        }
 
         //here is a code to continue with other parts of a when multiplying them
         if (SourceTerm.AddedTerms.Count > 0)
@@ -300,7 +336,9 @@ public partial class SymbolicVariable
             {
                 var eterm = et.Term;
                 if (et.Negative)
+                {
                     eterm = Multiply(NegativeOne, eterm);
+                }
 
                 var newe = Multiply(eterm, TargetSubTerm);
                 newExtraTerms.Add(new ExtraTerm { Term = newe });
@@ -338,7 +376,10 @@ public partial class SymbolicVariable
             var eTerm = b.ExtraTerms[extraIndex];
             TargetSubTerm = eTerm.Term;
             if (eTerm.Negative)
+            {
                 TargetSubTerm = Multiply(NegativeOne, TargetSubTerm);
+            }
+
             var TargetTermSubTotal = Multiply(a, TargetSubTerm);
             total = Add(total, TargetTermSubTotal);
             extraIndex++;
@@ -414,10 +455,15 @@ public partial class SymbolicVariable
                     // sample: 2^x*2^y = 2^(x+y)
                     var cpower = cst.ConstantPower;
                     if (cpower == null)
+                    {
                         cpower = One;
+                    }
 
                     if (SourceTerm._CoeffecientPowerTerm == null)
+                    {
                         SourceTerm._CoeffecientPowerTerm = One;
+                    }
+
                     SourceTerm._CoeffecientPowerTerm += cpower;
                 }
                 else if ((sbase - Math.Floor(sbase)) == 0.0 && sbase > 0)   // make sure there are no
@@ -426,7 +472,10 @@ public partial class SymbolicVariable
                     // 27*3^x = 3^3*3^x = 3^(3+x)
                     var cpower = cst.ConstantPower;
                     if (cpower == null)
+                    {
                         cpower = new SymbolicVariable("1");
+                    }
+
                     SourceTerm._CoeffecientPowerTerm = Add(new SymbolicVariable(sbase.ToString(CultureInfo.InvariantCulture)), cpower);
                     SourceTerm.Coeffecient = cst.ConstantValue;
                 }
@@ -467,7 +516,9 @@ public partial class SymbolicVariable
                             // if no base produced an integer power value then we add it into fused constants as it is.
 
                             if (cst.ConstantValue == 1.0)
+                            {
                                 continue;  // ONE doesn't change anything so we bypass it
+                            }
 
                             double? SucceededConstant = null;
                             double ower = 0;
@@ -521,8 +572,12 @@ public partial class SymbolicVariable
     internal static SymbolicVariable? Multiply(HybridVariable a, SymbolicVariable b)
     {
         if (a.SymbolicVariable != null)
+        {
             return Multiply(a.SymbolicVariable, b);
+        }
         else
+        {
             return Multiply(new SymbolicVariable(a.NumericalVariable.ToString(CultureInfo.InvariantCulture)), b);
+        }
     }
 }

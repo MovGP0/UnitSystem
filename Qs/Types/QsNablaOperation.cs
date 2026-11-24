@@ -129,7 +129,9 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
         var ccs = string.Empty;
 
         foreach (var s in Coordinates)
+        {
             ccs += s + " ";
+        }
 
         ccs = ccs.Trim();
 

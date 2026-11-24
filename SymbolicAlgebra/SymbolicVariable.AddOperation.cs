@@ -11,7 +11,9 @@ public partial class SymbolicVariable
     public static SymbolicVariable? Add(SymbolicVariable a, SymbolicVariable b)
     {
         if (a == null || b == null)
+        {
             return null;
+        }
 
         // check for the denominator part .. if it is not the same .. you will have to put the whole
         //  symbolic variable in the extra term.

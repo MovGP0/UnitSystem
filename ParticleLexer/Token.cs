@@ -26,9 +26,13 @@ public sealed partial class Token : IEnumerable<Token>
     public bool Contains<TargetTokenClass>() where TargetTokenClass : TokenClass
     {
         if (childTokens.Count(o => o.TokenClassType == typeof(TargetTokenClass)) > 0)
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
     /// <summary>
@@ -39,9 +43,13 @@ public sealed partial class Token : IEnumerable<Token>
     public bool Contains(Type tokenClassType)
     {
         if (childTokens.Count(o => o.TokenClassType == tokenClassType) > 0)
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
     /// <summary>
@@ -54,7 +62,9 @@ public sealed partial class Token : IEnumerable<Token>
         foreach(var tokenClassType in tokenClassTypes)
         {
             if (childTokens.Count(o => o.TokenClassType == tokenClassType) > 0)
+            {
                 return true;
+            }
         }
 
         return false;
@@ -157,9 +167,13 @@ public sealed partial class Token : IEnumerable<Token>
         get
         {
             if (childTokens.Count > 0)
+            {
                 return childTokens[0].IndexInText;
+            }
             else
+            {
                 return _IndexInText;
+            }
         }
     }
 
@@ -454,7 +468,9 @@ public sealed partial class Token : IEnumerable<Token>
                     if (!string.IsNullOrEmpty(tokenClassType.ShouldBeginWith))
                     {
                         if (!merged.TokenValue.StartsWith(tokenClassType.ShouldBeginWith, StringComparison.OrdinalIgnoreCase))
+                        {
                             goto NoStartWith;
+                        }
                     }
 
                     // inner sneaky loop. :)
@@ -483,7 +499,9 @@ public sealed partial class Token : IEnumerable<Token>
                             for (var iai = 0; iai < AccumulatedInnerText.Length; iai++)
                             {
                                 if (AccumulatedInnerText[iai] != tokenClassType.OriginalPatternWord[iai])
+                                {
                                     goto WhileBreak;
+                                }
                             }
                         }
                         else if (!string.IsNullOrEmpty(tokenClassType.ShouldBeginWith))
@@ -493,7 +511,9 @@ public sealed partial class Token : IEnumerable<Token>
                             // otherwise no need to make other accumulation.
 
                             if (!AccumulatedInnerText.StartsWith(tokenClassType.ShouldBeginWith, StringComparison.OrdinalIgnoreCase))
+                            {
                                 goto WhileBreak;
+                            }
                         }
 
                         // terminate on specific conditions
@@ -508,7 +528,9 @@ public sealed partial class Token : IEnumerable<Token>
                             // merge all tokens that made the success
                             // alter the original loop index and go to the loop tail
                             for (; tokIndex <= rtokIndex; tokIndex++)
+                            {
                                 merged.AppendSubToken(childTokens[tokIndex]);
+                            }
 
                             if (tokIndex < childTokens.Count)
                             {
@@ -543,7 +565,9 @@ public sealed partial class Token : IEnumerable<Token>
                             //    if we found the ending resemble the end string of target token class then we will assume that we don't have matching token suitable and
                             //    we will end the loop to prevent unnecessary loops
                             if (AccumulatedInnerText.EndsWith(tokenClassType.ShouldEndWith, StringComparison.OrdinalIgnoreCase))
+                            {
                                 goto WhileBreak;
+                            }
                         }
 
                         rtokIndex++;
@@ -588,7 +612,10 @@ public sealed partial class Token : IEnumerable<Token>
         if (!string.IsNullOrEmpty(merged.TokenValue))
         {
             if (rx.IsMatch(merged.TokenValue))
+            {
                 merged.TokenClassType = tokenClassType.GetType();
+            }
+
             current.AppendSubToken(merged);
         }
 
@@ -616,7 +643,10 @@ public sealed partial class Token : IEnumerable<Token>
         {
             var tc = GetTokenClass(tt);
             if (tc.ExactWord==false)
+            {
                 throw new InvalidOperationException("Only exact word tokens are allowed");
+            }
+
             tokenClasses.Add(tc);
         }
 
@@ -671,7 +701,10 @@ public sealed partial class Token : IEnumerable<Token>
                 // so we go for another tokenclass to compare
 
                 if (merged.Count > 0)
+                {
                     merged = new Token(); //reset the merged object because it was modified
+                }
+
                 TokenClassesIndex++;
             }
 
@@ -836,7 +869,9 @@ public sealed partial class Token : IEnumerable<Token>
             // then tokens were run out before we know if we can merge this into current or not
             // so take all tokens in merged and add it to current.
             for (var i = 0; i < merged.Count; i++)
+            {
                 current.AppendSubToken(merged[i]);
+            }
 
             merged = null;
         }
@@ -858,9 +893,13 @@ public sealed partial class Token : IEnumerable<Token>
             if (h.Count == 1)
             {
                 if (h.TokenClassType == h[0].TokenClassType)
+                {
                     Metzabbat.AppendSubToken(h[0]);
+                }
                 else
+                {
                     Metzabbat.AppendSubToken(h);
+                }
             }
             else
             {
@@ -974,7 +1013,9 @@ public sealed partial class Token : IEnumerable<Token>
             else
             {
                 if (tok.TokenClassType == untilToken)
+                {
                     reached = true;
+                }
 
                 //not the required token add it to the return value.
                 current.AppendSubToken(tok);

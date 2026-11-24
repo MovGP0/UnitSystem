@@ -15,13 +15,19 @@ public sealed class QsIntegerConvertBinder() : ConvertBinder(typeof(int), false)
             var rvalue = 0;
 
             if (v is QsScalar)
+            {
                 rvalue = (int)((QsScalar)v).NumericalQuantity.Value;
+            }
 
             if (v is QsVector)
+            {
                 rvalue = (int)((QsVector)v)[0].NumericalQuantity.Value;
+            }
 
             if (v is QsMatrix)
+            {
                 rvalue = (int)((QsMatrix)v)[0, 0].NumericalQuantity.Value;
+            }
 
             return target.Clone(Expression.Constant(rvalue, typeof(int)));
         }

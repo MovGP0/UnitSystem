@@ -10,7 +10,9 @@ public partial class SymbolicVariable
     public SymbolicVariable? Power(int power)
     {
         if (power == 0)
+        {
             return _One;
+        }
 
         var total = Clone();
         var pw = Math.Abs(power);
@@ -43,14 +45,19 @@ public partial class SymbolicVariable
     public SymbolicVariable? Power(double power)
     {
         if (Math.Floor(power) == power)
+        {
             return Power((int)power);
+        }
 
         var p = Clone();
         if (p.IsOneTerm)
         {
             // raise the coeffecient and symbol
             if (!string.IsNullOrEmpty(p.Symbol))
+            {
                 p.SymbolPower = power;
+            }
+
             p.Coeffecient = Math.Pow(p.Coeffecient, power);
         }
         else if (power == 0.5)

@@ -39,7 +39,10 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         get
         {
             if (InternalFunctionDelegate == null)
+            {
                 return false;
+            }
+
             return true;
         }
     }
@@ -261,7 +264,10 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         get
         {
             if (_InternalFunctionDelegate == null)
+            {
                 _InternalFunctionDelegate = FunctionExpression.Compile();
+            }
+
             return _InternalFunctionDelegate;
         }
         set => _InternalFunctionDelegate = value;
@@ -331,7 +337,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         for (var ix = 0; ix < Parameters.Length; ix++)
         {
             if (Parameters[ix].Name.Equals(parameterName, StringComparison.OrdinalIgnoreCase))
+            {
                 return ix;
+            }
         }
 
         return -1;
@@ -357,7 +365,10 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     public bool ContainsParameter(string parameterName)
     {
         if (GetParameterOrdinal(parameterName) > -1)
+        {
             return true;
+        }
+
         return false;
     }
 
@@ -371,7 +382,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         foreach (var paramName in parametersNames)
         {
             if (!ContainsParameter(paramName))
+            {
                 return false; //parameter does not exist break and return false;
+            }
         }
 
         return true;
@@ -420,7 +433,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     public static QsFunction ParseFunction(QsEvaluator qse, string functionDeclaration)
     {
         if (functionDeclaration.StartsWith("@"))
+        {
             return null;
+        }
 
         // fast check for function as = and ) before it.
         var eqIdx = functionDeclaration.IndexOf('=');
@@ -431,11 +446,20 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             {
                 eqIdx--;
                 if (functionDeclaration[eqIdx] == ' ')
+                {
                     continue;   // ignore spaces.
+                }
+
                 if (functionDeclaration[eqIdx] == '\t')
+                {
                     continue;  // ignore tabs
+                }
+
                 if (functionDeclaration[eqIdx] == ')')
+                {
                     goto GoParseFunction;
+                }
+
                 return null;
             }
         }
@@ -570,7 +594,10 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
             // built int math functions will be overwrite any other functions
             if (function != null)
+            {
                 return function;
+            }
+
             function = (QsFunction)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, functionName);
 
             return function;
@@ -610,7 +637,10 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         var f = GetFunction(scope, nameSpace, functionName);
 
         if (f == null)
+        {
             throw new QsFunctionNotFoundException("Function: '" + functionName + "' Couldn't be found in " + nameSpace + ".");
+        }
+
         return f;
     }
 
@@ -638,7 +668,10 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
         var symbol = functionName + "#" + paramNames.Length.ToString(CultureInfo.InvariantCulture);
         foreach (var p in paramNames)
+        {
             symbol += "_" + p.ToLowerInvariant();
+        }
+
         return symbol;
     }
 
@@ -650,7 +683,10 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     public static bool IsItFunctionSymbolicName(string name)
     {
         if (Regex.Match(name, @".+#.+").Success)
+        {
             return true;
+        }
+
         return false;
     }
 
@@ -662,7 +698,10 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     public static bool IsItDefaultFunctionSymbolicName(string name)
     {
         if (char.IsDigit(name.ToCharArray().Last()))
+        {
             return true;
+        }
+
         return false;
     }
 

@@ -19,10 +19,14 @@ public class DerivedQuantity<T> : AnyQuantity<T>
 
         {
             if (dimension.Length.ScalarExponent != 0)
+            {
                 quantities.Add(new Length<T>(dimension.Length.ScalarExponent));
+            }
 
             if (dimension.Length.VectorExponent != 0)
+            {
                 quantities.Add(new Displacement<T>(dimension.Length.VectorExponent));
+            }
         }
 
         if (dimension.Time.Exponent != 0)

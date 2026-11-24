@@ -305,7 +305,9 @@ public partial class Unit
                 {
                     //then it is unit with sub units in it
                     if (uu.SubUnits.Count == 1)
+                    {
                         uu = uu.SubUnits[0];
+                    }
                 }
 
                 dunits.Add(uu.Invert());
@@ -313,7 +315,9 @@ public partial class Unit
         }
 
         if (dunits.Count == 1)
+        {
             return dunits[0];
+        }
 
         //get the dimension of all units
         var ud = QuantityDimension.Dimensionless;
@@ -368,7 +372,10 @@ public partial class Unit
             for (var i = 10; i >= -10; i -= 1)
             {
                 if (i == 0)
+                {
                     i--; //skip the None prefix
+                }
+
                 if (unit.StartsWith(MetricPrefix.GetPrefix(i).Symbol, StringComparison.Ordinal))
                 {
                     //found
@@ -381,7 +388,10 @@ public partial class Unit
                     var u = FindUnit(upart) as MetricUnit;
 
                     if (u == null)
+                    {
                         goto nounit;
+                    }
+
                     u.UnitPrefix = mp;
 
                     finalUnit = u;

@@ -272,7 +272,10 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                 //add $ before any symbol
                 var sq = SymbolicQuantity.Value.ToString();
                 foreach (var sym in SymbolicQuantity.Value.InvolvedSymbols)
+                {
                     sq = sq.Replace(sym, "$" + sym);
+                }
+
                 rv =  sq + SymbolicQuantity.UnitText;
                 break;
 
@@ -294,7 +297,10 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         }
 
         if (rv.EndsWith("<1>"))
+        {
             return rv.Substring(0, rv.Length - 3);
+        }
+
         return rv;
     }
 
@@ -305,25 +311,39 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override string ToValueString()
     {
         if (_ScalarType == ScalarTypes.NumericalQuantity)
+        {
             return NumericalQuantity.Value.ToString(CultureInfo.InvariantCulture);
+        }
 
         if (_ScalarType == ScalarTypes.SymbolicQuantity)
+        {
             return SymbolicQuantity.Value.ToString();
+        }
 
         if (_ScalarType == ScalarTypes.ComplexNumberQuantity)
+        {
             return ComplexQuantity.Value.ToString();
+        }
 
         if (_ScalarType == ScalarTypes.QuaternionNumberQuantity)
+        {
             return QuaternionQuantity.Value.ToString();
+        }
 
         if (_ScalarType == ScalarTypes.FunctionQuantity)
+        {
             return FunctionQuantity.Value.ToShortString();
+        }
 
         if (_ScalarType == ScalarTypes.QsOperation)
+        {
             return Operation.ToShortString();
+        }
 
         if (_ScalarType == ScalarTypes.RationalNumberQuantity)
+        {
             return RationalQuantity.Value.ToString();
+        }
 
         throw new NotImplementedException("Unknow scalar type: " + _ScalarType);
     }
@@ -1262,9 +1282,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
@@ -1303,9 +1327,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
@@ -1350,14 +1378,21 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
             if (_ScalarType == ScalarTypes.QsOperation)
+            {
                 return Operation.MultiplyOperation(value);
+            }
+
             return MultiplyScalar((QsScalar)value);
         }
 
@@ -1405,9 +1440,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (_ScalarType == ScalarTypes.QsOperation)
         {
@@ -1435,9 +1474,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (_ScalarType == ScalarTypes.QsOperation)
         {
@@ -1451,9 +1494,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
@@ -1485,14 +1532,21 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
             if (ScalarType == ScalarTypes.QsOperation)
+            {
                 return Operation.PowerOperation(vl);
+            }
+
             return PowerScalar((QsScalar)value);
         }
 
@@ -1533,9 +1587,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         // this is tricky because if you divide 5<m>/2<s> you got Speed 2.5<m/s>
         //   but the modulus will be 5<m> / 2<s> = 2<m/s> + 1<m>
@@ -1552,9 +1610,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         throw new NotImplementedException("Tensor product of QsScalar and " + value.GetType().Name + " is not implemented yet");
     }
@@ -1576,9 +1638,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
@@ -1609,9 +1675,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
@@ -1642,9 +1712,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
@@ -1674,9 +1748,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
@@ -1706,12 +1784,18 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if ((object)value == null)
+        {
             return false;
+        }
 
         if (value is QsScalar)
         {
@@ -1768,9 +1852,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
         {
@@ -1886,12 +1974,19 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         QsValue value;
         if (vl is QsReference)
+        {
             value = ((QsReference)vl).ContentValue;
+        }
         else
+        {
             value = vl;
+        }
 
         if (value is QsScalar)
+        {
             return DifferentiateScalar((QsScalar)value);
+        }
+
         return base.DifferentiateOperation(value);
     }
 
@@ -1917,12 +2012,16 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                 if (end >= start)
                 {
                     for (var id = start; id <= end; id++)
+                    {
                         v.AddComponent(id.ToQuantity().ToScalar());
+                    }
                 }
                 else
                 {
                     for (var id = start; id >= end; id--)
+                    {
                         v.AddComponent(id.ToQuantity().ToScalar());
+                    }
                 }
 
                 return v;
@@ -2003,15 +2102,29 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public object ToType(Type conversionType, IFormatProvider? provider)
     {
         if (conversionType == typeof(QsFunction))
+        {
             return FunctionQuantity.Value;
+        }
+
         if (conversionType == typeof(Complex))
+        {
             return ComplexQuantity.Value;
+        }
+
         if (conversionType == typeof(Quaternion))
+        {
             return QuaternionQuantity.Value;
+        }
+
         if (conversionType == typeof(Rational))
+        {
             return RationalQuantity.Value;
+        }
+
         if (conversionType == typeof(SymbolicVariable))
+        {
             return SymbolicQuantity.Value;
+        }
 
         switch (ScalarType)
         {

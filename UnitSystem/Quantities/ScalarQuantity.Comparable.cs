@@ -10,7 +10,9 @@ public sealed partial class ScalarQuantity : IComparable<ScalarQuantity>
     public int CompareTo(ScalarQuantity? other)
     {
         if (other is null)
+        {
             return 1;
+        }
 
         Check.UnitsAreSameDimension(CoherentUnit, other.CoherentUnit);
         if (IsPoint != other.IsPoint)

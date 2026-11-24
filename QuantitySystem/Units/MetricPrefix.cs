@@ -284,9 +284,14 @@ public struct MetricPrefix(string prefix, string symbol, int exponent)
             {
                 var cexp = 0;
                 if (exp > 0)
+                {
                     cexp = correctexp[i];
+                }
+
                 if (exp < 0)
+                {
                     cexp = -1 * correctexp[i];
+                }
 
                 throw new MetricPrefixException("Exponent not aligned")
                 {

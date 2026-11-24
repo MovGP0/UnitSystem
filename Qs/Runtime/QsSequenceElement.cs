@@ -88,7 +88,10 @@ public class QsSequenceElement
     public QsValue Execute(int executionIndex, params QsParameter[] args)
     {
         if (ElementValue is QsValue)
+        {
             return (QsValue)ElementValue;
+        }
+
         switch (args.Length)
         {
 
@@ -220,7 +223,10 @@ public class QsSequenceElement
     public static QsSequenceElement Parse(string element, QsEvaluator qse, QsSequence sequence)
     {
         if (string.IsNullOrEmpty(element))
+        {
             throw new QsException("Can't create element from empty string.");
+        }
+
         //try direct quantity
         AnyQuantity<double> v;
         if (Unit.TryParseQuantity(element, out v))
@@ -242,7 +248,9 @@ public class QsSequenceElement
         lb.Parameter(typeof(int), sequence.SequenceIndexName);
         //find the index parameter in line to know if it will be evaluated or not
         if (element.IndexOf(sequence.SequenceIndexName) > -1)
+        {
             se.IndexEvaluation = true;
+        }
 
         //make the sequence parameters.
         foreach (var seqParam in sequence.Parameters)
@@ -250,7 +258,9 @@ public class QsSequenceElement
             //lb.Parameter(typeof(QsValue), seqParam.Name);
             lb.Parameter(typeof(QsParameter), seqParam.Name);
             if (element.IndexOf(seqParam.Name) > -1)
+            {
                 se.ParameterEvaluation = true;
+            }
         }
 
         var pvar = new QsVar(qse, element, sequence, lb);

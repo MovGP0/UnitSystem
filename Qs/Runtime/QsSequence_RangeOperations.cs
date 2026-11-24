@@ -62,17 +62,23 @@ public partial class QsSequence
             {
                 counterIndex--;
                 if (counterIndex < toIndex)
+                {
                     still = false;
+                }
             }
             else
             {
                 counterIndex++;
                 if (counterIndex > toIndex)
+                {
                     still = false;
+                }
             }
 
             if (still)
+            {
                 FunctionBody += " " + operation + " ";
+            }
         }
 
         return FunctionBody;
@@ -98,13 +104,17 @@ public partial class QsSequence
             {
                 counterIndex--;
                 if (counterIndex < toIndex)
+                {
                     still = false;
+                }
             }
             else
             {
                 counterIndex++;
                 if (counterIndex > toIndex)
+                {
                     still = false;
+                }
             }
 
             if (still)
@@ -483,19 +493,25 @@ public partial class QsSequence
             {
                 Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
                 foreach (var pel in ProcessedElements)
+                {
                     ((QsVector)Total).AddComponent((QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(pel));
+                }
             }
             else if (ee is QsVector)
             {
                 Total = new QsMatrix();
                 foreach (var pel in ProcessedElements)
+                {
                     ((QsMatrix)Total).AddVector((QsVector)QsEvaluator.CurrentEvaluator.SilentEvaluate(pel));
+                }
             }
             else if (ee is QsMatrix)
             {
                 Total = new QsTensor();
                 foreach (var pel in ProcessedElements)
+                {
                     ((QsTensor)Total).AddMatrix((QsMatrix)QsEvaluator.CurrentEvaluator.SilentEvaluate(pel));
+                }
             }
             else
             {

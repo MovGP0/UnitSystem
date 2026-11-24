@@ -312,7 +312,9 @@ public class SymbolicVariableTest
         foreach (var at in err1.AddedTerms)
         {
             if (at.Value.AddedTerms.Count > 0)
+            {
                 throw new Exception("No more than sub terms required");
+            }
         }
 
         var err2 = big - b;
@@ -320,7 +322,9 @@ public class SymbolicVariableTest
         foreach (var at in err2.AddedTerms)
         {
             if (at.Value.AddedTerms.Count > 0)
+            {
                 throw new Exception("No more than sub terms required");
+            }
         }
 
         Assert.AreEqual(1, 1);

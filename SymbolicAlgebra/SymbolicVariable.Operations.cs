@@ -44,7 +44,9 @@ public partial class SymbolicVariable
 
                 // multiplied symbol
                 if (!string.IsNullOrEmpty(basicterm.SymbolBaseKey))
+                {
                     MultipliedTerms.Add(new MultipliedTerm(Parse(basicterm.WholeValueBaseKey)));
+                }
             }
             else
             {
@@ -83,7 +85,9 @@ public partial class SymbolicVariable
                 var ss = new SymbolicVariable(FS.Key);
                 ss.SymbolPower = FS.Value.NumericalVariable;
                 if (FS.Value.SymbolicVariable != null)
+                {
                     ss._SymbolPowerTerm = FS.Value.SymbolicVariable.Clone();
+                }
 
                 MultipliedTerms.Add(new MultipliedTerm(ss));
             }
@@ -91,9 +95,14 @@ public partial class SymbolicVariable
 
         SpliBaseTerm(sv);
         if (sv.FusedConstants.Count > 0)
+        {
             SpliFusedConstants(sv);
+        }
+
         if (sv.FusedSymbols.Count > 0)
+        {
             SplitFusedSymbols(sv);
+        }
 
         return MultipliedTerms;
     }
