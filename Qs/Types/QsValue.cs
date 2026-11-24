@@ -181,12 +181,12 @@ public abstract class QsValue: IComparable
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    virtual public QsValue ExclamationOperator(QsValue key)
+    virtual public QsValue? ExclamationOperator(QsValue key)
     {
         throw new QsException("Exclamation operator is not valid for " + GetType());
     }
 
-    virtual public QsValue ColonOperator(QsValue value)
+    virtual public QsValue? ColonOperator(QsValue value)
     {
         throw new QsException("Colon operator is not valid for " + GetType());
     }
