@@ -230,7 +230,9 @@ internal sealed class UnitInterpreter
             if (opening >= expression.Length
                 || expression[opening] != '('
                 || !expression.AsSpan(index).StartsWith(token, StringComparison.Ordinal))
+            {
                 continue;
+            }
 
             var closing = expression.IndexOf(')', opening + 1);
             return closing >= 0 ? closing : throw InvalidExpression(expression);

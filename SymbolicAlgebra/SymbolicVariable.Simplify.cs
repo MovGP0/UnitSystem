@@ -86,8 +86,10 @@ public partial class SymbolicVariable
 
         Loop2(sv);
         if (sv._AddedTerms != null)
+        {
             foreach (var term in sv._AddedTerms.Values)
             Loop2(term);
+        }
 
         // coduct the third operation .. final calulcation
         var SimplifiedResult = sv.Clone();
@@ -204,8 +206,10 @@ public partial class SymbolicVariable
         ];
 
         if (_AddedTerms != null)
+        {
             foreach (var aterm in _AddedTerms)
                 bo2bo2.Add(aterm.Value.GetMultipliedTerms());
+        }
 
         // now i have the matrix of multiplied terms.
         /*

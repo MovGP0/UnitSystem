@@ -75,8 +75,10 @@ public partial class QsFunction
         {
             //double check parameters and their length to get the exact function.
             if (func.Parameters.Length == parametersNames.Length)
+            {
                 if (func.ContainsParameters(parametersNames))
                     return func;
+            }
         }
 
         return null;

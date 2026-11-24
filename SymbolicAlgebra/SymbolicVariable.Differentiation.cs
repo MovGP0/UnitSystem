@@ -32,11 +32,13 @@ public partial class SymbolicVariable
         {
             // search if a parameter contains the same parameter
             foreach (var pf in sv._FunctionParameters)
+            {
                 if (pf.Symbol.Equals(parameter, StringComparison.OrdinalIgnoreCase))
                 {
                     cc = true;
                     break;
                 }
+            }
         }
         else
         {

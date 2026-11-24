@@ -891,56 +891,82 @@ public partial class SymbolicVariable
             return ((Func<double>)FunctionDelegate)();
 
         if (pcount == 1)
+        {
             return ((Func<double, double>)
             FunctionDelegate)(FinalParams[0]);
+        }
 
         if (pcount == 2)
+        {
             return ((Func<double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1]);
+        }
 
         if (pcount == 3)
+        {
             return ((Func<double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2]);
+        }
 
         if (pcount == 4)
+        {
             return ((Func<double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3]);
+        }
 
         if (pcount == 5)
+        {
             return ((Func<double, double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4]);
+        }
 
         if (pcount == 6)
+        {
             return ((Func<double, double, double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5]);
+        }
 
         if (pcount == 7)
+        {
             return ((Func<double, double, double, double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6]);
+        }
 
         if (pcount == 8)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7]);
+        }
 
         if (pcount == 9)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8]);
+        }
 
         if (pcount == 10)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9]);
+        }
 
         if (pcount == 11)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9], FinalParams[10]);
+        }
 
         if (pcount == 12)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9], FinalParams[10], FinalParams[11]);
+        }
 
         if (pcount == 13)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9], FinalParams[10], FinalParams[11], FinalParams[12]);
+        }
 
         throw new Exception("What is that call ???!!");
     }
@@ -988,56 +1014,82 @@ public partial class SymbolicVariable
             return ((Func<double>)FunctionDelegate)();
 
         if (pcount == 1)
+        {
             return ((Func<double, double>)
             FunctionDelegate)(parameters[0]);
+        }
 
         if (pcount == 2)
+        {
             return ((Func<double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1]);
+        }
 
         if (pcount == 3)
+        {
             return ((Func<double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2]);
+        }
 
         if (pcount == 4)
+        {
             return ((Func<double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3]);
+        }
 
         if (pcount == 5)
+        {
             return ((Func<double, double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4]);
+        }
 
         if (pcount == 6)
+        {
             return ((Func<double, double, double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5]);
+        }
 
         if (pcount == 7)
+        {
             return ((Func<double, double, double, double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6]);
+        }
 
         if (pcount == 8)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7]);
+        }
 
         if (pcount == 9)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8]);
+        }
 
         if (pcount == 10)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9]);
+        }
 
         if (pcount == 11)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9], parameters[10]);
+        }
 
         if (pcount == 12)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9], parameters[10], parameters[11]);
+        }
 
         if (pcount == 13)
+        {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double, double, double>)
             FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9], parameters[10], parameters[11], parameters[12]);
+        }
 
         throw new Exception("What is that call ???!!");
     }

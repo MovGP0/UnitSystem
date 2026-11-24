@@ -138,7 +138,7 @@ dotnet_diagnostic.RCS0062.severity = none
 dotnet_diagnostic.RCS0063.severity = warning
 
 # Brace embedded statements that span multiple lines
-# dotnet_diagnostic.RCS1001.severity = warning
+dotnet_diagnostic.RCS1001.severity = warning
 
 # Remove optional braces from embedded statements
 # dotnet_diagnostic.RCS1002.severity = disabled

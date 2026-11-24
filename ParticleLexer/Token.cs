@@ -487,8 +487,10 @@ public sealed partial class Token : IEnumerable<Token>
 
                             // second check: check letter by letter that they are identical
                             for (var iai = 0; iai < AccumulatedInnerText.Length; iai++)
+                            {
                                 if (AccumulatedInnerText[iai] != tokenClassType.OriginalPatternWord[iai])
                                     goto WhileBreak;
+                            }
                         }
                         else if (!string.IsNullOrEmpty(tokenClassType.ShouldBeginWith))
                         {

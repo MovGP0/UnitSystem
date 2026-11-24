@@ -197,7 +197,9 @@ public class QsFlowingTuple : QsValue
                         || ThisFlow.FlowSteps[ix].Id != ft.ThisFlow.FlowSteps[ix].Id
                         || ThisFlow.FlowSteps[ix].Value.Equals(ft.ThisFlow.FlowSteps[ix].Value) == false
                 )
+                {
                     return false;
+                }
             }
 
             return true;

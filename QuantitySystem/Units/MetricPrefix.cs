@@ -255,20 +255,24 @@ public struct MetricPrefix(string prefix, string symbol, int exponent)
         var ov = expo - exp;
 
         if (exp > 24)
+        {
             throw new MetricPrefixException("Exponent Exceed 24")
         {
             WrongExponent = exp,
             CorrectPrefix = FromExponent(24),
             OverflowExponent = exp - 24 + ov
         };
+        }
 
         if (exp < -24)
+        {
             throw new MetricPrefixException("Exponent Precede -24")
         {
             WrongExponent = exp,
             CorrectPrefix = FromExponent(-24),
             OverflowExponent = exp + 24 + ov
         };
+        }
 
         int[] wrongexp = [4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 22, 23];
         int[] correctexp = [3, 3, 6, 6, 9, 9, 12, 12, 15, 15, 18, 18, 21, 21];

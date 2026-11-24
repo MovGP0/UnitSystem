@@ -818,7 +818,8 @@ public class QsEvaluator
 
                             List<string> vparameters = [];
                             foreach(var c in AllComponents)
-                                if(c.ScalarType ==  ScalarTypes.SymbolicQuantity)
+                            {
+                                if (c.ScalarType ==  ScalarTypes.SymbolicQuantity)
                                 {
                                     foreach (var sym in c.SymbolicQuantity.Value.InvolvedSymbols)
                                     {
@@ -826,6 +827,7 @@ public class QsEvaluator
                                             vparameters.Add(sym);
                                     }
                                 }
+                            }
 
                             var fh = "_(";
                             foreach (var p in vparameters)

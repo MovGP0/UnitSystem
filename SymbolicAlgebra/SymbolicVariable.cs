@@ -1126,8 +1126,10 @@ public partial class SymbolicVariable
         }
 
         if (FusedConstants.Count > 0)
+        {
             if (result == "1")
             result = string.Empty;
+        }
 
         // continue with the rest of constants
         for (var i = 0; i < FusedConstants.Count; i++)

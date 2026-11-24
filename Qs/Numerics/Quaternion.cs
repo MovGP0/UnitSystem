@@ -291,7 +291,10 @@ public struct Quaternion : IEquatable<Quaternion>
             && lhs.c == rhs.c
             && lhs.d == rhs.d
            )
+        {
             return true;
+        }
+
         return false;
     }
 
@@ -307,7 +310,10 @@ public struct Quaternion : IEquatable<Quaternion>
             && c == other.c
             && d == other.d
            )
+        {
             return true;
+        }
+
         return false;
     }
     public override bool Equals(object? obj)

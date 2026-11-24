@@ -27,10 +27,12 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
 
                 var dx = (QsScalar)dpo.DifferentiateOperation(new SymbolicVariable(x).ToQuantity().ToScalar());
                 if(Power>1)
+                {
                     for (var p = 1; p < Power; p++)
                     {
                         dx = (QsScalar)dx.DifferentiateOperation(new SymbolicVariable(x).ToQuantity().ToScalar());
                     }
+                }
 
                 v.AddComponent(dx);
             }
