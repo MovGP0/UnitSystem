@@ -813,7 +813,7 @@ dotnet_diagnostic.CA1806.severity = warning
 dotnet_diagnostic.CA1816.severity = warning
 
 # Remove empty Finalizers
-# dotnet_diagnostic.CA1821.severity = warning
+dotnet_diagnostic.CA1821.severity = warning
 
 # Mark members as static
 # dotnet_diagnostic.CA1822.severity = warning
