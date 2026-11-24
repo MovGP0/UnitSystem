@@ -1032,7 +1032,7 @@ dotnet_diagnostic.CA2219.severity = warning
 dotnet_diagnostic.CA2231.severity = warning
 
 # Provide correct arguments to formatting methods
-# dotnet_diagnostic.CA2241.severity = warning
+dotnet_diagnostic.CA2241.severity = warning
 
 # Test for NaN correctly
 # dotnet_diagnostic.CA2242.severity = warning
