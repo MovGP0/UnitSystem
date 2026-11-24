@@ -545,7 +545,7 @@ dotnet_diagnostic.RCS1202.severity = warning
 dotnet_diagnostic.RCS1203.severity = warning
 
 # Use EventArgs.Empty
-# dotnet_diagnostic.RCS1204.severity = warning
+dotnet_diagnostic.RCS1204.severity = warning
 
 # Order named arguments according to the order of parameters
 # dotnet_diagnostic.RCS1205.severity = warning
