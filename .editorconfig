@@ -1038,7 +1038,7 @@ dotnet_diagnostic.CA2241.severity = warning
 dotnet_diagnostic.CA2242.severity = warning
 
 # Do not duplicate indexed element initializations
-# dotnet_diagnostic.CA2244.severity = warning
+dotnet_diagnostic.CA2244.severity = warning
 
 # Do not assign a property to itself
 # dotnet_diagnostic.CA2245.severity = warning
