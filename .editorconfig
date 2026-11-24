@@ -371,7 +371,7 @@ dotnet_diagnostic.RCS1128.severity = warning
 # dotnet_diagnostic.RCS1129.severity = silent
 
 # Bitwise operation on enum without Flags attribute
-# dotnet_diagnostic.RCS1130.severity = warning
+dotnet_diagnostic.RCS1130.severity = warning
 
 # Remove redundant overriding member
 # dotnet_diagnostic.RCS1132.severity = warning
