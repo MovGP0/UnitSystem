@@ -484,10 +484,10 @@ public partial class QsFunction
                     }
 
                     sc.Append(nsv);
-                    sc.Append(" ");
+                    sc.Append(' ');
                 }
 
-                sc.Append("}");
+                sc.Append('}');
 
                 WholeFunction = sc.ToString();
             }

@@ -138,7 +138,7 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
         {
             var cell = this[ix].ToShortString();
             sb.Append(cell);
-            sb.Append(" ");
+            sb.Append(' ');
         }
 
         return sb.ToString();
