@@ -51,8 +51,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
     {
         get
         {
-            QsSequenceElement el;
-            if (!TryGetValue(index, out el))
+            if (!TryGetValue(index, out var el))
             {
                 //failed to get the value
                 // here the magic begins
@@ -177,12 +176,11 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
     /// <returns></returns>
     public QsValue GetElementValue(int index)
     {
-        QsValue val;
         if (CachingEnabled)
         {
-            if (CachedValues.TryGetValue(index, out val))
+            if (CachedValues.TryGetValue(index, out var cachedValue))
             {
-                return val;
+                return cachedValue;
             }
         }
 
@@ -230,7 +228,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             return new QsScalar(ScalarTypes.FunctionQuantity) { FunctionQuantity = qs.ToQuantity() };
         }
 
-        val = GetElement(index).Execute(index);
+        var val = GetElement(index).Execute(index);
 
         if (CachingEnabled)
         {

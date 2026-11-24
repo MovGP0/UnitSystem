@@ -197,10 +197,9 @@ public partial class Unit
         {
             #region Caching
             //because this method can be a lengthy method we try to check for cached pathes first.
-            UnitPathStack cachedPath;
             if (EnableUnitsCaching)
             {
-                if (CachedPaths.TryGetValue(UnitToUnitSymbol(this, unit), out cachedPath))
+                if (CachedPaths.TryGetValue(UnitToUnitSymbol(this, unit), out var cachedPath))
                 {
                     return (UnitPathStack)cachedPath.Clone();   //<--- Clone
 

@@ -46,8 +46,7 @@ public partial class SymbolicVariable
 
         Func<string, ParameterSquareTrig> PST = (nm) =>
         {
-            ParameterSquareTrig p;
-            if (!PSTS.TryGetValue(nm, out p))
+            if (!PSTS.TryGetValue(nm, out var p))
             {
                 p = new ParameterSquareTrig { Parameter = nm };
                 PSTS.Add(nm, p);
@@ -248,8 +247,7 @@ public partial class SymbolicVariable
                 var src_component = components[ix];
 
                 // once we this component we should write its existence in the list
-                List<int> indices;
-                if (!CommonFactorsMap.TryGetValue(src_component, out indices))
+                if (!CommonFactorsMap.TryGetValue(src_component, out var indices))
                 {
                     // new creation of the list
                     indices

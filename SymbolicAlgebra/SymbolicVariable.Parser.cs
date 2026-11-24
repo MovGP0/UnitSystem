@@ -620,7 +620,7 @@ public partial class SymbolicVariable
                         var fname = FMatch.Groups["function"].Value;
 
                         // search for the function in the math class
-                        MethodInfo targetfunction;
+                        MethodInfo? targetfunction;
 
                         if (CoMath.AvailableFunctions.Contains(fname, StringComparer.OrdinalIgnoreCase))
                         {
@@ -680,8 +680,7 @@ public partial class SymbolicVariable
                     else
                     {
                         // this is an ordinary parameter based on our test.
-                        ParameterExpression pe;
-                        if (parameters.TryGetValue(pname, out pe))
+                        if (parameters.TryGetValue(pname, out var pe))
                         {
                             ep.DynamicExpression = pe;
                         }

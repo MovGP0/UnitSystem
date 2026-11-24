@@ -15,7 +15,7 @@ public abstract partial class MetricUnit : Unit
         object[] attributes = (object[])info.GetCustomAttributes(true);
 
         //get the UnitAttribute
-        var siua = (MetricUnitAttribute)attributes.SingleOrDefault<object>(ut => ut is MetricUnitAttribute);
+        var siua = attributes.OfType<MetricUnitAttribute>().SingleOrDefault();
 
         if (siua != null)
         {

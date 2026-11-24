@@ -189,7 +189,7 @@ dotnet_diagnostic.CS0661.severity = warning
 dotnet_diagnostic.CS0693.severity = warning
 
 # Avoid assigning a possibly null value to a nonnullable variable
-dotnet_diagnostic.CS8600.severity = suggestion
+dotnet_diagnostic.CS8600.severity = warning
 
 # Avoid assigning a possibly null value to a nonnullable target
 dotnet_diagnostic.CS8601.severity = suggestion

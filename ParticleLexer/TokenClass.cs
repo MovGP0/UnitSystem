@@ -67,10 +67,8 @@ public abstract class TokenClass
     {
         _ThisTokenType = GetType();
 
-        Regex j;
-
         // Try Cached versions first
-        if (regexes.TryGetValue(_ThisTokenType, out j))
+        if (regexes.TryGetValue(_ThisTokenType, out var j))
         {
             Regex = j;
 

@@ -170,7 +170,7 @@ public partial class SymbolicVariable
                 {
                     // triogonometric functions
                     bool IsNegativeResult;
-                    string[] newfuntions = FunctionOperation.DiffTrigFunction(fv, out IsNegativeResult);
+                    string[]? newfuntions = FunctionOperation.DiffTrigFunction(fv, out IsNegativeResult);
 
                     if (newfuntions != null)
                     {
@@ -386,10 +386,10 @@ public partial class SymbolicVariable
     {
         var result = Clone();
 
-        Dictionary<string, SymbolicVariable> OtherAddedTerms = result._AddedTerms;
+        Dictionary<string, SymbolicVariable>? OtherAddedTerms = result._AddedTerms;
         result._AddedTerms = null;
 
-        List<ExtraTerm> OtherExtraTerms = result._ExtraTerms;
+        List<ExtraTerm>? OtherExtraTerms = result._ExtraTerms;
         result._ExtraTerms = null;
 
         result = DiffBigTerm(result, parameter);

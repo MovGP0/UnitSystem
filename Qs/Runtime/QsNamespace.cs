@@ -57,8 +57,7 @@ public class QsNamespace(string name)
             }
             else
             {
-                object o;
-                Values.TryGetValue(name, out o);
+                Values.TryGetValue(name, out var o);
                 var r = o as QsReference;
                 if (r == null)
                 {
@@ -109,8 +108,7 @@ public class QsNamespace(string name)
 
         // try in values hash
 
-        object o;
-        Values.TryGetValue(name, out o);
+        Values.TryGetValue(name, out var o);
 
         if (o == null)
         {
@@ -148,8 +146,7 @@ public class QsNamespace(string name)
 
         // try in values hash
 
-        object o;
-        Values.TryGetValue(name, out o);
+        Values.TryGetValue(name, out var o);
 
         return o;
     }
@@ -264,7 +261,7 @@ public class QsNamespace(string name)
 
                 var fAttributes = method.GetCustomAttributes(typeof(QsFunctionAttribute), false);
 
-                QsFunctionAttribute funcAttribute = null;
+                QsFunctionAttribute? funcAttribute = null;
                 var method_name = string.Empty;
                 var methodTrueName = string.Empty;
 
@@ -439,7 +436,7 @@ public class QsNamespace(string name)
     /// <returns></returns>
     public static QsNamespace GetNamespace(QsScope scope, string moduleNamespace, bool forceCreation)
     {
-        QsNamespace NameSpace = null;
+        QsNamespace? NameSpace = null;
 
         // try to get the namespace object from the scope
         //  then see if it represent a custom namespace also or not.

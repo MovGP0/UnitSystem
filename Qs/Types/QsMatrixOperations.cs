@@ -568,7 +568,7 @@ public partial class QsMatrix : QsValue
 
             for (var i = 0; i < RowsCount; i++)
             {
-                QsMatrix rowM = null;
+                QsMatrix? rowM = null;
                 for (var j = 0; j < ColumnsCount; j++)
                 {
                     var element = this[i, j];
@@ -727,7 +727,7 @@ public partial class QsMatrix : QsValue
         var indices = new int[allIndices.Length];
         for (var ix = 0; ix < indices.Length; ix++)
         {
-            indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
+            indices[ix] = allIndices[ix].GetScalarIndex();
         }
 
         var icount = indices.Count();

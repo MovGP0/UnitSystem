@@ -168,7 +168,7 @@ public partial class QsText(string text) : QsValue
 
     public override QsValue GetIndexedItem(QsParameter[] indices)
     {
-        var i = (int)((QsScalar)indices[0].QsNativeValue).NumericalQuantity.Value;
+        var i = indices[0].GetScalarIndex();
 
         if (i < 0)
         {

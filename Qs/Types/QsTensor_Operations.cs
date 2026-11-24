@@ -436,7 +436,7 @@ public partial class QsTensor : QsValue
 
         for (var ix = 0; ix < indices.Length; ix++)
         {
-            indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
+            indices[ix] = allIndices[ix].GetScalarIndex();
         }
 
         var dr = Order - indices.Count();

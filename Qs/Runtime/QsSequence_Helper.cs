@@ -156,7 +156,7 @@ public partial class QsSequence
             && (t.Count > 1 ? t[nsidx + 1].TokenClassType == typeof(SquareBracketsGroupToken) : false)     // test for second tokek to be [] group
            )
         {
-            Type SequenceTokenType = null;
+            Type? SequenceTokenType = null;
 
             var shift = 0;
 

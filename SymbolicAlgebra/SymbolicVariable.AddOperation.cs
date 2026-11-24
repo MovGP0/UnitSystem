@@ -124,7 +124,7 @@ public partial class SymbolicVariable
         {
             // add it to the positive variables.
 
-            SymbolicVariable pv = null;
+            SymbolicVariable? pv = null;
 
             sv.AddedTerms.TryGetValue(subB.WholeValueBaseKey, out pv);
 

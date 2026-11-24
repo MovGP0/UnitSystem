@@ -40,7 +40,7 @@ public partial class Unit
         if (dimension.Mass.Exponent != 0)
         {
             var unitType = GetDefaultUnitTypeOf(typeof(Mass<>), unitSystem);
-            var u = (Unit)Activator.CreateInstance(unitType);
+            var u = CreateInstance<Unit>(unitType);
 
             u.UnitExponent = dimension.Mass.Exponent;
             u.UnitDimension = new QuantityDimension(dimension.Mass.Exponent, 0, 0);
@@ -52,7 +52,7 @@ public partial class Unit
         {
             var unitType = GetDefaultUnitTypeOf(typeof(Length<>), unitSystem);
 
-            var u = (Unit)Activator.CreateInstance(unitType);
+            var u = CreateInstance<Unit>(unitType);
 
             u.UnitExponent = dimension.Length.Exponent;
             u.UnitDimension = new QuantityDimension() { Length = dimension.Length };
@@ -251,7 +251,7 @@ public partial class Unit
                 //subclass of AnyQuantity
                 //use direct mapping with the exponent of the quantity
 
-                var un = (Unit)Activator.CreateInstance(InnerUnitType);
+                var un = CreateInstance<Unit>(InnerUnitType);
 
                 SubUnits.Add(un);
             }
@@ -319,15 +319,14 @@ public partial class Unit
 
         if (innerUnitType == null) //no direct mapping so get it from the inner quantities
         {
-            BaseQuantity[] InternalQuantities;
-
             // I can't cast BaseQuantity to AnyQuantity<object> very annoying
             // so I used reflection.
 
             var GIQ = m_QuantityType.GetMethod("GetInternalQuantities");
 
             // casted the array to BaseQuantity array also
-            InternalQuantities = GIQ.Invoke(quantity, null) as BaseQuantity[];
+            var InternalQuantities = (BaseQuantity[]?)GIQ.Invoke(quantity, null)
+                ?? throw new InvalidOperationException($"Quantity '{m_QuantityType}' did not provide its component quantities.");
 
             foreach (var InnerQuantity in InternalQuantities)
             {
@@ -352,7 +351,7 @@ public partial class Unit
                 else
                 {
                     //found :) create it with the exponent
-                    var un = (Unit)Activator.CreateInstance(l2_InnerUnitType);
+                    var un = CreateInstance<Unit>(l2_InnerUnitType);
                     un.UnitExponent = InnerQuantity.Exponent;
                     un.UnitDimension = InnerQuantity.Dimension;
 
@@ -365,7 +364,7 @@ public partial class Unit
             //subclass of AnyQuantity
             //use direct mapping with the exponent of the quantity
 
-            var un = (Unit)Activator.CreateInstance(innerUnitType);
+            var un = CreateInstance<Unit>(innerUnitType);
             un.UnitExponent = quantity.Exponent;
             un.UnitDimension = quantity.Dimension;
 

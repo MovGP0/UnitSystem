@@ -301,10 +301,10 @@ class QsVar
 
         var tokens = toks.RemoveSpaceTokens();                           //remove all spaces
 
-        Expression quantityExpression = null;
-        ExprOp eop = null;
+        Expression? quantityExpression = null;
+        ExprOp? eop = null;
 
-        ExprOp FirstEop = null;
+        ExprOp? FirstEop = null;
 
         var ix = 0;                 //this is the index in the discovered tokens
 
@@ -1180,7 +1180,7 @@ class QsVar
     /// <returns></returns>
     private Expression RationalScalar(Token complexToken)
     {
-        Token cn = null;
+        Token? cn = null;
         if (complexToken.TokenClassType == typeof(RationalQuantityToken))
         {
             cn = complexToken[0];
@@ -1218,7 +1218,7 @@ class QsVar
         }
 
         var c = new Rational(num, den);
-        QsScalar sc = null;
+        QsScalar? sc = null;
         if (complexToken.TokenClassType == typeof(RationalQuantityToken)) // there is a unit
         {
             sc = c.ToQuantity(complexToken[1].TokenValue.Trim('<', '>')).ToScalar();
@@ -1233,7 +1233,7 @@ class QsVar
 
     private Expression QuaternionScalar(Token quaternionToken)
     {
-        Token cn = null;
+        Token? cn = null;
         if (quaternionToken.TokenClassType == typeof(QuaternionQuantityToken))
         {
             cn = quaternionToken[0];
@@ -1281,7 +1281,7 @@ class QsVar
         }
 
         var c = new Quaternion(real, im, j, k);
-        QsScalar sc = null;
+        QsScalar? sc = null;
         if (quaternionToken.TokenClassType == typeof(QuaternionQuantityToken)) // there is a unit
         {
             sc = c.ToQuantity(quaternionToken[1].TokenValue.Trim('<', '>')).ToScalar();
@@ -1296,7 +1296,7 @@ class QsVar
 
     private Expression ComplexScalar(Token complexToken)
     {
-        Token cn = null;
+        Token? cn = null;
         if (complexToken.TokenClassType == typeof(ComplexQuantityToken))
         {
             cn = complexToken[0];
@@ -1334,7 +1334,7 @@ class QsVar
         }
 
         var c = new Complex(real, imaginary);
-        QsScalar sc = null;
+        QsScalar? sc = null;
         if (complexToken.TokenClassType == typeof(ComplexQuantityToken)) // there is a unit
         {
             sc = c.ToQuantity(complexToken[1].TokenValue.Trim('<', '>')).ToScalar();
@@ -1624,7 +1624,7 @@ class QsVar
             var fpp = functionValueToken.TokenValue.Substring(functionValueToken.TokenValue.IndexOf('('));
 
             // put the parameter names in array
-            string[] pp = (from p in (fpp.Substring(1, fpp.Length - 2).Split(','))
+            string[]? pp = (from p in (fpp.Substring(1, fpp.Length - 2).Split(','))
                 select p.Trim())
                 .ToArray();
 
@@ -1701,7 +1701,7 @@ class QsVar
         {
             var fpp = functionValueToken.SubTokensValue(2);
 
-            string[] pp = (from p in (fpp.Substring(1, fpp.Length - 2).Split(','))
+            string[]? pp = (from p in (fpp.Substring(1, fpp.Length - 2).Split(','))
                 select p.Trim())
                 .ToArray();
 
@@ -2040,9 +2040,9 @@ class QsVar
         );
 
         #region Index manipulation
-        Expression IndexExpression = null;
-        Expression FromExpression = null;
-        Expression ToExpression = null;
+        Expression? IndexExpression = null;
+        Expression? FromExpression = null;
+        Expression? ToExpression = null;
 
         // now the index could be
         // integer number

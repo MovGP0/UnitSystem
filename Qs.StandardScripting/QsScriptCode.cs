@@ -7,14 +7,14 @@ namespace Qs.Scripting;
 
 public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
 {
-    public override object Run()
+    public override object? Run()
     {
         return Run(new Scope());
     }
 
     public static string LastLine { get; set; }
 
-    public override object Run(Scope scope)
+    public override object? Run(Scope scope)
     {
         var code = string.Empty;
         //try
@@ -46,7 +46,7 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
 
         string[] lines = code.Split(Environment.NewLine.ToCharArray());
 
-        object ret=null;
+        object? ret = null;
 
         foreach (var line in lines)
         {

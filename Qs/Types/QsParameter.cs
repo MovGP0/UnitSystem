@@ -65,6 +65,13 @@ public class QsParameter
     /// </summary>
     public QsValue? QsNativeValue => ParameterValue as QsValue;
 
+    internal int GetScalarIndex()
+    {
+        var scalar = (QsScalar?)QsNativeValue
+            ?? throw new QsInvalidInputException("An index requires a scalar value.");
+        return (int)scalar.NumericalQuantity.Value;
+    }
+
     /// <summary>
     /// Get the quantity from the parameter body on the form  ([namespace:]variable)  x:var or var
     /// </summary>

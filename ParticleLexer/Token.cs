@@ -730,11 +730,11 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     private TokenClass GetTokenClass(Type tokenClassType)
     {
-        TokenClass instance;
-        CachedTokenClasses.TryGetValue(tokenClassType, out instance);
+        CachedTokenClasses.TryGetValue(tokenClassType, out var instance);
         if (instance == null)
         {
-            instance = (TokenClass)Activator.CreateInstance(tokenClassType);
+            instance = (TokenClass?)Activator.CreateInstance(tokenClassType)
+                ?? throw new InvalidOperationException($"Could not create token class '{tokenClassType}'.");
             CachedTokenClasses.Add(tokenClassType, instance);
         }
 
@@ -743,8 +743,7 @@ public sealed partial class Token : IEnumerable<Token>
 
     public TokenClass GetTokenClass<DesiredTokenClass>() where DesiredTokenClass : TokenClass, new()
     {
-        TokenClass instance;
-        CachedTokenClasses.TryGetValue(typeof(DesiredTokenClass), out instance);
+        CachedTokenClasses.TryGetValue(typeof(DesiredTokenClass), out var instance);
         if (instance == null)
         {
             instance = new DesiredTokenClass();

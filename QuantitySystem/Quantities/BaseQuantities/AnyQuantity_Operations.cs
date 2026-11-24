@@ -12,7 +12,7 @@ public abstract partial class AnyQuantity<T>
     {
         if (firstQuantity.Equals(secondQuantity))
         {
-            AnyQuantity<T> AQ = null;
+            AnyQuantity<T>? AQ = null;
             try
             {
                 AQ = QuantityDimension.QuantityFrom<T>(firstQuantity.Dimension);
@@ -29,9 +29,9 @@ public abstract partial class AnyQuantity<T>
             {
                 //use direct calculations
 
-                var firstVal = (double)(object)firstQuantity.Value;
+                var firstVal = (double)(object?)firstQuantity.Value;
 
-                var secondVal = (double)(object)secondQuantity.Value;
+                var secondVal = (double)(object?)secondQuantity.Value;
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
@@ -116,7 +116,7 @@ public abstract partial class AnyQuantity<T>
     {
         if (firstQuantity.Equals(secondQuantity))
         {
-            AnyQuantity<T> AQ = null;
+            AnyQuantity<T>? AQ = null;
             try
             {
                 AQ = QuantityDimension.QuantityFrom<T>(firstQuantity.Dimension);
@@ -174,7 +174,7 @@ public abstract partial class AnyQuantity<T>
     {
         if (firstQuantity.Equals(secondQuantity))
         {
-            AnyQuantity<T> AQ = null;
+            AnyQuantity<T>? AQ = null;
             try
             {
                 AQ = QuantityDimension.QuantityFrom<T>(firstQuantity.Dimension);
@@ -191,9 +191,9 @@ public abstract partial class AnyQuantity<T>
             {
                 //use direct calculations
 
-                var firstVal = (double)(object)firstQuantity.Value;
+                var firstVal = (double)(object?)firstQuantity.Value;
 
-                var secondVal = (double)(object)secondQuantity.Value;
+                var secondVal = (double)(object?)secondQuantity.Value;
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
@@ -279,7 +279,7 @@ public abstract partial class AnyQuantity<T>
 
         if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
         {
-            qresult.Value = (T)(object)((double)(object)firstQuantity.Value * (double)(object)secondQuantity.Value);
+            qresult.Value = (T)(object)((double)(object?)firstQuantity.Value * (double)(object?)secondQuantity.Value);
 
             if (firstQuantity.Unit != null && secondQuantity.Unit != null)
             {
@@ -287,7 +287,7 @@ public abstract partial class AnyQuantity<T>
                 qresult.Unit = un;
                 if (un.IsOverflowed)
                 {
-                    qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object)qresult.Value);
+                    qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object?)qresult.Value);
                 }
             }
         }
@@ -334,7 +334,7 @@ public abstract partial class AnyQuantity<T>
 
         if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
         {
-            qresult.Value = (T)(object)((double)(object)firstQuantity.Value * (double)(object)sec_qty.Value);
+            qresult.Value = (T)(object)((double)(object?)firstQuantity.Value * (double)(object?)sec_qty.Value);
 
             if (firstQuantity.Unit != null && secondQuantity.Unit != null)
             {
@@ -342,7 +342,7 @@ public abstract partial class AnyQuantity<T>
                 qresult.Unit = un;
                 if (un.IsOverflowed)
                 {
-                    qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object)qresult.Value);
+                    qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object?)qresult.Value);
                 }
             }
         }
@@ -385,7 +385,7 @@ public abstract partial class AnyQuantity<T>
 
         var unit = quantity.Unit.RaiseUnitPower((float)exponent.Value);
 
-        AnyQuantity<T> result = null;
+        AnyQuantity<T>? result = null;
 
         if (unit.QuantityType != typeof(DerivedQuantity<>))
         {
@@ -427,7 +427,7 @@ public abstract partial class AnyQuantity<T>
 
         if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
         {
-            qresult.Value = (T)(object)((double)(object)firstQuantity.Value % (double)(object)secondQuantity.Value);
+            qresult.Value = (T)(object)((double)(object?)firstQuantity.Value % (double)(object?)secondQuantity.Value);
         }
         else
         {
@@ -447,9 +447,9 @@ public abstract partial class AnyQuantity<T>
                 #region Premitive
                 //use direct calculations
 
-                var firstVal = (double)(object)firstQuantity.Value;
+                var firstVal = (double)(object?)firstQuantity.Value;
 
-                var secondVal = (double)(object)secondQuantity.Value;
+                var secondVal = (double)(object?)secondQuantity.Value;
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
@@ -518,9 +518,9 @@ public abstract partial class AnyQuantity<T>
                 #region Premitive
                 //use direct calculations
 
-                var firstVal = (double)(object)firstQuantity.Value;
+                var firstVal = (double)(object?)firstQuantity.Value;
 
-                var secondVal = (double)(object)secondQuantity.Value;
+                var secondVal = (double)(object?)secondQuantity.Value;
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
@@ -588,9 +588,9 @@ public abstract partial class AnyQuantity<T>
                 #region Premitive
                 //use direct calculations
 
-                var firstVal = (double)(object)firstQuantity.Value;
+                var firstVal = (double)(object?)firstQuantity.Value;
 
-                var secondVal = (double)(object)secondQuantity.Value;
+                var secondVal = (double)(object?)secondQuantity.Value;
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
@@ -658,9 +658,9 @@ public abstract partial class AnyQuantity<T>
                 #region Premitive
                 //use direct calculations
 
-                var firstVal = (double)(object)firstQuantity.Value;
+                var firstVal = (double)(object?)firstQuantity.Value;
 
-                var secondVal = (double)(object)secondQuantity.Value;
+                var secondVal = (double)(object?)secondQuantity.Value;
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
@@ -726,9 +726,9 @@ public abstract partial class AnyQuantity<T>
                 #region Premitive
                 //use direct calculations
 
-                var firstVal = (double)(object)firstQuantity.Value;
+                var firstVal = (double)(object?)firstQuantity.Value;
 
-                var secondVal = (double)(object)secondQuantity.Value;
+                var secondVal = (double)(object?)secondQuantity.Value;
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
@@ -797,9 +797,9 @@ public abstract partial class AnyQuantity<T>
                 #region Premitive
                 //use direct calculations
 
-                var firstVal = (double)(object)firstQuantity.Value;
+                var firstVal = (double)(object?)firstQuantity.Value;
 
-                var secondVal = (double)(object)secondQuantity.Value;
+                var secondVal = (double)(object?)secondQuantity.Value;
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.

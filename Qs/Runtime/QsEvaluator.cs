@@ -61,25 +61,23 @@ public class QsEvaluator
 
     public QsScope Scope => _InternalScope;
 
-    public object GetVariable(string varName)
+    public object? GetVariable(string varName)
     {
         if (Scope != null)
         {
-            object q;
-            Scope.TryGetValue(varName, out q);
+            Scope.TryGetValue(varName, out var q);
             return q;
         }
 
         throw new NotImplementedException("you should be running in DLR");
     }
 
-    public AnyQuantity<double> GetQuantity(string varName)
+    public AnyQuantity<double>? GetQuantity(string varName)
     {
         if (Scope != null)
         {
-            object q;
-            Scope.TryGetValue(varName, out q);
-            return (AnyQuantity<double>)q;
+            Scope.TryGetValue(varName, out var q);
+            return (AnyQuantity<double>?)q;
         }
 
         throw new Exception("No Scope exist");
@@ -199,7 +197,7 @@ public class QsEvaluator
             return null;
         }
 
-        Match m = null;
+        Match? m = null;
 
         #region Match <unit> to <unit>
 
@@ -294,7 +292,7 @@ public class QsEvaluator
             varName = m.Groups[1].Value;
             var varVal = double.Parse(m.Groups[2].Value, CultureInfo.InvariantCulture);
 
-            QsScalar qty = null;
+            QsScalar? qty = null;
 
             if (!string.IsNullOrEmpty(m.Groups[5].Value))
             {
@@ -847,7 +845,7 @@ public class QsEvaluator
                             // the parsing to function should know the symbolic variables in the expression
                             //  and get the parameters required arranged by alphabet ofcourse
 
-                            QsScalar[] AllComponents = null;
+                            QsScalar[]? AllComponents = null;
                             var qvType = qvResult.GetType();
 
                             if(qvType == typeof(QsVector))
@@ -947,8 +945,8 @@ public class QsEvaluator
 
                         var varNameTokens = QsVar.TokenzieExpression(varName);
                         var v_index = 0;
-                        QsValue parent_object = null;
-                        PropertyInfo ParentPropertyInfo = null;
+                        QsValue? parent_object = null;
+                        PropertyInfo? ParentPropertyInfo = null;
                         int? ParentPropertyInfoIndexer = null;
                         Dictionary<PropertyInfo, bool> PropertyInfoIndexed = new();
 
@@ -967,7 +965,8 @@ public class QsEvaluator
                                     if (varNameTokens[v_index - 1].TokenClassType == typeof(PointerOperatorToken))
                                     {
                                         // we are accessing property here
-                                        var parent = (QsObject)parent_object;
+                                        var parent = (QsObject?)parent_object
+                                            ?? throw new QsException("Cannot access a property on a null value.");
                                         if (ParentPropertyInfo == null)
                                         {
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
@@ -975,7 +974,8 @@ public class QsEvaluator
                                         else if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
                                         {
                                             parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
-                                            parent = (QsObject)parent_object;
+                                            parent = (QsObject?)parent_object
+                                                ?? throw new QsException("Cannot access a property on a null value.");
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
                                         }
                                         else
@@ -985,7 +985,8 @@ public class QsEvaluator
                                             //   set this object as the parent
                                             //  then get the sub property metadata again.
                                             parent_object = parent.GetProperty(ParentPropertyInfo.Name);
-                                            parent = (QsObject)parent_object;
+                                            parent = (QsObject?)parent_object
+                                                ?? throw new QsException("Cannot access a property on a null value.");
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
                                         }
                                     }
@@ -1008,7 +1009,8 @@ public class QsEvaluator
                                 {
                                     // then we are referring to object with a property in its properties that is an array.
                                     // we need to get this property
-                                    var parent = (QsObject)parent_object;
+                                    var parent = (QsObject?)parent_object
+                                        ?? throw new QsException("Cannot access a property on a null value.");
                                     if (ParentPropertyInfo == null)
                                     {
                                         ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
@@ -1021,14 +1023,16 @@ public class QsEvaluator
                                         if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
                                         {
                                             parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
-                                            parent = (QsObject)parent_object;
+                                            parent = (QsObject?)parent_object
+                                                ?? throw new QsException("Cannot access a property on a null value.");
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
                                         }
                                         else
                                         {
                                             // get the previous property and make it parent
                                             parent_object = parent.GetProperty(ParentPropertyInfo.Name);
-                                            parent = (QsObject)parent_object;
+                                            parent = (QsObject?)parent_object
+                                                ?? throw new QsException("Cannot access a property on a null value.");
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
                                         }
                                     }
@@ -1047,7 +1051,8 @@ public class QsEvaluator
                             if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
                             {
                                 // set the value to the indexed item.
-                                var parent = (QsObject)parent_object;
+                                var parent = (QsObject?)parent_object
+                                    ?? throw new QsException("Cannot access a property on a null value.");
                                 ParentPropertyInfo.SetValue(
                                     parent.ThisObject,
                                     qvResult,
@@ -1063,7 +1068,8 @@ public class QsEvaluator
                                 // we are dealing with indexer
                                 // indexer should be called by the index
 
-                                var parent = (QsObject)parent_object;
+                                var parent = (QsObject?)parent_object
+                                    ?? throw new QsException("Cannot access a property on a null value.");
 
                                 var InsidePropertyAsObject = ParentPropertyInfo.GetValue(parent.ThisObject, null);
                                 var InsidePropertyObjectType = InsidePropertyAsObject.GetType();
@@ -1087,7 +1093,8 @@ public class QsEvaluator
                             }
                             else
                             {
-                                var parent = (QsObject)parent_object;
+                                var parent = (QsObject?)parent_object
+                                    ?? throw new QsException("Cannot access a property on a null value.");
                                 parent.SetProperty(ParentPropertyInfo.Name, qvResult);
                                 var q = parent.GetProperty(ParentPropertyInfo.Name);
                                 PrintQuantity(q);
@@ -1217,14 +1224,11 @@ public class QsEvaluator
     {
         if (string.IsNullOrEmpty(nameSpace))
         {
-            object q;
-            scope.TryGetValue(name, out q);
+            scope.TryGetValue(name, out var q);
             return q;
         }
 
-        object o;
-
-        scope.TryGetValue(nameSpace, out o);
+        scope.TryGetValue(nameSpace, out var o);
 
         var ns = o as QsNamespace;
 
@@ -1247,9 +1251,7 @@ public class QsEvaluator
     {
         if (string.IsNullOrEmpty(qsNamespace))
         {
-            object q;
-
-            scope.TryGetValue(name, out q);
+            scope.TryGetValue(name, out var q);
 
             if (q != null)
             {

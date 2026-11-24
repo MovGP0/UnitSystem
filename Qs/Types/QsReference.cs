@@ -21,7 +21,8 @@ public class QsReference(string varname) : QsValue
                 return (QsValue)cns.GetValue(nm);
             }
 
-            return (QsValue)QsEvaluator.CurrentEvaluator.GetVariable(varname);
+            return (QsValue?)QsEvaluator.CurrentEvaluator.GetVariable(varname)
+                ?? throw new QsVariableNotFoundException($"Variable '{varname}' was not found.");
         }
         set
         {

@@ -37,7 +37,7 @@ public class QsObject : QsValue
 
     public override  QsValue Execute(Token expression)
     {
-        Expression ResultExpression = null;
+        Expression? ResultExpression = null;
         if (expression.TokenClassType == typeof(ParenthesisCallToken))
         {
             // function call
@@ -166,7 +166,8 @@ public class QsObject : QsValue
 
         if (pi.PropertyType.IsArray)
         {
-            var array = (Array)pi.GetValue(_NativeObject, null);
+            var array = (Array?)pi.GetValue(_NativeObject, null)
+                ?? throw new QsException($"Array property '{propertyName}' has no value.");
             return Root.NativeToQsConvert(array.GetValue((int)indices[0]));
         }
 

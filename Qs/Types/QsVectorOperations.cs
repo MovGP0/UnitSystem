@@ -860,7 +860,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         var indices = new int[allIndices.Length];
         for (var ix = 0; ix < indices.Length; ix++)
         {
-            indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
+            indices[ix] = allIndices[ix].GetScalarIndex();
         }
 
         var index = indices[0];

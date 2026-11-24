@@ -37,7 +37,7 @@ public partial class SymbolicVariable
         // don't accept terms with power other than 1
         // solve
 
-        SymbolicVariable ExtractedTerm = null;
+        SymbolicVariable? ExtractedTerm = null;
         var RestTerm = Clone();
 
         // extract the needed term

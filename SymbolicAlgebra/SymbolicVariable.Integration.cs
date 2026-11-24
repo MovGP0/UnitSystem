@@ -476,10 +476,10 @@ public partial class SymbolicVariable
     {
         var result = Clone();
 
-        Dictionary<string, SymbolicVariable> OtherAddedTerms = result._AddedTerms;
+        Dictionary<string, SymbolicVariable>? OtherAddedTerms = result._AddedTerms;
         result._AddedTerms = null;
 
-        List<ExtraTerm> OtherExtraTerms = result._ExtraTerms;
+        List<ExtraTerm>? OtherExtraTerms = result._ExtraTerms;
         result._ExtraTerms = null;
 
         result = IntegBigTerm(result, parameter);

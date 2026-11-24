@@ -202,7 +202,7 @@ internal static class FunctionOperation
 
         var divo = SymbolicVariable.Divide(pa, spara);
 
-        SymbolicVariable result = null;
+        SymbolicVariable? result = null;
 
         if (string.Equals(func, "sin", StringComparison.OrdinalIgnoreCase))
         {
@@ -279,7 +279,7 @@ internal static class FunctionOperation
 
         var divo = SymbolicVariable.Divide(pa, spara);
 
-        SymbolicVariable result = null;
+        SymbolicVariable? result = null;
 
         if (string.Equals(func, "asin", StringComparison.OrdinalIgnoreCase))
         {

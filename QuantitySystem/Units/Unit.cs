@@ -89,7 +89,7 @@ public partial class Unit : ICloneable
                 {
                     if (dua.UnitType != null)
                     {
-                        _ReferenceUnit = (Unit)Activator.CreateInstance(dua.UnitType);
+                        _ReferenceUnit = (Unit?)Activator.CreateInstance(dua.UnitType);
                     }
                     else
                     {
@@ -98,7 +98,7 @@ public partial class Unit : ICloneable
                         var SIUnitType = GetDefaultSIUnitTypeOf(_QuantityType);
                         if (SIUnitType != null)
                         {
-                            _ReferenceUnit = (Unit)Activator.CreateInstance(SIUnitType);
+                            _ReferenceUnit = (Unit?)Activator.CreateInstance(SIUnitType);
                         }
                         else
                         {
@@ -240,6 +240,12 @@ public partial class Unit : ICloneable
     // so I'll cach resluts
     static Dictionary<Type, object> Qcach = new();
 
+    private static T CreateInstance<T>(Type type) where T : class
+    {
+        return (T?)Activator.CreateInstance(type)
+            ?? throw new InvalidOperationException($"Could not create an instance of '{type}'.");
+    }
+
     /// <summary>
     /// Gets the quantity of this unit based on the desired container.
     /// <see cref="QuantityType"/>
@@ -252,14 +258,13 @@ public partial class Unit : ICloneable
 
         var qt = QuantityType.MakeGenericType(typeof(T));
 
-        object j;
-        if (Qcach.TryGetValue(qt, out j))
+        if (Qcach.TryGetValue(qt, out var j))
         {
             Quantity = (AnyQuantity<T>)((AnyQuantity<T>)j).Clone();  //optimization for created quantities before
         }
         else
         {
-            Quantity = (AnyQuantity<T>)Activator.CreateInstance(QuantityType.MakeGenericType(typeof(T)));
+            Quantity = CreateInstance<AnyQuantity<T>>(qt);
             Qcach.Add(qt, Quantity);
         }
 
@@ -269,18 +274,17 @@ public partial class Unit : ICloneable
 
     public AnyQuantity<T> GetThisUnitQuantity<T>(T value)
     {
-        AnyQuantity<T> Quantity = null;
+        AnyQuantity<T>? Quantity = null;
         if (QuantityType != typeof(DerivedQuantity<>) && QuantityType != null)
         {
             var qt = QuantityType.MakeGenericType(typeof(T));
-             object j;
-            if (Qcach.TryGetValue(qt, out j))
+            if (Qcach.TryGetValue(qt, out var j))
             {
                 Quantity = (AnyQuantity<T>)((AnyQuantity<T>)j).Clone();  //optimization for created quantities before
             }
             else
             {
-                Quantity = (AnyQuantity<T>)Activator.CreateInstance(qt);
+                Quantity = CreateInstance<AnyQuantity<T>>(qt);
 
                 Qcach.Add(qt, Quantity);
             }

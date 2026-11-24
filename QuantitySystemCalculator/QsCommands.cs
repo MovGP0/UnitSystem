@@ -346,12 +346,8 @@ public static class QsCommands
         return varo;
     }
 
-    public static object GetVariable(string varName)
-    {
-        object q;
-        QsEvaluator.CurrentEvaluator.Scope.TryGetValue(varName, out q);
-        return q;
-    }
+    public static object? GetVariable(string varName)
+        => QsEvaluator.CurrentEvaluator.GetVariable(varName);
 
     /// <summary>
     /// List Command

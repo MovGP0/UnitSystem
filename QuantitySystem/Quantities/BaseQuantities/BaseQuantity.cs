@@ -76,8 +76,7 @@ public abstract class BaseQuantity(float exponent)
 
     public static Tuple<Type, float>[] GetInternalQuantities(Type quantity)
     {
-        Tuple<Type, float>[] result;
-        if (!QuantityTypeInternalQuantityTypes.TryGetValue(quantity, out result))
+        if (!QuantityTypeInternalQuantityTypes.TryGetValue(quantity, out var result))
         {
             // not instantiated yet .. so we can instantiate it here
             Activator.CreateInstance(quantity.MakeGenericType(typeof(double)));
