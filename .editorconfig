@@ -539,7 +539,7 @@ dotnet_diagnostic.RCS1200.severity = warning
 # dotnet_diagnostic.RCS1201.severity = silent
 
 # Avoid NullReferenceException
-# dotnet_diagnostic.RCS1202.severity = warning
+dotnet_diagnostic.RCS1202.severity = warning
 
 # Use AttributeUsageAttribute
 # dotnet_diagnostic.RCS1203.severity = warning
