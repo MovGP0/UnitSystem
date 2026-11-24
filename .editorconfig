@@ -626,7 +626,7 @@ dotnet_diagnostic.RCS1230.severity = warning
 # dotnet_diagnostic.RCS1231.severity = none
 
 # Order elements in documentation comment
-# dotnet_diagnostic.RCS1232.severity = warning
+dotnet_diagnostic.RCS1232.severity = warning
 
 # Use short-circuiting operator
 # dotnet_diagnostic.RCS1233.severity = warning
