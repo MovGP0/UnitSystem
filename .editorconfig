@@ -1008,7 +1008,7 @@ dotnet_diagnostic.CA2024.severity = warning
 dotnet_diagnostic.CA2026.severity = warning
 
 # Cancel Task.Delay after Task.WhenAny completes
-# dotnet_diagnostic.CA2027.severity = warning
+dotnet_diagnostic.CA2027.severity = warning
 
 # Avoid redundant 'Regex.IsMatch' call before 'Regex.Match'
 # dotnet_diagnostic.CA2028.severity = warning
