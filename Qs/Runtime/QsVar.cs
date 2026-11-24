@@ -420,7 +420,7 @@ class QsVar
 
             if (tokens[ix].TokenClassType == typeof(SequenceCallToken))
             {
-                if (eop != null && eop.Operation == "->")
+                if (eop?.Operation == "->")
                 {
                     // member call to the object.
                     // execute property its name in tokens[ix][0]
@@ -453,7 +453,7 @@ class QsVar
 
                     eop.Operation = "Skip";
                 }
-                else if (eop != null && eop.Operation == "!")
+                else if (eop?.Operation == "!")
                 {
                     // execute exlamination first
                     quantityExpression = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator"), Expression.Constant(new QsText(tokens[ix][0].TokenValue)));
@@ -493,7 +493,7 @@ class QsVar
             }
             else if (tokens[ix].TokenClassType == typeof(ParenthesisCallToken))
             {
-                if (eop != null && eop.Operation == "->")
+                if (eop?.Operation == "->")
                 {
                     // member call to the object.
                     quantityExpression
@@ -639,13 +639,13 @@ class QsVar
 
                 var mtk = tokens[ix].TrimEnd(typeof(ColonToken)); // removce the latest colon from the tokens.
 
-                if (eop != null && eop.Operation == "->")
+                if (eop?.Operation == "->")
                 {
                     // Execute first
                     quantityExpression = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(mtk));
                     eop.Operation = "Skip";
                 }
-                else if (eop != null && eop.Operation == "!")
+                else if (eop?.Operation == "!")
                 {
                     // execute exlamination first
                     quantityExpression = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator"), Expression.Constant(new QsText(mtk.TokenValue)));

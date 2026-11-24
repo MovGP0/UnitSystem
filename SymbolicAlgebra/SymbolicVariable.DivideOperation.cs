@@ -13,7 +13,7 @@ public partial class SymbolicVariable
 
         // if the divided term is more than on term
         // x^2/(y-x)  ==>
-        if (b.AddedTerms.Count > 0 || (b._ExtraTerms != null && b._ExtraTerms.Count > 0))
+        if (b.AddedTerms.Count > 0 || (b._ExtraTerms?.Count > 0))
         {
             if (a.Equals(b))
             {

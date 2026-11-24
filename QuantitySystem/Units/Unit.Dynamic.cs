@@ -340,7 +340,7 @@ public partial class Unit
                     // so we should create unit for this quantity
 
                     var un = DiscoverUnit(InnerQuantity);
-                    if (un.SubUnits != null && un.SubUnits.Count > 0)
+                    if (un.SubUnits?.Count > 0)
                     {
                         subUnits.AddRange(un.SubUnits);
                     }

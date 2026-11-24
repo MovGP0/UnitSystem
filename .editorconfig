@@ -410,7 +410,7 @@ dotnet_diagnostic.RCS1139.severity = warning
 # dotnet_diagnostic.RCS1145.severity = silent
 
 # Use conditional access
-# dotnet_diagnostic.RCS1146.severity = warning
+dotnet_diagnostic.RCS1146.severity = warning
 
 # Remove redundant cast
 # dotnet_diagnostic.RCS1151.severity = silent

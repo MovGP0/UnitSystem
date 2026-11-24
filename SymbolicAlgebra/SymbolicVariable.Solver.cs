@@ -26,7 +26,7 @@ public partial class SymbolicVariable
     {
         // "5*t1+3/t2"  ==>  5*t1 = -3/t2  ==>  t1  = (-3/t2)*5
 
-        if (_ExtraTerms != null && _ExtraTerms.Count > 0)
+        if (_ExtraTerms?.Count > 0)
         {
             throw new SymbolicException("can't solve expression with extra terms that hold terms with different denominator");
         }

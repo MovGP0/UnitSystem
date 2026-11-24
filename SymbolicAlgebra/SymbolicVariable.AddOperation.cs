@@ -171,7 +171,7 @@ public partial class SymbolicVariable
 
         // reaching here indicates that we didn't sum up the value to any of the target extra terms
         // so we need to include extra terms here
-        if (b._ExtraTerms != null && b._ExtraTerms.Count > 0)
+        if (b._ExtraTerms?.Count > 0)
         {
             // add extra terms of b into sv
             foreach (var eb in b._ExtraTerms)

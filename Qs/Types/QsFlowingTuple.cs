@@ -449,11 +449,8 @@ public class QsFlowingTuple : QsValue
         {
             var prop = all.FirstOrDefault(p => p.Name.Equals(step.Name, StringComparison.OrdinalIgnoreCase));
 
-            if (prop != null)
-            {
                 // property exist
-                prop.SetValue(svt, Root.QsToNativeConvert(prop.PropertyType, step.Value), null);
-            }
+                prop?.SetValue(svt, Root.QsToNativeConvert(prop.PropertyType, step.Value), null);
         }
 
         return (ValueType?)svt;
