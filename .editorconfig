@@ -374,7 +374,7 @@ dotnet_diagnostic.RCS1128.severity = warning
 dotnet_diagnostic.RCS1130.severity = warning
 
 # Remove redundant overriding member
-# dotnet_diagnostic.RCS1132.severity = warning
+dotnet_diagnostic.RCS1132.severity = warning
 
 # Remove redundant Dispose/Close call
 # dotnet_diagnostic.RCS1133.severity = silent

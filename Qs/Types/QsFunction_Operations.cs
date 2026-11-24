@@ -359,9 +359,11 @@ public partial class QsFunction
         throw new NotImplementedException();
     }
 
+#pragma warning disable RCS1132 // CS0660 and CS0661 require these overrides on the operator-declaring type.
     public override bool Equals(object? obj) => base.Equals(obj);
 
     public override int GetHashCode() => base.GetHashCode();
+#pragma warning restore RCS1132
 
     public static bool operator ==(QsFunction a, QsFunction b)
     {
