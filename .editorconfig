@@ -314,7 +314,7 @@ dotnet_diagnostic.RCS1093.severity = warning
 dotnet_diagnostic.RCS1097.severity = warning
 
 # Constant values should be placed on right side of comparisons
-# dotnet_diagnostic.RCS1098.severity = warning
+dotnet_diagnostic.RCS1098.severity = warning
 
 # Default label should be the last label in a switch section
 # dotnet_diagnostic.RCS1099.severity = warning
