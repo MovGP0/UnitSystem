@@ -209,8 +209,8 @@ public partial class SymbolicVariable
         //   b =>  2,3,4
         // then a*b => 2   and etc.
 
-        List<SymbolicVariable[]> bo2bo2 =
-        [
+        List<SymbolicVariable[]> bo2bo2
+            = [
             GetMultipliedTerms()
         ];
 
@@ -249,8 +249,8 @@ public partial class SymbolicVariable
                 if (!CommonFactorsMap.TryGetValue(src_component, out indices))
                 {
                     // new creation of the list
-                    indices =
-                    [
+                    indices
+                        = [
                         column
                     ];
                     CommonFactorsMap.Add(src_component, indices);
@@ -331,8 +331,8 @@ public partial class SymbolicVariable
 
         var term_indices = map[term_key];
 
-        List<SymbolicVariable> Common_Factors_Keys =
-        [
+        List<SymbolicVariable> Common_Factors_Keys
+            = [
             term_key
             // find the other keys that has the same indices like this key
         ];
@@ -452,8 +452,8 @@ public partial class SymbolicVariable
             {
                 var siv = new SymbolicVariable(fs.Key);
                 if (fs.Value.SymbolicVariable != null)
-                    siv._SymbolPowerTerm =
-                        Multiply(NegativeOne, fs.Value.SymbolicVariable);
+                    siv._SymbolPowerTerm
+                        = Multiply(NegativeOne, fs.Value.SymbolicVariable);
                 else
                     siv.SymbolPower = Math.Abs(fs.Value.NumericalVariable);
 

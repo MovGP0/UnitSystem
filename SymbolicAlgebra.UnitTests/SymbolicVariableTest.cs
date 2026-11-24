@@ -300,8 +300,8 @@ public class SymbolicVariableTest
 
         var aaa = aa * aa2;
 
-        var maxima =
-        "x^(6*t+3)*y^(6*t)+9*t*z*x^(4*t+2)*y^(4*t)+27*t^2*z^2*x^(2*t+1)*y^(2*t)+27*t^3*z^3";
+        var maxima
+            = "x^(6*t+3)*y^(6*t)+9*t*z*x^(4*t+2)*y^(4*t)+27*t^2*z^2*x^(2*t+1)*y^(2*t)+27*t^3*z^3";
         Assert.AreEqual(maxima, aaa.ToString());
 
         var aal = aa2 * aa;

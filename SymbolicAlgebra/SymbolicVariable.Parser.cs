@@ -274,19 +274,19 @@ public partial class SymbolicVariable
         TokenBuilder = null;
 
 
-        string[] Group =
-        [
+        string[] Group
+            = [
             "^"    /* Power for normal product '*' */
         ];
 
-        string[] SymGroup =
-        [
+        string[] SymGroup
+            = [
             "|" /* Derivation operator */,
             "." /* Integration operator */
         ];
 
-        string[] Group1 =
-        [
+        string[] Group1
+            = [
             "*"   /* normal multiplication */,
             "/"   /* normal division */,
             "%"   /* modulus */
@@ -774,14 +774,14 @@ public partial class SymbolicVariable
         TokenBuilder = null;
 
 
-        string[] Group =
-        [
+        string[] Group
+            = [
             "^"    /* Power for normal product '*' */
         ];
 
 
-        string[] Group1 =
-        [
+        string[] Group1
+            = [
             "*"   /* normal multiplication */,
             "/"   /* normal division */,
             "%"   /* modulus */
@@ -1006,8 +1006,8 @@ public partial class SymbolicVariable
 
         if (parameters.Length < pcount)
         {
-            var es =
-                string.Format("Feeded parameters are less than the required parameters of the expression {0} expected where {1} feeded\nExpression: {2}", pcount, parameters.Length, ToString());
+            var es
+                = string.Format("Feeded parameters are less than the required parameters of the expression {0} expected where {1} feeded\nExpression: {2}", pcount, parameters.Length, ToString());
 
             throw new SymbolicException(es);
         }

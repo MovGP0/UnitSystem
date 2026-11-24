@@ -21,8 +21,8 @@ public static class BinaryEngineeringNotation
     [DebuggerStepThrough]
     public static string FromValue(float value, IFormatProvider? formatProvider = null) => FromValue((double)value, formatProvider);
 
-    private static readonly BinaryPrefix[] PrefixesByDescendingFactor =
-        BinaryPrefix.GetAll().OrderByDescending(prefix => prefix.Factor).ToArray();
+    private static readonly BinaryPrefix[] PrefixesByDescendingFactor
+        = BinaryPrefix.GetAll().OrderByDescending(prefix => prefix.Factor).ToArray();
 
     [Pure]
     private static BinaryPrefix GetPrefix(double value)

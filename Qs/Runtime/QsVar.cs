@@ -434,8 +434,8 @@ class QsVar
                 {
                     // member call to the object.
                     // execute property its name in tokens[ix][0]
-                    quantityExpression =
-                        Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(tokens[ix][0]));
+                    quantityExpression
+                        = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(tokens[ix][0]));
 
                     var sct =  tokens[ix][1];
                     // because of the behavior of parsing the inner of this token between [ , ]  is ParameterToken
@@ -503,8 +503,8 @@ class QsVar
                 if (eop != null && eop.Operation == "->")
                 {
                     // member call to the object.
-                    quantityExpression =
-                        Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(tokens[ix]));
+                    quantityExpression
+                        = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(tokens[ix]));
 
                     eop.Operation = "Skip"; // skip this operation because we already made an evaluation for it
                 }
@@ -817,8 +817,8 @@ class QsVar
                         if (eop.Operation == "->")
                         {
                             // previous operation were calling for object member
-                            quantityExpression =
-                                Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(tokens[ix]));
+                            quantityExpression
+                                = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(tokens[ix]));
 
                             eop.Operation = "Skip"; // skip this operation because we already made an evaluation for it
                         }
@@ -826,16 +826,16 @@ class QsVar
                         {
                             // quantityExpression = Expression.Constant(new QsText(tokens[ix].TokenValue));
 
-                            quantityExpression =
-                                Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator"), Expression.Constant(new QsText(tokens[ix].TokenValue)));
+                            quantityExpression
+                                = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator"), Expression.Constant(new QsText(tokens[ix].TokenValue)));
 
                             eop.Operation = "Skip";
                         }
                         else if (eop.Operation == ":")
                         {
                             // quantityExpression = Expression.Constant(new QsText(tokens[ix].TokenValue));
-                            quantityExpression =
-                                Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ColonOperator"), Expression.Constant(new QsText(tokens[ix].TokenValue)));
+                            quantityExpression
+                                = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ColonOperator"), Expression.Constant(new QsText(tokens[ix].TokenValue)));
 
                             eop.Operation = "Skip";
                         }
@@ -2300,8 +2300,8 @@ class QsVar
         else
         {
             // specify the function real name
-            var TargetFunctionRealName =
-                QsFunction.FormFunctionSymbolicName(funcCallName, ArgumentTokens.Count); //to call the right function
+            var TargetFunctionRealName
+                = QsFunction.FormFunctionSymbolicName(funcCallName, ArgumentTokens.Count); //to call the right function
 
             TargetFunction = QsFunction.GetFunction(Scope, functionNameSpace, TargetFunctionRealName);
         }
@@ -2756,16 +2756,16 @@ class QsVar
     // passes depends on priorities of operators.
 
     // Internal Higher Priority Group
-    readonly static string[] HigherGroup =
-    [
+    readonly static string[] HigherGroup
+        = [
         "_h*" /* Higher Multiplication priority used internally in
                                               the case of -4  or 5^-3
                                               To be treated like -1_h*4   or 5^-1_h*4
                                            */
     ];
 
-    readonly static string[] Group =
-    [
+    readonly static string[] Group
+        = [
         "^"    /* Power for normal product '*' */,
         "^."   /* Power for dot product */,
         "^x"   /* Power for cross product */,
@@ -2779,8 +2779,8 @@ class QsVar
 
     readonly static string[] Group0 = ["x"   /* cross product */];
 
-    readonly static string[] Group1 =
-    [
+    readonly static string[] Group1
+        = [
         "*"   /* normal multiplication */,
         "."   /* dot product */,
         "(*)" /* Tensor product */,

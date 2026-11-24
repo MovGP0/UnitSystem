@@ -304,8 +304,8 @@ public partial class Unit : ICloneable
         Quantity.Value = value;
 
         if (IsOverflowed)
-            Quantity.Value =
-             AnyQuantity<T>.MultiplyScalarByGeneric(GetUnitOverflow(), value);
+            Quantity.Value
+                = AnyQuantity<T>.MultiplyScalarByGeneric(GetUnitOverflow(), value);
          return Quantity;
     }
 

@@ -147,8 +147,8 @@ public partial class SymbolicVariable
 
                     // fill the source symbol in fused variables from the primary symbol in Target term.
                     if (TargetSubTerm.SymbolPowerTerm != null)
-                        SourceTerm.FusedSymbols[TargetSubTerm.Symbol] +=
-                            new HybridVariable
+                        SourceTerm.FusedSymbols[TargetSubTerm.Symbol] += new
+                            HybridVariable
                             {
                                 NumericalVariable = TargetSubTerm.SymbolPower,
                                 SymbolicVariable = TargetSubTerm.SymbolPowerTerm

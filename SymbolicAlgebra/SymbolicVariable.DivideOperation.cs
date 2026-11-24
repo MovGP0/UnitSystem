@@ -246,8 +246,8 @@ public partial class SymbolicVariable
                                     else
                                     {
                                         // sum the value in the numerical part to the value in symbolic part
-                                        SourceTerm._SymbolPowerTerm =
-                                            new SymbolicVariable(SourceTerm._SymbolPower.ToString(CultureInfo.InvariantCulture)) - fsv.Value.SymbolicVariable;
+                                        SourceTerm._SymbolPowerTerm
+                                            = new SymbolicVariable(SourceTerm._SymbolPower.ToString(CultureInfo.InvariantCulture)) - fsv.Value.SymbolicVariable;
                                         // reset the value in numerical part
                                         SourceTerm._SymbolPower = -1;
                                     }

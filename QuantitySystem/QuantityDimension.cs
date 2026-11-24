@@ -136,8 +136,8 @@ public sealed partial class QuantityDimension
         var currentAssembly = Assembly.GetExecutingAssembly();
         Type[] types = currentAssembly.GetTypes();
 
-        var quantityTypes =
-            from QuantityType in types
+        var quantityTypes
+            = from QuantityType in types
             where QuantityType.IsSubclassOf(typeof(BaseQuantity))
             select QuantityType;
 

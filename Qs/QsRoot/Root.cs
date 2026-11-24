@@ -48,8 +48,8 @@ public class Root
         var executingTypes = Assembly.GetExecutingAssembly().GetTypes();
         var callingTypes = QsEvaluator.CallingAssembly.GetTypes();
 
-        var a =
-            from t in executingTypes.Union(callingTypes)
+        var a
+            = from t in executingTypes.Union(callingTypes)
             where t.FullName.Equals(typeName, StringComparison.OrdinalIgnoreCase)
             select t;
 

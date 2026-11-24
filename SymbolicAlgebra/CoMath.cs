@@ -5,8 +5,8 @@
 /// </summary>
 public static class CoMath
 {
-    public static readonly string[] AvailableFunctions =
-    [
+    public static readonly string[] AvailableFunctions
+        = [
         "Sec",
         "Csc",
         "Cot",

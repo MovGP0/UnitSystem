@@ -100,8 +100,8 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         switch(_ScalarType)
         {
             case ScalarTypes.NumericalQuantity:
-                var sv =
-                    NumericalQuantity.Unit.GetThisUnitQuantity(
+                var sv
+                    = NumericalQuantity.Unit.GetThisUnitQuantity(
                         new SymbolicVariable(NumericalQuantity.Value.ToString(CultureInfo.InvariantCulture)));
                 return sv;
             case ScalarTypes.RationalNumberQuantity:

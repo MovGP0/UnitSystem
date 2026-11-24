@@ -140,8 +140,8 @@ public partial class Unit
         while (string.IsNullOrEmpty(currentUnitSystem) == false && systemUnitType == null)
         {
             // prepare the query that we will search in
-            var systemUnitTypes =
-                from ut in UnitTypes
+            var systemUnitTypes
+                = from ut in UnitTypes
                 where ut.Namespace.ToUpperInvariant().EndsWith(currentUnitSystem, StringComparison.Ordinal)
                       || ut.Namespace.ToUpperInvariant().EndsWith("SHARED", StringComparison.Ordinal)
                 select ut;
@@ -187,8 +187,8 @@ public partial class Unit
         }
 
         // don't forget to include second in si units it is shared between all metric systems
-        var siUnitTypes =
-            from si in UnitTypes
+        var siUnitTypes
+            = from si in UnitTypes
             where si.Namespace.ToUpperInvariant().EndsWith("SI", StringComparison.Ordinal)
                   || si.Namespace.ToUpperInvariant().EndsWith("SHARED", StringComparison.Ordinal)
             select si;

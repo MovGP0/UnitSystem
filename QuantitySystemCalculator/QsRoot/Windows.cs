@@ -17,8 +17,8 @@ public static class Windows
         try { fw = ForegroundWindow.Instance; }
         catch { }
 
-        var d =
-            System.Windows.Forms.MessageBox.Show(
+        var d
+            = System.Windows.Forms.MessageBox.Show(
                 fw,
                 text.UnknownValueText,
                 "Quantity System"
@@ -38,8 +38,8 @@ public static class Windows
         try { fw = ForegroundWindow.Instance; }
         catch { }
 
-        var d =
-            System.Windows.Forms.MessageBox.Show(
+        var d
+            = System.Windows.Forms.MessageBox.Show(
                 fw,
                 text.UnknownValueText,
                 caption.UnknownValueText

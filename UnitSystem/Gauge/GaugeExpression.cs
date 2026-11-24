@@ -12,8 +12,8 @@ public sealed class GaugeExpression
 {
     private const int MaxNesting = 64;
 
-    private static readonly FrozenDictionary<string, GaugeRepresentation> StandardModelFields =
-        new Dictionary<string, StandardModelGaugeRepresentations>
+    private static readonly FrozenDictionary<string, GaugeRepresentation> StandardModelFields
+        = new Dictionary<string, StandardModelGaugeRepresentations>
         {
             ["Q_L"] = new LeftHandedQuarkDoublet(),
             ["u_R"] = new RightHandedUpQuark(),

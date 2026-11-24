@@ -891,8 +891,8 @@ public partial class SymbolicVariable
     /// <returns></returns>
     public SymbolicVariable[] GetMultipliedTerms()
     {
-        List<SymbolicVariable> MultilpiedTerms =
-        [
+        List<SymbolicVariable> MultilpiedTerms
+            = [
             GetTheStrippedCoefficient(),
             GetTheStrippedVariable()
         ];

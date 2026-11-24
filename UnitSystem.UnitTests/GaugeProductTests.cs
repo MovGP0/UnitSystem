@@ -13,8 +13,8 @@ public sealed class GaugeProductTests
     [Test]
     public void ShouldProjectEveryStandardModelMultipletToItsGaugeRepresentation()
     {
-        (StandardModelGaugeRepresentations Multiplet, GaugeRepresentation Representation)[] cases =
-        [
+        (StandardModelGaugeRepresentations Multiplet, GaugeRepresentation Representation)[] cases
+            = [
             (new LeftHandedQuarkDoublet(), QuarkDoublet),
             (new RightHandedUpQuark(), UpQuark),
             (new RightHandedDownQuark(), DownQuark),
