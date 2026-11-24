@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>Najveći broj dimenzija koje sustav jedinica {0} podržava jest {1}.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>„{0}” ima istu dimenziju i isti faktor kao „{1}”.</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>Jedinice nemaju istu dimenziju.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>Jedinice ne pripadaju istom sustavu.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>U sustavu već postoji jedinica sa simbolom „{0}”.</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>Izraz za jedinicu „{0}” nije ispravno oblikovan.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>Nije moguće odrediti predmetak koji je sastavni dio simbola jedinice „{0}”.</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>Izraz za jedinicu „{0}” je višeznačan.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>Predmetak „{0}” nije prepoznat.</value>
+  </data>
+</root>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>Sistem satuan {0} mendukung paling banyak {1} dimensi.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>‘{0}’ memiliki dimensi dan faktor yang sama dengan ‘{1}’.</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>Satuan-satuan tersebut memiliki dimensi yang berbeda.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>Satuan-satuan tersebut berasal dari sistem yang berbeda.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>Satuan dengan simbol ‘{0}’ sudah ada dalam sistem.</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>Format ekspresi satuan ‘{0}’ tidak benar.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>Prefiks yang melekat pada simbol satuan ‘{0}’ tidak dapat ditentukan.</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>Ekspresi satuan ‘{0}’ bersifat ambigu.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>Prefiks ‘{0}’ tidak dikenali.</value>
+  </data>
+</root>

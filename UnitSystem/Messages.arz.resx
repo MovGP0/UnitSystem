@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>أقصى عدد أبعاد نظام الوحدات {0} بيدعمه هو {1}.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>الوحدة «{0}» ليها نفس البُعد ونفس المعامل بتوع الوحدة «{1}».</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>الوحدات أبعادها مختلفة.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>الوحدات بتنتمي لأنظمة وحدات مختلفة.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>فيه بالفعل وحدة بالرمز «{0}» في النظام.</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>صيغة تعبير الوحدة «{0}» مش صحيحة.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>ما قدرناش نحدد البادئة اللي هي جزء من رمز الوحدة «{0}».</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>تعبير الوحدة «{0}» ممكن يتفهم بأكتر من طريقة.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>البادئة «{0}» مش معروفة.</value>
+  </data>
+</root>

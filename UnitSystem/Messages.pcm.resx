@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>Unit system {0} no fit support more than {1} dimension.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>‘{0}’ get di same dimension and factor as ‘{1}’.</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>Di units no get di same dimension.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>Di units no dey di same system.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>Unit wey get symbol ‘{0}’ dey di system already.</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>Di format for unit expression ‘{0}’ no correct.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>We no fit find out di prefix wey be part of unit symbol ‘{0}’.</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>Unit expression ‘{0}’ fit mean more than one thing.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>We no recognise di prefix ‘{0}’.</value>
+  </data>
+</root>

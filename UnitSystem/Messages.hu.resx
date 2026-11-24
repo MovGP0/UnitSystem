@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>A(z) {0} mértékegységrendszer legfeljebb {1} dimenziót támogat.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>A(z) „{0}” dimenziója és tényezője megegyezik a(z) „{1}” dimenziójával és tényezőjével.</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>A mértékegységek dimenziója eltérő.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>A mértékegységek különböző rendszerekhez tartoznak.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>A rendszerben már van „{0}” jelű mértékegység.</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>A(z) „{0}” mértékegység-kifejezés formátuma hibás.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>Nem sikerült meghatározni a(z) „{0}” mértékegységjelbe foglalt előtagot.</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>A(z) „{0}” mértékegység-kifejezés többértelmű.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>A(z) „{0}” előtag nem ismerhető fel.</value>
+  </data>
+</root>

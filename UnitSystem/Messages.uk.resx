@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>Максимальна кількість розмірностей, які підтримує система одиниць {0}, становить {1}.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>Одиниця «{0}» має ті самі розмірність і коефіцієнт, що й одиниця «{1}».</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>Одиниці мають різні розмірності.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>Одиниці належать до різних систем.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>У системі вже є одиниця з позначенням «{0}».</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>Вираз для одиниці «{0}» має неправильний формат.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>Не вдалося визначити префікс, що є частиною позначення одиниці «{0}».</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>Вираз для одиниці «{0}» неоднозначний.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>Префікс «{0}» не розпізнано.</value>
+  </data>
+</root>

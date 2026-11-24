@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>{0} birim sistemi en fazla {1} boyutu destekler.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>“{0}” birimi, “{1}” birimiyle aynı boyuta ve çarpana sahiptir.</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>Birimlerin boyutları farklıdır.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>Birimler farklı birim sistemlerine aittir.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>Sistemde “{0}” simgeli bir birim zaten var.</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>“{0}” birim ifadesinin biçimi geçersiz.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>“{0}” birim simgesinin içerdiği ön ek belirlenemedi.</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>“{0}” birim ifadesi birden fazla şekilde yorumlanabilir.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>“{0}” ön eki tanınmadı.</value>
+  </data>
+</root>

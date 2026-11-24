@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>單位制 {0} 最多支援 {1} 個量綱。</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>「{0}」與「{1}」的量綱和係數相同。</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>這些單位的量綱不同。</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>這些單位不屬於同一單位制。</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>系統中已存在符號為「{0}」的單位。</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>單位運算式「{0}」的格式不正確。</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>無法判定單位符號「{0}」固有的字首。</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>單位運算式「{0}」有歧義。</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>無法辨識字首「{0}」。</value>
+  </data>
+</root>

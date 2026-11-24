@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>इकाई प्रणाली {0} में समर्थित विमाओं की अधिकतम संख्या {1} है।</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>‘{0}’ की विमा और गुणक ‘{1}’ के समान हैं।</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>इकाइयों की विमाएँ अलग हैं।</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>इकाइयाँ अलग-अलग प्रणालियों की हैं।</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>इस प्रणाली में ‘{0}’ चिह्न वाली इकाई पहले से मौजूद है।</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>इकाई व्यंजक ‘{0}’ का प्रारूप सही नहीं है।</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>इकाई चिह्न ‘{0}’ में निहित उपसर्ग निर्धारित नहीं किया जा सका।</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>इकाई व्यंजक ‘{0}’ की एक से अधिक व्याख्याएँ संभव हैं।</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>उपसर्ग ‘{0}’ पहचाना नहीं गया।</value>
+  </data>
+</root>

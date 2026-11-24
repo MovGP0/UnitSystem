@@ -46,5 +46,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <!-- MSBuild needs explicit culture and manifest names for these locales. -->
+    <EmbeddedResource Update="Messages.arz.resx" Culture="arz" ManifestResourceName="$(RootNamespace).Messages.arz" />
+    <EmbeddedResource Update="Messages.cnr.resx" Culture="cnr" ManifestResourceName="$(RootNamespace).Messages.cnr" />
+    <EmbeddedResource Update="Messages.cnr-Cyrl.resx" Culture="cnr-Cyrl" ManifestResourceName="$(RootNamespace).Messages.cnr-Cyrl" />
+    <EmbeddedResource Update="Messages.*.resx">
+      <DependentUpon>Messages.resx</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

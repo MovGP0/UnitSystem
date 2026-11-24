@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>In-numru massimu ta’ dimensjonijiet li tappoġġa s-sistema ta’ unitajiet {0} huwa {1}.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>L-unità «{0}» għandha l-istess dimensjoni u l-istess fattur bħall-unità «{1}».</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>L-unitajiet għandhom dimensjonijiet differenti.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>L-unitajiet jappartjenu għal sistemi differenti.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>Fis-sistema diġà hemm unità bis-simbolu «{0}».</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>L-espressjoni tal-unità «{0}» mhijiex ifformattjata sew.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>Ma setax jiġi ddeterminat il-prefiss inerenti għas-simbolu tal-unità «{0}».</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>L-espressjoni tal-unità «{0}» hija ambigwa.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>Il-prefiss «{0}» ma ġiex rikonoxxut.</value>
+  </data>
+</root>

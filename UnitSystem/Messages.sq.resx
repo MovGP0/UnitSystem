@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>Numri maksimal i dimensioneve që mbështet sistemi i njësive {0} është {1}.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>Njësia «{0}» ka të njëjtin dimension dhe të njëjtin faktor si njësia «{1}».</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>Njësitë kanë dimensione të ndryshme.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>Njësitë u përkasin sistemeve të ndryshme.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>Në sistem ekziston tashmë një njësi me simbolin «{0}».</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>Shprehja e njësisë «{0}» nuk është në formatin e duhur.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>Nuk mund të përcaktohej parashtesa që është pjesë e simbolit të njësisë «{0}».</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>Shprehja e njësisë «{0}» mund të interpretohet në më shumë se një mënyrë.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>Parashtesa «{0}» nuk u njoh.</value>
+  </data>
+</root>

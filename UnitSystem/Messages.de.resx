@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>Die maximale Anzahl der vom Einheitensystem {0} unterstützten Dimensionen beträgt {1}.</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>„{0}“ hat dieselbe Dimension und denselben Faktor wie „{1}“.</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>Die Einheiten haben unterschiedliche Dimensionen.</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>Die Einheiten gehören zu unterschiedlichen Einheitensystemen.</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>Im System ist bereits eine Einheit mit dem Symbol „{0}“ vorhanden.</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>Der Einheitenausdruck „{0}“ ist nicht korrekt formatiert.</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>Das im Einheitensymbol „{0}“ enthaltene Präfix konnte nicht ermittelt werden.</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>Der Einheitenausdruck „{0}“ ist mehrdeutig.</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>Das Präfix „{0}“ wurde nicht erkannt.</value>
+  </data>
+</root>

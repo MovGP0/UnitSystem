@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DimensionUnknown" xml:space="preserve">
+    <value>単位系 {0} がサポートする次元の数は最大 {1} です。</value>
+  </data>
+  <data name="UnitAlreadyKnown" xml:space="preserve">
+    <value>「{0}」の次元と係数は「{1}」と同じです。</value>
+  </data>
+  <data name="UnitsNotSameDimension" xml:space="preserve">
+    <value>単位の次元が異なります。</value>
+  </data>
+  <data name="UnitsNotSameSystem" xml:space="preserve">
+    <value>単位が属する単位系が異なります。</value>
+  </data>
+  <data name="UnitSymbolAlreadyKnown" xml:space="preserve">
+    <value>この単位系には、記号「{0}」を持つ単位が既に存在します。</value>
+  </data>
+  <data name="UnitExpressionInvalid" xml:space="preserve">
+    <value>単位式「{0}」の書式が正しくありません。</value>
+  </data>
+  <data name="InherentPrefixInvalid" xml:space="preserve">
+    <value>単位記号「{0}」に含まれる固有の接頭語を特定できませんでした。</value>
+  </data>
+  <data name="UnitExpressionAmbiguous" xml:space="preserve">
+    <value>単位式「{0}」は複数の解釈が可能です。</value>
+  </data>
+  <data name="ThePrefixIsNotRecognized" xml:space="preserve">
+    <value>接頭語「{0}」を認識できません。</value>
+  </data>
+</root>
