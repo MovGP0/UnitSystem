@@ -897,7 +897,7 @@ dotnet_diagnostic.CA1853.severity = warning
 dotnet_diagnostic.CA1854.severity = warning
 
 # Prefer 'Clear' over 'Fill'
-# dotnet_diagnostic.CA1855.severity = warning
+dotnet_diagnostic.CA1855.severity = warning
 
 # Incorrect usage of ConstantExpected attribute
 dotnet_diagnostic.CA1856.severity = error
