@@ -786,7 +786,7 @@ dotnet_diagnostic.CA1421.severity = warning
 dotnet_diagnostic.CA1422.severity = warning
 
 # Use nameof to express symbol names
-# dotnet_diagnostic.CA1507.severity = warning
+dotnet_diagnostic.CA1507.severity = warning
 
 # Use ArgumentNullException throw helper
 # dotnet_diagnostic.CA1510.severity = warning
