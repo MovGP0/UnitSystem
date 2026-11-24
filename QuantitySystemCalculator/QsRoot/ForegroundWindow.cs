@@ -5,7 +5,7 @@ namespace QsRoot;
 /// <summary>
 /// to get the console window
 /// </summary>
-internal class ForegroundWindow : IWin32Window
+internal sealed class ForegroundWindow : IWin32Window
 {
     private static readonly ForegroundWindow Window = new();
 

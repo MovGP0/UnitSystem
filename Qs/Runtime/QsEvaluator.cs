@@ -16,7 +16,7 @@ namespace Qs.Runtime;
 /// <summary>
 /// used to evaluate the quantity system expressions.
 /// </summary>
-public class QsEvaluator
+public sealed class QsEvaluator
 {
     /// <summary>
     /// Match unit

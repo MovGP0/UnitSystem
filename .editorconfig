@@ -605,7 +605,7 @@ dotnet_diagnostic.RCS1222.severity = warning
 dotnet_diagnostic.RCS1224.severity = warning
 
 # Make class sealed
-# dotnet_diagnostic.RCS1225.severity = warning
+dotnet_diagnostic.RCS1225.severity = warning
 
 # Add paragraph to documentation comment
 # dotnet_diagnostic.RCS1226.severity = warning

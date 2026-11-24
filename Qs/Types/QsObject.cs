@@ -9,7 +9,7 @@ namespace Qs.Types;
 /// <summary>
 /// Holds QsObject either native (from C# class) or custom (from qs itself)
 /// </summary>
-public class QsObject : QsValue
+public sealed class QsObject : QsValue
 {
     /// <summary>
     /// The only way to create the QsObject.
