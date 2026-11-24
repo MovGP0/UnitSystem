@@ -218,7 +218,7 @@ dotnet_diagnostic.RCS1044.severity = warning
 # dotnet_diagnostic.RCS1046.severity = none
 
 # Non-asynchronous method name should not end with 'Async'
-# dotnet_diagnostic.RCS1047.severity = warning
+dotnet_diagnostic.RCS1047.severity = warning
 
 # Use lambda expression instead of anonymous method
 # dotnet_diagnostic.RCS1048.severity = warning
