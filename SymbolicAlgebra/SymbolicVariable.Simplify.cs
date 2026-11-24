@@ -435,10 +435,14 @@ public partial class SymbolicVariable
             {
                 var siv = new SymbolicVariable(fs.Key);
                 if (fs.Value.SymbolicVariable != null)
+                {
                     siv._SymbolPowerTerm
-                        = Multiply(NegativeOne, fs.Value.SymbolicVariable);
+                                        = Multiply(NegativeOne, fs.Value.SymbolicVariable);
+                }
                 else
+                {
                     siv.SymbolPower = Math.Abs(fs.Value.NumericalVariable);
+                }
 
                 denominator = Multiply(denominator, siv);  // accumulate negative power symbols here
 

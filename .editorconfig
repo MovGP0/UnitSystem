@@ -144,7 +144,7 @@ dotnet_diagnostic.RCS1001.severity = warning
 dotnet_diagnostic.RCS1002.severity = none
 
 # Brace multiline branches in an if-else chain
-# dotnet_diagnostic.RCS1003.severity = warning
+dotnet_diagnostic.RCS1003.severity = warning
 
 # Remove optional braces from if-else branches
 # dotnet_diagnostic.RCS1004.severity = disabled

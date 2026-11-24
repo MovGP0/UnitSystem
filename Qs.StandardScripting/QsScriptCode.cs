@@ -26,7 +26,9 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
                     code = SourceUnit.GetReader().ReadToEnd();
                 }
                 else
+                {
                     throw new QsException("File Not Found");
+                }
             }
             else
             {
@@ -86,7 +88,9 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
                                     qcOpened = !qcOpened;
                             }
                             else
+                            {
                                 qcOpened = !qcOpened;
+                            }
                         }
 
                         // is it a comment charachter.

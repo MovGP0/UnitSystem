@@ -355,7 +355,9 @@ public class QsEvaluator
                         InText = !InText;
                 }
                 else
+                {
                     InText = !InText;
+                }
             }
 
             if (m[ix] == '=' && scs == 0 && rcs == 0 && bcs == 0 && InText == false)

@@ -142,14 +142,18 @@ public partial class SymbolicVariable
 
                     // fill the source symbol in fused variables from the primary symbol in Target term.
                     if (TargetSubTerm.SymbolPowerTerm != null)
+                    {
                         SourceTerm.FusedSymbols[TargetSubTerm.Symbol] += new
-                            HybridVariable
-                            {
-                                NumericalVariable = TargetSubTerm.SymbolPower,
-                                SymbolicVariable = TargetSubTerm.SymbolPowerTerm
-                            };
+                                                HybridVariable
+                        {
+                            NumericalVariable = TargetSubTerm.SymbolPower,
+                            SymbolicVariable = TargetSubTerm.SymbolPowerTerm
+                        };
+                    }
                     else
+                    {
                         SourceTerm.FusedSymbols[TargetSubTerm.Symbol] += TargetSubTerm.SymbolPower;
+                    }
 
                     // however primary symbol in source still the same so we need to add it to the value in target
                     //    (if exist in fused variables in target)
@@ -174,7 +178,9 @@ public partial class SymbolicVariable
                                 if (tfs.Value.SymbolicVariable != null)
                                 {
                                     if (SourceTerm._SymbolPowerTerm != null)
+                                    {
                                         SourceTerm._SymbolPowerTerm += tfs.Value.SymbolicVariable;
+                                    }
                                     else
                                     {
                                         // sum the value in the numerical part to the value in symbolic part
@@ -184,7 +190,9 @@ public partial class SymbolicVariable
                                     }
                                 }
                                 else
+                                {
                                     SourceTerm._SymbolPower += tfs.Value.NumericalVariable;
+                                }
                             }
                             else
                             {
@@ -213,7 +221,9 @@ public partial class SymbolicVariable
                     foreach (var fsv in TargetSubTerm.FusedSymbols)
                     {
                         if (SourceTerm.FusedSymbols.ContainsKey(fsv.Key))
+                        {
                             SourceTerm.FusedSymbols[fsv.Key] += fsv.Value;
+                        }
                         else
                         {
                             // 1- if symbol is the same as priamry source
@@ -222,7 +232,9 @@ public partial class SymbolicVariable
                                 if (fsv.Value.SymbolicVariable != null)
                                 {
                                     if (SourceTerm._SymbolPowerTerm != null)
+                                    {
                                         SourceTerm._SymbolPowerTerm += fsv.Value.SymbolicVariable;
+                                    }
                                     else
                                     {
                                         // sum the value in the numerical part to the value in symbolic part

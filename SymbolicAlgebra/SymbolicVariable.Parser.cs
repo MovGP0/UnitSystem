@@ -69,7 +69,9 @@ public partial class SymbolicVariable
             expr = rr[1];
         }
         else
+        {
             expr = rr[0];
+        }
 
         expr = expr.Replace(" ", "");
 
@@ -576,24 +578,32 @@ public partial class SymbolicVariable
                         MethodInfo targetfunction;
 
                         if (CoMath.AvailableFunctions.Contains(fname, StringComparer.OrdinalIgnoreCase))
+                        {
                             targetfunction = typeof(CoMath).GetMethod(
                                 fname
-                                ,
+                                                        ,
                                 BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static
-                            );
+                                                    );
+                        }
                         else if (fname.Equals("log", StringComparison.OrdinalIgnoreCase))
+                        {
                             targetfunction = typeof(Math).GetMethod("Log", [typeof(double)]);
+                        }
                         else if (fname.Equals("iif", StringComparison.OrdinalIgnoreCase))
+                        {
                             targetfunction = typeof(CoLogic).GetMethod(
                                 "IIF",
                                 [typeof(bool), typeof(double), typeof(double)
                                     ]);
+                        }
                         else
+                        {
                             targetfunction = typeof(Math).GetMethod(
                                 fname
-                                ,
+                                                        ,
                                 BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static
-                            );
+                                                    );
+                        }
 
                         if (targetfunction != null)
                         {

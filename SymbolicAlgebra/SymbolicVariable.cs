@@ -131,8 +131,10 @@ public partial class SymbolicVariable
         {
             if (t != ' ')
             {
-                if (t == '-' && inStart==true)
+                if (t == '-' && inStart == true)
+                {
                     minuscount++;
+                }
                 else if (t == '+' && inStart == true)
                 {
                     /*ignore*/
@@ -722,7 +724,9 @@ public partial class SymbolicVariable
         {
             // variable exist
             if (power != 1)
+            {
                 result = variableName + "^" + power.ToString(CultureInfo.InvariantCulture);
+            }
             else
             {
                 if (TextTools.TopLevelExist(variableName, '+') == true || TextTools.TopLevelExist(variableName, '-') == true)
@@ -972,10 +976,14 @@ public partial class SymbolicVariable
                         return SymbolPower.ToString(CultureInfo.InvariantCulture);
                     }
                     else
+                    {
                         return string.Empty;
+                    }
                 }
                 else
+                {
                     return string.Empty;
+                }
             }
         }
     }
@@ -1016,7 +1024,9 @@ public partial class SymbolicVariable
                 else
                 {
                     if (_SymbolPowerTerm == null)
+                    {
                         result = Symbol + "^" + Math.Abs(SymbolPower).ToString(CultureInfo.InvariantCulture);    // x^power
+                    }
                     else
                     {
                         if (SymbolPowerText.Length > 1)
@@ -1043,7 +1053,9 @@ public partial class SymbolicVariable
             else
             {
                 if (pp >= 0)
+                {
                     result += "*" + GetSymbolBaseValue(i) + "";
+                }
                 else
                 {
                     var sabv = GetSymbolAbsoluteBaseValue(i);
@@ -1068,7 +1080,9 @@ public partial class SymbolicVariable
         if (Coeffecient == 1)
         {
             if (string.IsNullOrEmpty(result))
+            {
                 result = "1";
+            }
             else
             {
                 if (SymbolPower < 0)
@@ -1102,7 +1116,9 @@ public partial class SymbolicVariable
                 if (SymbolPower != 0)
                 {
                     if (SymbolPower < 0)
+                    {
                         result = rr + "/" + result;
+                    }
                     else
                     {
                         if (rr == "-1")
@@ -1166,7 +1182,9 @@ public partial class SymbolicVariable
                 if (sv.Coeffecient != 0)
                 {
                     if (sv.FormSymbolTextValue().StartsWith("-"))
+                    {
                         result += sv.FormSymbolTextValue();
+                    }
                     else
                     {
                         result += "+" + sv.FormSymbolTextValue();
@@ -1239,7 +1257,9 @@ public partial class SymbolicVariable
                 return _AddedTerms.Values.ElementAt(ix - 1);
             }
             else if (ix < 0)
+            {
                 throw new IndexOutOfRangeException();
+            }
             else
             {
                 // ix ==== 0
@@ -1362,7 +1382,9 @@ public partial class SymbolicVariable
             if (Symbol.Equals(sv.Symbol, StringComparison.OrdinalIgnoreCase) && DividedTerm.Equals( sv.DividedTerm))
             {
                 if (Symbol == string.Empty)
+                {
                     return true;  //because there is no symbol or empty symbol which indicates that the term is coefficient only
+                }
                 else if (_SymbolPowerTerm != null && sv._SymbolPowerTerm != null)
                 {
                     if (_SymbolPowerTerm.Equals(sv._SymbolPowerTerm))
@@ -1670,7 +1692,9 @@ public partial class SymbolicVariable
                 return true;
             }
             else if (IsZero)
+            {
                 return true;
+            }
 
             return false;
         }

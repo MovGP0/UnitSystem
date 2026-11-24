@@ -26,8 +26,10 @@ public partial class SymbolicVariable
         }
 
         var cc = false;
-        if(sv.BaseVariable!=null)
+        if (sv.BaseVariable != null)
+        {
             cc = sv.BaseVariable.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase); // case of base variable
+        }
         else if (sv.IsFunction && symbolpowercontainParameter == true)
         {
             // search if a parameter contains the same parameter

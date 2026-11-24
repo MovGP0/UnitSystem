@@ -66,7 +66,9 @@ class SimpleLambdaBuilder(string functionName, Type type)
 
         Type delegateType;
         if (action)
+        {
             delegateType = Expression.GetActionType(typeArgs);
+        }
         else
         {
             typeArgs[paramCount] = returnType;

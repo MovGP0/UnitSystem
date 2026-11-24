@@ -191,14 +191,16 @@ public partial class SymbolicVariable
                                         SourceTerm._SymbolPower = -1;
                                     }
 
-                                    if(SourceTerm._SymbolPowerTerm.IsCoeffecientOnly)
+                                    if (SourceTerm._SymbolPowerTerm.IsCoeffecientOnly)
                                     {
                                         SourceTerm._SymbolPower = SourceTerm._SymbolPowerTerm.Coeffecient;
                                         SourceTerm._SymbolPowerTerm = null;
                                     }
                                 }
                                 else
+                                {
                                     SourceTerm._SymbolPower -= tfs.Value.NumericalVariable;
+                                }
                             }
                             else
                             {
@@ -227,7 +229,9 @@ public partial class SymbolicVariable
                     foreach (var fsv in TargetSubTerm.FusedSymbols)
                     {
                         if (SourceTerm.FusedSymbols.ContainsKey(fsv.Key))
+                        {
                             SourceTerm.FusedSymbols[fsv.Key] -= fsv.Value;
+                        }
                         else
                         {
                             // 1- if symbol is the same as priamry source
@@ -236,7 +240,9 @@ public partial class SymbolicVariable
                                 if (fsv.Value.SymbolicVariable != null)
                                 {
                                     if (SourceTerm._SymbolPowerTerm != null)
+                                    {
                                         SourceTerm._SymbolPowerTerm -= fsv.Value.SymbolicVariable;
+                                    }
                                     else
                                     {
                                         // sum the value in the numerical part to the value in symbolic part

@@ -285,15 +285,25 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         try
         {
             if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = SumElements(fromIndex, toIndex);
+            }
             else if (operation.Equals("MulElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = MulElements(fromIndex, toIndex);
+            }
             else if (operation.Equals("Average", StringComparison.OrdinalIgnoreCase))
+            {
                 result = Average(fromIndex, toIndex);
+            }
             else if (operation.Equals("StdDeviation", StringComparison.OrdinalIgnoreCase))
+            {
                 result = StdDeviation(fromIndex, toIndex);
+            }
             else if (operation.Equals("QsValueElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = QsValueElements(fromIndex, toIndex);
+            }
             else
             {
                 EndRangeOperation();
@@ -317,15 +327,25 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         try
         {
             if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = SumElements(fromIndex, toIndex, arg0);
+            }
             else if (operation.Equals("MulElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = MulElements(fromIndex, toIndex, arg0);
+            }
             else if (operation.Equals("Average", StringComparison.OrdinalIgnoreCase))
+            {
                 result = Average(fromIndex, toIndex, arg0);
+            }
             else if (operation.Equals("StdDeviation", StringComparison.OrdinalIgnoreCase))
+            {
                 result = StdDeviation(fromIndex, toIndex, arg0);
+            }
             else if (operation.Equals("QsValueElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = QsValueElements(fromIndex, toIndex, arg0);
+            }
             else
             {
                 EndRangeOperation();
@@ -349,15 +369,25 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         try
         {
             if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = SumElements(fromIndex, toIndex, arg0, arg1);
+            }
             else if (operation.Equals("MulElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = MulElements(fromIndex, toIndex, arg0, arg1);
+            }
             else if (operation.Equals("Average", StringComparison.OrdinalIgnoreCase))
+            {
                 result = Average(fromIndex, toIndex, arg0, arg1);
+            }
             else if (operation.Equals("StdDeviation", StringComparison.OrdinalIgnoreCase))
+            {
                 result = StdDeviation(fromIndex, toIndex, arg0, arg1);
+            }
             else if (operation.Equals("QsValueElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = QsValueElements(fromIndex, toIndex, arg0, arg1);
+            }
             else
             {
                 EndRangeOperation();
@@ -380,15 +410,25 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         try
         {
             if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = SumElements(fromIndex, toIndex, arg0, arg1, arg2);
+            }
             else if (operation.Equals("MulElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = MulElements(fromIndex, toIndex, arg0, arg1, arg2);
+            }
             else if (operation.Equals("Average", StringComparison.OrdinalIgnoreCase))
+            {
                 result = Average(fromIndex, toIndex, arg0, arg1, arg2);
+            }
             else if (operation.Equals("StdDeviation", StringComparison.OrdinalIgnoreCase))
+            {
                 result = StdDeviation(fromIndex, toIndex, arg0, arg1, arg2);
+            }
             else if (operation.Equals("QsValueElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = QsValueElements(fromIndex, toIndex, arg0, arg1, arg2);
+            }
             else
             {
                 EndRangeOperation();
@@ -411,15 +451,25 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         try
         {
             if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3);
+            }
             else if (operation.Equals("MulElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = MulElements(fromIndex, toIndex, arg0, arg1, arg2, arg3);
+            }
             else if (operation.Equals("Average", StringComparison.OrdinalIgnoreCase))
+            {
                 result = Average(fromIndex, toIndex, arg0, arg1, arg2, arg3);
+            }
             else if (operation.Equals("StdDeviation", StringComparison.OrdinalIgnoreCase))
+            {
                 result = StdDeviation(fromIndex, toIndex, arg0, arg1, arg2, arg3);
+            }
             else if (operation.Equals("QsValueElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = QsValueElements(fromIndex, toIndex, arg0, arg1, arg2, arg3);
+            }
             else
             {
                 EndRangeOperation();
@@ -442,15 +492,25 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         try
         {
             if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4);
+            }
             else if (operation.Equals("MulElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = MulElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4);
+            }
             else if (operation.Equals("Average", StringComparison.OrdinalIgnoreCase))
+            {
                 result = Average(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4);
+            }
             else if (operation.Equals("StdDeviation", StringComparison.OrdinalIgnoreCase))
+            {
                 result = StdDeviation(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4);
+            }
             else if (operation.Equals("QsValueElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = QsValueElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4);
+            }
             else
             {
                 EndRangeOperation();
@@ -473,15 +533,25 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         try
         {
             if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5);
+            }
             else if (operation.Equals("MulElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = MulElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5);
+            }
             else if (operation.Equals("Average", StringComparison.OrdinalIgnoreCase))
+            {
                 result = Average(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5);
+            }
             else if (operation.Equals("StdDeviation", StringComparison.OrdinalIgnoreCase))
+            {
                 result = StdDeviation(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5);
+            }
             else if (operation.Equals("QsValueElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = QsValueElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5);
+            }
             else
             {
                 EndRangeOperation();
@@ -505,15 +575,25 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         try
         {
             if (operation.Equals("SumElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            }
             else if (operation.Equals("MulElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = MulElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            }
             else if (operation.Equals("Average", StringComparison.OrdinalIgnoreCase))
+            {
                 result = Average(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            }
             else if (operation.Equals("StdDeviation", StringComparison.OrdinalIgnoreCase))
+            {
                 result = StdDeviation(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            }
             else if (operation.Equals("QsValueElements", StringComparison.OrdinalIgnoreCase))
+            {
                 result = QsValueElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+            }
             else
             {
                 EndRangeOperation();

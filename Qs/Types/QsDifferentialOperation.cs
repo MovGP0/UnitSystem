@@ -106,15 +106,15 @@ public class QsDifferentialOperation : QsOperation
                     switch (op.Operation)
                     {
                         case Operator.Differentiate:
-                        {
-                            var dsv = ((QsScalar)op.value).SymbolicQuantity.Value;
-                            var times = (int)dsv.SymbolPower;
-                            while (times > 0)
                             {
-                                f = f.Differentiate(dsv.Symbol);
-                                times--;
+                                var dsv = ((QsScalar)op.value).SymbolicQuantity.Value;
+                                var times = (int)dsv.SymbolPower;
+                                while (times > 0)
+                                {
+                                    f = f.Differentiate(dsv.Symbol);
+                                    times--;
+                                }
                             }
-                        }
 
                             break;
 
@@ -126,8 +126,10 @@ public class QsDifferentialOperation : QsOperation
                 return f.ToQuantity().ToScalar();
             }
             else
+            {
                 //throw new QsException("Can't multiply current operation for this scalar " + sc.ScalarType.ToString());
                 return QsScalar.Zero;
+            }
         }
 
         throw new NotImplementedException();

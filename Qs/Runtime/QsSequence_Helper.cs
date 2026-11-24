@@ -139,7 +139,9 @@ public partial class QsSequence
                 declaredNamespace += tok.TokenValue;
             }
             else
+            {
                 break;
+            }
         }
 
         declaredNamespace = declaredNamespace.TrimEnd(':');
@@ -170,7 +172,9 @@ public partial class QsSequence
                         shift = 1;
                     }
                     else
+                    {
                         return null;
+                    }
                 }
                 else
                 {

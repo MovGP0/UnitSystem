@@ -380,7 +380,9 @@ public abstract partial class AnyQuantity<T>
         AnyQuantity<T> result = null;
 
         if (unit.QuantityType != typeof(DerivedQuantity<>))
+        {
             result = unit.MakeQuantity<T>(RaiseGenericByScalar(quantity.Value, exponent.Value));
+        }
         else
         {
             result = new DerivedQuantity<T>(unit.UnitDimension);

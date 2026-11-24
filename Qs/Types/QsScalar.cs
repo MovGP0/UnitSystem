@@ -1915,11 +1915,15 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
                 QsVector v = new();
                 if (end >= start)
+                {
                     for (var id = start; id <= end; id++)
                         v.AddComponent(id.ToQuantity().ToScalar());
+                }
                 else
+                {
                     for (var id = start; id >= end; id--)
                         v.AddComponent(id.ToQuantity().ToScalar());
+                }
 
                 return v;
             }

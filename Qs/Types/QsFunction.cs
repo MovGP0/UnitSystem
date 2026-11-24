@@ -465,7 +465,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                 functionNamespace += tok.TokenValue;
             }
             else
+            {
                 break;
+            }
         }
 
         if (
@@ -505,7 +507,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                         prms.Add(new QsParamInfo { Name = c.TokenValue, Type = QsParamType.Value });
                     }
                     else
+                    {
                         throw new QsSyntaxErrorException("Parameter name must statrt with a letter");
+                    }
                 }
             }
 

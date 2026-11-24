@@ -414,7 +414,9 @@ public abstract class QsValue: IComparable
             if (v is QsScalar)
             {
                 if (m.RowsCount == 0)
+                {
                     m.AddVector((QsVector)VectorFromValues(v));
+                }
                 else
                 {
                     m.Rows[0].AddComponent((QsScalar)v);
@@ -424,7 +426,9 @@ public abstract class QsValue: IComparable
             if (v is QsVector)
             {
                 if (m.RowsCount == 0)
+                {
                     m.AddVector(((QsVector)v).Clone() as QsVector);
+                }
                 else if (m.RowsCount == 1)
                 {
                     m.Rows[0].AddComponents((QsVector)v);

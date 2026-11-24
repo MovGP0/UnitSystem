@@ -255,7 +255,9 @@ internal static class FunctionOperation
             result = SymbolicVariable.Parse($"log(sinh({pa.ToString()}))");
         }
         else
+        {
             throw new SymbolicException(fv.FunctionName + " integration not implemented yet");
+        }
 
         if (divo.IsOne)
             return result;
@@ -362,7 +364,9 @@ internal static class FunctionOperation
             result = SymbolicVariable.Parse($"{pa}*acoth({pa})+(log(1-{pa2})/2");
         }
         else
+        {
             throw new SymbolicException(fv.FunctionName + " integration not implemented yet");
+        }
 
         if (divo.IsOne)
             return result;

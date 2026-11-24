@@ -55,7 +55,9 @@ public class QsFlowingTuple : QsValue
             v.Value = new QsText("n/a");
         }
         else
+        {
             v.Value = value;
+        }
     }
 
     private QsValue? ValueToQsValue(object? value)
@@ -259,7 +261,9 @@ public class QsFlowingTuple : QsValue
             times = ((QsReference)vl).ContentValue;
         }
         else
+        {
             times = vl;
+        }
 
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 

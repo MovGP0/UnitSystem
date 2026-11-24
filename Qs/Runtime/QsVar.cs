@@ -429,7 +429,9 @@ class QsVar
                             CorrectToken.AppendSubToken(sct_e[0]);
                         }
                         else
+                        {
                             CorrectToken.AppendSubToken(sct_e);
+                        }
                     }
 
                     // then apply indexing
@@ -456,7 +458,9 @@ class QsVar
                             CorrectToken.AppendSubToken(sct_e[0]);
                         }
                         else
+                        {
                             CorrectToken.AppendSubToken(sct_e);
+                        }
                     }
 
                     // then apply indexing
@@ -634,7 +638,9 @@ class QsVar
                     eop.Operation = "Skip";
                 }
                 else
+                {
                     quantityExpression = GetQsVariable(mtk);
+                }
 
                 --ix;   //decrease ix with one because operator was fused in this token.
             }

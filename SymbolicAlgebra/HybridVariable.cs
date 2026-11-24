@@ -115,7 +115,9 @@ internal struct HybridVariable
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
     }
 
@@ -132,7 +134,9 @@ internal struct HybridVariable
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
     }
 

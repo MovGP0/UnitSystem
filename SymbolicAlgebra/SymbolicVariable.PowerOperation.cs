@@ -66,7 +66,9 @@ public partial class SymbolicVariable
                         fusedItem.NumericalVariable = 1;  // set it to one because it has gone to the symbolic part
                     }
                     else
+                    {
                         fusedItem.SymbolicVariable = fusedItem.SymbolicVariable * b;
+                    }
 
                     an.FusedSymbols[FusedSymbols.ElementAt(i).Key] = fusedItem;
                 }
