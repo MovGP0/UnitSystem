@@ -171,7 +171,7 @@ roslynator_array_creation_type_style = implicit
 dotnet_diagnostic.CS0162.severity = warning
 
 # Remove unused local variable declarations
-dotnet_diagnostic.CS0168.severity = suggestion
+dotnet_diagnostic.CS0168.severity = warning
 
 # Replace calls to obsolete members
 dotnet_diagnostic.CS0618.severity = suggestion

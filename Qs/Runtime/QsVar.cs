@@ -2670,10 +2670,8 @@ class QsVar
                 directQuantity
             );
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            //System.Diagnostics.Debug.Print(e.ToString());
-
             //quantity variable  //get it from evaluator  global heap
 
             //return GetQsVariable(parameterName.tok
