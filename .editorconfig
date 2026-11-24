@@ -954,7 +954,7 @@ dotnet_diagnostic.CA1874.severity = warning
 dotnet_diagnostic.CA1875.severity = warning
 
 # Do not use 'AsParallel' in 'foreach'
-# dotnet_diagnostic.CA1876.severity = warning
+dotnet_diagnostic.CA1876.severity = warning
 
 # Collapse consecutive Path.Combine or Path.Join operations
 # dotnet_diagnostic.CA1877.severity = warning
