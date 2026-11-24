@@ -1011,7 +1011,7 @@ dotnet_diagnostic.CA2026.severity = warning
 dotnet_diagnostic.CA2027.severity = warning
 
 # Avoid redundant 'Regex.IsMatch' call before 'Regex.Match'
-# dotnet_diagnostic.CA2028.severity = warning
+dotnet_diagnostic.CA2028.severity = warning
 
 # Specify marshaling for P/Invoke string arguments
 # dotnet_diagnostic.CA2101.severity = warning
