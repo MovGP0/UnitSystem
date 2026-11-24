@@ -933,7 +933,7 @@ dotnet_diagnostic.CA1866.severity = warning
 dotnet_diagnostic.CA1868.severity = warning
 
 # Cache and reuse 'JsonSerializerOptions' instances
-# dotnet_diagnostic.CA1869.severity = warning
+dotnet_diagnostic.CA1869.severity = warning
 
 # Use a cached 'SearchValues' instance
 # dotnet_diagnostic.CA1870.severity = warning
