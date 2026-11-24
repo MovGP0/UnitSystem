@@ -10,6 +10,12 @@ namespace QsRoot;
 /// </summary>
 public static class Io
 {
+    private static readonly HttpClient DownloadClient = new(new SocketsHttpHandler
+    {
+        PooledConnectionLifetime = TimeSpan.FromMinutes(2),
+        UseCookies = false
+    });
+
     public static QsValue InputLine(string prompt)
     {
         Console.Write(prompt);
@@ -47,15 +53,30 @@ public static class Io
 
     public static string DownloadString(string url)
     {
-        var result = string.Empty;
-
-        using (var client = new WebClient()) // WebClient class inherits IDisposable
+        ArgumentNullException.ThrowIfNull(url);
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
         {
-            result = client.DownloadString(url);
+            return File.ReadAllText(url);
         }
 
-        return result;
+        if (uri.IsFile)
+        {
+            return File.ReadAllText(uri.LocalPath);
+        }
+
+        if (uri.Scheme == Uri.UriSchemeFtp)
+        {
+#pragma warning disable SYSLIB0014 // Preserve FTP downloads, which HttpClient does not support.
+            using var ftpClient = new WebClient();
+#pragma warning restore SYSLIB0014
+            return ftpClient.DownloadString(uri);
+        }
+
+        return DownloadClient.GetStringAsync(uri).GetAwaiter().GetResult();
     }
+
+    internal static byte[] DownloadBytes(string url)
+        => DownloadClient.GetByteArrayAsync(url).GetAwaiter().GetResult();
 
     public static string[] Files()
     {

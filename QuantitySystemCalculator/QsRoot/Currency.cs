@@ -28,8 +28,7 @@ public static class Currency
     {
         const string web = "https://quantitysystem.azurewebsites.net/api/ExchangeRates";
 
-        var wc = new System.Net.WebClient();
-        var xch = wc.DownloadData(web);
+        var xch = Io.DownloadBytes(web);
         File.WriteAllBytes(TodayChangeRatesFile, xch);
     }
 
