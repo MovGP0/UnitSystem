@@ -12,14 +12,20 @@ public static class EngineeringNotation
     [Pure]
     public static string FromValue(double value, IFormatProvider? formatProvider = null)
     {
+        formatProvider ??= CultureInfo.InvariantCulture;
+        if (value == 0 || double.IsNaN(value) || double.IsInfinity(value))
+        {
+            return value.ToString(formatProvider);
+        }
+
         var decimalExponent = GetDecimalExponent(value);
-        var metricExponent = GetClosestMetricExponent(decimalExponent);
+        int metricExponent = GetClosestMetricExponent(decimalExponent);
 
         // scale the value by the exponent
-        var scaledValue = value * Math.Pow(10, -metricExponent);
+        double scaledValue = value * Math.Pow(10, -metricExponent);
         var prefix = prefixes[metricExponent];
         const char NonBreakingSpace = (char)0xA0;
-        return (scaledValue.ToString("0.###,###", formatProvider ?? CultureInfo.InvariantCulture) + NonBreakingSpace + prefix.Symbol).TrimEnd();
+        return (scaledValue.ToString("0.###,###", formatProvider) + NonBreakingSpace + prefix.Symbol).TrimEnd();
     }
 
     /// <summary>

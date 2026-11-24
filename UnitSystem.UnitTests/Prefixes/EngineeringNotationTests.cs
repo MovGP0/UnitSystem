@@ -1,6 +1,5 @@
-﻿using Shouldly;
+﻿using System.Globalization;
 using UnitSystem.Prefixes;
-using UnitTests.Shared;
 
 namespace UnitSystem.UnitTests.Prefixes;
 
@@ -8,6 +7,21 @@ namespace UnitSystem.UnitTests.Prefixes;
 [TestOf(typeof(EngineeringNotation))]
 public sealed class EngineeringNotationTests
 {
+    [TestMethod]
+    [DataRow(0.0, "0")]
+    [DataRow(double.NaN, "undefined")]
+    [DataRow(double.PositiveInfinity, "inf")]
+    [DataRow(double.NegativeInfinity, "-inf")]
+    public void ShouldFormatSpecialValuesWithoutAPrefix(double value, string expected)
+    {
+        var format = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
+        format.NaNSymbol = "undefined";
+        format.PositiveInfinitySymbol = "inf";
+        format.NegativeInfinitySymbol = "-inf";
+
+        EngineeringNotation.FromValue(value, format).ShouldBe(expected);
+    }
+
     [TestMethod]
     [DataRow(1e-18, "1 a")]
     [DataRow(1e-17, "10 a")]
