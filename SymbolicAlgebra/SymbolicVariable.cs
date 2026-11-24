@@ -1378,7 +1378,9 @@ public partial class SymbolicVariable
         }
     }
 
-    public static Dictionary<string, SymbolicVariable> _Functions;
+#pragma warning disable CA2211 // Existing consumers can supply their own function registry through this field.
+    public static Dictionary<string, SymbolicVariable>? _Functions;
+#pragma warning restore CA2211
 
     /// <summary>
     /// Contains a static dictionary of function names that may be used inside the context of differentiation

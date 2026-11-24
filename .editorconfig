@@ -1023,7 +1023,7 @@ dotnet_diagnostic.CA2200.severity = warning
 dotnet_diagnostic.CA2208.severity = warning
 
 # Non-constant fields should not be visible
-# dotnet_diagnostic.CA2211.severity = warning
+dotnet_diagnostic.CA2211.severity = warning
 
 # Do not raise exceptions in finally clauses
 # dotnet_diagnostic.CA2219.severity = warning

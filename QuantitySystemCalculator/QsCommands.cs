@@ -7,7 +7,7 @@ namespace QuantitySystemCalculator;
 
 public static class QsCommands
 {
-    public static bool CommandProcessed;
+    public static bool CommandProcessed { get; set; }
 
     public static ScriptEngine Engine { get; set; }
 
