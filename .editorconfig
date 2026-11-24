@@ -578,7 +578,7 @@ dotnet_diagnostic.RCS1213.severity = warning
 dotnet_diagnostic.RCS1214.severity = warning
 
 # Expression is always equal to true/false
-# dotnet_diagnostic.RCS1215.severity = warning
+dotnet_diagnostic.RCS1215.severity = warning
 
 # Unnecessary unsafe context
 # dotnet_diagnostic.RCS1216.severity = warning
