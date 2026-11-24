@@ -17,14 +17,14 @@ public sealed partial class QuantityDimension : IEquatable<QuantityDimension>
             return false;
         }
 
-        return ElectricCurrent.Exponent == dimension.ElectricCurrent.Exponent &&
-               Length.Exponent == dimension.Length.Exponent &&
-               LuminousIntensity.Exponent == dimension.LuminousIntensity.Exponent &&
-               Mass.Exponent == dimension.Mass.Exponent &&
-               AmountOfSubstance.Exponent == dimension.AmountOfSubstance.Exponent &&
-               Temperature.Exponent == dimension.Temperature.Exponent &&
-               Time.Exponent == dimension.Time.Exponent &&
-               Currency.Exponent == dimension.Currency.Exponent;
+        return ElectricCurrent.Exponent == dimension.ElectricCurrent.Exponent
+            && Length.Exponent == dimension.Length.Exponent
+            && LuminousIntensity.Exponent == dimension.LuminousIntensity.Exponent
+            && Mass.Exponent == dimension.Mass.Exponent
+            && AmountOfSubstance.Exponent == dimension.AmountOfSubstance.Exponent
+            && Temperature.Exponent == dimension.Temperature.Exponent
+            && Time.Exponent == dimension.Time.Exponent
+            && Currency.Exponent == dimension.Currency.Exponent;
     }
 
     public override int GetHashCode() => ToString().GetHashCode();

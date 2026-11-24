@@ -273,10 +273,10 @@ public partial class SymbolicVariable
 
                             if (_FunctionParameters != null)
                             {
-                                if (_FunctionParameters[0].FusedSymbols.Count > 0 || _FunctionParameters[0].FusedConstants.Count > 0 ||
-                                    (_FunctionParameters[0].CoeffecientPowerTerm != null && _FunctionParameters[0].SymbolPowerTerm != null) ||
-                                    ((_FunctionParameters[0].CoeffecientPowerTerm != null) && (_FunctionParameters[0].SymbolPower > 1 || _FunctionParameters[0].SymbolPower < 0)) ||
-                                    (_FunctionParameters[0].Coeffecient!=1 && !string.IsNullOrEmpty(_FunctionParameters[0].Symbol) && _FunctionParameters[0].SymbolPower!=0)
+                                if (_FunctionParameters[0].FusedSymbols.Count > 0 || _FunctionParameters[0].FusedConstants.Count > 0
+                                    || (_FunctionParameters[0].CoeffecientPowerTerm != null && _FunctionParameters[0].SymbolPowerTerm != null)
+                                    || ((_FunctionParameters[0].CoeffecientPowerTerm != null) && (_FunctionParameters[0].SymbolPower > 1 || _FunctionParameters[0].SymbolPower < 0))
+                                    || (_FunctionParameters[0].Coeffecient!=1 && !string.IsNullOrEmpty(_FunctionParameters[0].Symbol) && _FunctionParameters[0].SymbolPower!=0)
 
                                    )
                                 {

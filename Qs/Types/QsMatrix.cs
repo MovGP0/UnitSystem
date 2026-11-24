@@ -209,8 +209,8 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
 
         throw new QsMatrixException("Matrix 1 [" + RowsCount.ToString(CultureInfo.InvariantCulture)
-                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture) +
-                                                 "] is not dimensional equal with Materix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
+                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture)
+            + "] is not dimensional equal with Materix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
                                                  + "x" + matrix.ColumnsCount.ToString(CultureInfo.InvariantCulture) + "]");
     }
 
@@ -241,8 +241,8 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
 
         throw new QsMatrixException("Matrix 1 [" + RowsCount.ToString(CultureInfo.InvariantCulture)
-                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture) +
-                                                 "] is not dimensional equal with Materix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
+                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture)
+            + "] is not dimensional equal with Materix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
                                                  + "x" + matrix.ColumnsCount.ToString(CultureInfo.InvariantCulture) + "]");
     }
 
@@ -267,8 +267,8 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
 
         throw new QsMatrixException("Matrix 1 [" + RowsCount.ToString(CultureInfo.InvariantCulture)
-                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture) +
-                                                 "] is not dimensional equal with Materix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
+                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture)
+            + "] is not dimensional equal with Materix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
                                                  + "x" + matrix.ColumnsCount.ToString(CultureInfo.InvariantCulture) + "]");
     }
 
@@ -294,8 +294,8 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
 
         throw new QsMatrixException("Matrix 1 [" + RowsCount.ToString(CultureInfo.InvariantCulture)
-                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture) +
-                                                 "] is not dimensional equal with Materix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
+                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture)
+            + "] is not dimensional equal with Materix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
                                                  + "x" + matrix.ColumnsCount.ToString(CultureInfo.InvariantCulture) + "]");
     }
 
@@ -328,8 +328,8 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
 
         throw new QsMatrixException("Matrix 1 [" + RowsCount.ToString(CultureInfo.InvariantCulture)
-                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture) +
-                                                 "] is not dimensional equal with Matrix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
+                                                 + "x" + ColumnsCount.ToString(CultureInfo.InvariantCulture)
+            + "] is not dimensional equal with Matrix 2 [" + matrix.RowsCount.ToString(CultureInfo.InvariantCulture)
                                                  + "x" + matrix.ColumnsCount.ToString(CultureInfo.InvariantCulture) + "]");
     }
 

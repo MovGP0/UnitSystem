@@ -48,7 +48,7 @@ dotnet_diagnostic.RCS0023.severity = warning
 dotnet_diagnostic.RCS0025.severity = warning
 
 # Control where wrapped binary operators appear
-# dotnet_diagnostic.RCS0027.severity = warning
+dotnet_diagnostic.RCS0027.severity = warning
 roslynator_binary_operator_new_line = before
 
 # Control where wrapped conditional operators appear

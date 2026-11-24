@@ -303,10 +303,10 @@ public struct Quaternion : IEquatable<Quaternion>
 
     public static bool operator ==(Quaternion lhs, Quaternion rhs)
     {
-        if (lhs.a == rhs.a &&
-            lhs.b == rhs.b &&
-            lhs.c == rhs.c &&
-            lhs.d == rhs.d
+        if (lhs.a == rhs.a
+            && lhs.b == rhs.b
+            && lhs.c == rhs.c
+            && lhs.d == rhs.d
            )
             return true;
         return false;
@@ -319,10 +319,10 @@ public struct Quaternion : IEquatable<Quaternion>
 
     public bool Equals(Quaternion other)
     {
-        if (a == other.a &&
-            b == other.b &&
-            c == other.c &&
-            d == other.d
+        if (a == other.a
+            && b == other.b
+            && c == other.c
+            && d == other.d
            )
             return true;
         return false;

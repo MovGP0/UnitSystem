@@ -478,9 +478,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         }
 
         if (
-            functionToken[nsidx].TokenClassType == typeof(WordToken) &&
-            (functionToken.Count > (nsidx + 1) ? functionToken[nsidx + 1].TokenClassType == typeof(ParenthesisGroupToken) : false) &&
-            (functionToken.Count > (nsidx + 2) ? functionToken[nsidx + 2].TokenClassType == typeof(EqualToken) : false)
+            functionToken[nsidx].TokenClassType == typeof(WordToken)
+            && (functionToken.Count > (nsidx + 1) ? functionToken[nsidx + 1].TokenClassType == typeof(ParenthesisGroupToken) : false)
+            && (functionToken.Count > (nsidx + 2) ? functionToken[nsidx + 2].TokenClassType == typeof(EqualToken) : false)
         )
         {
             //get function name
@@ -499,10 +499,10 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             foreach (var c in functionToken[nsidx + 1])
             {
                 if (
-                    c.TokenValue.StartsWith("(") ||
-                    c.TokenValue.StartsWith(")") ||
-                    c.TokenValue.StartsWith(",") ||
-                    c.TokenClassType==typeof(MultipleSpaceToken)
+                    c.TokenValue.StartsWith("(")
+                    || c.TokenValue.StartsWith(")")
+                    || c.TokenValue.StartsWith(",")
+                    || c.TokenClassType==typeof(MultipleSpaceToken)
                 )
                 {
                     //ignore these things.

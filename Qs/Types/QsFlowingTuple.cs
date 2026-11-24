@@ -188,9 +188,9 @@ public class QsFlowingTuple : QsValue
             for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
             {
                 if (
-                    ThisFlow.FlowSteps[ix].Name.Equals(ft.ThisFlow.FlowSteps[ix].Name, StringComparison.OrdinalIgnoreCase) == false ||
-                    ThisFlow.FlowSteps[ix].Id != ft.ThisFlow.FlowSteps[ix].Id ||
-                    ThisFlow.FlowSteps[ix].Value.Equals(ft.ThisFlow.FlowSteps[ix].Value) == false
+                    ThisFlow.FlowSteps[ix].Name.Equals(ft.ThisFlow.FlowSteps[ix].Name, StringComparison.OrdinalIgnoreCase) == false
+                    || ThisFlow.FlowSteps[ix].Id != ft.ThisFlow.FlowSteps[ix].Id
+                    || ThisFlow.FlowSteps[ix].Value.Equals(ft.ThisFlow.FlowSteps[ix].Value) == false
                 )
                     return false;
             }

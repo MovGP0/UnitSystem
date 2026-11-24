@@ -21,8 +21,8 @@ internal static class DimensionExponent
         text = text.Trim();
         var exponentMarker = text.IndexOfAny('e', 'E');
         // A short scientific literal can otherwise expand into a very large integer.
-        if (exponentMarker >= 0 &&
-            (!int.TryParse(text[(exponentMarker + 1)..], NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture,
+        if (exponentMarker >= 0
+            && (!int.TryParse(text[(exponentMarker + 1)..], NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture,
                 out var exponent) || exponent is < -MaxScientificExponent or > MaxScientificExponent))
         {
             value = default;
