@@ -81,7 +81,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     /// <param name="column"></param>
     public void AddColumn(params QsScalar[] column)
     {
-
         if (Rows.Count > 0) //test if the matrix initialized.
         {
             if (column.Length != RowsCount)
@@ -100,7 +99,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
         else
         {
-
             foreach (var q in column)
             {
                 AddRow(q);
@@ -113,13 +111,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     /// </summary>
     public int RowsCount => Rows.Count;
 
-
     /// <summary>
     /// Count of the matrix columns {n}
     /// </summary>
     public int ColumnsCount => Rows[0].Count;
-
-
 
     /// <summary>
     /// Returns columns as vector array.
@@ -152,7 +147,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
                 row = Rows.Count + row;
             return Rows[row];
         }
-
     }
 
     /// <summary>
@@ -181,11 +175,9 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             if (column < 0)
                 column = required_row.Count + column;
 
-
             required_row[column] = value;
         }
     }
-
 
     #region Matrix Operations
 
@@ -224,7 +216,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             + matrix.ColumnsCount.ToString(CultureInfo.InvariantCulture)
             + "]");
     }
-
 
     /// <summary>
     /// Element wise multiplcation of the matrix.
@@ -293,7 +284,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             + "]");
     }
 
-
     public QsValue ModuloMatrixByElements(QsMatrix matrix)
     {
         if (DimensionEquals(matrix))
@@ -324,9 +314,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             + matrix.ColumnsCount.ToString(CultureInfo.InvariantCulture)
             + "]");
     }
-
-
-
 
     /// <summary>
     /// Matrix - Matrix
@@ -363,7 +350,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             + matrix.ColumnsCount.ToString(CultureInfo.InvariantCulture)
             + "]");
     }
-
 
     /// <summary>
     /// Ordinary multiplicatinon of the matrix.
@@ -405,11 +391,9 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
                     }
 
                     tvec[tix] = tnum;
-
                 }
 
                 Total.AddRow(tvec);
-
             }
 
             return Total;
@@ -435,7 +419,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         return m;
     }
 
-
     /// <summary>
     /// Append the target matrix right to the matrix.
     /// </summary>
@@ -459,8 +442,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
     #endregion
 
-
-
     #region Manipulation
 
     /// <summary>
@@ -475,7 +456,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
         return QsVector.CopyVector(Rows[rowIndex]);
     }
-
 
     public QsMatrix GetVectorMatrix(int rowIndex)
     {
@@ -499,7 +479,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         if (columnIndex > ColumnsCount)
             throw new QsMatrixException("Index '" + columnIndex + "' Exceeds the columns limits '" + ColumnsCount + "'");
 
-
         QsScalar[] col = new QsScalar[RowsCount];
         var nc = 0;
         for (var IY = 0; IY < RowsCount; IY++)
@@ -510,9 +489,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
         var vec = new QsVector(col);
 
-
         return vec;
-
     }
 
     /// <summary>
@@ -547,7 +524,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
 
         return values;
-
     }
 
     #endregion
@@ -556,7 +532,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
         get
         {
-
             var maxCharachtersCount = 0;
             string[,] cells = new string[RowsCount, ColumnsCount];
 
@@ -569,7 +544,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
                     cells[IY, IX] = cell;
 
                     maxCharachtersCount = Math.Max(maxCharachtersCount, cell.Length);
-
                 }
             }
 
@@ -592,7 +566,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
     public override string ToString()
     {
-
         var sb = new StringBuilder();
         sb.Append("QsMatrix:");
         sb.AppendLine();
@@ -672,8 +645,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
     }
 
-
-
     /// <summary>
     /// Calculates the determinant and return it as a vector.
     /// </summary>
@@ -723,7 +694,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         throw new QsMatrixException("This matrix is not a square matrix.");
     }
 
-
     #endregion
 
     /// <summary>
@@ -740,7 +710,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         {
             if (ColumnsCount == matrix.ColumnsCount)
             {
-
                 return true;   //just for now.
             }
         }
@@ -748,9 +717,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         //dimensions not equal.
         return false;
     }
-
-
-
 
     /// <summary>
     /// Make identity matrix bases on dimension
@@ -778,7 +744,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         return m;
     }
 
-
     public static QsMatrix Random(int rows, int columns)
     {
         var m = new QsMatrix();
@@ -792,7 +757,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             {
                 var sr = new QsScalar(ScalarTypes.NumericalQuantity) { NumericalQuantity = (rr.NextDouble()).ToQuantity() };
                 v.AddComponent(sr);
-
             }
 
             m.AddVector(v);
@@ -805,8 +769,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
         return Random(n, n);
     }
-
-
 
     #region IEnumerable<QsVector> Members
 
@@ -826,8 +788,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
     #endregion
 
-
-
     /// <summary>
     /// Copy the matrix into new matrix instance.
     /// </summary>
@@ -843,7 +803,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
         return m;
     }
-
 
     /// <summary>
     /// Makes n x n matrix with zeros.
@@ -866,7 +825,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
         return m;
     }
-
 
     #region ICloneable Members
 

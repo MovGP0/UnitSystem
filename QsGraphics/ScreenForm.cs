@@ -7,7 +7,6 @@ public partial class ScreenForm : Form
         InitializeComponent();
     }
 
-
     private Graphics _FormGraphics;
 
     private void ScreenForm_Load(object sender, EventArgs e)

@@ -21,6 +21,4 @@ public class SolidAngle<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

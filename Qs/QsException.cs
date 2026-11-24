@@ -20,6 +20,5 @@ public class QsException : Exception
   // Add any type-specific logic for inner exceptions.
  }
 
-
  public string ExtraData { get; set; }
 }

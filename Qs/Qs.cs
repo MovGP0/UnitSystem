@@ -106,7 +106,6 @@ public static class Qs
         return un.GetThisUnitQuantity(complexValue);
     }
 
-
     /// <summary>
     /// Wrap Complex Quantity into Scalar.
     /// </summary>
@@ -116,7 +115,6 @@ public static class Qs
     {
         return new QsScalar(ScalarTypes.ComplexNumberQuantity) { ComplexQuantity = qty };
     }
-
 
     /// <summary>
     /// Quantitize the quaternion number into quantity
@@ -208,7 +206,6 @@ public static class Qs
         return fnScalar;
     }
 
-
     public static QsValue ToScalarValue(this AnyQuantity<double> qty)
     {
         return new QsScalar { NumericalQuantity = qty };
@@ -225,7 +222,6 @@ public static class Qs
         return converted;
     }
 
-
     /// <summary>
     /// Returns Quaternion quantity from Double Quantity.
     /// </summary>
@@ -239,11 +235,9 @@ public static class Qs
 
     public static AnyQuantity<Rational> ToRational(this AnyQuantity<double> qty)
     {
-
         var converted = qty.Unit.GetThisUnitQuantity(new Rational((float)qty.Value, 1));
         return converted;
     }
-
 
     /// <summary>
     /// Returns Quaternion Quantity from Complex Quantity.
@@ -255,8 +249,6 @@ public static class Qs
         var converted = qty.Unit.GetThisUnitQuantity<Quaternion>(qty.Value);
         return converted;
     }
-
-
 
     /// <summary>
     /// Quantitize the complex number into Complex Quantity
@@ -271,7 +263,6 @@ public static class Qs
         return un.GetThisUnitQuantity(rationalValue);
     }
 
-
     /// <summary>
     /// Wrap Complex Quantity into Scalar.
     /// </summary>
@@ -281,9 +272,6 @@ public static class Qs
     {
         return new QsScalar(ScalarTypes.RationalNumberQuantity) { RationalQuantity = qty };
     }
-
-
-
 
     public static QsValue ToScalarValue(this string s)
     {
@@ -295,7 +283,6 @@ public static class Qs
         return new QsScalar { NumericalQuantity = ToQuantity(i) };
     }
 
-
     /// <summary>
     /// Parse the string into quantity and wrap it into QsScalar object.
     /// </summary>
@@ -305,7 +292,6 @@ public static class Qs
     {
         return new QsScalar { NumericalQuantity = s.ToQuantity() };
     }
-
 
     /// <summary>
     /// The function try to convert the passed array into an array of scalars.
@@ -334,9 +320,6 @@ public static class Qs
         return vector;
     }
 
-
     #endregion
-
-
 
 }

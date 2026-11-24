@@ -12,7 +12,6 @@ public class FlexuralRigidity<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator FlexuralRigidity<T>(T value)
     {
         FlexuralRigidity<T> Q = new()
@@ -22,5 +21,4 @@ public class FlexuralRigidity<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

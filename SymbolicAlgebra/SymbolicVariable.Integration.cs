@@ -2,7 +2,6 @@
 
 public partial class SymbolicVariable
 {
-
     /*
      * https://socratic.org/calculus/techniques-of-integration/integration-by-parts
      * https://socratic.org/questions/use-the-method-of-integration-by-parts-to-evaluate-int-x-2-sin-pix-dx
@@ -116,7 +115,6 @@ public partial class SymbolicVariable
                     var dlnterm = lnterm.Integrate(parameter);
                     sv = Divide(sv, dlnterm);
                     throw new NotImplementedException();
-
                 }
                 else
                 {
@@ -151,7 +149,6 @@ public partial class SymbolicVariable
                     {
                         hv.NumericalVariable += 1;
                         sv.Coeffecient = sv.Coeffecient / hv.NumericalVariable;
-
                     }
 
                     sv._FusedSymbols[parameter] = hv;
@@ -177,7 +174,6 @@ public partial class SymbolicVariable
                     fv.SymbolPower = 1.0;
                     fv.Coeffecient = 1.0;
 
-
                     if (fv.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
                     {
                         if (fv._FunctionParameters.Length != 1)
@@ -196,7 +192,6 @@ public partial class SymbolicVariable
                             return fv;
                         else
                             return Divide(fv, divo);
-
                     }
                     else if (fv.FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
                     {
@@ -219,7 +214,6 @@ public partial class SymbolicVariable
                         //         = ∫ 1 dx
                         //         =  x
                         // ∫ln(x) dx = ∫u dv = uv − ∫v du = x ln x − x
-
 
                         // ∫ log(x^2+x) dx
                         // ----------------
@@ -262,7 +256,6 @@ public partial class SymbolicVariable
                         var dpa = pa.Differentiate(parameter);
                         var den = Multiply(Two, fv);
                         fv = Divide(dpa, den);
-
                     }
                     else if (FunctionOperation.InversedTrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
                     {
@@ -273,18 +266,13 @@ public partial class SymbolicVariable
                         // triogonometric functions
 
                         fv = FunctionOperation.IntegTrigFunction(fv, parameter);
-
-
                     }
-
                     else
                     {
                         throw new NotImplementedException();
 
-
                         // the function is not a special function like sin, cos, and log.
                         // search for the function in the running context.
-
 
                         var extendedFunction = Functions.Keys.FirstOrDefault(c => c.StartsWith(fv.FunctionName, StringComparison.OrdinalIgnoreCase));
                         if (!string.IsNullOrEmpty(extendedFunction))
@@ -303,13 +291,11 @@ public partial class SymbolicVariable
                             }
 
                             fv = Parse(dsf).Differentiate(parameter);
-
                         }
                         else
                         {
                             throw new SymbolicException("This function is not a special function, and I haven't implemented storing user functions in the running context");
                         }
-
                     }
 
                     // second treat the function normally as if it is one big symbol
@@ -327,7 +313,6 @@ public partial class SymbolicVariable
                         sv._SymbolPowerTerm = Subtract(sv._SymbolPowerTerm, One);
                         sv = Multiply(sv, oldPower);
                     }
-
 
                     sv = Multiply(fv, sv);
                 }
@@ -350,7 +335,6 @@ public partial class SymbolicVariable
                     {
                         sv._Symbol = parameter;
                         sv._SymbolPower = 1;
-
                     }
                     else
                     {
@@ -379,10 +363,8 @@ public partial class SymbolicVariable
         return sv;
     }
 
-
     public static SymbolicVariable? IntegByParts(string parameter, SymbolicVariable u, Stack<SymbolicVariable> dv)
     {
-
         // ∫u dv = uv − ∫v du
 
         if (dv.Count == 0)
@@ -391,7 +373,6 @@ public partial class SymbolicVariable
         }
         else
         {
-
             // ∫u dv = uv − ∫v du
             var popped_dv = dv.Pop();
             var v = IntegByParts(parameter, popped_dv, dv);
@@ -402,11 +383,9 @@ public partial class SymbolicVariable
 
             var ivdu = vdu.Integrate(parameter);
 
-
             var result = Subtract(uv, ivdu);
 
             return result;
-
         }
     }
 
@@ -462,8 +441,6 @@ public partial class SymbolicVariable
         var Trig_Term = One;
         var Exponential_Term = One;
 
-
-
         // distribute everything
         foreach (var mt in MultipliedTerms)
         {
@@ -474,13 +451,10 @@ public partial class SymbolicVariable
 
                 if (mt.Term.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
                     Exponential_Term = Multiply(Exponential_Term, mt.Term);
-
                 else if (FunctionOperation.InversedTrigFunctions.Contains(mt.Term.FunctionName, StringComparer.OrdinalIgnoreCase))
                     InversedTrig_Term = Multiply(InversedTrig_Term, mt.Term);
-
                 else if (FunctionOperation.TrigFunctions.Contains(mt.Term.FunctionName, StringComparer.OrdinalIgnoreCase))
                     Trig_Term = Multiply(Trig_Term, mt.Term);
-
             }
             else
             {
@@ -500,14 +474,11 @@ public partial class SymbolicVariable
         if (!InversedTrig_Term.IsOne)
             OrderedVariables.Push(InversedTrig_Term);
 
-
         var result = IntegByParts(parameter, OrderedVariables.Pop(), OrderedVariables);
 
         return result;
 
         List<SymbolicVariable> CalculatedIntegs = new List<SymbolicVariable>(1);
-
-
 
         //for (int ix = 0; ix < MultipliedTerms.Count; ix++)
         //{
@@ -524,8 +495,6 @@ public partial class SymbolicVariable
             CalculatedIntegs.Add(MultipliedTerms[ix].Term);
         }*/
         //}
-
-
 
         // what about divided term ??
         if (!SvDividedTerm.IsOne)
@@ -544,8 +513,6 @@ public partial class SymbolicVariable
             MultipliedTerms.Add(new MultipliedTerm(SvDividedTerm, true));
         }
 
-
-
         //       dx*y*z     dy*x*z       dz*x*y
         var total = Zero;
 
@@ -563,7 +530,6 @@ public partial class SymbolicVariable
         return total;
     }
 
-
     public SymbolicVariable Integrate(string parameter)
     {
         var result = Clone();
@@ -575,7 +541,6 @@ public partial class SymbolicVariable
         result._ExtraTerms = null;
 
         result = IntegBigTerm(result, parameter);
-
 
         // take the rest terms
         if (OtherAddedTerms != null)
@@ -599,7 +564,6 @@ public partial class SymbolicVariable
             }
         }
 
-
         AdjustSpecialFunctions(ref result);
 
         AdjustZeroPowerTerms(result);
@@ -608,5 +572,4 @@ public partial class SymbolicVariable
 
         return result;
     }
-
 }

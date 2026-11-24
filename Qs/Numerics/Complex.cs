@@ -13,13 +13,11 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 
     public double Imaginary => _imaginary;
 
-
     public static readonly Complex Zero = new(0, 0);
 
     public static readonly Complex One = new(1.0, 0.0);
 
     public static readonly Complex ImaginaryOne = new(0.0, 1.0);
-
 
     public override string ToString()
     {
@@ -30,7 +28,6 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
     {
         return "C{" + Real.ToString(CultureInfo.InvariantCulture) + ", " + Imaginary.ToString(CultureInfo.InvariantCulture) + "}";
     }
-
 
     public static implicit operator Complex(double d)
     {
@@ -43,7 +40,6 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
             return true;
         return false;
     }
-
 
     public static bool operator ==(Complex lhs, Complex rhs)
     {
@@ -67,14 +63,12 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
         return false;
     }
 
-
     public override int GetHashCode()
     {
         return _real.GetHashCode() ^ _imaginary.GetHashCode();
     }
 
     public bool IsZero => _real == 0.0 && _imaginary == 0.0;
-
 
     #region Operations
     public static Complex operator +(Complex a, Complex b)
@@ -119,7 +113,6 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
         return new Complex(real, imag);
     }
 
-
     public static Complex operator /(double a, Complex b)
     {
         var result = new Complex(a, 0) / b;
@@ -143,8 +136,6 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
         var result = a * new Complex(b, 0);
         return (result);
     }
-
-
 
     public Complex Power(Complex y)
     {
@@ -186,21 +177,16 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
         return new Complex(mul * Math.Cos(common), mul * Math.Sin(common));
     }
 
-
     public static Complex Pow(Complex a, Complex power)
     {
         return a.Power(power);
     }
-
 
     public static Complex Pow(Complex a, double power)
     {
         var result = a.Power(new Complex(power, 0));
         return (result);
     }
-
-
-
 
     #endregion
 }

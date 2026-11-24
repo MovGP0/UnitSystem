@@ -35,5 +35,4 @@ public class Torque<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

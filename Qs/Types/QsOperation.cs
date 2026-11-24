@@ -11,7 +11,6 @@
 /// </summary>
 public class QsOperation : QsValue
 {
-
     public override QsValue DifferentiateOperation(QsValue value)
     {
         throw new NotImplementedException();
@@ -31,7 +30,6 @@ public class QsOperation : QsValue
 
     public virtual object Clone()
     {
-
         throw new QsException("Qs Base Operation Class cannot be cloned, It only occure in sub classes");
     }
 

@@ -28,12 +28,9 @@ public partial class QsSequence
         return Total / count;
     }
 
-
     #region Average Functions
     public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0)
     {
-
-
         var n = toIndex - fromIndex + 1;
         FixIndices(ref fromIndex, ref toIndex);
         var mean = Average(fromIndex, toIndex, arg0);
@@ -51,11 +48,8 @@ public partial class QsSequence
         return Total / count;
     }
 
-
     public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
     {
-
-
         var n = toIndex - fromIndex + 1;
         FixIndices(ref fromIndex, ref toIndex);
         var mean = Average(fromIndex, toIndex, arg0, arg1);
@@ -74,8 +68,6 @@ public partial class QsSequence
     }
     public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
     {
-
-
         var n = toIndex - fromIndex + 1;
         FixIndices(ref fromIndex, ref toIndex);
         var mean = Average(fromIndex, toIndex, arg0, arg1, arg2);
@@ -94,8 +86,6 @@ public partial class QsSequence
     }
     public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
     {
-
-
         var n = toIndex - fromIndex + 1;
         FixIndices(ref fromIndex, ref toIndex);
         var mean = Average(fromIndex, toIndex, arg0, arg1, arg2, arg3);
@@ -114,8 +104,6 @@ public partial class QsSequence
     }
     public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
     {
-
-
         var n = toIndex - fromIndex + 1;
         FixIndices(ref fromIndex, ref toIndex);
         var mean = Average(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4);
@@ -134,8 +122,6 @@ public partial class QsSequence
     }
     public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
     {
-
-
         var n = toIndex - fromIndex + 1;
         FixIndices(ref fromIndex, ref toIndex);
         var mean = Average(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5);
@@ -155,8 +141,6 @@ public partial class QsSequence
 
     public QsValue StdDeviation(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
     {
-
-
         var n = toIndex - fromIndex + 1;
         FixIndices(ref fromIndex, ref toIndex);
         var mean = Average(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);

@@ -2,8 +2,6 @@
 
 public abstract class BaseQuantity(float exponent)
 {
-
-
     #region Construction
 
     private float _Exponent = exponent;
@@ -23,7 +21,6 @@ public abstract class BaseQuantity(float exponent)
         var bq = (BaseQuantity)MemberwiseClone();
         bq.SetExponent(0 - _Exponent);
 
-
         return bq;
     }
 
@@ -34,9 +31,6 @@ public abstract class BaseQuantity(float exponent)
     public virtual QuantityDimension Dimension => new();
 
     #endregion
-
-
-
 
     #region Dimension Equality Algorithm
 
@@ -51,7 +45,6 @@ public abstract class BaseQuantity(float exponent)
 
         if(bd!=null)
         {
-
             if (Dimension.IsDimensionless & bd.Dimension.IsDimensionless)
             {
                 //why I've tested dimensioless in begining??
@@ -75,8 +68,6 @@ public abstract class BaseQuantity(float exponent)
     }
 
     #endregion
-
-
 
     /// <summary>
     /// Holds the internal quantity types of specific strongly typed quantity type.
@@ -102,5 +93,4 @@ public abstract class BaseQuantity(float exponent)
         if (!QuantityTypeInternalQuantityTypes.ContainsKey(quantity))
             QuantityTypeInternalQuantityTypes[quantity] = internalQuantities;
     }
-
 }

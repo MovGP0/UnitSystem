@@ -4,7 +4,6 @@ namespace QuantitySystem.Quantities;
 
 public class AreaMomentOfInertia<T> : DerivedQuantity<T>
 {
-
     public AreaMomentOfInertia()
         : base(1, new Length<T>(2, TensorRank.Scalar), new Length<T>(2, TensorRank.Vector))
     {
@@ -15,7 +14,6 @@ public class AreaMomentOfInertia<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator AreaMomentOfInertia<T>(T value)
     {
         AreaMomentOfInertia<T> Q = new()
@@ -25,6 +23,4 @@ public class AreaMomentOfInertia<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

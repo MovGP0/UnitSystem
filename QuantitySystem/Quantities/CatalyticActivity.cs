@@ -14,7 +14,6 @@ public class CatalyticActivity<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator CatalyticActivity<T>(T value)
     {
         CatalyticActivity<T> Q = new()
@@ -24,5 +23,4 @@ public class CatalyticActivity<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

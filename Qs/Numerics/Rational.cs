@@ -6,7 +6,6 @@ public struct Rational(float num, float den)
 {
     public float num = num, den = den;
 
-
     /// <summary>
     /// Simplify the output
     ///    for example if the result is 4/8  then it is simplified to 2/4 then 1/2
@@ -98,15 +97,12 @@ public struct Rational(float num, float den)
         return "(" + num.ToString(CultureInfo.InvariantCulture) + "/" + den.ToString(CultureInfo.InvariantCulture) + ")";
     }
 
-
     public string ToQsSyntax()
     {
-
         return "Q{ "
             + num.ToString(CultureInfo.InvariantCulture)
             + ", "
             + den.ToString(CultureInfo.InvariantCulture)
             + "}";
     }
-
 }

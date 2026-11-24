@@ -15,7 +15,6 @@ namespace Qs.Types;
 /// </summary>
 public partial class QsFunction
 {
-
     /// <summary>
     /// if you give it x,y,x,x,y,y will return string of "x,y"
     /// </summary>
@@ -38,7 +37,6 @@ public partial class QsFunction
     }
 
     public override QsValue Identity => throw new NotImplementedException();
-
 
     /// <summary>
     /// Join any set of given functions and returns the tokens of the new function along
@@ -87,14 +85,11 @@ public partial class QsFunction
                 fTokens.AppendSubToken(Token.ParseText(operation.Trim())[0]);  //operation is only one charachter
         }
 
-
         return fTokens;
     }
 
-
     internal static Token JoinFunctionsBodiesTokensWithOperation(string operation, params QsFunction[] functions)
     {
-
         var fbody = "";
         foreach (var f in functions)
         {
@@ -102,7 +97,6 @@ public partial class QsFunction
         }
 
         fbody = fbody.TrimEnd(operation.ToCharArray());
-
 
         var fTokens = new Token();
 
@@ -118,10 +112,8 @@ public partial class QsFunction
                 fTokens.AppendSubToken(Token.ParseText(operation.Trim())[0]);  //operation is only one charachter
         }
 
-
         return fTokens;
     }
-
 
     /// <summary>
     /// Take the value and operation in text and return the current function operationed by value.
@@ -189,7 +181,6 @@ public partial class QsFunction
             else
                 throw new QsException("Operation '" + operation + "' for the target scalar type (" + svl.ScalarType + ") is not supported");
 
-
             var fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
 
             var FuncBody = string.Empty;
@@ -202,7 +193,6 @@ public partial class QsFunction
 
             if (svl.ScalarType == ScalarTypes.SymbolicQuantity)
             {
-
                 List<string> newParametersList = [..functionParametersArray];
 
                 newParametersList.AddRange(svl.SymbolicQuantity.Value.InvolvedSymbols);
@@ -212,7 +202,6 @@ public partial class QsFunction
 
             if (svl.ScalarType == ScalarTypes.FunctionQuantity)
             {
-
                 List<string> newParametersList = [..functionParametersArray];
 
                 newParametersList.AddRange(svl.FunctionQuantity.Value.ParametersNames);
@@ -246,7 +235,6 @@ public partial class QsFunction
         }
     }
 
-
     public SymbolicVariable ToSymbolicVariable()
     {
         return SymbolicVariable.Parse(FunctionBody);
@@ -254,11 +242,8 @@ public partial class QsFunction
 
     public AnyQuantity<SymbolicVariable> ToSymbolicQuantity()
     {
-
         var fv = SymbolicVariable.Parse(FunctionBody);
         return fv.ToQuantity();
-
-
     }
 
     /// <summary>
@@ -266,13 +251,10 @@ public partial class QsFunction
     /// </summary>
     public QsScalar ToSymbolicScalar()
     {
-
         //return (QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(SymbolicBodyText);
         var fv = SymbolicVariable.Parse(FunctionBody);
         return new QsScalar(ScalarTypes.SymbolicQuantity) { SymbolicQuantity = fv.ToQuantity() };
-
     }
-
 
     internal static string FormFunctionHeadFromFunctions(string functionName, params QsFunction[] functions)
     {
@@ -303,7 +285,6 @@ public partial class QsFunction
 
     public override QsValue MultiplyOperation(QsValue value)
     {
-
         return FOperation(value, Operator.Multiply);
     }
 
@@ -374,7 +355,6 @@ public partial class QsFunction
         return !(a == b);
     }
 
-
     static PropertyInfo ExpressionDebugView = typeof(Expression).GetProperty("DebugView", BindingFlags.Instance | BindingFlags.NonPublic);
 
     public override bool Equality(QsValue value)
@@ -388,7 +368,6 @@ public partial class QsFunction
             var funcDebugView = ExpressionDebugView.GetValue(func._FunctionExpression.Body) as string;
 
             return thisDebugView.Equals(funcDebugView);
-
         }
 
         return false;
@@ -487,7 +466,6 @@ public partial class QsFunction
 
                 WholeFunction = fname + "(" + RemoveRedundantParameters(ParametersNames) + ") = " + nsv;
             }
-
 
             return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction);
         }

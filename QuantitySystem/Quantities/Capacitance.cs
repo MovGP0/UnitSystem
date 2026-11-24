@@ -12,7 +12,6 @@ public class Capacitance<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Capacitance<T>(T value)
     {
         Capacitance<T> Q = new()
@@ -22,6 +21,4 @@ public class Capacitance<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

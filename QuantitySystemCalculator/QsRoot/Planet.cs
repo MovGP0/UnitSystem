@@ -30,7 +30,6 @@ public sealed class Planet
 
     public string Name { get; set; }
 
-
     public long[] Rocks { get; set; }
 
     static int _planets;

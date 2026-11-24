@@ -12,7 +12,6 @@ public class MagneticFluxDensity<T>  : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator MagneticFluxDensity<T>(T value)
     {
         MagneticFluxDensity<T> Q = new()
@@ -22,5 +21,4 @@ public class MagneticFluxDensity<T>  : DerivedQuantity<T>
 
         return Q;
     }
-
 }

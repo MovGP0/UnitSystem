@@ -5,7 +5,6 @@ namespace PassiveFlow;
 
 public class Flow : IEnumerable<Step>
 {
-
     public event EventHandler<StepEventArgs>? StepChanged;
 
     /// <summary>
@@ -77,7 +76,6 @@ public class Flow : IEnumerable<Step>
 
     public FieldInfo[] MyFields => _MyFields.ToArray();
 
-
     #region Flowstep Add procedures
     public Step Add(string stepName, int stepId)
     {
@@ -125,10 +123,7 @@ public class Flow : IEnumerable<Step>
         return fi;
     }
 
-
     #endregion
-
-
 
     /// <summary>
     /// fast action retrival
@@ -169,9 +164,6 @@ public class Flow : IEnumerable<Step>
 
         return "";
     }
-
-
-
 
     public Step FirstStep => FlowSteps[FlowSteps.GetLowerBound(0)];
 
@@ -231,7 +223,6 @@ public class Flow : IEnumerable<Step>
             {
                 if (fi.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return fi;
-
             }
 
             throw new StepException("Flow step not found");
@@ -239,7 +230,6 @@ public class Flow : IEnumerable<Step>
     }
 
     public Step[] FlowSteps => (Step[])innerSteps.ToArray();
-
 
     protected int _Previous_StepIndex;
     protected int _Current_StepIndex;
@@ -260,7 +250,6 @@ public class Flow : IEnumerable<Step>
         if (StepChanged != null)
             StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
     }
-
 
     /// <summary>
     /// Go forward one step.
@@ -292,7 +281,6 @@ public class Flow : IEnumerable<Step>
 
         if (StepChanged != null)
             StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
-
     }
 
     public void StepBack()
@@ -319,7 +307,6 @@ public class Flow : IEnumerable<Step>
         if (StepChanged != null)
             StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
     }
-
 
     /// <summary>
     /// go to the last step
@@ -350,7 +337,6 @@ public class Flow : IEnumerable<Step>
         }
     }
 
-
     /// <summary>
     /// Step to the desired identified step.
     /// </summary>
@@ -375,7 +361,6 @@ public class Flow : IEnumerable<Step>
             StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
     }
 
-
     /// <summary>
     /// ReSet the current step to the passed step id
     /// even if the desired step marked to be skipped.
@@ -397,24 +382,19 @@ public class Flow : IEnumerable<Step>
 
             i++;
         }
-
     }
 
-
     #endregion
-
 
     /// <summary>
     /// The step that was before the current active step.
     /// </summary>
     public Step PreviousStep => FlowSteps[_Previous_StepIndex];
 
-
     /// <summary>
     /// Returns the current step that the flow is waiting at.
     /// </summary>
     public Step CurrentStep => FlowSteps[_Current_StepIndex];
-
 
     /// <summary>
     /// Advance the flow forward step.
@@ -500,7 +480,6 @@ public class Flow : IEnumerable<Step>
         {
             return false;
         }
-
     }
 
     public static bool operator !=(Flow fl1, Flow fl2)
@@ -578,9 +557,7 @@ public class Flow : IEnumerable<Step>
         }
     }
 
-
     #endregion
-
 
     /// <summary>
     /// get the latest action

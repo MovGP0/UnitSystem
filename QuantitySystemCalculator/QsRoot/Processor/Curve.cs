@@ -13,15 +13,12 @@ public class Curve(SymbolicVariable fx, SymbolicVariable fy, SymbolicVariable fz
         var z = fz.Execute(t);
 
         return new QsVector(x.ToQuantity().ToScalar(), y.ToQuantity().ToScalar(), z.ToQuantity().ToScalar());
-
     }
 
     public static Curve GetCurve(SymbolicVariable x, SymbolicVariable y, SymbolicVariable z)
     {
         return new Curve(x, y, z);
     }
-
-
 
     /// <summary>
     /// Test method for returning array of objects
@@ -40,5 +37,4 @@ public class Curve(SymbolicVariable fx, SymbolicVariable fy, SymbolicVariable fz
 
         return z;
     }
-
 }

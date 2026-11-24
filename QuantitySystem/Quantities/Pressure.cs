@@ -12,7 +12,6 @@ public class Pressure<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Pressure<T>(T value)
     {
         Pressure<T> Q = new()
@@ -22,6 +21,4 @@ public class Pressure<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

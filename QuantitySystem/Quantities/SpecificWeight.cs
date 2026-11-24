@@ -12,7 +12,6 @@ public class SpecificWeight<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator SpecificWeight<T>(T value)
     {
         SpecificWeight<T> Q = new()
@@ -22,6 +21,4 @@ public class SpecificWeight<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

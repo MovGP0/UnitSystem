@@ -1,12 +1,10 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-
 namespace SymbolicAlgebra;
 
 public partial class SymbolicVariable
 {
-
     /// <summary>
     /// The  number multiplied by the symbol  a*x^2  I mean {a}
     /// </summary>
@@ -17,7 +15,6 @@ public partial class SymbolicVariable
     /// ["parameters"] group for the inner between brackets (*)  including any commas also.
     /// </summary>
     static Regex FunctionRegex = new Regex(@"^(?<function>[0-9a-zA-Z:]+)\((?<parameters>.*)\)$");
-
 
     private string _Symbol;
 
@@ -56,7 +53,6 @@ public partial class SymbolicVariable
             }
         }
     }
-
 
     /// <summary>
     /// This power term is only for the variable part of the instance.
@@ -111,7 +107,6 @@ public partial class SymbolicVariable
         }
     }
 
-
     private bool? _IsFunction;
     private SymbolicVariable[]? _FunctionParameters;
     private string[] _RawFunctionParameters;
@@ -119,11 +114,9 @@ public partial class SymbolicVariable
     public SymbolicVariable[]? FunctionParameters => _FunctionParameters;
     public string[] RawFunctionParameters => _RawFunctionParameters;
 
-
     private readonly string _FunctionName;
 
     public string FunctionName => _FunctionName;
-
 
     /// <summary>
     /// The only constructor for the symbolic variable
@@ -225,7 +218,6 @@ public partial class SymbolicVariable
                 {
                     string[] oddfuncs = ["sin", "csc", "tan", "cot"];
                     string[] evenfuncs = ["cos", "sec"];
-
 
                     // for some triogonmetric functions like sin  sin(-x) = -sin(x)  // this is important
 
@@ -343,7 +335,6 @@ public partial class SymbolicVariable
                                     ReplaceCurrentValuesWith(final);
                                     #endregion
 
-
                                 }
                                 else
                                 {
@@ -353,7 +344,6 @@ public partial class SymbolicVariable
 
                                         // get the power term
                                         var spt = new HybridVariable { NumericalVariable = _FunctionParameters[0].SymbolPower, SymbolicVariable = _FunctionParameters[0].SymbolPowerTerm };
-
 
                                         // make the log(parameter without its power)
                                         _FunctionParameters[0]._SymbolPowerTerm = null;
@@ -419,8 +409,6 @@ public partial class SymbolicVariable
                 _IsFunction = false;
             }
         }
-
-
     }
 
     /// <summary>
@@ -458,14 +446,12 @@ public partial class SymbolicVariable
         {
             Symbol += p.ToString() + ",";
             iparms += p.ToString() + ",";
-
         }
 
         if (Symbol.EndsWith(","))
         {
             Symbol = Symbol.TrimEnd(',');
             iparms = iparms.TrimEnd(',');
-
         }
 
         Symbol += ")";
@@ -499,7 +485,6 @@ public partial class SymbolicVariable
         }
     }
 
-
     /// <summary>
     /// When using this field, the symbol property will be altered to use it.
     /// </summary>
@@ -521,8 +506,6 @@ public partial class SymbolicVariable
         SymbolPower = 1;
     }
 
-
-
     /*
      * when adding or subtracting symbolic variables that are not the same variable like the current
      * I would like to store these variables inside the current instance.
@@ -531,12 +514,10 @@ public partial class SymbolicVariable
      *
      */
 
-
     /// <summary>
     /// Terms that can't be fused into the instance a*x^2 + b*y^3  I mean {b*y^3}
     /// </summary>
     private Dictionary<string, SymbolicVariable>? _AddedTerms;
-
 
     /*
      *
@@ -544,7 +525,6 @@ public partial class SymbolicVariable
      */
 
     private List<ExtraTerm>? _ExtraTerms;
-
 
     /// <summary>
     /// Terms that couldn't be divide on this term like  x/(x^2-y^5)
@@ -583,7 +563,6 @@ public partial class SymbolicVariable
         }
     }
 
-
     /// <summary>
     /// Extra Terms that doesn't share the same denominator  (take care that 1/x + 1/y share the same denominator because the symbol power here is -1)
     /// so representaion of (1/y+1/x) = y^-1+x^-1
@@ -598,7 +577,6 @@ public partial class SymbolicVariable
             return _ExtraTerms;
         }
     }
-
 
     /// <summary>
     /// Extra terms that couldn't be divided into the term.
@@ -655,11 +633,9 @@ public partial class SymbolicVariable
         }
     }
 
-
     #region Fused Constants Functions
     private string GetConstantBaseValue(int i)
     {
-
         var result = string.Empty;
 
         var power = FusedConstants.ElementAt(i).Value.NumericalVariable;
@@ -688,7 +664,6 @@ public partial class SymbolicVariable
 
     private string GetConstantAbsoluteBaseValue(int i)
     {
-
         var result = string.Empty;
 
         var power = FusedConstants.ElementAt(i).Value.NumericalVariable;
@@ -720,8 +695,6 @@ public partial class SymbolicVariable
         return FusedConstants.ElementAt(i).Value.NumericalVariable;
     }
 
-
-
     #endregion
 
     #region Fused Symbols Functions
@@ -731,7 +704,6 @@ public partial class SymbolicVariable
     /// </summary>
     private string GetSymbolBaseValue(int i)
     {
-
         var result = string.Empty;
 
         var power = FusedSymbols.ElementAt(i).Value.NumericalVariable;
@@ -763,14 +735,12 @@ public partial class SymbolicVariable
         return result;
     }
 
-
     /// <summary>
     /// from a*x^-2-y^-3  will return y^3  but from fused variables
     /// used internally.
     /// </summary>
     private string GetSymbolAbsoluteBaseValue(int i)
     {
-
         var result = string.Empty;
 
         var power = FusedSymbols.ElementAt(i).Value.NumericalVariable;
@@ -809,8 +779,6 @@ public partial class SymbolicVariable
     {
         return FusedSymbols.ElementAt(i).Value.NumericalVariable;
     }
-
-
 
     public string GetFusedKey(int i)
     {
@@ -851,9 +819,6 @@ public partial class SymbolicVariable
             return ft.Power(fs.Value.NumericalVariable);
     }
 
-
-
-
     /// <summary>
     /// gets the current term without any additional fused or added terms
     /// </summary>
@@ -866,7 +831,6 @@ public partial class SymbolicVariable
 
         if (_SymbolPowerTerm != null)
             stripped._SymbolPowerTerm = _SymbolPowerTerm.Clone();
-
 
         return stripped;
     }
@@ -883,7 +847,6 @@ public partial class SymbolicVariable
             stripped._CoeffecientPowerTerm = _CoeffecientPowerTerm.Clone();
 
         return stripped;
-
     }
 
     /// <summary>
@@ -908,7 +871,6 @@ public partial class SymbolicVariable
             MultilpiedTerms.Add(GetFusedTerm(ifsx));
         }
 
-
         return MultilpiedTerms.ToArray();
     }
 
@@ -924,7 +886,6 @@ public partial class SymbolicVariable
         get
         {
             var result = string.Empty;
-
 
             // add the key of the coefficient only  when it has power term and coefficient itself is not zero.
             if (CoeffecientPowerTerm != null && Coeffecient != 0)
@@ -954,7 +915,6 @@ public partial class SymbolicVariable
 
             for (var i = 0; i < FusedSymbols.Count; i++)
             {
-
                 var pp = GetFusedPower(i);
 
                 if(string.IsNullOrEmpty(result))
@@ -977,8 +937,6 @@ public partial class SymbolicVariable
         }
     }
 
-
-
     public string SymbolBaseKey
     {
         get
@@ -989,10 +947,8 @@ public partial class SymbolicVariable
                 return g.Substring(g.IndexOf('|') + 1);
             else
                 return g;
-
         }
     }
-
 
     /// <summary>
     /// Gets the power part of this term
@@ -1032,7 +988,6 @@ public partial class SymbolicVariable
     /// </summary>
     private  string GetFormattedSymbolicValue()
     {
-
         var result = string.Empty;
 
         // first check the primary storage of the symbol and if it has value or noy
@@ -1073,10 +1028,8 @@ public partial class SymbolicVariable
             }
         }
 
-
         for (var i = 0; i < FusedSymbols.Count; i++)
         {
-
             var pp = GetFusedPower(i);         // fused symbol power
 
             if (string.IsNullOrEmpty(result))
@@ -1101,7 +1054,6 @@ public partial class SymbolicVariable
 
         return result;
     }
-
 
     /// <summary>
     /// Returns the whole symbolic variable   symobl part with coeffecient part
@@ -1198,9 +1150,7 @@ public partial class SymbolicVariable
             }
         }
 
-
         return result;
-
     }
 
     public string FinalText()
@@ -1218,7 +1168,6 @@ public partial class SymbolicVariable
                     else
                     {
                         result += "+" + sv.FormSymbolTextValue();
-
                     }
 
                     if (!sv.DividedTerm.IsOne)
@@ -1246,7 +1195,6 @@ public partial class SymbolicVariable
         {
             if (eterm.Negative)
             {
-
                 result += "-" + eterm.Term.FinalText();
             }
             else
@@ -1272,8 +1220,6 @@ public partial class SymbolicVariable
         var final = FinalText();
         return final;
     }
-
-
 
     /// <summary>
     /// Returns the symbolic variable as separated terms that share the same divisor  (this doesn't include extra terms)
@@ -1317,8 +1263,6 @@ public partial class SymbolicVariable
         }
     }
 
-
-
     public static Dictionary<string, SymbolicVariable> _Functions;
 
     /// <summary>
@@ -1335,8 +1279,6 @@ public partial class SymbolicVariable
         }
     }
 
-
-
     /// <summary>
     /// Compare the symbol of current instance to the symbol of parameter instance
     /// either in primary symbol part and in fused symbols.
@@ -1346,7 +1288,6 @@ public partial class SymbolicVariable
     /// <returns></returns>
     public bool BaseEquals(SymbolicVariable sv)
     {
-
         if (!DividedTerm.Equals(sv.DividedTerm))
             return false;
 
@@ -1436,13 +1377,11 @@ public partial class SymbolicVariable
                     if (SymbolPowerText.Equals(sv.SymbolPowerText, StringComparison.OrdinalIgnoreCase))
                         return true;
                 }
-
             }
         }
 
         return false;
     }
-
 
     /// <summary>
     /// Tells if this instance equal the other instance.
@@ -1508,12 +1447,10 @@ public partial class SymbolicVariable
         }
     }
 
-
     public override int GetHashCode()
     {
         return Coeffecient.GetHashCode() + Symbol.GetHashCode() + SymbolPower.GetHashCode();
     }
-
 
     /// <summary>
     /// This function is mainly taking the sqrt(x)^2 and product x  instead of it.
@@ -1536,7 +1473,6 @@ public partial class SymbolicVariable
             newvalue.Coeffecient *= sv.Coeffecient;
 
             sv = newvalue;
-
         }
 
         if (aterms != null)
@@ -1549,7 +1485,6 @@ public partial class SymbolicVariable
 
                 sv.AddedTerms.Add(sa.WholeValueBaseKey,sa);
             }
-
         }
 
         if (eterms != null)
@@ -1559,7 +1494,6 @@ public partial class SymbolicVariable
                 AdjustSpecialFunctions(ref r.Term);
                 sv.ExtraTerms.Add(r);
             }
-
         }
     }
 
@@ -1569,7 +1503,6 @@ public partial class SymbolicVariable
         {
             if (svar.FusedSymbols.ElementAt(i).Value.IsZero || svar.FusedSymbols.ElementAt(i).Key == string.Empty)
                 svar.FusedSymbols.Remove(svar.FusedSymbols.ElementAt(i).Key);
-
         }
 
         if (svar._SymbolPower == 0)
@@ -1603,7 +1536,6 @@ public partial class SymbolicVariable
         foreach (var r in svar.AddedTerms.Values)
             AdjustZeroPowerTerms(r);
     }
-
 
     /// <summary>
     /// Removes the terms with coeffiecient of zero.
@@ -1656,7 +1588,6 @@ public partial class SymbolicVariable
                 priamry._ExtraTerms = NewExtraTerms;
 
                 svar = priamry;
-
             }
             else
             {
@@ -1665,7 +1596,6 @@ public partial class SymbolicVariable
             }
         }
     }
-
 
     /// <summary>
     /// Test if the whole term equals zero or not.
@@ -1694,7 +1624,6 @@ public partial class SymbolicVariable
             return false;
         }
     }
-
 
     /// <summary>
     /// Test if -1
@@ -1797,8 +1726,6 @@ public partial class SymbolicVariable
         }
     }
 
-
-
     /// <summary>
     /// Match the term if it contains function on the form f() or e:f(y,x)
     /// </summary>
@@ -1811,7 +1738,6 @@ public partial class SymbolicVariable
             return _IsFunction.Value;
         }
     }
-
 
     public string[] GetInvolvedSymbols()
     {
@@ -1933,7 +1859,6 @@ public partial class SymbolicVariable
 
         symbols.Sort();
         return symbols.ToArray();
-
     }
 
     /// <summary>
@@ -1941,12 +1866,10 @@ public partial class SymbolicVariable
     /// </summary>
     public string[] InvolvedSymbols => GetInvolvedSymbols();
 
-
     #region ICloneable Members
 
     public SymbolicVariable Clone(bool excludeExtraTerms = false)
     {
-
         var clone = new SymbolicVariable(Symbol);
 
         //if (this._BaseVariable == null)  clone._Symbol = this._Symbol;

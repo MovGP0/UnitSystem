@@ -1,12 +1,10 @@
 ﻿using System.Globalization;
 using Qs.Types;
 
-
 namespace Qs.Runtime;
 
 public partial class QsSequence
 {
-
     /// <summary>
     /// Take the average of the sequence.
     /// Corresponds To: S[i!!k]
@@ -16,7 +14,6 @@ public partial class QsSequence
     /// <returns></returns>
     public QsValue Average(int fromIndex, int toIndex)
     {
- 
         var n = toIndex - fromIndex + 1;
         if (Parameters.Length > 0)
         {
@@ -24,7 +21,6 @@ public partial class QsSequence
             // like g[n](x) ..> x^n
             /// and calling g[0++2]                //  the output should be x^0 + x^1 + x^2
             //  and be parsed into function  (QsFunction)
-
 
             var porma = string.Empty;  // the parameters separated by comma ','
             foreach (var prm in Parameters)
@@ -50,12 +46,9 @@ public partial class QsSequence
         return tot / count;
     }
 
-
-
     #region Average Functions
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0)
     {
- 
         FixIndices(ref fromIndex, ref toIndex);
 
         var tot = SumElements(fromIndex, toIndex, arg0);
@@ -64,10 +57,8 @@ public partial class QsSequence
         return tot / count;
     }
 
-
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
     {
- 
         FixIndices(ref fromIndex, ref toIndex);
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1);
@@ -77,7 +68,6 @@ public partial class QsSequence
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
     {
- 
         FixIndices(ref fromIndex, ref toIndex);
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2);
@@ -87,7 +77,6 @@ public partial class QsSequence
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
     {
- 
         FixIndices(ref fromIndex, ref toIndex);
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3);
@@ -97,7 +86,6 @@ public partial class QsSequence
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
     {
- 
         FixIndices(ref fromIndex, ref toIndex);
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4);
@@ -107,7 +95,6 @@ public partial class QsSequence
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
     {
- 
         FixIndices(ref fromIndex, ref toIndex);
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5);
@@ -117,7 +104,6 @@ public partial class QsSequence
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
     {
- 
         FixIndices(ref fromIndex, ref toIndex);
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
@@ -127,6 +113,5 @@ public partial class QsSequence
     }
 
     #endregion
-
 
 }

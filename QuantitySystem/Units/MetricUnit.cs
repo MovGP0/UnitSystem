@@ -21,13 +21,11 @@ public abstract partial class MetricUnit : Unit
         {
             defaultUnitPrefix = MetricPrefix.FromPrefixName(siua.SiPrefix.ToString());
             unitPrefix = MetricPrefix.FromPrefixName(siua.SiPrefix.ToString());
-
         }
         else
         {
             throw new UnitException("SIUnitAttribute Not Found");
         }
-
 
         //ReferenceUnit attribute may or may not appear
         // if it appears then the unit is not a default SI unit
@@ -44,7 +42,6 @@ public abstract partial class MetricUnit : Unit
     /// </summary>
     public MetricPrefix DefaultUnitPrefix => defaultUnitPrefix;
 
-
     private MetricPrefix unitPrefix;
 
     /// <summary>
@@ -55,7 +52,6 @@ public abstract partial class MetricUnit : Unit
         get => unitPrefix;
         set => unitPrefix = value;
     }
-
 
     /// <summary>
     /// unit symbol with prefix.
@@ -136,11 +132,9 @@ public abstract partial class MetricUnit : Unit
             {
                 //return referenceUnitDenominator;
                 return Math.Pow(_ReferenceUnitDenominator, UnitExponent);
-
             }
         }
     }
-
 
     /// <summary>
     /// Reference unit is generated according to the state of the unit
@@ -171,11 +165,9 @@ public abstract partial class MetricUnit : Unit
                 //(p.u)^r  = p^r*u^r
 
                 return Math.Pow(_ReferenceUnitNumerator, UnitExponent) * CorrectToDefault;
-
             }
         }
     }
-
 
     /// <summary>
     /// 

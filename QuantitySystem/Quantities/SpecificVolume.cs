@@ -4,7 +4,6 @@ namespace QuantitySystem.Quantities;
 
 public class SpecificVolume<T> : DerivedQuantity<T>
 {
-
     public SpecificVolume()
         : base(1, new Volume<T>(), new Mass<T>(-1))
     {
@@ -15,7 +14,6 @@ public class SpecificVolume<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator SpecificVolume<T>(T value)
     {
         SpecificVolume<T> Q = new()
@@ -25,6 +23,4 @@ public class SpecificVolume<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

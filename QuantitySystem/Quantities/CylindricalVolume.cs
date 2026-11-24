@@ -19,7 +19,6 @@ public class CylindricalVolume<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator CylindricalVolume<T>(T value)
     {
         CylindricalVolume<T> Q = new()

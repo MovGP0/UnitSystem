@@ -2,13 +2,11 @@
 
 public partial class SymbolicVariable
 {
-
     #region coeffecient multiplication
 
     #region number precede symbol
     public static SymbolicVariable? operator *(int a, SymbolicVariable b)
     {
-
         var sv = new SymbolicVariable(a.ToString(CultureInfo.InvariantCulture)) * b;
 
         return sv;
@@ -39,7 +37,6 @@ public partial class SymbolicVariable
         return sv;
     }
     #endregion
-
 
     #region number after symbol
     public static SymbolicVariable? operator *(SymbolicVariable b, int a)
@@ -79,7 +76,6 @@ public partial class SymbolicVariable
     #region number precede symbol
     public static SymbolicVariable? operator /(int a, SymbolicVariable b)
     {
-
         var sv = new SymbolicVariable(a.ToString(CultureInfo.InvariantCulture)) / b;
 
         return sv;
@@ -112,7 +108,6 @@ public partial class SymbolicVariable
         return sv;
     }
     #endregion
-
 
     #region number after symbol
     public static SymbolicVariable? operator /(SymbolicVariable b, int a)

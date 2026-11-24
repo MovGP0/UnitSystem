@@ -6,10 +6,8 @@ public partial class QsText(string text) : QsValue
 {
     public string Text { get; set; } = text.Replace("\\\"", "\"");
 
-
     public override string ToString()
     {
-
         return  Text ;
     }
 
@@ -18,13 +16,11 @@ public partial class QsText(string text) : QsValue
         return "\"" + Text + "\"";
     }
 
-
     #region QsValue Operations
     public override QsValue Identity => throw new NotImplementedException();
 
     public override QsValue AddOperation(QsValue value)
     {
-            
         var t = new QsText(Text + value);
         return t;
     }
@@ -61,7 +57,6 @@ public partial class QsText(string text) : QsValue
         if (itimes > Text.Length)
             itimes = itimes % Text.Length;
 
-
         var vec = new StringBuilder(Text.Length);
 
         for (var i = itimes; i < Text.Length; i++)
@@ -74,9 +69,7 @@ public partial class QsText(string text) : QsValue
             vec.Append(Text[i]);
         }
 
-
         return new QsText(vec.ToString());
-
     }
 
     public override QsValue RightShiftOperation(QsValue times)
@@ -100,9 +93,7 @@ public partial class QsText(string text) : QsValue
             vec.Append(Text[i]);
         }
 
-
         return new QsText(vec.ToString());
-
     }
 
     public override bool LessThan(QsValue value)
@@ -133,7 +124,6 @@ public partial class QsText(string text) : QsValue
         if (text.Text.Equals(Text, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;
-
     }
 
     public override bool Inequality(QsValue value)
@@ -184,7 +174,6 @@ public partial class QsText(string text) : QsValue
         throw new NotImplementedException();
     }
     #endregion
-
 
     public override QsValue ColonOperator(QsValue value)
     {

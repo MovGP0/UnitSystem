@@ -14,7 +14,6 @@ public class MagneticReluctance<T>  : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator MagneticReluctance<T>(T value)
     {
         MagneticReluctance<T> Q = new()
@@ -24,5 +23,4 @@ public class MagneticReluctance<T>  : DerivedQuantity<T>
 
         return Q;
     }
-
 }

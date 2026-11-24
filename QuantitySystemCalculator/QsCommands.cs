@@ -88,7 +88,6 @@ public static class QsCommands
         {
             QsEvaluator.CurrentEvaluator.Scope.Clear();
 
-
             GC.Collect();
 
             CommandProcessed = true;
@@ -127,9 +126,7 @@ public static class QsCommands
                                 Unit.ClearDynamicUnitsCaching();
                                 Console.WriteLine("    Dynamic Units Caching Cleared.");
                             }
-
                         }
-
                     }
                 }
             }
@@ -211,12 +208,10 @@ public static class QsCommands
 
         var calcVer = (AssemblyFileVersionAttribute)Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0];
 
-
         Console.WriteLine("Quantity System Framework  ver " + libVer.Version);
         Console.WriteLine("Quantity System DLR        ver " + qscVer.Version);
         Console.WriteLine("Symbolic Algebra Library   ver " + symbVer.Version);
         Console.WriteLine("Quantity System Calculator ver " + calcVer.Version);
-
 
         var qscCwr = Assembly
             .GetEntryAssembly()
@@ -235,7 +230,6 @@ public static class QsCommands
         Console.WriteLine("-------------------------------------------------------------------");
 
         Console.ForegroundColor = ForegroundColor;
-
     }
 
     /// <summary>
@@ -276,7 +270,6 @@ public static class QsCommands
         Console.WriteLine("           \" m1 . m2 \"         #for matrix element wise multiplication");
         Console.WriteLine("           \" m ^ 2 \"           #for power with ordinary matrix multiplication");
         Console.WriteLine("           \" m ^. 2 \"          #for power with element matrix multiplication");
-
 
     Console.WriteLine();
     Console.WriteLine("       - Tensor");
@@ -346,10 +339,8 @@ public static class QsCommands
         Console.WriteLine("       - \"Copyright\" for information about the product.");
         Console.WriteLine("       - \"CTRL+Z\" to terminate the console.");
 
-
         Console.ForegroundColor = ForegroundColor;
     }
-
 
     public static IEnumerable<string> GetVariablesKeys()
     {
@@ -357,7 +348,6 @@ public static class QsCommands
                     select item.Key;
         return varo;
     }
-
 
     public static object GetVariable(string varName)
     {
@@ -415,7 +405,6 @@ public static class QsCommands
         Console.ForegroundColor = ForegroundColor;
     }
 
-
     private struct UnitInfo
     {
         public string Uname;
@@ -450,7 +439,6 @@ public static class QsCommands
 
                 var qtype = ua.QuantityType.ToString().Substring(ua.QuantityType.Namespace.Length + 1).TrimEnd("`1[T]".ToCharArray());
 
-
                 if (string.IsNullOrEmpty(quantity))
                 {
                     var ui = new UnitInfo
@@ -477,7 +465,6 @@ public static class QsCommands
                     select ("    " + ut.Uname + " " + ut.Symbol + " " + ut.System + ut.Qtype);
             foreach (var ut in uts)
             {
-
                 Console.WriteLine(ut);
             }
 

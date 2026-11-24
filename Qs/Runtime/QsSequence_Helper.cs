@@ -44,7 +44,6 @@ public partial class QsSequence
     /// </summary>
     public string SequenceRangeEndName { get; set; }
 
-
     private string _SequenceName;
 
     public string SequenceSymbolicName
@@ -75,8 +74,6 @@ public partial class QsSequence
             CachingEnabled = true;  //Allow caching for parameterless sequence.
     }
 
-
-
     /// <summary>
     /// Parse the give sequence text and return <see cref="QsSequence"/> if succeeded
     /// otherwise return null reference.
@@ -102,7 +99,6 @@ public partial class QsSequence
 
         t = t.MergeTokens<PositiveSequenceToken>();  //    ..>  start from 0 index to +ve
         t = t.MergeTokens<NegativeSequenceToken>();  //    <..  start from -1 index to -ve
-
 
         if (t.IndexOf(typeof(PositiveSequenceToken)) > -1)
         {
@@ -135,7 +131,6 @@ public partial class QsSequence
 
         var declaredNamespace = string.Empty;
 
-
         foreach (var tok in t)
         {
             if (tok.TokenClassType == typeof(NamespaceToken))
@@ -149,12 +144,10 @@ public partial class QsSequence
 
         declaredNamespace = declaredNamespace.TrimEnd(':');
 
-
         if (t[nsidx + 0].TokenClassType == typeof(WordToken)
             && (t.Count > 1 ? t[nsidx + 1].TokenClassType == typeof(SquareBracketsGroupToken) : false)     // test for second tokek to be [] group
            )
         {
-
             Type SequenceTokenType = null;
 
             var shift = 0;
@@ -189,10 +182,8 @@ public partial class QsSequence
                 return null;
             }
 
-
             // s[]   found
             var sequenceName = t[nsidx + 0].TokenValue;
-
 
             // Specify the index area  [k=m->n, l=i->j]
             var IndicesArea = t[nsidx + 1];
@@ -221,7 +212,6 @@ public partial class QsSequence
                         var SyntaxErrorMessage = "Sequence syntax error in indexer declaration: Correct Declaration looks like S[k] or S[k=m->n]";
                         if (m.Count == 5)
                         {
-
                             if (m[0].TokenClassType == typeof(WordToken)
                                 && m[1].TokenClassType == typeof(EqualToken)
                                 && m[2].TokenClassType == typeof(WordToken)
@@ -253,7 +243,6 @@ public partial class QsSequence
             if (indexes.Count > 1)
                 throw new QsException("Sequences with more than one index are not supported now");
 
-
             // get parameters
             string[] parameters = []; //array with zero count :)
             if (t[nsidx + 2].TokenClassType == typeof(ParenthesisGroupToken))
@@ -263,7 +252,6 @@ public partial class QsSequence
                     select c.TokenValue)
                     .ToArray();
             }
-
 
             //make all things between ';' be a whole word.
 
@@ -301,7 +289,6 @@ public partial class QsSequence
 
                         SequenceRangeStartName = rangeStartNames[0],
                         SequenceRangeEndName = rangeEndNames[0]
-
                     };
                 }
                 else
@@ -349,7 +336,6 @@ public partial class QsSequence
             }
 
             return seqo;
-
         }
 
         return null;
@@ -379,7 +365,6 @@ public partial class QsSequence
         var ns = QsNamespace.GetNamespace(scope, qsNamespace);
         return (QsSequence)ns.GetValueOrNull(sequenceName);
     }
-
 
     /// <summary>
     /// Helper function to create the scope memory name of the sequence.

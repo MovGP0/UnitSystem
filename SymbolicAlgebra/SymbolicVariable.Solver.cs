@@ -15,7 +15,6 @@ public partial class SymbolicVariable
         return Solve(InvolvedSymbols[0]).Coeffecient;
     }
 
-
     /// <summary>
     /// Solve for the variable and gets the whole expression for that variable
     /// </summary>
@@ -75,7 +74,6 @@ public partial class SymbolicVariable
         return result;
     }
 
-
     /// <summary>
     /// Substitute variable with the value
     /// </summary>
@@ -84,7 +82,6 @@ public partial class SymbolicVariable
     /// <returns></returns>
     public SymbolicVariable? Substitute(string variable, double value)
     {
-
         var s = ToString();
         var ss = s.Replace(variable, "(" + value.ToString() + ")");
 
@@ -99,13 +96,11 @@ public partial class SymbolicVariable
     /// <returns></returns>
     public SymbolicVariable? Substitute(string variable, SymbolicVariable value)
     {
-
         var s = ToString();
         var ss = s.Replace(variable, "(" + value.ToString() + ")");
 
         return Parse(ss);
     }
-
 
     /// <summary>
     /// Returns the coefficient of variable in expression or null in case variable not found

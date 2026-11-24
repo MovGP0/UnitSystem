@@ -14,7 +14,6 @@ public class PolarArea<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator PolarArea<T>(T value)
     {
         PolarArea<T> Q = new()
@@ -24,6 +23,4 @@ public class PolarArea<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

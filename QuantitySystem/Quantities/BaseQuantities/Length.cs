@@ -4,7 +4,6 @@ namespace QuantitySystem.Quantities.BaseQuantities;
 
 public class Length<T> : AnyQuantity<T>
 {
-
     public TensorRank LengthRank { get; set; }
 
     public Length()
@@ -46,7 +45,6 @@ public class Length<T> : AnyQuantity<T>
         }
     }
 
-
     public static implicit operator Length<T>(T value)
     {
         Length<T> Q = new()
@@ -56,5 +54,4 @@ public class Length<T> : AnyQuantity<T>
 
         return Q;
     }
-
 }

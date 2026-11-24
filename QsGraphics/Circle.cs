@@ -10,8 +10,6 @@ public class Circle : Shape
 {
     readonly AnyQuantity<double> _x, _y, _radius;
 
-
-
     public Circle(AnyQuantity<double> x, AnyQuantity<double> y, AnyQuantity<double> radius)
     {
         _x = x;
@@ -21,9 +19,7 @@ public class Circle : Shape
         var t = new System.Timers.Timer();
     }
 
-
     QsFunction xfunc, yfunc, radfunc;
-
 
     /// <summary>
     /// constructor accepts quantities and qs functions also
@@ -47,14 +43,12 @@ public class Circle : Shape
             radfunc = radius.FunctionQuantity.Value;
         else
             _radius = radius.NumericalQuantity;
-
     }
 
     private Length<double> zm = (Length<double>)Unit.ParseQuantity("0<m>");
 
     // milli second quantity
     private AnyQuantity<double> zmt = Unit.ParseQuantity("0<m/ms>");
-
 
     public override void Draw(Graphics graphics, float pixelPerMeter)
     {
@@ -113,13 +107,11 @@ public class Circle : Shape
             ActualY = (Length<double>)(zm + _y);
         }
 
-
         p1.X = (float)((ActualX - ActualRadius).Value * pixelPerMeter);
         p2.X = (float)((ActualX + ActualRadius).Value * pixelPerMeter);
 
         p1.Y = (float)((ActualY - ActualRadius).Value * pixelPerMeter);
         p2.Y = (float)((ActualY + ActualRadius).Value * pixelPerMeter);
-
 
         var sf = new SizeF(p2.X - p1.X, p2.Y - p1.Y);
 

@@ -219,7 +219,6 @@ public partial class Unit : ICloneable
             foreach (var lun in SubUnits)
             {
                 InvertedUnits.Add(lun.Invert());
-
             }
 
             unit = new Unit(QuantityType, InvertedUnits.ToArray());
@@ -249,7 +248,6 @@ public partial class Unit : ICloneable
     /// <returns></returns>
     public AnyQuantity<T> GetThisUnitQuantity<T>()
     {
-
         AnyQuantity<T>? Quantity = null;
 
         var qt = QuantityType.MakeGenericType(typeof(T));
@@ -258,13 +256,11 @@ public partial class Unit : ICloneable
         if (Qcach.TryGetValue(qt, out j))
         {
             Quantity = (AnyQuantity<T>)((AnyQuantity<T>)j).Clone();  //optimization for created quantities before
-
         }
         else
         {
             Quantity = (AnyQuantity<T>)Activator.CreateInstance(QuantityType.MakeGenericType(typeof(T)));
             Qcach.Add(qt, Quantity);
-
         }
 
         Quantity.Unit = this;
@@ -273,7 +269,6 @@ public partial class Unit : ICloneable
 
     public AnyQuantity<T> GetThisUnitQuantity<T>(T value)
     {
-
         AnyQuantity<T> Quantity = null;
         if (QuantityType != typeof(DerivedQuantity<>) && QuantityType != null)
         {
@@ -281,12 +276,10 @@ public partial class Unit : ICloneable
              object j;
             if (Qcach.TryGetValue(qt, out j))
             {
-
                 Quantity = (AnyQuantity<T>)((AnyQuantity<T>)j).Clone();  //optimization for created quantities before
             }
             else
             {
-
                 Quantity = (AnyQuantity<T>)Activator.CreateInstance(qt);
 
                 Qcach.Add(qt, Quantity);
@@ -296,7 +289,6 @@ public partial class Unit : ICloneable
         {
             //create it from the unit dimension
             Quantity = new DerivedQuantity<T>(UnitDimension);
-
         }
 
         Quantity.Unit = this;

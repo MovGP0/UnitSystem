@@ -12,7 +12,6 @@ public class AngularMomentum<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator AngularMomentum<T>(T value)
     {
         AngularMomentum<T> Q = new()
@@ -22,5 +21,4 @@ public class AngularMomentum<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

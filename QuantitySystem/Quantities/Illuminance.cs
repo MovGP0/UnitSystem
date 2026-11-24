@@ -13,7 +13,6 @@ public class Illuminance<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Illuminance<T>(T value)
     {
         Illuminance<T> Q = new()
@@ -23,5 +22,4 @@ public class Illuminance<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

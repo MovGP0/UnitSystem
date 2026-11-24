@@ -23,7 +23,6 @@ public class DerivedQuantity<T> : AnyQuantity<T>
 
             if (dimension.Length.VectorExponent != 0)
                 quantities.Add(new Displacement<T>(dimension.Length.VectorExponent));
-
         }
 
         if (dimension.Time.Exponent != 0)
@@ -87,11 +86,9 @@ public class DerivedQuantity<T> : AnyQuantity<T>
         _Dimension = null;
     }
 
-
     #endregion
 
     #region M L T Processing
-
 
     /// <summary>
     /// Cached Dimension.
@@ -141,12 +138,10 @@ public class DerivedQuantity<T> : AnyQuantity<T>
         if (Unit != null)
         {
             dq.Unit = Unit.Invert();
-
         }
 
         return dq;
     }
-
 
     #endregion
 }

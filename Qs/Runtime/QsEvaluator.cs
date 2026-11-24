@@ -11,7 +11,6 @@ using System.Text;
 using QsRoot;
 using System.Globalization;
 
-
 namespace Qs.Runtime;
 
 /// <summary>
@@ -19,7 +18,6 @@ namespace Qs.Runtime;
 /// </summary>
 public class QsEvaluator
 {
-
     /// <summary>
     /// Match unit
     /// </summary>
@@ -63,10 +61,8 @@ public class QsEvaluator
 
     public QsScope Scope => _InternalScope;
 
-
     public object GetVariable(string varName)
     {
-
         if (Scope != null)
         {
             object q;
@@ -75,7 +71,6 @@ public class QsEvaluator
         }
 
         throw new NotImplementedException("you should be running in DLR");
-
     }
 
     public AnyQuantity<double> GetQuantity(string varName)
@@ -89,7 +84,6 @@ public class QsEvaluator
 
         throw new Exception("No Scope exist");
     }
-
 
     /// <summary>
     /// 
@@ -125,7 +119,6 @@ public class QsEvaluator
         var ns = QsNamespace.GetNamespace(Scope, nameSpace, true);
 
         return ns.AddReference(varName, referencedVariableName);
-
     }
 
     /// <summary>
@@ -147,10 +140,8 @@ public class QsEvaluator
             var ns = QsNamespace.GetNamespace(Scope, nameSpace, true);
 
             ns.SetValue(varName, varValue);
-
         }
     }
-
 
     /// <summary>
     /// Stack that reserve the SilentEvaluation during successive calls to the SilentEvaluate
@@ -170,7 +161,6 @@ public class QsEvaluator
         }
     }
 
-
     /// <summary>
     /// Never put any thing on the output screen.
     /// </summary>
@@ -178,7 +168,6 @@ public class QsEvaluator
     /// <returns></returns>
     public object SilentEvaluate(string line)
     {
-
         SilentStack.Push(true);
         try
         {
@@ -191,14 +180,11 @@ public class QsEvaluator
         }
     }
 
-
-
     static Regex UnitToUnitRegex = new(UnitToUnitExpression);
     static Regex UnitRegex = new(UnitExpression);
     static Regex VariableQuantityRegex = new(VariableQuantityExpression);
     public object Evaluate(string expr)
     {
-
 #if WINRT
 #else
         if (string.IsNullOrEmpty(expr))
@@ -281,7 +267,6 @@ public class QsEvaluator
             {
                 throw new QsException("Unit Not Found", e);
             }
-
         }
         #endregion
 
@@ -307,18 +292,15 @@ public class QsEvaluator
 
                     qty = new QsScalar { NumericalQuantity = AnyQuantity<double>.Parse(m.Groups[6].Value) };
 
-
                     //get the quantity
 
                     qty.NumericalQuantity.Unit = Unit.DiscoverUnit(qty.NumericalQuantity);
-
                 }
                 catch (QuantityNotFoundException)
                 {
                     Console.Error.WriteLine("Quantity Not Found");
                     return null;
                 }
-
             }
 
             qty.NumericalQuantity.Value = varVal;
@@ -333,9 +315,7 @@ public class QsEvaluator
 #endif
         //check if the line has '='
         return ExtraEvaluate(expr);
-
     }
-
 
     /// <summary>
     /// Obtains the location of equal sign, that is not inside string or inside function  parenthese
@@ -427,11 +407,8 @@ public class QsEvaluator
             }
         }
 
-
         return IsSequence;
     }
-
-
 
     internal object ExtraEvaluate(string line)
     {
@@ -444,7 +421,6 @@ public class QsEvaluator
             StoreFunction(func);
             return func;
         }
-
 
         //try to get sequence.
         var seqo = QsSequence.ParseSequence(this, line);
@@ -540,7 +516,6 @@ public class QsEvaluator
                                 //replace the index name used with the real index of the sequence.
                                 var evline = line.Replace(indexName, sq.SequenceIndexName);
 
-
                                 //replace the parameter names with parameters with the real parameter names of sequence
                                 for (var i = 0; i < parameters.Length; i++)
                                 {
@@ -566,7 +541,6 @@ public class QsEvaluator
                         }
                         else
                         {
-
                             #region Non indexed sequence
 
                             //match for a[1]
@@ -658,7 +632,6 @@ public class QsEvaluator
                                     ,
                                     (QsValue)qv.Execute()
                                 );
-
                             }
 
                             #endregion
@@ -674,7 +647,6 @@ public class QsEvaluator
                 }
 
                 {
-
                     #region Normal Variable
 
                     //Normal Variable.
@@ -754,7 +726,6 @@ public class QsEvaluator
                             }
                             else
                             {
-
                                 SetVariable(
                                     vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':')
                                     ,
@@ -762,7 +733,6 @@ public class QsEvaluator
                                     ,
                                     qvResult
                                 );
-
 
                                 var q = GetScopeQsValue(
                                     Scope
@@ -846,7 +816,6 @@ public class QsEvaluator
                             if(qvType == typeof(QsTensor))
                                 throw new QsException("Tensor parsing to function is not supported yet");
 
-
                             List<string> vparameters = [];
                             foreach(var c in AllComponents)
                                 if(c.ScalarType ==  ScalarTypes.SymbolicQuantity)
@@ -857,7 +826,6 @@ public class QsEvaluator
                                             vparameters.Add(sym);
                                     }
                                 }
-
 
                             var fh = "_(";
                             foreach (var p in vparameters)
@@ -901,13 +869,11 @@ public class QsEvaluator
 
                                 var all = fh + fhb.ToString().Trim(';', ' ') + "]";
 
-
                                 var qf = QsFunction.ParseFunction(this, all);
                                 qf.FunctionName = varName;
 
                                 StoreFunction(qf);
                                 return qf;
-
                             }
 
                             throw new QsException("QsType " + qvType.Name + " is not supported to be converted into function");
@@ -1012,7 +978,6 @@ public class QsEvaluator
                                             parent = (QsObject)parent_object;
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
                                         }
-
                                     }
 
                                     // and get the indexing number
@@ -1144,12 +1109,10 @@ public class QsEvaluator
         #endregion
     }
 
-
     #region print information helpers
 
     public void PrintUnitInfo(Unit unit)
     {
-
 #if WINRT
 #else
         Console.ForegroundColor = HelpColor;
@@ -1184,7 +1147,6 @@ public class QsEvaluator
     }
 
     #endregion
-
 
     #region Scope Helper methods.
 
@@ -1227,7 +1189,6 @@ public class QsEvaluator
     /// <returns></returns>
     public static QsValue GetScopeQsValue(QsScope scope, string qsNamespace, string name)
     {
-
         if (string.IsNullOrEmpty(qsNamespace))
         {
             object q;
@@ -1262,12 +1223,10 @@ public class QsEvaluator
         var module = QsNamespace.GetNamespace(scope, qsNamespace);
 
         return (QsValue)module.GetValue(name);
-
     }
 
     public QsValue DeleteQsValue(string qsNamespace, string name)
     {
-
         if (string.IsNullOrEmpty(qsNamespace))
         {
             if (!Scope.DeleteValue(name))
@@ -1279,7 +1238,6 @@ public class QsEvaluator
     }
 
     #endregion
-
 
     #region  singleton pattern
     private QsEvaluator()
@@ -1306,9 +1264,7 @@ public class QsEvaluator
 
     #endregion
 
-
     #region Function Storage
-
 
     /// <summary>
     /// Store the function in the scope by choosing the suitable symbolic name for the function.
@@ -1316,7 +1272,6 @@ public class QsEvaluator
     /// <param name="function"></param>
     public void StoreFunction(QsFunction qsFunction)
     {
-
         // 1- find the default function of this name.
         // 2- if default function exist declare non default function
         // 3- if default function does'nt exist declare default function.
@@ -1377,10 +1332,8 @@ public class QsEvaluator
                         QsFunction.FormFunctionSymbolicName(qsFunction.FunctionName, OverLoadedFunction.ParametersNames),
                         qsFunction);
                 }
-
             }
         }
-
     }
 
     #endregion

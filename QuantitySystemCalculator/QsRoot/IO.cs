@@ -10,7 +10,6 @@ namespace QsRoot;
 /// </summary>
 public static class Io
 {
-
     public static QsValue InputLine(string prompt)
     {
         Console.Write(prompt);
@@ -46,7 +45,6 @@ public static class Io
         return null;
     }
 
-
     public static string DownloadString(string url)
     {
         var result = string.Empty;
@@ -61,7 +59,6 @@ public static class Io
 
     public static string[] Files()
     {
-
         var di = new DirectoryInfo(Directory.GetCurrentDirectory());
 
         return di.GetFiles().Select(x => x.Name).ToArray();

@@ -4,12 +4,10 @@ namespace ParticleLexer;
 
 public abstract class TokenClass
 {
-
     /// <summary>
     /// The pattern that we will use to tokenizing and merging tokens.
     /// </summary>
     public Regex Regex { get; }
-
 
     /// <summary>
     /// Tells if the regex is an exact word without regex classes.
@@ -44,7 +42,6 @@ public abstract class TokenClass
 
     public string ShouldEndWith { get; }
 
-
     //cache token regexes
     static Dictionary<Type, Regex> regexes = new Dictionary<Type, Regex>();
 
@@ -68,7 +65,6 @@ public abstract class TokenClass
     private Type _ThisTokenType;
     public TokenClass()
     {
-
         _ThisTokenType = GetType();
 
         Regex j;
@@ -89,11 +85,9 @@ public abstract class TokenClass
             ContinousToken = ContinousTokenList[_ThisTokenType];
 
             ShouldEndWith = ShouldEndWithList[_ThisTokenType];
-
         }
         else
         {
-
             // Cache the regexes due to the multiple creation  of the inherited types
             var rxs = GetType().GetCustomAttributes(false);
 
@@ -122,8 +116,6 @@ public abstract class TokenClass
             }
         }
     }
-
-
 
     /// <summary>
     /// Type of TokenClass

@@ -19,5 +19,4 @@ public class QsInvalidOperationException : QsException
    {
       // Add any type-specific logic for inner exceptions.
    }
-
 }

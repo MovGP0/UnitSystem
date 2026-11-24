@@ -10,7 +10,6 @@ public sealed class Bit : Unit;
 
 #endregion
 
-
 #region Binary
 
 #endregion

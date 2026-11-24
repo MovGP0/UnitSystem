@@ -12,7 +12,6 @@ public static class Windows
 {
     public static QsValue MessageBox(QsParameter text)
     {
-
         IWin32Window? fw = null;
         try { fw = ForegroundWindow.Instance; }
         catch { }
@@ -33,7 +32,6 @@ public static class Windows
         [QsParamInfo(QsParamType.Text)]QsParameter caption
     )
     {
-
         IWin32Window? fw = null;
         try { fw = ForegroundWindow.Instance; }
         catch { }

@@ -18,7 +18,6 @@ public class Viscosity<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Viscosity<T>(T value)
     {
         Viscosity<T> Q = new()
@@ -28,5 +27,4 @@ public class Viscosity<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

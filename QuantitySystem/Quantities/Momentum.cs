@@ -14,7 +14,6 @@ public class Momentum<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Momentum<T>(T value)
     {
         Momentum<T> Q = new()
@@ -24,5 +23,4 @@ public class Momentum<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

@@ -126,5 +126,4 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
 
         return ret;
     }
-
 }

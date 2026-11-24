@@ -4,7 +4,6 @@ namespace Qs.Types;
 
 public partial class QsMatrix : QsValue
 {
-
     #region Scalar operations
 
     /// <summary>
@@ -28,7 +27,6 @@ public partial class QsMatrix : QsValue
         }
 
         return Total;
-
     }
 
     /// <summary>
@@ -52,7 +50,6 @@ public partial class QsMatrix : QsValue
         }
 
         return Total;
-
     }
 
     /// <summary>
@@ -124,8 +121,6 @@ public partial class QsMatrix : QsValue
         return Total;
     }
 
-
-
     /// <summary>
     /// Matrix ^ scalar
     /// </summary>
@@ -158,10 +153,7 @@ public partial class QsMatrix : QsValue
         }
 
         return Total;
-
     }
-
-
 
     /// <summary>
     /// Matrix elements ^. scalar
@@ -187,8 +179,6 @@ public partial class QsMatrix : QsValue
     }
 
     #endregion
-
-
 
     #region Matrix oeprators
     public static QsMatrix operator *(QsMatrix a, QsScalar b)
@@ -222,7 +212,6 @@ public partial class QsMatrix : QsValue
     }
 
     #endregion
-
 
     /*
     #region Scalar operators
@@ -270,8 +259,6 @@ public partial class QsMatrix : QsValue
 
     */
 
-
-
     #region QsValue operations
 
     public override QsValue Identity
@@ -285,7 +272,6 @@ public partial class QsMatrix : QsValue
 
             throw new QsMatrixException("No Identity matrix for non square matrix");
         }
-
     }
 
     public override QsValue AddOperation(QsValue vl)
@@ -295,7 +281,6 @@ public partial class QsMatrix : QsValue
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -322,7 +307,6 @@ public partial class QsMatrix : QsValue
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -380,7 +364,6 @@ public partial class QsMatrix : QsValue
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             return MultiplyScalar((QsScalar)value);
@@ -389,12 +372,10 @@ public partial class QsMatrix : QsValue
         if (value is QsVector)
         {
             throw new NotSupportedException();
-
         }
 
         if (value is QsMatrix)
         {
-
             throw new NotSupportedException();
         }
 
@@ -413,7 +394,6 @@ public partial class QsMatrix : QsValue
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -441,7 +421,6 @@ public partial class QsMatrix : QsValue
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             return ModuloScalar((QsScalar)value);
@@ -460,7 +439,6 @@ public partial class QsMatrix : QsValue
         throw new NotSupportedException();
     }
 
-
     public override QsValue PowerOperation(QsValue vl)
     {
         QsValue value;
@@ -468,7 +446,6 @@ public partial class QsMatrix : QsValue
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -496,13 +473,10 @@ public partial class QsMatrix : QsValue
 
     public override QsValue AbsOperation()
     {
-
         if (RowsCount < 4)
             return Determinant().Sum();
         return Determinant(this);
-
     }
-
 
     public override QsValue PowerDotOperation(QsValue vl)
     {
@@ -511,7 +485,6 @@ public partial class QsMatrix : QsValue
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -545,7 +518,6 @@ public partial class QsMatrix : QsValue
         else
             value = vl;
 
-
         if (value is QsMatrix)
         {
             // Kronecker product
@@ -566,7 +538,6 @@ public partial class QsMatrix : QsValue
                         rowM = imat;
                     else
                         rowM = rowM.AppendRightMatrix(imat);
-
                 }
 
                 lm.Add(rowM);
@@ -576,7 +547,6 @@ public partial class QsMatrix : QsValue
 
             foreach (var rm in lm)
             {
-
                 result = result.AppendLowerMatrix(rm);
             }
 
@@ -585,7 +555,6 @@ public partial class QsMatrix : QsValue
 
         throw new NotImplementedException();
     }
-
 
     /// <summary>
     /// '<<' left shift operator
@@ -600,7 +569,6 @@ public partial class QsMatrix : QsValue
         else
             times = vl;
 
-
         var ShiftedMatrix = new QsMatrix();
         foreach (var vec in this)
         {
@@ -609,7 +577,6 @@ public partial class QsMatrix : QsValue
 
         return ShiftedMatrix;
     }
-
 
     /// <summary>
     /// '>>' Right Shift Operator
@@ -624,7 +591,6 @@ public partial class QsMatrix : QsValue
         else
             times = vl;
 
-
         var ShiftedMatrix = new QsMatrix();
         foreach (var vec in this)
         {
@@ -635,7 +601,6 @@ public partial class QsMatrix : QsValue
     }
 
     #endregion
-
 
     #region Relational Operations
     public override bool LessThan(QsValue value)
@@ -670,19 +635,16 @@ public partial class QsMatrix : QsValue
 
             if (!ReferenceEquals(m, this))
             {
-
                 // if not then we need to compare it element by element
 
                 for (var i = 0; i < RowsCount; i++)
                 {
                     for (var j = 0; j < ColumnsCount; j++)
                     {
-
                         if (!this[i, j].Equality(m[i, j]))
                             return false;
                     }
                 }
-
             }
 
             return true;
@@ -693,7 +655,6 @@ public partial class QsMatrix : QsValue
 
     public override bool Inequality(QsValue value)
     {
-
         throw new NotImplementedException();
     }
 
@@ -728,9 +689,7 @@ public partial class QsMatrix : QsValue
         throw new NotImplementedException();
     }
 
-
     #endregion
-
 
     /// <summary>
     /// 
@@ -745,7 +704,6 @@ public partial class QsMatrix : QsValue
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var n = new QsMatrix();
@@ -759,7 +717,6 @@ public partial class QsMatrix : QsValue
 
         return base.DifferentiateOperation(value);
     }
-
 
     /// <summary>
     /// Removes row at index
@@ -777,7 +734,6 @@ public partial class QsMatrix : QsValue
 
         return m;
     }
-
 
     /// <summary>
     /// Removes column at index
@@ -835,10 +791,8 @@ public partial class QsMatrix : QsValue
 
     public QsMatrix Inverse => Adjoint.DivideScalar( Determinant(this));
 
-
     public override QsValue Execute(Token expression)
     {
-
         var operation = expression.TokenValue;
 
         if (operation.Equals("Transpose()", StringComparison.OrdinalIgnoreCase))
@@ -858,7 +812,6 @@ public partial class QsMatrix : QsValue
 
         if (operation.Equals("Inverse", StringComparison.OrdinalIgnoreCase))
             return Inverse;
-
 
         throw new QsException("Not implemented or Unknow method for the matrix type");
     }

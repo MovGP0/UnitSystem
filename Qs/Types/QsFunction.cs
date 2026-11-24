@@ -7,7 +7,6 @@ using Qs.Runtime;
 using ParticleLexer.QsTokens;
 using System.Linq.Expressions;
 
-
 namespace Qs.Types;
 
 /// <summary>
@@ -16,7 +15,6 @@ namespace Qs.Types;
 public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 {
     private string functionName;
-
 
     public string FunctionName
     {
@@ -29,11 +27,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// </summary>
     public string FunctionNamespace { get; set; }
 
-
     private LambdaExpression _FunctionExpression;
 
     public LambdaExpression FunctionExpression =>_FunctionExpression;
-
 
     /// <summary>
     /// Tells if the function has an evaluated body that can be invoked.
@@ -76,7 +72,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             .ToArray();
 
         return (QsScalar)InvokeByQsParameters(parms);
-
     }
 
     /// <summary>
@@ -141,7 +136,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         }
     }
 
-
     /// <summary>
     /// Evaluate every argument and call the suitable function
     /// </summary>
@@ -149,7 +143,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <returns></returns>
     internal Expression GetInvokeExpression(QsVar vario, string[] args)
     {
-
         List<Expression> parameters = [];
 
         for (var ip = 0; ip < args.Count(); ip++)
@@ -191,7 +184,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                     nakedParameter,
                     rawParameter);
 
-
                 // -> Catch(QsVariableNotFoundException e) {QsParameter.MakeParameter(e.ExtraData, args[ip])}
 
                 var e = Expression.Parameter(typeof(QsVariableNotFoundException), "e");
@@ -213,12 +205,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             }
         }
 
-
         var qsParamArray = Expression.NewArrayInit(typeof(QsParameter), parameters);
         return Expression.Call(Expression.Constant(this), GetType().GetMethod("InvokeByQsParameters"), qsParamArray);
-
     }
-
 
     /// <summary>
     /// This function is used internally from the expression calls.
@@ -254,14 +243,11 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             }
             else
             {
-
                 //normal variable
                 nakedParameter = QsParameter.MakeParameter(parameters[ip].QsNativeValue, parameters[ip].ParameterRawText);
-
             }
 
             ProcessedParameters.Add(nakedParameter);
-
         }
 
         return InvokeByQsParameters(ProcessedParameters.ToArray());
@@ -309,8 +295,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
     #endregion
 
-
-
     /// <summary>
     /// Function text after '=' equal sign.
     /// </summary>
@@ -326,7 +310,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// </summary>
     public string FunctionDeclaration { get; set; } = functionBody;
 
-
     /// <summary>
     /// Parameters of the functions.
     /// </summary>
@@ -337,7 +320,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// </summary>
     public string[] ParametersNames => (from p in Parameters select p.Name).ToArray();
 
-
     /// <summary>
     /// returns 0 indexed parameter name location
     /// -1 if not found
@@ -346,8 +328,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <returns></returns>
     public int GetParameterOrdinal(string parameterName)
     {
-
-
         for (var ix = 0; ix < Parameters.Length; ix++)
         {
             if (Parameters[ix].Name.Equals(parameterName, StringComparison.OrdinalIgnoreCase))
@@ -397,7 +377,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         return true;
     }
 
-
     public QsFunction(string functionBody)
         : this(functionBody, false)
     {
@@ -419,7 +398,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     }
 
     #region Helper Functions
-
 
     public static Token TokenizeFunction(string functionCode)
     {
@@ -469,15 +447,12 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
         GoParseFunction:
 
-
         var functionToken = TokenizeFunction(functionDeclaration);
         return ParseFunction(qse, functionDeclaration, functionToken);
-
     }
 
     public static QsFunction ParseFunction(QsEvaluator qse, string functionDeclaration, Token functionToken)
     {
-
         var nsidx = 0; // surve as a base for indexing token if there is namespace it will be 1 otherwise remain 0
 
         // specify the namespaces end token.
@@ -503,7 +478,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             // will be the first token after excluding namespace.
 
             var functionName  = string.Empty;
-
 
             functionName = functionToken[nsidx].TokenValue;
 
@@ -543,7 +517,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                 Parameters = prms.ToArray()
             };
 
-
             //LambdaBuilder lb = Utils.Lambda(typeof(QsValue), functionName);
             var lb = SimpleLambdaBuilder.Create(typeof(QsValue), functionName);
 
@@ -563,8 +536,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
             lb.Body = Expression.Block(statements);
 
-
-
             var lbe = lb.MakeLambda();
 
             qf._FunctionExpression = lbe;
@@ -572,7 +543,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             qf.FunctionBodyToken = functionBodyTokens;
 
             return qf;
-
         }
 
         return null;
@@ -588,11 +558,9 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <returns></returns>
     public static QsFunction GetFunction(QsScope scope, string qsNamespace, string functionName)
     {
-
         if (string.IsNullOrEmpty(qsNamespace))
         {
             // no namespace included then it is from the local scope.
-
 
             // I am adding the mathmatical functions in the root namespace
             // so I will test for the function namespace and
@@ -605,26 +573,19 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             function = (QsFunction)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, functionName);
 
             return function;
-
         }
 
         try
         {
-
             var ns = QsNamespace.GetNamespace(scope, qsNamespace);
 
-
             return (QsFunction)ns.GetValue(functionName);
-
         }
         catch(QsVariableNotFoundException)
         {
             return null;
         }
     }
-
-
-
 
     /// <summary>
     /// Called from Expressions.
@@ -645,14 +606,12 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             functionName = functionFullName.Substring(functionFullName.IndexOf(':') + 1);
         }
 
-
         var f = GetFunction(scope, nameSpace, functionName);
 
         if (f == null)
             throw new QsFunctionNotFoundException("Function: '" + functionName + "' Couldn't be found in " + nameSpace + ".");
         return f;
     }
-
 
     /// <summary>
     /// Form a function symbolic name that can be stored into the program heap.
@@ -694,7 +653,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         return false;
     }
 
-
     /// <summary>
     /// Test the last charachter in the text f#2 if it is digit then the symbolic name is not expressing overloaded function.
     /// </summary>
@@ -709,10 +667,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
     #endregion
 
-
-
-
-
     #region ICloneable Members
 
     public object Clone()
@@ -721,7 +675,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         var fdname = f.FunctionDeclaration.Substring(0, f.FunctionDeclaration.IndexOf('('));
         f.FunctionDeclaration = f.FunctionDeclaration.Replace(fdname, "_");
         return f;
-
     }
 
     #endregion

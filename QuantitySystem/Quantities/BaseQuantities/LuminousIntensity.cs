@@ -9,7 +9,6 @@ public class LuminousIntensity<T>(float exponent) : AnyQuantity<T>(exponent)
 
     public override QuantityDimension Dimension => _Dimension * Exponent;
 
-
     public static implicit operator LuminousIntensity<T>(T value)
     {
         LuminousIntensity<T> Q = new()
@@ -19,5 +18,4 @@ public class LuminousIntensity<T>(float exponent) : AnyQuantity<T>(exponent)
 
         return Q;
     }
-
 }

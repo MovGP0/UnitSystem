@@ -4,7 +4,6 @@ namespace QuantitySystem.Quantities.DimensionlessQuantities;
 
 public class Angle<T> : DerivedQuantity<T>
 {
-
     public Angle()
         :base(1, new Length<T>(), new Displacement<T>(-1))
     {
@@ -15,7 +14,6 @@ public class Angle<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Angle<T>(T value)
     {
         Angle<T> Q = new()
@@ -25,6 +23,4 @@ public class Angle<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

@@ -19,6 +19,4 @@ public class UnitsNotDimensionallyEqualException : UnitException
    {
       // Add any type-specific logic for inner exceptions.
    }
-
-
 }

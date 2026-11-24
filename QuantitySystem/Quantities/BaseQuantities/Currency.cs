@@ -8,7 +8,6 @@ public class Currency<T> : AnyQuantity<T>
     public Currency()
         : base(1)
     {
-
     }
 
     /// <summary>
@@ -18,14 +17,12 @@ public class Currency<T> : AnyQuantity<T>
     public Currency(float exponent)
         : base(exponent) { }
 
-
     private static QuantityDimension _Dimension = new()
     {
         Currency = new DimensionDescriptors.CurrencyDescriptor(1)
     };
 
     public override QuantityDimension Dimension => _Dimension * Exponent;
-
 
     public static implicit operator Currency<T>(T value)
     {
@@ -36,5 +33,4 @@ public class Currency<T> : AnyQuantity<T>
 
         return Q;
     }
-
 }

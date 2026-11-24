@@ -14,7 +14,6 @@ public class Speed<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Speed<T>(T value)
     {
         Speed<T> Q = new()
@@ -24,5 +23,4 @@ public class Speed<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

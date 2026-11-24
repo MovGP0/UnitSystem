@@ -141,18 +141,14 @@ public class SymbolicVariableTest
         var xxy2T = xy2T * _x;
         Assert.AreEqual("x^(2*t+1)*y^(2*t)", xxy2T.ToString());
 
-
         var xxy2T2 = xxy2T.Power(2);
         Assert.AreEqual("x^(4*t+2)*y^(4*t)", xxy2T2.ToString());
-
 
         var xe = xxy2T + (3 * t * _z);
         Assert.AreEqual("x^(2*t+1)*y^(2*t)+3*t*z", xe.ToString());
 
-
         var xe2 = xe.Power(2);
         Assert.AreEqual("x^(4*t+2)*y^(4*t)+6*t*z*x^(2*t+1)*y^(2*t)+9*t^2*z^2", xe2.ToString());
-
     }
 
     /// <summary>
@@ -161,7 +157,6 @@ public class SymbolicVariableTest
     [Test]
     public void SymbolicPowerMulDivTest()
     {
-
         var lx = _x.RaiseToSymbolicPower(_y);
 
         var hx = _x.RaiseToSymbolicPower(_three);
@@ -191,13 +186,11 @@ public class SymbolicVariableTest
         r = 1 / c;
 
         Assert.AreEqual(r.ToString(), "1/(u^2-2*v*u+v^2)");
-
     }
 
     [Test]
     public void MiscTesting()
     {
-
         var t = new SymbolicVariable("t");
         var po = _two * t + _one;
 
@@ -210,12 +203,8 @@ public class SymbolicVariableTest
         var xp2 = xp * xp;
         Assert.AreEqual("x^(4*t+2)", xp2.ToString());
 
-
         var xp2V2 = xp.Power(2);
         Assert.AreEqual("x^(4*t+2)", xp2V2.ToString());
-
-
-
     }
 
     [Test]
@@ -245,7 +234,6 @@ public class SymbolicVariableTest
         uv = u * v;
         Assert.AreEqual("8*y^4*x^3", uv.ToString());
 
-
         u = _three * _y * _x * _z;
         v = _five * _y.Power(2) * _x.Power(3) * _z.Power(7);
         uv = u * v;
@@ -259,7 +247,6 @@ public class SymbolicVariableTest
         Assert.AreEqual("15*z^4*x^8*y^3", uv.ToString());
         #endregion
         #endregion
-
 
         #region division to the same value term with different orders
         var l = _eight * _z.Power(3) * _x.Power(2) * _y.Power(5);
@@ -307,7 +294,6 @@ public class SymbolicVariableTest
         var aal = aa2 * aa;
         Assert.AreEqual(maxima, aal.ToString());
 
-
         var aa3 = aa.Power(3);
         Assert.AreEqual(maxima, aa3.ToString());
     }
@@ -334,11 +320,7 @@ public class SymbolicVariableTest
                 throw new Exception("No more than sub terms required");
 
         Assert.AreEqual(1, 1);
-
-
     }
-
-
 
     [Test]
     public void RemovingZeroTerms()
@@ -349,7 +331,6 @@ public class SymbolicVariableTest
         var tot = a + b;
 
         Assert.AreEqual(tot.ToString(), "2*y+2*z");
-
     }
 
     [Test]
@@ -375,9 +356,7 @@ public class SymbolicVariableTest
         var c = SymbolicVariable.Multiply(aB, aB);
 
         Assert.AreEqual("(x+y+z)^(6*x)+2*(x+y+z)^(y+3*x)+(x+y+z)^(2*y)", c.ToString());
-
     }
-
 
     /// <summary>
     ///A test for Diff
@@ -439,7 +418,6 @@ public class SymbolicVariableTest
         Assert.AreEqual("3*x*y^2+2*x", dkY.ToString());
     }
 
-
     [Test]
     public void ParseTest()
     {
@@ -460,10 +438,7 @@ public class SymbolicVariableTest
 
         var ns = SymbolicVariable.Parse("-6^w");
         Assert.AreEqual("-6^w", ns.ToString());
-
     }
-
-
 
     [Test]
     public void FuncDiscoveryTest()
@@ -476,14 +451,10 @@ public class SymbolicVariableTest
 
         Assert.AreEqual(true, _emptyFuntion.IsFunction);
 
-
         var cf = SymbolicVariable.Parse("sum(o, sum(a,b))");
         var g = cf.FunctionParameters;
         Assert.AreEqual("o", g[0].ToString());
         Assert.AreEqual("sum(a,b)", g[1].ToString());
-
-
-
     }
 
     [Test]
@@ -517,12 +488,10 @@ public class SymbolicVariableTest
         Assert.AreEqual("-csch(x)*coth(x)", csch.Differentiate("x").ToString());
         Assert.AreEqual("-csch(x)^2", coth.Differentiate("x").ToString());
 
-
         var complexsin = SymbolicVariable.Parse("cos(x^2+x^2+x^2)");
         Assert.AreEqual("cos(3*x^2)", complexsin.ToString());
 
         Assert.AreEqual("-6*x*sin(3*x^2)", complexsin.Differentiate("x").ToString());
-
 
         var log = new SymbolicVariable(op_LnText + "(x^6*y^3)");
 
@@ -551,10 +520,8 @@ public class SymbolicVariableTest
 
         Assert.AreEqual("2^x", p.ToString());
 
-
         var p2 = SymbolicVariable.Multiply(SymbolicVariable.Parse("2^x"), _one);
         Assert.AreEqual("2^x", p2.ToString());
-
 
         var xx = SymbolicVariable.Parse("x^2");
         var roro = SymbolicVariable.Multiply(p, xx);
@@ -583,7 +550,6 @@ public class SymbolicVariableTest
 
         Assert.AreEqual("2^(x+y)", g.ToString());
 
-
         var fl = SymbolicVariable.Parse("3^x");
         g = SymbolicVariable.Multiply(fp, fl);
         Assert.AreEqual("2^x*3^x", g.ToString());
@@ -594,20 +560,17 @@ public class SymbolicVariableTest
         g = SymbolicVariable.Multiply(g, SymbolicVariable.Parse("2^z"));
         Assert.AreEqual("2^(x+z)*3^(x+y)", g.ToString());
 
-
         g = SymbolicVariable.Multiply(g, SymbolicVariable.Parse("2^v"));
         Assert.AreEqual("2^(x+z+v)*3^(x+y)", g.ToString());
 
         g = SymbolicVariable.Multiply(g, SymbolicVariable.Parse("3^u"));
         Assert.AreEqual("2^(x+z+v)*3^(x+y+u)", g.ToString());
 
-
         var ns = SymbolicVariable.Parse("-6.6^w");
         Assert.AreEqual("-6.6^w", ns.ToString());
 
         g = SymbolicVariable.Multiply(g, ns);
         Assert.AreEqual("2^(x+z+v)*3^(x+y+u)*-6.6^w", g.ToString());
-
     }
 
     [Test]
@@ -623,9 +586,7 @@ public class SymbolicVariableTest
 
         g = SymbolicVariable.Multiply(g, new SymbolicVariable("30"));
         Assert.AreEqual("3^(x+3)*30", g.ToString());
-
     }
-
 
     [Test]
     public void BaseVariablePowerVariableDiffTest()
@@ -670,9 +631,7 @@ public class SymbolicVariableTest
         var cst = new SymbolicVariable("-cos(t)");
         g = SymbolicVariable.Multiply(_t, cst);
         Assert.AreEqual("-t*cos(t)", g.ToString());
-
     }
-
 
     [Test]
     public void DifferentiateMultpliedSymbols()
@@ -690,7 +649,6 @@ public class SymbolicVariableTest
         g = p.Differentiate("x");
 
         Assert.AreEqual("cos(x)^2-sin(x)^2", g.ToString());
-
 
         p = SymbolicVariable.Parse("sin(2*x*y)*cos(x)");
         g = p.Differentiate("x");
@@ -711,9 +669,7 @@ public class SymbolicVariableTest
 
         g = p.Differentiate("y");
         Assert.AreEqual("5*t/y", g.ToString());
-
     }
-
 
     /// <summary>
     ///A test for ParseLambda
@@ -820,7 +776,6 @@ public class SymbolicVariableTest
         v = SymbolicVariable.Parse("+6/(z*x*y)-(2+u+v)/(x+y)");
         Assert.AreEqual("6/z/x/y-(2+u+v)/(x+y)", v.ToString());
 
-
         v = SymbolicVariable.Parse("2/(x+2) + y/(x+2)");
         Assert.AreEqual("(2+y)/(x+2)", v.ToString());
 
@@ -848,7 +803,6 @@ public class SymbolicVariableTest
         v = v.Power(0.5);
 
         Assert.AreEqual("Sqrt(4+5*t)", v.ToString());
-
 
         v = v.Power(2);
         Assert.AreEqual("4+5*t", v.ToString());
@@ -914,7 +868,6 @@ public class SymbolicVariableTest
         v = v.Differentiate("x");
         Assert.AreEqual("-(1-3*x)^(cos(x))*log((1-3*x))*sin(x)-3*(1-3*x)^(cos(x))*cos(x)/(1-3*x)", v.ToString());
 
-
         v = SymbolicVariable.Parse("log(2*x^(3*x^2))");
         v = v.Differentiate("x");
         Assert.AreEqual("6*log(x)*x+3*x", v.ToString());
@@ -934,7 +887,6 @@ public class SymbolicVariableTest
 
         dv = v.Differentiate("x");
         Assert.AreEqual("sin(x)^x*log(sin(x))+sin(x)^(x-1)*x*cos(x)", dv.ToString());
-
     }
 
     [Test]

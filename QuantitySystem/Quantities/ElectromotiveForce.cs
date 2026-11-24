@@ -14,7 +14,6 @@ public class ElectromotiveForce<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator ElectromotiveForce<T>(T value)
     {
         ElectromotiveForce<T> Q = new()
@@ -24,5 +23,4 @@ public class ElectromotiveForce<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

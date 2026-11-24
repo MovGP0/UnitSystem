@@ -18,7 +18,6 @@ public class PolarVolume<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator PolarVolume<T>(T value)
     {
         PolarVolume<T> Q = new()

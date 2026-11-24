@@ -27,7 +27,6 @@ public class GearBox : Flow
     [Step(0)]
     public static Step Neutral;
 
-
     [StepAction(10, "From First Shift To Neutral", "Neutral")]
     [StepAction(12, "From First Shift To SecondShift", "SecondShift")]
     [Step(1)]

@@ -14,7 +14,6 @@ public class RotationalStiffness<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator RotationalStiffness<T>(T value)
     {
         RotationalStiffness<T> Q = new()
@@ -24,5 +23,4 @@ public class RotationalStiffness<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

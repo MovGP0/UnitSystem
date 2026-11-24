@@ -5,10 +5,6 @@ using StandardTokens;
 
 public sealed partial class Token : IEnumerable<Token>
 {
-
-
-
-
     public static Type GetTokenClassType(char c)
     {
         switch (c)
@@ -83,11 +79,8 @@ public sealed partial class Token : IEnumerable<Token>
 
             case '\n': return typeof(LineFeedToken);
 
-
             default:
                 return typeof(CharToken);
         }
     }
-
-
 }

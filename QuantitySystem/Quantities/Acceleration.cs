@@ -14,7 +14,6 @@ public class Acceleration<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Acceleration<T>(T value)
     {
         Acceleration<T> Q = new()
@@ -24,6 +23,4 @@ public class Acceleration<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

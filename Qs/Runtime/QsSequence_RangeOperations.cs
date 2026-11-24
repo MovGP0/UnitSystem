@@ -1,14 +1,10 @@
 ﻿using System.Globalization;
 using Qs.Types;
 
-
-
 namespace Qs.Runtime;
 
 public partial class QsSequence
 {
-
-
     #region Higher Sequence Manipulation functions (Summation ++, Multiplication **, Range ..).
 
     /// <summary>
@@ -82,7 +78,6 @@ public partial class QsSequence
         return FunctionBody;
     }
 
-
     /// <summary>
     /// returns elements in array
     /// </summary>
@@ -126,8 +121,6 @@ public partial class QsSequence
     /// </summary>
     public QsValue SumElements(int fromIndex, int toIndex)
     {
-
-
         if (Parameters.Length > 0)
         {
             // this is a call to form symbolic element
@@ -135,7 +128,6 @@ public partial class QsSequence
             // and calling g[0++2]
             //  the output should be x^0 + x^1 + x^2
             //  and be parsed into function  (QsFunction)
-
 
             var porma = string.Empty;  // the parameters separated by comma ','
             foreach (var prm in Parameters)
@@ -148,7 +140,6 @@ public partial class QsSequence
             var FunctionBody = JoinElementsWithOperation(fromIndex, toIndex, "+");
 
             var FunctionDeclaration = "_(" + porma + ") = " + FunctionBody;
-
 
             var qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
 
@@ -164,15 +155,12 @@ public partial class QsSequence
             Total = Total + GetElementValue(i);
         }
 
-
         return Total;
     }
 
     #region SumElements Functions
     public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0);
@@ -184,11 +172,8 @@ public partial class QsSequence
         return Total;
     }
 
-
     public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1);
@@ -201,8 +186,6 @@ public partial class QsSequence
     }
     public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2);
@@ -215,8 +198,6 @@ public partial class QsSequence
     }
     public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3);
@@ -229,8 +210,6 @@ public partial class QsSequence
     }
     public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4);
@@ -243,8 +222,6 @@ public partial class QsSequence
     }
     public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5);
@@ -257,8 +234,6 @@ public partial class QsSequence
     }
     public QsValue SumElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
@@ -272,16 +247,12 @@ public partial class QsSequence
 
     #endregion
 
-
-
     /// <summary>
     /// The method multiply all elements in the sequence between the supplied indexes.
     /// Correspondes To: S[i**k]
     /// </summary>
     public QsValue MulElements(int fromIndex, int toIndex)
     {
-
-
         if (Parameters.Length > 0)
         {
             // this is a call to form symbolic element
@@ -289,7 +260,6 @@ public partial class QsSequence
             // and calling g[0++2]
             //  the output should be x^0 + x^1 + x^2
             //  and be parsed into function  (QsFunction)
-
 
             var porma = string.Empty;  // the parameters separated by comma ','
             foreach (var prm in Parameters)
@@ -306,7 +276,6 @@ public partial class QsSequence
             var qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
 
             return new QsScalar(ScalarTypes.FunctionQuantity) { FunctionQuantity = qs.ToQuantity() };
-
         }
 
         FixIndices(ref fromIndex, ref toIndex);
@@ -318,15 +287,12 @@ public partial class QsSequence
             Total = Total * (QsValue)GetElementValue(i);
         }
 
-
         return Total;
     }
 
     #region MulElements Functions
     public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0);
@@ -340,8 +306,6 @@ public partial class QsSequence
 
     public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1);
@@ -354,8 +318,6 @@ public partial class QsSequence
     }
     public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2);
@@ -368,8 +330,6 @@ public partial class QsSequence
     }
     public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3);
@@ -382,8 +342,6 @@ public partial class QsSequence
     }
     public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4);
@@ -396,8 +354,6 @@ public partial class QsSequence
     }
     public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5);
@@ -410,8 +366,6 @@ public partial class QsSequence
     }
     public QsValue MulElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
     {
-
-
         FixIndices(ref fromIndex, ref toIndex);
 
         var Total = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
@@ -424,8 +378,6 @@ public partial class QsSequence
     }
 
     #endregion
-
-
 
     /// <summary>
     /// This is a tricky functions
@@ -474,7 +426,6 @@ public partial class QsSequence
                         se_text = se_text.Replace("`", "$" + SequenceRangeEndName);
                     }
 
-
                     // replace the parameters in declaration with the same
                     foreach (var param in Parameters)
                     {
@@ -483,7 +434,6 @@ public partial class QsSequence
                         se_text = se_text.Replace(param.Name, "$" + param.Name);
 
                         se_text = se_text.Replace("`" , "$" + param.Name);
-
                     }
 
                     ProcessedElements.Add(se_text);
@@ -512,7 +462,6 @@ public partial class QsSequence
                         se_text = se_text.Replace("`", "$" + SequenceRangeEndName);
                     }
 
-
                     // replace the parameters with names
                     foreach (var param in Parameters)
                     {
@@ -521,7 +470,6 @@ public partial class QsSequence
                         se_text = se_text.Replace(param.Name, "$" + param.Name);
 
                         se_text = se_text.Replace("`", "$" + param.Name);
-
                     }
 
                     ProcessedElements.Add(se_text);
@@ -551,14 +499,10 @@ public partial class QsSequence
             }
             else
             {
-
                 throw new QsException("This is enough, no more than matrix values please.");
             }
 
-
-
             #endregion
-
 
             return Total;
         }
@@ -568,7 +512,6 @@ public partial class QsSequence
         {
             //return vector
             var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
-
 
             #region Numerical Representation
             Total.AddComponent((QsScalar)firstElement);
@@ -588,7 +531,6 @@ public partial class QsSequence
                 }
             }
             #endregion
-
 
             return Total;
         }
@@ -614,13 +556,11 @@ public partial class QsSequence
                 }
             }
 
-
             return Total;
         }
 
         if (firstElement is QsMatrix)
         {
-
             throw new NotImplementedException();
         }
 
@@ -630,8 +570,6 @@ public partial class QsSequence
     #region QsValueElements Functions
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0)
     {
-
-
         var firstElement = GetElementValue(fromIndex, arg0);
         if (firstElement is QsScalar)
         {
@@ -655,7 +593,6 @@ public partial class QsSequence
                 }
             }
 
-
             return Total;
         }
 
@@ -680,13 +617,11 @@ public partial class QsSequence
                 }
             }
 
-
             return Total;
         }
 
         if (firstElement is QsMatrix)
         {
-
             throw new NotImplementedException();
         }
 
@@ -1050,7 +985,6 @@ public partial class QsSequence
 
         throw new NotSupportedException();
     }
-
 
     #endregion
 

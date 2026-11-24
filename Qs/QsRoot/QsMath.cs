@@ -119,7 +119,6 @@ public static partial class QsMath
         }
 
         throw new QsException("Not implemented for above matrix");
-
     }
 
     public static QsValue? Min(QsParameter value)

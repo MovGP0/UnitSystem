@@ -135,7 +135,7 @@ roslynator_blank_line_between_switch_sections = include
 dotnet_diagnostic.RCS0062.severity = none
 
 # Remove redundant blank lines
-# dotnet_diagnostic.RCS0063.severity = warning
+dotnet_diagnostic.RCS0063.severity = warning
 
 # Brace embedded statements that span multiple lines
 # dotnet_diagnostic.RCS1001.severity = warning

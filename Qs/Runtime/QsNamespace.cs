@@ -20,18 +20,13 @@ namespace Qs.Runtime;
 /// </summary>
 public class QsNamespace(string name)
 {
-
-
-
     public string NameSpaceRoot { get; set; }
-
 
     public string Name { get; } = name;
 
     private Type _NamespaceType = null;
 
     public Type NamespaceType => _NamespaceType;
-
 
     private Dictionary<string, object> Values = new(StringComparer.OrdinalIgnoreCase);
 
@@ -42,7 +37,6 @@ public class QsNamespace(string name)
         Values.Add(newVariable, qsr);
 
         return qsr;
-
     }
 
     public void SetValue(string name, object value)
@@ -70,7 +64,6 @@ public class QsNamespace(string name)
                     Values[name] = value;
                 else
                     r.ContentValue = (QsValue)value;
-
             }
         }
         else
@@ -78,7 +71,6 @@ public class QsNamespace(string name)
             throw new QsSyntaxErrorException("Variable name must start with a letter.");
         }
     }
-
 
     /// <summary>
     /// It tries to get the value of the given key.
@@ -106,7 +98,6 @@ public class QsNamespace(string name)
                 {
                     return Root.NativeToQsConvert(prop.GetValue(null, null));
                 }
-
             }
         }
 
@@ -119,7 +110,6 @@ public class QsNamespace(string name)
             throw new QsVariableNotFoundException("Variable '" + name + "' not found in '" + Name + "' namespace.");
         return o;
     }
-
 
     public object GetValueOrNull(string name)
     {
@@ -153,7 +143,6 @@ public class QsNamespace(string name)
         return o;
     }
 
-
     /// <summary>
     /// Decorate a native C# function with QsFunction
     /// </summary>
@@ -168,7 +157,6 @@ public class QsNamespace(string name)
 
         var miParameters = methodInfo.GetParameters();
         var qsFuncParamCount = miParameters.Length;
-
 
         var QsModFunc = new QsFunction("[" +qsNamespace + "." + qsFuncName + "]", true);
         QsModFunc.FunctionNamespace = qsNamespace;
@@ -202,14 +190,9 @@ public class QsNamespace(string name)
             QsModFunc.FunctionDeclaration += sb.ToString().TrimStart(',', ' ');
         QsModFunc.FunctionDeclaration += ")";
 
-
-
         QsModFunc.InternalFunctionDelegate = FormNativeFunctionDelegate(methodInfo);
         return QsModFunc;
-
     }
-
-
 
     #region discover of items
 
@@ -225,7 +208,6 @@ public class QsNamespace(string name)
     /// <returns></returns>
     private Dictionary<string, object> GetQsNamespaceMethods()
     {
-
         // The namespace is a static class with public visibility to its static members.
         var methods = _NamespaceType.GetMethods(
             BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Public
@@ -257,9 +239,7 @@ public class QsNamespace(string name)
             {
                 ParameterInfo[] mps = method.GetParameters();
 
-
                 var paramCount = mps.Length;
-
 
                 var fAttributes = method.GetCustomAttributes(typeof(QsFunctionAttribute), false);
 
@@ -269,7 +249,6 @@ public class QsNamespace(string name)
 
                 if (fAttributes.Length > 0)
                 {
-
                     funcAttribute = (QsFunctionAttribute)fAttributes[0];
 
                     // if the attribute were found treat the function as namedargument function that is not default function.
@@ -288,7 +267,6 @@ public class QsNamespace(string name)
                     }
 
                     CodedMembers.Add(methodTrueName, GetQsFunctionFromTypeMethod(method, funcAttribute));
-
                 }
                 else
                 {
@@ -296,7 +274,6 @@ public class QsNamespace(string name)
                     methodTrueName = QsFunction.FormFunctionSymbolicName(method_name, paramCount);
 
                     CodedMembers.Add(methodTrueName, GetQsFunctionFromTypeMethod(method, null));
-
                 }
             }
         }
@@ -304,10 +281,8 @@ public class QsNamespace(string name)
         return CodedMembers;
     }
 
-
     private IEnumerable<KeyValuePair<string, object>> GetQsNamespaceProperties()
     {
-
         var properties = _NamespaceType.GetProperties(
             BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Public);
 
@@ -332,11 +307,9 @@ public class QsNamespace(string name)
         {
             CodedMembers.Add(new KeyValuePair<string, object>
                 (prop.Name, prop.GetValue(null,null)));
-
         }
 
         return CodedMembers;
-
     }
 
     public IEnumerable<KeyValuePair<string, object>> GetItems()
@@ -362,19 +335,16 @@ public class QsNamespace(string name)
         return items;
     }
 
-
     public IEnumerable<string> GetVariablesKeys()
     {
         var varo = from item in GetItems()
             select item.Key;
         return varo;
-
     }
 
     #endregion
 
     #region Helpers for getting qsnampespaces
-
 
     /// <summary>
     /// The namespace is a static C# class under QsRoot.*
@@ -383,9 +353,7 @@ public class QsNamespace(string name)
     /// <returns></returns>
     private static Type GetQsNamespaceType(string qsNamespace)
     {
-
         qsNamespace = qsNamespace.Replace(':', '.');
-
 
         var cls = qsNamespace;
 
@@ -393,8 +361,6 @@ public class QsNamespace(string name)
             cls = cls.Replace("..", ""); // indicates that we used root operator in namespace  ::
         else
             cls = "QsRoot." + cls;
-
-
 
         //try the current assembly
 #if WINRT
@@ -408,7 +374,6 @@ public class QsNamespace(string name)
 
         if (ns == null)
         {
-
             /*
             // try  another search in the Qs*.dll dlls
 
@@ -429,8 +394,6 @@ public class QsNamespace(string name)
         return ns;
     }
 
-
-
     /// <summary>
     /// try to get the name
     /// </summary>
@@ -441,7 +404,6 @@ public class QsNamespace(string name)
     {
         return GetNamespace(scope, moduleNamespace, false);
     }
-
 
     /// <summary>
     /// The primary  function that gets the namespace from the scope.
@@ -459,7 +421,6 @@ public class QsNamespace(string name)
         // then return the object that hold the whole thing.
         if (scope != null)
         {
-
             if (scope.HasValue(moduleNamespace))
             {
                 NameSpace = (QsNamespace)scope.GetValue(moduleNamespace);
@@ -480,7 +441,6 @@ public class QsNamespace(string name)
                 }
             }
         }
-
 
         return NameSpace;
     }
@@ -504,10 +464,6 @@ public class QsNamespace(string name)
 
     #endregion
 
-
-
-
-
     /// <summary>
     /// Returns a delegate to native c# function.
     /// </summary>
@@ -522,7 +478,6 @@ public class QsNamespace(string name)
 
         var lb = SimpleLambdaBuilder.Create(typeof(QsValue), method.Name);
 
-
         //prepare parameters with the same name of native function but with qsparameter type
         var parameters = method.GetParameters();
 
@@ -535,7 +490,6 @@ public class QsNamespace(string name)
 
         if (!DecorateNativeFunction)
         {
-
             #region Delegate creation section
             switch (parameters.Length)
             {
@@ -631,7 +585,6 @@ public class QsNamespace(string name)
             // convert to array of QsParameter
             var parms = Expression.NewArrayInit(typeof(QsParameter), lb.Parameters.ToArray());
 
-
             // Convert to array of Object
             Expression ConvertedParametersExpression = Expression.Call(convparMethod, methodExpress ,parms);
 
@@ -646,30 +599,20 @@ public class QsNamespace(string name)
 
             var rr = Expression.Call(iv, methodExpress, parms);
 
-
             //var rr = Expression.Call(null, method);
             var vv = Expression.Call(NTOQ, rr);
             statements.Add(vv);
         }
-
 
         lb.Body = Expression.Block(statements);
 
         var lbe = lb.MakeLambda();
 
         return lbe.Compile();
-
     }
-
-
-
 
     internal static object IndirectInvoke(MethodInfo method, params object[] parameters)
     {
-
         return  method.Invoke(null, parameters);
     }
-
-
-
 }

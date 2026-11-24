@@ -42,7 +42,6 @@ public class QsDifferentialOperation : QsOperation
         return fo;
     }
 
-
     /// <summary>
     /// @|$value  will store this operation
     /// </summary>
@@ -65,7 +64,6 @@ public class QsDifferentialOperation : QsOperation
 
         throw new NotImplementedException();
     }
-
 
     /// <summary>
     /// 
@@ -135,7 +133,6 @@ public class QsDifferentialOperation : QsOperation
         throw new NotImplementedException();
     }
 
-
     public override bool Equality(QsValue value)
     {
         if (value is QsDifferentialOperation op)
@@ -164,7 +161,6 @@ public class QsDifferentialOperation : QsOperation
         }
 
         return g;
-
     }
 
     public override string ToShortString()

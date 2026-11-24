@@ -14,7 +14,6 @@ public class MassFlowRate<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator MassFlowRate<T>(T value)
     {
         MassFlowRate<T> Q = new()
@@ -24,5 +23,4 @@ public class MassFlowRate<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

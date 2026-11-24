@@ -2,7 +2,6 @@
 
 public partial class QsVector : QsValue, IEnumerable<QsScalar>
 {
-
     #region Scalar Operations
 
     /// <summary>
@@ -37,7 +36,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         }
 
         return v;
-
     }
 
     private QsVector MultiplyScalar(QsScalar s)
@@ -50,7 +48,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         }
 
         return v;
-
     }
 
     public QsVector DivideScalar(QsScalar scalar)
@@ -63,7 +60,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         }
 
         return v;
-
     }
 
     private QsValue ModuloScalar(QsScalar scalar)
@@ -78,7 +74,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         return v;
     }
 
-
     public QsVector PowerScalar(QsScalar scalar)
     {
         var v = new QsVector(Count);
@@ -90,7 +85,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         return v;
     }
-
 
     /// <summary>
     /// Differentiate every component in vectpr with the scalar.
@@ -108,7 +102,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         return v;
     }
-
 
     #endregion
     #region Vector Operations
@@ -151,8 +144,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         return v;
     }
 
-
-
     /// <summary>
     /// Multiply vector component by component.
     /// </summary>
@@ -171,7 +162,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         return v;
     }
 
-
     /// <summary>
     /// Divide vector component by component.
     /// </summary>
@@ -187,7 +177,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         for (var ix = 0; ix < Count; ix++)
             v[ix] = v[ix] / vector[ix];
 
-
         return v;
     }
 
@@ -195,7 +184,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     {
         if (Count != vector.Count)
             throw new QsException("Vectors are not equal");
-
 
         var v = CopyVector(this);
 
@@ -205,13 +193,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         return v;
     }
 
-
-
     /*
      * Scalar prodcut is commutative that is a{}.b{} = b{}.a{}
      * a{}.b{} = a1b1+a2b2+anbn
      */
-
 
     /// <summary>
     /// Dot product of two vectors
@@ -233,7 +218,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         return Total ;
     }
-
 
     /// <summary>
     /// Cross product for 3 components vector.
@@ -264,12 +248,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
     }
 
-
-
-
     #endregion
-
-
 
     #region QsValue operations
 
@@ -287,7 +266,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         }
     }
 
-
     public override QsValue AddOperation(QsValue vl)
     {
         QsValue value;
@@ -295,7 +273,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -318,7 +295,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             return SubtractScalar((QsScalar)value);
@@ -332,7 +308,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         throw new NotSupportedException();
     }
 
-
     /// <summary>
     /// Normal multiplication.
     /// </summary>
@@ -345,7 +320,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -367,7 +341,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         throw new NotSupportedException();
     }
 
-
     /// <summary>
     /// Dot product
     /// </summary>
@@ -380,7 +353,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -403,7 +375,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             return MultiplyScalar((QsScalar)value);
@@ -424,7 +395,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -448,7 +418,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             return DifferentiateScalar((QsScalar)value);
@@ -464,7 +433,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -494,7 +462,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         //this is according to wikipedia that |x| if x is vector is valid but discouraged
         //  the norm of vector should be ||x|| notation.
 
-
     }
 
     public override QsValue ModuloOperation(QsValue vl)
@@ -504,7 +471,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -533,7 +499,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             throw new NotSupportedException();
@@ -541,7 +506,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         if (value is QsVector)
         {
-
             var vec = (QsVector)value;
 
             if (vec.Count != Count)
@@ -552,16 +516,13 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             {
                 var v = (QsVector)(c * vec);
                 vcs.Add(v);
-
             }
 
             return (new QsMatrix(vcs.ToArray()));
-
         }
 
         throw new NotSupportedException();
     }
-
 
     public override QsValue LeftShiftOperation(QsValue vl)
     {
@@ -571,12 +532,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             times = vl;
 
-
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
         if (itimes > Count)
             itimes = itimes % Count;
-
 
         var vec = new QsVector(Count);
 
@@ -590,7 +549,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             vec.AddComponent(this[i]);
         }
 
-
         return vec;
     }
 
@@ -601,7 +559,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             times = ((QsReference)vl).ContentValue;
         else
             times = vl;
-
 
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
@@ -622,14 +579,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             vec.AddComponent(this[i]);
         }
 
-
         return vec;
     }
 
-
     #endregion
-
-
 
     public override bool LessThan(QsValue vl)
     {
@@ -638,7 +591,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -665,12 +617,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var s = (QsScalar)value.AbsOperation();
             return Magnitude().NumericalQuantity > s.NumericalQuantity;
-
         }
 
         if (value is QsVector)
@@ -678,7 +628,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             //the comparison will be based on the vector magnitudes.
             var v = (QsVector)value;
             return (Magnitude().NumericalQuantity > v.Magnitude().NumericalQuantity);
-
         }
 
         throw new NotSupportedException();
@@ -692,12 +641,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var s = (QsScalar)value.AbsOperation();
             return Magnitude().NumericalQuantity <= s.NumericalQuantity;
-
         }
 
         if (value is QsVector)
@@ -705,7 +652,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             //the comparison will be based on the vector magnitudes.
             var v = (QsVector)value;
             return (Magnitude().NumericalQuantity <= v.Magnitude().NumericalQuantity);
-
         }
 
         throw new NotSupportedException();
@@ -719,12 +665,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var s = (QsScalar)value.AbsOperation();
             return Magnitude().NumericalQuantity >= s.NumericalQuantity;
-
         }
 
         if (value is QsVector)
@@ -732,7 +676,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             //the comparison will be based on the vector magnitudes.
             var v = (QsVector)value;
             return (Magnitude().NumericalQuantity >= v.Magnitude().NumericalQuantity);
-
         }
 
         throw new NotSupportedException();
@@ -740,7 +683,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
     public override bool Equality(QsValue vl)
     {
-
         if ((object)vl == null)
             return false;
 
@@ -750,12 +692,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var s = (QsScalar)value.AbsOperation();
             return Magnitude().NumericalQuantity == s.NumericalQuantity;
-
         }
 
         if (value is QsVector v)
@@ -782,12 +722,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var s = (QsScalar)value.AbsOperation();
             return Magnitude().NumericalQuantity != s.NumericalQuantity;
-
         }
 
         if (value is QsVector)
@@ -795,7 +733,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             //the comparison will be based on the vector magnitudes.
             var v = (QsVector)value;
             return (Magnitude().NumericalQuantity != v.Magnitude().NumericalQuantity);
-
         }
 
         throw new NotSupportedException();
@@ -818,7 +755,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         throw new NotImplementedException();
     }
 
-
     /// <summary>
     /// Some operations on the vector.
     /// </summary>
@@ -830,6 +766,5 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             return Count.ToScalarValue();
 
         return base.Execute(expression);
-
     }
 }

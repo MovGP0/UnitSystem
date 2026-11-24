@@ -33,7 +33,6 @@ public abstract partial class AnyQuantity<T>
 
                 var secondVal = (double)(object)secondQuantity.Value;
 
-
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
 
@@ -51,18 +50,15 @@ public abstract partial class AnyQuantity<T>
 
                 var result = firstVal + secondVal;
 
-
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                 {
                     //assign the unit of first quantity to the result.
                     AQ.Unit = (Unit)firstQuantity.Unit.Clone();
                 }
 
-
                 AQ.Value = (T)(object)result;
 
                 return AQ;
-
             }
             else
             {
@@ -78,10 +74,8 @@ public abstract partial class AnyQuantity<T>
                     //factor from second unit to first unit
                     var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
 
-
                     secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
                 }
-
 
                 var expr = Expression.Add(Expression.Constant(firstVal), Expression.Constant(secondVal));
 
@@ -100,12 +94,10 @@ public abstract partial class AnyQuantity<T>
                     AQ.Unit = firstQuantity.Unit;
                 }
 
-
                 AQ.Value = result;
 
                 return AQ;
             }
-
         }
         else
         {
@@ -136,7 +128,6 @@ public abstract partial class AnyQuantity<T>
                 AQ = (AnyQuantity<T>)firstQuantity.Clone();
             }
 
-
             var firstVal = firstQuantity.Value;
 
             var secondVal = secondQuantity.Value;
@@ -151,7 +142,6 @@ public abstract partial class AnyQuantity<T>
 
                 secondVal = MultiplyScalarByGeneric<Q>(stof.ConversionFactor, secondVal);
             }
-
 
             var expr = Expression.Add(Expression.Constant(firstVal), Expression.Constant(secondVal));
 
@@ -170,7 +160,6 @@ public abstract partial class AnyQuantity<T>
                 AQ.Unit = firstQuantity.Unit;
             }
 
-
             AQ.Value = result;
 
             return AQ;
@@ -180,7 +169,6 @@ public abstract partial class AnyQuantity<T>
             throw new QuantitiesNotDimensionallyEqualException();
         }
     }
-
 
     public static AnyQuantity<T> Subtract(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
@@ -198,7 +186,6 @@ public abstract partial class AnyQuantity<T>
                 //keep the first quantity configuration.
                 AQ = (AnyQuantity<T>)firstQuantity.Clone();
             }
-
 
             if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
             {
@@ -219,8 +206,6 @@ public abstract partial class AnyQuantity<T>
                     secondVal = stof.ConversionFactor * secondVal;
                 }
 
-
-
                 ////sum the values
 
                 var result = firstVal - secondVal;
@@ -231,14 +216,12 @@ public abstract partial class AnyQuantity<T>
                     AQ.Unit = (Unit)firstQuantity.Unit.Clone();
                 }
 
-
                 AQ.Value = (T)(object)result;
 
                 return AQ;
             }
             else
             {
-
                 var firstVal = firstQuantity.Value;
                 var secondVal = secondQuantity.Value;
 
@@ -253,7 +236,6 @@ public abstract partial class AnyQuantity<T>
                     secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
                 }
 
-
                 var expr = Expression.Subtract(Expression.Constant(firstVal), Expression.Constant(secondVal));
 
                 // Construct Lambda function which return one object.
@@ -265,7 +247,6 @@ public abstract partial class AnyQuantity<T>
                 // execute the function
                 var result = aqf();
 
-
                 if (firstQuantity.Unit != null && secondQuantity.Unit != null)
                 {
                     //assign the unit of first quantity to the result.
@@ -276,7 +257,6 @@ public abstract partial class AnyQuantity<T>
 
                 return AQ;
             }
-
         }
         else
         {
@@ -292,7 +272,6 @@ public abstract partial class AnyQuantity<T>
         {
             //correct quantities and units
             qresult = QuantityDimension.QuantityFrom<T>(qresult.Dimension);
-
         }
         catch (QuantityNotFoundException)
         {
@@ -304,7 +283,6 @@ public abstract partial class AnyQuantity<T>
 
             if (firstQuantity.Unit != null && secondQuantity.Unit != null)
             {
-
                 var un = new Unit(qresult.GetType(), firstQuantity.Unit, secondQuantity.Unit);
                 qresult.Unit = un;
                 if (un.IsOverflowed)
@@ -313,7 +291,6 @@ public abstract partial class AnyQuantity<T>
         }
         else
         {
-
             qresult.Value = MultiplyGenericByGeneric(firstQuantity.Value, secondQuantity.Value);
 
             //check if any of the two quantities have a valid unit
@@ -321,26 +298,18 @@ public abstract partial class AnyQuantity<T>
 
             if (firstQuantity.Unit != null && secondQuantity.Unit != null)
             {
-
                 var un = new Unit(qresult.GetType(), firstQuantity.Unit, secondQuantity.Unit);
                 qresult.Unit = un;
                 if (un.IsOverflowed)
                     qresult.Value = MultiplyScalarByGeneric(un.GetUnitOverflow(), qresult.Value);
-
-
             }
         }
-
 
         return qresult;
     }
 
-
-
     public static AnyQuantity<T> Divide(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
-
-
         //to preserve the units we make a derivedquantity with passed quantities
         // then we take the derived unit in temporary store
         // then we try to get strongly typed Quantity
@@ -349,9 +318,7 @@ public abstract partial class AnyQuantity<T>
 
         AnyQuantity<T> sec_qty = (AnyQuantity<T>)secondQuantity.Invert(); //this is a divide process we must make 1/exponenet :)
 
-
         AnyQuantity<T> qresult = (AnyQuantity<T>)ConstructDerivedQuantity(firstQuantity, sec_qty);
-
 
         try
         {
@@ -361,14 +328,12 @@ public abstract partial class AnyQuantity<T>
         {
         }
 
-
         if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
         {
             qresult.Value = (T)(object)((double)(object)firstQuantity.Value * (double)(object)sec_qty.Value);
 
             if (firstQuantity.Unit != null && secondQuantity.Unit != null)
             {
-
                 var un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
                 qresult.Unit = un;
                 if (un.IsOverflowed)
@@ -377,7 +342,6 @@ public abstract partial class AnyQuantity<T>
         }
         else
         {
-
             qresult.Value = DivideGenericByGeneric(firstQuantity.Value, secondQuantity.Value);
 
             //check if any of the two quantities have a valid unit
@@ -385,12 +349,10 @@ public abstract partial class AnyQuantity<T>
 
             if (firstQuantity.Unit != null && secondQuantity.Unit != null)
             {
-
                 var un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
                 qresult.Unit = un;
                 if (un.IsOverflowed)
                     qresult.Value = MultiplyScalarByGeneric(un.GetUnitOverflow(), qresult.Value);
-
             }
         }
 
@@ -411,11 +373,9 @@ public abstract partial class AnyQuantity<T>
             throw new QuantityException("Raising Quantity to a non dimensionless quantity is not implemented\nExpected Result is " + expectedResult, new NotImplementedException());
         }
 
-
         // and I am ignoring the units conversion also
 
         var unit = quantity.Unit.RaiseUnitPower((float)exponent.Value);
-
 
         AnyQuantity<T> result = null;
 
@@ -430,10 +390,7 @@ public abstract partial class AnyQuantity<T>
 
         Debug.Assert(result.Dimension.Equals(result.Unit.UnitDimension), "Dimensions are not equal after power");
         return result;
-
     }
-
-
 
     /// <summary>
     /// Raising power of the same storage types.
@@ -443,24 +400,20 @@ public abstract partial class AnyQuantity<T>
     /// <returns></returns>
     public static AnyQuantity<T> Power(AnyQuantity<T> quantity, AnyQuantity<T> exponent)
     {
-
         if (!(exponent.Dimension.IsDimensionless & quantity.Dimension.IsDimensionless))
         {
             throw new QuantityException("All quantities should be dimensionless, because I don't have a clue about your object power technique", new NotImplementedException());
         }
 
-
         AnyQuantity<T> result = new DimensionlessQuantities.DimensionlessQuantity<T>();
         result.Value = RaiseGenericByGeneric(quantity.Value, exponent.Value);
 
         return result;
-
     }
 
     public static AnyQuantity<T> Mod(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
         AnyQuantity<T> qresult = (AnyQuantity<T>)firstQuantity.Clone();
-
 
         if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
         {
@@ -468,13 +421,11 @@ public abstract partial class AnyQuantity<T>
         }
         else
         {
-
             qresult.Value = ModuloGenericByGeneric(firstQuantity.Value, secondQuantity.Value);
         }
 
         return qresult;
     }
-
 
     #region Relation methods
     public static bool LessThan(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
@@ -490,7 +441,6 @@ public abstract partial class AnyQuantity<T>
 
                 var secondVal = (double)(object)secondQuantity.Value;
 
-
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
 
@@ -502,7 +452,6 @@ public abstract partial class AnyQuantity<T>
                     //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
                     secondVal = stof.ConversionFactor * secondVal;
-
                 }
 
                 return firstVal < secondVal;
@@ -510,7 +459,6 @@ public abstract partial class AnyQuantity<T>
             }
             else
             {
-
                 #region Custom Types
 
                 var firstVal = firstQuantity.Value;
@@ -524,7 +472,6 @@ public abstract partial class AnyQuantity<T>
                 {
                     //factor from second unit to first unit
                     var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
-
 
                     secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
                 }
@@ -552,7 +499,6 @@ public abstract partial class AnyQuantity<T>
         }
     }
 
-
     public static bool LessThanOrEqual(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
         if (firstQuantity.Equals(secondQuantity))
@@ -566,7 +512,6 @@ public abstract partial class AnyQuantity<T>
 
                 var secondVal = (double)(object)secondQuantity.Value;
 
-
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
 
@@ -578,7 +523,6 @@ public abstract partial class AnyQuantity<T>
                     //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
                     secondVal = stof.ConversionFactor * secondVal;
-
                 }
 
                 return firstVal <= secondVal;
@@ -586,9 +530,7 @@ public abstract partial class AnyQuantity<T>
             }
             else
             {
-
                 #region Custom Types
-
 
                 var firstVal = firstQuantity.Value;
 
@@ -601,7 +543,6 @@ public abstract partial class AnyQuantity<T>
                 {
                     //factor from second unit to first unit
                     var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
-
 
                     secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
                 }
@@ -628,7 +569,6 @@ public abstract partial class AnyQuantity<T>
         }
     }
 
-
     public static bool GreaterThan(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
         if (firstQuantity.Equals(secondQuantity))
@@ -642,7 +582,6 @@ public abstract partial class AnyQuantity<T>
 
                 var secondVal = (double)(object)secondQuantity.Value;
 
-
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
 
@@ -654,7 +593,6 @@ public abstract partial class AnyQuantity<T>
                     //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
                     secondVal = stof.ConversionFactor * secondVal;
-
                 }
 
                 return firstVal > secondVal;
@@ -662,11 +600,7 @@ public abstract partial class AnyQuantity<T>
             }
             else
             {
-
-
                 #region Custom Types
-
-
 
                 var firstVal = firstQuantity.Value;
 
@@ -679,7 +613,6 @@ public abstract partial class AnyQuantity<T>
                 {
                     //factor from second unit to first unit
                     var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
-
 
                     secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
                 }
@@ -706,7 +639,6 @@ public abstract partial class AnyQuantity<T>
         }
     }
 
-
     public static bool GreaterThanOrEqual(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
         if (firstQuantity.Equals(secondQuantity))
@@ -720,7 +652,6 @@ public abstract partial class AnyQuantity<T>
 
                 var secondVal = (double)(object)secondQuantity.Value;
 
-
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
 
@@ -732,7 +663,6 @@ public abstract partial class AnyQuantity<T>
                     //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
                     secondVal = stof.ConversionFactor * secondVal;
-
                 }
 
                 return firstVal >= secondVal;
@@ -740,7 +670,6 @@ public abstract partial class AnyQuantity<T>
             }
             else
             {
-
                 #region Custom Types
                 var firstVal = firstQuantity.Value;
 
@@ -753,7 +682,6 @@ public abstract partial class AnyQuantity<T>
                 {
                     //factor from second unit to first unit
                     var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
-
 
                     secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
                 }
@@ -779,7 +707,6 @@ public abstract partial class AnyQuantity<T>
         }
     }
 
-
     public static bool Equality(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
         if (firstQuantity.Equals(secondQuantity))
@@ -793,7 +720,6 @@ public abstract partial class AnyQuantity<T>
 
                 var secondVal = (double)(object)secondQuantity.Value;
 
-
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
 
@@ -805,7 +731,6 @@ public abstract partial class AnyQuantity<T>
                     //secondVal =  stof.ConversionFactor * secondVal;  //original line without shift
 
                     secondVal = stof.ConversionFactor * secondVal;
-
                 }
 
                 return firstVal == secondVal;
@@ -813,7 +738,6 @@ public abstract partial class AnyQuantity<T>
             }
             else
             {
-
                 #region Custom Types
 
                 var firstVal = firstQuantity.Value;
@@ -827,7 +751,6 @@ public abstract partial class AnyQuantity<T>
                 {
                     //factor from second unit to first unit
                     var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
-
 
                     secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
                 }
@@ -846,7 +769,6 @@ public abstract partial class AnyQuantity<T>
                 return result;
                 #endregion
 
-
             }
         }
         else
@@ -855,7 +777,6 @@ public abstract partial class AnyQuantity<T>
             return false;
         }
     }
-
 
     public static bool Inequality(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
@@ -869,7 +790,6 @@ public abstract partial class AnyQuantity<T>
                 var firstVal = (double)(object)firstQuantity.Value;
 
                 var secondVal = (double)(object)secondQuantity.Value;
-
 
                 //correct the values according to left unit or first unit.
                 //the resulted quantity has the values of the first unit.
@@ -887,12 +807,7 @@ public abstract partial class AnyQuantity<T>
             }
             else
             {
-
-
-
                 #region Custom Types
-
-
 
                 var firstVal = firstQuantity.Value;
 
@@ -905,7 +820,6 @@ public abstract partial class AnyQuantity<T>
                 {
                     //factor from second unit to first unit
                     var stof = secondQuantity.Unit.PathToUnit(firstQuantity.Unit);
-
 
                     secondVal = MultiplyScalarByGeneric(stof.ConversionFactor, secondVal);
                 }
@@ -924,7 +838,6 @@ public abstract partial class AnyQuantity<T>
                 return result;
                 #endregion
 
-
             }
         }
         else
@@ -937,10 +850,7 @@ public abstract partial class AnyQuantity<T>
     #endregion
     #endregion
 
-
-
     #region Overloaded Operators
-
 
     public static AnyQuantity<T> operator +(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
@@ -952,12 +862,10 @@ public abstract partial class AnyQuantity<T>
         return Subtract(firstQuantity, secondQuantity);
     }
 
-
     public static AnyQuantity<T> operator *(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
         return Multiply(firstQuantity, secondQuantity);
     }
-
 
     public static AnyQuantity<T> operator /(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
@@ -974,7 +882,6 @@ public abstract partial class AnyQuantity<T>
     {
         return Power(quantity, exponent);
     }
-
 
     #region Relations Operators
     public static bool operator <(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
@@ -1009,6 +916,5 @@ public abstract partial class AnyQuantity<T>
     #endregion
 
     #endregion
-
 
 }

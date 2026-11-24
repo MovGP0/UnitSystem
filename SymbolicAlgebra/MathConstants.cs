@@ -2,7 +2,6 @@
 
 public static class MathConstants
 {
-
     /// <summary>
     /// returns the corresponding double value of the constant
     /// </summary>
@@ -10,7 +9,6 @@ public static class MathConstants
     /// <returns></returns>
     public static double Constant(string name)
     {
-
         if (name.Equals("pi", StringComparison.OrdinalIgnoreCase))
             return Math.PI;
 
@@ -22,9 +20,7 @@ public static class MathConstants
 
         // if(name.Equals("i", StringComparison.OrdinalIgnoreCase)) return  complex value
 
-
         // return unknown constant.
         return 0;
-
     }
 }

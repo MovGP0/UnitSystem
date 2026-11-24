@@ -153,7 +153,6 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
         if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float) || typeof(T) == typeof(int) || typeof(T) == typeof(short))
         {
             return (T)(object)Math.Pow((double)(object)value, factor);
-
         }
 
         var m = typeof(T).GetMethod("Pow", [typeof(T), typeof(double)]);
@@ -250,16 +249,13 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
         }
         else
         {
-
             //QuantityType = QuantityType.MakeGenericType(typeof(T));
             //AnyQuantity<T> qty = (AnyQuantity<T>)Activator.CreateInstance(QuantityType);
 
             AnyQuantity<T> qty = QuantityDimension.QuantityFrom<T>(QuantityDimension.DimensionFrom(quantityType));
             return qty;
         }
-
     }
-
 
     #region ICloneable Members
 

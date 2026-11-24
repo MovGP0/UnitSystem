@@ -10,7 +10,6 @@ public enum QsParamType
     /// </summary>
     Raw,
 
-
     /// <summary>
     /// Text parameter.
     /// </summary>

@@ -14,7 +14,6 @@ public class MassMomentOfInertia<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator MassMomentOfInertia<T>(T value)
     {
         MassMomentOfInertia<T> Q = new()
@@ -24,5 +23,4 @@ public class MassMomentOfInertia<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

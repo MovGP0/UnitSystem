@@ -6,11 +6,9 @@
 /// </summary>
 internal struct HybridVariable
 {
-
     public SymbolicVariable? SymbolicVariable;
 
     public double NumericalVariable;
-
 
     public static HybridVariable operator -(HybridVariable hv, HybridVariable num)
     {
@@ -60,7 +58,6 @@ internal struct HybridVariable
         return nhv;
     }
 
-
     public static HybridVariable operator +(HybridVariable hv, double num)
     {
         HybridVariable nhv;
@@ -85,8 +82,6 @@ internal struct HybridVariable
         return nhv;
     }
 
-
-
     public static HybridVariable operator /(HybridVariable hv, HybridVariable num)
     {
         HybridVariable nhv;
@@ -107,7 +102,6 @@ internal struct HybridVariable
         }
     }
 
-
     public bool IsZero
     {
         get
@@ -123,7 +117,6 @@ internal struct HybridVariable
             else
                 return false;
         }
-
     }
 
     public bool IsNegative
@@ -140,7 +133,6 @@ internal struct HybridVariable
             }
             else
                 return false;
-
         }
     }
 

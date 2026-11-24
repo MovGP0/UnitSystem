@@ -23,5 +23,4 @@ public class Volume<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

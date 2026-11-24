@@ -93,9 +93,7 @@ public partial class Unit
             //I want to get the type without type parameters AnyQuantity<>
 
             quantityType = quantityType.GetGenericTypeDefinition();
-
         }
-
 
         //predictor of default unit.
         Func<Type, bool> SearchForQuantityType = unitType =>
@@ -256,7 +254,6 @@ public partial class Unit
                         if (u.QuantityType == typeof(Length<>))
                         {
                             u.QuantityType = typeof(Displacement<>);
-
                         }
 
                         if(u.QuantityType == typeof(Force<>))
@@ -413,14 +410,12 @@ public partial class Unit
             Type? uQType = null;
             uQType = QuantityDimension.GetQuantityTypeFrom(ud);
             finalUnit = new Unit(uQType, chobits);
-
         }
 
         return finalUnit;
 
         nounit:
         throw new UnitNotFoundException(un);
-
     }
 
     private static Dictionary<Type, UnitAttribute> UnitsAttributes = new();

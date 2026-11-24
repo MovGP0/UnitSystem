@@ -4,12 +4,10 @@ namespace Qs.Types;
 
 public partial class QsVector: QsValue, IEnumerable<QsScalar>
 {
-
     /// <summary>
     /// for storing the quantities.
     /// </summary>
     private List<QsScalar> ListStorage;
-
 
     #region constructors
 
@@ -21,7 +19,6 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     public QsVector(int count)
     {
         ListStorage = new List<QsScalar>(count);
-
     }
 
     public QsVector(params QsScalar[] scalars)
@@ -75,12 +72,9 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     /// <returns></returns>
     public QsScalar Magnitude()
     {
-
-
         var v_dot_v = DotProductOperation(this) as QsScalar;
 
         var sqrt_v_dot_v = v_dot_v.PowerScalar("0.5".ToScalar());
-
 
         return sqrt_v_dot_v;
     }
@@ -95,12 +89,10 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
         for (var i = 1; i < Count; i++)
             total = total + this[i];
         return total;
-
     }
 
     #region Vector behaviour
     public int Count => ListStorage.Count;
-
 
     public QsScalar this[int i]
     {
@@ -118,7 +110,6 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
         }
     }
     #endregion
-
 
     /// <summary>
     /// Test if the vector is one element only.
@@ -147,7 +138,6 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
         return sb.ToString();
     }
 
-
     /// <summary>
     /// Copy the vector to another instance with the same components.
     /// </summary>
@@ -170,8 +160,6 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
         return ListStorage.ToArray();
     }
 
-
-
     #region IEnumerable<QsScalar> Members
 
     public IEnumerator<QsScalar> GetEnumerator()
@@ -190,20 +178,14 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
 
     #endregion
 
-
-
-
     #region ICloneable Members
 
     public object Clone()
     {
         return CopyVector(this);
-
     }
 
     #endregion
-
-
 
     public override string ToShortString()
     {
@@ -219,5 +201,4 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     {
         return new QsMatrix(this).Transpose();
     }
-
 }

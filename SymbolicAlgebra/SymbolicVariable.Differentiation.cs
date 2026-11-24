@@ -2,7 +2,6 @@
 
 public partial class SymbolicVariable
 {
-
     /// <summary>
     /// Derive one pure term.
     /// </summary>
@@ -64,7 +63,6 @@ public partial class SymbolicVariable
                     var lnterm = new SymbolicVariable($"{FunctionOperation.LnText}(" + sv.ToString() + ")");
                     var dlnterm = lnterm.Differentiate(parameter);
                     sv = Multiply(sv, dlnterm);
-
                 }
                 else
                 {
@@ -141,7 +139,6 @@ public partial class SymbolicVariable
                         var pa = fv._FunctionParameters[0];
                         var dpa = pa.Differentiate(parameter);
                         fv = Divide(dpa, pa);
-
                     }
                     else if(fv.FunctionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
                     {
@@ -153,7 +150,6 @@ public partial class SymbolicVariable
                         var dpa = pa.Differentiate(parameter);
                         var den = Multiply(Two, fv);
                         fv = Divide(dpa, den);
-
                     }
                     else if (FunctionOperation.InversedTrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
                     {
@@ -192,11 +188,8 @@ public partial class SymbolicVariable
                     }
                     else
                     {
-
-
                         // the function is not a special function like sin, cos, and log.
                         // search for the function in the running context.
-
 
                         var extendedFunction = Functions.Keys.FirstOrDefault(c => c.StartsWith(fv.FunctionName, StringComparison.OrdinalIgnoreCase));
                         if (!string.IsNullOrEmpty(extendedFunction))
@@ -215,14 +208,11 @@ public partial class SymbolicVariable
                             }
 
                             fv = Parse(dsf).Differentiate(parameter);
-
                         }
                         else
                         {
-
                             throw new SymbolicException("This function is not a special function, and it is not being defined before .. to define a user function write f(x):= x^2  or h(u,v):=u-v^2");
                         }
-
                     }
 
                     // second treat the function normally as if it is one big symbol
@@ -240,7 +230,6 @@ public partial class SymbolicVariable
                         sv._SymbolPowerTerm = Subtract(sv._SymbolPowerTerm, One);
                         sv = Multiply(sv, oldPower);
                     }
-
 
                     sv = Multiply(fv, sv);
                 }
@@ -276,7 +265,6 @@ public partial class SymbolicVariable
         return sv;
     }
 
-
     private static SymbolicVariable? DiffBigTerm(SymbolicVariable sv, string parameter)
     {
         // now result contains only one term
@@ -284,7 +272,6 @@ public partial class SymbolicVariable
 
         // we need to differentiate multiplied terms   in this  ONE TERM
         // every term is differentiated and multiplied by other terms  if  x*y*z  then == dx*y*z+x*dy+z+x*y*dz
-
 
         var SvDividedTerm = sv.DividedTerm;  // here we isolate the divided term for later calculations
         sv.DividedTerm = One;
@@ -340,7 +327,6 @@ public partial class SymbolicVariable
 
             // term *mt
             CalculatedDiffs[ix] = Multiply(mt, term);
-
         }
 
         //       dx*y*z     dy*x*z       dz*x*y
@@ -360,7 +346,6 @@ public partial class SymbolicVariable
         return total;
     }
 
-
     /// <summary>
     /// Differentiate the whole term based on the needed variables ... you know what I mean :)
     /// </summary>
@@ -375,7 +360,6 @@ public partial class SymbolicVariable
 
         List<ExtraTerm> OtherExtraTerms = result._ExtraTerms;
         result._ExtraTerms = null;
-
 
         result = DiffBigTerm(result, parameter);
 
@@ -400,7 +384,6 @@ public partial class SymbolicVariable
                 result = Add(result, term);
             }
         }
-
 
         AdjustSpecialFunctions(ref result);
 

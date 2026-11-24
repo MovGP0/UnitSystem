@@ -5,7 +5,6 @@ using System.Globalization;
 using QuantitySystem.Units;
 using Qs.Numerics;
 
-
 namespace Qs.Types;
 
 /// <summary>
@@ -13,7 +12,6 @@ namespace Qs.Types;
 /// </summary>
 public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 {
-
     #region Scalar Types Storage
 
     /// <summary>
@@ -43,7 +41,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     /// Quantity that its storage is a Quaternion number
     /// </summary>
     public AnyQuantity<Quaternion> QuaternionQuantity { get; set; }
-
 
     /// <summary>
     /// Quantity that its storage is a Function.
@@ -299,7 +296,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         if (rv.EndsWith("<1>"))
             return rv.Substring(0, rv.Length - 3);
         return rv;
-
     }
 
     /// <summary>
@@ -605,7 +601,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             default:
                 throw new NotImplementedException(_ScalarType + " - " + scalar.ScalarType);
         }
-
     }
 
     /// <summary>
@@ -757,7 +752,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             default:
                 throw new NotImplementedException(_ScalarType + " * " + scalar.ScalarType);
         }
-
     }
 
     public QsScalar DivideScalar(QsScalar scalar)
@@ -929,7 +923,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                     default:
                         throw new NotImplementedException(_ScalarType + " ^ " + power.ScalarType);
                 }
-
             }
 
             case ScalarTypes.SymbolicQuantity:
@@ -959,7 +952,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                             var NewSymbolicQuantityScalar = NewSymbolicQuantity.ToScalar();
 
                             return NewSymbolicQuantityScalar;
-
                         }
 
                         throw new QsException("Raising Symbolic Quantity to Symbolic Quantity is only valid when the two quantities are dimensionless");
@@ -968,7 +960,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                     default:
                         throw new NotImplementedException("Raising Symbolic Quantity to " + power.ScalarType + " is not implemented yet");
                 }
-
             }
 
             case ScalarTypes.ComplexNumberQuantity:
@@ -1285,7 +1276,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             var b = value as QsVector;
 
             return AddVector(b);
-
         }
 
         if (value is QsText)
@@ -1317,7 +1307,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             return SubtractScalar((QsScalar)value);
@@ -1328,7 +1317,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             var b = value as QsVector;
 
             return SubtractVector(b);
-
         }
 
         if (value is QsMatrix)
@@ -1358,7 +1346,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         throw new NotImplementedException("Subtracting QsScalar from " + value.GetType().Name + " is not implemented yet");
     }
 
-
     public override QsValue MultiplyOperation(QsValue vl)
     {
         QsValue value;
@@ -1366,7 +1353,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -1423,7 +1409,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         else
             value = vl;
 
-
         if (_ScalarType == ScalarTypes.QsOperation)
         {
             return Operation.DotProductOperation(value);
@@ -1431,12 +1416,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
         if (_ScalarType == ScalarTypes.SymbolicQuantity && value is QsScalar sc && sc.ScalarType == ScalarTypes.SymbolicQuantity)
         {
-
-
             var fbody = "(" + SymbolicQuantity.Value + ")" + "." + "(" + sc.SymbolicQuantity.Value + ")";
 
             var fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
-
 
             return fb;
         }
@@ -1473,7 +1455,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             return DivideScalar((QsScalar)value);
@@ -1508,7 +1489,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             if (ScalarType == ScalarTypes.QsOperation)
@@ -1518,7 +1498,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
         throw new NotImplementedException("Raising QsScalar to power of " + value.GetType().Name + " is not implemented yet");
     }
-
 
     /// <summary>
     /// ||Scalar||
@@ -1543,9 +1522,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         }
 
         return new QsScalar { NumericalQuantity = q * "1".ToQuantity() };
-
     }
-
 
     /// <summary>
     /// Calculate the modulo of
@@ -1559,7 +1536,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         // this is tricky because if you divide 5<m>/2<s> you got Speed 2.5<m/s>
         //   but the modulus will be 5<m> / 2<s> = 2<m/s> + 1<m>
@@ -1580,7 +1556,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         else
             value = vl;
 
-
         throw new NotImplementedException("Tensor product of QsScalar and " + value.GetType().Name + " is not implemented yet");
     }
 
@@ -1595,7 +1570,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     }
     #endregion
 
-
     #region Relational Operation
 
     public override bool LessThan(QsValue vl)
@@ -1605,7 +1579,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -1621,7 +1594,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             var mag = vector.Magnitude();
 
             return ((QsScalar)AbsOperation()).NumericalQuantity < mag.NumericalQuantity;
-
         }
 
         if (value is QsMatrix)
@@ -1640,7 +1612,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -1675,7 +1646,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var scalar = (QsScalar)value;
@@ -1708,7 +1678,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var scalar = (QsScalar)value;
@@ -1740,7 +1709,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if ((object)value == null)
             return false;
@@ -1804,7 +1772,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var scalar = (QsScalar)value;
@@ -1845,7 +1812,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         //  why I didn't use  normal brackets??
         //   because it is reserved to know the function itself by parameters (as I have overloaded functions by parameter names) not types
         //   @f(x,y)  !=  @f(u,v)    etc.
-
 
         if (_ScalarType == ScalarTypes.FunctionQuantity)
         {
@@ -1900,7 +1866,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                 n.Operation = (QsOperation)Operation.Clone();
                 break;
 
-
             case ScalarTypes.RationalNumberQuantity:
                 n.RationalQuantity = (AnyQuantity<Rational>)RationalQuantity.Clone();
                 break;
@@ -1924,7 +1889,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
             return DifferentiateScalar((QsScalar)value);
@@ -1965,7 +1929,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
         throw new NotImplementedException("Range to " + value.GetType().Name + " is not supported");
     }
-
 
     #region IConvertible
     public TypeCode GetTypeCode()
@@ -2097,7 +2060,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
         return base.Execute(expression);
     }
-
 
     /// <summary>
     /// returns constant value

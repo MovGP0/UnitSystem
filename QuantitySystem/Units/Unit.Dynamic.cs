@@ -143,7 +143,6 @@ public partial class Unit
         catch (QuantityNotFoundException)
         {
             un = new Unit(null, subUnits.ToArray());
-
         }
 
         return un;
@@ -156,7 +155,6 @@ public partial class Unit
     /// <param name="quantityType"></param>
     public Unit(Type quantityType)
     {
-
             SubUnits = [];
 
             //try direct mapping first to get the unit
@@ -166,7 +164,6 @@ public partial class Unit
             if (InnerUnitType == null)
             {
                 var dimension = QuantityDimension.DimensionFrom(quantityType);
-
 
                 if (dimension.Mass.Exponent != 0)
                 {
@@ -231,7 +228,6 @@ public partial class Unit
                     SubUnits.Add(u);
                 }
 
-
                 if (dimension.Currency.Exponent != 0)
                 {
                     Unit u = new Currency.Coin();
@@ -250,7 +246,6 @@ public partial class Unit
                     SubUnits.Add(u);
                 }
             }
-
             else
             {
                 //subclass of AnyQuantity
@@ -259,24 +254,19 @@ public partial class Unit
                 var un = (Unit)Activator.CreateInstance(InnerUnitType);
 
                 SubUnits.Add(un);
-
             }
 
             _Symbol = GenerateUnitSymbolFromSubBaseUnits();
-
 
             _IsDefaultUnit = true;
 
             //the quantity may be derived quantity which shouldn't be referenced :check here.
             _QuantityType = quantityType;
 
-
             UnitDimension = QuantityDimension.DimensionFrom(_QuantityType);
 
             _IsBaseUnit = false;
-
         }
-
 
     /// <summary>
     /// Construct a unit based on the default units of the internal quantities of passed quantity instance.
@@ -308,7 +298,6 @@ public partial class Unit
             if (!QtyType.IsGenericTypeDefinition)
             {
                 QtyType = QtyType.GetGenericTypeDefinition();
-
             }
 
             if (QtyType == typeof(DimensionlessQuantity<>))
@@ -550,7 +539,6 @@ public partial class Unit
                         unitOverflow += Math.Pow(10, mpe.OverflowExponent);
                         _IsOverflowed = true;
                     }
-
                 }
 
                 us[un.UniqueKey].UnitExponent += un.UnitExponent;

@@ -81,7 +81,6 @@ public partial class Unit
         return path;
     }
 
-
     /// <summary>
     /// Create units path from default unit in the dimension of the current unit system to the running unit instance.
     /// </summary>
@@ -146,7 +145,6 @@ public partial class Unit
             {
                 CachedPaths.Remove(dynamicKey);
             }
-
         }
 
         var dynamicTypes = CachedUnitsValues.Keys.Where(k=> k.BaseType == typeof(DynamicUnit)).ToArray();
@@ -156,7 +154,6 @@ public partial class Unit
             {
                 CachedUnitsValues.Remove(dynamicType);
             }
-
         }
 
         CacheCleared?.Invoke(null, EventArgs.Empty);
@@ -310,12 +307,10 @@ public partial class Unit
             }
             else
             {
-
                 //then we must go out side the current unit system
                 //all default units are pointing to the SIUnit system this is a must and not option.
 
                 //get the default unit of target
-
 
                 // to cross the boundary
                 // we should know the non SI system that we will cross it

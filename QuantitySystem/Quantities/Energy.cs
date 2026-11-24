@@ -14,7 +14,6 @@ public class Energy<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Energy<T>(T value)
     {
         Energy<T> Q = new()
@@ -24,6 +23,4 @@ public class Energy<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

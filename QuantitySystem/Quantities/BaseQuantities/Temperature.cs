@@ -9,7 +9,6 @@ public class Temperature<T>(float exponent) : AnyQuantity<T>(exponent)
 
     public override QuantityDimension Dimension => _Dimension * Exponent;
 
-
     public static implicit operator Temperature<T>(T value)
     {
         Temperature<T> Q = new()

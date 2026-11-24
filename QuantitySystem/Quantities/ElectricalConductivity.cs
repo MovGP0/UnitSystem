@@ -14,7 +14,6 @@ class ElectricalConductivity<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator ElectricalConductivity<T>(T value)
     {
         ElectricalConductivity<T> Q = new()
@@ -24,5 +23,4 @@ class ElectricalConductivity<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

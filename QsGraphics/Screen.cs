@@ -8,7 +8,6 @@ namespace QsGraphics;
 
 public class Screen
 {
-
     private readonly int _Width;
 
     private readonly int _Height;
@@ -27,11 +26,9 @@ public class Screen
 
     private readonly Task _FormTask;
 
-
     private readonly Graphics OffGraphics;
 
     private readonly Bitmap OffBitmap;
-
 
     private bool loop = true;
 
@@ -59,7 +56,6 @@ public class Screen
         OffBitmap = new Bitmap(_Width, _Height);
 
         OffGraphics = Graphics.FromImage(OffBitmap);
-
     }
 
     public void End()
@@ -73,17 +69,13 @@ public class Screen
 
     ~Screen()
     {
-
         End();
     }
-
 
     private AnyQuantity<double> zm = Unit.ParseQuantity("0<m>");
     //private AnyQuantity<double> zrm = Unit.ParseQuantity("0<m!>");
 
-
     List<Shape> Shapes = [];
-
 
     /// <summary>
     /// Draw a circle on the screen.
@@ -102,7 +94,6 @@ public class Screen
 
         return s;
     }
-
 
     public Shape Circle(QsScalar x, QsScalar y, QsScalar radius)
     {
@@ -123,7 +114,6 @@ public class Screen
             sh.Reset();
         Task.WaitAll(runningTasks.ToArray());
     }
-
 
     /// <summary>
     /// Clear to white colour
@@ -147,7 +137,6 @@ public class Screen
         _Form.FormGraphics.DrawImage(OffBitmap, 0, 0);
 
         Thread.Sleep(0);
-
     }
 
     List<Task> runningTasks = [];
@@ -171,7 +160,6 @@ public class Screen
         });
 
         runningTasks.Add(t);
-
     }
 
     public void UpdateForever()
@@ -198,7 +186,6 @@ public class Screen
     {
         loop = false;
         Task.WaitAll(runningTasks.ToArray());
-
     }
 
     public Shape this[int i] => Shapes[i];

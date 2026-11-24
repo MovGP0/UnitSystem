@@ -4,7 +4,6 @@ using ParticleLexer;
 using ParticleLexer.StandardTokens;
 using QsRoot;
 
-
 namespace Qs.Types;
 
 /// <summary>
@@ -115,7 +114,6 @@ public class QsObject : QsValue
 
                 return result;
             }
-
         }
 
         {
@@ -124,7 +122,6 @@ public class QsObject : QsValue
 
             var mi = typeof(Root).GetMethod("NativeToQsConvert", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static);
             ResultExpression = Expression.Call(mi, Expression.Convert(ResultExpression, typeof(object)));
-
 
             // Construct Lambda function which return one object.
             Expression<Func<QsValue>> cq = Expression.Lambda<Func<QsValue>>(ResultExpression);
@@ -137,9 +134,7 @@ public class QsObject : QsValue
 
             // return the result
             return result;
-
         }
-
     }
 
     public void SetProperty(string propertyName, object value)
@@ -155,7 +150,6 @@ public class QsObject : QsValue
     {
         return InstanceType.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
     }
-
 
     /// <summary>
     /// the function will realize between property that is an array and needs to be accessed as an array
@@ -209,7 +203,6 @@ public class QsObject : QsValue
     {
         return InstanceType.Name;
     }
-
 
     #region QsValue Implementation
     public override QsValue Identity => throw new NotImplementedException();
@@ -328,7 +321,6 @@ public class QsObject : QsValue
 
             // return the result
             return new QsObject(result);
-
         }
 
         throw new NotImplementedException("Operation between " + ToString() + " and " + value + " is not supported");
@@ -363,7 +355,6 @@ public class QsObject : QsValue
 
             // return the result
             return new QsObject(result);
-
         }
 
         throw new NotImplementedException("Operation between " + ToString() + " and " + value + " is not supported");
@@ -397,12 +388,10 @@ public class QsObject : QsValue
 
             // return the result
             return new QsObject(result);
-
         }
 
         throw new NotImplementedException("Operation between " + ToString() + " and " + value + " is not supported");
     }
-
 
     public override QsValue PowerOperation(QsValue value)
     {
@@ -481,15 +470,11 @@ public class QsObject : QsValue
 
     public override QsValue GetIndexedItem(QsParameter[] indices)
     {
-
-
         var pi = InstanceType.GetProperty(
             "Item"
             ,
             BindingFlags.Instance | BindingFlags.Public
         );
-
-
 
         var r = Root.QsParametersToNativeValues(pi.GetGetMethod(), indices);
 
@@ -512,7 +497,6 @@ public class QsObject : QsValue
         pi.SetValue(_NativeObject, nativeValue, r);
     }
     #endregion
-
 
     public override QsValue ExclamationOperator(QsValue key)
     {

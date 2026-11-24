@@ -21,5 +21,4 @@ public class KinematicViscosity<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

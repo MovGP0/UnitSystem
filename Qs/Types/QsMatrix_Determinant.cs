@@ -2,7 +2,6 @@
 
 public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 {
-
     // Contribution by Edward Popko, a well commented version: determinant.c for Microsoft C++ Visual Studio 6.
     // http://local.wasp.uwa.edu.au/~pbourke/miscellaneous/determinant/determinant.c
     //==============================================================================
@@ -147,7 +146,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             // should not get here
             det = a[0][0];
         }
-
         else if (n == 2)
         {
             // basic 2X2 sub-matrix determinate
@@ -203,10 +201,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
 
         return (det);
-
     }
-
-
 
     public QsMatrix LowerMatrix
     {

@@ -14,7 +14,6 @@ public class Stiffness<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Stiffness<T>(T value)
     {
         Stiffness<T> Q = new()
@@ -24,5 +23,4 @@ public class Stiffness<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

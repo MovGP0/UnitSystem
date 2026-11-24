@@ -1,6 +1,5 @@
 ﻿using QuantitySystem.Quantities.BaseQuantities;
 
-
 namespace QuantitySystem.Quantities;
 
 public class ForceVector<T> : DerivedQuantity<T>
@@ -24,5 +23,4 @@ public class ForceVector<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

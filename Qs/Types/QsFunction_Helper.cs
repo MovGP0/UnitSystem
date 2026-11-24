@@ -19,7 +19,6 @@ public partial class QsFunction
         int parametersCount,
         params string[] parametersNames)
     {
-
         IEnumerable<KeyValuePair<string, object>> Items = null;
 
         if (!string.IsNullOrEmpty(qsNamespace))
@@ -44,11 +43,8 @@ public partial class QsFunction
             where fc.FunctionName.Equals(functionName, StringComparison.OrdinalIgnoreCase)
             select fc;
 
-
         return func_Pass3.ToArray();
     }
-
-
 
     /// <summary>
     /// Get the exact function with given parameters names.
@@ -86,7 +82,6 @@ public partial class QsFunction
         return null;
     }
 
-
     /// <summary>
     /// Get the default function.
     /// Default function is on the form f#2 f#3  without decoration for parameters.
@@ -102,16 +97,12 @@ public partial class QsFunction
         string functionName,
         int parametersCount)
     {
-
         var functionRealName = FormFunctionSymbolicName(functionName, parametersCount);
 
         var func = GetFunction(scope, nameSpace, functionRealName);
 
         return func;
-
-
     }
-
 
     /// <summary>
     /// Get the first declared function of this undecorated name.
@@ -125,7 +116,6 @@ public partial class QsFunction
         string nameSpace,
         string functionName)
     {
-
         IEnumerable<KeyValuePair<string, object>> Items = null;
 
         if (!string.IsNullOrEmpty(nameSpace))

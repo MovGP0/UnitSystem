@@ -7,9 +7,7 @@ namespace Qs.Types;
 /// </summary>
 public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
 {
-
     protected List<QsMatrix> MatrixLayers = [];
-
 
     /// <summary>
     /// As was indicated in wikipedia and some physics forms
@@ -22,7 +20,6 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     /// </summary>
     protected List<QsTensor> InnerTensors;
 
-
     /// <summary>
     /// Returns the current Rank (Order) of this Tensor.
     /// Rank (Order) of Tensor is different than Rank of matrix :S
@@ -33,7 +30,6 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
         {
             if (InnerTensors == null)
             {
-
                 if (MatrixLayers.Count > 1)
                     return 3;
                 if (MatrixLayers.Count == 1)
@@ -72,7 +68,6 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
         MatrixLayers.AddRange(matrices);
     }
 
-
     /// <summary>
     /// Count of the face matrix rows {m}
     /// </summary>
@@ -82,7 +77,6 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     /// Count of the face matrix columns {n}
     /// </summary>
     public int FaceColumnsCount => MatrixLayers[0].ColumnsCount;
-
 
     /// <summary>
     /// Initiate adding tensor in current tensor
@@ -123,7 +117,6 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
                 {
                     if (v.Count != FaceColumnsCount)
                         throw new QsInvalidInputException("Adding first rank tensor with different number of columns");
-
                 }
 
                 MatrixLayers[0].AddVector(v);
@@ -139,7 +132,6 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
                 {
                     if (matrix.ColumnsCount == FaceColumnsCount)
                     {
-
                     }
                     else
                     {
@@ -162,7 +154,6 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
 
             InnerTensors.Add(qsTensor);
         }
-
     }
 
     /// <summary>
@@ -312,17 +303,11 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
         return sb.ToString();
     }
 
-
-
     #region This region for rotation of tensor
     // try to remember that rotation of tensor depend on the rank of the tensor
     //  I mean tensor of rank 0 (looks like scalar)  will have no dimention to rotate around
     //  tensor of 2nd rank will have two dimension to rotate around
     #endregion
-
-
-
-
 
     public IEnumerator<QsMatrix> GetEnumerator()
     {

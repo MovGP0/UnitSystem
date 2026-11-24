@@ -14,7 +14,6 @@ public class Power<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Power<T>(T value)
     {
         Power<T> Q = new()
@@ -24,5 +23,4 @@ public class Power<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

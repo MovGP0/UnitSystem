@@ -10,7 +10,6 @@ public class AngularVelocity<T> : DerivedQuantity<T>
     {
     }
 
-
     public AngularVelocity(float exponent)
         : base(exponent, new Angle<T>(exponent), new Time<T>(-1 * exponent))
     {
@@ -25,5 +24,4 @@ public class AngularVelocity<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

@@ -25,7 +25,6 @@ public static class Basic
     {
         Console.Write(alert);
         return Console.ReadLine();
-
     }
 
     /// <summary>

@@ -2,7 +2,6 @@
 
 public partial class QsTensor : QsValue
 {
-
     #region QsValue operations
     public override QsValue Identity => throw new NotImplementedException();
 
@@ -13,7 +12,6 @@ public partial class QsTensor : QsValue
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -89,7 +87,6 @@ public partial class QsTensor : QsValue
         else
             value = vl;
 
-
         if (value is QsScalar)
         {
             var scalar = value as QsScalar;
@@ -163,7 +160,6 @@ public partial class QsTensor : QsValue
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {
@@ -239,7 +235,6 @@ public partial class QsTensor : QsValue
         throw new NotImplementedException();
     }
 
-
     public override bool LessThan(QsValue value)
     {
         throw new NotImplementedException();
@@ -268,7 +263,6 @@ public partial class QsTensor : QsValue
                 return false;
             if (!ReferenceEquals(ts, this))
             {
-
                 // we need to test equality to
 
                 if (InnerTensors != null)
@@ -281,22 +275,15 @@ public partial class QsTensor : QsValue
                 }
                 else
                 {
-
                     for (var mn = 0; mn < MatrixLayers.Count; mn++)
                     {
                         if (!MatrixLayers[mn].Equality(ts.MatrixLayers[mn]))
                             return false;
                     }
-
                 }
-
-
-
-
             }
 
             return true;
-
         }
 
         return false;
@@ -314,8 +301,6 @@ public partial class QsTensor : QsValue
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
-
 
         QsTensor tensor;
 
@@ -384,7 +369,6 @@ public partial class QsTensor : QsValue
         }
 
         throw new NotImplementedException();
-
     }
 
     public override QsValue CrossProductOperation(QsValue value)
@@ -476,8 +460,6 @@ public partial class QsTensor : QsValue
                 ix++;
             }
 
-
-
             // then return the matrix.
             return t[indices[ix]];  //ix was increased the latest time.
         }
@@ -516,7 +498,6 @@ public partial class QsTensor : QsValue
             value = ((QsReference)vl).ContentValue;
         else
             value = vl;
-
 
         if (value is QsScalar)
         {

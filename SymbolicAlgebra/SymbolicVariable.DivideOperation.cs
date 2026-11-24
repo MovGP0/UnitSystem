@@ -2,7 +2,6 @@
 
 public partial class SymbolicVariable
 {
-
     public static SymbolicVariable? Divide(SymbolicVariable a, SymbolicVariable b)
     {
         if (a == null || b == null)
@@ -30,9 +29,7 @@ public partial class SymbolicVariable
             }
         }
 
-
         var TargetSubTerm = b.Clone();
-
 
         TargetSubTerm._AddedTerms = null;   // remove added variables to prevent its repeated calculations in second passes
         TargetSubTerm._ExtraTerms = null;
@@ -52,8 +49,6 @@ public partial class SymbolicVariable
             {
                 SourceTerm.SymbolPower = SourceTerm.SymbolPower - TargetSubTerm.SymbolPower;
             }
-
-
 
             //fuse the fused symbols in b into sv
             foreach (var bfv in TargetSubTerm.FusedSymbols)
@@ -131,7 +126,6 @@ public partial class SymbolicVariable
                                 SourceTerm._SymbolPower = -1;
 
                                 SourceTerm._SymbolPowerTerm *= NegativeOne;
-
                             }
                         }
                     }
@@ -263,7 +257,6 @@ public partial class SymbolicVariable
                                         SourceTerm._SymbolPower -= fsv.Value.NumericalVariable;
                                     }
                                 }
-
                             }
                             else
                             {
@@ -311,7 +304,6 @@ public partial class SymbolicVariable
             SourceTerm._ExtraTerms = newExtraTerms;
         }
 
-
         var subIndex = 0;
         var total = SourceTerm;
 
@@ -345,17 +337,13 @@ public partial class SymbolicVariable
             extraIndex++;
         }
 
-
         AdjustSpecialFunctions(ref total);
 
         AdjustZeroPowerTerms(total);
         AdjustZeroCoeffecientTerms(ref total);
 
-
         return total;
     }
-
-
 
     /// <summary>
     /// Multiply Coeffecients of second argument into first argument.
@@ -368,7 +356,6 @@ public partial class SymbolicVariable
         //      and only hold coeffecient itself.
         foreach (var cst in TargetSubTerm.Constants)
         {
-
             if (SourceTerm._CoeffecientPowerTerm == null && cst.ConstantPower == null)
             {
                 SourceTerm.Coeffecient /= cst.ConstantValue;
@@ -378,7 +365,6 @@ public partial class SymbolicVariable
             {
                 // no the coeffecient part is not empty so we will test if bases are equal
                 // then make use of the fusedsymbols to add our constant
-
 
                 var sbase = Math.Log(SourceTerm.Coeffecient, cst.ConstantValue);
 
@@ -402,7 +388,6 @@ public partial class SymbolicVariable
                         cpower = new SymbolicVariable("1");
                     SourceTerm._CoeffecientPowerTerm = Subtract(new SymbolicVariable(sbase.ToString(CultureInfo.InvariantCulture)), cpower);
                     SourceTerm.Coeffecient = cst.ConstantValue;
-
                 }
                 else
                 {
@@ -460,7 +445,6 @@ public partial class SymbolicVariable
                                     rr.SymbolicVariable -= new SymbolicVariable(ower.ToString(CultureInfo.InvariantCulture));
                                     SourceTerm.FusedConstants[SucceededConstant.Value] = rr;
                                 }
-
                             }
                             else
                             {
@@ -477,5 +461,4 @@ public partial class SymbolicVariable
             }
         }
     }
-
 }

@@ -52,7 +52,6 @@ public class QsReference(string varname) : QsValue
         return VariableName + ": " + ContentValue;
     }
 
-
     public override QsValue Identity => ContentValue.Identity;
 
     public override QsValue AddOperation(QsValue value)
@@ -169,5 +168,4 @@ public class QsReference(string varname) : QsValue
     {
         return ContentValue.Execute(expression);
     }
-
 }

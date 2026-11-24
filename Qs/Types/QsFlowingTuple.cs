@@ -22,7 +22,6 @@ public class QsFlowingTuple : QsValue
     {
     }
 
-
     public QsFlowingTuple(params QsTupleValue[] values)
     {
         // get the maximum id defined in the array
@@ -44,7 +43,6 @@ public class QsFlowingTuple : QsValue
         }
 
         InitialValues = values;
-
     }
 
     public void AddTupleValue(QsValue value)
@@ -89,7 +87,6 @@ public class QsFlowingTuple : QsValue
         var lll = sb.ToString().TrimEnd(',', ' ') + ")";
         return lll;
     }
-
 
     public override string ToShortString()
     {
@@ -234,7 +231,6 @@ public class QsFlowingTuple : QsValue
         if (itimes > c)
             itimes = itimes % c;
 
-
         var NewValues = new QsTupleValue[c];
 
         var ix = 0;
@@ -269,7 +265,6 @@ public class QsFlowingTuple : QsValue
 
         if (itimes > c)
             itimes = itimes % c;
-
 
         var NewValues = new QsTupleValue[c];
 
@@ -380,7 +375,6 @@ public class QsFlowingTuple : QsValue
         var id = 10;   // begin the properties from id == 10  like Basic auto numbering in old days
         for (var ix = 0; ix < all.Count(); ix++)
         {
-
             var StructProperty = all.ElementAt(ix);
 
             fefe[ix].Name = StructProperty.Name;
@@ -417,7 +411,6 @@ public class QsFlowingTuple : QsValue
             {
                 // property exist
                 prop.SetValue(svt, Root.QsToNativeConvert(prop.PropertyType, step.Value), null);
-
             }
         }
 

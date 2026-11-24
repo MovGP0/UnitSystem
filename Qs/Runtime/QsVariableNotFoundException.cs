@@ -20,9 +20,6 @@ public class QsVariableNotFoundException : QsException
       // Add any type-specific logic for inner exceptions.
    }
 
-
-
-
    public string Namespace { get; set; }
 
    public string Variable { get; set; }

@@ -18,7 +18,6 @@ public struct MetricPrefix(string prefix, string symbol, int exponent)
 
     #region SI Standard prefixes as static properties
 
-
     #region Positive
     public static MetricPrefix Quetta => new("quetta", "Q", 30);
     public static MetricPrefix Ronna => new("ronna", "R", 27);
@@ -58,7 +57,6 @@ public struct MetricPrefix(string prefix, string symbol, int exponent)
     #region static constructor
     public static MetricPrefix GetPrefix(int index)
     {
-
         switch (index)
         {
             case 12: return Quetta;

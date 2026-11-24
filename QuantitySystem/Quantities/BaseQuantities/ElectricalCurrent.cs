@@ -9,7 +9,6 @@ public class ElectricalCurrent<T>(float exponent) : AnyQuantity<T>(exponent)
 
     public override QuantityDimension Dimension => _Dimension * Exponent;
 
-
     public static implicit operator ElectricalCurrent<T>(T value)
     {
         ElectricalCurrent<T> Q = new()

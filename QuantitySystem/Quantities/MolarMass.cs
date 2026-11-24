@@ -23,5 +23,4 @@ public class MolarMass<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

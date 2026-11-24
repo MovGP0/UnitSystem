@@ -99,7 +99,6 @@ public static class QsGamma
         //    I think 3.5<kg>! = 11.631728<kg^3> is wrong and of course not <kg^4>  but it is <kg^3.5>
         var TotalUnit = num.Unit.RaiseUnitPower((float)number.Value);
 
-
         // if we have fraction correct the calculation with Gamma Factorial.
         if (number.Value > v)
         {
@@ -111,7 +110,6 @@ public static class QsGamma
         return TotalQuantity;
     }
 
-
     /// <summary>
     /// Factorial for real numbers.
     /// </summary>
@@ -121,8 +119,6 @@ public static class QsGamma
     {
         //I checked this http://www.rskey.org/gamma.htm
         // then this ...  http://www.luschny.de/System.Math/factorial/approx/SimpleCases.html
-
-
 
         //the used function  near to the windows calculator
         var StieltjesFactorial = delegate(double x)
@@ -139,7 +135,6 @@ public static class QsGamma
                 r = r / p;
             return r * Math.Sqrt(2 * Math.PI / y);
         };
-
 
         var StieltjesLnFactorial = delegate(double z)
         {
@@ -175,7 +170,6 @@ public static class QsGamma
             return r;
         };
 
-
         //gives value less the normal factorial :(
         var Nemes = delegate(double x)
         {
@@ -185,12 +179,8 @@ public static class QsGamma
             temp += (239 / 362880) * (1 / x * x * x * x * x);
 
             return Math.Pow(temp, x) * Math.Exp(-x) * Math.Sqrt(2) * Math.Sqrt(Math.PI * x);
-
         };
 
-
         return StieltjesFactorial(number);
-
     }
-
 }

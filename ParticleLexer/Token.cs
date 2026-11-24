@@ -65,7 +65,6 @@ public sealed partial class Token : IEnumerable<Token>
     private List<Token> childTokens = [];
     public ICollection<Token> ChildTokens => childTokens;
 
-
     public Token AppendSubToken()
     {
         return AppendSubToken(string.Empty);
@@ -90,14 +89,11 @@ public sealed partial class Token : IEnumerable<Token>
         childTokens.Add(token);
     }
 
-
     public void InsertSubToken(int index, Token token)
     {
         token.ParentToken = this;
         childTokens.Insert(index, token);
     }
-
-
 
     /// <summary>
     /// Indexing Child Tokens
@@ -110,14 +106,12 @@ public sealed partial class Token : IEnumerable<Token>
         set => childTokens[index] = value;
     }
 
-
     /// <summary>
     /// Count of child tokens.
     /// </summary>
     public int Count => childTokens.Count;
 
     public Token ParentToken { get; set; }
-
 
     private string _TokenValue = null;
     private int _previousChildrenTokenCount;
@@ -155,7 +149,6 @@ public sealed partial class Token : IEnumerable<Token>
 
     public int TokenValueLength => TokenValue.Length;
 
-
     /// <summary>
     /// Token index in the original text.
     /// </summary>
@@ -181,13 +174,11 @@ public sealed partial class Token : IEnumerable<Token>
 
     #region Tokenization operations.
 
-
     public Token TrimStart<TargetTokenClass>()
         where TargetTokenClass : TokenClass
     {
         return TrimStart(typeof(TargetTokenClass));
     }
-
 
     /// <summary>
     /// remove the token from the start of tokens.
@@ -266,9 +257,6 @@ public sealed partial class Token : IEnumerable<Token>
         return Trimmed;
     }
 
-
-
-
     /// <summary>
     /// Merge all tokens into the one and exclude specific token
     /// </summary>
@@ -292,7 +280,6 @@ public sealed partial class Token : IEnumerable<Token>
         return MergeAllBut(0, typeof(MergedTokenClass), tokenClasses);
     }
 
-
     /// <summary>
     /// Optimized function to merge all tokens but spaces tokens
     /// </summary>
@@ -313,7 +300,6 @@ public sealed partial class Token : IEnumerable<Token>
 
         while (ci < first.Count)
         {
-
             var c = first[ci];
 
             if (ci < startIndex)
@@ -356,9 +342,7 @@ public sealed partial class Token : IEnumerable<Token>
         current.TokenClassType = first.TokenClassType;
 
         return Zabbat(current);
-
     }
-
 
     /// <summary>
     /// Merge all tokens into the one Token with specific TokenClass and exclude specific token classes.
@@ -387,7 +371,6 @@ public sealed partial class Token : IEnumerable<Token>
 
         while (ci < first.Count)
         {
-
             var c = first[ci];
 
             if (ci < startIndex)
@@ -413,7 +396,6 @@ public sealed partial class Token : IEnumerable<Token>
                     current.AppendSubToken(c);
 
                     mergedTokens = new Token();
-
                 }
             }
 
@@ -428,13 +410,10 @@ public sealed partial class Token : IEnumerable<Token>
             current.AppendSubToken(mergedTokens);
         }
 
-
         current.TokenClassType = first.TokenClassType;
 
         return Zabbat(current);
-
     }
-
 
     /// <summary>
     /// Merge Single Tokens into one token guided by regular expression.
@@ -455,7 +434,6 @@ public sealed partial class Token : IEnumerable<Token>
             var Matched = false;
 
             Matched = rx.Match(merged.TokenValue + tok.TokenValue).Success;
-
 
             if (Matched)
             {
@@ -484,8 +462,6 @@ public sealed partial class Token : IEnumerable<Token>
                         if (!merged.TokenValue.StartsWith(tokenClassType.ShouldBeginWith, StringComparison.OrdinalIgnoreCase))
                             goto NoStartWith;
                     }
-
-
 
                     // inner sneaky loop. :)
                     var rtokIndex = tokIndex;
@@ -524,12 +500,10 @@ public sealed partial class Token : IEnumerable<Token>
                                 goto WhileBreak;
                         }
 
-
                         // terminate on specific conditions
 
                         // reaching new line:  if you reach new line then most probably we don't need to check more for that token
                         //if (AccumulatedInnerText.EndsWith(Environment.NewLine)) goto WhileBreak;
-
 
                         // go with comparing.
                         if (rx.IsMatch(AccumulatedInnerText))
@@ -539,7 +513,6 @@ public sealed partial class Token : IEnumerable<Token>
                             // alter the original loop index and go to the loop tail
                             for (; tokIndex <= rtokIndex; tokIndex++)
                                 merged.AppendSubToken(childTokens[tokIndex]);
-
 
                             if (tokIndex < childTokens.Count)
                             {
@@ -563,7 +536,6 @@ public sealed partial class Token : IEnumerable<Token>
                             }
                         }
 
-
                         if (!string.IsNullOrEmpty(tokenClassType.ShouldEndWith))
                         {
                             // Why we break here ??
@@ -582,7 +554,6 @@ public sealed partial class Token : IEnumerable<Token>
                     }
 
                     WhileBreak: ;
-
                 }
 
                 #endregion
@@ -601,7 +572,6 @@ public sealed partial class Token : IEnumerable<Token>
                     current.AppendSubToken(merged);
                     merged = new Token();
 
-
                     // for begining another test with the new token
                     merged.AppendSubToken(tok);
 
@@ -617,7 +587,6 @@ public sealed partial class Token : IEnumerable<Token>
 
             loopTail:
             tokIndex++;
-
         }
 
         if (!string.IsNullOrEmpty(merged.TokenValue))
@@ -630,7 +599,6 @@ public sealed partial class Token : IEnumerable<Token>
         current.TokenClassType = TokenClassType;
         return Zabbat(current);
     }
-
 
     /// <summary>
     /// Merge multiple exact words in the same time to enhance performance.
@@ -677,12 +645,10 @@ public sealed partial class Token : IEnumerable<Token>
                 // the token in test should be less than the compare token.
                 if(CurrentTokenClass.OriginalPatternWord.StartsWith(tok.TokenValue, StringComparison.OrdinalIgnoreCase))
                 {
-
                     while(subTokIndex < ChildTokens.Count)
                     {
                         var stok = childTokens[subTokIndex];
                         merged.AppendSubToken(stok);
-
 
                         if (CurrentTokenClass.OriginalPatternWord.StartsWith(merged.TokenValue, StringComparison.OrdinalIgnoreCase))
                         {
@@ -711,7 +677,6 @@ public sealed partial class Token : IEnumerable<Token>
                 if (merged.Count > 0)
                     merged = new Token(); //reset the merged object because it was modified
                 TokenClassesIndex++;
-
             }
 
             // we didn't find any match that this token can be merged into it
@@ -726,7 +691,6 @@ public sealed partial class Token : IEnumerable<Token>
         current.TokenClassType = TokenClassType;
         return Zabbat(current);
     }
-
 
     private static Dictionary<Type, TokenClass> CachedTokenClasses = new Dictionary<Type, TokenClass>();
 
@@ -792,7 +756,6 @@ public sealed partial class Token : IEnumerable<Token>
             }
             else
             {
-
                 if (merged.Count > 0)
                 {
                     current.AppendSubToken(merged);
@@ -817,7 +780,6 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public Token MergeSequenceTokens<DesiredTokenClass>(params Type[] tokenTypes) where DesiredTokenClass : TokenClass, new()
     {
-
         var ComparisonTokensNumber = tokenTypes.Length;
 
         var CurrentTokenTypeIndex = 0;    // hold the current index of the required tokens
@@ -827,7 +789,6 @@ public sealed partial class Token : IEnumerable<Token>
         var current = new Token();
 
         var merged = new Token() { TokenClassType = typeof(DesiredTokenClass) };
-
 
         var tokIndex = 0;
         while (tokIndex < childTokens.Count)
@@ -869,7 +830,6 @@ public sealed partial class Token : IEnumerable<Token>
 
                 // add the current index.
                 current.AppendSubToken(childTokens[tokIndex]);
-
             }
 
             tokIndex++;
@@ -887,7 +847,6 @@ public sealed partial class Token : IEnumerable<Token>
 
         return Zabbat(current);
     }
-
 
     /// <summary>
     /// This function make sure that inner tokens are not the same as outer tokens by popping out the
@@ -917,7 +876,6 @@ public sealed partial class Token : IEnumerable<Token>
 
         return Metzabbat;
     }
-
 
     /// <summary>
     /// Removes specific tokens from the current tokens.
@@ -982,7 +940,6 @@ public sealed partial class Token : IEnumerable<Token>
         return idx;
     }
 
-
     /// <summary>
     /// Remove specific token starting from the first token till the terminating token encountered while removing then the process ends.
     /// </summary>
@@ -1033,7 +990,6 @@ public sealed partial class Token : IEnumerable<Token>
         return first;
     }
 
-
     /// <summary>
     /// Search for <see cref="MultipleSpaceToken"/> tokens and remove them from the children tokens.
     /// Used after Merging tokens with <see cref="MultipleSpaceToken"/>
@@ -1083,7 +1039,6 @@ public sealed partial class Token : IEnumerable<Token>
 
             //make sure all chars in value are white spaces
 
-
             if (tok.TokenClassType == typeof(MultipleSpaceToken) || tok.TokenClassType == typeof(SingleSpaceToken))
             {
                 //all string are white spaces
@@ -1115,7 +1070,6 @@ public sealed partial class Token : IEnumerable<Token>
 
             //make sure all chars in value are white spaces
 
-
             if (tok.TokenClassType == typeof(CarriageReturnToken) || tok.TokenClassType == typeof(LineFeedToken))
             {
                 //all string are white spaces
@@ -1130,8 +1084,6 @@ public sealed partial class Token : IEnumerable<Token>
 
         return first;
     }
-
-
 
     /// <summary>
     /// Returns the value of tokens starting from specific token.
@@ -1149,7 +1101,6 @@ public sealed partial class Token : IEnumerable<Token>
         }
 
         return total;
-
     }
 
     /// <summary>
@@ -1163,7 +1114,6 @@ public sealed partial class Token : IEnumerable<Token>
     {
         var count = Count;
 
-
         var rtk = new Token();
         for (var b = leftIndex; b < count - rightIndex; b++)
         {
@@ -1171,9 +1121,7 @@ public sealed partial class Token : IEnumerable<Token>
         }
 
         return rtk;
-
     }
-
 
     /// <summary>
     /// Extend Tokens from Left and Right and Fuse them into one Token with specific token class
@@ -1211,7 +1159,6 @@ public sealed partial class Token : IEnumerable<Token>
         return tk;
     }
 
-
     /// <summary>
     /// Parse text between " Double Qoutation marks and escape it \" with back slash \" "
     /// </summary>
@@ -1219,7 +1166,6 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public Token TokenizeTextStrings()
     {
-
         var tokens = this;
 
         // merge \" to be one charachter after this
@@ -1231,7 +1177,6 @@ public sealed partial class Token : IEnumerable<Token>
         var runner = root;
 
         //add every token until you encounter '
-
 
         var ix = 0;
         var TextMode = false;
@@ -1249,7 +1194,6 @@ public sealed partial class Token : IEnumerable<Token>
                     root.AppendSubToken(runner);
 
                     runner.AppendSubToken(tokens[ix]);
-
                 }
                 else
                 {
@@ -1264,17 +1208,11 @@ public sealed partial class Token : IEnumerable<Token>
                 runner.AppendSubToken(tokens[ix]);
             }
 
-
             ix++;
-
         }
-
 
         return root;
     }
-
-
-
 
     #endregion
 
@@ -1307,8 +1245,6 @@ public sealed partial class Token : IEnumerable<Token>
     }
 
     #endregion
-
-
 
     #region IEnumerable<Token> Members
 

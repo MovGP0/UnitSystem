@@ -28,7 +28,6 @@ public class QsParameter
             if (rv.Length == 2)
                 return rv[0];
             return "";
-
         }
     }
 
@@ -82,7 +81,6 @@ public class QsParameter
         }
     }
 
-
     /// <summary>
     /// if there are a value other than string then return true.
     /// </summary>
@@ -115,5 +113,4 @@ public class QsParameter
     {
         return QsFunction.FormFunctionSymbolicName(ParameterRawText, paramCount);
     }
-
 }

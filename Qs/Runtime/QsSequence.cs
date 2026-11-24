@@ -12,7 +12,6 @@ namespace Qs.Runtime;
 public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerable<QsValue>
 #endif
 {
-
     /// <summary>
     /// if the function has a namespace then the value of it is here.
     /// </summary>
@@ -38,12 +37,10 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
     /// </summary>
     public int EndIndex { get; set; }
 
-
     /// <summary>
     /// When true indicates that the sequence is executing a range function.
     /// </summary>
     public bool RangeMode { get; set; }
-
 
     /// <summary>
     /// Correspones To: S[i]
@@ -143,8 +140,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         RangeMode = false;
     }
 
-
-
     private bool _CachingEnabled;
 
     /// <summary>
@@ -168,7 +163,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
     /// </summary>
     private Dictionary<int, QsValue> CachedValues = new();
 
-
     /// <summary>
     /// Gets the element quantity and employ cach
     /// </summary>
@@ -176,7 +170,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
     /// <returns></returns>
     public QsValue GetElementValue(int index)
     {
-
         QsValue val;
         if (CachingEnabled)
         {
@@ -185,7 +178,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
                 return val;
             }
         }
-
 
         if (Parameters.Length > 0)
         {
@@ -237,7 +229,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             CachedValues[index] = val;
 
         return val;
-
     }
 
     #region Get Element Quantity Functions
@@ -284,7 +275,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
     }
 
     #endregion
-
 
     #region Range Operation Execution
 
@@ -350,9 +340,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             EndRangeOperation();
             throw new QsException("Un Handled Exception", ex);
         }
-
     }
-
 
     public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
     {
@@ -384,7 +372,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             EndRangeOperation();
             throw new QsException("Un Handled Exception", ex);
         }
-
     }
     public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
     {
@@ -416,7 +403,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             EndRangeOperation();
             throw new QsException("Un Handled Exception", ex);
         }
-
     }
     public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
     {
@@ -448,7 +434,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             EndRangeOperation();
             throw new QsException("Un Handled Exception", ex);
         }
-
     }
     public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
     {
@@ -480,7 +465,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             EndRangeOperation();
             throw new QsException("Un Handled Exception", ex);
         }
-
     }
     public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
     {
@@ -512,7 +496,6 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             EndRangeOperation();
             throw new QsException("Un Handled Exception", ex);
         }
-
     }
 
     public QsValue RangeOperation(string operation, int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
@@ -545,16 +528,11 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             EndRangeOperation();
             throw new QsException("Un Handled Exception", ex);
         }
-
     }
 
     #endregion
 
-
-
-
     #region IEnumerable<QsValue> Members
-
 
     /// <summary>
     /// Sequence begin from minimum declared index till the maximum number that can stored in double.
@@ -566,12 +544,10 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         var q = GetElementValue(i);
         while (((QsScalar)q).NumericalQuantity.Value < double.MaxValue)
         {
-
             yield return (QsValue)q;
 
             i++;
             q = GetElementValue(i);
-
         }
     }
 

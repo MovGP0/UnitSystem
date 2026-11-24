@@ -19,7 +19,6 @@ public class Step(Flow flow)
     /// </summary>
     public int Id = 0;
 
-
     /// <summary>
     /// Value of the step could be any arbitary thing.
     /// </summary>
@@ -39,7 +38,6 @@ public class Step(Flow flow)
     /// Describe the stage
     /// </summary>
     public string Description_2 = "";
-
 
     /// <summary>
     /// The host type of this step
@@ -61,7 +59,6 @@ public class Step(Flow flow)
     {
         return Name;
     }
-
 
     /// <summary>
     /// Get the id of the step.
@@ -90,14 +87,11 @@ public class Step(Flow flow)
     {
         get
         {
-
-
             var Parent = CreateHostFlow();
             Parent.ReSetToStep(Id);
             return Parent.CurrentStepIndex;
         }
     }
-
 
     Func<Flow> HostFlowCreationFunction;
 
@@ -114,7 +108,6 @@ public class Step(Flow flow)
         }
 
         return HostFlowCreationFunction();
-
     }
 
     /// <summary>

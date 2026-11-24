@@ -17,7 +17,6 @@ class SimpleLambdaBuilder(string functionName, Type type)
 
     private static int _lambdaId; //for generating unique lambda name
 
-
     // TODO: Complete member initialization
 
     /// <summary>
@@ -51,7 +50,6 @@ class SimpleLambdaBuilder(string functionName, Type type)
     /// </summary>
     public List<ParameterExpression> Parameters => _params;
 
-
     private static Type GetLambdaType(Type returnType, IList<ParameterExpression> parameterList)
     {
         Contract.Requires(returnType != null);
@@ -78,7 +76,6 @@ class SimpleLambdaBuilder(string functionName, Type type)
         return delegateType;
     }
 
-
     /// <summary>
     /// Creates the LambdaExpression from the builder.
     /// After this operation, the builder can no longer be used to create other instances.
@@ -86,7 +83,6 @@ class SimpleLambdaBuilder(string functionName, Type type)
     /// <returns>New LambdaExpression instance.</returns>
     public LambdaExpression MakeLambda()
     {
-
         var lambda = Expression.Lambda(
             GetLambdaType(type, _params),
             _body,
@@ -97,11 +93,8 @@ class SimpleLambdaBuilder(string functionName, Type type)
         return lambda;
     }
 
-
-
     internal static SimpleLambdaBuilder Create(Type type, string functionName)
     {
         return new SimpleLambdaBuilder(functionName, type);
     }
-
 }

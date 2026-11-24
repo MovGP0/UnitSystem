@@ -2,7 +2,6 @@
 
 public partial class SymbolicVariable
 {
-
     /// <summary>
     /// Subtracts symbolic variable b from symbolic variable a
     /// </summary>
@@ -42,16 +41,13 @@ public partial class SymbolicVariable
 
             AdjustZeroCoeffecientTerms(ref a_b);
             return a_b;
-
         }
-
 
         var subB = b.Clone();
         var sub = -1;
 
         var sv = a.Clone();
         NewPart:
-
 
         var consumed = false;
 
@@ -86,7 +82,6 @@ public partial class SymbolicVariable
         //  1- the symbolic can be added to one of the existing terms (which will be perfect)
         //  2- there are no compatible term so we have to add it to the addedvariables of this instance.
 
-
         foreach (var av in a.AddedTerms)
         {
             if (av.Value.BaseEquals(subB))
@@ -118,7 +113,6 @@ public partial class SymbolicVariable
             }
         }
 
-
         if (!consumed)
         {
             // add it to the positive variables.
@@ -148,7 +142,6 @@ public partial class SymbolicVariable
                         sv.AddedTerms.Add(at.Value.WholeValueBaseKey, at.Value);
                     }
                 }
-
             }
             else
             {
@@ -186,14 +179,10 @@ public partial class SymbolicVariable
             }
         }
 
-
         AdjustSpecialFunctions(ref sv);
         AdjustZeroPowerTerms(sv);
         AdjustZeroCoeffecientTerms(ref sv);
 
-
         return sv;
     }
-
-
 }

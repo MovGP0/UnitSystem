@@ -5,7 +5,6 @@ namespace QsRoot;
 
 public static class Currency
 {
-
     static ParticleLexer.Token _currenciesJson;
 
     static Dictionary<string, double> _currentCurrencies;
@@ -26,7 +25,6 @@ public static class Currency
             return file;
         }
     }
-
 
     static void DownloadExchangeFile()
     {
@@ -69,7 +67,6 @@ public static class Currency
             typeof(NumberToken)
         );
 
-
         _currentCurrencies = new Dictionary<string, double>();
 
         // find rates key
@@ -88,7 +85,6 @@ public static class Currency
             return 1.0 / result;
         else
             return double.NaN;
-
     }
 
     /// <summary>

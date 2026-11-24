@@ -19,5 +19,4 @@ public class SymbolicException : Exception
    {
       // Add any type-specific logic for inner exceptions.
    }
-
 }

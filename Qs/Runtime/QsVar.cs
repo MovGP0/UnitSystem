@@ -16,11 +16,9 @@ namespace Qs.Runtime;
 
 class QsVar
 {
-
     private readonly QsEvaluator evaluator;
 
     public QsEvaluator Evaluator => evaluator;
-
 
     public class ExprOp
     {
@@ -44,16 +42,11 @@ class QsVar
         }
     }
 
-
     public QsVarParseModes ParseMode { get; set; }
 
     SimpleLambdaBuilder lambdaBuilder = null;
 
-
-
-
     private QsFunction Function;
-
 
     /// <summary>
     /// Evaluate the function body taking into considerations
@@ -64,7 +57,6 @@ class QsVar
     /// <param name="lb"></param>
     public QsVar(QsEvaluator evaluator, string line, QsFunction function, SimpleLambdaBuilder lb, out Token tokenizedBody)
     {
-
         this.evaluator = evaluator;
         if (function != null)
         {
@@ -76,16 +68,13 @@ class QsVar
         }
 
         ResultExpression = ParseArithmatic(line, out tokenizedBody);
-
     }
-
 
     public static Expression ParseToExpression(QsEvaluator evaluator, string line)
     {
         var v = new QsVar(evaluator, line);
         return v.ResultExpression;
     }
-
 
     /// <summary>
     /// Evaluates Normal Calculations.
@@ -97,7 +86,6 @@ class QsVar
         this.evaluator = evaluator;
 
         ResultExpression = ParseArithmatic(line);
-
     }
 
     public QsVar(QsEvaluator evaluator, Token expression)
@@ -105,7 +93,6 @@ class QsVar
         this.evaluator = evaluator;
 
         ResultExpression = ParseArithmatic(expression);
-
     }
 
     private QsSequence Sequence= null;
@@ -127,10 +114,8 @@ class QsVar
             ParseMode = QsVarParseModes.Sequence;
         }
 
-
         ResultExpression = ParseArithmatic(line);
     }
-
 
     /// <summary>
     /// Merge operators that have more than one letter.
@@ -153,7 +138,6 @@ class QsVar
         Token dummy;
         return ParseArithmatic(codeLine, out dummy);
     }
-
 
     /// <summary>
     /// Takes the expression text and returns it into tokens.
@@ -231,7 +215,6 @@ class QsVar
         tokens = tokens.MergeSequenceTokens<UnitizedNumberToken>(typeof(PeriodToken), typeof(UnitizedNumberToken));
         tokens = tokens.MergeSequenceTokens<NumberToken>(typeof(PeriodToken), typeof(NumberToken));
 
-
         tokens = tokens.MergeSequenceTokens<ConstantToken>(typeof(PercentToken), typeof(WordToken));
 
         // discover the complex numbers
@@ -265,7 +248,6 @@ class QsVar
         //tokens = tokens.MergeSequenceTokens<NameSpaceAndVariableToken>(typeof(NameSpaceToken), typeof(FunctionValueToken));
         tokens = tokens.MergeSequenceTokens<NameSpaceAndVariableToken>(typeof(NamespaceToken), typeof(FunctionQuantityToken));
 
-
         // Assemble '\''/' into \/ to form the nabla operator
         tokens = tokens.MergeTokens<Nabla>();
 
@@ -293,20 +275,16 @@ class QsVar
 
     internal Expression ParseArithmatic(string codeLine, out Token tokenizedExpression)
     {
-
         var tokens = TokenzieExpression(codeLine);
 
         tokenizedExpression = tokens;
 
         return ParseArithmatic(tokens);
-
     }
 
     Stack<string> loopIteratorContainer = new();
 
     Dictionary<string, ParameterExpression> loopIteratorParameter = new();
-
-
 
     /// <summary>
     /// Main parsing method.
@@ -367,7 +345,6 @@ class QsVar
 
                 ix--;
                 goto ExpressionCompleted;
-
             }
 
             if (q.Equals("new", StringComparison.OrdinalIgnoreCase))
@@ -461,7 +438,6 @@ class QsVar
                     // then skip this operation because it has been evaluated
 
                     eop.Operation = "Skip";
-
                 }
                 else if (eop != null && eop.Operation == "!")
                 {
@@ -639,7 +615,6 @@ class QsVar
             }
             else if (tokens[ix].TokenClassType == typeof(NamespaceToken))
             {
-
                 // ok this is something like  N:N:L:
                 // so we will extract the last
                 OperatorTokenText = ":";    // make colon an operation
@@ -662,7 +637,6 @@ class QsVar
                     quantityExpression = GetQsVariable(mtk);
 
                 --ix;   //decrease ix with one because operator was fused in this token.
-
             }
             else if (tokens[ix].TokenClassType == typeof(TrueToken))
                 quantityExpression = Expression.Constant(QsBoolean.True);
@@ -689,13 +663,11 @@ class QsVar
                 // expression that hold the counter.
                 var counter = Expression.Parameter(typeof(int), "Counter_" + loopIteratorContainer.Count);
 
-
                 // the statement in tokens[ix][1] will be repeated on the count of vector or tuple on tokens[ix][3]
                 var LoopBreakLabel = Expression.Label(typeof(QsValue), "LoopBreak_" + loopIteratorContainer.Count);
 
                 // Creating an expression to hold a local variable.
                 var result = Expression.Parameter(typeof(QsFlowingTuple), "result");
-
 
                 // modify the state of this qsvar to indicate there is a difference in getting the value
                 loopIteratorContainer.Push(tokens[ix][3].TokenValue);
@@ -704,7 +676,6 @@ class QsVar
                 //ss.AddOperation(null);
 
                 var fltAdd = typeof(QsFlowingTuple).GetMethod("AddTupleValue");
-
 
                 quantityExpression = Expression.Block(
                     new[] { counter, result },
@@ -726,7 +697,6 @@ class QsVar
 
                 loopIteratorContainer.Pop();
                 loopIteratorParameter.Remove(tokens[ix][3].TokenValue);
-
             }
             else
             {
@@ -758,8 +728,6 @@ class QsVar
                     }
                     else
                     {
-
-
                         //we should check if q is index or parameter of sequence.
 
                         if (q.Equals(Sequence.SequenceIndexName, StringComparison.OrdinalIgnoreCase))
@@ -771,13 +739,10 @@ class QsVar
                             //   because it is only integer
 
                             quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]), quantityExpression);
-
                         }
                         else if (Sequence.Parameters.Count(s => s.Name.Equals(q, StringComparison.OrdinalIgnoreCase)) > 0)
                         {
-
                             quantityExpression = GetFunctionOrSequenceParameter(q);
-
                         }
                         else
                         {
@@ -787,8 +752,6 @@ class QsVar
                             Sequence.CachingEnabled = false;  //because when evaluating external variable the external variable may change without knowing
                             throw new QsParameterNotFoundException("Global variable (" + q + ") are not permitted");
                         }
-
-
                     }
                     #endregion
 
@@ -896,7 +859,6 @@ class QsVar
                     }
                     #endregion
                 }
-
             }
 
             #region Apply the postfix here
@@ -932,7 +894,6 @@ class QsVar
                     // call indexer here
                     quantityExpression = ValueIndexExpression(quantityExpression, tokens[ix + 1]);
 
-
                     //get the next operator
                     ix++;
 
@@ -964,7 +925,6 @@ class QsVar
             eop.QuantityExpression = quantityExpression;
 
             ix += 2;
-
         }
 
         if (eop.Next == null && string.IsNullOrEmpty(eop.Operation) == false)
@@ -978,10 +938,8 @@ class QsVar
             throw new QsIncompleteExpression();
         }
 
-
         return FirstEop;
     }
-
 
     internal Expression ParseArithmatic(Token toks)
     {
@@ -1002,7 +960,6 @@ class QsVar
         var tpvcp3 = typeof(QsTupleValue).GetConstructor([typeof(int), typeof(string), typeof(QsValue)]);
 
         var tpvcp4 = typeof(QsTupleValue).GetConstructor([typeof(int), typeof(QsValue)]);
-
 
         /*
             #normal tuple
@@ -1065,12 +1022,9 @@ class QsVar
             }
             else
             {
-
                 var r = ParseArithmatic(t);
                 ps.Add(Expression.New(tpvcp1, r));
             }
-
-
         }
 
         var cp = typeof(QsFlowingTuple).GetConstructor([typeof(QsTupleValue[])]);
@@ -1080,7 +1034,6 @@ class QsVar
 
     private Expression DeleteInstance(Token token)
     {
-
         var ex = Expression.Constant(Evaluator);
 
         return Expression.Call(
@@ -1091,7 +1044,6 @@ class QsVar
             ,
             Expression.Constant(token.TokenValue)
         );
-
     }
 
     /// <summary>
@@ -1107,7 +1059,6 @@ class QsVar
         if(token.TokenClassType == typeof(ParenthesisCallToken))
         {
             cls = token[0].TokenValue;
-
 
             List<string> parms = [];
             //discover parameters
@@ -1128,13 +1079,10 @@ class QsVar
 
         cls = cls.Replace(':','.');
 
-
         if (cls.StartsWith(".."))
             cls = cls.Replace("..", ""); // indicates that we used root operator in namespace  ::
         else
             cls = "QsRoot." + cls;
-
-
 
 #if WINRT
             discoveredType = Root.GetInternalType(cls);
@@ -1223,18 +1171,14 @@ class QsVar
         QsScalar sc = null;
         if (complexToken.TokenClassType == typeof(RationalQuantityToken)) // there is a unit
             sc = c.ToQuantity(complexToken[1].TokenValue.Trim('<', '>')).ToScalar();
-
         else
             sc = c.ToQuantity().ToScalar();
 
         return Expression.Constant(sc, typeof(QsScalar));
     }
 
-
-
     private Expression QuaternionScalar(Token quaternionToken)
     {
-
         Token cn = null;
         if (quaternionToken.TokenClassType == typeof(QuaternionQuantityToken))
             cn = quaternionToken[0];
@@ -1275,7 +1219,6 @@ class QsVar
             sc = c.ToQuantity().ToScalar();
 
         return Expression.Constant(sc, typeof(QsScalar));
-
     }
 
     private Expression ComplexScalar(Token complexToken)
@@ -1312,13 +1255,11 @@ class QsVar
         QsScalar sc = null;
         if (complexToken.TokenClassType == typeof(ComplexQuantityToken)) // there is a unit
             sc = c.ToQuantity(complexToken[1].TokenValue.Trim('<', '>')).ToScalar();
-
         else
             sc = c.ToQuantity().ToScalar();
 
         return Expression.Constant(sc, typeof(QsScalar));
     }
-
 
     /// <summary>
     /// Get Absolute of number or determinant of matrix.
@@ -1352,7 +1293,6 @@ class QsVar
         return rr;
     }
 
-
     #region QsValue Parsers
 
     /// <summary>
@@ -1369,10 +1309,8 @@ class QsVar
         var token = tok.TrimStart(typeof(LeftCurlyBracketToken));
         token = token.TrimEnd(typeof(RightCurlyBracketToken));
 
-
         token = token.MergeAllBut(typeof(MergedToken), new CommaToken(), new MultipleSpaceToken());
         token = token.RemoveTokens(typeof(CommaToken), typeof(MultipleSpaceToken));
-
 
         for (var i = 0; i < token.Count; i++)
         {
@@ -1396,10 +1334,8 @@ class QsVar
         var token = tok.TrimStart(typeof(LeftCurlyBracketToken));
         token = token.TrimEnd(typeof(RightCurlyBracketToken));
 
-
         token = token.MergeAllBut(typeof(MergedToken), new CommaToken(), new MultipleSpaceToken());
         token = token.RemoveTokens(typeof(CommaToken), typeof(MultipleSpaceToken));
-
 
         for (var i = 0; i < token.Count ;i++ )
         {
@@ -1417,7 +1353,6 @@ class QsVar
 
         return vectorExpression;
     }
-
 
     /// <summary>
     /// Parsing is expecting values separated by colon or space
@@ -1443,7 +1378,6 @@ class QsVar
 
         for (var i = 0; i < token.Count; i++)
         {
-
             if (token[i].TokenClassType == typeof(MergedToken))
             {
                 // loop through every element
@@ -1461,9 +1395,7 @@ class QsVar
                                 vtk.TokenClassType != typeof(CommaToken)
                     )
                     {
-
                         componentsExpressions.Add(ParseArithmatic(vtk));    // get the expression of the current component.
-
                     }
                 }
 
@@ -1473,7 +1405,6 @@ class QsVar
                     ComponentsArray);
 
                 vctExpressions.Add(MatrixOfComponents);
-
             }
         }
 
@@ -1485,7 +1416,6 @@ class QsVar
 
         return matrixExpression;
     }
-
 
     public Expression ParseTensor(Token tok)
     {
@@ -1502,7 +1432,6 @@ class QsVar
 
         for (var i = 0; i < token.Count; i++)
         {
-
             if (token[i].TokenClassType == typeof(MergedToken))
             {
                 if (token[i].Contains<TensorGroupToken>())
@@ -1527,10 +1456,7 @@ class QsVar
             valuesArray);
 
         return tensorExpression;
-
-
     }
-
 
     public Expression ParseText(Token tok)
     {
@@ -1542,7 +1468,6 @@ class QsVar
     #endregion
 
     #region Helpers in making values
-
 
     /// <summary>
     /// Obtain variable value by expression in the current scope
@@ -1581,8 +1506,6 @@ class QsVar
                 Expression.Constant(ns),
                 Expression.Constant(nsvar)
             );
-
-
         }
 
         var fe = Expression.Call(
@@ -1592,10 +1515,8 @@ class QsVar
             Expression.Constant(var[0])
         );
 
-
         return fe;
     }
-
 
     /// <summary>
     /// gets the function as a scalar of function quantity.
@@ -1619,7 +1540,6 @@ class QsVar
                 select p.Trim())
                 .ToArray();
 
-
             if (pp.Length == 1 && string.IsNullOrEmpty(pp[0]))
                 pp = null;
 
@@ -1629,7 +1549,6 @@ class QsVar
                 ns = functionValueToken.TokenValue.Substring(0, functionValueToken.TokenValue.LastIndexOf(':'));
             var nsfnname = functionValueToken.TokenValue.Substring(functionValueToken.TokenValue.LastIndexOf(':') + 2);
             nsfnname = nsfnname.Substring(0, nsfnname.IndexOf('('));
-
 
             //specify parameters
             f = QsFunction.GetExactFunctionWithParameters(
@@ -1647,7 +1566,6 @@ class QsVar
                     Scope,
                     string.Empty,
                     functionValueToken.TokenValue.Substring(1));
-
             }
             else
             {
@@ -1659,10 +1577,8 @@ class QsVar
             }
         }
 
-
         if (f != null)
         {
-
             //return Expression.Constant(f, typeof(QsValue));
             return Expression.Constant(f.ToQuantity().ToScalar(), typeof(QsScalar));
         }
@@ -1681,7 +1597,6 @@ class QsVar
                     Scope,
                     string.Empty,
                     functionValueToken[1].TokenValue);
-
             }
             else
             {
@@ -1703,7 +1618,6 @@ class QsVar
             if (pp.Length == 1 && string.IsNullOrEmpty(pp[0]))
                 pp = null;
 
-
             if (functionValueToken[1].TokenClassType == typeof(WordToken))
             {
                 //specify parameters
@@ -1713,7 +1627,6 @@ class QsVar
                     functionValueToken[1].TokenValue,
                     pp
                 );
-
             }
             else
             {
@@ -1761,7 +1674,6 @@ class QsVar
             else
                 s = token[0][1].TokenValue;
 
-
             unit = token[1].TokenValue.Trim('<', '>');
         }
 
@@ -1785,7 +1697,6 @@ class QsVar
     /// <returns></returns>
     internal object Execute()
     {
-
         // Construct Lambda function which return one object.
         Expression<Func<object>> cq = Expression.Lambda<Func<object>>(ResultExpression);
 
@@ -1798,7 +1709,6 @@ class QsVar
         // return the result
         return result;
     }
-
 
     public QsScope Scope => Evaluator.Scope;
 
@@ -1817,18 +1727,12 @@ class QsVar
     /// <returns></returns>
     public Expression IndexerExpression(string valueName, Token indexes, Token args)
     {
-
-
-
         // this needs to be rewritten
 
         //  first we need to check our context if we are evaluating inside a function or inside a sequence
         //   then we evaluate the parameters   and we index based on the feeded parameters
         //     if parameters aren't available for that name then we proceed with global scope
         //     
-
-
-
 
         var ns = string.Empty;
         if (valueName.LastIndexOf(':') > -1)
@@ -1852,7 +1756,6 @@ class QsVar
 
         if (value == null)
         {
-
             // we are in global code context
             //   or we didn't find the variable name in the parameters list of the function
             return SequenceCallExpression(valueName, indexes, args);
@@ -1912,12 +1815,10 @@ class QsVar
             Expression.NewArrayInit(typeof(QsParameter), ExpressionParameters));
 
         return result;
-
     }
 
     public Expression ValueIndexExpression(Expression value, Token indexes)
     {
-
         var Tokens = indexes.TrimStart<LeftSquareBracketToken>().TrimEnd<RightSquareBracketToken>();
         Tokens = Tokens.MergeAllBut<MergedToken>(new CommaToken()).RemoveTokens(typeof(CommaToken));
 
@@ -1946,12 +1847,7 @@ class QsVar
             Expression.NewArrayInit(typeof(QsParameter), ExpressionParameters));
 
         return result;
-
     }
-
-
-
-
 
     /// <summary>
     /// evaluate expression on the syntax S[n] or S[9..34](x1, x2, .., x7)  etc.
@@ -1962,7 +1858,6 @@ class QsVar
     /// <returns></returns>
     public Expression SequenceCallExpression(string sequenceName, Token indexes, Token args)
     {
-
         //discover the index
         if (indexes.Count > 3)
             throw new QsException("Calling sequence with more than one index is not supported yet.");
@@ -1983,7 +1878,6 @@ class QsVar
             {
                 if (args[ai].TokenValue != ",")
                 {
-
                     Expression rawParameter = Expression.Constant(args[ai].TokenValue.Trim());
 
                     var nakedParameter = ParseArithmatic(args[ai]);
@@ -1995,7 +1889,6 @@ class QsVar
                         typeof(QsParameter).GetMethod("MakeParameter"),
                         nakedParameter,
                         rawParameter);
-
 
                     // -> Catch(QsVariableNotFoundException e) {QsParameter.MakeParameter(e.ExtraData, args[ip])}
 
@@ -2013,7 +1906,6 @@ class QsVar
                      Expression tryc  = tt.ToExpression()
                      */
                     Expression tryc = Expression.TryCatch(tryBody, Expression.Catch(e, catchBody));
-
 
                     parameters.Add(tryc);
                 }
@@ -2088,7 +1980,6 @@ class QsVar
 
             //however we need to convert it to integer. because it is an index
             IndexExpression = Expression.Call(typeof(Qs).GetMethod("IntegerFromQsValue"), IndexExpression);
-
         }
         #endregion
 
@@ -2238,10 +2129,7 @@ class QsVar
         );
 
         return finale;
-
     }
-
-
 
     /// <summary>
     /// Used to build the function call expression
@@ -2319,7 +2207,6 @@ class QsVar
 
             if (DiscoveredFunctions.Length > 1)
             {
-
                 //we need to make another filtering criteria to decrease the discovered numbers.
 
                 List<QsFunction> Pass2Functions = [];
@@ -2362,7 +2249,6 @@ class QsVar
             {
                 TargetFunction = DiscoveredFunctions[0];
             }
-
         }
         else
         {
@@ -2373,7 +2259,6 @@ class QsVar
             TargetFunction = QsFunction.GetFunction(Scope, functionNameSpace, TargetFunctionRealName);
         }
         #endregion
-
 
         List<Expression> parameters = [];
 
@@ -2401,8 +2286,6 @@ class QsVar
                     pinfo = Sequence.Parameters.Single(c => c.Name.Equals(funcName, StringComparison.OrdinalIgnoreCase));
                 else
                     throw new QsException("Parse mode is not known to evaluate this function");
-
-
 
                 //Yes the function should be retrieved dynamically from the passed parameter name.
 
@@ -2485,9 +2368,7 @@ class QsVar
                         )
                     );
 
-
                     FunctorParams.Add(qp);
-
                 }
 
                 // expression to call the function QsFunction.GetInvoke  is used here
@@ -2499,7 +2380,6 @@ class QsVar
 
                 //set that the parameter is function.
                 pinfo.Type = QsParamType.Function;
-
 
                 return CallExpression;
             }
@@ -2514,7 +2394,6 @@ class QsVar
             // Means a function is already available in the global heap to be called.
             // so we can call it directly if we wish
 
-
             // check if the function name is originally come from the parameters.
             if (ParseMode == QsVarParseModes.Function)
             {
@@ -2528,12 +2407,10 @@ class QsVar
                     return FunP;
             }
 
-
             #region Adjusting (ReArranging) the named arguments order to the real function parameter order
 
             //Rearrange paramsText so it includes named arguments
             //  named argument is on the format  x=20, j=30
-
 
             // fParameters is the parameters array that will be sent to the function
             Dictionary<string, string> fParameters = new(StringComparer.OrdinalIgnoreCase);
@@ -2554,7 +2431,6 @@ class QsVar
             // second search for named arguments and replace the old values.
             for (var i = 0; i < ArgumentTokens.Count; i++)
             {
-
                 var paraToken = ArgumentTokens[i].RemoveSpaceTokens();
 
                 if (paraToken.Contains<EqualToken>())
@@ -2584,8 +2460,6 @@ class QsVar
                         throw new QsException("Normal argument after named argument is not permitted");
                     setParameters[TargetFunction.Parameters[i].Name] = true;
                 }
-
-
             }
             #endregion
 
@@ -2606,10 +2480,7 @@ class QsVar
         }
 
         throw new QsFunctionNotFoundException(functionName + " Can't be found.");
-
     }
-
-
 
     /// <summary>
     /// Get the parameter expression when parsing in function mode
@@ -2626,7 +2497,6 @@ class QsVar
         {
             Expression eu = lambdaBuilder.Parameters.Single(c => c.Name.Equals(parameterName, StringComparison.OrdinalIgnoreCase));
 
-
             // parameter is having quantity in normal cases
             Expression directQuantity = Expression.Property(eu, "QsNativeValue");
 
@@ -2634,8 +2504,6 @@ class QsVar
             //   this case only occure if I called a function declared like this   f(a) = a(5,3)+a
             //      because when calling f(u)  where u=50 and u(x,y)=x+y  then I want the evaluation to get the calculations right
             //      because 'a' alone is expressing single global variable.
-
-
 
             Expression indirectQuantity = Expression.Call(
                 eu,
@@ -2650,7 +2518,6 @@ class QsVar
                 indirectQuantity,
                 directQuantity
             );
-
         }
         catch (Exception e)
         {
@@ -2662,10 +2529,7 @@ class QsVar
 
             throw new QsParameterNotFoundException(parameterName);
         }
-
     }
-
-
 
     /// <summary>
     /// Just take the left and right expression with the operator and make arithmatic expression.
@@ -2788,7 +2652,6 @@ class QsVar
             // here we must consume another expression for the false evaluation.
             //   if there are more expression on the linked list
 
-
             if (eop.Next.Next == null)
             {
                 throw new QsException("syntax error: When without Otherwise");
@@ -2820,7 +2683,6 @@ class QsVar
 
         throw new NotSupportedException("Not Supported Operator '" + op + "'");
     }
-
 
     #region Operators and Priority Groups
     //Treat operators as groups
@@ -2873,13 +2735,11 @@ class QsVar
 
     readonly static string[] WhenOtherwiseGroup = ["when", "otherwise"];
 
-
     /// Operator Groups Ordered by Priorities.
     readonly static string[][] OperatorGroups = [HigherGroup, Group, SymGroup, Group0, Group1, Group2, Shift, RelationalGroup, EqualityGroup, AndGroup, OrGroup, WhenOtherwiseGroup
     ];
 
     #endregion
-
 
     /// <summary>
     /// Takes the linked list of formed expressions and construct the arithmatic expressions based
@@ -2893,7 +2753,6 @@ class QsVar
     /// <returns></returns>
     private Expression ConstructExpression(ExprOp FirstEop)
     {
-
         foreach (var opg in OperatorGroups)
         {
             var eop = FirstEop;
@@ -2937,7 +2796,6 @@ class QsVar
 
         return FirstEop.QuantityExpression;
     }
-
 
     /// <summary>
     /// The final result of the parsing and expression tree construction.

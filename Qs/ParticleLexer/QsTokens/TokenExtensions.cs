@@ -60,16 +60,12 @@ public static class TokenExtensions
                             functionCallToken.TokenClassType = typeof(ParenthesisCallToken);
                             functionCallToken.AppendSubToken(c);
 
-
-
                             if (cnext.Contains((typeof(ParenthesisGroupToken))) | cnext.Contains(typeof(SquareBracketsGroupToken)))
                             {
                                 cnext = cnext.DiscoverQsCalls(stringComparer, ignoreWords);
                             }
 
-
                             cnext = token.SplitParamerers(cnext, new CommaToken());
-
 
                             functionCallToken.AppendSubToken(cnext);
 
@@ -147,8 +143,6 @@ public static class TokenExtensions
 
         return Token.Zabbat(first);
     }
-
-
 
     /// <summary>
     /// Parsing the loop body

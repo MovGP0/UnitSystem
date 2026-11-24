@@ -8,7 +8,6 @@ namespace QuantitySystem.Quantities;
 /// <typeparam name="T"></typeparam>
 public class MolarDensity<T> : DerivedQuantity<T>
 {
-
     public MolarDensity()
         : base(1, new AmountOfSubstance<T>(), new Volume<T>(-1))
     {
@@ -19,7 +18,6 @@ public class MolarDensity<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator MolarDensity<T>(T value)
     {
         MolarDensity<T> Q = new()
@@ -29,6 +27,4 @@ public class MolarDensity<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

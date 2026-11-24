@@ -1,7 +1,6 @@
 ﻿using QuantitySystem.Quantities.BaseQuantities;
 using QuantitySystem.Quantities.DimensionlessQuantities;
 
-
 namespace QuantitySystem.Quantities;
 
 public class LuminousFlux<T> : DerivedQuantity<T>
@@ -16,7 +15,6 @@ public class LuminousFlux<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator LuminousFlux<T>(T value)
     {
         LuminousFlux<T> Q = new()
@@ -26,5 +24,4 @@ public class LuminousFlux<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

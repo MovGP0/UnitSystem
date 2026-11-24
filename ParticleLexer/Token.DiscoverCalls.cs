@@ -4,7 +4,6 @@ namespace ParticleLexer;
 
 public sealed partial class Token : IEnumerable<Token>
 {
-
     /// <summary>
     /// Merge between known start token and different closing tokens with different merged tokens classes
     /// </summary>
@@ -91,7 +90,6 @@ public sealed partial class Token : IEnumerable<Token>
         return Zabbat(first);
     }
 
-
     /// <summary>
     /// Assemble single tokens into groups like open and close parenthesis
     ///     (()(())[[[][]])
@@ -103,7 +101,6 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public Token MergeTokensInGroups(params GroupTokenClass[] groupsTokens)
     {
-
         var first = new Token();
         var current = first;
 
@@ -149,14 +146,12 @@ public sealed partial class Token : IEnumerable<Token>
             //not open nor close.
             current.AppendSubToken(c);
 
-
             LoopAgain:
             ci++;
         }
 
         return Zabbat(first);
     }
-
 
     /// <summary>
     /// After merging words and grouping brackets
@@ -187,12 +182,9 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public Token DiscoverCalls(StringComparer stringComparer, CallTokenClass[] callTokensClasses,Type[] wordTokensClasses, string[] ignoreWords)
     {
-
-
         var GroupsClassesTypes = (from gct in callTokensClasses
             select gct.GroupToken.Type)
             .ToArray();
-
 
         var first = new Token();
         var current = first;
@@ -269,7 +261,6 @@ public sealed partial class Token : IEnumerable<Token>
         return Zabbat(first);
     }
 
-
     /// <summary>
     /// Merge tokens inside group token ignore the first and last token and merge all tokens inside them leaving the separator as it is
     /// then mark the merged tokens as ParameterToken
@@ -279,13 +270,11 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public Token SplitParamerers(Token cnext, TokenClass separator)
     {
-
         //here I must merge all but the parenthesis
         var temp = new Token();
 
         for (var iy = 1; iy < cnext.Count - 1; iy++)
             temp.AppendSubToken(cnext[iy]);
-
 
         temp = temp.MergeAllBut<ParameterToken>(separator);
 
@@ -300,11 +289,4 @@ public sealed partial class Token : IEnumerable<Token>
 
         return Zabbat(tmp2);
     }
-
-
-
-
-
-
-
 }

@@ -1,7 +1,6 @@
 ﻿//  Source code is translated from boost C++ to C#
 //  Translator: Ahmed Sadek
 
-
 //  boost quaternion.hpp header file
 
 //  (C) Copyright Hubert Holin 2001.
@@ -10,7 +9,6 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 // See http://www.boost.org for updates, documentation, and revision history.
-
 
 using System.Globalization;
 using Qs.Types;
@@ -76,7 +74,6 @@ public struct Quaternion : IEquatable<Quaternion>
         return dd;
     }
 
-
     public override string ToString()
     {
         return "("
@@ -90,10 +87,8 @@ public struct Quaternion : IEquatable<Quaternion>
             + "k )";
     }
 
-
     public string ToQsSyntax()
     {
-
         return "H{ "
             + a.ToString(CultureInfo.InvariantCulture)
             + ", "
@@ -103,12 +98,9 @@ public struct Quaternion : IEquatable<Quaternion>
             + ", "
             + d.ToString(CultureInfo.InvariantCulture)
             + " }";
-
     }
 
     #region The code is based on http://www.boost.org/doc/libs/1_43_0/boost/math/quaternion.hpp
-
-
 
     public static Quaternion operator +(Quaternion lhs, double rhs)
     {
@@ -160,9 +152,6 @@ public struct Quaternion : IEquatable<Quaternion>
         return result;
     }
 
-
-
-
     public static Quaternion operator *(Quaternion lhs, double rhs)
     {
         var result = new Quaternion(lhs);
@@ -175,7 +164,6 @@ public struct Quaternion : IEquatable<Quaternion>
 
     public static Quaternion operator *(Quaternion lhs, Complex rhs)
     {
-
         var ar = rhs.Real;
         var br = rhs.Imaginary;
 
@@ -190,7 +178,6 @@ public struct Quaternion : IEquatable<Quaternion>
 
     public static Quaternion operator *(Quaternion lhs, Quaternion rhs)
     {
-
         var ar = (rhs.a);
         var br = (rhs.b);
         var cr = (rhs.c);
@@ -218,7 +205,6 @@ public struct Quaternion : IEquatable<Quaternion>
 
     public static Quaternion operator /(Quaternion lhs, Complex rhs)
     {
-
         var ar = rhs.Real;
         var br = rhs.Imaginary;
 
@@ -235,7 +221,6 @@ public struct Quaternion : IEquatable<Quaternion>
 
     public static Quaternion operator /(Quaternion lhs, Quaternion rhs)
     {
-
         var ar = (rhs.a);
         var br = (rhs.b);
         var cr = (rhs.c);
@@ -248,15 +233,12 @@ public struct Quaternion : IEquatable<Quaternion>
         var ct = (-lhs.a * cr + lhs.b * dr + lhs.c * ar - lhs.d * br) / denominator;    //((ar*c-a*cr)+(dr*b-d*br))/denominator;
         var dt = (-lhs.a * dr - lhs.b * cr + lhs.c * br + lhs.d * ar) / denominator;    //((ar*d-a*dr)+(br*c-b*cr))/denominator;
 
-
         var result = new Quaternion(at, bt, ct, dt);
 
         return result;
     }
 
-
     #endregion
-
 
     public static Quaternion operator /(double a, Quaternion b)
     {
@@ -267,7 +249,6 @@ public struct Quaternion : IEquatable<Quaternion>
     {
         return new Quaternion(a) * b;
     }
-
 
     public static Quaternion Pow(Quaternion q, double nn)
     {
@@ -302,8 +283,6 @@ public struct Quaternion : IEquatable<Quaternion>
         /* n < 0 */
         return (Pow(new Quaternion(1) / q, -n));
     }
-
-
 
     public static bool operator ==(Quaternion lhs, Quaternion rhs)
     {
@@ -343,14 +322,12 @@ public struct Quaternion : IEquatable<Quaternion>
         return a.GetHashCode() ^ b.GetHashCode() ^ c.GetHashCode() ^ d.GetHashCode();
     }
 
-
     /// <summary>
     /// 3x3 Rotation Matrix From normalized quaternion
     /// </summary>
     /// <returns></returns>
     public QsMatrix To_3x3_RotationMatrix()
     {
-
         var w = a;
         var x = i;
         var y = j;
@@ -374,6 +351,5 @@ public struct Quaternion : IEquatable<Quaternion>
 
         var rm = new QsMatrix(v0, v1, v2);
         return rm;
-
     }
 }

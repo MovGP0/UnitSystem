@@ -662,4 +662,3 @@ public sealed class Zambian_Kwacha : Unit;
 [Unit("ZWL", typeof(Currency<>))]
 [ReferenceUnit(typeof(United_States_Dollar), "Currency.ZWL")]
 public sealed class Zimbabwean_Dollar : Unit;
-

@@ -2,10 +2,8 @@
 
 public partial class SymbolicVariable
 {
-
     internal struct MultipliedTerm(SymbolicVariable term, bool divided)
     {
-
         public SymbolicVariable Term = term;
 
         public bool Divided = divided;
@@ -52,7 +50,6 @@ public partial class SymbolicVariable
             {
                 MultipliedTerms.Add(new MultipliedTerm(basicterm));
             }
-
         };
 
         Action<SymbolicVariable> SpliFusedConstants = (rr) =>

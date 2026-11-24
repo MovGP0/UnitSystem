@@ -14,7 +14,6 @@ public class QsBoolean : QsValue
 
     public static  QsBoolean False => _QsFalse;
 
-
     public static implicit operator QsBoolean(bool b)
     {
         return new QsBoolean { Value = b };
@@ -59,7 +58,6 @@ public class QsBoolean : QsValue
     {
         return new QsBoolean { Value = a.Value & b.Value };
     }
-
 
     public override QsValue AddOperation(QsValue value)
     {

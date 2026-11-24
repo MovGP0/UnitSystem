@@ -14,7 +14,6 @@ public class ElectricConductance<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator ElectricConductance<T>(T value)
     {
         ElectricConductance<T> Q = new()
@@ -24,5 +23,4 @@ public class ElectricConductance<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

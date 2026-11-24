@@ -5,7 +5,6 @@
 /// </summary>
 public class QsScopeStorage : IQsStorageProvider
 {
-
     Dictionary<string, object> _Storage = new(StringComparer.OrdinalIgnoreCase);
 
     public IEnumerable<KeyValuePair<string, object>> GetItems()
@@ -37,7 +36,6 @@ public class QsScopeStorage : IQsStorageProvider
     {
         _Storage[variable] =  value;
     }
-
 
     /// <summary>
     /// Trys to get a variable content by its name .. the function also calls an delegate function for

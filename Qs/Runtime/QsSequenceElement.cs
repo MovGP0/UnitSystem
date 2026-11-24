@@ -3,7 +3,6 @@ using Qs.Types;
 using QuantitySystem.Quantities.BaseQuantities;
 using QuantitySystem.Units;
 
-
 namespace Qs.Runtime;
 
 /// <summary>
@@ -14,7 +13,6 @@ namespace Qs.Runtime;
 /// </summary>
 public class QsSequenceElement
 {
-
     private string elementDeclaration;
 
     /// <summary>
@@ -25,7 +23,6 @@ public class QsSequenceElement
         get => elementDeclaration.Trim();
         set => elementDeclaration = value;
     }
-
 
     // I want to know if specific element will have to evaluate index or parameter
     // this information will be usefull later when planning the caching of the sequence.
@@ -40,12 +37,10 @@ public class QsSequenceElement
     /// </summary>
     public bool ParameterEvaluation { get; set; }
 
-
     /// <summary>
     /// Contains the DLR expression of the evaluation of this element.
     /// </summary>
     public Expression ElementExpression { get; set; }
-
 
     /// <summary>
     /// The value of the sequence element.
@@ -55,8 +50,6 @@ public class QsSequenceElement
     /// - Delegate to code passing index and parameters.
     /// </summary>
     public object ElementValue { get; set; }
-
-
 
     /// <summary>
     /// The parent sequence that hold this element.
@@ -69,7 +62,6 @@ public class QsSequenceElement
     /// </summary>
     public int IndexInParentSequence { get; set; }
 
-
     /// <summary>
     /// Execute the element by accepting the index of execution.
     /// index of execution may differ on IndexInParentSequence.
@@ -78,10 +70,8 @@ public class QsSequenceElement
     /// <returns></returns>
     public QsValue Execute(int executionIndex)
     {
-
         if (ElementValue.GetType() == typeof(Func<int, QsValue>))
         {
-
             return ((Func<int, QsValue>)ElementValue)(executionIndex);
         }
 
@@ -131,7 +121,6 @@ public class QsSequenceElement
         throw new QsException("Parameters Exeeded the limits");
     }
 
-
     public override string ToString()
     {
         return ElementDeclaration;
@@ -154,7 +143,6 @@ public class QsSequenceElement
         el.ParameterEvaluation = false;
 
         return el;
-
     }
 
     /// <summary>
@@ -165,7 +153,6 @@ public class QsSequenceElement
     /// <returns></returns>
     public static QsSequenceElement FromSequenceAccess(QsSequence sequence)
     {
-
         var el = new QsSequenceElement();
         el.ElementValue = sequence;
 
@@ -225,7 +212,6 @@ public class QsSequenceElement
         return el;
     }
 
-
     /// <summary>
     /// Parse the element text and make the element point to delegate which evaluate the text if necessary.
     /// </summary>
@@ -258,7 +244,6 @@ public class QsSequenceElement
         if (element.IndexOf(sequence.SequenceIndexName) > -1)
             se.IndexEvaluation = true;
 
-
         //make the sequence parameters.
         foreach (var seqParam in sequence.Parameters)
         {
@@ -284,6 +269,5 @@ public class QsSequenceElement
     }
 
     #endregion
-
 
 }

@@ -45,7 +45,6 @@ public static class Vector
             {
                 vec.AddComponent(vl);
             }
-
         }
 
         return vec;

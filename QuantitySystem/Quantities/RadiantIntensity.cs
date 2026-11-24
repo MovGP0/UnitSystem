@@ -27,5 +27,4 @@ public class RadiantIntensity<T> : DerivedQuantity<T>
 
         return Q;
     }
-
 }

@@ -24,5 +24,4 @@ internal static class Operator
     public const string PowerDot = "^.";
 
     public const string Differentiate = "|";
-
 }

@@ -6,7 +6,6 @@
 public abstract class CallTokenClass(GroupTokenClass groupToken, TokenClass parameterSeparatorToken)
     : TokenClass
 {
-
     /// <summary>
     /// The group that we will look for.
     /// </summary>

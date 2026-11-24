@@ -2,7 +2,6 @@
 
 public sealed partial class SymbolicVariable
 {
-
     public static SymbolicVariable Number(double number)
     {
         var sv = new SymbolicVariable(number.ToString(CultureInfo.InvariantCulture));

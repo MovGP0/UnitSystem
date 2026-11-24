@@ -14,7 +14,6 @@ public class ElectricCharge<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator ElectricCharge<T>(T value)
     {
         ElectricCharge<T> Q = new()
@@ -24,6 +23,4 @@ public class ElectricCharge<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

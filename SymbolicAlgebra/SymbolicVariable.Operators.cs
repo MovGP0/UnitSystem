@@ -2,8 +2,6 @@
 
 public partial class SymbolicVariable
 {
-
-
     /// <summary>
     /// Raise to specified power.
     /// </summary>
@@ -78,7 +76,6 @@ public partial class SymbolicVariable
         return p;
     }
 
-
     public static SymbolicVariable? Pow(SymbolicVariable a, int power)
     {
         return a.RaiseToSymbolicPower(new SymbolicVariable(power.ToString()));
@@ -86,10 +83,8 @@ public partial class SymbolicVariable
 
     public static SymbolicVariable? Pow(SymbolicVariable a, double power)
     {
-
         return a.RaiseToSymbolicPower(new SymbolicVariable(power.ToString()));
     }
-
 
     public static SymbolicVariable? operator +(SymbolicVariable a, SymbolicVariable b)
     {

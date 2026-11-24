@@ -14,7 +14,6 @@ public class Area<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Area<T>(T value)
     {
         Area<T> Q = new()
@@ -24,6 +23,4 @@ public class Area<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

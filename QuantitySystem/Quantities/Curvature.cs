@@ -14,7 +14,6 @@ public class Curvature<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator Curvature<T>(T value)
     {
         Curvature<T> Q = new()

@@ -48,7 +48,6 @@ public sealed class ReferenceUnitAttribute : Attribute
 
         // the numerator will be calculated based on source value
 
-
         var sourceFunctionName = source[..source.IndexOf('.')];
 
         if (!DynamicQuantitySystem.DynamicSourceFunctions.ContainsKey(sourceFunctionName))

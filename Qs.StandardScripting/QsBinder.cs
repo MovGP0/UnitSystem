@@ -3,13 +3,10 @@ using Microsoft.Scripting.Ast;
 using Microsoft.Scripting.Utils;
 using System.Linq.Expressions;
 
-
 namespace Qs.Scripting;
 
 public class QsBinder : DefaultBinder
 {
-
-
     public override Microsoft.Scripting.Actions.Calls.Candidate PreferConvert(Type t1, Type t2)
     {
         throw new NotImplementedException();
@@ -19,7 +16,6 @@ public class QsBinder : DefaultBinder
     {
         throw new NotImplementedException();
     }
-
 
     public override Expression ConvertExpression(Expression expr, Type toType, ConversionResultKind kind, Microsoft.Scripting.Actions.Calls.OverloadResolverFactory resolverFactory)
     {
@@ -43,9 +39,6 @@ public class QsBinder : DefaultBinder
         return base.ConvertExpression(expr, toType, kind, resolverFactory);
     }
 
-
-
-
     //protected override void MakeRule(OldDynamicAction action, object[] args, RuleBuilder rule)
     //{
 
@@ -57,6 +50,5 @@ public class QsBinder : DefaultBinder
     //    rule.Target = rule.MakeReturn(this, Expression.Constant(0));
 
     //}
-
 
 }

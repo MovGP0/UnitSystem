@@ -377,7 +377,6 @@ public abstract class QsValue: IComparable
         return vec;
     }
 
-
     /// <summary>
     /// Create A matrix from a row values by aligning values to the left in
     /// </summary>
@@ -407,8 +406,6 @@ public abstract class QsValue: IComparable
 
             return tensor;
         }
-
-
 
         var m = new QsMatrix();
 
@@ -469,8 +466,6 @@ public abstract class QsValue: IComparable
     /// <returns></returns>
     public static QsValue MatrixFromValues(params QsValue[] values)
     {
-
-
         if (values[0] is QsTensor)
         {
             if (values.Count() == 1)
@@ -512,7 +507,6 @@ public abstract class QsValue: IComparable
         return mat;
     }
 
-
     /// <summary>
     /// 
     /// </summary>
@@ -541,7 +535,6 @@ public abstract class QsValue: IComparable
         return tens;
     }
 
-
     #endregion
 
     /// <summary>
@@ -552,7 +545,6 @@ public abstract class QsValue: IComparable
     {
         return this;
     }
-
 
     #region IComparable Members
 

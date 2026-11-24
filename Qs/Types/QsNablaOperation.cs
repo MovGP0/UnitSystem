@@ -39,7 +39,6 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
         }
     }
 
-
     /// <summary>
     /// \/ * value  operation is called gradient
     ///     gradient over scalar field generate a vector
@@ -80,9 +79,7 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
         }
 
         throw new NotImplementedException(@"Multiplication of \/ * " + value.GetType().Name +" Not implemented yet");
-
     }
-
 
     /// <summary>
     /// \/ . F  where F is a vector field and the return value should be scalar.
@@ -99,7 +96,6 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
         throw new NotImplementedException(@"\/ . " + value.GetType().Name + " not implemented");
     }
 
-
     /// <summary>
     /// \/  x  F  is called curl of vector
     /// </summary>
@@ -114,7 +110,6 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
 
         throw new NotImplementedException(@"\/ x " + value.GetType().Name + " not implemented");
     }
-
 
     private int Power = 1;
 
@@ -143,5 +138,4 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
     {
         return ToShortString();
     }
-
 }

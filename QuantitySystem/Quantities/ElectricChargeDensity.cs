@@ -12,7 +12,6 @@ public class ElectricChargeDensity<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator ElectricChargeDensity<T>(T value)
     {
         ElectricChargeDensity<T> Q = new()
@@ -22,6 +21,4 @@ public class ElectricChargeDensity<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }

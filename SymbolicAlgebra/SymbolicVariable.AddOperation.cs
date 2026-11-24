@@ -42,16 +42,13 @@ public partial class SymbolicVariable
 
             AdjustZeroCoeffecientTerms(ref a_b);
             return a_b;
-
         }
-
 
         var subB = b.Clone();
         var sub = -1;
 
         var sv = a.Clone();
         NewPart:
-
 
         // compare the first or primary part of this instance to the primary part of other instance.
         // if they are the same sum their coefficients.
@@ -80,7 +77,6 @@ public partial class SymbolicVariable
             {
                 // nothing
             }
-
         }
 
         //so the equality doesn't exits or this instance have other terms also
@@ -88,7 +84,6 @@ public partial class SymbolicVariable
         // there are two cases now
         //  1- the symbolic can be added to one of the existing terms primary and others in addedvariables (which will be perfect)
         //  2- there are no compatible term so we have to add it to the AddedTerms of this instance.
-
 
         //try to add to the rest terms
         foreach (var av in a.AddedTerms)
@@ -170,7 +165,6 @@ public partial class SymbolicVariable
             }
         }
 
-
         // reaching here indicates that we didn't sum up the value to any of the target extra terms
         // so we need to include extra terms here
         if (b._ExtraTerms != null && b._ExtraTerms.Count > 0)
@@ -187,8 +181,6 @@ public partial class SymbolicVariable
         AdjustZeroPowerTerms(sv);
         AdjustZeroCoeffecientTerms(ref sv);
 
-
         return sv;
     }
-
 }

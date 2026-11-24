@@ -15,7 +15,6 @@ public static class TextTools
         return Split(expression, ',');
     }
 
-
     /// <summary>
     /// split the text with splitter character and ignore between parenthesis
     /// </summary>
@@ -197,13 +196,9 @@ public static class TextTools
         else
         {
             results.Add(TokenBuilder.ToString());
-
-
         }
 
         TokenBuilder = null;
-
-
 
         var ff = from z in results
             where string.IsNullOrEmpty(z)==false && char.IsDigit(z, 0) == false
@@ -211,7 +206,6 @@ public static class TextTools
 
         return ff.ToArray();
     }
-
 
     public static string[] ExtractFunctionParameters(string expression)
     {

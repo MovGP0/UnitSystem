@@ -8,7 +8,6 @@ public class Mass<T> : AnyQuantity<T>
     public Mass()
         : base(1)
     {
-
     }
 
     /// <summary>
@@ -18,11 +17,9 @@ public class Mass<T> : AnyQuantity<T>
     public Mass(float exponent)
         : base(exponent) { }
 
-
     private static QuantityDimension _Dimension = new(1, 0, 0);
 
     public override QuantityDimension Dimension => _Dimension * Exponent;
-
 
     public static implicit operator Mass<T>(T value)
     {
@@ -33,5 +30,4 @@ public class Mass<T> : AnyQuantity<T>
 
         return Q;
     }
-
 }

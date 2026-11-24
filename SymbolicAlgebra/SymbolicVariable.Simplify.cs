@@ -5,12 +5,10 @@ using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-
 namespace SymbolicAlgebra;
 
 public partial class SymbolicVariable
 {
-
     class ParameterSquareTrig
     {
         public string Parameter;
@@ -18,7 +16,6 @@ public partial class SymbolicVariable
         public int Sin_2_Count;
 
         public int Cos_2_Count;
-
 
         SymbolicVariable _NegativeSimplifyValue;
 
@@ -36,7 +33,6 @@ public partial class SymbolicVariable
             }
         }
     }
-
 
     /// <summary>
     /// Simplify Trigonometric Functions
@@ -93,10 +89,8 @@ public partial class SymbolicVariable
             foreach (var term in sv._AddedTerms.Values)
             Loop2(term);
 
-
         // coduct the third operation .. final calulcation
         var SimplifiedResult = sv.Clone();
-
 
         foreach (var pst in PSTS.Values)
         {
@@ -108,14 +102,11 @@ public partial class SymbolicVariable
 
                 pst.Cos_2_Count--;
                 pst.Sin_2_Count--;
-
             }
         }
 
-
         return SimplifiedResult;
     }
-
 
     /// <summary>
     /// Trys to simplify the expression with trigonemtric rules.
@@ -126,7 +117,6 @@ public partial class SymbolicVariable
     {
         if (sv.ExtraTerms.Count > 0)
             return sv.Clone(); //prevent simplification in case of extra terms
-
 
         var factorized = FactorWithCommonFactor(sv);
 
@@ -155,7 +145,6 @@ public partial class SymbolicVariable
                     }
                     else
                     {
-
                         // replace with the new value in the fused symbols.
                         term._FusedSymbols.Add(sp.ToString(), term._FusedSymbols[term.GetFusedKey(fui)]);
 
@@ -238,7 +227,6 @@ public partial class SymbolicVariable
         {
             var components = bo2bo2[column];
 
-
             for (var ix = 0; ix < components.Length; ix++)
             {
                 // get the component.
@@ -255,7 +243,6 @@ public partial class SymbolicVariable
                     ];
                     CommonFactorsMap.Add(src_component, indices);
                 }
-
 
                 for (var nxc = column + 1; nxc < bo2bo2.Count ; nxc++)
                 {
@@ -277,7 +264,6 @@ public partial class SymbolicVariable
             }
         }
 
-
         return CommonFactorsMap;
     }
 
@@ -288,7 +274,6 @@ public partial class SymbolicVariable
     public bool CanBeFactored()
     {
         var map = GetCommonFactorsMap();
-
 
         // get all keys  sorted by number of elements
 
@@ -310,7 +295,6 @@ public partial class SymbolicVariable
     {
         var map = sv.GetCommonFactorsMap();
 
-
         // get all keys  sorted by number of elements
 
         var keys = (from mk in map
@@ -318,8 +302,6 @@ public partial class SymbolicVariable
             where mk.Key.Equals(One) == false && mk.Value.Count > 1 && mk.Key.IsCoeffecientOnly == false
             select mk.Key)
             .ToArray();
-
-
 
         if (keys.Length == 0)
             return sv.Clone();
@@ -412,8 +394,6 @@ public partial class SymbolicVariable
         return result;
     }
 
-
-
     /// <summary>
     /// Reorders the negative symbols and gets them into DividedTerm object.
     /// for example 4*x^-2*y^6*u^-4  will get u^4*x^2  and 5/a  will get a
@@ -437,15 +417,12 @@ public partial class SymbolicVariable
             if (sVariable._SymbolPowerTerm != null) //include the symbol power term also but invert its sign
                 denominator._SymbolPowerTerm = Multiply(NegativeOne, sVariable._SymbolPowerTerm);
 
-
             // fix the reordered variable by removing this symbol information because it will appear later
             //   in the divided term.
 
             reOrderedVariable.SymbolPower = 0 ;
             reOrderedVariable._SymbolPowerTerm = null;
             reOrderedVariable.Symbol = string.Empty;
-
-
         }
 
         foreach (var fs in sVariable.FusedSymbols)
@@ -466,7 +443,6 @@ public partial class SymbolicVariable
             }
         }
 
-
         reOrderedVariable.DividedTerm = Multiply(reOrderedVariable.DividedTerm, denominator);
 
         return denominator;
@@ -480,7 +456,6 @@ public partial class SymbolicVariable
     public static SymbolicVariable[] SeparateWithDifferentDenominators(SymbolicVariable sv)
     {
         List<SymbolicVariable> SeparatedVariabls = [];
-
 
         var svclone = sv.Clone(true);
         var divisor = svclone._DividedTerm;
@@ -549,13 +524,10 @@ public partial class SymbolicVariable
 
             var OrdNumerator = Multiply(proTerm.Denominator, OrderedVariable.Numerator);
 
-
             OrderedVariable = Add(OrdNumerator, exNumerator);
 
             OrderedVariable._DividedTerm = exDenominator;
-
         }
-
 
         return OrderedVariable;
     }
@@ -564,5 +536,4 @@ public partial class SymbolicVariable
     {
         return UnifyDenominators(sv);
     }
-
 }

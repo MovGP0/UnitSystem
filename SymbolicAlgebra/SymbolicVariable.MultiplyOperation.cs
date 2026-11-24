@@ -34,9 +34,7 @@ public partial class SymbolicVariable
         {
             #region Symbols are Equal (I mean 2*x^3 = 2*X^3)
 
-
             MultiplyCoeffecients(ref SourceTerm, TargetSubTerm);
-
 
             if (a.SymbolPowerTerm != null || TargetSubTerm.SymbolPowerTerm != null)
             {
@@ -81,9 +79,6 @@ public partial class SymbolicVariable
                     SourceTerm._SymbolPowerTerm = TargetSubTerm.SymbolPowerTerm.Clone();
                 else
                     SourceTerm._SymbolPowerTerm = null;
-
-
-
 
                 //fuse the fused variables in target into source
                 foreach (var fv in TargetSubTerm.FusedSymbols)
@@ -213,7 +208,6 @@ public partial class SymbolicVariable
                             SymbolicVariable = TargetSubTerm.SymbolPowerTerm == null ? null : TargetSubTerm.SymbolPowerTerm.Clone()
                         });
 
-
                     // But the primary symbol of source may exist in the target fused variables.
 
                     foreach (var fsv in TargetSubTerm.FusedSymbols)
@@ -248,7 +242,6 @@ public partial class SymbolicVariable
                                         SourceTerm._SymbolPower += fsv.Value.NumericalVariable;
                                     }
                                 }
-
                             }
                             else
                             {
@@ -257,7 +250,6 @@ public partial class SymbolicVariable
                         }
                     }
                     #endregion
-
 
                 }
 
@@ -321,10 +313,8 @@ public partial class SymbolicVariable
             //   this new term is a sub term in b and will be added to all terms of a.
             TargetSubTerm =  b.AddedTerms.ElementAt(subIndex).Value.Clone();
 
-
             TargetSubTerm.DividedTerm = b.DividedTerm;   // this line is important because I extracted this added term from a bigger term with the same divided term
             // and when I did this the extracted term lost its divided term
-
 
             var TargetTermSubTotal = Multiply(a, TargetSubTerm);
             total = Add(total, TargetTermSubTotal);
@@ -345,12 +335,10 @@ public partial class SymbolicVariable
             extraIndex++;
         }
 
-
         AdjustSpecialFunctions(ref total);
         AdjustZeroPowerTerms(total);
 
         AdjustZeroCoeffecientTerms(ref total);
-
 
         return total;
     }
@@ -380,7 +368,6 @@ public partial class SymbolicVariable
                 var hb = FusedConstants.ElementAt(i);
                 cvs[i + 1] = new CoeffecienttValue
                 {
-
                     ConstantValue = hb.Key,
                     ConstantPower = hb.Value.SymbolicVariable
                 };
@@ -401,7 +388,6 @@ public partial class SymbolicVariable
         //      and only hold coeffecient itself.
         foreach (var cst in TargetSubTerm.Constants)
         {
-
             if (SourceTerm._CoeffecientPowerTerm == null && cst.ConstantPower == null)
             {
                 SourceTerm.Coeffecient *= cst.ConstantValue;
@@ -411,7 +397,6 @@ public partial class SymbolicVariable
             {
                 // no the coeffecient part is not empty so we will test if bases are equal
                 // then make use of the fusedsymbols to add our constant
-
 
                 var sbase = Math.Log(SourceTerm.Coeffecient, cst.ConstantValue);
 
@@ -435,7 +420,6 @@ public partial class SymbolicVariable
                         cpower = new SymbolicVariable("1");
                     SourceTerm._CoeffecientPowerTerm = Add(new SymbolicVariable(sbase.ToString(CultureInfo.InvariantCulture)), cpower);
                     SourceTerm.Coeffecient = cst.ConstantValue;
-
                 }
                 else
                 {
@@ -501,7 +485,6 @@ public partial class SymbolicVariable
                                     rr.SymbolicVariable += new SymbolicVariable(ower.ToString(CultureInfo.InvariantCulture));
                                     SourceTerm.FusedConstants[SucceededConstant.Value] = rr;
                                 }
-
                             }
                             else
                             {

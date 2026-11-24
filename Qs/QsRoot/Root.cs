@@ -100,7 +100,6 @@ public class Root
     /// <returns></returns>
     public static object[] QsParametersToNativeValues(MethodInfo method, params QsParameter[] parameters)
     {
-
         List<object?> NativeParameters = [];
 
         var iy = 0;
@@ -194,7 +193,6 @@ public class Root
                 {
                     throw new QsException(string.Format("Converting {0} to {1} is not supported", qso.InstanceType.Name, paramInfos[iy].Name));
                 }
-
             }
             else
             {
@@ -202,13 +200,10 @@ public class Root
             }
 
             iy++;
-
         }
 
         return NativeParameters.ToArray();
     }
-
-
 
     /// <summary>
     /// Created to be used for the retuen values of the function
@@ -305,7 +300,6 @@ public class Root
                 return QsBoolean.True;
             return QsBoolean.False;
         }
-
 
         if (vType.IsValueType)
             return QsFlowingTuple.FromStruct((ValueType)value);

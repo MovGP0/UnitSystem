@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-
 namespace SymbolicAlgebra;
 
 public partial class SymbolicVariable
@@ -26,7 +25,6 @@ public partial class SymbolicVariable
                 if (Next != null)
                     gg += " ...";
                 return gg;
-
             }
         }
 
@@ -56,8 +54,6 @@ public partial class SymbolicVariable
     /// <returns></returns>
     public static SymbolicVariable? Parse(string expression)
     {
-
-
         var r = from zr in expression.Split([":="], StringSplitOptions.RemoveEmptyEntries)
             where string.IsNullOrWhiteSpace(zr)==false
             select zr.Trim();
@@ -75,8 +71,6 @@ public partial class SymbolicVariable
         else
             expr = rr[0];
 
-
-
         expr = expr.Replace(" ", "");
 
         //if (expression.StartsWith("-") ||expression.StartsWith("+")) expression = expression.Insert(1,"1*");
@@ -90,7 +84,6 @@ public partial class SymbolicVariable
         //    /  division
         //    +  Addition
         //    -  Subtraction
-
 
         var NextGroupIsNegativeSign = false;
 
@@ -274,7 +267,6 @@ public partial class SymbolicVariable
 
         TokenBuilder = null;
 
-
         string[] Group
             = [
             "^"    /* Power for normal product '*' */
@@ -292,7 +284,6 @@ public partial class SymbolicVariable
             "/"   /* normal division */,
             "%"   /* modulus */
         ];
-
 
         string[] Group2 = ["+", "-"];
 
@@ -346,7 +337,6 @@ public partial class SymbolicVariable
             var fname = rr[0];
 
             Functions[fname] = Root.SymbolicExpression;
-
         }
 
         return Root.SymbolicExpression;
@@ -354,7 +344,6 @@ public partial class SymbolicVariable
 
     private static SymbolicVariable? ArithExpression(SymbolicExpressionOperator eop, out short skip)
     {
-
         var left = eop.SymbolicExpression;
         var op = eop.Operation;
         var right = eop.Next.SymbolicExpression;
@@ -393,7 +382,6 @@ public partial class SymbolicVariable
 
         if (op == "^")
         {
-
             // This will be right associative operator
             // which means if more than one power appeared like this 3^2^4  then it will be processed like this 3^(2^4)
 
@@ -420,7 +408,6 @@ public partial class SymbolicVariable
             {
                 return SymbolicPower(left, right);
             }
-
         }
 
         if (op == "*")
@@ -432,20 +419,16 @@ public partial class SymbolicVariable
         if (op == "-")
             return Subtract(left, right);
 
-
         throw new NotSupportedException("Not Supported Operator '" + op + "'");
     }
 
-
     private static Expression ArithExpression(DynamicExpressionOperator eop, out short skip)
     {
-
         var left = eop.DynamicExpression;
         var op = eop.Operation;
         var right = eop.Next.DynamicExpression;
 
         skip = 1;
-
 
         if (op == "^")
         {
@@ -499,7 +482,6 @@ public partial class SymbolicVariable
         if (op == "<>")
             return Expression.NotEqual(left, right);
 
-
         throw new NotSupportedException("Not Supported Operator '" + op + "'");
     }
 
@@ -523,11 +505,9 @@ public partial class SymbolicVariable
             expression = expression.TrimStart('-');  // remove any trailing minuses
         }
 
-
         char[] separators = ['^', '*', '/', '+', '-', '(', '<', '>', '='];
 
         char[] operators = ['^', '*', '/', '+', '-'];
-
 
         expression = expression.Replace(" ", "");
 
@@ -540,8 +520,6 @@ public partial class SymbolicVariable
         //    /  division
         //    +  Addition
         //    -  Subtraction
-
-
 
         // Tokenization is done by separating with operators
         var Root = new DynamicExpressionOperator();
@@ -558,7 +536,6 @@ public partial class SymbolicVariable
             // Last pass that escaped from the loop.
             if (Inner)
             {
-
                 ep.DynamicExpression = ParseDynamicExpression(ref parameters, TokenBuilder.ToString());
 
                 Inner = false;
@@ -665,7 +642,6 @@ public partial class SymbolicVariable
                 }
             }
         };
-
 
         #endregion
 
@@ -781,12 +757,10 @@ public partial class SymbolicVariable
 
         TokenBuilder = null;
 
-
         string[] Group
             = [
             "^"    /* Power for normal product '*' */
         ];
-
 
         string[] Group1
             = [
@@ -794,7 +768,6 @@ public partial class SymbolicVariable
             "/"   /* normal division */,
             "%"   /* modulus */
         ];
-
 
         string[] Group2 = ["+", "-"];
 
@@ -854,9 +827,7 @@ public partial class SymbolicVariable
             FinalExpression = Root.DynamicExpression;
 
         return FinalExpression;
-
     }
-
 
     private Expression DynamicBody;
 
@@ -866,10 +837,8 @@ public partial class SymbolicVariable
 
     private Delegate FunctionDelegate;
 
-
     private void PrepareExecute()
     {
-
         if (DynamicBody == null)
         {
             var t0 = this[0];
@@ -906,7 +875,6 @@ public partial class SymbolicVariable
     /// <returns></returns>
     public double Execute(Dictionary<string, double> parameters)
     {
-
         PrepareExecute();
 
         var pcount = InvolvedSymbols.Length;
@@ -918,7 +886,6 @@ public partial class SymbolicVariable
             orderby pr.Key
             select pr.Value)
             .ToArray();
-
 
         if (pcount == 0)
             return ((Func<double>)FunctionDelegate)();
@@ -978,8 +945,6 @@ public partial class SymbolicVariable
         throw new Exception("What is that call ???!!");
     }
 
-
-
     public double Execute(params Tuple<string, double>[] parameters)
     {
         Dictionary<string, double> FinalParams = new Dictionary<string, double>();
@@ -988,9 +953,7 @@ public partial class SymbolicVariable
             FinalParams.Add(p.Item1, p.Item2);
 
         return Execute(FinalParams);
-
     }
-
 
     /// <summary>
     /// Execute expression that take no arguments.
@@ -1078,6 +1041,4 @@ public partial class SymbolicVariable
 
         throw new Exception("What is that call ???!!");
     }
-
-
 }

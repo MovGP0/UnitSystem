@@ -4,7 +4,6 @@ namespace QuantitySystem.Quantities;
 
 public class BitRate<T> : DerivedQuantity<T>
 {
-
     public BitRate()
         : base(1, new Digital<T>(1), new Time<T>(-1))
     {
@@ -15,7 +14,6 @@ public class BitRate<T> : DerivedQuantity<T>
     {
     }
 
-
     public static implicit operator BitRate<T>(T value)
     {
         BitRate<T> Q = new()
@@ -25,6 +23,4 @@ public class BitRate<T> : DerivedQuantity<T>
 
         return Q;
     }
-
-
 }
