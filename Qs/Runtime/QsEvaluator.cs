@@ -951,7 +951,7 @@ public sealed class QsEvaluator
                                         }
                                         else if (ParentPropertyInfo.PropertyType.IsArray || ParentPropertyInfo.GetIndexParameters().Length > 0)
                                         {
-                                            parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
+                                            parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer ?? throw new QsException("The property requires an index."));
                                             parent = (QsObject?)parent_object
                                                 ?? throw new QsException("Cannot access a property on a null value.");
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
@@ -1000,7 +1000,7 @@ public sealed class QsEvaluator
                                         // if not then it was a normal variable
                                         if (ParentPropertyInfo.PropertyType.IsArray || ParentPropertyInfo.GetIndexParameters().Length > 0)
                                         {
-                                            parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
+                                            parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer ?? throw new QsException("The property requires an index."));
                                             parent = (QsObject?)parent_object
                                                 ?? throw new QsException("Cannot access a property on a null value.");
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
@@ -1031,12 +1031,12 @@ public sealed class QsEvaluator
                                 // set the value to the indexed item.
                                 var parent = (QsObject?)parent_object
                                     ?? throw new QsException("Cannot access a property on a null value.");
+                                var index = ParentPropertyInfoIndexer ?? throw new QsException("The property requires an index.");
                                 ParentPropertyInfo.SetValue(
                                     parent.ThisObject,
                                     qvResult,
-                                    [ParentPropertyInfoIndexer.Value
-                                        ]);
-                                var q = parent.GetProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
+                                    [index]);
+                                var q = parent.GetProperty(ParentPropertyInfo.Name, index);
                                 PrintQuantity(q);
                                 return q;
                             }
@@ -1055,19 +1055,19 @@ public sealed class QsEvaluator
                                 var IndexerProperty = InsidePropertyObjectType.GetProperty("Item")
                                     ?? throw new MissingMemberException(InsidePropertyObjectType.FullName, "Item");
 
+                                var index = ParentPropertyInfoIndexer ?? throw new QsException("The property requires an index.");
                                 var nativeValue = Root.QsToNativeConvert(IndexerProperty.PropertyType, qvResult);
                                 IndexerProperty.SetValue(
                                     InsidePropertyAsObject
                                     ,
                                     nativeValue
                                     ,
-                                    [ParentPropertyInfoIndexer.Value]
+                                    [index]
                                 );
 
                                 var q = IndexerProperty.GetValue(
                                     InsidePropertyAsObject,
-                                    [ParentPropertyInfoIndexer.Value
-                                        ]);
+                                    [index]);
                                 PrintQuantity(q);
                                 return q;
                             }
