@@ -36,6 +36,7 @@ public class Length<T> : AnyQuantity<T>
                 case TensorRank.Scalar:
                     LengthDimension.Length = new LengthDescriptor(Exponent,  0);
                     break;
+
                 case TensorRank.Vector:
                     LengthDimension.Length = new LengthDescriptor(0,  Exponent);
                     break;

@@ -2102,45 +2102,53 @@ class QsVar
                 case 0:
                     mi = typeof(QsSequence).GetMethod(methodName, [typeof(int)]);
                     break;
+
                 case 1:
                     mi = typeof(QsSequence).GetMethod(methodName, [typeof(int), typeof(QsParameter)]);
                     break;
+
                 case 2:
                     mi = typeof(QsSequence).GetMethod(
                         methodName,
                         [typeof(int), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 3:
                     mi = typeof(QsSequence).GetMethod(
                         methodName,
                         [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 4:
                     mi = typeof(QsSequence).GetMethod(
                         methodName,
                         [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 5:
                     mi = typeof(QsSequence).GetMethod(
                         methodName,
                         [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 6:
                     mi = typeof(QsSequence).GetMethod(
                         methodName,
                         [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 7:
                     mi = typeof(QsSequence).GetMethod(
                         methodName,
                         [typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 default:
                     throw new QsException("Number of sequence parameters exceed the built in functionality");
             }
@@ -2158,48 +2166,56 @@ class QsVar
                 case 0:
                     mi = typeof(QsSequence).GetMethod(RangeOperation, [typeof(string), typeof(int), typeof(int)]);
                     break;
+
                 case 1:
                     mi = typeof(QsSequence).GetMethod(
                         RangeOperation,
                         [typeof(string), typeof(int), typeof(int), typeof(QsParameter)
                             ]);
                     break;
+
                 case 2:
                     mi = typeof(QsSequence).GetMethod(
                         RangeOperation,
                         [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 3:
                     mi = typeof(QsSequence).GetMethod(
                         RangeOperation,
                         [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 4:
                     mi = typeof(QsSequence).GetMethod(
                         RangeOperation,
                         [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 5:
                     mi = typeof(QsSequence).GetMethod(
                         RangeOperation,
                         [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 6:
                     mi = typeof(QsSequence).GetMethod(
                         RangeOperation,
                         [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 case 7:
                     mi = typeof(QsSequence).GetMethod(
                         RangeOperation,
                         [typeof(string), typeof(int), typeof(int), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter), typeof(QsParameter)
                             ]);
                     break;
+
                 default:
                     throw new QsException("Number of sequence parameters exceed the built in functionality");
             }

@@ -99,28 +99,40 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         {
             case 0:
                 return FunctionDelegate_0();
+
             case 1:
                 return FunctionDelegate_1(args[0]);
+
             case 2:
                 return FunctionDelegate_2(args[0], args[1]);
+
             case 3:
                 return FunctionDelegate_3(args[0], args[1], args[2]);
+
             case 4:
                 return FunctionDelegate_4(args[0], args[1], args[2], args[3]);
+
             case 5:
                 return FunctionDelegate_5(args[0], args[1], args[2], args[3], args[4]);
+
             case 6:
                 return FunctionDelegate_6(args[0], args[1], args[2], args[3], args[4], args[5]);
+
             case 7:
                 return FunctionDelegate_7(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+
             case 8:
                 return FunctionDelegate_8(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
+
             case 9:
                 return FunctionDelegate_9(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
+
             case 10:
                 return FunctionDelegate_10(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
+
             case 11:
                 return FunctionDelegate_11(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]);
+
             case 12:
                 return FunctionDelegate_12(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11]);
 

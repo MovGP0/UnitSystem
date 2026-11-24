@@ -104,18 +104,25 @@ public class QsSequenceElement
 
             case 0:
                 return Execute(executionIndex);
+
             case 1:
                 return ((Func<int, QsParameter, QsValue>)ElementValue)(executionIndex, args[0]);
+
             case 2:
                 return ((Func<int, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1]);
+
             case 3:
                 return ((Func<int, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2]);
+
             case 4:
                 return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3]);
+
             case 5:
                 return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3], args[4]);
+
             case 6:
                 return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3], args[4], args[5]);
+
             case 7:
                 return ((Func<int, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>)ElementValue)(executionIndex, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
 

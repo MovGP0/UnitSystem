@@ -558,22 +558,27 @@ public class QsNamespace(string name)
                     return Delegate.CreateDelegate(
                         typeof(Func<QsParameter, QsParameter, QsParameter, QsValue>),
                         method);
+
                 case 4:
                     return Delegate.CreateDelegate(
                         typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                         method);
+
                 case 5:
                     return Delegate.CreateDelegate(
                         typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                         method);
+
                 case 6:
                     return Delegate.CreateDelegate(
                         typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                         method);
+
                 case 7:
                     return Delegate.CreateDelegate(
                         typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),
                         method);
+
                 case 8:
                     return Delegate.CreateDelegate(
                         typeof(Func<QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsParameter, QsValue>),

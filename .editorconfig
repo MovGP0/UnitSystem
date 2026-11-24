@@ -128,7 +128,7 @@ dotnet_diagnostic.RCS0060.severity = warning
 roslynator_blank_line_after_file_scoped_namespace_declaration = true
 
 # Control the spacing between switch sections
-# dotnet_diagnostic.RCS0061.severity = warning
+dotnet_diagnostic.RCS0061.severity = warning
 roslynator_blank_line_between_switch_sections = include
 
 # Control whether an expression body starts on a new line

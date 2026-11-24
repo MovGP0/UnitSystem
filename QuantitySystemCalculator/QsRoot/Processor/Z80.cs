@@ -126,27 +126,35 @@ public sealed class Z80 : EightBitProcessor
                 case "AF":
                     Af = value;
                     break;
+
                 case "BC":
                     Bc = value;
                     break;
+
                 case "DE":
                     De = value;
                     break;
+
                 case "HL":
                     Hl = value;
                     break;
+
                 case "IX":
                     Ix = value;
                     break;
+
                 case "IY":
                     Iy = value;
                     break;
+
                 case "SP":
                     Sp = value;
                     break;
+
                 case "PC":
                     Pc = value;
                     break;
+
                 default:
                     throw new QsException("Register not found");
             }

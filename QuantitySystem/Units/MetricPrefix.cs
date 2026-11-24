@@ -62,31 +62,53 @@ public struct MetricPrefix(string prefix, string symbol, int exponent)
         switch (index)
         {
             case 12: return Quetta;
+
             case 11: return Ronna;
+
             case 10: return Yotta;
+
             case 9: return Zetta;
+
             case 8: return Exa;
+
             case 7: return Peta;
+
             case 6: return Tera;
+
             case 5: return Giga;
+
             case 4: return Mega;
+
             case 3: return Kilo;
+
             case 2: return Hecto;
+
             case 1: return Deka;
 
             case 0: return None;
 
             case -1: return Deci;
+
             case -2: return Centi;
+
             case -3: return Milli;
+
             case -4: return Micro;
+
             case -5: return Nano;
+
             case -6: return Pico;
+
             case -7: return Femto;
+
             case -8: return Atto;
+
             case -9: return Zepto;
+
             case -10: return Yocto;
+
             case -11: return Ronto;
+
             case -12: return Quento;
         }
 

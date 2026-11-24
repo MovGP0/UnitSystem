@@ -90,6 +90,7 @@ public class QsDifferentialOperation : QsOperation
                             case Operator.Differentiate:
                                 f = (QsFunction)f.DifferentiateOperation(op.value);
                                 break;
+
                             default:
                                 throw new NotImplementedException();
                         }
@@ -118,6 +119,7 @@ public class QsDifferentialOperation : QsOperation
                         }
 
                             break;
+
                         default:
                             throw new NotImplementedException();
                     }
