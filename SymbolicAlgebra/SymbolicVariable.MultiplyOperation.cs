@@ -245,7 +245,7 @@ public partial class SymbolicVariable
                         new HybridVariable
                         {
                             NumericalVariable = TargetSubTerm.SymbolPower,
-                            SymbolicVariable = TargetSubTerm.SymbolPowerTerm == null ? null : TargetSubTerm.SymbolPowerTerm.Clone()
+                            SymbolicVariable = (TargetSubTerm.SymbolPowerTerm?.Clone())
                         });
 
                     // But the primary symbol of source may exist in the target fused variables.

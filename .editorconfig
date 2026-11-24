@@ -551,7 +551,7 @@ dotnet_diagnostic.RCS1204.severity = warning
 dotnet_diagnostic.RCS1205.severity = warning
 
 # Use conditional access instead of conditional expression
-# dotnet_diagnostic.RCS1206.severity = warning
+dotnet_diagnostic.RCS1206.severity = warning
 
 # Use anonymous function or method group
 # dotnet_diagnostic.RCS1207.severity = none
