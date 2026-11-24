@@ -431,7 +431,7 @@ dotnet_diagnostic.RCS1157.severity = warning
 dotnet_diagnostic.RCS1158.severity = warning
 
 # Use EventHandler<T>
-# dotnet_diagnostic.RCS1159.severity = warning
+dotnet_diagnostic.RCS1159.severity = warning
 
 # Abstract type should not have public constructors
 # dotnet_diagnostic.RCS1160.severity = warning
