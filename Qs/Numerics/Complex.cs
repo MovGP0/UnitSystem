@@ -36,32 +36,17 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 
     public bool Equals(Complex other)
     {
-        if ((_real == other._real) && (_imaginary == other._imaginary))
-        {
-            return true;
-        }
-
-        return false;
+        return (_real == other._real) && (_imaginary == other._imaginary);
     }
 
     public static bool operator ==(Complex lhs, Complex rhs)
     {
-        if ((lhs._real == rhs._real) && (lhs._imaginary == rhs._imaginary))
-        {
-            return true;
-        }
-
-        return false;
+        return (lhs._real == rhs._real) && (lhs._imaginary == rhs._imaginary);
     }
 
     public static bool operator !=(Complex lhs, Complex rhs)
     {
-        if ((lhs._real != rhs._real) || (lhs._imaginary != rhs._imaginary))
-        {
-            return true;
-        }
-
-        return false;
+        return (lhs._real != rhs._real) || (lhs._imaginary != rhs._imaginary);
     }
 
     public override bool Equals(object? obj)

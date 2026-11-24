@@ -25,14 +25,7 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public bool Contains<TargetTokenClass>() where TargetTokenClass : TokenClass
     {
-        if (childTokens.Count(o => o.TokenClassType == typeof(TargetTokenClass)) > 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return childTokens.Count(o => o.TokenClassType == typeof(TargetTokenClass)) > 0;
     }
 
     /// <summary>
@@ -42,14 +35,7 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public bool Contains(Type tokenClassType)
     {
-        if (childTokens.Count(o => o.TokenClassType == tokenClassType) > 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return childTokens.Count(o => o.TokenClassType == tokenClassType) > 0;
     }
 
     /// <summary>

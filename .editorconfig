@@ -266,7 +266,7 @@ dotnet_diagnostic.RCS1068.severity = warning
 # dotnet_diagnostic.RCS1071.severity = silent
 
 # Convert 'if' to 'return' statement
-# dotnet_diagnostic.RCS1073.severity = warning
+dotnet_diagnostic.RCS1073.severity = warning
 
 # Remove redundant constructor
 # dotnet_diagnostic.RCS1074.severity = silent

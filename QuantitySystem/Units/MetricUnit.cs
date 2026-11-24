@@ -69,14 +69,7 @@ public abstract partial class MetricUnit : Unit
             if (_ReferenceUnit == null)
             {
                 //means I am native SI unit.
-                if (unitPrefix.Exponent == defaultUnitPrefix.Exponent)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return unitPrefix.Exponent == defaultUnitPrefix.Exponent;
             }
             else
             {

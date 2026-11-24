@@ -38,12 +38,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     {
         get
         {
-            if (InternalFunctionDelegate == null)
-            {
-                return false;
-            }
-
-            return true;
+            return InternalFunctionDelegate != null;
         }
     }
 
@@ -364,12 +359,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <returns></returns>
     public bool ContainsParameter(string parameterName)
     {
-        if (GetParameterOrdinal(parameterName) > -1)
-        {
-            return true;
-        }
-
-        return false;
+        return GetParameterOrdinal(parameterName) > -1;
     }
 
     /// <summary>
@@ -682,12 +672,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <returns></returns>
     public static bool IsItFunctionSymbolicName(string name)
     {
-        if (Regex.Match(name, @".+#.+").Success)
-        {
-            return true;
-        }
-
-        return false;
+        return Regex.Match(name, @".+#.+").Success;
     }
 
     /// <summary>
@@ -697,12 +682,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <returns></returns>
     public static bool IsItDefaultFunctionSymbolicName(string name)
     {
-        if (char.IsDigit(name.ToCharArray().Last()))
-        {
-            return true;
-        }
-
-        return false;
+        return char.IsDigit(name.ToCharArray().Last());
     }
 
     #endregion

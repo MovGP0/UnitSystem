@@ -1793,12 +1793,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (ToString() == "0")
-            {
-                return true;
-            }
-
-            return false;
+            return ToString() == "0";
         }
     }
 
@@ -1809,12 +1804,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (ToString() == "1")
-            {
-                return true;
-            }
-
-            return false;
+            return ToString() == "1";
         }
     }
 
@@ -1825,12 +1815,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (ToString() == "-1")
-            {
-                return true;
-            }
-
-            return false;
+            return ToString() == "-1";
         }
     }
 
@@ -1880,12 +1865,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (Symbol.StartsWith("%"))
-            {
-                return true;
-            }
-
-            return false;
+            return Symbol.StartsWith("%");
         }
     }
 
@@ -1893,12 +1873,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (AddedTerms.Count == 0 && ExtraTerms.Count == 0)
-            {
-                return false;
-            }
-
-            return true;
+            return AddedTerms.Count != 0 || ExtraTerms.Count != 0;
         }
     }
 
@@ -1926,14 +1901,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (Coeffecient < 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return Coeffecient < 0;
         }
     }
 

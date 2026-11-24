@@ -99,12 +99,7 @@ public class QsParameter
     {
         get
         {
-            if (ParameterValue is QsValue)
-            {
-                return true;
-            }
-
-            return false;
+            return ParameterValue is QsValue;
         }
     }
 

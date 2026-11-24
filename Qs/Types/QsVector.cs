@@ -129,12 +129,7 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     {
         get
         {
-            if (Count == 1)
-            {
-                return true;
-            }
-
-            return false;
+            return Count == 1;
         }
     }
 

@@ -128,12 +128,7 @@ public partial class QsText(string text) : QsValue
             return false;
         }
 
-        if (text.Text.Equals(Text, StringComparison.OrdinalIgnoreCase))
-        {
-            return true;
-        }
-
-        return false;
+        return text.Text.Equals(Text, StringComparison.OrdinalIgnoreCase);
     }
 
     public override bool Inequality(QsValue value)

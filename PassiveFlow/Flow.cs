@@ -489,14 +489,7 @@ public class Flow : IEnumerable<Step>
     {
         if (fl1.GetType().Equals(fl2.GetType()))
         {
-            if (fl1.CurrentStep.Id == fl2.CurrentStep.Id)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return fl1.CurrentStep.Id == fl2.CurrentStep.Id;
         }
         else
         {
@@ -518,14 +511,7 @@ public class Flow : IEnumerable<Step>
 
         if (GetType().Equals(fl2.GetType()))
         {
-            if (CurrentStep.Id == fl2.CurrentStep.Id)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return CurrentStep.Id == fl2.CurrentStep.Id;
         }
         else
         {
@@ -547,14 +533,7 @@ public class Flow : IEnumerable<Step>
     {
         if (fl1.GetType().Equals(fl2.GetType()))
         {
-            if (fl1.CurrentStep.Id != fl2.CurrentStep.Id)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return fl1.CurrentStep.Id != fl2.CurrentStep.Id;
         }
         else
         {
@@ -566,14 +545,7 @@ public class Flow : IEnumerable<Step>
     {
         if (fl1.GetType().Equals(fl2.GetType()))
         {
-            if (fl1.CurrentStep.StepIndex > fl2.CurrentStep.StepIndex)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return fl1.CurrentStep.StepIndex > fl2.CurrentStep.StepIndex;
         }
         else
         {
@@ -585,14 +557,7 @@ public class Flow : IEnumerable<Step>
     {
         if (fl1.GetType().Equals(fl2.GetType()))
         {
-            if (fl1.CurrentStep.StepIndex < fl2.CurrentStep.StepIndex)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return fl1.CurrentStep.StepIndex < fl2.CurrentStep.StepIndex;
         }
         else
         {
@@ -604,14 +569,7 @@ public class Flow : IEnumerable<Step>
     {
         if (fl1.GetType().Equals(fl2.GetType()))
         {
-            if (fl1.CurrentStep.StepIndex >= fl2.CurrentStep.StepIndex)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return fl1.CurrentStep.StepIndex >= fl2.CurrentStep.StepIndex;
         }
         else
         {
@@ -623,14 +581,7 @@ public class Flow : IEnumerable<Step>
     {
         if (fl1.GetType().Equals(fl2.GetType()))
         {
-            if (fl1.CurrentStep.StepIndex <= fl2.CurrentStep.StepIndex)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return fl1.CurrentStep.StepIndex <= fl2.CurrentStep.StepIndex;
         }
         else
         {

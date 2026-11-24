@@ -634,12 +634,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
         get
         {
-            if (RowsCount == 1)
-            {
-                return true;
-            }
-
-            return false;
+            return RowsCount == 1;
         }
     }
 
@@ -647,12 +642,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
         get
         {
-            if (ColumnsCount == 1)
-            {
-                return true;
-            }
-
-            return false;
+            return ColumnsCount == 1;
         }
     }
 
@@ -660,12 +650,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
         get
         {
-            if (RowsCount == 1 && ColumnsCount == 1)
-            {
-                return true;
-            }
-
-            return false;
+            return RowsCount == 1 && ColumnsCount == 1;
         }
     }
 
@@ -676,12 +661,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     {
         get
         {
-            if (RowsCount == ColumnsCount)
-            {
-                return true;
-            }
-
-            return false;
+            return RowsCount == ColumnsCount;
         }
     }
 

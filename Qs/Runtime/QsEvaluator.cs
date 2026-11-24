@@ -157,12 +157,7 @@ public class QsEvaluator
     {
         get
         {
-            if (SilentStack.Count > 0)
-            {
-                return true;
-            }
-
-            return false;
+            return SilentStack.Count > 0;
         }
     }
 
