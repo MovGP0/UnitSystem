@@ -949,7 +949,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                             var RaisedSymbolicVariable = SymbolicVariable.SymbolicPower(SymbolicQuantity.Value, power.SymbolicQuantity.Value);
 
                             // make it into quantity
-                            AnyQuantity<SymbolicVariable> NewSymbolicQuantity = RaisedSymbolicVariable.ToQuantity();
+                            AnyQuantity<SymbolicVariable> NewSymbolicQuantity = (RaisedSymbolicVariable ?? throw new QsException("Expected a symbolic expression.")).ToQuantity();
 
                             // assign into SymbolicQuantity property in new QsScalar object.
 
@@ -1276,16 +1276,14 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return AddScalar(qsScalar);
         }
 
-        if (value is QsVector)
+        if (value is QsVector b)
         {
-            var b = value as QsVector;
-
             return AddVector(b);
         }
 
         if (value is QsText text)
         {
-            var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
+            var qt = QsEvaluator.CurrentEvaluator.EvaluateRequired<QsValue>(text.Text);
             return AddOperation(qt);
         }
 
@@ -1319,22 +1317,19 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return SubtractScalar(qsScalar);
         }
 
-        if (value is QsVector)
+        if (value is QsVector b)
         {
-            var b = value as QsVector;
-
             return SubtractVector(b);
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix m)
         {
-            var m = value as QsMatrix;
             return SubtractMatrix(m);
         }
 
         if (value is QsText text)
         {
-            var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
+            var qt = QsEvaluator.CurrentEvaluator.EvaluateRequired<QsValue>(text.Text);
             return SubtractOperation(qt);
         }
 
@@ -1373,7 +1368,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return MultiplyScalar((QsScalar)value);
         }
 
-        if (value is QsVector)
+        if (value is QsVector b)
         {
             if (ScalarType == ScalarTypes.QsOperation)
             {
@@ -1381,20 +1376,17 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                 return Operation.MultiplyOperation(value);
             }
 
-            var b = value as QsVector;
-
             return MultiplyVector(b);
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix m)
         {
-            var m = value as QsMatrix;
             return MultiplyMatrix(m);
         }
 
         if (value is QsText text)
         {
-            var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
+            var qt = QsEvaluator.CurrentEvaluator.EvaluateRequired<QsValue>(text.Text);
             return MultiplyOperation(qt);
         }
 
@@ -1432,7 +1424,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         {
             var fbody = "(" + SymbolicQuantity.Value + ").(" + sc.SymbolicQuantity.Value + ")";
 
-            var fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
+            var fb = (SymbolicVariable.Parse(fbody) ?? throw new QsException("Expected a symbolic expression.")).ToQuantity().ToScalar();
 
             return fb;
         }
@@ -1484,7 +1476,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
         if (value is QsText text)
         {
-            var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
+            var qt = QsEvaluator.CurrentEvaluator.EvaluateRequired<QsValue>(text.Text);
             return DivideOperation(qt);
         }
 

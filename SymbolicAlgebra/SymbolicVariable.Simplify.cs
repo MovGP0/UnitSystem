@@ -167,7 +167,7 @@ public partial class SymbolicVariable
         }
 
         // so begin in the factorized
-        var tsimp = PartialTrigSimplify(total);
+        var tsimp = PartialTrigSimplify(total.RequireExpression());
 
         return tsimp;
     }
@@ -463,7 +463,7 @@ public partial class SymbolicVariable
                     siv.SymbolPower = Math.Abs(fs.Value.NumericalVariable);
                 }
 
-                denominator = Multiply(denominator, siv);  // accumulate negative power symbols here
+                denominator = Multiply(denominator, siv).RequireExpression();  // accumulate negative power symbols here
 
                 // remove this fused symbol from reOrdered variable
                 reOrderedVariable.FusedSymbols.Remove(fs.Key);

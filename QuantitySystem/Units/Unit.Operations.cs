@@ -409,7 +409,8 @@ public partial class Unit
         if (IsStronglyTyped)
         {
             //get the corresponding unit in the SI System
-            var innerUnitType = GetDefaultSIUnitTypeOf(QuantityType);
+            var quantityType = QuantityType ?? throw new UnitException("The unit has no associated quantity type.");
+            var innerUnitType = GetDefaultSIUnitTypeOf(quantityType);
 
             if (innerUnitType == null && QuantityType == typeof(Displacement<>))
             {

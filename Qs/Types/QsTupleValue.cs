@@ -22,7 +22,7 @@ public struct QsTupleValue
     /// Set the tuple value to a value that will be evaluated when value accessed first time
     /// </summary>
     /// <param name="value"></param>
-    public void SetLazyValue(object value)
+    public void SetLazyValue(object? value)
     {
         _LazyValue = value;
     }

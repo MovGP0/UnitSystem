@@ -427,7 +427,7 @@ public partial class Unit
         throw new UnitNotFoundException(un);
     }
 
-    private static Dictionary<Type, UnitAttribute> UnitsAttributes = new();
+    private static Dictionary<Type, UnitAttribute?> UnitsAttributes = new();
 
     /// <summary>
     /// Get the unit attribute which hold the unit information.
@@ -465,7 +465,8 @@ public partial class Unit
             return unit;
         }
 
-        var qdim = QuantityDimension.DimensionFrom(unit.QuantityType);
+        var quantityType = unit.QuantityType ?? throw new UnitException("The unit has no associated quantity type.");
+        var qdim = QuantityDimension.DimensionFrom(quantityType);
 
         if (unit is MetricUnit metricUnit)
         {

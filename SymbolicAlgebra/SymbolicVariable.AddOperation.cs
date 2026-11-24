@@ -8,7 +8,7 @@ public partial class SymbolicVariable
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static SymbolicVariable? Add(SymbolicVariable a, SymbolicVariable b)
+    public static SymbolicVariable? Add(SymbolicVariable? a, SymbolicVariable? b)
     {
         if (a == null || b == null)
         {

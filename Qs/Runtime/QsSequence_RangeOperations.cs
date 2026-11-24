@@ -153,7 +153,7 @@ public partial class QsSequence
 
             var qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
 
-            return new QsScalar(ScalarTypes.FunctionQuantity) { FunctionQuantity = qs.ToQuantity() };
+            return new QsScalar(ScalarTypes.FunctionQuantity) { FunctionQuantity = (qs ?? throw new QsException("Expected a function expression.")).ToQuantity() };
         }
 
         FixIndices(ref fromIndex, ref toIndex);
@@ -285,7 +285,7 @@ public partial class QsSequence
 
             var qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
 
-            return new QsScalar(ScalarTypes.FunctionQuantity) { FunctionQuantity = qs.ToQuantity() };
+            return new QsScalar(ScalarTypes.FunctionQuantity) { FunctionQuantity = (qs ?? throw new QsException("Expected a function expression.")).ToQuantity() };
         }
 
         FixIndices(ref fromIndex, ref toIndex);

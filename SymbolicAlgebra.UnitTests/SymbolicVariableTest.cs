@@ -105,7 +105,7 @@ public class SymbolicVariableTest
         var cx = _x * _seven;
         Assert.AreEqual("7*x", cx.ShouldNotBeNull().ToString());
 
-        var cx2Y = cx.RaiseToSymbolicPower(_two * _y);
+        var cx2Y = cx.RaiseToSymbolicPower((_two * _y).ShouldNotBeNull());
         Assert.AreEqual("7^(2*y)*x^(2*y)", cx2Y.ShouldNotBeNull().ToString());
     }
 
@@ -203,7 +203,7 @@ public class SymbolicVariableTest
         var xp2 = xp * xp;
         Assert.AreEqual("x^(4*t+2)", xp2.ShouldNotBeNull().ToString());
 
-        var xp2V2 = xp.Power(2);
+        var xp2V2 = xp.ShouldNotBeNull().Power(2);
         Assert.AreEqual("x^(4*t+2)", xp2V2.ShouldNotBeNull().ToString());
     }
 
@@ -277,7 +277,7 @@ public class SymbolicVariableTest
     {
         // x^(2*t+1)*y^(2*t)+3*t*z   in power three :S  not the same as maxima my reference program.
 
-        var aa = (_x.RaiseToSymbolicPower((2 * _t) + _one) * _y.RaiseToSymbolicPower(2 * _t)) + (3 * _t * _z);
+        var aa = (_x.RaiseToSymbolicPower(((2 * _t) + _one).ShouldNotBeNull()) * _y.RaiseToSymbolicPower((2 * _t).ShouldNotBeNull())) + (3 * _t * _z);
 
         var aa2 = aa.ShouldNotBeNull().Power(2);
 
@@ -344,7 +344,7 @@ public class SymbolicVariableTest
     [Test]
     public void ExtraPowerTesting()
     {
-        var a = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(3 * _x);
+        var a = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower((3 * _x).ShouldNotBeNull());
 
         var b = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(_y);
 
@@ -355,7 +355,7 @@ public class SymbolicVariableTest
         var rs = _y + (3 * _x);
         var ls = (3 * _x) + _y;
 
-        Assert.AreEqual(rs.ShouldNotBeNull().Equals(ls), true);
+        Assert.AreEqual(rs.ShouldNotBeNull().Equals(ls.ShouldNotBeNull()), true);
 
         var ot = _x.RaiseToSymbolicPower(_v) + _x.RaiseToSymbolicPower(_z) + _x.RaiseToSymbolicPower(_y);
 
@@ -389,17 +389,17 @@ public class SymbolicVariableTest
 
         Assert.AreEqual("-40*x^3/y^41+3/z*y^2", ddY.ToString());
 
-        var e = _x.RaiseToSymbolicPower(2*_y);
+        var e = _x.RaiseToSymbolicPower((2*_y).ShouldNotBeNull());
         var deX = e.ShouldNotBeNull().Differentiate("x");
 
         Assert.AreEqual("2*x^(2*y-1)*y", deX.ToString());
 
-        var f = _two * _x.RaiseToSymbolicPower(3 * _z) * _y.RaiseToSymbolicPower(2 * _z);
+        var f = _two * _x.RaiseToSymbolicPower((3 * _z).ShouldNotBeNull()) * _y.RaiseToSymbolicPower((2 * _z).ShouldNotBeNull());
         var dfX = f.ShouldNotBeNull().Differentiate("y");
 
         Assert.AreEqual("4*x^(3*z)*y^(2*z-1)*z", dfX.ToString());
 
-        var g = (_two * _y) + (3 * _x.RaiseToSymbolicPower(_z)) - (5 * _x.RaiseToSymbolicPower(_y - _one));
+        var g = (_two * _y) + (3 * _x.RaiseToSymbolicPower(_z)) - (5 * _x.RaiseToSymbolicPower((_y - _one).ShouldNotBeNull()));
         var dgX = g.ShouldNotBeNull().Differentiate("x");
 
         Assert.AreEqual("3*x^(z-1)*z-5*x^(y-2)*y+5*x^(y-2)", dgX.ToString());
@@ -512,7 +512,7 @@ public class SymbolicVariableTest
     public void SpecialFunctionHigherPowerTest()
     {
         var sin = new SymbolicVariable("sin(x)");
-        var sin2Y = sin.RaiseToSymbolicPower(SymbolicVariable.Parse("2-y"));
+        var sin2Y = sin.RaiseToSymbolicPower(SymbolicVariable.Parse("2-y").ShouldNotBeNull());
         Assert.AreEqual("sin(x)^(2-y)", sin2Y.ShouldNotBeNull().ToString());
         Assert.AreEqual("2*cos(x)*sin(x)^(1-y)-cos(x)*sin(x)^(1-y)*y", sin2Y.Differentiate("x").ToString());
 
@@ -924,7 +924,7 @@ public class SymbolicVariableTest
 
         var kk = SymbolicVariable.Parse("(cos(theta)^2+sin(theta)^2)/(2*cos(theta)^2*r^2*sin(theta)^2+sin(theta)^4*r^2+cos(theta)^4*r^2)");
         var ll = _one * kk;
-        Assert.AreEqual(kk.ToString(), ll.ShouldNotBeNull().ToString());
+        Assert.AreEqual(kk.ShouldNotBeNull().ToString(), ll.ShouldNotBeNull().ToString());
 
         var we = SymbolicVariable.Parse("5*sin(x)^4^x");
         var rs = we.ShouldNotBeNull().Differentiate("x");
@@ -1082,25 +1082,25 @@ public class SymbolicVariableTest
     public void FactorCommonFactorTest()
     {
         var sv = SymbolicVariable.Parse("a*x+a*y+z");
-        var result = SymbolicVariable.FactorWithCommonFactor(sv);
+        var result = SymbolicVariable.FactorWithCommonFactor(sv.ShouldNotBeNull());
 
         Assert.AreEqual("a*(x+y)+z", result.ShouldNotBeNull().ToString());
 
         var rr = SymbolicVariable.Parse("a*b*c*f + a*b*s + a*b*c*h");
-        var rrResult = SymbolicVariable.FactorWithCommonFactor(rr);
+        var rrResult = SymbolicVariable.FactorWithCommonFactor(rr.ShouldNotBeNull());
         Assert.AreEqual("a*b*(c*f+s+c*h)", rrResult.ShouldNotBeNull().ToString());
 
         var trig = SymbolicVariable.Parse("a^2*alpha^2*sin(alpha*t)^2+a^2*alpha^2*cos(alpha*t)^2+b^2");
-        var trigResult = SymbolicVariable.FactorWithCommonFactor(trig);
+        var trigResult = SymbolicVariable.FactorWithCommonFactor(trig.ShouldNotBeNull());
 
         Assert.AreEqual("a^2*alpha^2*(sin(alpha*t)^2+cos(alpha*t)^2)+b^2", trigResult.ShouldNotBeNull().ToString());
 
         var test = SymbolicVariable.Parse("(sin(phi)^2+cos(phi)^2)*sin(theta)^2+cos(theta)^2");
-        var factored = SymbolicVariable.FactorWithCommonFactor(test);
+        var factored = SymbolicVariable.FactorWithCommonFactor(test.ShouldNotBeNull());
 
         Assert.AreEqual("sin(theta)^2*(sin(phi)^2+cos(phi)^2)+cos(theta)^2", factored.ShouldNotBeNull().ToString());
 
-        var spz = SymbolicVariable.FactorWithCommonFactor(SymbolicVariable.Parse("0"));
+        var spz = SymbolicVariable.FactorWithCommonFactor(SymbolicVariable.Parse("0").ShouldNotBeNull());
     }
 
     [TestCase("sqrt(1-z^2/(x^2+y^2+z^2))^2", "z^2/(x^2+y^2+z^2)")]

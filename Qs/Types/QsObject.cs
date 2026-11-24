@@ -104,7 +104,7 @@ public sealed class QsObject : QsValue
             {
                 // determine the return type to conver it into suitable QsValue
                 var mi = typeof(Root).GetMethod("NativeToQsConvert", BindingFlags.IgnoreCase| BindingFlags.Public | BindingFlags.Static);
-                ResultExpression = Expression.Call(mi, Expression.Convert(ResultExpression, typeof(object)));
+                ResultExpression = Expression.Call(mi.RequireMember(), Expression.Convert(ResultExpression, typeof(object)));
 
                 Expression<Func<QsValue>> cq = Expression.Lambda<Func<QsValue>>(ResultExpression);
 
@@ -121,7 +121,7 @@ public sealed class QsObject : QsValue
             ResultExpression =  Expression.Property(Expression.Constant(ThisObject), expression.TokenValue);
 
             var mi = typeof(Root).GetMethod("NativeToQsConvert", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static);
-            ResultExpression = Expression.Call(mi, Expression.Convert(ResultExpression, typeof(object)));
+            ResultExpression = Expression.Call(mi.RequireMember(), Expression.Convert(ResultExpression, typeof(object)));
 
             // Construct Lambda function which return one object.
             Expression<Func<QsValue>> cq = Expression.Lambda<Func<QsValue>>(ResultExpression);

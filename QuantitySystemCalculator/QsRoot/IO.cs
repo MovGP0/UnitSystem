@@ -18,7 +18,7 @@ public static class Io
 
     public static QsValue InputLine()
     {
-        return new QsText(Console.ReadLine());
+        return new QsText(Console.ReadLine() ?? throw new EndOfStreamException("No more console input is available."));
     }
 
     public static QsValue? PrintLine([QsParamInfo(QsParamType.Text)] QsParameter val)
@@ -29,7 +29,7 @@ public static class Io
 
     public static QsValue ReadBinaryFile([QsParamInfo(QsParamType.Text)]QsParameter fileName)
     {
-        var data = File.ReadAllBytes(fileName.UnknownValueText);
+        var data = File.ReadAllBytes(fileName.UnknownValueText ?? throw new QsException("A file name is required."));
 
         return data.ToQsVector();
     }
@@ -40,7 +40,7 @@ public static class Io
     {
         var ss = new System.Speech.Synthesis.SpeechSynthesizer();
 
-        ss.SpeakAsync(text.UnknownValueText);
+        ss.SpeakAsync(text.UnknownValueText ?? throw new QsException("Text to speak is required."));
 
         return null;
     }

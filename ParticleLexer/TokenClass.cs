@@ -7,7 +7,7 @@ public abstract class TokenClass
     /// <summary>
     /// The pattern that we will use to tokenizing and merging tokens.
     /// </summary>
-    public Regex Regex { get; }
+    public Regex? Regex { get; }
 
     /// <summary>
     /// Tells if the regex is an exact word without regex classes.
@@ -17,14 +17,14 @@ public abstract class TokenClass
     /// <summary>
     /// The pattern text.
     /// </summary>
-    public string RegexPattern { get; }
+    public string? RegexPattern { get; }
 
-    public string OriginalPatternWord => Regex.Unescape(RegexPattern);
+    public string OriginalPatternWord => Regex.Unescape(RegexPattern ?? throw new InvalidOperationException("The token has no pattern."));
 
     /// <summary>
     /// Condition for the comparing process to make sure that the target should begin with this value. otherwise the code will bypass the current process.
     /// </summary>
-    public string ShouldBeginWith { get; }
+    public string? ShouldBeginWith { get; }
 
     /// <summary>
     /// Indicates if parser should continue test after success and consume other tokens or not.
@@ -34,22 +34,22 @@ public abstract class TokenClass
 
     public bool ContinousToken { get; set; }
 
-    public string ShouldEndWith { get; }
+    public string? ShouldEndWith { get; }
 
     //cache token regexes
-    static readonly Dictionary<Type, Regex> regexes = new Dictionary<Type, Regex>();
+    static readonly Dictionary<Type, Regex?> regexes = new Dictionary<Type, Regex?>();
 
     static readonly Dictionary<Type, bool> exactwords = new Dictionary<Type, bool>();
 
-    static readonly Dictionary<Type, string> words = new Dictionary<Type, string>();
+    static readonly Dictionary<Type, string?> words = new Dictionary<Type, string?>();
 
-    static readonly Dictionary<Type, string> ShouldBeginingWithList = new Dictionary<Type, string>();
+    static readonly Dictionary<Type, string?> ShouldBeginingWithList = new Dictionary<Type, string?>();
 
     static readonly Dictionary<Type, bool> ContinueAfterSuccessList = new Dictionary<Type, bool>();
 
     static readonly Dictionary<Type, bool> ContinousTokenList = new Dictionary<Type, bool>();
 
-    static readonly Dictionary<Type, string> ShouldEndWithList = new Dictionary<Type, string>();
+    static readonly Dictionary<Type, string?> ShouldEndWithList = new Dictionary<Type, string?>();
 
     protected TokenClass()
     {

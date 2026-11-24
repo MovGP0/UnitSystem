@@ -104,7 +104,7 @@ public class Flow : IEnumerable<Step>
         return fi;
     }
 
-    private Step Add(string stepName, int stepId, Type[] stepAssociatedTypes, bool skip)
+    private Step Add(string stepName, int stepId, Type[]? stepAssociatedTypes, bool skip)
     {
         var fi = new Step(this);
         fi.Name = stepName;
@@ -117,7 +117,7 @@ public class Flow : IEnumerable<Step>
         return fi;
     }
 
-    public Step Add(string stepName, int stepId, Type[] stepAssociatedTypes, bool skip, params StepAction[] stepActions)
+    public Step Add(string stepName, int stepId, Type[]? stepAssociatedTypes, bool skip, params StepAction[]? stepActions)
     {
         var fi = new Step(this);
         fi.Name = stepName;

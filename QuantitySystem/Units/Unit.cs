@@ -157,8 +157,9 @@ public partial class Unit : ICloneable
         get => _QuantityType;
         internal set
         {
-            _QuantityType = value;
-            UnitDimension = QuantityDimension.DimensionFrom(value);
+            var quantityType = value ?? throw new ArgumentNullException(nameof(value));
+            UnitDimension = QuantityDimension.DimensionFrom(quantityType);
+            _QuantityType = quantityType;
         }
     }
 

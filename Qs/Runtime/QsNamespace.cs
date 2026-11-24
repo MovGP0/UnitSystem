@@ -28,7 +28,7 @@ public class QsNamespace(string name)
 
     public Type? NamespaceType => _NamespaceType;
 
-    private readonly Dictionary<string, object> Values = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, object?> Values = new(StringComparer.OrdinalIgnoreCase);
 
     public QsReference AddReference(string newVariable, string targetVariable)
     {
@@ -218,14 +218,14 @@ public class QsNamespace(string name)
     /// <summary>
     /// Cache the discovered QsNamespace inner class type members.
     /// </summary>
-    private Dictionary<string, object> HardCodedMethods;
+    private Dictionary<string, object?> HardCodedMethods;
 
     /// <summary>
     /// Gets the members of the QsNamespace or (static class ) that hold the hard coded functions and properties.
     /// </summary>
     /// <param name="namespaceType"></param>
     /// <returns></returns>
-    private Dictionary<string, object> GetQsNamespaceMethods()
+    private Dictionary<string, object?> GetQsNamespaceMethods()
     {
         // The namespace is a static class with public visibility to its static members.
         var methods = (_NamespaceType ?? throw new QsException("The namespace has no native type.")).GetMethods(
@@ -233,7 +233,7 @@ public class QsNamespace(string name)
             /*| BindingFlags.InvokeMethod */
         );
 
-        Dictionary<string, object> CodedMembers = new(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, object?> CodedMembers = new(StringComparer.OrdinalIgnoreCase);
 
         /*
         var FilteredMethods = from m in methods
@@ -300,7 +300,7 @@ public class QsNamespace(string name)
         return CodedMembers;
     }
 
-    private List<KeyValuePair<string, object>> GetQsNamespaceProperties()
+    private List<KeyValuePair<string, object?>> GetQsNamespaceProperties()
     {
         var properties = (_NamespaceType ?? throw new QsException("The namespace has no native type.")).GetProperties(
             BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Public);
@@ -320,20 +320,20 @@ public class QsNamespace(string name)
                     )
             select m;
 
-        List<KeyValuePair<string, object>> CodedMembers = [];
+        List<KeyValuePair<string, object?>> CodedMembers = [];
 
         foreach (var prop in FilteredProperties)
         {
-            CodedMembers.Add(new KeyValuePair<string, object>
+            CodedMembers.Add(new KeyValuePair<string, object?>
                 (prop.Name, prop.GetValue(null,null)));
         }
 
         return CodedMembers;
     }
 
-    public IEnumerable<KeyValuePair<string, object>> GetItems()
+    public IEnumerable<KeyValuePair<string, object?>> GetItems()
     {
-        List<KeyValuePair<string, object>> items = [];
+        List<KeyValuePair<string, object?>> items = [];
 
         items.AddRange(Values);
 
@@ -602,21 +602,21 @@ public class QsNamespace(string name)
             var parms = Expression.NewArrayInit(typeof(QsParameter), lb.Parameters.ToArray());
 
             // Convert to array of Object
-            Expression ConvertedParametersExpression = Expression.Call(convparMethod, methodExpress ,parms);
+            Expression ConvertedParametersExpression = Expression.Call(convparMethod.RequireMember(), methodExpress ,parms);
 
-            var rr = Expression.Call(iv, methodExpress, ConvertedParametersExpression);
+            var rr = Expression.Call(iv.RequireMember(), methodExpress, ConvertedParametersExpression);
 
-            var vv = Expression.Call(NTOQ, rr);
+            var vv = Expression.Call(NTOQ.RequireMember(), rr);
             statements.Add(vv);
         }
         else
         {
             var parms = Expression.NewArrayInit(typeof(object));
 
-            var rr = Expression.Call(iv, methodExpress, parms);
+            var rr = Expression.Call(iv.RequireMember(), methodExpress, parms);
 
             //var rr = Expression.Call(null, method);
-            var vv = Expression.Call(NTOQ, rr);
+            var vv = Expression.Call(NTOQ.RequireMember(), rr);
             statements.Add(vv);
         }
 

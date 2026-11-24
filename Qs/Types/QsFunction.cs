@@ -66,7 +66,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     {
         var parms = (from arg in args
             select
-                QsParameter.MakeParameter(arg, arg.ToString()))
+                QsParameter.MakeParameter(arg, arg.ToString() ?? string.Empty))
             .ToArray();
 
         return (QsScalar)InvokeByQsParameters(parms);
@@ -156,7 +156,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
                 //expression to make parameter from the corresponding naked parameter
                 parameters.Add(Expression.Call(
-                    typeof(QsParameter).GetMethod("MakeParameter"),
+                    typeof(QsParameter).GetMethod("MakeParameter").RequireMember(),
                     nakedParameter,
                     rawParameter));
             }
@@ -178,7 +178,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                 //  then excpetion will occur in GetQuantity that variable was not found in the scope
 
                 Expression tryBody = Expression.Call(
-                    typeof(QsParameter).GetMethod("MakeParameter"),
+                    typeof(QsParameter).GetMethod("MakeParameter").RequireMember(),
                     nakedParameter,
                     rawParameter);
 
@@ -186,7 +186,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
                 var e = Expression.Parameter(typeof(QsVariableNotFoundException), "e");
                 Expression catchBody = Expression.Call(
-                    typeof(QsParameter).GetMethod("MakeParameter"),
+                    typeof(QsParameter).GetMethod("MakeParameter").RequireMember(),
                     Expression.Property(e, "ExtraData"),
                     rawParameter);
 
@@ -204,7 +204,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         }
 
         var qsParamArray = Expression.NewArrayInit(typeof(QsParameter), parameters);
-        return Expression.Call(Expression.Constant(this), GetType().GetMethod("InvokeByQsParameters"), qsParamArray);
+        return Expression.Call(Expression.Constant(this), GetType().GetMethod("InvokeByQsParameters").RequireMember(), qsParamArray);
     }
 
     /// <summary>

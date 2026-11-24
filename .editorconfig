@@ -1142,7 +1142,7 @@ dotnet_diagnostic.CS8602.severity = warning
 dotnet_diagnostic.CS8603.severity = warning
 
 # Check a possibly null argument before passing it to a nonnullable parameter
-dotnet_diagnostic.CS8604.severity = suggestion
+dotnet_diagnostic.CS8604.severity = warning
 
 # Check a possibly null object before unboxing it
 dotnet_diagnostic.CS8605.severity = suggestion

@@ -241,7 +241,7 @@ public class Root
 
                 var tpv = new QsTupleValue(
                     ival,
-                    Enum.GetName(EnumType, eval),
+                    Enum.GetName(EnumType, eval) ?? throw new QsException("The enum value has no name."),
                     ival.ToScalarValue());
 
                 tupleValues.Add(tpv);
@@ -254,7 +254,7 @@ public class Root
         {
             // retur// return the result as a flowing tuple instance
             var ff = QsFlowingTuple.FromCSharpEnum(value.GetType());
-            return ff[Enum.GetName(value.GetType(), value)];
+            return ff[Enum.GetName(value.GetType(), value) ?? throw new QsException("The enum value has no name.")];
         }
 
         var vType = value.GetType();
@@ -447,7 +447,7 @@ public class Root
             //return tuple.FromTuple(targetType);
 
             var mi = typeof(QsFlowingTuple).GetMethod("FromTuple");
-            return Expression.Call(value, mi, Expression.Constant(targetType));
+            return Expression.Call(value, mi.RequireMember(), Expression.Constant(targetType));
         }
 
         // at la// at last test if the target type may be an object // and the source may be a QsObject <===>  I can't test the type of the expression because everything is QsValue,
@@ -544,11 +544,16 @@ public class Root
     /// <param name="targetType"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static object? QsToNativeConvert(Type targetType, object value)
+    public static object? QsToNativeConvert(Type targetType, object? value)
     {
         if (targetType == typeof(QsValue))
         {
             return value;   //no need to change because target type is QsValue which is the Qs primary type.
+        }
+
+        if (value == null)
+        {
+            throw new QsException("Cannot convert a null value to " + targetType.Name);
         }
 
         if (targetType == typeof(QsValue) || targetType.BaseType == typeof(QsValue))

@@ -249,7 +249,7 @@ public abstract class QsValue: IComparable
         return a.GreaterThanOrEqual(b);
     }
 
-    public static bool operator ==(QsValue a, QsValue b)
+    public static bool operator ==(QsValue? a, QsValue? b)
     {
         // If both are null, or both are same instance, return true.
         if (ReferenceEquals(a, b))
@@ -266,7 +266,7 @@ public abstract class QsValue: IComparable
         return a.Equality(b);
     }
 
-    public static bool operator !=(QsValue a, QsValue b)
+    public static bool operator !=(QsValue? a, QsValue? b)
     {
         return !(a == b);
     }
@@ -436,7 +436,7 @@ public abstract class QsValue: IComparable
             {
                 if (m.RowsCount == 0)
                 {
-                    m.AddVector(qsVectors.Clone() as QsVector);
+                    m.AddVector((QsVector)qsVectors.Clone());
                 }
                 else if (m.RowsCount == 1)
                 {
@@ -568,8 +568,7 @@ public abstract class QsValue: IComparable
 
     public int CompareTo(object? obj)
     {
-        var value = obj as QsValue;
-        if (obj != null)
+        if (obj is QsValue value)
         {
             if (LessThan(value))
             {

@@ -48,12 +48,12 @@ public class QsScope : IDynamicMetaObjectProvider
     /// Returns all the items in the registered storages
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<KeyValuePair<string, object>> GetItems()
+    public IEnumerable<KeyValuePair<string, object?>> GetItems()
     {
-        List<KeyValuePair<string, object>> all = [];
+        List<KeyValuePair<string, object?>> all = [];
         foreach (var v in StorageProviders.Values)
         {
-            all.AddRange(v.GetItems());
+            all.AddRange(v.GetItems().Select(item => new KeyValuePair<string, object?>(item.Key, item.Value)));
         }
 
         return all.AsEnumerable();

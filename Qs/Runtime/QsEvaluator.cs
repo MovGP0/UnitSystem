@@ -996,7 +996,7 @@ public sealed class QsEvaluator
                                     if (ParentPropertyInfo == null)
                                     {
                                         ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
-                                        PropertyInfoIndexed[ParentPropertyInfo] = true;
+                                        PropertyInfoIndexed[ParentPropertyInfo ?? throw new QsException("The indexed property could not be found.")] = true;
                                     }
                                     else
                                     {
@@ -1180,7 +1180,7 @@ public sealed class QsEvaluator
 #endif
     }
 
-    public void PrintQuantity(object qty)
+    public void PrintQuantity(object? qty)
     {
 #if WINRT
 #else

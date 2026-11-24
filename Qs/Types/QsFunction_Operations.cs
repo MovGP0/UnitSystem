@@ -201,7 +201,7 @@ public partial class QsFunction
                 throw new QsException("Operation '" + operation + "' for the target scalar type (" + svl.ScalarType + ") is not supported");
             }
 
-            var fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
+            var fb = (SymbolicVariable.Parse(fbody) ?? throw new QsException("Expected a symbolic expression.")).ToQuantity().ToScalar();
 
             var FuncBody = string.Empty;
             if(fb.ScalarType == ScalarTypes.SymbolicQuantity)
@@ -269,7 +269,7 @@ public partial class QsFunction
     public AnyQuantity<SymbolicVariable> ToSymbolicQuantity()
     {
         var fv = SymbolicVariable.Parse(FunctionBody);
-        return fv.ToQuantity();
+        return (fv ?? throw new QsException("Expected a symbolic expression.")).ToQuantity();
     }
 
     /// <summary>
@@ -279,7 +279,7 @@ public partial class QsFunction
     {
         //return (QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(SymbolicBodyText);
         var fv = SymbolicVariable.Parse(FunctionBody);
-        return new QsScalar(ScalarTypes.SymbolicQuantity) { SymbolicQuantity = fv.ToQuantity() };
+        return new QsScalar(ScalarTypes.SymbolicQuantity) { SymbolicQuantity = (fv ?? throw new QsException("Expected a symbolic expression.")).ToQuantity() };
     }
 
     internal static string FormFunctionHeadFromFunctions(string functionName, params QsFunction[] functions)
@@ -365,7 +365,7 @@ public partial class QsFunction
     public override int GetHashCode() => base.GetHashCode();
 #pragma warning restore RCS1132
 
-    public static bool operator ==(QsFunction a, QsFunction b)
+    public static bool operator ==(QsFunction? a, QsFunction? b)
     {
         // If both are null, or both are same instance, return true.
         if (ReferenceEquals(a, b))
@@ -382,7 +382,7 @@ public partial class QsFunction
         return a.Equality(b);
     }
 
-    public static bool operator !=(QsFunction a, QsFunction b)
+    public static bool operator !=(QsFunction? a, QsFunction? b)
     {
         return !(a == b);
     }

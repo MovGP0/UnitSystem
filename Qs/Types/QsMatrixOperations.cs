@@ -475,9 +475,8 @@ public partial class QsMatrix : QsValue
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar s)
         {
-            var s = value as QsScalar;
             return PowerScalar(s);
         }
 
@@ -521,9 +520,8 @@ public partial class QsMatrix : QsValue
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar s)
         {
-            var s = value as QsScalar;
             return ElementsPowerScalar(s);
         }
 
@@ -583,7 +581,10 @@ public partial class QsMatrix : QsValue
                     }
                 }
 
-                lm.Add(rowM);
+                if (rowM is not null)
+                {
+                    lm.Add(rowM);
+                }
             }
 
             // append vertically all matrices

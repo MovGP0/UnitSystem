@@ -19,7 +19,7 @@ public partial class QsFunction
         int parametersCount,
         params string[] parametersNames)
     {
-        IEnumerable<KeyValuePair<string, object>>? Items = null;
+        IEnumerable<KeyValuePair<string, object?>>? Items = null;
 
         if (!string.IsNullOrEmpty(qsNamespace))
         {
@@ -57,7 +57,7 @@ public partial class QsFunction
         QsScope scope,
         string nameSpace,
         string functionName,
-        params string[] parametersNames)
+        params string[]? parametersNames)
     {
         if (parametersNames == null)
         {
@@ -120,7 +120,7 @@ public partial class QsFunction
         string nameSpace,
         string functionName)
     {
-        IEnumerable<KeyValuePair<string, object>>? Items = null;
+        IEnumerable<KeyValuePair<string, object?>>? Items = null;
 
         if (!string.IsNullOrEmpty(nameSpace))
         {

@@ -423,7 +423,7 @@ class QsVar
                     // member call to the object.
                     // execute property its name in tokens[ix][0]
                     quantityExpression
-                        = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(tokens[ix][0]));
+                        = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute").RequireMember(), Expression.Constant(tokens[ix][0]));
 
                     var sct =  tokens[ix][1];
                     // because of the behavior of parsing the inner of this token between [ , ]  is ParameterToken
@@ -454,7 +454,7 @@ class QsVar
                 else if (eop?.Operation == "!")
                 {
                     // execute exlamination first
-                    quantityExpression = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator"), Expression.Constant(new QsText(tokens[ix][0].TokenValue)));
+                    quantityExpression = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator").RequireMember(), Expression.Constant(new QsText(tokens[ix][0].TokenValue)));
 
                     // then indexer after
                     var sct = tokens[ix][1];
@@ -495,7 +495,7 @@ class QsVar
                 {
                     // member call to the object.
                     quantityExpression
-                        = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(tokens[ix]));
+                        = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute").RequireMember(), Expression.Constant(tokens[ix]));
 
                     eop.Operation = "Skip"; // skip this operation because we already made an evaluation for it
                 }
@@ -624,7 +624,7 @@ class QsVar
 
                 var sf = new QsScalar(ScalarTypes.FunctionQuantity)
                 {
-                    FunctionQuantity = QsFunction.ParseFunction(Evaluator, funcbody).ToQuantity()
+                    FunctionQuantity = (QsFunction.ParseFunction(Evaluator, funcbody) ?? throw new QsException("Expected a function expression.")).ToQuantity()
                 };
 
                 quantityExpression = Expression.Constant(sf);
@@ -640,13 +640,13 @@ class QsVar
                 if (eop?.Operation == "->")
                 {
                     // Execute first
-                    quantityExpression = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(mtk));
+                    quantityExpression = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute").RequireMember(), Expression.Constant(mtk));
                     eop.Operation = "Skip";
                 }
                 else if (eop?.Operation == "!")
                 {
                     // execute exlamination first
-                    quantityExpression = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator"), Expression.Constant(new QsText(mtk.TokenValue)));
+                    quantityExpression = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator").RequireMember(), Expression.Constant(new QsText(mtk.TokenValue)));
                     eop.Operation = "Skip";
                 }
                 else
@@ -717,7 +717,7 @@ class QsVar
                         Expression.IfThenElse(
                             Expression.LessThan(counter, Expression.Constant(count)),
                             Expression.Block(
-                                Expression.Call(result, fltAdd, ParseArithmatic(tokens[ix][1]))
+                                Expression.Call(result, fltAdd.RequireMember(), ParseArithmatic(tokens[ix][1]))
                                 ,
                                 Expression.PostIncrementAssign(counter)
                             ),
@@ -746,14 +746,14 @@ class QsVar
                     if (q.Equals(Sequence.SequenceRangeStartName, StringComparison.OrdinalIgnoreCase))
                     {
                         quantityExpression = Expression.PropertyOrField(Expression.Constant(Sequence), "StartIndex");
-                        quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]), quantityExpression);
+                        quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]).RequireMember(), quantityExpression);
 
                         Sequence.CachingEnabled = false;
                     }
                     else if (q.Equals(Sequence.SequenceRangeEndName, StringComparison.OrdinalIgnoreCase))
                     {
                         quantityExpression = Expression.PropertyOrField(Expression.Constant(Sequence), "EndIndex");
-                        quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]), quantityExpression);
+                        quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]).RequireMember(), quantityExpression);
 
                         Sequence.CachingEnabled = false; // because start and end index may change from call to call
                     }
@@ -769,7 +769,7 @@ class QsVar
                             // convert it into Quantity.
                             //   because it is only integer
 
-                            quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]), quantityExpression);
+                            quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]).RequireMember(), quantityExpression);
                         }
                         else if (Sequence.Parameters.Any(s => s.Name.Equals(q, StringComparison.OrdinalIgnoreCase)))
                         {
@@ -800,16 +800,16 @@ class QsVar
 
                         var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]);
 
-                        var lip = Expression.Call(ItoQsv, vp);
+                        var lip = Expression.Call(ItoQsv.RequireMember(), vp);
 
                         var IndexArg = Expression.Call(
-                            mpm
+                            mpm.RequireMember()
                             ,
                             Expression.Convert(lip, typeof(object))
                             ,
                             Expression.Constant("Counter_" + s));
 
-                        quantityExpression = Expression.Call(quantityExpression, mix, Expression.NewArrayInit(typeof(QsParameter), IndexArg));
+                        quantityExpression = Expression.Call(quantityExpression, mix.RequireMember(), Expression.NewArrayInit(typeof(QsParameter), IndexArg));
                     };
 
                     #region variable in main context
@@ -819,7 +819,7 @@ class QsVar
                         {
                             // previous operation were calling for object member
                             quantityExpression
-                                = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute"), Expression.Constant(tokens[ix]));
+                                = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("Execute").RequireMember(), Expression.Constant(tokens[ix]));
 
                             eop.Operation = "Skip"; // skip this operation because we already made an evaluation for it
                         }
@@ -828,7 +828,7 @@ class QsVar
                             // quantityExpression = Expression.Constant(new QsText(tokens[ix].TokenValue));
 
                             quantityExpression
-                                = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator"), Expression.Constant(new QsText(tokens[ix].TokenValue)));
+                                = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ExclamationOperator").RequireMember(), Expression.Constant(new QsText(tokens[ix].TokenValue)));
 
                             eop.Operation = "Skip";
                         }
@@ -836,7 +836,7 @@ class QsVar
                         {
                             // quantityExpression = Expression.Constant(new QsText(tokens[ix].TokenValue));
                             quantityExpression
-                                = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ColonOperator"), Expression.Constant(new QsText(tokens[ix].TokenValue)));
+                                = Expression.Call(eop.QuantityExpression, typeof(QsValue).GetMethod("ColonOperator").RequireMember(), Expression.Constant(new QsText(tokens[ix].TokenValue)));
 
                             eop.Operation = "Skip";
                         }
@@ -853,7 +853,7 @@ class QsVar
                             // case of loop counter
                             var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]);
 
-                            quantityExpression = Expression.Call(ItoQsv, loopIteratorParameter[tokens[ix].TokenValue.Substring(1)]);
+                            quantityExpression = Expression.Call(ItoQsv.RequireMember(), loopIteratorParameter[tokens[ix].TokenValue.Substring(1)]);
                         }
                         else
                         {
@@ -875,7 +875,7 @@ class QsVar
                         // case of loop counter
                         var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]);
 
-                        quantityExpression = Expression.Call(ItoQsv, loopIteratorParameter[tokens[ix].TokenValue.Substring(1)]);
+                        quantityExpression = Expression.Call(ItoQsv.RequireMember(), loopIteratorParameter[tokens[ix].TokenValue.Substring(1)]);
                     }
                     else
                     {
@@ -890,7 +890,7 @@ class QsVar
 
             if (FactorialPostfix)
             {
-                quantityExpression = Expression.Call(typeof(QsGamma).GetMethod("Factorial"), quantityExpression);
+                quantityExpression = Expression.Call(typeof(QsGamma).GetMethod("Factorial").RequireMember(), quantityExpression ?? throw new QsException("Factorial requires an operand."));
 
                 //get the next operator.
                 ix++;
@@ -901,7 +901,7 @@ class QsVar
 
             if (PercentagePostfix)
             {
-                quantityExpression = Expression.Divide(quantityExpression, Expression.Constant(QsValue.ParseScalar("100"), typeof(QsValue)));
+                quantityExpression = Expression.Divide(quantityExpression ?? throw new QsException("Percentage requires an operand."), Expression.Constant(QsValue.ParseScalar("100"), typeof(QsValue)));
 
                 //get the next operator.
                 ix++;
@@ -917,7 +917,7 @@ class QsVar
                 if (tokens[ix + 1].TokenClassType == typeof(SquareBracketsGroupToken))
                 {
                     // call indexer here
-                    quantityExpression = ValueIndexExpression(quantityExpression, tokens[ix + 1]);
+                    quantityExpression = ValueIndexExpression(quantityExpression ?? throw new QsException("Indexing requires a value."), tokens[ix + 1]);
 
                     //get the next operator
                     ix++;
@@ -1025,7 +1025,7 @@ class QsVar
                 be.AppendSubToken(t[4]);
                 var r = ParseArithmatic(be);
 
-                ps.Add(Expression.New(tpvcp3, Expression.Constant(i), Expression.Constant(nm), r));
+                ps.Add(Expression.New(tpvcp3.RequireMember(), Expression.Constant(i), Expression.Constant(nm), r));
             }
             else if (NameExist)
             {
@@ -1035,7 +1035,7 @@ class QsVar
                 be.AppendSubToken(t[2]);
                 var r = ParseArithmatic(be);
 
-                ps.Add(Expression.New(tpvcp2, Expression.Constant(nm), r));
+                ps.Add(Expression.New(tpvcp2.RequireMember(), Expression.Constant(nm), r));
             }
             else if (IdExist)
             {
@@ -1045,18 +1045,18 @@ class QsVar
                 be.AppendSubToken(t[2]);
                 var r = ParseArithmatic(be);
 
-                ps.Add(Expression.New(tpvcp4, Expression.Constant(i), r));
+                ps.Add(Expression.New(tpvcp4.RequireMember(), Expression.Constant(i), r));
             }
             else
             {
                 var r = ParseArithmatic(t);
-                ps.Add(Expression.New(tpvcp1, r));
+                ps.Add(Expression.New(tpvcp1.RequireMember(), r));
             }
         }
 
         var cp = typeof(QsFlowingTuple).GetConstructor([typeof(QsTupleValue[])]);
 
-        return Expression.New(cp, Expression.NewArrayInit(typeof(QsTupleValue), ps.ToArray()));
+        return Expression.New(cp.RequireMember(), Expression.NewArrayInit(typeof(QsTupleValue), ps.ToArray()));
     }
 
     private MethodCallExpression DeleteInstance(Token token)
@@ -1065,7 +1065,7 @@ class QsVar
 
         return Expression.Call(
             ex,
-            typeof(QsEvaluator).GetMethod("DeleteQsValue")
+            typeof(QsEvaluator).GetMethod("DeleteQsValue").RequireMember()
             ,
             Expression.Constant(string.Empty)
             ,
@@ -1125,7 +1125,7 @@ class QsVar
 
         if (args.Length == 0)
         {
-            return Expression.Call(typeof(QsObject).GetMethod("CreateNativeObject"), Expression.New(discoveredType));
+            return Expression.Call(typeof(QsObject).GetMethod("CreateNativeObject").RequireMember(), Expression.New(discoveredType));
         }
 
         //constructor included
@@ -1157,7 +1157,7 @@ class QsVar
         }
 
         // args has been prepared
-        return Expression.Call(typeof(QsObject).GetMethod("CreateNativeObject"), Expression.New(d_ctor, Arguments.ToArray()));
+        return Expression.Call(typeof(QsObject).GetMethod("CreateNativeObject").RequireMember(), Expression.New(d_ctor, Arguments.ToArray()));
     }
 
     /// <summary>
@@ -1344,7 +1344,7 @@ class QsVar
         // parsing within absolute will re-execute the parsing
         var rr = ParseArithmatic(token.TrimTokens(1, 1));
 
-        return Expression.Call(rr, typeof(QsValue).GetMethod("AbsOperation"));
+        return Expression.Call(rr, typeof(QsValue).GetMethod("AbsOperation").RequireMember());
     }
 
     /// <summary>
@@ -1359,7 +1359,7 @@ class QsVar
         // parsing within absolute will re-execute the parsing
         var rr = ParseArithmatic(token.TrimTokens(1, 1));
 
-        return Expression.Call(rr, typeof(QsValue).GetMethod("NormOperation"));
+        return Expression.Call(rr, typeof(QsValue).GetMethod("NormOperation").RequireMember());
     }
 
     #region QsValue Parsers
@@ -1419,7 +1419,7 @@ class QsVar
         var valuesArray = Expression.NewArrayInit(typeof(QsValue), qtyExpressions);
 
         var vectorExpression = Expression.Call(
-            typeof(QsValue).GetMethod("VectorFromValues"),
+            typeof(QsValue).GetMethod("VectorFromValues").RequireMember(),
             valuesArray);
 
         return vectorExpression;
@@ -1472,7 +1472,7 @@ class QsVar
 
                 Expression ComponentsArray = Expression.NewArrayInit(typeof(QsValue), componentsExpressions);
                 Expression MatrixOfComponents = Expression.Call(
-                    typeof(QsValue).GetMethod("MatrixRowFromValues"),
+                    typeof(QsValue).GetMethod("MatrixRowFromValues").RequireMember(),
                     ComponentsArray);
 
                 vctExpressions.Add(MatrixOfComponents);
@@ -1482,7 +1482,7 @@ class QsVar
         var valuesArray = Expression.NewArrayInit(typeof(QsValue), vctExpressions);
 
         var matrixExpression = Expression.Call(
-            typeof(QsValue).GetMethod("MatrixFromValues"),
+            typeof(QsValue).GetMethod("MatrixFromValues").RequireMember(),
             valuesArray);
 
         return matrixExpression;
@@ -1523,7 +1523,7 @@ class QsVar
         var valuesArray = Expression.NewArrayInit(typeof(QsValue), vctExpressions);
 
         var tensorExpression = Expression.Call(
-            typeof(QsValue).GetMethod("TensorFromValues"),
+            typeof(QsValue).GetMethod("TensorFromValues").RequireMember(),
             valuesArray);
 
         return tensorExpression;
@@ -1532,7 +1532,7 @@ class QsVar
     public static Expression ParseText(Token tok)
     {
         var tx = Expression.Constant( tok.TrimTokens(1,1).TokenValue);
-        var texte = Expression.New(typeof(QsText).GetConstructor([typeof(string)]), tx);
+        var texte = Expression.New(typeof(QsText).GetConstructor([typeof(string)]).RequireMember(), tx);
         return Expression.Convert(texte, typeof(QsValue));
     }
 
@@ -1572,7 +1572,7 @@ class QsVar
 
             // normal variable in the namespace
             return Expression.Call(
-                typeof(QsEvaluator).GetMethod(GetterFunction),
+                typeof(QsEvaluator).GetMethod(GetterFunction).RequireMember(),
                 ScopeExp,
                 Expression.Constant(ns),
                 Expression.Constant(nsvar)
@@ -1580,7 +1580,7 @@ class QsVar
         }
 
         var fe = Expression.Call(
-            typeof(QsEvaluator).GetMethod(GetterFunction),
+            typeof(QsEvaluator).GetMethod(GetterFunction).RequireMember(),
             ScopeExp,
             Expression.Constant(string.Empty),
             Expression.Constant(var[0])
@@ -1761,7 +1761,7 @@ class QsVar
         }
 
         var sv  = SymbolicVariable.Parse(s);
-        var SymbolicScalar = sv.ToQuantity(unit).ToScalar();
+        var SymbolicScalar = (sv ?? throw new QsException("Expected a symbolic expression.")).ToQuantity(unit).ToScalar();
 
         return Expression.Constant(SymbolicScalar, typeof(QsValue));
     }
@@ -1808,7 +1808,7 @@ class QsVar
     /// <param name="indexes"></param>
     /// <param name="args"></param>
     /// <returns></returns>
-    public Expression IndexerExpression(string valueName, Token indexes, Token args)
+    public Expression IndexerExpression(string valueName, Token indexes, Token? args)
     {
         // this needs to be rewritten
 
@@ -1886,7 +1886,7 @@ class QsVar
             var vp = ParseArithmatic(t);
 
             ExpressionParameters[ix] = Expression.Call(
-                mpm,
+                mpm.RequireMember(),
                 vp,                                                                       //Evaluated value.
                 Expression.Constant(Tokens[ix].TokenValue)                                //Raw Value
             );
@@ -1894,7 +1894,7 @@ class QsVar
 
         Expression result = Expression.Call(
             Expression.Constant(value),
-            mi,
+            mi.RequireMember(),
             Expression.NewArrayInit(typeof(QsParameter), ExpressionParameters));
 
         return result;
@@ -1918,7 +1918,7 @@ class QsVar
             var vp = ParseArithmatic(t);
 
             ExpressionParameters[ix] = Expression.Call(
-                mpm,
+                mpm.RequireMember(),
                 vp,                                                                       //Evaluated value.
                 Expression.Constant(Tokens[ix].TokenValue)                                //Raw Value
             );
@@ -1926,7 +1926,7 @@ class QsVar
 
         Expression result = Expression.Call(
             value,
-            mi,
+            mi.RequireMember(),
             Expression.NewArrayInit(typeof(QsParameter), ExpressionParameters));
 
         return result;
@@ -1939,7 +1939,7 @@ class QsVar
     /// <param name="indexes"></param>
     /// <param name="args"></param>
     /// <returns></returns>
-    public Expression SequenceCallExpression(string sequenceName, Token indexes, Token args)
+    public Expression SequenceCallExpression(string sequenceName, Token indexes, Token? args)
     {
         //discover the index
         if (indexes.Count > 3)
@@ -1973,7 +1973,7 @@ class QsVar
                     //  then excpetion will occur in GetQuantity that variable was not found in the scope
 
                     Expression tryBody = Expression.Call(
-                        typeof(QsParameter).GetMethod("MakeParameter"),
+                        typeof(QsParameter).GetMethod("MakeParameter").RequireMember(),
                         nakedParameter,
                         rawParameter);
 
@@ -1981,7 +1981,7 @@ class QsVar
 
                     var e = Expression.Parameter(typeof(QsVariableNotFoundException), "e");
                     Expression catchBody = Expression.Call(
-                        typeof(QsParameter).GetMethod("MakeParameter"),
+                        typeof(QsParameter).GetMethod("MakeParameter").RequireMember(),
                         Expression.Property(e, "ExtraData"),
                         rawParameter);
 
@@ -2014,7 +2014,7 @@ class QsVar
         //get the sequence dynamically because sequence can be recursive :)
 
         Expression QsSequExpression = Expression.Call(
-            typeof(QsSequence).GetMethod("GetSequence"),
+            typeof(QsSequence).GetMethod("GetSequence").RequireMember(),
             Expression.Constant(Evaluator.Scope),
             Expression.Constant(sequenceNamespace),
             Expression.Constant(seqo)
@@ -2040,8 +2040,8 @@ class QsVar
         if (itok.Count == 3 && itok[1].TokenClassType == typeof(SequenceRangeToken))
         {
             #region From To and Range Function
-            FromExpression = Expression.Call(typeof(Qs).GetMethod("IntegerFromQsValue"), ParseArithmatic(itok[0].TokenValue));
-            ToExpression = Expression.Call(typeof(Qs).GetMethod("IntegerFromQsValue"), ParseArithmatic(itok[2].TokenValue));
+            FromExpression = Expression.Call(typeof(Qs).GetMethod("IntegerFromQsValue").RequireMember(), ParseArithmatic(itok[0].TokenValue));
+            ToExpression = Expression.Call(typeof(Qs).GetMethod("IntegerFromQsValue").RequireMember(), ParseArithmatic(itok[2].TokenValue));
 
             if (itok[1].TokenValue == "++")
             {
@@ -2078,7 +2078,7 @@ class QsVar
             IndexExpression = ParseArithmatic(indexText);
 
             //however we need to convert it to integer. because it is an index
-            IndexExpression = Expression.Call(typeof(Qs).GetMethod("IntegerFromQsValue"), IndexExpression);
+            IndexExpression = Expression.Call(typeof(Qs).GetMethod("IntegerFromQsValue").RequireMember(), IndexExpression);
         }
         #endregion
 
@@ -2144,7 +2144,7 @@ class QsVar
             }
 
             // insert the index parameter.
-            parameters.Insert(0, IndexExpression);
+            parameters.Insert(0, IndexExpression ?? throw new QsException("The sequence index is missing."));
             #endregion
         }
         else
@@ -2211,8 +2211,8 @@ class QsVar
             }
 
             // insert the index parameter.
-            parameters.Insert(0, ToExpression);
-            parameters.Insert(0, FromExpression);
+            parameters.Insert(0, ToExpression ?? throw new QsException("The end of the sequence range is missing."));
+            parameters.Insert(0, FromExpression ?? throw new QsException("The start of the sequence range is missing."));
             parameters.Insert(0, Expression.Constant(methodName));
             #endregion
         }
@@ -2222,7 +2222,7 @@ class QsVar
         var finale = Expression.Call(
             QsSequExpression
             ,
-            mi
+            mi.RequireMember()
             ,
             parameters.ToArray()
         );
@@ -2420,13 +2420,13 @@ class QsVar
 
                 Expression FunctionParameterName = Expression.Call(
                     FunctionParameter,
-                    typeof(QsParameter).GetMethod("GetTrueFunctionName"),
+                    typeof(QsParameter).GetMethod("GetTrueFunctionName").RequireMember(),
                     Expression.Constant(ArgumentTokens.Count)
                 );
 
                 // Get the Function object.
                 Expression Functor = Expression.Call(
-                    typeof(QsFunction).GetMethod("GetFunctionAndThrowIfNotFound"),
+                    typeof(QsFunction).GetMethod("GetFunctionAndThrowIfNotFound").RequireMember(),
                     Expression.Constant(Scope),
                     FunctionParameterName
                 );
@@ -2474,7 +2474,7 @@ class QsVar
 
                     Expression qp = Expression.TryCatch(
                         Expression.Call(
-                            typeof(QsParameter).GetMethod("MakeParameter"),
+                            typeof(QsParameter).GetMethod("MakeParameter").RequireMember(),
                             q,                                //Evaluated value.
                             rw                                //Raw Value
                         )
@@ -2482,7 +2482,7 @@ class QsVar
                         Expression.Catch(
                             typeof(QsVariableNotFoundException),
                             Expression.Call(
-                                typeof(QsParameter).GetMethod("MakeParameter"),
+                                typeof(QsParameter).GetMethod("MakeParameter").RequireMember(),
                                 Expression.Constant(null),                                //no value
                                 rw                                //Raw Value
                             )
@@ -2495,7 +2495,7 @@ class QsVar
                 // expression to call the function QsFunction.GetInvoke  is used here
                 Expression CallExpression = Expression.Call(
                     Functor,
-                    typeof(QsFunction).GetMethod("GetInvoke"),
+                    typeof(QsFunction).GetMethod("GetInvoke").RequireMember(),
                     Expression.NewArrayInit(typeof(QsParameter), FunctorParams)
                 );
 
@@ -2639,7 +2639,7 @@ class QsVar
 
             Expression indirectQuantity = Expression.Call(
                 eu,
-                typeof(QsParameter).GetMethod("GetIndirectQuantity"),
+                typeof(QsParameter).GetMethod("GetIndirectQuantity").RequireMember(),
                 Expression.Constant(Scope)
             );
 
@@ -2670,9 +2670,9 @@ class QsVar
     /// <returns></returns>
     private static Expression ArithExpression(ExprOp eop, out short skip)
     {
-        var left = eop.QuantityExpression;
+        var left = eop.QuantityExpression ?? throw new QsException("The left operand is missing.");
         var op = eop.Operation;
-        var right = eop.Next.QuantityExpression;
+        var right = eop.Next.QuantityExpression ?? throw new QsException("The right operand is missing.");
 
         skip = 1;
 
@@ -2680,22 +2680,22 @@ class QsVar
 
         if (op == ":")
         {
-            return Expression.Call(left, aqType.GetMethod("ColonOperator"), right);
+            return Expression.Call(left, aqType.GetMethod("ColonOperator").RequireMember(), right);
         }
 
         if (op == "!")
         {
-            return Expression.Call(left, aqType.GetMethod("ExclamationOperator"), right);
+            return Expression.Call(left, aqType.GetMethod("ExclamationOperator").RequireMember(), right);
         }
 
         if (op == "->")
         {
-            return Expression.Call(left, aqType.GetMethod("Execute"), right);
+            return Expression.Call(left, aqType.GetMethod("Execute").RequireMember(), right);
         }
 
         if (op == "..")
         {
-            return Expression.Call(left, aqType.GetMethod("RangeOperation"), right);
+            return Expression.Call(left, aqType.GetMethod("RangeOperation").RequireMember(), right);
         }
 
         if (op == "_h*")
@@ -2743,7 +2743,7 @@ class QsVar
 
         if (op.Equals("|"))
         {
-            return Expression.Call(left, aqType.GetMethod("DifferentiateOperation"), right);
+            return Expression.Call(left, aqType.GetMethod("DifferentiateOperation").RequireMember(), right);
         }
 
         if (op == "*")
@@ -2866,7 +2866,7 @@ class QsVar
             }
             else
             {
-                var WhenExpression = Expression.Condition(right, left, eop.Next.Next.QuantityExpression, typeof(QsValue));
+                var WhenExpression = Expression.Condition(right, left, eop.Next.Next.QuantityExpression ?? throw new QsException("The Otherwise expression is missing."), typeof(QsValue));
                 return WhenExpression;
             }
         }

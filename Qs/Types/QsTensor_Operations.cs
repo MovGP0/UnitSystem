@@ -17,10 +17,8 @@ public partial class QsTensor : QsValue
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar scalar)
         {
-            var scalar = value as QsScalar;
-
             var NewTensor = new QsTensor();
             if (Order > 3)
             {
@@ -96,10 +94,8 @@ public partial class QsTensor : QsValue
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar scalar)
         {
-            var scalar = value as QsScalar;
-
             var NewTensor = new QsTensor();
             if (Order > 3)
             {

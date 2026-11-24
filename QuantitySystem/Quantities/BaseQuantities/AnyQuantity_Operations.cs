@@ -336,9 +336,9 @@ public abstract partial class AnyQuantity<T>
         {
             qresult.Value = (T)(object)((double)(object?)firstQuantity.Value * (double)(object?)sec_qty.Value);
 
-            if (firstQuantity.Unit != null && secondQuantity.Unit != null)
+            if (firstQuantity.Unit != null && sec_qty.Unit is { } invertedUnit)
             {
-                var un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
+                var un = new Unit(qresult.GetType(), firstQuantity.Unit, invertedUnit);
                 qresult.Unit = un;
                 if (un.IsOverflowed)
                 {
@@ -353,9 +353,9 @@ public abstract partial class AnyQuantity<T>
             //check if any of the two quantities have a valid unit
             // to be able to derive the current quantity
 
-            if (firstQuantity.Unit != null && secondQuantity.Unit != null)
+            if (firstQuantity.Unit != null && sec_qty.Unit is { } invertedUnit)
             {
-                var un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
+                var un = new Unit(qresult.GetType(), firstQuantity.Unit, invertedUnit);
                 qresult.Unit = un;
                 if (un.IsOverflowed)
                 {

@@ -27,9 +27,9 @@ class SimpleLambdaBuilder(string functionName, Type type)
     /// however custom ordering is possible via direct access to
     /// Parameters collection.
     /// </summary>
-    public ParameterExpression Parameter(Type type, string name)
+    public ParameterExpression Parameter(Type type, string? name)
     {
-        Contract.Requires(type != null);
+        ArgumentNullException.ThrowIfNull(type);
 
         var result = Expression.Parameter(type, name);
         Parameters.Add(result);

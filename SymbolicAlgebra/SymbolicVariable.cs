@@ -353,7 +353,7 @@ public partial class SymbolicVariable
                                         final = Add(final, Multiply(fusedPowers[i], new SymbolicVariable("log(" + logparam.FusedSymbols.ElementAt(i).Key + ")")));
                                     }
 
-                                    ReplaceCurrentValuesWith(final);
+                                    ReplaceCurrentValuesWith(final.RequireExpression());
                                     #endregion
 
                                 }
@@ -374,7 +374,7 @@ public partial class SymbolicVariable
 
                                     // replace the primary symbol with the information of the power in parameter
                                     var rs = Multiply(spt, t);
-                                    ReplaceCurrentValuesWith(rs);
+                                    ReplaceCurrentValuesWith(rs.RequireExpression());
                                 }
                                 else if (_FunctionParameters[0].CoeffecientPowerTerm != null)
                                 {
@@ -391,7 +391,7 @@ public partial class SymbolicVariable
 
                                     // replace the primary symbol with the information of the power in parameter
                                     var rs = Multiply(spt, t);
-                                    ReplaceCurrentValuesWith(rs);
+                                    ReplaceCurrentValuesWith(rs.RequireExpression());
                                 }
                                 else
                                 {
@@ -916,12 +916,12 @@ public partial class SymbolicVariable
 
         for (var ifsx = 0; ifsx < FusedConstants.Count; ifsx++)
         {
-            MultilpiedTerms.Add(GetConstantTerm(ifsx));
+            MultilpiedTerms.Add(GetConstantTerm(ifsx).RequireExpression());
         }
 
         for (var ifsx = 0; ifsx < FusedSymbols.Count; ifsx++)
         {
-            MultilpiedTerms.Add(GetFusedTerm(ifsx));
+            MultilpiedTerms.Add(GetFusedTerm(ifsx).RequireExpression());
         }
 
         return MultilpiedTerms.ToArray();

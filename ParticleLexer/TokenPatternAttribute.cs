@@ -6,7 +6,7 @@ public class TokenPatternAttribute : Attribute
     /// <summary>
     /// The regex pattern that will be used to compare when tokenizing the target.
     /// </summary>
-    public string RegexPattern { get; set; }
+    public string? RegexPattern { get; set; }
 
     /// <summary>
     /// Indicates that Regex Pattern is a whole exact complete word without special regex classes.
@@ -16,12 +16,12 @@ public class TokenPatternAttribute : Attribute
     /// <summary>
     /// Condition for the comparing process to make sure that the target should begin with this value. otherwise the code will bypass the current process.
     /// </summary>
-    public string ShouldBeginWith { get; set; }
+    public string? ShouldBeginWith { get; set; }
 
     /// <summary>
     /// Condition that let the parser continue parsing until it found the End with charachter
     /// </summary>
-    public string ShouldEndWith { get; set; }
+    public string? ShouldEndWith { get; set; }
 
     /// <summary>
     /// Indicates if parser should continue test after success and consume other tokens or not.

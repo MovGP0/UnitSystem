@@ -90,22 +90,22 @@ public partial class SymbolicVariable
         return a.RaiseToSymbolicPower(new SymbolicVariable(power.ToString()));
     }
 
-    public static SymbolicVariable? operator +(SymbolicVariable a, SymbolicVariable b)
+    public static SymbolicVariable? operator +(SymbolicVariable? a, SymbolicVariable? b)
     {
         return Add(a, b);
     }
 
-    public static SymbolicVariable? operator -(SymbolicVariable a, SymbolicVariable b)
+    public static SymbolicVariable? operator -(SymbolicVariable? a, SymbolicVariable? b)
     {
         return Subtract(a, b);
     }
 
-    public static SymbolicVariable? operator *(SymbolicVariable a, SymbolicVariable b)
+    public static SymbolicVariable? operator *(SymbolicVariable? a, SymbolicVariable? b)
     {
         return Multiply(a, b);
     }
 
-    public static SymbolicVariable? operator /(SymbolicVariable a, SymbolicVariable b)
+    public static SymbolicVariable? operator /(SymbolicVariable? a, SymbolicVariable? b)
     {
         return Divide(a, b);
     }

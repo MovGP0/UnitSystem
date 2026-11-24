@@ -45,7 +45,7 @@ public partial class SymbolicVariable
                 // multiplied symbol
                 if (!string.IsNullOrEmpty(basicterm.SymbolBaseKey))
                 {
-                    MultipliedTerms.Add(new MultipliedTerm(Parse(basicterm.WholeValueBaseKey)));
+                    MultipliedTerms.Add(new MultipliedTerm(Parse(basicterm.WholeValueBaseKey).RequireExpression()));
                 }
             }
             else

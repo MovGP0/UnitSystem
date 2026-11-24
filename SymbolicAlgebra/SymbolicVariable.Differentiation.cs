@@ -301,7 +301,7 @@ public partial class SymbolicVariable
         // get all differentials of all terms                       // x*y*z ==>  dx  dy  dz
         for (var ix = 0; ix < MultipliedTerms.Count; ix++)
         {
-            CalculatedDiffs.Add(DiffTerm(MultipliedTerms[ix].Term, parameter));
+            CalculatedDiffs.Add(DiffTerm(MultipliedTerms[ix].Term, parameter).RequireExpression());
         }
 
         // what about divided term ??
@@ -314,7 +314,7 @@ public partial class SymbolicVariable
              *      +(g(x)*('diff(f(x),x,1)))/h(x)
              */
             var dvr = Subtract(Zero, SvDividedTerm.Differentiate(parameter));  //differential of divided takes minus sign because it wil
-            CalculatedDiffs.Add(dvr);
+            CalculatedDiffs.Add(dvr.RequireExpression());
 
             // add the divided term but in negative  value because it is divided and in differentiation it will have -ve power
             MultipliedTerms.Add(new MultipliedTerm(SvDividedTerm, true));

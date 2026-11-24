@@ -39,7 +39,8 @@ public partial class Unit
 
         if (dimension.Mass.Exponent != 0)
         {
-            var unitType = GetDefaultUnitTypeOf(typeof(Mass<>), unitSystem);
+            var unitType = GetDefaultUnitTypeOf(typeof(Mass<>), unitSystem)
+                ?? throw new UnitNotFoundException($"No default unit for {typeof(Mass<>)} in {unitSystem}.");
             var u = CreateInstance<Unit>(unitType);
 
             u.UnitExponent = dimension.Mass.Exponent;
@@ -50,7 +51,8 @@ public partial class Unit
 
         if (dimension.Length.Exponent != 0)
         {
-            var unitType = GetDefaultUnitTypeOf(typeof(Length<>), unitSystem);
+            var unitType = GetDefaultUnitTypeOf(typeof(Length<>), unitSystem)
+                ?? throw new UnitNotFoundException($"No default unit for {typeof(Length<>)} in {unitSystem}.");
 
             var u = CreateInstance<Unit>(unitType);
 
@@ -62,8 +64,9 @@ public partial class Unit
 
         if (dimension.Time.Exponent != 0)
         {
-            var unitType = GetDefaultUnitTypeOf(typeof(Time<>), unitSystem);
-            var u = (Unit)Activator.CreateInstance(unitType)!;
+            var unitType = GetDefaultUnitTypeOf(typeof(Time<>), unitSystem)
+                ?? throw new UnitNotFoundException($"No default unit for {typeof(Time<>)} in {unitSystem}.");
+            var u = CreateInstance<Unit>(unitType);
 
             u.UnitExponent = dimension.Time.Exponent;
             u.UnitDimension = new QuantityDimension() { Time = dimension.Time };
@@ -73,8 +76,9 @@ public partial class Unit
 
         if (dimension.Temperature.Exponent != 0)
         {
-            var unitType = GetDefaultUnitTypeOf(typeof(Temperature<>), unitSystem);
-            var u = (Unit)Activator.CreateInstance(unitType)!;
+            var unitType = GetDefaultUnitTypeOf(typeof(Temperature<>), unitSystem)
+                ?? throw new UnitNotFoundException($"No default unit for {typeof(Temperature<>)} in {unitSystem}.");
+            var u = CreateInstance<Unit>(unitType);
 
             u.UnitExponent = dimension.Temperature.Exponent;
             u.UnitDimension = new QuantityDimension() { Temperature = dimension.Temperature };
@@ -84,8 +88,9 @@ public partial class Unit
 
         if (dimension.LuminousIntensity.Exponent != 0)
         {
-            var unitType = GetDefaultUnitTypeOf(typeof(LuminousIntensity<>), unitSystem);
-            var u = (Unit)Activator.CreateInstance(unitType)!;
+            var unitType = GetDefaultUnitTypeOf(typeof(LuminousIntensity<>), unitSystem)
+                ?? throw new UnitNotFoundException($"No default unit for {typeof(LuminousIntensity<>)} in {unitSystem}.");
+            var u = CreateInstance<Unit>(unitType);
 
             u.UnitExponent = dimension.LuminousIntensity.Exponent;
             u.UnitDimension = new QuantityDimension() { LuminousIntensity = dimension.LuminousIntensity };
@@ -95,8 +100,9 @@ public partial class Unit
 
         if (dimension.AmountOfSubstance.Exponent != 0)
         {
-            var unitType = GetDefaultUnitTypeOf(typeof(AmountOfSubstance<>), unitSystem);
-            var u = (Unit)Activator.CreateInstance(unitType)!;
+            var unitType = GetDefaultUnitTypeOf(typeof(AmountOfSubstance<>), unitSystem)
+                ?? throw new UnitNotFoundException($"No default unit for {typeof(AmountOfSubstance<>)} in {unitSystem}.");
+            var u = CreateInstance<Unit>(unitType);
 
             u.UnitExponent = dimension.AmountOfSubstance.Exponent;
             u.UnitDimension = new QuantityDimension(0, 0, 0, 0, 0, dimension.AmountOfSubstance.Exponent, 0);
@@ -106,8 +112,9 @@ public partial class Unit
 
         if (dimension.ElectricCurrent.Exponent != 0)
         {
-            var unitType = GetDefaultUnitTypeOf(typeof(ElectricalCurrent<>), unitSystem);
-            var u = (Unit)Activator.CreateInstance(unitType)!;
+            var unitType = GetDefaultUnitTypeOf(typeof(ElectricalCurrent<>), unitSystem)
+                ?? throw new UnitNotFoundException($"No default unit for {typeof(ElectricalCurrent<>)} in {unitSystem}.");
+            var u = CreateInstance<Unit>(unitType);
 
             u.UnitExponent = dimension.ElectricCurrent.Exponent;
             u.UnitDimension = new QuantityDimension() { ElectricCurrent = dimension.ElectricCurrent };

@@ -412,7 +412,7 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     private  Token MergeTokens(TokenClass tokenClassType)
     {
-        var rx = tokenClassType.Regex;
+        var rx = tokenClassType.Regex ?? throw new InvalidOperationException("The token has no pattern.");
         var current = new Token();
         var merged = new Token();
         var tokIndex = 0;

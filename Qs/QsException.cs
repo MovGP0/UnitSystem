@@ -13,7 +13,7 @@ public class QsException : Exception
   // Add any type-specific logic.
  }
 
- public QsException(string message, Exception innerException)
+ public QsException(string message, Exception? innerException)
   :
   base (message, innerException)
  {

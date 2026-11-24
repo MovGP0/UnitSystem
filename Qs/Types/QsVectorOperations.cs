@@ -447,9 +447,8 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar s)
         {
-            var s = value as QsScalar;
             return DivideScalar(s);
         }
 
@@ -535,9 +534,8 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar s)
         {
-            var s = value as QsScalar;
             return ModuloScalar(s);
         }
 

@@ -405,7 +405,7 @@ public partial class SymbolicVariable
                     var powerResult = SymbolicPower(
                         left
                         ,
-                        ArithExpression(eop.Next, out iskip)
+                        ArithExpression(eop.Next, out iskip).RequireExpression()
                     );
 
                     skip += iskip;

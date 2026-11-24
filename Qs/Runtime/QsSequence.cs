@@ -225,7 +225,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
 
             var qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
 
-            return new QsScalar(ScalarTypes.FunctionQuantity) { FunctionQuantity = qs.ToQuantity() };
+            return new QsScalar(ScalarTypes.FunctionQuantity) { FunctionQuantity = (qs ?? throw new QsException("Expected a function expression.")).ToQuantity() };
         }
 
         var val = GetElement(index).Execute(index);
