@@ -686,7 +686,7 @@ dotnet_diagnostic.RCS1251.severity = warning
 # dotnet_diagnostic.RCS1253.severity = none
 
 # Normalize format of enum flag value
-# dotnet_diagnostic.RCS1254.severity = warning
+dotnet_diagnostic.RCS1254.severity = warning
 
 # Simplify argument null check
 # dotnet_diagnostic.RCS1255.severity = none
