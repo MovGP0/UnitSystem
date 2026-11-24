@@ -124,7 +124,7 @@ dotnet_diagnostic.RCS0059.severity = warning
 roslynator_null_conditional_operator_new_line = before
 
 # Control the blank line after a file-scoped namespace
-# dotnet_diagnostic.RCS0060.severity = warning
+dotnet_diagnostic.RCS0060.severity = warning
 roslynator_blank_line_after_file_scoped_namespace_declaration = true
 
 # Control the spacing between switch sections
