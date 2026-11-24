@@ -128,39 +128,30 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         switch (ScalarType)
         {
             case ScalarTypes.NumericalQuantity:
-                scalar = NumericalQuantity.ToString();
-                break;
+                return NumericalQuantity.ToString();
 
             case ScalarTypes.ComplexNumberQuantity:
-                scalar = ComplexQuantity.ToString();
-                break;
+                return ComplexQuantity.ToString();
 
             case ScalarTypes.QuaternionNumberQuantity:
-                scalar = QuaternionQuantity.ToString();
-                break;
+                return QuaternionQuantity.ToString();
 
             case ScalarTypes.SymbolicQuantity:
-                scalar = SymbolicQuantity.ToString();
-                break;
+                return SymbolicQuantity.ToString();
 
             case ScalarTypes.FunctionQuantity:
                 var plist = string.Join(", ", FunctionQuantity.Value.ParametersNames);
-                scalar = FunctionQuantity.ToString();
-                break;
+                return FunctionQuantity.ToString();
 
             case ScalarTypes.QsOperation:
-                scalar = Operation.ToString() ?? string.Empty;
-                break;
+                return Operation.ToString() ?? string.Empty;
 
             case ScalarTypes.RationalNumberQuantity:
-                scalar = RationalQuantity.ToString();
-                break;
+                return RationalQuantity.ToString();
 
             default:
                 throw new NotImplementedException(ScalarType + " Operation not implemented yet");
         }
-
-        return scalar;
     }
 
     /// <summary>

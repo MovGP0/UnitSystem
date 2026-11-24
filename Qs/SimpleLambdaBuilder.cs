@@ -57,18 +57,15 @@ class SimpleLambdaBuilder(string functionName, Type type)
             typeArgs[i] = parameterList[i].Type;
         }
 
-        Type delegateType;
         if (action)
         {
-            delegateType = Expression.GetActionType(typeArgs);
+            return Expression.GetActionType(typeArgs);
         }
         else
         {
             typeArgs[paramCount] = returnType;
-            delegateType = Expression.GetFuncType(typeArgs);
+            return Expression.GetFuncType(typeArgs);
         }
-
-        return delegateType;
     }
 
     /// <summary>

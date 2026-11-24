@@ -479,7 +479,7 @@ dotnet_diagnostic.RCS1173.severity = warning
 dotnet_diagnostic.RCS1175.severity = warning
 
 # Unnecessary assignment
-# dotnet_diagnostic.RCS1179.severity = warning
+dotnet_diagnostic.RCS1179.severity = warning
 
 # Inline lazy initialization
 # dotnet_diagnostic.RCS1180.severity = warning
