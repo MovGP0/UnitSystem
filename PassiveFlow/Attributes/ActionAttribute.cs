@@ -13,7 +13,7 @@ public abstract class ActionAttribute(int actionId, string actionText, int relat
 
     public string TargetStepName { get; }
 
-    public ActionAttribute(int actionId, string actionText, string targetStepName, int statusId = 0)
+    protected ActionAttribute(int actionId, string actionText, string targetStepName, int statusId = 0)
         : this(actionId, actionText, 0, statusId)
     {
         TargetStepName = targetStepName;

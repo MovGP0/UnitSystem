@@ -57,7 +57,7 @@ public abstract class TokenClass
      */
 
     private Type _ThisTokenType;
-    public TokenClass()
+    protected TokenClass()
     {
         _ThisTokenType = GetType();
 
