@@ -29,6 +29,20 @@ public sealed class SianoOrientationTests
     }
 
     [Test]
+    public void ShouldRotateComplexSpatialCoefficientsAndKeepTheScalar()
+    {
+        var orientation = new SianoOrientation(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19));
+        var rotation = Rotation3D.FromAxisAngle(0, 0, 1, Math.PI / 2);
+
+        var rotated = orientation.Rotate(rotation);
+
+        (rotated.XCoefficient + orientation.YCoefficient).Magnitude.ShouldBe(0, 1e-12);
+        (rotated.YCoefficient - orientation.XCoefficient).Magnitude.ShouldBe(0, 1e-12);
+        (rotated.ZCoefficient - orientation.ZCoefficient).Magnitude.ShouldBe(0, 1e-12);
+        rotated.ScalarCoefficient.ShouldBe(orientation.ScalarCoefficient);
+    }
+
+    [Test]
     public void ShouldMultiplyComplexCoefficientsBilinearly()
     {
         var combination = (Complex.ImaginaryOne * X) + Y;

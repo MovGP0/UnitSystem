@@ -50,8 +50,9 @@ and time.
 `SianoOrientation` represents these labels as basis vectors with complex
 coefficients. For example, `3 * SianoOrientation.X + 4 * SianoOrientation.Y`
 has coefficients `(3, 4, 0, 0)` in X, Y, Z, scalar order. Its multiplication
-extends the Siano table to sums by distributivity. Geometric dot and cross
-products use their own rules.
+extends the Siano table to sums by distributivity. The product depends on the
+chosen Cartesian frame. `SianoOrientation.Rotate` rotates the real and imaginary
+spatial coefficients together and preserves the orientationless coefficient.
 
 `OrientedQuantity` accepts a single basis label per component. For a displacement
 of `(3, 4, 0) m`, attach X to `3 m` and Y to `4 m`. Express both vectors in a
@@ -68,12 +69,26 @@ var forceX = new OrientedQuantity(new ScalarQuantity(5, N), SianoOrientation.X);
 var forceY = new OrientedQuantity(new ScalarQuantity(5, N), SianoOrientation.Y);
 
 var work = displacement * forceX;    // 10 J, orientationless
-var momentZ = displacement * forceY; // 10 N·m, Z orientation
+var momentLabel = displacement * forceY; // 10 N·m with a Z label
 ```
 
-The prototype supports integer powers. An even power is orientationless, so its
-orientation alone cannot recover the original axis. Use the underlying
-`ScalarQuantity` for plain dimensional calculations.
+The labeled component supports integer powers. An even power of a basis label
+produces the orientationless label.
+
+Use `VectorQuantity` for geometry. It stores three double-precision components
+with a shared unit. Convert an existing labeled spatial component with `ToVector()`.
+`Rotation3D` accepts an axis and angle in radians or a quaternion, including
+`System.Numerics.Quaternion` values.
+
+```csharp
+var displacementVector = new VectorQuantity(2, 0, 0, m);
+var force = new VectorQuantity(5, 5, 0, N);
+var rotation = Rotation3D.FromAxisAngle(0, 0, 1, Math.PI / 2);
+
+var work = displacementVector.Dot(force);            // 10 J
+var torque = displacementVector.Cross(force);         // (0, 0, 10) N·m
+var rotated = displacementVector.Rotate(rotation);   // approximately (0, 2, 0) m
+```
 
 [Siano, Orientational Analysis I](https://doi.org/10.1016/0016-0032%2885%2990031-6)
 

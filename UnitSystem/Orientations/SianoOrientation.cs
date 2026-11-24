@@ -29,6 +29,20 @@ public readonly record struct SianoOrientation(
     /// <summary>Gets whether this value is one of the four basis elements.</summary>
     public bool IsBasisElement => this == X || this == Y || this == Z || this == Orientationless;
 
+    /// <summary>Rotates the spatial coefficients and retains the orientationless coefficient.</summary>
+    /// <remarks>The real and imaginary spatial coefficients undergo the same rotation.</remarks>
+    public SianoOrientation Rotate(Rotation3D rotation)
+    {
+        ArgumentNullException.ThrowIfNull(rotation);
+        var (realX, realY, realZ) = rotation.Apply(XCoefficient.Real, YCoefficient.Real, ZCoefficient.Real);
+        var (imaginaryX, imaginaryY, imaginaryZ) = rotation.Apply(XCoefficient.Imaginary, YCoefficient.Imaginary, ZCoefficient.Imaginary);
+        return new SianoOrientation(
+            new Complex(realX, imaginaryX),
+            new Complex(realY, imaginaryY),
+            new Complex(realZ, imaginaryZ),
+            ScalarCoefficient);
+    }
+
     /// <summary>Adds the coefficients of corresponding basis elements.</summary>
     public static SianoOrientation operator +(SianoOrientation left, SianoOrientation right)
         => new(

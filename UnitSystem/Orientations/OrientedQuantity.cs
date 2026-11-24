@@ -7,7 +7,7 @@ namespace UnitSystem.Orientations;
 /// </summary>
 /// <remarks>
 /// Operands use the same Cartesian frame. The sign of a component is part of the amount.
-/// For vector addition, add corresponding components separately.
+/// Convert spatial components with <see cref="ToVector"/> to add or rotate them as vectors.
 /// </remarks>
 public sealed record OrientedQuantity
 {
@@ -36,6 +36,23 @@ public sealed record OrientedQuantity
     /// Converts the measurement to a compatible unit and retains its orientation.
     /// </summary>
     public OrientedQuantity Convert(Unit unit) => new(Quantity.Convert(unit), Orientation);
+
+    /// <summary>Creates a vector with this signed quantity on the labeled axis.</summary>
+    public VectorQuantity ToVector()
+    {
+        if (Quantity.IsPoint || Orientation == SianoOrientation.Orientationless)
+        {
+            throw new InvalidOperationException("A vector component requires a spatial axis and a linear quantity or difference.");
+        }
+
+        var amount = Quantity.Amount;
+        var unit = Quantity.Unit;
+        return new VectorQuantity(
+            Orientation == SianoOrientation.X ? amount : 0,
+            Orientation == SianoOrientation.Y ? amount : 0,
+            Orientation == SianoOrientation.Z ? amount : 0,
+            unit);
+    }
 
     /// <summary>
     /// Raises the measurement to an integer power. Even powers are orientationless.

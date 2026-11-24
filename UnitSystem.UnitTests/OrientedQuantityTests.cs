@@ -95,4 +95,28 @@ public sealed class OrientedQuantityTests
         length.Pow(0).ShouldBe(new OrientedQuantity(new ScalarQuantity(1, SISystem.NoUnit), Orientationless));
         length.Pow(2).ShouldBe(new OrientedQuantity(new ScalarQuantity(4, m.Pow(2)), Orientationless));
     }
+
+    [Test]
+    public void ShouldConvertSignedComponentsToAVector()
+    {
+        var centimetres = SISystem.System.Parse("cm");
+        var first = new OrientedQuantity(new ScalarQuantity(-3, m), X);
+        var second = new OrientedQuantity(new ScalarQuantity(400, centimetres), Y);
+        var third = new OrientedQuantity(new ScalarQuantity(-2, m), Z);
+
+        var vector = first.ToVector() + second.ToVector() + third.ToVector();
+
+        (vector.X, vector.Y, vector.Z).ShouldBe((-3d, 4d, -2d));
+        vector.Unit.ShouldBe(m);
+    }
+
+    [Test]
+    public void ShouldRejectScalarsAndPointsAsVectorComponents()
+    {
+        var scalar = new OrientedQuantity(new ScalarQuantity(2, m), Orientationless);
+        var point = new OrientedQuantity(new ScalarQuantity(20, degC), X);
+
+        Should.Throw<InvalidOperationException>(() => scalar.ToVector());
+        Should.Throw<InvalidOperationException>(() => point.ToVector());
+    }
 }
