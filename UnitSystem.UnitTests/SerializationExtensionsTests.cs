@@ -1,12 +1,11 @@
 ﻿using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
-using Newtonsoft.Json;
-using Shouldly;
 using UnitSystem.Quantities;
 using UnitSystem.Serialization;
 using UnitSystem.Systems;
-using UnitTests.Shared;
+using Newtonsoft.Json;
+using Shouldly;
 using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;
@@ -14,6 +13,7 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(SerializationExtensions))]
 public static class SerializationExtensionsTests
 {
+    [TestClass]
     [TestOf(typeof(SerializationExtensions), nameof(SerializationExtensions.FromInfo))]
     public sealed class FromInfoTests
     {
@@ -23,7 +23,7 @@ public static class SerializationExtensionsTests
             // Arrange
             var quantity = new ScalarQuantity(100, J / (m ^ 3));
             var info = quantity.ToInfo();
-            var serializer = new DataContractSerializer(typeof(QuantityInfo<>));
+            var serializer = new DataContractSerializer(typeof(QuantityInfo<double>));
 
             // Act
             var builder = new StringBuilder();

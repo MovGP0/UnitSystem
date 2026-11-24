@@ -1,5 +1,4 @@
-﻿using UnitSystem.Extensions;
-using UnitSystem.Quantities;
+﻿using UnitSystem.Quantities;
 
 namespace UnitSystem.Serialization;
 
@@ -18,22 +17,19 @@ public static class SerializationExtensions
     public static ScalarQuantity FromInfo(this IUnitSystem system, QuantityInfo<double> info)
     {
         var unit = system.NoUnit;
-        var symbols = info.Unit.Keys.ToArray();
-        var exponents = info.Unit.Values.ToArray();
-
-        for (var i = 0; i < info.Unit.Count; i++)
+        foreach (var component in info.Unit)
         {
-            var baseUnit = system[symbols[i]];
+            var baseUnit = system[component.Key];
 
             if (baseUnit is not { IsCoherent: true })
             {
                 throw new InvalidOperationException(Messages.UnitsNotSameSystem);
             }
 
-            unit *= baseUnit ^ exponents[i];
+            unit *= baseUnit ^ component.Value;
         }
 
-        return new ScalarQuantity(info.Amount, unit);
+        return new ScalarQuantity(info.Amount, unit, info.IsPoint ?? unit.SupportsPoints);
     }
 
     /// <summary>
@@ -45,12 +41,15 @@ public static class SerializationExtensions
     public static QuantityInfo<T> ToInfo<T>(this Quantity<T> scalarQuantity)
         where T : struct
     {
-        var coherent = scalarQuantity.ToCoherent();
-        var baseUnits = scalarQuantity.Unit.System.BaseUnits;
+        var coherentUnit = scalarQuantity.CoherentUnit;
+        var units = coherentUnit.System.BaseUnits
+            .Zip(coherentUnit.Dimension, (unit, exponent) => new { unit.Symbol, Exponent = exponent })
+            .Where(component => component.Exponent != 0)
+            .ToDictionary(component => component.Symbol, component => component.Exponent);
 
-        var units = baseUnits.ZipMerge(coherent.Unit.Dimension, (u, exp) => new { u!.Symbol, exp }, true)
-            .ToDictionary(u => u.Symbol, u => u.exp);
-
-        return new QuantityInfo<T>(coherent.Amount, units);
+        return new QuantityInfo<T>(scalarQuantity.CoherentAmount, units,
+            scalarQuantity.IsPoint || scalarQuantity.Unit.SupportsPoints || coherentUnit.SupportsPoints
+                ? scalarQuantity.IsPoint
+                : null);
     }
 }

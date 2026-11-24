@@ -6,203 +6,247 @@ using UnitSystem.Presentation;
 
 namespace UnitSystem;
 
-internal class UnitSystem : IUnitSystem
+internal sealed class UnitSystem : IUnitSystem
 {
-    private readonly Dictionary<Dimension, KnownUnit> _baseUnits;
-    private readonly Dictionary<Dimension, Unit> _coherentUnits;
-    private readonly IUnitFactory _unitFactory;
-    private readonly Dictionary<(double, double, Dimension), KnownUnit> _units;
-    private readonly Dictionary<string, KnownUnit> _unitsBySymbol;
+    private readonly object _gate = new();
+    private readonly List<KnownUnit> _baseUnits = new();
+    private readonly Dictionary<(double Factor, double Offset, Dimension Dimension), KnownUnit> _units = new();
+    private readonly Dictionary<string, KnownUnit> _unitsBySymbol = new(StringComparer.Ordinal);
+    private readonly Dictionary<int, string> _dimensionSymbols = new();
+    private readonly HashSet<Dimension> _affineDimensions = new();
+    private readonly IUnitFactory _unitFactory = new UnitFactory();
+    private UnitInterpreter? _interpreter;
+    private bool _frozen;
 
     public UnitSystem(string name)
-        : this(name, new UnitFactory(), new UnitDialect())
-    {
-    }
-
-    public UnitSystem(string name, IUnitDialect dialect)
-        : this(name, new UnitFactory(), dialect)
-    {
-    }
-
-    private UnitSystem(string name, IUnitFactory unitFactory, IUnitDialect dialect)
     {
         Check.Argument(name, nameof(name)).IsNotNull();
-        Check.Argument(unitFactory, nameof(unitFactory)).IsNotNull();
-        Check.Argument(dialect, nameof(dialect)).IsNotNull();
-
-        _unitFactory = unitFactory;
         Name = name;
-        _baseUnits = new();
-        _coherentUnits = new();
-        _units = new();
-        _unitsBySymbol = new();
         NoUnit = new DerivedUnit(this, 1.0, 0.0, Dimension.DimensionLess);
-        Interpreter = new(this, dialect);
     }
 
-    private UnitInterpreter Interpreter { get; }
-
-    /// <inheritdoc cref="IUnitSystem.Name"/>
+    /// <inheritdoc />
     public string Name { get; }
 
-    /// <inheritdoc cref="IUnitSystem.NumberOfDimensions"/>
-    public int NumberOfDimensions { get; private set; }
+    /// <inheritdoc />
+    public int NumberOfDimensions
+    {
+        get
+        {
+            lock (_gate) return _baseUnits.Count;
+        }
+    }
 
-    /// <inheritdoc cref="IUnitSystem.NoUnit"/>
+    /// <inheritdoc />
     public Unit NoUnit { get; }
 
-    /// <inheritdoc cref="IUnitSystem.BaseUnits"/>
-    public IEnumerable<KnownUnit> BaseUnits => _baseUnits.Values;
+    /// <inheritdoc />
+    public IEnumerable<KnownUnit> BaseUnits
+    {
+        get
+        {
+            lock (_gate) return _baseUnits.ToArray();
+        }
+    }
 
-    /// <inheritdoc cref="IUnitSystem.this[string]"/>
+    /// <inheritdoc />
     public KnownUnit? this[string key]
     {
         get
         {
-            _unitsBySymbol.TryGetValue(key, out var unit);
+            lock (_gate)
+            {
+                _unitsBySymbol.TryGetValue(key, out var unit);
+                return unit;
+            }
+        }
+    }
+
+    /// <inheritdoc />
+    public Unit AddBaseUnit(string symbol, string name, string inherentPrefix = "", string dimensionSymbol = "")
+    {
+        lock (_gate)
+        {
+            EnsureMutable();
+            var exponents = new float[_baseUnits.Count + 1];
+            exponents[exponents.Length - 1] = 1;
+            var unit = _unitFactory.CreateUnit(
+                this,
+                1.0,
+                0.0,
+                new Dimension(exponents),
+                symbol,
+                name,
+                inherentPrefix);
+            if (unit.BaseSymbol != unit.Symbol && _baseUnits.Any(existing =>
+                    existing.BaseSymbol != existing.Symbol && existing.BaseSymbol == unit.BaseSymbol))
+            {
+                throw new InvalidOperationException(Messages.UnitSymbolAlreadyKnown.FormatWith(unit.BaseSymbol));
+            }
+
+            RegisterKnownUnit(unit);
+            _baseUnits.Add(unit);
+            _dimensionSymbols.Add(exponents.Length, dimensionSymbol);
             return unit;
         }
     }
 
-    /// <inheritdoc cref="IUnitSystem.AddBaseUnit(string, string, string, string)"/>
-    public Unit AddBaseUnit(string symbol, string name, string inherentPrefix = "", string dimensionSymbol = "")
-    {
-        var newUnit = _unitFactory.CreateUnit(
-            this,
-            1.0,
-            0.0,
-            CreateNewBaseDimension(BaseUnits.Count(), dimensionSymbol),
-            symbol,
-            name,
-            inherentPrefix);
-
-        EnsureUnitIsNotRegistered(newUnit);
-
-        _baseUnits.Add(newUnit.Dimension, newUnit);
-        NumberOfDimensions++;
-
-        RegisterKnownUnit(newUnit);
-
-        return newUnit;
-    }
-
-    /// <inheritdoc cref="IUnitSystem.AddDerivedUnit(string, string, Unit, double)"/>
+    /// <inheritdoc />
     public Unit AddDerivedUnit(string symbol, string name, Unit unit, double offset = 0.0)
     {
-        var newUnit = _unitFactory.CreateUnit(
-            this,
-            unit.Factor,
-            offset,
-            unit.Dimension,
-            symbol,
-            name,
-            string.Empty);
-
-        EnsureUnitIsNotRegistered(newUnit);
-        RegisterKnownUnit(newUnit);
-        return newUnit;
+        lock (_gate)
+        {
+            EnsureMutable();
+            Check.UnitsAreFromSameSystem(NoUnit, unit);
+            var derived = _unitFactory.CreateUnit(
+                this,
+                unit.Factor,
+                offset,
+                unit.Dimension,
+                symbol,
+                name,
+                string.Empty);
+            RegisterKnownUnit(derived);
+            return derived;
+        }
     }
 
-    /// <inheritdoc cref="IUnitSystem.CreateUnit(double, double, Dimension)"/>
+    internal void AddAlias(string symbol, KnownUnit unit)
+    {
+        lock (_gate)
+        {
+            EnsureMutable();
+            Check.UnitsAreFromSameSystem(NoUnit, unit);
+            EnsureSymbolAvailable(symbol);
+            _unitsBySymbol.Add(symbol, unit);
+            _interpreter = null;
+        }
+    }
+
+    internal bool IsAffineDimension(Dimension dimension)
+    {
+        lock (_gate) return _affineDimensions.Contains(dimension);
+    }
+
+    internal void Freeze()
+    {
+        lock (_gate)
+        {
+            _interpreter ??= new UnitInterpreter(this, new UnitDialect());
+            _frozen = true;
+        }
+    }
+
+    /// <inheritdoc />
     public Unit CreateUnit(double factor, double offset, Dimension dimension)
     {
-        // Prefer returning a known or coherent unit
-
-        if (_units.TryGetValue((factor, offset, dimension), out var known))
+        lock (_gate)
         {
-            return known;
-        }
+            if (_units.TryGetValue((factor, offset, dimension), out var known))
+            {
+                return known;
+            }
 
-        if (factor.Equals(1.0) && offset.Equals(0.0) && _coherentUnits.TryGetValue(dimension, out var coherent))
-        {
-            return coherent;
-        }
+            if (factor.Equals(1.0) && offset.Equals(0.0) && dimension.Count == 0)
+            {
+                return NoUnit;
+            }
 
-        return _unitFactory.CreateUnit(this, factor, offset, dimension);
+            return _unitFactory.CreateUnit(this, factor, offset, dimension);
+        }
     }
 
-    /// <inheritdoc cref="IUnitSystem.CreateUnit(double, Dimension)"/>
+    /// <inheritdoc />
     public Unit CreateUnit(double factor, Dimension dimension) => CreateUnit(factor, 0.0, dimension);
 
-    /// <inheritdoc cref="IUnitSystem.Parse(string)"/>
-    public Unit Parse(string unitExpression) => Interpreter.Parse(unitExpression);
+    /// <inheritdoc />
+    public Unit Parse(string unitExpression)
+    {
+        lock (_gate)
+        {
+            _interpreter ??= new UnitInterpreter(this, new UnitDialect());
+            return _interpreter.Parse(unitExpression);
+        }
+    }
 
-    /// <inheritdoc cref="IUnitSystem.Display(Unit)"/>
+    /// <inheritdoc />
     public string Display(Unit unit)
     {
         Check.UnitsAreFromSameSystem(NoUnit, unit);
-
-        return Interpreter.ToString(unit);
+        lock (_gate)
+        {
+            _interpreter ??= new UnitInterpreter(this, new UnitDialect());
+            return _interpreter.Display(unit);
+        }
     }
 
-    /// <inheritdoc cref="IUnitSystem.MakeCoherent(Unit)"/>
+    /// <inheritdoc />
     public Unit MakeCoherent(Unit unit)
     {
-        if (unit.IsCoherent) return unit;
+        Check.UnitsAreFromSameSystem(NoUnit, unit);
+        return unit.IsCoherent ? unit : CreateUnit(1.0, unit.Dimension);
+    }
 
-        if (_coherentUnits.TryGetValue(unit.Dimension, out var coherentUnit))
+    /// <inheritdoc />
+    public IReadOnlyDictionary<int, string> DimensionSymbols
+    {
+        get
         {
-            return coherentUnit;
-        }
-
-        lock (_coherentUnits)
-        {
-            if (_coherentUnits.TryGetValue(unit.Dimension, out coherentUnit))
-            {
-                return coherentUnit;
-            }
-
-            coherentUnit = unit / unit.Factor;
-            _coherentUnits.Add(coherentUnit.Dimension, coherentUnit);
-            return coherentUnit;
+            lock (_gate) return new ReadOnlyDictionary<int, string>(new Dictionary<int, string>(_dimensionSymbols));
         }
     }
+
+    /// <inheritdoc />
+    public IEnumerator<KnownUnit> GetEnumerator()
+    {
+        lock (_gate) return ((IEnumerable<KnownUnit>)_units.Values.ToArray()).GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     private void RegisterKnownUnit(KnownUnit unit)
     {
-        _units.Add((unit.Factor, unit.Offset, unit.Dimension), unit);
-        _unitsBySymbol.Add(unit.Symbol, unit);
-
-        if (unit.Factor.Equals(1.0) && unit.Offset.Equals(0.0))
+        EnsureSymbolAvailable(unit.Symbol);
+        if (unit.Factor == 0 || double.IsNaN(unit.Factor) || double.IsInfinity(unit.Factor)
+            || double.IsNaN(unit.Offset) || double.IsInfinity(unit.Offset))
         {
-            _coherentUnits.Add(unit.Dimension, unit);
-        }
-    }
-
-    private void EnsureUnitIsNotRegistered(KnownUnit unit)
-    {
-        if (_units.Values.Any(u => u.Symbol == unit.Symbol))
-        {
-            throw new InvalidOperationException(Messages.UnitSymbolAlreadyKnown.FormatWith(unit.Symbol));
+            throw new ArgumentException("A registered unit requires a finite, invertible conversion.", nameof(unit));
         }
 
-        if (_units.TryGetValue((unit.Factor, unit.Offset, unit.Dimension), out var collision))
+        var key = (unit.Factor, unit.Offset, unit.Dimension);
+        if (_units.TryGetValue(key, out var collision))
         {
             throw new InvalidOperationException(Messages.UnitAlreadyKnown.FormatWith(unit, collision));
         }
+
+        _units.Add(key, unit);
+        _unitsBySymbol.Add(unit.Symbol, unit);
+        if (!unit.IsAbsoluteUnit)
+        {
+            _affineDimensions.Add(unit.Dimension);
+        }
+
+        _interpreter = null;
     }
 
-    private Dimension CreateNewBaseDimension(int index, string symbol)
+    private void EnsureSymbolAvailable(string symbol)
     {
-        var exponents = new float[index + 1];
-        exponents[index] = 1;
+        if (string.IsNullOrWhiteSpace(symbol) || symbol == "1")
+        {
+            throw new ArgumentException("A unit requires a nonempty, nonreserved symbol.", nameof(symbol));
+        }
 
-        _dimensionSymbols.Add(index + 1, symbol);
-        return new(exponents);
+        if (_unitsBySymbol.ContainsKey(symbol))
+        {
+            throw new InvalidOperationException(Messages.UnitSymbolAlreadyKnown.FormatWith(symbol));
+        }
     }
 
-    private readonly Dictionary<int, string> _dimensionSymbols = new();
-
-    /// <inheritdoc cref="IUnitSystem.DimensionSymbols"/>
-    public IReadOnlyDictionary<int, string> DimensionSymbols => new ReadOnlyDictionary<int, string>(_dimensionSymbols);
-
-    #region IEnumerable<KnownUnit>
-
-    /// <inheritdoc cref="IEnumerable{T}.GetEnumerator()"/>
-    public IEnumerator<KnownUnit> GetEnumerator() => _units.Values.GetEnumerator();
-
-    /// <inheritdoc cref="IEnumerable.GetEnumerator()"/>
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    #endregion
+    private void EnsureMutable()
+    {
+        if (_frozen)
+        {
+            throw new InvalidOperationException("The standard unit catalog is read-only.");
+        }
+    }
 }

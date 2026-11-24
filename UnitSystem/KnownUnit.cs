@@ -101,22 +101,19 @@ public sealed class KnownUnit : Unit
     /// <param name="prefix">The inherent prefix of the unit.</param>
     private void DeriveInherentFactorAndBaseSymbol(string symbol, string prefix)
     {
-        var baseSymbol = symbol.Substring(prefix.Length);
-
-        if (string.IsNullOrEmpty(baseSymbol))
+        if (!symbol.StartsWith(prefix, StringComparison.Ordinal) || symbol.Length == prefix.Length)
         {
-            ThrowArgumentException();
+            throw new ArgumentException(Messages.InherentPrefixInvalid.FormatWith(symbol), nameof(prefix));
         }
+
+        var baseSymbol = symbol.Substring(prefix.Length);
 
         if (!MetricPrefix.TryGetValue(prefix, out var inherentPrefix))
         {
-            ThrowArgumentException();
+            throw new ArgumentException(Messages.InherentPrefixInvalid.FormatWith(symbol), nameof(prefix));
         }
 
         InherentFactor = inherentPrefix.Factor;
         BaseSymbol = baseSymbol;
-        return;
-
-        void ThrowArgumentException() => throw new ArgumentException(Messages.InherentPrefixInvalid.FormatWith(symbol));
     }
 }

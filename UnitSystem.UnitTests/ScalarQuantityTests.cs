@@ -1,9 +1,8 @@
 ﻿using System.Globalization;
-using Shouldly;
-using UnitSystem.Prefixes;
 using UnitSystem.Quantities;
+using UnitSystem.Prefixes;
 using UnitSystem.Systems;
-using UnitTests.Shared;
+using Shouldly;
 using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;
@@ -196,7 +195,7 @@ public static class ScalarQuantityTests
         public void ShouldWorkAsExpected1()
         {
             // Arrange
-            var kWh = SISystem.System.AddDerivedUnit("kWh", "kilowatt hour", MetricPrefix.Kilo * W * h);
+            var kWh = MetricPrefix.Kilo * W * h;
             var energy1 = new ScalarQuantity(100, J).Convert(kWh);
             var energy2 = new ScalarQuantity(101, J);
 
@@ -273,7 +272,7 @@ public static class ScalarQuantityTests
         public void ShouldBeEquivalentWhenConverted()
         {
             // Arrange
-            var GWh = AddDerivedUnit("GWh", "gigawatt hour", MetricPrefix.Giga * W * h);
+            var GWh = MetricPrefix.Giga * W * h;
             var quantity = new ScalarQuantity(100*1000*1000, J);
 
             // Act
@@ -309,11 +308,11 @@ public static class ScalarQuantityTests
         {
             // Arrange
             var quantity = new ScalarQuantity(10 * 1000 * 1000, J);
-            var MWh = AddDerivedUnit("MWh", "megawatt hour", MetricPrefix.Mega * W * h);
+            var MWh = new KnownUnit(SISystem.System, 3.6e9, 0, J.Dimension, "MWh", "megawatt hour");
 
             // Act & Assert
             quantity.ToString().ShouldBe("10000000 J");
-            quantity.ToString(MWh).ShouldBe("0.00277777777777778 MWh");
+            quantity.ToString("G15", MWh).ShouldBe("0.00277777777777778 MWh");
             quantity.ToString("N3", MWh).ShouldBe("0.003 MWh");
         }
 
@@ -321,8 +320,8 @@ public static class ScalarQuantityTests
         public void ShouldBehaveCorrectly()
         {
             // Arrange
-            var mg = AddDerivedUnit("mg", "milligram", kg / (1000 * 1000));
-            var t = AddDerivedUnit("t", "tonne", 1000 * kg);
+            var mg = kg / (1000 * 1000);
+            var t = new KnownUnit(SISystem.System, 1000, 0, kg.Dimension, "t", "tonne");
             var mass = new ScalarQuantity(10 * 1000, kg);
 
             // Act & Assert

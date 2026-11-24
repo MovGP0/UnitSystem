@@ -3,24 +3,11 @@ namespace UnitSystem.Quantities;
 public sealed partial class ScalarQuantity : IEquatable<ScalarQuantity>
 {
     /// <summary>
-    /// The precomputed hash code for the scalar quantity.
-    /// </summary>
-    private readonly int _hashCode;
-
-    /// <summary>
     /// Gets the hash code for the scalar quantity.
     /// </summary>
     /// <returns>The hash code of the scalar quantity.</returns>
     [Pure]
-    public override int GetHashCode() => _hashCode;
-
-    /// <summary>
-    /// Generates a hash code based on the unit and amount of the scalar quantity.
-    /// </summary>
-    /// <returns>The generated hash code.</returns>
-    [Pure]
-    private int GenerateHashCode()
-        => HashCode.Combine(Unit, Amount);
+    public override int GetHashCode() => HashCode.Combine(CoherentUnit, CoherentAmount, IsPoint);
 
     /// <summary>
     /// Determines whether the specified <see cref="ScalarQuantity"/> is equal to the current <see cref="ScalarQuantity"/>.
@@ -32,8 +19,9 @@ public sealed partial class ScalarQuantity : IEquatable<ScalarQuantity>
     {
         if (other is null) return false;
 
-        return _coherent.Unit == other._coherent.Unit
-               && _coherent.Amount == other._coherent.Amount;
+        return IsPoint == other.IsPoint
+               && CoherentUnit == other.CoherentUnit
+               && CoherentAmount.Equals(other.CoherentAmount);
     }
 
     /// <summary>

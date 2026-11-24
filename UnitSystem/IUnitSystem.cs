@@ -3,7 +3,8 @@ using UnitSystem.Dimensions;
 namespace UnitSystem;
 
 /// <summary>
-/// Represents a system of units, based on a given set of base units.
+/// Represents a system of units based on a set of base dimensions.
+/// The standard catalog is read-only. Create a custom catalog with <see cref="UnitSystemFactory.CreateSystem(string)"/> to register units.
 /// </summary>
 public interface IUnitSystem : IEnumerable<KnownUnit>
 {
@@ -50,7 +51,7 @@ public interface IUnitSystem : IEnumerable<KnownUnit>
     /// <param name="symbol">The symbol</param>
     /// <param name="name">The name</param>
     /// <param name="unit">The unit to base the new unit on</param>
-    /// <param name="offset">The offset of the unit from zero.</param>
+    /// <param name="offset">The offset added after scaling a point into the coherent unit.</param>
     /// <returns>The known unit</returns>
     Unit AddDerivedUnit(string symbol, string name, Unit unit, double offset = 0.0);
 
@@ -58,7 +59,7 @@ public interface IUnitSystem : IEnumerable<KnownUnit>
     /// Creates a unit with the specified factor and dimension
     /// </summary>
     /// <param name="factor">The factor</param>
-    /// <param name="offset">The offset of the unit from zero.</param>
+    /// <param name="offset">The offset added after scaling a point into the coherent unit.</param>
     /// <param name="dimension">The dimension</param>
     /// <returns>The unit</returns>
     Unit CreateUnit(double factor, double offset, Dimension dimension);

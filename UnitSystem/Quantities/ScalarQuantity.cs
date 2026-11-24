@@ -1,71 +1,38 @@
 ﻿namespace UnitSystem.Quantities;
 
 /// <summary>
-/// Represents a scalar quantity with a specified amount and unit, inheriting from <see cref="Quantity{T}"/>.
+/// Represents a scalar measurement or a point on an affine scale.
 /// </summary>
 public sealed partial class ScalarQuantity : Quantity<double>
 {
     /// <summary>
-    /// Creates a new instance of the <see cref="Quantity{T}"/> class.
+    /// Creates a quantity. Units in an affine dimension, including kelvin, construct points by default.
     /// </summary>
-    /// <param name="amount">The amount of the quantity.</param>
-    /// <param name="unit">The unit of the quantity.</param>
-    /// <param name="coherent">The coherent quantity.</param>
-    /// <returns>A new instance of the <see cref="ScalarQuantity"/> class.</returns>
-    [Pure]
-    protected override Quantity<double> CreateQuantity(double amount, Unit unit, Quantity<double> coherent) => new ScalarQuantity(amount, unit, coherent);
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ScalarQuantity"/> class.
-    /// </summary>
-    /// <param name="amount">The amount of the scalar quantity.</param>
-    /// <param name="unit">The unit of the scalar quantity.</param>
     public ScalarQuantity(double amount, Unit unit)
         : base(amount, unit)
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ScalarQuantity"/> class with a specified coherent quantity.
+    /// Creates a quantity, explicitly specifying whether the amount is a point or a difference.
+    /// Use <c>false</c> for intervals such as a change of ten degrees Celsius.
     /// </summary>
-    /// <param name="amount">The amount of the scalar quantity.</param>
-    /// <param name="unit">The unit of the scalar quantity.</param>
-    /// <param name="coherent">The coherent scalar quantity.</param>
+    public ScalarQuantity(double amount, Unit unit, bool isPoint)
+        : base(amount, unit, isPoint)
+    {
+    }
+
     private ScalarQuantity(double amount, Unit unit, Quantity<double> coherent)
         : base(amount, unit, coherent)
     {
     }
 
-    /// <summary>
-    /// Converts the scalar quantity to a specified unit.
-    /// </summary>
-    /// <param name="unit">The target unit to convert to.</param>
-    /// <returns>The converted scalar quantity.</returns>
+    /// <inheritdoc />
     [Pure]
-    new public ScalarQuantity Convert(Unit unit)
-    {
-        if (Unit == unit) return this;
+    protected override Quantity<double> CreateQuantity(double amount, Unit unit, Quantity<double> coherent)
+        => new ScalarQuantity(amount, unit, coherent);
 
-        Check.UnitsAreSameDimension(Unit, unit);
-        return new ScalarQuantity(_coherent.Amount / unit.Factor, unit, _coherent);
-    }
-
-    /// <summary>
-    /// Converts the scalar quantity to its coherent representation.
-    /// </summary>
-    /// <returns>The coherent scalar quantity.</returns>
+    /// <inheritdoc cref="Quantity{T}.Convert(Unit)"/>
     [Pure]
-    new internal ScalarQuantity ToCoherent()
-    {
-        var unit = Unit;
-
-        if (unit.IsCoherent)
-        {
-            return this;
-        }
-
-        var coherentUnit = unit.System.MakeCoherent(unit);
-
-        return new ScalarQuantity(unit.Factor * Amount - unit.Offset, coherentUnit);
-    }
+    new public ScalarQuantity Convert(Unit unit) => (ScalarQuantity)base.Convert(unit);
 }

@@ -1,108 +1,80 @@
 ﻿namespace UnitSystem.Quantities;
 
 /// <summary>
-/// Represents a quantity with a specified amount and unit, allowing for different amount data types such as <see cref="double"/>, <see cref="Vector{T}"/>, or <see cref="Matrix{T}"/>.
+/// Represents a quantity with an amount and a unit.
 /// </summary>
-/// <typeparam name="T">The type of the amount, which must be a struct.</typeparam>
+/// <typeparam name="T">The type of the amount.</typeparam>
 public abstract partial class Quantity<T>
     where T : struct
 {
     /// <summary>
-    /// The coherent quantity, which is a standardized representation of the quantity.
+    /// Initializes a quantity using the unit's default point or difference semantics.
     /// </summary>
-    internal readonly Quantity<T> _coherent;
-
-    /// <summary>
-    /// The hash code for the quantity.
-    /// </summary>
-    internal readonly int _hashCode;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Quantity{T}"/> class.
-    /// </summary>
-    /// <param name="amount">The amount of the quantity.</param>
-    /// <param name="unit">The unit of the quantity.</param>
     protected Quantity(T amount, Unit unit)
+        : this(amount, unit, unit.SupportsPoints)
     {
-        Amount = amount;
-        Unit = unit;
-        // ReSharper disable once VirtualMemberCallInConstructor
-        _coherent = ToCoherent();
-        _hashCode = GenerateHashCode();
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Quantity{T}"/> class with a specified coherent quantity.
+    /// Initializes a quantity with explicit point or difference semantics.
     /// </summary>
-    /// <param name="amount">The amount of the quantity.</param>
-    /// <param name="unit">The unit of the quantity.</param>
-    /// <param name="coherent">The coherent quantity.</param>
+    protected Quantity(T amount, Unit unit, bool isPoint)
+    {
+        Amount = amount;
+        Unit = unit;
+        IsPoint = isPoint;
+        CoherentUnit = unit.System.MakeCoherent(unit);
+        CoherentAmount = unit.ToCoherent(amount, isPoint);
+    }
+
+    /// <summary>
+    /// Initializes a converted quantity from its canonical value.
+    /// </summary>
     protected Quantity(T amount, Unit unit, Quantity<T> coherent)
     {
         Amount = amount;
         Unit = unit;
-        _coherent = coherent;
-        _hashCode = GenerateHashCode();
+        IsPoint = coherent.IsPoint;
+        CoherentUnit = coherent.CoherentUnit;
+        CoherentAmount = coherent.CoherentAmount;
     }
 
     /// <summary>
-    /// Gets the amount of the quantity.
+    /// Gets the amount in <see cref="Unit"/>.
     /// </summary>
     public T Amount { get; }
 
     /// <summary>
-    /// Gets the unit of the quantity.
+    /// Gets the unit of the amount.
     /// </summary>
     public Unit Unit { get; }
 
     /// <summary>
-    /// Converts the quantity to a specified unit.
+    /// Gets whether the quantity represents a point on an affine scale, such as a temperature reading.
     /// </summary>
-    /// <param name="unit">The target unit to convert to.</param>
-    /// <returns>The converted quantity.</returns>
-    /// <exception cref="InvalidOperationException">Thrown if the units are not of the same dimension.</exception>
+    public bool IsPoint { get; }
+
+    internal T CoherentAmount { get; }
+    internal Unit CoherentUnit { get; }
+
+    /// <summary>
+    /// Converts the quantity to a compatible unit, preserving its point or difference semantics.
+    /// </summary>
     [Pure]
     public Quantity<T> Convert(Unit unit)
     {
+        Check.UnitsAreSameDimension(Unit, unit);
         if (Unit == unit) return this;
 
-        Check.UnitsAreSameDimension(Unit, unit);
-        return CreateQuantity(_coherent.Amount.Divide(unit.Factor), unit, _coherent);
+        return CreateQuantity(unit.FromCoherent(CoherentAmount, IsPoint), unit, ToCoherent());
     }
 
-    /// <summary>
-    /// Converts the quantity to its coherent representation.
-    /// </summary>
-    /// <returns>The coherent quantity.</returns>
-    [Pure]
-    internal virtual Quantity<T> ToCoherent()
-    {
-        var unit = Unit;
-
-        if (unit.IsCoherent)
-        {
-            return this;
-        }
-
-        var coherentUnit = unit.System.MakeCoherent(unit);
-
-        return CreateQuantity(Amount.Multiply(unit.Factor), coherentUnit, _coherent);
-    }
+    internal Quantity<T> ToCoherent()
+        => Unit.IsCoherent ? this : CreateQuantity(CoherentAmount, CoherentUnit, this);
 
     /// <summary>
-    /// Creates a new instance of the <see cref="Quantity{T}"/> class.
+    /// Creates a quantity with the supplied amount, unit, and canonical value.
     /// </summary>
-    /// <param name="amount">The amount of the quantity.</param>
-    /// <param name="unit">The unit of the quantity.</param>
-    /// <param name="coherent">The coherent quantity.</param>
-    /// <returns>A new instance of the <see cref="Quantity{T}"/> class.</returns>
     [Pure]
     protected abstract Quantity<T> CreateQuantity(T amount, Unit unit, Quantity<T> coherent);
-
-    /// <summary>
-    /// Generates a hash code for the quantity.
-    /// </summary>
-    /// <returns>The hash code for the quantity.</returns>
-    [Pure]
-    private int GenerateHashCode() => HashCode.Combine(Amount, Unit, _coherent);
 }

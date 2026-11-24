@@ -12,57 +12,36 @@ namespace UnitSystem.Systems;
 /// </remarks>
 public static class CGSSystem
 {
-    static CGSSystem()
+    internal static void Register(UnitSystem system)
     {
-        System = SISystem.System;
+        var cm = system.AddDerivedUnit("cm", "centimetre", MetricPrefix.Centi * SISystem.m);
+        var g = system.AddDerivedUnit("g", "gram", SISystem.kg / 1000);
+        var s = SISystem.s;
+        var cmSquared = cm ^ 2;
+        var dyne = system.AddDerivedUnit("dyn", "dyne", g * cm / (s ^ 2));
+        var erg = system.AddDerivedUnit("erg", "erg", dyne * cm);
+        system.AddDerivedUnit("Ba", "barye", dyne / cmSquared);
 
-        // Base units
-        cm = System.AddDerivedUnit("cm", "centimetre", MetricPrefix.Centi * SISystem.m);
-        g = System.AddDerivedUnit("g", "gram", 0.001 * SISystem.kg);
-        s = SISystem.s;
-        A = SISystem.A;
-        K = SISystem.K;
-        mol = SISystem.mol;
-        cd = SISystem.cd;
-
-        dyn = System.AddDerivedUnit("dyn", "dyne", g * cm * (s^-2));
-        erg = System.AddDerivedUnit("erg", "erg", dyn * cm);
-        statC = System.AddDerivedUnit("statC", "statcoulomb", dyn * (cm^2) * (s^-2));
-        Gs = System.AddDerivedUnit("Gs", "gauss", dyn * (cm^-2));
-
-        // Angles
-        rad = SISystem.rad;
-        sr = SISystem.sr;
-        deg = SISystem.deg;
-
-        // Incoherent units
-        min = SISystem.min;
-        h = SISystem.h;
-
-        // Derived units
-        dyne = System.AddDerivedUnit("dyn", "dyne", g*cm*(s^-2));
-        erg = System.AddDerivedUnit("erg", "erg", dyne*cm);
-        Ba = System.AddDerivedUnit("Ba", "barye", dyne*(cm^-2));
-        stC = System.AddDerivedUnit("stC", "statcoulomb", dyn*(cm^2)*(s^-2));
-        stV = System.AddDerivedUnit("stV", "statvolt", erg*(stC^-1));
-        stF = System.AddDerivedUnit("stF", "statfarad", stC*(stV^-1));
-        stΩ = System.AddDerivedUnit("stΩ", "statohm", stV*(dyn^-1));
-        stS = System.AddDerivedUnit("stS", "statmho", stC*(erg^-1));
-        stWb = System.AddDerivedUnit("stWb", "statweber", erg*(s^-2));
-        stT = System.AddDerivedUnit("stT", "stattesla", stWb*(cm^-2));
-        stH = System.AddDerivedUnit("stH", "stathenry", stWb*(stC^-1));
-        Gs = System.AddDerivedUnit("Gs", "gauss", dyne*(cm^-2));
-        ph = System.AddDerivedUnit("ph", "phot", erg*(cm^-2)*(s^-1));
-        r = System.AddDerivedUnit("r", "roentgen", statC*(g^-1));
-        kg = System.AddDerivedUnit("kg", "kilogram", 1000 * g);
-        kat = System.AddDerivedUnit("kat", "katal", mol*(s^-1));
-        Sv = System.AddDerivedUnit("Sv", "sievert", erg*(g^-1));
-        kat = System.AddDerivedUnit("kat", "katal", mol*(s^-1));
-        k = System.AddDerivedUnit("k", "kayser", cm^-1);
-        St = System.AddDerivedUnit("St", "stokes", (cm^2)*(s^-1));
-        P = System.AddDerivedUnit("P", "poise", g*(cm^-1)*(s^-1));
-        Gal = System.AddDerivedUnit("Gal", "gal", cm*(s^-2));
-        sb = System.AddDerivedUnit("sb", "stilb", cd*(cm^-2));
+        // The CGS electrostatic units are expressed on the catalog's SI basis.
+        const double statcoulombInCoulombs = 1 / (10.0 * 299_792_458);
+        var statC = (KnownUnit)system.AddDerivedUnit("statC", "statcoulomb", statcoulombInCoulombs * SISystem.C);
+        system.AddAlias("stC", statC);
+        var statA = statC / s;
+        var statV = system.AddDerivedUnit("stV", "statvolt", erg / statC);
+        system.AddDerivedUnit("stF", "statfarad", statC / statV);
+        system.AddDerivedUnit("stΩ", "statohm", statV / statA);
+        system.AddDerivedUnit("stS", "statmho", statA / statV);
+        var statWb = system.AddDerivedUnit("stWb", "statweber", statV * s);
+        system.AddDerivedUnit("stT", "stattesla", statWb / cmSquared);
+        system.AddDerivedUnit("stH", "stathenry", statWb / statA);
+        system.AddDerivedUnit("Gs", "gauss", SISystem.T / 10_000);
+        system.AddDerivedUnit("ph", "phot", 10_000 * SISystem.lx);
+        system.AddDerivedUnit("r", "roentgen", 2.58e-4 * SISystem.C / SISystem.kg);
+        system.AddDerivedUnit("k", "kayser", cm ^ -1);
+        system.AddDerivedUnit("St", "stokes", cmSquared / s);
+        system.AddDerivedUnit("P", "poise", g / (cm * s));
+        system.AddDerivedUnit("Gal", "gal", cm / (s ^ 2));
+        system.AddDerivedUnit("sb", "stilb", SISystem.cd / cmSquared);
     }
 
     #region IUnitSystem
@@ -104,79 +83,79 @@ public static class CGSSystem
     /// <summary>
     /// Centimetre-Gram-Second System of Units
     /// </summary>
-    public static IUnitSystem System { get; }
+    public static IUnitSystem System => SISystem.System;
 
     #region Base units
 
     /// <summary>
     /// luminous intensity
     /// </summary>
-    public static Unit cd { get; }
+    public static Unit cd => System["cd"]!;
 
     /// <summary>
     /// electric current
     /// </summary>
-    public static Unit A { get; }
+    public static Unit A => System["A"]!;
 
     /// <summary>
     /// thermodynamic temperature
     /// </summary>
-    public static Unit K { get; }
+    public static Unit K => System["K"]!;
 
     /// <summary>
     /// amount of substance
     /// </summary>
-    public static Unit mol { get; }
+    public static Unit mol => System["mol"]!;
 
     /// <summary>
     /// length
     /// </summary>
-    public static Unit cm { get; }
+    public static Unit cm => System["cm"]!;
 
     /// <summary>
     /// mass
     /// </summary>
-    public static Unit g { get; }
+    public static Unit g => System["g"]!;
 
     /// <summary>
     /// time
     /// </summary>
-    public static Unit s { get; }
+    public static Unit s => System["s"]!;
 
     /// <summary>
     /// force
     /// </summary>
-    public static Unit dyn { get; }
+    public static Unit dyn => System["dyn"]!;
 
     /// <summary>
     /// energy
     /// </summary>
-    public static Unit erg { get; }
+    public static Unit erg => System["erg"]!;
 
     /// <summary>
     /// electric charge
     /// </summary>
-    public static Unit statC { get; }
+    public static Unit statC => System["statC"]!;
 
     /// <summary>
     /// magnetic flux density
     /// </summary>
-    public static Unit Gs { get; }
+    public static Unit Gs => System["Gs"]!;
 
     /// <summary>
     /// angle
     /// </summary>
-    public static Unit rad { get; }
+    public static Unit rad => System["rad"]!;
 
     /// <summary>
     /// spherical angle
     /// </summary>
-    public static Unit sr { get; }
+    public static Unit sr => System["sr"]!;
 
     /// <summary>
     /// angle
     /// </summary>
-    public static Unit deg { get; }
+    public static Unit deg => System["°"]!;
 
     #endregion
 
@@ -185,102 +164,102 @@ public static class CGSSystem
     /// <summary>
     /// mass
     /// </summary>
-    public static Unit kg { get; }
+    public static Unit kg => System["kg"]!;
 
     /// <summary>
     /// force
     /// </summary>
-    public static Unit dyne { get; }
+    public static Unit dyne => System["dyn"]!;
 
     /// <summary>
     /// pressure
     /// </summary>
-    public static Unit Ba { get; }
+    public static Unit Ba => System["Ba"]!;
 
     /// <summary>
     /// electric charge
     /// </summary>
-    public static Unit stC { get; }
+    public static Unit stC => System["stC"]!;
 
     /// <summary>
     /// voltage
     /// </summary>
-    public static Unit stV { get; }
+    public static Unit stV => System["stV"]!;
 
     /// <summary>
     /// electric capacitance
     /// </summary>
-    public static Unit stF { get; }
+    public static Unit stF => System["stF"]!;
 
     /// <summary>
     /// electric resistance
     /// </summary>
-    public static Unit stΩ { get; }
+    public static Unit stΩ => System["stΩ"]!;
 
     /// <summary>
     /// electrical conductance
     /// </summary>
-    public static Unit stS { get; }
+    public static Unit stS => System["stS"]!;
 
     /// <summary>
     /// magnetic flux
     /// </summary>
-    public static Unit stWb { get; }
+    public static Unit stWb => System["stWb"]!;
 
     /// <summary>
     /// magnetic field strength
     /// </summary>
-    public static Unit stT { get; }
+    public static Unit stT => System["stT"]!;
 
     /// <summary>
     /// inductance
     /// </summary>
-    public static Unit stH { get; }
+    public static Unit stH => System["stH"]!;
 
     /// <summary>
     /// illuminance
     /// </summary>
-    public static Unit ph { get; }
+    public static Unit ph => System["ph"]!;
 
     /// <summary>
     /// exposure
     /// </summary>
-    public static Unit r { get; }
+    public static Unit r => System["r"]!;
 
     /// <summary>
     /// catalytic activity
     /// </summary>
-    public static Unit kat { get; }
+    public static Unit kat => System["kat"]!;
 
     /// <summary>
     /// wave number
     /// </summary>
-    public static Unit k { get; }
+    public static Unit k => System["k"]!;
 
     /// <summary>
     /// kinematic viscosity
     /// </summary>
-    public static Unit St { get; }
+    public static Unit St => System["St"]!;
 
     /// <summary>
     /// dynamic viscosity
     /// </summary>
-    public static Unit P { get; }
+    public static Unit P => System["P"]!;
 
     /// <summary>
     /// dose equivalent
     /// </summary>
-    public static Unit Sv { get; }
+    public static Unit Sv => System["Sv"]!;
 
     /// <summary>
     /// acceleration
     /// </summary>
-    public static Unit Gal { get; }
+    public static Unit Gal => System["Gal"]!;
 
     /// <summary>
     /// luminance
     /// </summary>
-    public static Unit sb { get; }
+    public static Unit sb => System["sb"]!;
 
     #endregion
 
@@ -289,12 +268,12 @@ public static class CGSSystem
     /// <summary>
     /// Time expressed in minutes
     /// </summary>
-    public static Unit min { get; }
+    public static Unit min => System["min"]!;
 
     /// <summary>
     /// Time expressed in hours
     /// </summary>
-    public static Unit h { get; }
+    public static Unit h => System["h"]!;
 
     #endregion
 }

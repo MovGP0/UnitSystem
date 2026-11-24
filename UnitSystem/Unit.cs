@@ -1,4 +1,5 @@
 using UnitSystem.Dimensions;
+using UnitSystem.Quantities;
 
 namespace UnitSystem;
 
@@ -44,13 +45,27 @@ public abstract partial class Unit : IEquatable<Unit>
     /// Gets the offset of the unit from zero.
     /// </summary>
     /// <remarks>
-    /// This is used for units like Celsius, which have an offset from zero.
+    /// This offset is added after scaling a point into the coherent unit.
     /// </remarks>
     [Pure]
     internal double Offset { get; } = 0d;
 
     [Pure]
     public bool IsAbsoluteUnit => Offset == 0.0;
+
+    internal bool SupportsPoints => !IsAbsoluteUnit || System is UnitSystem system && system.IsAffineDimension(Dimension);
+
+    internal T ToCoherent<T>(T amount, bool isPoint) where T : struct
+    {
+        var scaled = Factor.Equals(1.0) ? amount : amount.Multiply(Factor);
+        return isPoint && !IsAbsoluteUnit ? scaled.Add(Offset) : scaled;
+    }
+
+    internal T FromCoherent<T>(T amount, bool isPoint) where T : struct
+    {
+        var shifted = isPoint && !IsAbsoluteUnit ? amount.Subtract(Offset) : amount;
+        return Factor.Equals(1.0) ? shifted : shifted.Divide(Factor);
+    }
 
     /// <summary>
     /// Gets the dimension of the unit.
@@ -75,7 +90,9 @@ public abstract partial class Unit : IEquatable<Unit>
         if (ReferenceEquals(this, other)) return true;
         if (other is null) return false;
 
-        return HasSameDimension(other) && Factor.Equals(other.Factor);
+        return HasSameDimension(other)
+               && Offset.Equals(other.Offset)
+               && Factor.Equals(other.Factor);
     }
 
     /// <summary>
@@ -144,7 +161,9 @@ public abstract partial class Unit : IEquatable<Unit>
         Check.EnsureAbsoluteUnit(unit1);
         Check.EnsureAbsoluteUnit(unit2);
 
-        return unit1.System.CreateUnit(unit1.Factor / unit2.Factor, unit1.Dimension / unit2.Dimension);
+        var newFactor = unit1.Factor / unit2.Factor;
+        var newDimension = unit1.Dimension / unit2.Dimension;
+        return unit1.System.CreateUnit(newFactor, newDimension);
     }
 
     /// <summary>

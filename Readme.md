@@ -17,6 +17,15 @@ The following adoptions have been made:
 - added angles as a separate dimension
 - added support for relative units like °C and °F
 
+## Standard and custom units
+
+SI, CGS, and Imperial units share a read-only catalog and a common conversion basis. Use
+`UnitSystemFactory.CreateSystem` to register units and symbols in a custom catalog.
+
+Temperature quantities default to points on a scale. Pass `isPoint: false` to the
+`ScalarQuantity` constructor for a temperature difference. Subtracting two points
+produces a difference. Adding a difference to a point produces a point.
+
 ## Open issues
 
 - Add support for Siano's extensions to support units with directed dimensions

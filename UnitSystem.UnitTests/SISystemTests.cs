@@ -1,7 +1,6 @@
-﻿using Shouldly;
-using UnitSystem.Prefixes;
+﻿using UnitSystem.Prefixes;
 using UnitSystem.Systems;
-using UnitTests.Shared;
+using Shouldly;
 using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;
@@ -9,14 +8,16 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(SISystem))]
 public static class SISystemTests
 {
+    [TestClass]
     [TestOf(typeof(SISystem), nameof(BaseUnits))]
     public sealed class BaseUnitsTests
     {
         [TestMethod]
-        public void ShouldDefineAll7BaseUnits()
+        public void ShouldDefineBaseUnitsIncludingAngle()
         {
             // Arrange & Act & Assert
-            BaseUnits.Count().ShouldBe(7);
+            BaseUnits.Count().ShouldBe(8);
+            rad.ShouldNotBeNull();
             m.ShouldNotBeNull();
             kg.ShouldNotBeNull();
             s.ShouldNotBeNull();
@@ -49,6 +50,7 @@ public static class SISystemTests
         }
     }
 
+    [TestClass]
     [TestOf(typeof(SISystem), nameof(Parse))]
     public sealed class ParseTests
     {
@@ -115,6 +117,7 @@ public static class SISystemTests
         }
     }
 
+    [TestClass]
     [TestOf(typeof(SISystem), nameof(Display))]
     public sealed class DisplayTests
     {

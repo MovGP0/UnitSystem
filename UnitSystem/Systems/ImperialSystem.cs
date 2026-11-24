@@ -8,47 +8,34 @@
 /// </remarks>
 public static class ImperialSystem
 {
-    static ImperialSystem()
+    internal static void Register(UnitSystem system)
     {
-        System = SISystem.System;
+        var ft = system.AddDerivedUnit("ft", "foot", 0.3048 * SISystem.m);
+        var lb = system.AddDerivedUnit("lb", "pound", 0.45359237 * SISystem.kg);
+        var s = SISystem.s;
+        var inch = system.AddDerivedUnit("in", "inch", ft / 12);
+        var mile = system.AddDerivedUnit("mi", "mile", 5280 * ft);
+        system.AddDerivedUnit("yd", "yard", 3 * ft);
+        system.AddDerivedUnit("oz", "ounce", lb / 16);
+        system.AddDerivedUnit("long ton", "long ton", 2240 * lb);
+        system.AddDerivedUnit("short ton", "short ton", 2000 * lb);
 
-        // Base units
-        ft = System.AddDerivedUnit("ft", "foot", 0.3048 * SISystem.m);
-        lb = System.AddDerivedUnit("lb", "pound", 0.45359237 * SISystem.kg);
+        var cubicInch = inch ^ 3;
+        var gallon = system.AddDerivedUnit("gal", "gallon", 0.00454609 * (SISystem.m ^ 3));
+        system.AddDerivedUnit("us gal", "US gallon", 231 * cubicInch);
+        system.AddDerivedUnit("qt", "quart", gallon / 4);
+        system.AddDerivedUnit("pt", "pint", gallon / 8);
+        system.AddDerivedUnit("fl_oz", "fluid ounce", gallon / 160);
 
-        s =  SISystem.s;
-        A =  SISystem.A;
-        K =  SISystem.K;
-        mol = SISystem.mol;
-        cd = SISystem.cd;
+        var lbf = system.AddDerivedUnit("lbf", "pound-force", lb * (9.80665 * SISystem.m / (s ^ 2)));
+        system.AddDerivedUnit("hp", "horsepower", 550 * ft * lbf / s);
+        system.AddDerivedUnit("psi", "pound per square inch", lbf / (inch ^ 2));
+        system.AddDerivedUnit("mph", "miles per hour", mile / SISystem.h);
+        system.AddDerivedUnit("btu", "British thermal unit", 778.169 * ft * lbf);
 
-        // Angles
-        rad = SISystem.rad;
-        sr = SISystem.sr;
-        deg = SISystem.deg;
-
-        // Incoherent units
-        min = SISystem.min;
-        h = SISystem.h;
-
-        // Derived units
-        @in = System.AddDerivedUnit("in", "inch", ft / 12);
-        yd = System.AddDerivedUnit("yd", "yard", 3 * ft);
-        mi = System.AddDerivedUnit("mi", "mile", 5280 * ft);
-        oz = System.AddDerivedUnit("oz", "ounce", lb / 16);
-        ton_long = System.AddDerivedUnit("long ton", "long ton", 2240 * lb);
-        ton_short = System.AddDerivedUnit("short ton", "short ton", 2000 * lb);
-        gal = System.AddDerivedUnit("gal", "gallon", 277.419432 * @in * @in * @in);
-        gal_us = System.AddDerivedUnit("us gal", "US gallon", 231 * @in * @in * @in);
-        qt = System.AddDerivedUnit("qt", "quart", gal / 4);
-        pt = System.AddDerivedUnit("pt", "pint", gal / 8);
-        fl_oz = System.AddDerivedUnit("fl_oz", "fluid ounce", gal / 160);
-        hp = System.AddDerivedUnit("hp", "horsepower", 550 * ft * lb / (s * s));
-        psi = System.AddDerivedUnit("psi", "pound per square inch", lb / (@in * @in));
-        mph = System.AddDerivedUnit("mph", "miles per hour", mi / h);
-        lbf = System.AddDerivedUnit("lbf", "pound-force", lb * ft / (s * s));
-        btu = System.AddDerivedUnit("btu", "british thermal unit", 778.169 * ft * lb);
-        degF = System.AddDerivedUnit("°F", "degrees fahrenheit", 5.0/9.0 * K, offset: 459.67);
+        const double fahrenheitScale = 5.0 / 9.0;
+        system.AddDerivedUnit("°F", "degrees Fahrenheit", fahrenheitScale * SISystem.K,
+            offset: 273.15 - 32 * fahrenheitScale);
     }
 
     #region IUnitSystem
@@ -90,34 +77,34 @@ public static class ImperialSystem
     /// <summary>
     /// Imperial System of Units
     /// </summary>
-    public static IUnitSystem System { get; }
+    public static IUnitSystem System => SISystem.System;
 
     #region Incoherent units
 
     /// <summary>
     /// angle
     /// </summary>
-    public static Unit rad { get; }
+    public static Unit rad => System["rad"]!;
 
     /// <summary>
     /// spherical angle
     /// </summary>
-    public static Unit sr { get; }
+    public static Unit sr => System["sr"]!;
 
     /// <summary>
     /// angle
     /// </summary>
-    public static Unit deg { get; }
+    public static Unit deg => System["°"]!;
 
     /// <summary>
     /// Time expressed in minutes
     /// </summary>
-    public static Unit min { get; }
+    public static Unit min => System["min"]!;
 
     /// <summary>
     /// Time expressed in hours
     /// </summary>
-    public static Unit h { get; }
+    public static Unit h => System["h"]!;
 
     #endregion
 
@@ -126,37 +113,37 @@ public static class ImperialSystem
     /// <summary>
     /// length
     /// </summary>
-    public static Unit ft { get; }
+    public static Unit ft => System["ft"]!;
 
     /// <summary>
     /// mass
     /// </summary>
-    public static Unit lb { get; }
+    public static Unit lb => System["lb"]!;
 
     /// <summary>
     /// time
     /// </summary>
-    public static Unit s { get; }
+    public static Unit s => System["s"]!;
 
     /// <summary>
     /// electric current
     /// </summary>
-    public static Unit A { get; }
+    public static Unit A => System["A"]!;
 
     /// <summary>
     /// thermodynamic temperature
     /// </summary>
-    public static Unit K { get; }
+    public static Unit K => System["K"]!;
 
     /// <summary>
     /// amount of substance
     /// </summary>
-    public static Unit mol { get; }
+    public static Unit mol => System["mol"]!;
 
     /// <summary>
     /// luminous intensity
     /// </summary>
-    public static Unit cd { get; }
+    public static Unit cd => System["cd"]!;
 
     #endregion
 
@@ -165,32 +152,32 @@ public static class ImperialSystem
     /// <summary>
     /// length
     /// </summary>
-    public static Unit @in { get; }
+    public static Unit @in => System["in"]!;
 
     /// <summary>
     /// length
     /// </summary>
-    public static Unit yd { get; }
+    public static Unit yd => System["yd"]!;
 
     /// <summary>
     /// length
     /// </summary>
-    public static Unit mi { get; }
+    public static Unit mi => System["mi"]!;
 
     /// <summary>
     /// mass
     /// </summary>
-    public static Unit oz { get; }
+    public static Unit oz => System["oz"]!;
 
     /// <summary>
     /// mass
     /// </summary>
-    public static Unit ton_long { get; }
+    public static Unit ton_long => System["long ton"]!;
 
     /// <summary>
     /// mass
     /// </summary>
-    public static Unit ton_short { get; }
+    public static Unit ton_short => System["short ton"]!;
 
     /// <summary>
     /// volume
@@ -199,7 +186,7 @@ public static class ImperialSystem
     /// This is the UK gallon.
     /// Equals to 4.54609 litres or 277.419432 cubic inches
     /// </remarks>
-    public static Unit gal { get; }
+    public static Unit gal => System["gal"]!;
 
     /// <summary>
     /// volume
@@ -208,47 +195,47 @@ public static class ImperialSystem
     /// This is the US gallon.
     /// Equals to 3.785411784 litres or 231 cubic inches
     /// </remarks>
-    public static Unit gal_us { get; }
+    public static Unit gal_us => System["us gal"]!;
 
     /// <summary>
     /// volume
     /// </summary>
-    public static Unit qt { get; }
+    public static Unit qt => System["qt"]!;
 
     /// <summary>
     /// volume
     /// </summary>
-    public static Unit pt { get; }
+    public static Unit pt => System["pt"]!;
 
     /// <summary>
     /// volume
     /// </summary>
-    public static Unit fl_oz { get; }
+    public static Unit fl_oz => System["fl_oz"]!;
 
     /// <summary>
     /// power
     /// </summary>
-    public static Unit hp { get; }
+    public static Unit hp => System["hp"]!;
 
     /// <summary>
     /// pressure
     /// </summary>
-    public static Unit psi { get; }
+    public static Unit psi => System["psi"]!;
 
     /// <summary>
     /// speed
     /// </summary>
-    public static Unit mph { get; }
+    public static Unit mph => System["mph"]!;
 
     /// <summary>
     /// force
     /// </summary>
-    public static Unit lbf { get; }
+    public static Unit lbf => System["lbf"]!;
 
     /// <summary>
     /// energy
     /// </summary>
-    public static Unit btu { get; }
+    public static Unit btu => System["btu"]!;
 
     /// <summary>
     /// thermodynamic temperature
@@ -256,7 +243,7 @@ public static class ImperialSystem
     /// <remarks>
     /// This is a relative unit and needs to be converted to <see cref="K">Kelvin</see> to be used in calculations.
     /// </remarks>
-    public static Unit degF { get; }
+    public static Unit degF => System["°F"]!;
 
     #endregion
 }

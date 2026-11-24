@@ -14,6 +14,8 @@ internal static class OperatorExtensions
     /// <returns>The result of adding <paramref name="a"/> and <paramref name="b"/>.</returns>
     public static T Add<T>(this T a, T b) where T : struct => (dynamic)a + (dynamic)b;
 
+    public static T Add<T>(this T a, double b) where T : struct => (dynamic)a + b;
+
     /// <summary>
     /// Subtracts the second value from the first value of type <typeparamref name="T"/>.
     /// </summary>
@@ -22,6 +24,8 @@ internal static class OperatorExtensions
     /// <param name="b">The second value.</param>
     /// <returns>The result of subtracting <paramref name="b"/> from <paramref name="a"/>.</returns>
     public static T Subtract<T>(this T a, T b) where T : struct => (dynamic)a - (dynamic)b;
+
+    public static T Subtract<T>(this T a, double b) where T : struct => (dynamic)a - b;
 
     /// <summary>
     /// Multiplies two values of type <typeparamref name="T"/>.

@@ -10,15 +10,9 @@ namespace UnitSystem.Systems;
 /// </remarks>
 public static class SISystem
 {
-    static SISystem() => Initialize();
-
-    private static bool _initialized;
-
-    private static void Initialize()
+    static SISystem()
     {
-        if (_initialized) return;
-
-        _system = UnitSystemFactory.CreateSystem("SI");
+        _system = new UnitSystem("SI");
 
         // Base units
         m = _system.AddBaseUnit("m", "metre", dimensionSymbol: "L");
@@ -46,9 +40,10 @@ public static class SISystem
         Ω = _system.AddDerivedUnit("Ω", "ohm", V/A);
         S = _system.AddDerivedUnit("S", "siemens", A/V);
         Wb = _system.AddDerivedUnit("Wb", "weber", V*s);
-        T = _system.AddDerivedUnit("T", "tesla", Wb*(s^-2));
+        T = _system.AddDerivedUnit("T", "tesla", Wb / (m ^ 2));
         H = _system.AddDerivedUnit("H", "inductance", Wb/A);
-        lx = _system.AddDerivedUnit("lx", "illuminance", (m^-2)*cd);
+        lm = _system.AddDerivedUnit("lm", "lumen", cd * sr);
+        lx = _system.AddDerivedUnit("lx", "illuminance", lm / (m ^ 2));
         Sv = _system.AddDerivedUnit("Sv", "sievert", J/kg);
         kat = _system.AddDerivedUnit("kat", "katal", (s^-1)*mol);
         degC = _system.AddDerivedUnit("°C", "degrees Celsius", K, 273.15);
@@ -56,60 +51,53 @@ public static class SISystem
         // Incoherent units
         h = _system.AddDerivedUnit("h", "hour", 60*60*s);
         min = _system.AddDerivedUnit("min", "minute", 60*s);
-        lm = _system.AddDerivedUnit("lm", "lumen", cd/sr);
-
-        _initialized = true;
+        CGSSystem.Register(_system);
+        ImperialSystem.Register(_system);
+        _system.Freeze();
     }
 
     #region IUnitSystem
 
-    /// <inheritdoc cref="IUnitsystem.Name"/>
+    /// <inheritdoc cref="IUnitSystem.Name"/>
     public static string Name => _system.Name;
 
-    /// <inheritdoc cref="IUnitsystem.NumberOfDimensions"/>
+    /// <inheritdoc cref="IUnitSystem.NumberOfDimensions"/>
     public static int NumberOfDimensions => _system.NumberOfDimensions;
 
-    /// <inheritdoc cref="IUnitsystem.BaseUnits"/>
+    /// <inheritdoc cref="IUnitSystem.BaseUnits"/>
     public static IEnumerable<KnownUnit> BaseUnits => _system.BaseUnits;
 
-    /// <inheritdoc cref="IUnitsystem.NoUnit"/>
+    /// <inheritdoc cref="IUnitSystem.NoUnit"/>
     public static Unit NoUnit => _system.NoUnit;
 
-    /// <inheritdoc cref="IUnitsystem.AddBaseUnit(string, string, string, string)"/>
+    /// <inheritdoc cref="IUnitSystem.AddBaseUnit(string, string, string, string)"/>
     public static Unit AddBaseUnit(string symbol, string name, string inherentPrefix = "", string dimensionSymbol = "")
         => _system.AddBaseUnit(symbol, name, inherentPrefix, dimensionSymbol);
 
-    /// <inheritdoc cref="IUnitsystem.AddDerivedUnit(string, string, Unit)"/>
+    /// <inheritdoc cref="IUnitSystem.AddDerivedUnit(string, string, Unit, double)"/>
     public static Unit AddDerivedUnit(string symbol, string name, Unit unit)
         => _system.AddDerivedUnit(symbol, name, unit);
 
-    /// <inheritdoc cref="IUnitsystem.Parse(string)"/>
+    /// <inheritdoc cref="IUnitSystem.Parse(string)"/>
     public static Unit Parse(string unitExpression) => _system.Parse(unitExpression);
 
-    /// <inheritdoc cref="IUnitsystem.Display(Unit)"/>
+    /// <inheritdoc cref="IUnitSystem.Display(Unit)"/>
     public static string Display(Unit unit) => _system.Display(unit);
 
-    /// <inheritdoc cref="IUnitsystem.MakeCoherent(Unit)"/>
+    /// <inheritdoc cref="IUnitSystem.MakeCoherent(Unit)"/>
     public static Unit MakeCoherent(Unit unit) => _system.MakeCoherent(unit);
 
-    /// <inheritdoc cref="IUnitsystem.DimensionSymbols"/>
+    /// <inheritdoc cref="IUnitSystem.DimensionSymbols"/>
     public static IReadOnlyDictionary<int, string> DimensionSymbols => _system.DimensionSymbols;
 
     #endregion
 
-    private static IUnitSystem _system = null!;
+    private static readonly UnitSystem _system;
 
     /// <summary>
     /// International System of Units
     /// </summary>
-    public static IUnitSystem System
-    {
-        get
-        {
-            Initialize();
-            return _system;
-        }
-    }
+    public static IUnitSystem System => _system;
 
     #region Base units
 

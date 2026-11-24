@@ -1,278 +1,235 @@
-﻿using System.Text;
-using System.Text.RegularExpressions;
-using UnitSystem.Extensions;
+﻿using UnitSystem.Extensions;
 using UnitSystem.Prefixes;
 
 namespace UnitSystem.Presentation;
 
-/// <summary>
-/// Represents a unit interpreter that parses and formats units according to a specified unit system and dialect.
-/// </summary>
-internal class UnitInterpreter
+internal sealed class UnitInterpreter
 {
-    /// <summary>
-    /// The list of base units in the unit system.
-    /// </summary>
-    private readonly List<KnownUnit> _baseUnits;
-
-    /// <summary>
-    /// The dialect used for parsing and formatting units.
-    /// </summary>
-    private readonly IUnitDialect _dialect;
-
-    /// <summary>
-    /// A cache for parsed units to optimize repeated parsing operations.
-    /// </summary>
-    private readonly Dictionary<string, Unit> _parseCache = new();
-
-    /// <summary>
-    /// A dictionary of known units with prefixes mapped to their base symbols.
-    /// </summary>
-    private readonly Dictionary<string, KnownUnit> _prefixedUnits = new();
-
-    /// <summary>
-    /// The unit system that defines the units and their relationships.
-    /// </summary>
     private readonly IUnitSystem _system;
+    private readonly KnownUnit[] _baseUnits;
+    private readonly Dictionary<string, KnownUnit> _prefixedBases;
+    private readonly MetricPrefix[] _prefixes;
+    private readonly string[] _division;
+    private readonly string _multiplication;
+    private readonly string[] _explicitMultiplication;
+    private readonly int _maxSymbolWords;
+    private readonly string[] _exponentiation;
 
-    /// <summary>
-    /// The regular expression pattern used to parse unit expressions.
-    /// </summary>
-    private readonly string _unitRegex;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="UnitInterpreter"/> class.
-    /// </summary>
-    /// <param name="system">The unit system to be used by the interpreter.</param>
-    /// <param name="dialect">The dialect defining how units are parsed and formatted.</param>
     public UnitInterpreter(IUnitSystem system, IUnitDialect dialect)
     {
         _system = system;
-        _dialect = dialect;
-        _unitRegex = BuildUnitRegex();
-        _baseUnits = [.._system.BaseUnits];
-
-        foreach (var unit in system)
-        {
-            if (unit.Symbol != unit.BaseSymbol)
-            {
-                _prefixedUnits.Add(unit.BaseSymbol, unit);
-            }
-        }
+        _baseUnits = system.BaseUnits.ToArray();
+        _prefixedBases = _baseUnits.Where(unit => unit.BaseSymbol != unit.Symbol)
+            .ToDictionary(unit => unit.BaseSymbol, StringComparer.Ordinal);
+        _prefixes = MetricPrefix.GetAll().Where(prefix => prefix.Symbol.Length != 0)
+            .OrderByDescending(prefix => prefix.Symbol.Length).ToArray();
+        _division = (string[])dialect.Division;
+        _multiplication = dialect.Multiplication.First();
+        _explicitMultiplication = dialect.Multiplication.Where(token => token != " ").ToArray();
+        _maxSymbolWords = system.Select(unit => unit.Symbol.Count(c => c == ' ') + 1).DefaultIfEmpty(1).Max();
+        _exponentiation = (string[])dialect.Exponentiation;
     }
 
-    /// <summary>
-    /// Converts a <see cref="Unit"/> to its string representation.
-    /// </summary>
-    /// <param name="unit">The unit to be converted to a string.</param>
-    /// <returns>A string representation of the unit.</returns>
-    public string ToString(Unit unit)
+    public string Display(Unit unit)
     {
-        var nominator = new List<string>();
+        if (!unit.IsCoherent && unit is KnownUnit known && _system[known.Symbol] == unit)
+        {
+            return known.Symbol;
+        }
+
+        if (unit.IsAbsoluteUnit && !unit.IsCoherent && TryDisplayPrefixedUnit(unit) is { } prefixed)
+        {
+            return prefixed;
+        }
+
+        var numerator = new List<string>();
         var denominator = new List<string>();
 
         for (var i = 0; i < unit.Dimension.Count; i++)
         {
             var exponent = unit.Dimension[i];
-
             if (exponent > 0)
             {
-                nominator.Add(BuildFactor(_baseUnits[i].Symbol, exponent));
+                numerator.Add(DisplayFactor(_baseUnits[i].Symbol, exponent));
             }
-
-            if (exponent < 0)
+            else if (exponent < 0)
             {
-                denominator.Add(BuildFactor(_baseUnits[i].Symbol, exponent));
+                denominator.Add(DisplayFactor(_baseUnits[i].Symbol, -exponent));
             }
         }
 
-        if (!nominator.Any() && !denominator.Any())
+        if (numerator.Count == 0 && denominator.Count == 0)
         {
-            return string.Empty;
+            return unit.IsCoherent ? string.Empty : DisplayTransform(unit);
         }
 
-        var builder = new StringBuilder();
-
-        if (!unit.IsCoherent)
-        {
-            builder.Append(unit.Factor).Append(' ');
-        }
-
-        builder.Append(nominator.Count == 0 ? "1" : string.Join(_dialect.Multiplication.First(), nominator));
-
+        var expression = numerator.Count == 0 ? "1" : string.Join(_multiplication, numerator);
         if (denominator.Count != 0)
         {
-            builder.Append(" {0} ".FormatWith(_dialect.Division.First()));
-            builder.Append(string.Join(_dialect.Multiplication.First(), denominator));
+            expression += " " + _division[0] + " " + string.Join(_multiplication, denominator);
         }
 
-        return builder.ToString();
+        return unit.IsCoherent ? expression : DisplayTransform(unit) + " " + expression;
     }
 
-    private const float FloatComparisonTolerance = 1e-6f;
-
-    /// <summary>
-    /// Builds a factor string representation based on the symbol and exponent.
-    /// </summary>
-    /// <param name="symbol">The unit symbol.</param>
-    /// <param name="exponent">The exponent associated with the unit.</param>
-    /// <returns>A string representation of the factor.</returns>
-    private string BuildFactor(string symbol, float exponent)
+    private string? TryDisplayPrefixedUnit(Unit unit)
     {
-        var absolute = Math.Abs(exponent);
-
-        if (Math.Abs(absolute - 1f) < FloatComparisonTolerance)
+        foreach (var baseUnit in _baseUnits)
         {
-            return symbol;
+            if (!unit.Dimension.Equals(baseUnit.Dimension)) continue;
+
+            foreach (var prefix in _prefixes)
+            {
+                var symbol = prefix.Symbol + baseUnit.BaseSymbol;
+                var exact = _system[symbol];
+                if (exact is not null ? exact == unit : (prefix.Factor / baseUnit.InherentFactor).Equals(unit.Factor))
+                {
+                    return symbol;
+                }
+            }
         }
 
-        return "{0}{1}{2}".FormatWith(symbol, _dialect.Exponentiation.First(), absolute);
+        return null;
     }
 
-    /// <summary>
-    /// Parses a unit expression string and returns the corresponding <see cref="Unit"/>.
-    /// </summary>
-    /// <param name="unitExpression">The unit expression to be parsed.</param>
-    /// <returns>The parsed unit.</returns>
+    private string DisplayFactor(string symbol, float exponent)
+        => exponent == 1 ? symbol : symbol + _exponentiation[0] + exponent.ToString("R", CultureInfo.InvariantCulture);
+
+    private static string DisplayTransform(Unit unit)
+    {
+        var factor = unit.Factor.ToString("R", CultureInfo.InvariantCulture);
+        return unit.IsAbsoluteUnit ? factor : factor + "@" + unit.Offset.ToString("R", CultureInfo.InvariantCulture);
+    }
+
     public Unit Parse(string unitExpression)
     {
-        if (_parseCache.TryGetValue(unitExpression, out var unit))
-        {
-            return unit;
-        }
+        Check.Argument(unitExpression, nameof(unitExpression)).IsNotNull();
+        var expression = unitExpression.Trim();
+        if (expression.Length == 0) return _system.NoUnit;
+        if (_system[expression] is { } known) return known;
 
-        lock (_parseCache)
+        double factor = 1, offset = 0;
+        var separator = expression.IndexOf(' ');
+        var firstToken = separator < 0 ? expression : expression.Substring(0, separator);
+        if (TryParseTransform(firstToken, out var parsedFactor, out var parsedOffset))
         {
-            if (_parseCache.TryGetValue(unitExpression, out unit))
+            factor = parsedFactor;
+            offset = parsedOffset;
+            expression = separator < 0 ? "1" : expression.Substring(separator + 1).TrimStart();
+            if (_division.Any(token => expression.StartsWith(token, StringComparison.Ordinal)))
             {
-                return unit;
-            }
-
-            unit = ParseCore(unitExpression);
-            _parseCache.Add(unitExpression, unit);
-        }
-
-        return unit;
-    }
-
-    /// <summary>
-    /// Core parsing logic for a unit expression string.
-    /// </summary>
-    /// <param name="unitExpression">The unit expression to be parsed.</param>
-    /// <returns>The parsed unit.</returns>
-    private Unit ParseCore(string unitExpression)
-    {
-        var fraction = unitExpression.Split(
-            (string[])_dialect.Division,
-            StringSplitOptions.RemoveEmptyEntries);
-
-        if (fraction.Length == 0)
-        {
-            return _system.NoUnit;
-        }
-
-        if (fraction.Length == 1)
-        {
-            return ParseUnitProduct(fraction[0]);
-        }
-
-        if (fraction.Length > 2)
-        {
-            throw new FormatException(Messages.UnitExpressionInvalid.FormatWith(unitExpression));
-        }
-
-        var nominator = ParseUnitProduct(fraction[0]);
-        var denominator = ParseUnitProduct(fraction[1]);
-
-        return nominator/denominator;
-    }
-
-    /// <summary>
-    /// Parses a unit product expression.
-    /// </summary>
-    /// <param name="unitExpression">The unit product expression to be parsed.</param>
-    /// <returns>The parsed unit product.</returns>
-    private Unit ParseUnitProduct(string unitExpression)
-    {
-        var factors = unitExpression.Split(
-            (string[])_dialect.Multiplication,
-            StringSplitOptions.RemoveEmptyEntries);
-        var product = _system.NoUnit;
-
-        return factors.Aggregate(product, (current, factor) => current*ParseUnit(factor));
-    }
-
-    /// <summary>
-    /// Parses an individual unit expression.
-    /// </summary>
-    /// <param name="unitExpression">The unit expression to be parsed.</param>
-    /// <returns>The parsed unit.</returns>
-    /// <exception cref="FormatException">Thrown when the unit expression is invalid or ambiguous.</exception>
-    private Unit ParseUnit(string unitExpression)
-    {
-        var matches = Regex.Matches(unitExpression, _unitRegex);
-
-        if (matches.Count == 0)
-        {
-            throw new FormatException(Messages.UnitExpressionInvalid.FormatWith(unitExpression));
-        }
-
-        if (matches.Count > 1)
-        {
-            throw new FormatException(Messages.UnitExpressionAmbiguous.FormatWith(unitExpression));
-        }
-
-        var prefixSymbol = matches[0].Groups["prefix"].Value;
-        var unitSymbol = matches[0].Groups["unit"].Value;
-        var exponent = matches[0].Groups["exponent"].Value;
-
-        var knownUnit = _system[unitSymbol];
-        Unit parsedUnit;
-
-        if (knownUnit == null)
-        {
-            knownUnit = _prefixedUnits[unitSymbol];
-            parsedUnit = knownUnit/knownUnit.InherentFactor;
-        }
-        else
-        {
-            parsedUnit = knownUnit;
-        }
-
-        if (!string.IsNullOrEmpty(prefixSymbol))
-        {
-            if (MetricPrefix.TryGetValue(prefixSymbol, out var prefix))
-            {
-                parsedUnit *= prefix.Factor;
-            }
-            else
-            {
-                var message = string.Format(Messages.ThePrefixIsNotRecognized, prefixSymbol);
-                throw new ArgumentException(message, nameof(unitExpression));
+                expression = "1 " + expression;
             }
         }
 
-        if (!string.IsNullOrEmpty(exponent))
+        var fraction = expression.Split(_division, StringSplitOptions.None);
+        if (fraction.Length > 2 || fraction.Any(string.IsNullOrWhiteSpace))
         {
-            parsedUnit ^= int.Parse(exponent);
+            throw InvalidExpression(unitExpression);
         }
 
-        return parsedUnit;
+        var unit = ParseProduct(fraction[0].Trim());
+        if (fraction.Length == 2)
+        {
+            unit /= ParseProduct(fraction[1].Trim());
+        }
+
+        if (factor.Equals(1.0) && offset.Equals(0.0)) return unit;
+        Check.EnsureAbsoluteUnit(unit);
+        return _system.CreateUnit(factor * unit.Factor, offset, unit.Dimension);
     }
 
-    /// <summary>
-    /// Builds the unit regular expression based on the system's units and the dialect.
-    /// </summary>
-    /// <returns>The unit regular expression string.</returns>
-    private string BuildUnitRegex()
+    private static bool TryParseTransform(string token, out double factor, out double offset)
     {
-        var prefixes = string.Join("|", MetricPrefix.Prefixes.Keys);
-        var units = string.Join("|", _system.Select(u => Regex.Escape(u.BaseSymbol)));
-        var exponentiationOperators = string.Join("|", _dialect.Exponentiation.Select(Regex.Escape));
+        offset = 0;
+        var separator = token.IndexOf('@');
+        if (separator < 0)
+        {
+            return double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out factor);
+        }
 
-        var regex = @"^(?<prefix>({0}))?(?<unit>{1})({2}(?<exponent>-?\d+))?$".FormatWith(prefixes, units,
-            exponentiationOperators);
-
-        return regex;
+        return double.TryParse(token.Substring(0, separator), NumberStyles.Float, CultureInfo.InvariantCulture, out factor)
+            && double.TryParse(token.Substring(separator + 1), NumberStyles.Float, CultureInfo.InvariantCulture, out offset);
     }
+
+    private Unit ParseProduct(string expression)
+    {
+        if (TryParseTerm(expression) is { } single) return single;
+
+        Unit? product = null;
+        foreach (var segment in expression.Split(_explicitMultiplication, StringSplitOptions.None))
+        {
+            var words = segment.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (words.Length == 0) throw InvalidExpression(expression);
+
+            for (var index = 0; index < words.Length;)
+            {
+                var term = ParseNextTerm(words, ref index);
+                product = product is null ? term : product * term;
+            }
+        }
+
+        return product ?? throw InvalidExpression(expression);
+    }
+
+    private Unit ParseNextTerm(string[] words, ref int index)
+    {
+        // Try the longest symbol first so symbols such as "us gal" work inside products.
+        for (var count = Math.Min(_maxSymbolWords, words.Length - index); count > 0; count--)
+        {
+            if (TryParseTerm(string.Join(" ", words, index, count)) is { } term)
+            {
+                index += count;
+                return term;
+            }
+        }
+
+        throw InvalidExpression(words[index]);
+    }
+
+    private Unit? TryParseTerm(string expression)
+    {
+        if (TryParseSymbol(expression) is { } unit) return unit;
+
+        var power = expression.Split(_exponentiation, StringSplitOptions.None);
+        if (power.Length == 2 && TryParseSymbol(power[0]) is { } basis
+            && float.TryParse(power[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var exponent)
+            && !float.IsNaN(exponent) && !float.IsInfinity(exponent))
+        {
+            return basis ^ exponent;
+        }
+
+        return null;
+    }
+
+    private Unit? TryParseSymbol(string symbol)
+    {
+        if (symbol == "1") return _system.NoUnit;
+        if (_system[symbol] is { } known) return known;
+        if (_prefixedBases.TryGetValue(symbol, out var prefixedBase))
+        {
+            return prefixedBase / prefixedBase.InherentFactor;
+        }
+
+        foreach (var prefix in _prefixes)
+        {
+            if (!symbol.StartsWith(prefix.Symbol, StringComparison.Ordinal)) continue;
+
+            var suffix = symbol.Substring(prefix.Symbol.Length);
+            if (_prefixedBases.TryGetValue(suffix, out prefixedBase))
+            {
+                return _system.CreateUnit(prefix.Factor / prefixedBase.InherentFactor, prefixedBase.Dimension);
+            }
+
+            if (_system[suffix] is { IsAbsoluteUnit: true } basis && basis.BaseSymbol == basis.Symbol)
+            {
+                return prefix * basis;
+            }
+        }
+
+        return null;
+    }
+
+    private static FormatException InvalidExpression(string expression)
+        => new(Messages.UnitExpressionInvalid.FormatWith(expression));
 }

@@ -3,89 +3,39 @@ namespace UnitSystem.Quantities;
 public sealed partial class ScalarQuantity : IComparable<ScalarQuantity>
 {
     /// <summary>
-    /// Compares the current instance with another <see cref="ScalarQuantity"/> and returns an integer that indicates whether the current instance
-    /// precedes, follows, or occurs in the same position in the sort order as the other <see cref="ScalarQuantity"/>.
+    /// Compares canonical amounts of quantities with the same dimension and point or difference semantics.
     /// </summary>
-    /// <param name="other">The <see cref="ScalarQuantity"/> to compare with this instance.</param>
-    /// <returns>A value that indicates the relative order of the objects being compared.
-    /// The return value has these meanings:
-    /// Less than zero: This instance precedes <paramref name="other"/> in the sort order.
-    /// Zero: This instance occurs in the same position in the sort order as <paramref name="other"/>.
-    /// Greater than zero: This instance follows <paramref name="other"/> in the sort order.</returns>
+    /// <exception cref="InvalidOperationException">The quantities have incompatible dimensions or semantics.</exception>
     [Pure]
     public int CompareTo(ScalarQuantity? other)
     {
-        if (this < other) return -1;
-        if (this > other) return 1;
+        if (other is null) return 1;
 
-        return 0;
+        Check.UnitsAreSameDimension(CoherentUnit, other.CoherentUnit);
+        if (IsPoint != other.IsPoint)
+        {
+            throw new InvalidOperationException("A point cannot be ordered against a difference.");
+        }
+
+        return CoherentAmount.CompareTo(other.CoherentAmount);
     }
 
-    /// <summary>
-    /// Determines whether one <see cref="ScalarQuantity"/> is greater than another <see cref="ScalarQuantity"/>.
-    /// </summary>
-    /// <param name="quantity1">The first <see cref="ScalarQuantity"/> to compare.</param>
-    /// <param name="quantity2">The second <see cref="ScalarQuantity"/> to compare.</param>
-    /// <returns><c>true</c> if <paramref name="quantity1"/> is greater than <paramref name="quantity2"/>; otherwise, <c>false</c>.</returns>
+    /// <inheritdoc cref="CompareTo" />
     [Pure]
-    public static bool operator >(ScalarQuantity? quantity1, ScalarQuantity? quantity2)
-    {
-        if (ReferenceEquals(quantity1, quantity2)) return false;
-        if (quantity1 is null) return false;
-        if (quantity2 is null) return true;
+    public static bool operator >(ScalarQuantity? left, ScalarQuantity? right) => Compare(left, right) > 0;
 
-        return quantity1._coherent.Amount > quantity2._coherent.Amount
-               && quantity1._coherent.Unit == quantity2._coherent.Unit;
-    }
-
-    /// <summary>
-    /// Determines whether one <see cref="ScalarQuantity"/> is less than another <see cref="ScalarQuantity"/>.
-    /// </summary>
-    /// <param name="quantity1">The first <see cref="ScalarQuantity"/> to compare.</param>
-    /// <param name="quantity2">The second <see cref="ScalarQuantity"/> to compare.</param>
-    /// <returns><c>true</c> if <paramref name="quantity1"/> is less than <paramref name="quantity2"/>; otherwise, <c>false</c>.</returns>
+    /// <inheritdoc cref="CompareTo" />
     [Pure]
-    public static bool operator <(ScalarQuantity? quantity1, ScalarQuantity? quantity2)
-    {
-        if (ReferenceEquals(quantity1, quantity2)) return false;
-        if (quantity1 is null) return true;
-        if (quantity2 is null) return false;
+    public static bool operator <(ScalarQuantity? left, ScalarQuantity? right) => Compare(left, right) < 0;
 
-        return quantity1._coherent.Amount < quantity2._coherent.Amount
-               && quantity1._coherent.Unit == quantity2._coherent.Unit;
-    }
-
-    /// <summary>
-    /// Determines whether one <see cref="ScalarQuantity"/> is greater than or equal to another <see cref="ScalarQuantity"/>.
-    /// </summary>
-    /// <param name="quantity1">The first <see cref="ScalarQuantity"/> to compare.</param>
-    /// <param name="quantity2">The second <see cref="ScalarQuantity"/> to compare.</param>
-    /// <returns><c>true</c> if <paramref name="quantity1"/> is greater than or equal to <paramref name="quantity2"/>; otherwise, <c>false</c>.</returns>
+    /// <inheritdoc cref="CompareTo" />
     [Pure]
-    public static bool operator >=(ScalarQuantity? quantity1, ScalarQuantity? quantity2)
-    {
-        if (ReferenceEquals(quantity1, quantity2)) return true;
-        if (quantity1 is null) return false;
-        if (quantity2 is null) return true;
+    public static bool operator >=(ScalarQuantity? left, ScalarQuantity? right) => Compare(left, right) >= 0;
 
-        return quantity1._coherent.Amount >= quantity2._coherent.Amount
-               && quantity1._coherent.Unit == quantity2._coherent.Unit;
-    }
-
-    /// <summary>
-    /// Determines whether one <see cref="ScalarQuantity"/> is less than or equal to another <see cref="ScalarQuantity"/>.
-    /// </summary>
-    /// <param name="quantity1">The first <see cref="ScalarQuantity"/> to compare.</param>
-    /// <param name="quantity2">The second <see cref="ScalarQuantity"/> to compare.</param>
-    /// <returns><c>true</c> if <paramref name="quantity1"/> is less than or equal to <paramref name="quantity2"/>; otherwise, <c>false</c>.</returns>
+    /// <inheritdoc cref="CompareTo" />
     [Pure]
-    public static bool operator <=(ScalarQuantity? quantity1, ScalarQuantity? quantity2)
-    {
-        if (ReferenceEquals(quantity1, quantity2)) return true;
-        if (quantity1 is null) return true;
-        if (quantity2 is null) return false;
+    public static bool operator <=(ScalarQuantity? left, ScalarQuantity? right) => Compare(left, right) <= 0;
 
-        return quantity1._coherent.Amount <= quantity2._coherent.Amount
-               && quantity1._coherent.Unit == quantity2._coherent.Unit;
-    }
+    private static int Compare(ScalarQuantity? left, ScalarQuantity? right)
+        => left is null ? (right is null ? 0 : -1) : left.CompareTo(right);
 }

@@ -8,7 +8,7 @@ public class ImmutableCollection<TItem> : ReadOnlyCollection<TItem>, IEquatable<
     private readonly int _hashCode;
 
     public ImmutableCollection(IList<TItem> items)
-        : base(items)
+        : base(new List<TItem>(items))
     {
         _hashCode = Items.Hash();
     }

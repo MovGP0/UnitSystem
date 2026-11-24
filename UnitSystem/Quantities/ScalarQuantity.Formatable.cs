@@ -1,5 +1,3 @@
-using UnitSystem.Extensions;
-
 namespace UnitSystem.Quantities;
 
 public sealed partial class ScalarQuantity : IFormattable
@@ -69,5 +67,11 @@ public sealed partial class ScalarQuantity : IFormattable
     /// <inheritdoc />
     [Pure]
     public string ToString(string? format, IFormatProvider? formatProvider)
-        => "{0} {1}".FormatWith(Amount.ToString(format, formatProvider), Unit);
+    {
+        var amount = Amount.ToString(format, formatProvider);
+        var symbol = Unit.ToString();
+        if (symbol.Length == 0) return amount;
+
+        return !IsPoint && Unit.SupportsPoints ? $"{amount} Δ{symbol}" : $"{amount} {symbol}";
+    }
 }
