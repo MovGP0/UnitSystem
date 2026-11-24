@@ -9,7 +9,7 @@ root = true
 # https://josefpihrt.github.io/docs/roslynator/analyzers/
 
 # Separate the using list from the declarations that follow
-# dotnet_diagnostic.RCS0003.severity = warning
+dotnet_diagnostic.RCS0003.severity = warning
 
 # Separate a closing brace from the next statement
 # dotnet_diagnostic.RCS0008.severity = warning
