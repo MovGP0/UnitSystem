@@ -780,7 +780,7 @@ dotnet_diagnostic.CA1419.severity = warning
 dotnet_diagnostic.CA1420.severity = warning
 
 # This method uses runtime marshalling even when the 'DisableRuntimeMarshallingAttribute' is applied
-# dotnet_diagnostic.CA1421.severity = warning
+dotnet_diagnostic.CA1421.severity = warning
 
 # Validate platform compatibility
 dotnet_diagnostic.CA1422.severity = warning
