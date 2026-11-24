@@ -846,7 +846,7 @@ dotnet_diagnostic.CA1831.severity = warning
 dotnet_diagnostic.CA1832.severity = warning
 
 # Use AsSpan or AsMemory instead of Range-based indexers when appropriate
-# dotnet_diagnostic.CA1833.severity = warning
+dotnet_diagnostic.CA1833.severity = warning
 
 # Consider using 'StringBuilder.Append(char)' when applicable
 # dotnet_diagnostic.CA1834.severity = warning
