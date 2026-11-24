@@ -461,7 +461,7 @@ dotnet_diagnostic.RCS1166.severity = warning
 dotnet_diagnostic.RCS1169.severity = warning
 
 # Use read-only auto-implemented property
-# dotnet_diagnostic.RCS1170.severity = warning
+dotnet_diagnostic.RCS1170.severity = warning
 
 # Simplify lazy initialization
 # dotnet_diagnostic.RCS1171.severity = warning

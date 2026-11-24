@@ -76,7 +76,7 @@ public sealed class KnownUnit : Unit
     /// <summary>
     /// Gets the name of the unit.
     /// </summary>
-    public string Name { get; private set; }
+    public string Name { get; }
 
     /// <summary>
     /// Gets the inherent factor of the unit, which is determined by the prefix.

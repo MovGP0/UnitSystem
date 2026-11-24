@@ -6,7 +6,7 @@
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
 public class QsFunctionAttribute(string functionName) : Attribute
 {
-    public string FunctionName { get; private set; } = functionName;
+    public string FunctionName { get; } = functionName;
 
     public bool DefaultScopeFunction { get; set; } = false;
 }

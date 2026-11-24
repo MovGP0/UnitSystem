@@ -104,52 +104,52 @@ public static class SISystem
     /// <summary>
     /// length
     /// </summary>
-    public static Unit m { get; private set; } = null!;
+    public static Unit m { get; } = null!;
 
     /// <summary>
     /// mass
     /// </summary>
-    public static Unit kg { get; private set; } = null!;
+    public static Unit kg { get; } = null!;
 
     /// <summary>
     /// time
     /// </summary>
-    public static Unit s { get; private set; } = null!;
+    public static Unit s { get; } = null!;
 
     /// <summary>
     /// electric current
     /// </summary>
-    public static Unit A { get; private set; } = null!;
+    public static Unit A { get; } = null!;
 
     /// <summary>
     /// thermodynamic temperature
     /// </summary>
-    public static Unit K { get; private set; } = null!;
+    public static Unit K { get; } = null!;
 
     /// <summary>
     /// amount of substance
     /// </summary>
-    public static Unit mol { get; private set; } = null!;
+    public static Unit mol { get; } = null!;
 
     /// <summary>
     /// luminous intensity
     /// </summary>
-    public static Unit cd { get; private set; } = null!;
+    public static Unit cd { get; } = null!;
 
     /// <summary>
     /// angle
     /// </summary>
-    public static Unit rad { get; private set; } = null!;
+    public static Unit rad { get; } = null!;
 
     /// <summary>
     /// spherical angle
     /// </summary>
-    public static Unit sr { get; private set; } = null!;
+    public static Unit sr { get; } = null!;
 
     /// <summary>
     /// angle
     /// </summary>
-    public static Unit deg { get; private set; } = null!;
+    public static Unit deg { get; } = null!;
 
     #endregion
 
@@ -158,87 +158,87 @@ public static class SISystem
     /// <summary>
     /// luminous flux
     /// </summary>
-    public static Unit lm { get; private set; } = null!;
+    public static Unit lm { get; } = null!;
 
     /// <summary>
     /// frequency
     /// </summary>
-    public static Unit Hz { get; private set; } = null!;
+    public static Unit Hz { get; } = null!;
 
     /// <summary>
     /// force, weight
     /// </summary>
-    public static Unit N { get; private set; } = null!;
+    public static Unit N { get; } = null!;
 
     /// <summary>
     /// pressure, stress
     /// </summary>
-    public static Unit Pa { get; private set; } = null!;
+    public static Unit Pa { get; } = null!;
 
     /// <summary>
     /// energy, work, heat
     /// </summary>
-    public static Unit J { get; private set; } = null!;
+    public static Unit J { get; } = null!;
 
     /// <summary>
     /// power, radiant flux
     /// </summary>
-    public static Unit W { get; private set; } = null!;
+    public static Unit W { get; } = null!;
 
     /// <summary>
     /// electric charge, quantity of electricity
     /// </summary>
-    public static Unit C { get; private set; } = null!;
+    public static Unit C { get; } = null!;
 
     /// <summary>
     /// voltage (electrical potential difference), electromotive force
     /// </summary>
-    public static Unit V { get; private set; } = null!;
+    public static Unit V { get; } = null!;
 
     /// <summary>
     /// electric capacitance
     /// </summary>
-    public static Unit F { get; private set; } = null!;
+    public static Unit F { get; } = null!;
 
     /// <summary>
     /// electric resistance, impedance, reactance
     /// </summary>
-    public static Unit Ω { get; private set; } = null!;
+    public static Unit Ω { get; } = null!;
 
     /// <summary>
     /// electrical conductance
     /// </summary>
-    public static Unit S { get; private set; } = null!;
+    public static Unit S { get; } = null!;
 
     /// <summary>
     /// magnetic flux
     /// </summary>
-    public static Unit Wb { get; private set; } = null!;
+    public static Unit Wb { get; } = null!;
 
     /// <summary>
     /// magnetic field strength
     /// </summary>
-    public static Unit T { get; private set; } = null!;
+    public static Unit T { get; } = null!;
 
     /// <summary>
     /// inductance
     /// </summary>
-    public static Unit H { get; private set; } = null!;
+    public static Unit H { get; } = null!;
 
     /// <summary>
     /// illuminance
     /// </summary>
-    public static Unit lx { get; private set; } = null!;
+    public static Unit lx { get; } = null!;
 
     /// <summary>
     /// equivalent dose of ionizing radiation
     /// </summary>
-    public static Unit Sv { get; private set; } = null!;
+    public static Unit Sv { get; } = null!;
 
     /// <summary>
     /// catalytic activity
     /// </summary>
-    public static Unit kat { get; private set; } = null!;
+    public static Unit kat { get; } = null!;
 
     /// <summary>
     /// thermodynamic temperature
@@ -246,7 +246,7 @@ public static class SISystem
     /// <remarks>
     /// This is a relative unit and needs to be converted to <see cref="K">Kelvin</see> to be used in calculations.
     /// </remarks>
-    public static Unit degC { get; private set; } = null!;
+    public static Unit degC { get; } = null!;
 
     #endregion
 
@@ -255,12 +255,12 @@ public static class SISystem
     /// <summary>
     /// Time expressed in hours
     /// </summary>
-    public static Unit h { get; private set; } = null!;
+    public static Unit h { get; } = null!;
 
     /// <summary>
     /// Time expressed in minutes
     /// </summary>
-    public static Unit min { get; private set; } = null!;
+    public static Unit min { get; } = null!;
 
     #endregion
 }
