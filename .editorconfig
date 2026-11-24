@@ -662,7 +662,7 @@ dotnet_diagnostic.RCS1243.severity = warning
 # dotnet_diagnostic.RCS1244.severity = silent
 
 # Use element access
-# dotnet_diagnostic.RCS1246.severity = warning
+dotnet_diagnostic.RCS1246.severity = warning
 
 # Fix documentation comment tag
 # dotnet_diagnostic.RCS1247.severity = warning

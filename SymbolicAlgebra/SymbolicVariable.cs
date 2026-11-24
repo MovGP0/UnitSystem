@@ -1698,7 +1698,7 @@ public partial class SymbolicVariable
 
         for (var i = svar.ExtraTerms.Count - 1; i >= 0; i--)
         {
-            if (svar.ExtraTerms.ElementAt(i).Term.Coeffecient == 0)
+            if (svar.ExtraTerms[i].Term.Coeffecient == 0)
             {
                 svar.ExtraTerms.RemoveAt(i);
             }
@@ -1726,7 +1726,7 @@ public partial class SymbolicVariable
             }
             else if (svar.ExtraTerms.Count > 0)
             {
-                var priamry = svar.ExtraTerms.ElementAt(0).Term;
+                var priamry = svar.ExtraTerms[0].Term;
                 if (svar.ExtraTerms[0].Negative)
                 {
                     priamry.Coeffecient *= -1;
