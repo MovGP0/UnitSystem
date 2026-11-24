@@ -521,7 +521,7 @@ dotnet_diagnostic.RCS1194.severity = warning
 dotnet_diagnostic.RCS1195.severity = warning
 
 # Call extension method as instance method
-# dotnet_diagnostic.RCS1196.severity = warning
+dotnet_diagnostic.RCS1196.severity = warning
 
 # Optimize StringBuilder.Append/AppendLine call
 # dotnet_diagnostic.RCS1197.severity = warning

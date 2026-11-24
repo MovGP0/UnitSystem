@@ -43,7 +43,7 @@ public partial class QsSequence
 
         var tot = SumElements(fromIndex, toIndex);
 
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
         return tot / count;
     }
 
@@ -54,7 +54,7 @@ public partial class QsSequence
 
         var tot = SumElements(fromIndex, toIndex, arg0);
         var n = toIndex - fromIndex + 1;
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
         return tot / count;
     }
 
@@ -64,7 +64,7 @@ public partial class QsSequence
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1);
         var n = toIndex - fromIndex + 1;
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
         return tot / count;
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
@@ -73,7 +73,7 @@ public partial class QsSequence
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2);
         var n = toIndex - fromIndex + 1;
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
         return tot / count;
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
@@ -82,7 +82,7 @@ public partial class QsSequence
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3);
         var n = toIndex - fromIndex + 1;
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
         return tot / count;
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
@@ -91,7 +91,7 @@ public partial class QsSequence
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4);
         var n = toIndex - fromIndex + 1;
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
         return tot / count;
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
@@ -100,7 +100,7 @@ public partial class QsSequence
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5);
         var n = toIndex - fromIndex + 1;
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
         return tot / count;
     }
     public QsValue Average(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
@@ -109,7 +109,7 @@ public partial class QsSequence
 
         var tot = SumElements(fromIndex, toIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
         var n = toIndex - fromIndex + 1;
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
         return tot / count;
     }
 

@@ -23,7 +23,7 @@ public partial class QsSequence
             Total += pp2;
         }
 
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
 
         return Total / count;
     }
@@ -43,7 +43,7 @@ public partial class QsSequence
             Total += pp2;
         }
 
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
 
         return Total / count;
     }
@@ -62,7 +62,7 @@ public partial class QsSequence
             Total += pp2;
         }
 
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
 
         return Total / count;
     }
@@ -80,7 +80,7 @@ public partial class QsSequence
             Total += pp2;
         }
 
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
 
         return Total / count;
     }
@@ -98,7 +98,7 @@ public partial class QsSequence
             Total += pp2;
         }
 
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
 
         return Total / count;
     }
@@ -116,7 +116,7 @@ public partial class QsSequence
             Total += pp2;
         }
 
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
 
         return Total / count;
     }
@@ -134,7 +134,7 @@ public partial class QsSequence
             Total += pp2;
         }
 
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
 
         return Total / count;
     }
@@ -153,7 +153,7 @@ public partial class QsSequence
             Total += pp2;
         }
 
-        var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
+        var count = new QsScalar { NumericalQuantity = ((double)n).ToQuantity() };
 
         return Total / count;
     }
