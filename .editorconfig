@@ -108,7 +108,7 @@ dotnet_diagnostic.RCS0054.severity = warning
 dotnet_diagnostic.RCS0055.severity = warning
 
 # Limit the width of source lines
-# dotnet_diagnostic.RCS0056.severity = warning
+dotnet_diagnostic.RCS0056.severity = warning
 roslynator_max_line_length = 1024
 roslynator_tab_length = 4
 
