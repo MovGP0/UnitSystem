@@ -476,7 +476,7 @@ dotnet_diagnostic.RCS1173.severity = warning
 # dotnet_diagnostic.RCS1174.severity = none
 
 # Unused 'this' parameter
-# dotnet_diagnostic.RCS1175.severity = warning
+dotnet_diagnostic.RCS1175.severity = warning
 
 # Unnecessary assignment
 # dotnet_diagnostic.RCS1179.severity = warning
