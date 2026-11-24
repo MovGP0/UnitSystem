@@ -185,7 +185,7 @@ dotnet_diagnostic.RCS1015.severity = warning
 dotnet_diagnostic.RCS1020.severity = warning
 
 # Convert lambda expression body to expression body
-# dotnet_diagnostic.RCS1021.severity = warning
+dotnet_diagnostic.RCS1021.severity = warning
 
 # Remove unnecessary braces in switch section
 # dotnet_diagnostic.RCS1031.severity = silent
