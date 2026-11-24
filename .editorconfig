@@ -1005,7 +1005,7 @@ dotnet_diagnostic.CA2023.severity = warning
 dotnet_diagnostic.CA2024.severity = warning
 
 # Prefer JsonElement.Parse over JsonDocument.Parse().RootElement
-# dotnet_diagnostic.CA2026.severity = warning
+dotnet_diagnostic.CA2026.severity = warning
 
 # Cancel Task.Delay after Task.WhenAny completes
 # dotnet_diagnostic.CA2027.severity = warning
