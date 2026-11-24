@@ -482,7 +482,7 @@ dotnet_diagnostic.RCS1175.severity = warning
 dotnet_diagnostic.RCS1179.severity = warning
 
 # Inline lazy initialization
-# dotnet_diagnostic.RCS1180.severity = warning
+dotnet_diagnostic.RCS1180.severity = warning
 
 # Convert comment to documentation comment
 # dotnet_diagnostic.RCS1181.severity = silent

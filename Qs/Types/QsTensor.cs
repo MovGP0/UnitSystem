@@ -160,12 +160,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
         else
         {
             // Third rank tensor or more
-            if (InnerTensors == null)
-            {
-                InnerTensors = [];
-            }
-
-            InnerTensors.Add(qsTensor);
+            (InnerTensors ??= []).Add(qsTensor);
         }
     }
 
