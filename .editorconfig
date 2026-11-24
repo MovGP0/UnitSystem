@@ -963,7 +963,7 @@ dotnet_diagnostic.CA1877.severity = warning
 dotnet_diagnostic.CA2009.severity = warning
 
 # Avoid infinite recursion
-# dotnet_diagnostic.CA2011.severity = warning
+dotnet_diagnostic.CA2011.severity = warning
 
 # Use ValueTasks correctly
 # dotnet_diagnostic.CA2012.severity = warning
