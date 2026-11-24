@@ -61,7 +61,9 @@ public class QsScopeStorage : IQsStorageProvider
         _Storage.Clear();
     }
 
+#pragma warning disable CA1816 // Dictionary-backed storage owns no resources and does not manage derived finalizers.
     public void Dispose()
+#pragma warning restore CA1816
     {
         // do nothing
     }

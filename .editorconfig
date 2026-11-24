@@ -810,7 +810,7 @@ dotnet_diagnostic.CA1517.severity = warning
 dotnet_diagnostic.CA1806.severity = warning
 
 # Dispose methods should call SuppressFinalize
-# dotnet_diagnostic.CA1816.severity = warning
+dotnet_diagnostic.CA1816.severity = warning
 
 # Remove empty Finalizers
 # dotnet_diagnostic.CA1821.severity = warning
