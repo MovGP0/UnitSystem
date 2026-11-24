@@ -332,7 +332,7 @@ dotnet_diagnostic.RCS1104.severity = warning
 dotnet_diagnostic.RCS1105.severity = warning
 
 # Remove redundant 'ToCharArray' call
-# dotnet_diagnostic.RCS1107.severity = warning
+dotnet_diagnostic.RCS1107.severity = warning
 
 # Add 'static' modifier to all partial class declarations
 # dotnet_diagnostic.RCS1108.severity = warning
