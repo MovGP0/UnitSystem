@@ -446,7 +446,7 @@ dotnet_diagnostic.RCS1160.severity = warning
 dotnet_diagnostic.RCS1163.severity = warning
 
 # Unused type parameter
-# dotnet_diagnostic.RCS1164.severity = warning
+dotnet_diagnostic.RCS1164.severity = warning
 
 # Unconstrained type parameter checked for null
 # dotnet_diagnostic.RCS1165.severity = silent
