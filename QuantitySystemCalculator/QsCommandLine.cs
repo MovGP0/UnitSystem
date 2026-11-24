@@ -6,7 +6,7 @@ public sealed class QsCommandLine : CommandLine
 {
     protected override string Prompt => "Qs> ";
 
-    protected override string ReadLine(int autoIndentSize)
+    protected override string? ReadLine(int autoIndentSize)
     {
         Qs.Scripting.QsScriptCode.LastLine = base.ReadLine(autoIndentSize);
 

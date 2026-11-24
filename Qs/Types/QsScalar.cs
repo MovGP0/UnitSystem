@@ -2,6 +2,7 @@
 using Qs.Runtime;
 using SymbolicAlgebra;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using QuantitySystem.Units;
 using Qs.Numerics;
 
@@ -14,43 +15,88 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 {
     #region Scalar Types Storage
 
+    private AnyQuantity<Rational>? _rationalQuantity;
+
+    private QsOperation? _operation;
+
+    private AnyQuantity<QsFunction>? _functionQuantity;
+
+    private AnyQuantity<Quaternion>? _quaternionQuantity;
+
+    private AnyQuantity<Complex>? _complexQuantity;
+
+    private AnyQuantity<double>? _numericalQuantity;
+
+    private AnyQuantity<SymbolicVariable>? _symbolicQuantity;
+
     public ScalarTypes ScalarType { get; } = scalarType;
 
     /// <summary>
     /// Quantity that its storage is symbol.
     /// </summary>
-    public AnyQuantity<SymbolicVariable> SymbolicQuantity { get; set; }
+    public AnyQuantity<SymbolicVariable> SymbolicQuantity
+    {
+        get => RequireScalarValue(_symbolicQuantity);
+        set => _symbolicQuantity = value;
+    }
 
     /// <summary>
     /// Double Number Quantity
     /// Default behaviour.
     /// </summary>
-    public AnyQuantity<double> NumericalQuantity { get; set; }
+    public AnyQuantity<double> NumericalQuantity
+    {
+        get => RequireScalarValue(_numericalQuantity);
+        set => _numericalQuantity = value;
+    }
 
     /// <summary>
     /// Quantity that its storage is a complex number
     /// </summary>
-    public AnyQuantity<Complex> ComplexQuantity { get; set; }
+    public AnyQuantity<Complex> ComplexQuantity
+    {
+        get => RequireScalarValue(_complexQuantity);
+        set => _complexQuantity = value;
+    }
 
     /// <summary>
     /// Quantity that its storage is a Quaternion number
     /// </summary>
-    public AnyQuantity<Quaternion> QuaternionQuantity { get; set; }
+    public AnyQuantity<Quaternion> QuaternionQuantity
+    {
+        get => RequireScalarValue(_quaternionQuantity);
+        set => _quaternionQuantity = value;
+    }
 
     /// <summary>
     /// Quantity that its storage is a Function.
     /// </summary>
-    public AnyQuantity<QsFunction> FunctionQuantity { get; set; }
+    public AnyQuantity<QsFunction> FunctionQuantity
+    {
+        get => RequireScalarValue(_functionQuantity);
+        set => _functionQuantity = value;
+    }
 
     /// <summary>
     /// Hold qs operations like @ and \/ operations
     /// </summary>
-    public QsOperation Operation { get; set; }
+    public QsOperation Operation
+    {
+        get => RequireScalarValue(_operation);
+        set => _operation = value;
+    }
 
     /// <summary>
     /// Rational Number Quantity.
     /// </summary>
-    public AnyQuantity<Rational> RationalQuantity { get; set; }
+    public AnyQuantity<Rational> RationalQuantity
+    {
+        get => RequireScalarValue(_rationalQuantity);
+        set => _rationalQuantity = value;
+    }
+
+    private static T RequireScalarValue<T>(T? value, [CallerMemberName] string? member = null) where T : class
+        => value ?? throw new InvalidOperationException($"The scalar does not contain {member}.");
 
     #endregion
 

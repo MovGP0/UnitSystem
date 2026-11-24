@@ -33,7 +33,7 @@ public sealed partial class Token : IEnumerable<Token>
                 if (InComplete)
                 {
                     // we didn't encounter ending token   so we put the current tokens into its parents
-                    var p = current.ParentToken;
+                    var p = current.ParentToken ?? throw new InvalidOperationException("The token group has no parent.");
                     foreach (var t in current)
                     {
                         p.AppendSubToken(t);
@@ -54,7 +54,7 @@ public sealed partial class Token : IEnumerable<Token>
                 goto LoopAgain;
             }
 
-            if (closeTokenClasses.Contains(c.TokenClassType) && InComplete)
+            if (c.TokenClassType is { } closeType && closeTokenClasses.Contains(closeType) && InComplete)
             {
                 //put the close token inside the current container
                 current.AppendSubToken(c);
@@ -69,7 +69,7 @@ public sealed partial class Token : IEnumerable<Token>
                     }
                 }
 
-                current = current.ParentToken;
+                current = current.ParentToken ?? throw new FormatException("Unexpected closing token.");
 
                 InComplete = false;
 
@@ -86,7 +86,7 @@ public sealed partial class Token : IEnumerable<Token>
         if (InComplete)
         {
             // we didn't encounter ending token   so we put the current tokens into its parents
-            var p = current.ParentToken;
+            var p = current.ParentToken ?? throw new InvalidOperationException("The token group has no parent.");
             foreach (var t in current)
             {
                 p.AppendSubToken(t);
@@ -145,7 +145,7 @@ public sealed partial class Token : IEnumerable<Token>
                     // mark the current container with the group class type.
                     current.TokenClassType = GroupToken.Type;
 
-                    current = current.ParentToken;
+                    current = current.ParentToken ?? throw new FormatException("Unexpected closing token.");
 
                     goto LoopAgain;
                 }
@@ -211,12 +211,7 @@ public sealed partial class Token : IEnumerable<Token>
             else
             {
                 //sub groups then test this token
-                if (
-                    (
-                        wordTokensClasses.Contains(c.TokenClassType)
-                    )
-                        && !ignoreWords.Contains(c.TokenValue, stringComparer)         // and the whole value is not in  the ignore words
-                )
+                if (c.TokenClassType is { } wordType && wordTokensClasses.Contains(wordType) && !ignoreWords.Contains(c.TokenValue, stringComparer))
                 {
                     //check if the next token is group
                     if (ci < Count - 1)
@@ -225,7 +220,7 @@ public sealed partial class Token : IEnumerable<Token>
 
                         #region group discovery
                         // see if the next token class type is among the types we are checking for.
-                        if (GroupsClassesTypes.Contains(cnext.TokenClassType))
+                        if (cnext.TokenClassType is { } groupType && GroupsClassesTypes.Contains(groupType))
                         {
                             // so this is a call pattern
                             // find the CALL class type of this group from the original CallTokenClasses

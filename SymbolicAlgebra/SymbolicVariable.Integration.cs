@@ -166,6 +166,7 @@ public partial class SymbolicVariable
             }
             else if (sv.IsFunction)
             {
+                var functionName = sv.FunctionName;
                 var fv = sv.Clone();
 
                 // remove the power term in this copied function term
@@ -173,7 +174,7 @@ public partial class SymbolicVariable
                 fv.SymbolPower = 1.0;
                 fv.Coeffecient = 1.0;
 
-                if (fv.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
+                if (functionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
                 {
                     if (fv.FunctionArguments.Length != 1)
                     {
@@ -198,7 +199,7 @@ public partial class SymbolicVariable
                         return Divide(fv, divo);
                     }
                 }
-                else if (fv.FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
+                else if (functionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
                 {
                     if (fv.FunctionArguments.Length != 1)
                     {
@@ -252,15 +253,15 @@ public partial class SymbolicVariable
                     */
 
                 }
-                else if (fv.FunctionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
+                else if (functionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
                 {
                     throw new NotImplementedException();
                 }
-                else if (FunctionOperation.InversedTrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
+                else if (FunctionOperation.InversedTrigFunctions.Contains(functionName, StringComparer.OrdinalIgnoreCase))
                 {
                     fv = FunctionOperation.IntegInversedTrigFunction(fv, parameter);
                 }
-                else if (FunctionOperation.TrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
+                else if (FunctionOperation.TrigFunctions.Contains(functionName, StringComparer.OrdinalIgnoreCase))
                 {
                     // triogonometric functions
 

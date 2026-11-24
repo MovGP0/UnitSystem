@@ -8,7 +8,7 @@ namespace QsGraphics;
 
 public class Circle : Shape
 {
-    readonly AnyQuantity<double> _x, _y, _radius;
+    readonly AnyQuantity<double>? _x, _y, _radius;
 
     public Circle(AnyQuantity<double> x, AnyQuantity<double> y, AnyQuantity<double> radius)
     {
@@ -19,7 +19,7 @@ public class Circle : Shape
         var t = new System.Timers.Timer();
     }
 
-    readonly QsFunction xfunc, yfunc, radfunc;
+    readonly QsFunction? xfunc, yfunc, radfunc;
 
     /// <summary>
     /// constructor accepts quantities and qs functions also
@@ -59,6 +59,22 @@ public class Circle : Shape
 
     private readonly Length<double> zm = (Length<double>)Unit.ParseQuantity("0<m>");
 
+    private Length<double> ResolveLength(AnyQuantity<double>? quantity, QsFunction? function, Time<double> time)
+    {
+        if (function is not null)
+        {
+            return (Length<double>)(zm + function.Invoke(time));
+        }
+
+        var value = quantity ?? throw new InvalidOperationException("The circle dimension is missing.");
+        if (value.GetType() == typeof(Speed<double>))
+        {
+            value *= time;
+        }
+
+        return (Length<double>)(zm + value);
+    }
+
     public override void Draw(Graphics graphics, float pixelPerMeter)
     {
         var p1 = new PointF();
@@ -73,51 +89,9 @@ public class Circle : Shape
             TQ = (Time<double>)MetricUnit.Milli<Second>(Timer.ElapsedMilliseconds);
         }
 
-        Length<double> ActualRadius;
-
-        if (radfunc != null)
-        {
-            ActualRadius = (Length<double>)(zm + radfunc.Invoke(TQ));
-        }
-        else if (_radius.GetType().Equals(typeof(Speed<double>)))
-        {
-            ActualRadius = (Length<double>)(zm + (_radius * TQ));
-        }
-        else
-        {
-            ActualRadius = (Length<double>)(zm + _radius);
-        }
-
-        Length<double> ActualX;
-
-        if (xfunc != null)
-        {
-            ActualX = (Length<double>)(zm + xfunc.Invoke(TQ));
-        }
-        else if (_x.GetType().Equals(typeof(Speed<double>)))
-        {
-            ActualX = (Length<double>)(zm + (_x * TQ));
-        }
-        else
-        {
-            ActualX = (Length<double>)(zm + _x);
-        }
-
-        Length<double> ActualY;
-
-        if (yfunc != null)
-        {
-            ActualY = (Length<double>)(zm + yfunc.Invoke(TQ));
-        }
-        else if (_y.GetType().Equals(typeof(Speed<double>)))
-        {
-            ActualY = (Length<double>)(zm + (_y * TQ));
-        }
-        else
-        {
-            ActualY = (Length<double>)(zm + _y);
-        }
-
+        var ActualRadius = ResolveLength(_radius, radfunc, TQ);
+        var ActualX = ResolveLength(_x, xfunc, TQ);
+        var ActualY = ResolveLength(_y, yfunc, TQ);
         p1.X = (float)((ActualX - ActualRadius).Value * pixelPerMeter);
         p2.X = (float)((ActualX + ActualRadius).Value * pixelPerMeter);
 

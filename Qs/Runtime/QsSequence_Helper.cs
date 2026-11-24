@@ -7,7 +7,7 @@ namespace Qs.Runtime;
 
 public partial class QsSequence
 {
-    private string _SequenceDeclaration;
+    private string? _SequenceDeclaration;
 
     public string SequenceDeclaration
     {
@@ -36,15 +36,15 @@ public partial class QsSequence
     /// When applying a range operator like summation or multiplication
     /// this is the variable that will hold the start value 0..10 (I mean 0)
     /// </summary>
-    public string SequenceRangeStartName { get; set; }
+    public string? SequenceRangeStartName { get; set; }
 
     /// <summary>
     /// When applying a range operator like summation or multiplication
     /// this is the variable that will hold the end value  0..10  (I mean 10)
     /// </summary>
-    public string SequenceRangeEndName { get; set; }
+    public string? SequenceRangeEndName { get; set; }
 
-    private string _SequenceName;
+    private string _SequenceName = string.Empty;
 
     public string SequenceSymbolicName
     {

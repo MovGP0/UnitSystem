@@ -8,7 +8,7 @@ public class StepAttribute : Attribute
 {
     public int _StepId;
 
-    public Type[] _ItemAssociatedTypes;
+    public Type[]? _ItemAssociatedTypes;
 
     public bool Skip = false;
 

@@ -18,7 +18,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
     /// <summary>
     /// The body of the lambda. This must be non-null.
     /// </summary>
-    public Expression Body { get; set; }
+    public Expression? Body { get; set; }
 
     /// <summary>
     /// Creates a parameter on the lambda with a given name and type.
@@ -77,7 +77,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
     {
         var lambda = Expression.Lambda(
             GetLambdaType(type, Parameters),
-            Body,
+            Body ?? throw new InvalidOperationException("The lambda body is missing."),
             functionName + "$" + Interlocked.Increment(ref _lambdaId),
             Parameters
         );

@@ -5,13 +5,11 @@ namespace QsRoot;
 
 public static class Currency
 {
-    static ParticleLexer.Token _currenciesJson;
-
     static Dictionary<string, double> _currentCurrencies;
 
     static Currency()
     {
-        ReadCurrenciesJson();
+        _currentCurrencies = ReadCurrenciesJson();
     }
 
     /// <summary>
@@ -35,7 +33,7 @@ public static class Currency
         File.WriteAllBytes(TodayChangeRatesFile, xch);
     }
 
-    static void ReadCurrenciesJson()
+    static Dictionary<string, double> ReadCurrenciesJson()
     {
         if (!File.Exists(TodayChangeRatesFile))
         {
@@ -43,9 +41,10 @@ public static class Currency
             DownloadExchangeFile();
         }
 
+        ParticleLexer.Token currenciesJson;
         using (var rr = new StreamReader(TodayChangeRatesFile))
         {
-            _currenciesJson = ParticleLexer.Token.ParseText(rr.ReadToEnd());
+            currenciesJson = ParticleLexer.Token.ParseText(rr.ReadToEnd());
         }
 
         /*
@@ -56,27 +55,29 @@ public static class Currency
          * value is either string or number
          *
          */
-        _currenciesJson = _currenciesJson.TokenizeTextStrings();
-        _currenciesJson = _currenciesJson.MergeTokens<WordToken>();
-        _currenciesJson = _currenciesJson.RemoveAnySpaceTokens();
-        _currenciesJson = _currenciesJson.RemoveNewLineTokens();
-        _currenciesJson = _currenciesJson.MergeTokens<NumberToken>();
-        _currenciesJson = _currenciesJson.MergeSequenceTokens<MergedToken>(
+        currenciesJson = currenciesJson.TokenizeTextStrings();
+        currenciesJson = currenciesJson.MergeTokens<WordToken>();
+        currenciesJson = currenciesJson.RemoveAnySpaceTokens();
+        currenciesJson = currenciesJson.RemoveNewLineTokens();
+        currenciesJson = currenciesJson.MergeTokens<NumberToken>();
+        currenciesJson = currenciesJson.MergeSequenceTokens<MergedToken>(
             typeof(ParticleLexer.CommonTokens.TextStringToken),
             typeof(ColonToken),
             typeof(NumberToken)
         );
 
-        _currentCurrencies = new Dictionary<string, double>();
+        Dictionary<string, double> currencies = new();
 
         // find rates key
-        foreach (var tok in _currenciesJson)
+        foreach (var tok in currenciesJson)
         {
             if (tok.TokenClassType == typeof(MergedToken))
             {
-                _currentCurrencies.Add(tok[0].TrimTokens(1, 1).TokenValue, double.Parse(tok[2].TokenValue, CultureInfo.InvariantCulture));
+                currencies.Add(tok[0].TrimTokens(1, 1).TokenValue, double.Parse(tok[2].TokenValue, CultureInfo.InvariantCulture));
             }
         }
+
+        return currencies;
     }
 
     public static double CurrencyConverter(string currency)
@@ -98,6 +99,6 @@ public static class Currency
     {
         DownloadExchangeFile();
 
-        ReadCurrenciesJson();
+        _currentCurrencies = ReadCurrenciesJson();
     }
 }

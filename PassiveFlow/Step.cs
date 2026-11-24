@@ -93,7 +93,7 @@ public class Step(Flow flow)
         }
     }
 
-    Func<Flow> HostFlowCreationFunction;
+    Func<Flow>? HostFlowCreationFunction;
 
     private Flow CreateHostFlow()
     {

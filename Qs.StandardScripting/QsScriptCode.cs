@@ -12,7 +12,7 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
         return Run(new Scope());
     }
 
-    public static string LastLine { get; set; }
+    public static string? LastLine { get; set; }
 
     public override object? Run(Scope scope)
     {

@@ -22,13 +22,13 @@ class QsVar
     {
         public Expression? QuantityExpression { get; set; }
 
-        public string Operation { get; set; }
+        public string Operation { get; set; } = string.Empty;
 
-        public ExprOp Previous { get; set; }
+        public ExprOp? Previous { get; set; }
 
-        private ExprOp _Next;
+        private ExprOp? _Next;
 
-        public ExprOp Next
+        public ExprOp? Next
         {
             get => _Next;
             set
@@ -44,9 +44,13 @@ class QsVar
 
     public QsVarParseModes ParseMode { get; set; }
 
-    readonly SimpleLambdaBuilder lambdaBuilder = null;
+    private readonly SimpleLambdaBuilder? _lambdaBuilder;
 
-    private readonly QsFunction Function;
+    private SimpleLambdaBuilder LambdaBuilder => _lambdaBuilder ?? throw new QsException("A lambda builder is required in this parsing mode.");
+
+    private readonly QsFunction? _function;
+
+    private QsFunction Function => _function ?? throw new QsException("Function context is missing.");
 
     /// <summary>
     /// Evaluate the function body taking into considerations
@@ -60,9 +64,9 @@ class QsVar
         this.Evaluator = evaluator;
         if (function != null)
         {
-            lambdaBuilder = lb;
+            _lambdaBuilder = lb;
 
-            Function = function;
+            _function = function;
 
             ParseMode = QsVarParseModes.Function;
         }
@@ -95,7 +99,9 @@ class QsVar
         ResultExpression = ParseArithmatic(expression);
     }
 
-    private readonly QsSequence Sequence= null;
+    private readonly QsSequence? _sequence;
+
+    private QsSequence Sequence => _sequence ?? throw new QsException("Sequence context is missing.");
 
     /// <summary>
     /// Evaulate the line for use in sequence body.
@@ -109,8 +115,8 @@ class QsVar
 
         if (sequence != null)
         {
-            lambdaBuilder = lb;
-            Sequence = sequence;
+            _lambdaBuilder = lb;
+            _sequence = sequence;
             ParseMode = QsVarParseModes.Sequence;
         }
 
@@ -763,7 +769,7 @@ class QsVar
 
                         if (q.Equals(Sequence.SequenceIndexName, StringComparison.OrdinalIgnoreCase))
                         {
-                            quantityExpression = lambdaBuilder.Parameters.Single(c => c.Name == q);
+                            quantityExpression = LambdaBuilder.Parameters.Single(c => c.Name == q);
 
                             //it is really an index
                             // convert it into Quantity.
@@ -1373,7 +1379,7 @@ class QsVar
     {
         if (tok.TokenClassType != typeof(CurlyBracketGroupToken))
         {
-            throw new QsException("The passed token type is not curly bracket group token, it is " + tok.TokenClassType.Name);
+            throw new QsException("The passed token type is not curly bracket group token, it is " + (tok.TokenClassType?.Name ?? "unclassified"));
         }
 
         List<string> qtyExpressions = [];
@@ -2416,7 +2422,7 @@ class QsVar
                 // Prepare the expression that will execute this function dynamically
 
                 // Get the function name from the parameter
-                Expression FunctionParameter = lambdaBuilder.Parameters.Single(c => string.Equals(c.Name, functionName, StringComparison.OrdinalIgnoreCase));
+                Expression FunctionParameter = LambdaBuilder.Parameters.Single(c => string.Equals(c.Name, functionName, StringComparison.OrdinalIgnoreCase));
 
                 Expression FunctionParameterName = Expression.Call(
                     FunctionParameter,
@@ -2445,7 +2451,7 @@ class QsVar
                     Expression rw;
                     try
                     {
-                        rw = lambdaBuilder.Parameters.Single(c => string.Equals(c.Name, prm, StringComparison.OrdinalIgnoreCase));
+                        rw = LambdaBuilder.Parameters.Single(c => string.Equals(c.Name, prm, StringComparison.OrdinalIgnoreCase));
                         rw = Expression.Property(rw, "ParameterRawText");  //raw value that was send with this parameter.
                     }
                     catch
@@ -2627,7 +2633,7 @@ class QsVar
 
         try
         {
-            Expression eu = lambdaBuilder.Parameters.Single(c => string.Equals(c.Name, parameterName, StringComparison.OrdinalIgnoreCase));
+            Expression eu = LambdaBuilder.Parameters.Single(c => string.Equals(c.Name, parameterName, StringComparison.OrdinalIgnoreCase));
 
             // parameter is having quantity in normal cases
             Expression directQuantity = Expression.Property(eu, "QsNativeValue");
@@ -2672,7 +2678,8 @@ class QsVar
     {
         var left = eop.QuantityExpression ?? throw new QsException("The left operand is missing.");
         var op = eop.Operation;
-        var right = eop.Next.QuantityExpression ?? throw new QsException("The right operand is missing.");
+        var rightOperand = eop.Next ?? throw new QsException("The right operand is missing.");
+        var right = rightOperand.QuantityExpression ?? throw new QsException("The right operand is missing.");
 
         skip = 1;
 
@@ -2708,16 +2715,16 @@ class QsVar
             // This will be right associative operator
             // which means if more than one power appeared like this 3^2^4  then it will be processed like this 3^(2^4)
 
-            if (eop.Next.Next != null)
+            if (rightOperand.Next != null)
             {
-                if (eop.Next.Operation == "^")
+                if (rightOperand.Operation == "^")
                 {
                     short iskip;
                     var powerResult = Expression.Power(
                         left,
                         ArithExpression
                             (
-                                eop.Next, out iskip
+                                rightOperand, out iskip
                             ),
                         aqType.GetMethod("Pow"));
 
@@ -2842,7 +2849,7 @@ class QsVar
             // here we must consume another expression for the false evaluation.
             //   if there are more expression on the linked list
 
-            if (eop.Next.Next == null)
+            if (rightOperand.Next == null)
             {
                 throw new QsException("syntax error: When without Otherwise");
             }
@@ -2852,12 +2859,12 @@ class QsVar
             //eop:=when .Next=Expression .Next=otherwise .Net=expression
 
             //There is a node test if it is a when node.
-            if (eop.Next.Next.Operation.Equals("when", StringComparison.OrdinalIgnoreCase))
+            if (rightOperand.Next.Operation.Equals("when", StringComparison.OrdinalIgnoreCase))
             {
                 // yes there is a node when that should its body processed
                 short innerSkip;
 
-                var CompoundWhenExpression = ArithExpression(eop.Next.Next, out innerSkip);  //send the next when node
+                var CompoundWhenExpression = ArithExpression(rightOperand.Next, out innerSkip);  //send the next when node
 
                 skip += innerSkip;  // to know how many nodes we skipped.
 
@@ -2866,7 +2873,7 @@ class QsVar
             }
             else
             {
-                var WhenExpression = Expression.Condition(right, left, eop.Next.Next.QuantityExpression ?? throw new QsException("The Otherwise expression is missing."), typeof(QsValue));
+                var WhenExpression = Expression.Condition(right, left, rightOperand.Next.QuantityExpression ?? throw new QsException("The Otherwise expression is missing."), typeof(QsValue));
                 return WhenExpression;
             }
         }
@@ -2962,9 +2969,9 @@ class QsVar
                     {
                         while (skip > 0)
                         {
-                            eop.Operation = eop.Next.Operation;
-
-                            eop.Next = eop.Next.Next;
+                            var consumed = eop.Next ?? throw new QsIncompleteExpression();
+                            eop.Operation = consumed.Operation;
+                            eop.Next = consumed.Next;
 
                             skip--;
                         }

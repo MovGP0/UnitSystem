@@ -4,7 +4,13 @@ namespace QuantitySystem.Units;
 
 public sealed partial class UnitPathItem
 {
-    public Unit Unit { get; set; }
+    private Unit? _unit;
+
+    public Unit Unit
+    {
+        get => _unit ?? throw new InvalidOperationException("The conversion step has no unit.");
+        set => _unit = value;
+    }
 
     public double Times => Numerator / Denominator;
 

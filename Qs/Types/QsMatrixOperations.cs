@@ -821,12 +821,12 @@ public partial class QsMatrix : QsValue
         return m;
     }
 
-    private QsMatrix _Cofactors;
+    private QsMatrix? _Cofactors;
     public QsMatrix Cofactors
     {
         get
         {
-            if (ReferenceEquals( _Cofactors , null))
+            if (_Cofactors is null)
             {
                 _Cofactors = new QsMatrix();
 

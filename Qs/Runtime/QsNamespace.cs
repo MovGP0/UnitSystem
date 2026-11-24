@@ -20,7 +20,7 @@ namespace Qs.Runtime;
 /// </summary>
 public class QsNamespace(string name)
 {
-    public string NameSpaceRoot { get; set; }
+    public string? NameSpaceRoot { get; set; }
 
     public string Name { get; } = name;
 
@@ -218,7 +218,7 @@ public class QsNamespace(string name)
     /// <summary>
     /// Cache the discovered QsNamespace inner class type members.
     /// </summary>
-    private Dictionary<string, object?> HardCodedMethods;
+    private Dictionary<string, object?>? HardCodedMethods;
 
     /// <summary>
     /// Gets the members of the QsNamespace or (static class ) that hold the hard coded functions and properties.

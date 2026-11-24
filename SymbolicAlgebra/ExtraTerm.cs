@@ -2,7 +2,7 @@
 
 public class ExtraTerm
 {
-    public SymbolicVariable Term;
+    public required SymbolicVariable Term;
 
     public bool Negative;
 

@@ -53,7 +53,7 @@ public class Root
     public static Type? GetInternalType(string typeName)
     {
         var executingTypes = Assembly.GetExecutingAssembly().GetTypes();
-        var callingTypes = QsEvaluator.CallingAssembly.GetTypes();
+        var callingTypes = QsEvaluator.CallingAssembly?.GetTypes() ?? [];
 
         var a
             = from t in executingTypes.Union(callingTypes)

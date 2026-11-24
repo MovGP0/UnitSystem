@@ -278,7 +278,7 @@ public partial class QsTensor : QsValue
             {
                 // we need to test equality to
 
-                if (InnerTensors != null)
+                if (InnerTensors.Count > 0)
                 {
                     for (var i = 0; i < InnerTensors.Count; i++)
                     {

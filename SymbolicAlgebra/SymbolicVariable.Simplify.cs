@@ -9,9 +9,9 @@ namespace SymbolicAlgebra;
 
 public partial class SymbolicVariable
 {
-    class ParameterSquareTrig
+    class ParameterSquareTrig(string parameter)
     {
-        public string Parameter;
+        public string Parameter { get; } = parameter;
 
         public int Sin_2_Count;
 
@@ -48,7 +48,7 @@ public partial class SymbolicVariable
         {
             if (!PSTS.TryGetValue(nm, out var p))
             {
-                p = new ParameterSquareTrig { Parameter = nm };
+                p = new ParameterSquareTrig(nm);
                 PSTS.Add(nm, p);
                 return p;
             }
@@ -65,15 +65,15 @@ public partial class SymbolicVariable
 
             foreach (var term in TermsToBeTested)
             {
-                if (term.IsFunction && term._SymbolPower == 2 && term._RawFunctionParameters.Length == 1)
+                if (term.IsFunction && term._SymbolPower == 2 && term._RawFunctionParameters is { Length: 1 } parameters)
                 {
                     if (term.FunctionName.Equals("Sin", StringComparison.OrdinalIgnoreCase))
                     {
-                        PST(term._RawFunctionParameters[0]).Sin_2_Count++;
+                        PST(parameters[0]).Sin_2_Count++;
                     }
                     else if (term.FunctionName.Equals("Cos", StringComparison.OrdinalIgnoreCase))
                     {
-                        PST(term._RawFunctionParameters[0]).Cos_2_Count++;
+                        PST(parameters[0]).Cos_2_Count++;
                     }
                     else
                     {

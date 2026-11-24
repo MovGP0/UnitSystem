@@ -15,7 +15,7 @@ public class QsParameter
     /// <summary>
     /// Original value before evaluation.
     /// </summary>
-    public string ParameterRawText { get; private set; }
+    public string ParameterRawText { get; private set; } = string.Empty;
 
     /// <summary>
     /// Namespace part in parameter text

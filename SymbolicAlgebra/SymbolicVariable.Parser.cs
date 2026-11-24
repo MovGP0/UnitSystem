@@ -8,7 +8,7 @@ public partial class SymbolicVariable
 {
     private class SymbolicExpressionOperator
     {
-        public string Operation;
+        public string Operation = string.Empty;
 
         public SymbolicExpressionOperator? Next;
 
@@ -39,11 +39,11 @@ public partial class SymbolicVariable
 
     private class DynamicExpressionOperator
     {
-        public string Operation;
+        public string Operation = string.Empty;
 
         public DynamicExpressionOperator? Next;
 
-        public Expression DynamicExpression;
+        public Expression? DynamicExpression;
     }
 
     static readonly char[] parse_separators = ['^', '*', '/', '+', '-', '(', '|', '.'];
@@ -447,7 +447,7 @@ public partial class SymbolicVariable
 
     private static BinaryExpression ArithExpression(DynamicExpressionOperator eop, out short skip)
     {
-        var left = eop.DynamicExpression;
+        var left = eop.DynamicExpression ?? throw new SymbolicException("An operator is missing an operand.");
         var op = eop.Operation;
         var right = eop.Next?.DynamicExpression ?? throw new SymbolicException("An operator is missing an operand.");
 
@@ -877,57 +877,42 @@ public partial class SymbolicVariable
             }
         }
 
+        var body = Root.DynamicExpression ?? throw new SymbolicException("Expected an expression.");
         Expression FinalExpression;
 
         if (NegativeExpression)
         {
-            FinalExpression = Expression.Multiply(Expression.Constant(-1.0, typeof(double)), Root.DynamicExpression);
+            FinalExpression = Expression.Multiply(Expression.Constant(-1.0, typeof(double)), body);
         }
         else
         {
-            FinalExpression = Root.DynamicExpression;
+            FinalExpression = body;
         }
 
         return FinalExpression;
     }
 
-    private Expression DynamicBody;
+    private Delegate? _functionDelegate;
 
-    private Dictionary<string, ParameterExpression> DynamicParameters = new Dictionary<string,ParameterExpression>();
-
-    private LambdaExpression Lambda;
-
-    private Delegate FunctionDelegate;
-
-    private void PrepareExecute()
+    private Delegate PrepareExecute()
     {
-        if (DynamicBody == null)
+        if (_functionDelegate is not null)
         {
-            var t0 = this[0];
-            DynamicBody = this[0].ParseDynamicExpression(ref DynamicParameters);
-            //if (t0.IsNegative)
-            //    DynamicBody = Expression.Multiply(Expression.Constant(-1.0), DynamicBody);
-
-            // i will parse each term alone.  // so that i have more control over the parse
-            for (var tc = 1; tc < TermsCount; tc++)
-            {
-                var rt = this[tc];
-
-                //if (rt.IsNegative)
-                //    DynamicBody = Expression.Subtract(DynamicBody, rt.ParseDynamicExpression(ref DynamicParameters));
-                //else
-                DynamicBody = Expression.Add(DynamicBody, rt.ParseDynamicExpression(ref DynamicParameters));
-            }
-
-            // sort the parameter based on alphabet.
-
-            var finalexparms = from exp in DynamicParameters
-                orderby exp.Key
-                select exp.Value;
-
-            Lambda = Expression.Lambda(DynamicBody, finalexparms.ToArray());
-            FunctionDelegate = Lambda.Compile();
+            return _functionDelegate;
         }
+
+        Dictionary<string, ParameterExpression> parameters = new();
+        var body = this[0].ParseDynamicExpression(ref parameters);
+        for (var termIndex = 1; termIndex < TermsCount; termIndex++)
+        {
+            var term = this[termIndex].ParseDynamicExpression(ref parameters);
+            body = Expression.Add(body, term);
+        }
+
+        var orderedParameters = from parameter in parameters
+            orderby parameter.Key
+            select parameter.Value;
+        return _functionDelegate = Expression.Lambda(body, orderedParameters.ToArray()).Compile();
     }
 
     /// <summary>
@@ -937,7 +922,7 @@ public partial class SymbolicVariable
     /// <returns></returns>
     public double Execute(Dictionary<string, double> parameters)
     {
-        PrepareExecute();
+        var function = PrepareExecute();
 
         var pcount = InvolvedSymbols.Length;
 
@@ -953,85 +938,85 @@ public partial class SymbolicVariable
 
         if (pcount == 0)
         {
-            return ((Func<double>)FunctionDelegate)();
+            return ((Func<double>)function)();
         }
 
         if (pcount == 1)
         {
             return ((Func<double, double>)
-            FunctionDelegate)(FinalParams[0]);
+            function)(FinalParams[0]);
         }
 
         if (pcount == 2)
         {
             return ((Func<double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1]);
+            function)(FinalParams[0], FinalParams[1]);
         }
 
         if (pcount == 3)
         {
             return ((Func<double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2]);
         }
 
         if (pcount == 4)
         {
             return ((Func<double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3]);
         }
 
         if (pcount == 5)
         {
             return ((Func<double, double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4]);
         }
 
         if (pcount == 6)
         {
             return ((Func<double, double, double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5]);
         }
 
         if (pcount == 7)
         {
             return ((Func<double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6]);
         }
 
         if (pcount == 8)
         {
             return ((Func<double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7]);
         }
 
         if (pcount == 9)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8]);
         }
 
         if (pcount == 10)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9]);
         }
 
         if (pcount == 11)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9], FinalParams[10]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9], FinalParams[10]);
         }
 
         if (pcount == 12)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9], FinalParams[10], FinalParams[11]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9], FinalParams[10], FinalParams[11]);
         }
 
         if (pcount == 13)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9], FinalParams[10], FinalParams[11], FinalParams[12]);
+            function)(FinalParams[0], FinalParams[1], FinalParams[2], FinalParams[3], FinalParams[4], FinalParams[5], FinalParams[6], FinalParams[7], FinalParams[8], FinalParams[9], FinalParams[10], FinalParams[11], FinalParams[12]);
         }
 
         throw new Exception("What is that call ???!!");
@@ -1055,8 +1040,8 @@ public partial class SymbolicVariable
     /// <returns></returns>
     public double Execute()
     {
-        PrepareExecute();
-        return ((Func<double>)FunctionDelegate)();
+        var function = PrepareExecute();
+        return ((Func<double>)function)();
     }
 
     /// <summary>
@@ -1066,7 +1051,7 @@ public partial class SymbolicVariable
     /// <returns>Expression Evaluation</returns>
     public double Execute(params double[] parameters)
     {
-        PrepareExecute();
+        var function = PrepareExecute();
 
         var pcount = GetInvolvedSymbols().Length;
 
@@ -1080,85 +1065,85 @@ public partial class SymbolicVariable
 
         if (pcount == 0)
         {
-            return ((Func<double>)FunctionDelegate)();
+            return ((Func<double>)function)();
         }
 
         if (pcount == 1)
         {
             return ((Func<double, double>)
-            FunctionDelegate)(parameters[0]);
+            function)(parameters[0]);
         }
 
         if (pcount == 2)
         {
             return ((Func<double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1]);
+            function)(parameters[0], parameters[1]);
         }
 
         if (pcount == 3)
         {
             return ((Func<double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2]);
+            function)(parameters[0], parameters[1], parameters[2]);
         }
 
         if (pcount == 4)
         {
             return ((Func<double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3]);
         }
 
         if (pcount == 5)
         {
             return ((Func<double, double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4]);
         }
 
         if (pcount == 6)
         {
             return ((Func<double, double, double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5]);
         }
 
         if (pcount == 7)
         {
             return ((Func<double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6]);
         }
 
         if (pcount == 8)
         {
             return ((Func<double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7]);
         }
 
         if (pcount == 9)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8]);
         }
 
         if (pcount == 10)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9]);
         }
 
         if (pcount == 11)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9], parameters[10]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9], parameters[10]);
         }
 
         if (pcount == 12)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9], parameters[10], parameters[11]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9], parameters[10], parameters[11]);
         }
 
         if (pcount == 13)
         {
             return ((Func<double, double, double, double, double, double, double, double, double, double, double, double, double, double>)
-            FunctionDelegate)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9], parameters[10], parameters[11], parameters[12]);
+            function)(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6], parameters[7], parameters[8], parameters[9], parameters[10], parameters[11], parameters[12]);
         }
 
         throw new Exception("What is that call ???!!");

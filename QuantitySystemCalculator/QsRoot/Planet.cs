@@ -5,7 +5,7 @@ namespace QsRoot;
 
 public sealed class Planet
 {
-    public Mass<double> Mass { get; set; }
+    public Mass<double>? Mass { get; set; }
 
     public PlanetElement Element { get; set; } = new()
     {
@@ -26,11 +26,11 @@ public sealed class Planet
         Element = pe;
     }
 
-    public QsScalar Volume { get; set; }
+    public QsScalar? Volume { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
-    public long[] Rocks { get; set; }
+    public long[]? Rocks { get; set; }
 
     static int _planets;
 

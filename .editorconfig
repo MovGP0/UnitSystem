@@ -1148,7 +1148,7 @@ dotnet_diagnostic.CS8604.severity = warning
 dotnet_diagnostic.CS8605.severity = warning
 
 # Initialize nonnullable members before construction completes
-dotnet_diagnostic.CS8618.severity = suggestion
+dotnet_diagnostic.CS8618.severity = warning
 
 # Align nested nullability across assigned values
 dotnet_diagnostic.CS8619.severity = suggestion

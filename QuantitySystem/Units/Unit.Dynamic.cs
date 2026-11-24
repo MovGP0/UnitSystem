@@ -13,7 +13,7 @@ public partial class Unit
     /// <summary>
     /// This list shouldn't been modified by child classes
     /// </summary>
-    public List<Unit> SubUnits { get; private set; }
+    public List<Unit>? SubUnits { get; private set; }
 
     /// <summary>
     /// Create the unit directly from the specified dimension in its SI base units.
@@ -453,7 +453,7 @@ public partial class Unit
             }
             else
             {
-                all.AddRange(un.SubUnits);
+                all.AddRange(un.SubUnits ?? throw new UnitException("A derived unit must contain a subunit list."));
             }
         }
 
@@ -675,7 +675,7 @@ public partial class Unit
             }
         }
 
-        foreach (var unit in SubUnits)
+        foreach (var unit in SubUnits ?? throw new UnitException("A derived unit must contain a subunit list."))
         {
             ConcatenateUnit(unit.Symbol, unit.UnitExponent);
         }

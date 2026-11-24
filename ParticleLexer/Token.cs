@@ -14,7 +14,7 @@ public sealed partial class Token : IEnumerable<Token>
 {
     public string Value = string.Empty;
 
-    public Type TokenClassType { get; set; }
+    public Type? TokenClassType { get; set; }
 
     private int _IndexInText;
 
@@ -107,7 +107,7 @@ public sealed partial class Token : IEnumerable<Token>
     /// </summary>
     public int Count => childTokens.Count;
 
-    public Token ParentToken { get; set; }
+    public Token? ParentToken { get; set; }
 
     private string _TokenValue = null;
     private int _previousChildrenTokenCount;
@@ -165,7 +165,7 @@ public sealed partial class Token : IEnumerable<Token>
 
     #endregion
 
-    public string DebugView => "[" + IndexInText.ToString() + ", "+TokenClassType.Name + "]: " + TokenValue;
+    public string DebugView => "[" + IndexInText.ToString() + ", "+(TokenClassType?.Name ?? "Unclassified") + "]: " + TokenValue;
 
     public override string ToString()
     {

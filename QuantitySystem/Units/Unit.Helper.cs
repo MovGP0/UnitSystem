@@ -473,7 +473,7 @@ public partial class Unit
             // pure unit without derived units like Pa, N, and L
             var u = DiscoverUnit(qdim);
 
-            var baseUnits = u.SubUnits;
+            var baseUnits = u.SubUnits ?? throw new UnitException("A derived unit must contain a subunit list.");
 
             // add prefix to the first unit in the array
 

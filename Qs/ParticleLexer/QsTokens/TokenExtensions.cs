@@ -1,4 +1,5 @@
-﻿using ParticleLexer.StandardTokens;
+﻿using Qs;
+using ParticleLexer.StandardTokens;
 
 namespace ParticleLexer.QsTokens;
 
@@ -177,12 +178,12 @@ public static class TokenExtensions
             }
             else if (tokens[ix].TokenClassType == typeof(OnStatementToken))
             {
-                runner = runner.ParentToken;
+                runner = runner.ParentToken ?? throw new QsException("The loop token has no parent.");
 
                 runner.AppendSubToken(tokens[ix]);      // the name of on
                 runner.AppendSubToken(tokens[ix + 1]);  // the name of the container we are counting on
                 ix++;
-                runner = runner.ParentToken;
+                runner = runner.ParentToken ?? throw new QsException("The loop token has no parent.");
             }
             else
             {

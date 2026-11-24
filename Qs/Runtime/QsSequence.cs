@@ -15,7 +15,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
     /// <summary>
     /// if the function has a namespace then the value of it is here.
     /// </summary>
-    public string SequenceNamespace { get; set; }
+    public string SequenceNamespace { get; set; } = string.Empty;
 
     /// <summary>
     /// Minimum decalred index in the sequence.

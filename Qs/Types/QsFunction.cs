@@ -14,7 +14,7 @@ namespace Qs.Types;
 /// </summary>
 public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 {
-    private string functionName;
+    private string functionName = string.Empty;
 
     public string FunctionName
     {
@@ -25,11 +25,11 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <summary>
     /// if the function has a namespace then the value of it is here.
     /// </summary>
-    public string FunctionNamespace { get; set; }
+    public string FunctionNamespace { get; set; } = string.Empty;
 
-    private LambdaExpression _FunctionExpression;
+    private LambdaExpression? _FunctionExpression;
 
-    public LambdaExpression FunctionExpression =>_FunctionExpression;
+    public LambdaExpression FunctionExpression => _FunctionExpression ?? throw new InvalidOperationException("The function has no expression body.");
 
     /// <summary>
     /// Tells if the function has an evaluated body that can be invoked.
@@ -38,7 +38,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     {
         get
         {
-            return InternalFunctionDelegate != null;
+            return _InternalFunctionDelegate != null || _FunctionExpression != null;
         }
     }
 
@@ -253,7 +253,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
     #region private delegate properties for the function with its number of parameters
 
-    internal Delegate _InternalFunctionDelegate;
+    internal Delegate? _InternalFunctionDelegate;
     internal Delegate InternalFunctionDelegate
     {
         get
@@ -299,12 +299,18 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <summary>
     /// Function text after '=' equal sign.
     /// </summary>
-    public string FunctionBody { get; private set; }
+    public string FunctionBody { get; private set; } = string.Empty;
 
     /// <summary>
     /// Hold the tokens of function after '=' equal sign
     /// </summary>
-    public Token FunctionBodyToken { get; private set; }
+    private Token? _functionBodyToken;
+
+    public Token FunctionBodyToken
+    {
+        get => _functionBodyToken ?? throw new InvalidOperationException("The function body has not been tokenized.");
+        private set => _functionBodyToken = value;
+    }
 
     /// <summary>
     /// The function declaration text
@@ -314,7 +320,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <summary>
     /// Parameters of the functions.
     /// </summary>
-    public QsParamInfo[] Parameters { get; set; }
+    public QsParamInfo[] Parameters { get; set; } = [];
 
     /// <summary>
     /// Returns the parameters names in the function

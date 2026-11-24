@@ -9,9 +9,9 @@ public static class QsCommands
 {
     public static bool CommandProcessed { get; set; }
 
-    public static ScriptEngine Engine { get; set; }
+    public static ScriptEngine? Engine { get; set; }
 
-    public static ScriptScope ScriptScope { get; set; }
+    public static ScriptScope? ScriptScope { get; set; }
 
     public const ConsoleColor BackgroundColor = ConsoleColor.White;
 
@@ -146,7 +146,8 @@ public static class QsCommands
                 var file = commands[1];
                 //if (File.Exists(file))
                 {
-                    ScriptScope.Engine.ExecuteFile(file, ScriptScope);
+                    var scope = ScriptScope ?? throw new InvalidOperationException("The scripting scope is unavailable.");
+                    scope.Engine.ExecuteFile(file, scope);
 
                     CommandProcessed = true;
                 }

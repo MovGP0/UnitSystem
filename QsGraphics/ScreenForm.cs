@@ -7,12 +7,12 @@ public partial class ScreenForm : Form
         InitializeComponent();
     }
 
-    private Graphics _FormGraphics;
+    private Graphics? _FormGraphics;
 
     private void ScreenForm_Load(object sender, EventArgs e)
     {
         _FormGraphics = CreateGraphics();
     }
 
-    public Graphics FormGraphics => _FormGraphics;
+    public Graphics FormGraphics => _FormGraphics ?? throw new InvalidOperationException("The graphics surface is unavailable before the form loads.");
 }

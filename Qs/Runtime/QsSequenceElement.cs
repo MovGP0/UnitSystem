@@ -13,7 +13,9 @@ namespace Qs.Runtime;
 /// </summary>
 public class QsSequenceElement
 {
-    private string elementDeclaration;
+    private object? _elementValue;
+
+    private string elementDeclaration = string.Empty;
 
     /// <summary>
     /// The original text that the element took when created.
@@ -40,7 +42,7 @@ public class QsSequenceElement
     /// <summary>
     /// Contains the DLR expression of the evaluation of this element.
     /// </summary>
-    public Expression ElementExpression { get; set; }
+    public Expression? ElementExpression { get; set; }
 
     /// <summary>
     /// The value of the sequence element.
@@ -49,12 +51,16 @@ public class QsSequenceElement
     /// - Delegate to code passing index.
     /// - Delegate to code passing index and parameters.
     /// </summary>
-    public object ElementValue { get; set; }
+    public object ElementValue
+    {
+        get => _elementValue ?? throw new InvalidOperationException("The sequence element has no value.");
+        set => _elementValue = value;
+    }
 
     /// <summary>
     /// The parent sequence that hold this element.
     /// </summary>
-    public QsSequence ParentSequence { get; set; }
+    public QsSequence? ParentSequence { get; set; }
 
     /// <summary>
     /// This element index in the parent sequence.

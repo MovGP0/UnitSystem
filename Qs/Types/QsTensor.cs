@@ -18,7 +18,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     /// However in the property we can store Sub Tensors which in turn can store sub tensors and etc.
     /// this will permit us to store more tensor ranks as we want
     /// </summary>
-    protected List<QsTensor> InnerTensors;
+    protected List<QsTensor> InnerTensors = [];
 
     /// <summary>
     /// Returns the current Rank (Order) of this Tensor.
@@ -28,7 +28,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     {
         get
         {
-            if (InnerTensors == null)
+            if (InnerTensors.Count == 0)
             {
                 if (MatrixLayers.Count > 1)
                 {
@@ -157,7 +157,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
         else
         {
             // Third rank tensor or more
-            (InnerTensors ??= []).Add(qsTensor);
+            InnerTensors.Add(qsTensor);
         }
     }
 

@@ -115,6 +115,7 @@ public partial class SymbolicVariable
             }
             else if (sv.IsFunction)
             {
+                var functionName = sv.FunctionName;
                 var fv = sv.Clone();
 
                 // remove the power term in this copied function term
@@ -122,7 +123,7 @@ public partial class SymbolicVariable
                 fv.SymbolPower = 1.0;
                 fv.Coeffecient = 1.0;
 
-                if (fv.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
+                if (functionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
                 {
                     if (fv.FunctionArguments.Length != 1)
                     {
@@ -136,7 +137,7 @@ public partial class SymbolicVariable
                     var presult = pa.Differentiate(parameter);
                     fv = Multiply(presult, fv);
                 }
-                else if (fv.FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
+                else if (functionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
                 {
                     if (fv.FunctionArguments.Length != 1)
                     {
@@ -149,7 +150,7 @@ public partial class SymbolicVariable
                     var dpa = pa.Differentiate(parameter);
                     fv = Divide(dpa, pa);
                 }
-                else if (fv.FunctionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
+                else if (functionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
                 {
                     // d/dx ( sqrt( g(x) ) ) = g'(x) / 2* sqrt(g(x))
                     if (fv.FunctionArguments.Length != 1)
@@ -162,11 +163,11 @@ public partial class SymbolicVariable
                     var den = Multiply(Two, fv);
                     fv = Divide(dpa, den);
                 }
-                else if (FunctionOperation.InversedTrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
+                else if (FunctionOperation.InversedTrigFunctions.Contains(functionName, StringComparer.OrdinalIgnoreCase))
                 {
                     fv = FunctionOperation.DiffInversedTrigFunction(fv, parameter);
                 }
-                else if (FunctionOperation.TrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
+                else if (FunctionOperation.TrigFunctions.Contains(functionName, StringComparer.OrdinalIgnoreCase))
                 {
                     // triogonometric functions
                     bool IsNegativeResult;
@@ -206,12 +207,13 @@ public partial class SymbolicVariable
                     // the function is not a special function like sin, cos, and log.
                     // search for the function in the running context.
 
-                    var extendedFunction = Functions.Keys.FirstOrDefault(c => c.StartsWith(fv.FunctionName, StringComparison.OrdinalIgnoreCase));
+                    var extendedFunction = Functions.Keys.FirstOrDefault(c => c.StartsWith(functionName, StringComparison.OrdinalIgnoreCase));
                     if (!string.IsNullOrEmpty(extendedFunction))
                     {
                         string[] fps = extendedFunction.Substring(extendedFunction.IndexOf('(')).TrimStart('(').TrimEnd(')').Split(',');
 
-                        if (fps.Length != fv._RawFunctionParameters.Length)
+                        var arguments = fv._RawFunctionParameters ?? [];
+                        if (fps.Length != arguments.Length)
                         {
                             throw new SymbolicException("Insufficient function parameters");
                         }
@@ -221,7 +223,7 @@ public partial class SymbolicVariable
 
                         for (var ipxf = 0; ipxf < fps.Length; ipxf++)
                         {
-                            dsf = dsf.Replace(fps[ipxf], fv._RawFunctionParameters[ipxf]);
+                            dsf = dsf.Replace(fps[ipxf], arguments[ipxf]);
                         }
 
                         fv = Parse(dsf).RequireExpression().Differentiate(parameter);

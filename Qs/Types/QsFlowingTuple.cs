@@ -16,7 +16,7 @@ public class QsFlowingTuple : QsValue
 {
     private readonly Flow ThisFlow = [];
 
-    readonly QsTupleValue[] InitialValues;
+    readonly QsTupleValue[] InitialValues = [];
 
     public QsFlowingTuple()
     {

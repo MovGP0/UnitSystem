@@ -17,7 +17,7 @@ public partial class SymbolicVariable
     /// </summary>
     static Regex FunctionRegex = new Regex(@"^(?<function>[0-9a-zA-Z:]+)\((?<parameters>.*)\)$");
 
-    private string _Symbol;
+    private string _Symbol = string.Empty;
 
     /// <summary>
     /// the symbol name   a*x^2 I mean {x}
@@ -112,17 +112,17 @@ public partial class SymbolicVariable
 
     private bool? _IsFunction;
     private SymbolicVariable[]? _FunctionParameters;
-    private string[] _RawFunctionParameters;
+    private string[]? _RawFunctionParameters;
 
     public SymbolicVariable[]? FunctionParameters => _FunctionParameters;
 
     internal SymbolicVariable[] FunctionArguments => _FunctionParameters ?? [];
 
-    public string[] RawFunctionParameters => _RawFunctionParameters;
+    public string[]? RawFunctionParameters => _RawFunctionParameters;
 
-    private readonly string _FunctionName;
+    private readonly string? _FunctionName;
 
-    public string FunctionName => _FunctionName;
+    public string? FunctionName => _FunctionName;
 
     /// <summary>
     /// The only constructor for the symbolic variable
@@ -281,9 +281,9 @@ public partial class SymbolicVariable
 
                             if (_FunctionParameters != null)
                             {
-                                if (!string.IsNullOrEmpty(_FunctionParameters[0].FunctionName))
+                                if (_FunctionParameters[0].FunctionName is { Length: > 0 } innerFunctionName)
                                 {
-                                    if (_FunctionParameters[0].FunctionName.Equals("exp", StringComparison.OrdinalIgnoreCase))
+                                    if (innerFunctionName.Equals("exp", StringComparison.OrdinalIgnoreCase))
                                     {
                                         // take the inner of exp and put it as a symbolic variable
                                         ReplaceCurrentValuesWith(_FunctionParameters[0].FunctionArguments[0]);
@@ -1870,11 +1870,12 @@ public partial class SymbolicVariable
     /// <summary>
     /// Match the term if it contains function on the form f() or e:f(y,x)
     /// </summary>
+    [MemberNotNullWhen(true, nameof(FunctionName))]
     public bool IsFunction
     {
         get
         {
-            return _IsFunction ??= false;
+            return FunctionName is not null && (_IsFunction ??= false);
         }
     }
 

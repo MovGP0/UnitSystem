@@ -17,7 +17,8 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
 
     #region Value & Unit
 
-    public T Value { get; set; }
+    // Quantity factories and callers assign reference-type values after construction.
+    public T Value { get; set; } = default!;
 
     public Unit? Unit { get; set; }
 

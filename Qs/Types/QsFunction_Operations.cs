@@ -400,8 +400,8 @@ public partial class QsFunction
 
             var debugView = ExpressionDebugView
                 ?? throw new NotSupportedException("Expression debug views are unavailable on this runtime.");
-            var thisDebugView = debugView.GetValue(_FunctionExpression.Body) as string;
-            var funcDebugView = debugView.GetValue(func._FunctionExpression.Body) as string;
+            var thisDebugView = debugView.GetValue(FunctionExpression.Body) as string;
+            var funcDebugView = debugView.GetValue(func.FunctionExpression.Body) as string;
 
             return string.Equals(thisDebugView, funcDebugView, StringComparison.Ordinal);
         }

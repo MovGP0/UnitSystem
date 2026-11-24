@@ -484,7 +484,7 @@ public partial class Unit
         }
 
         var paths = new UnitPathStack();
-        foreach (var un in SubUnits)
+        foreach (var un in SubUnits ?? throw new UnitException("A derived unit must contain a subunit list."))
         {
             var up = un.PathToSIBaseUnits();
 
