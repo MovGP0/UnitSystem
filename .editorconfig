@@ -1062,7 +1062,7 @@ dotnet_diagnostic.CA2250.severity = warning
 dotnet_diagnostic.CA2252.severity = error
 
 # Named placeholders should not be numeric values
-# dotnet_diagnostic.CA2253.severity = warning
+dotnet_diagnostic.CA2253.severity = warning
 
 # Template should be a static expression
 # dotnet_diagnostic.CA2254.severity = warning
