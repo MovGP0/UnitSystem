@@ -43,9 +43,9 @@ public static class CoMath
 
     public static double Acot(double x) => Math.Atan(1.0 / x);
 
-    public static double Acosh(double x) => Math.Log(x + Math.Sqrt(x * x - 1.0));
+    public static double Acosh(double x) => Math.Log(x + Math.Sqrt((x * x) - 1.0));
 
-    public static double Asinh(double x) => Math.Log(x + Math.Sqrt(x * x + 1.0));
+    public static double Asinh(double x) => Math.Log(x + Math.Sqrt((x * x) + 1.0));
 
     public static double Atanh(double x) => 0.5 * Math.Log((1.0 + x) / (1.0 - x));
 

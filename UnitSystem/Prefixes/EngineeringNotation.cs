@@ -51,7 +51,7 @@ public static class EngineeringNotation
             < -3.0 => ((int)decimalExponent % 3) switch
             {
                 -2 => (int)((decimalExponent - 2) / 3 ) * 3,
-                -1 => (int)(decimalExponent / 3 - 1) * 3,
+                -1 => (int)((decimalExponent / 3) - 1) * 3,
                 _ => (int)(decimalExponent / 3) * 3
             },
             // handling for positive exponents

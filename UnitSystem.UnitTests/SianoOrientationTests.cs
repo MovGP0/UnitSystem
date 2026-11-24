@@ -21,7 +21,7 @@ public sealed class SianoOrientationTests
     [Test]
     public void ShouldRepresentACombinationOfAxes()
     {
-        var combination = 3 * X + Y * 4;
+        var combination = (3 * X) + (Y * 4);
 
         combination.ShouldBe(new SianoOrientation(3, 4, 0, 0));
         combination.IsBasisElement.ShouldBeFalse();
@@ -32,7 +32,7 @@ public sealed class SianoOrientationTests
     [Test]
     public void ShouldMultiplyComplexCoefficientsBilinearly()
     {
-        var combination = Complex.ImaginaryOne * X + Y;
+        var combination = (Complex.ImaginaryOne * X) + Y;
 
         (combination * combination).ShouldBe(new SianoOrientation(0, 0, 2 * Complex.ImaginaryOne, 0));
     }

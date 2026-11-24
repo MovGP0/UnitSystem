@@ -38,7 +38,7 @@ public static class ImperialSystem
             "°F",
             "degrees Fahrenheit",
             fahrenheitScale * SISystem.K,
-            offset: 273.15 - 32 * fahrenheitScale);
+            offset: 273.15 - (32 * fahrenheitScale));
     }
 
     #region IUnitSystem

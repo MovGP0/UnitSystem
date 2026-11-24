@@ -356,7 +356,7 @@ dotnet_diagnostic.RCS1114.severity = warning
 dotnet_diagnostic.RCS1118.severity = warning
 
 # Add parentheses when necessary
-# dotnet_diagnostic.RCS1123.severity = warning
+dotnet_diagnostic.RCS1123.severity = warning
 
 # Inline local variable
 # dotnet_diagnostic.RCS1124.severity = silent

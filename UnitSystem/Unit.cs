@@ -62,7 +62,7 @@ public abstract partial class Unit : IEquatable<Unit>
     [Pure]
     public bool IsAbsoluteUnit => Offset == 0.0;
 
-    internal bool SupportsPoints => !IsAbsoluteUnit || System is UnitSystem system && system.IsAffineDimension(Dimension);
+    internal bool SupportsPoints => !IsAbsoluteUnit || (System is UnitSystem system && system.IsAffineDimension(Dimension));
 
     internal double ToCoherent(double amount, bool isPoint)
     {

@@ -45,7 +45,7 @@ public class SymbolicVariableTest
 
         r.ShouldNotBeNull().IsZero.ShouldBeTrue();
 
-        r = _x * _y - (_y * _x) + _one;
+        r = (_x * _y) - (_y * _x) + _one;
         r.ShouldNotBeNull().IsZero.ShouldBeFalse();
 
         r -= _one;
@@ -192,7 +192,7 @@ public class SymbolicVariableTest
     public void MiscTesting()
     {
         var t = new SymbolicVariable("t");
-        var po = _two * t + _one;
+        var po = (_two * t) + _one;
 
         Assert.AreEqual("2*t+1", po.ShouldNotBeNull().ToString());
 
@@ -277,7 +277,7 @@ public class SymbolicVariableTest
     {
         // x^(2*t+1)*y^(2*t)+3*t*z   in power three :S  not the same as maxima my reference program.
 
-        var aa = _x.RaiseToSymbolicPower(2 * _t + _one) * _y.RaiseToSymbolicPower(2 * _t) + 3 * _t * _z;
+        var aa = (_x.RaiseToSymbolicPower((2 * _t) + _one) * _y.RaiseToSymbolicPower(2 * _t)) + (3 * _t * _z);
 
         var aa2 = aa.ShouldNotBeNull().Power(2);
 
@@ -302,10 +302,10 @@ public class SymbolicVariableTest
     [Issue(4)]
     public void Issues4Testing()
     {
-        var a = new SymbolicVariable("-10") * _y + new SymbolicVariable("50");
+        var a = (new SymbolicVariable("-10") * _y) + new SymbolicVariable("50");
         var b = new SymbolicVariable("-1") * a;
 
-        var big = _x * _y + _x;
+        var big = (_x * _y) + _x;
 
         var err1 = big + b;
 
@@ -334,7 +334,7 @@ public class SymbolicVariableTest
     public void RemovingZeroTerms()
     {
         var a = _x + _y + _z;
-        var b = -1 * _x + _y + _z;
+        var b = (-1 * _x) + _y + _z;
 
         var tot = a + b;
 
@@ -352,8 +352,8 @@ public class SymbolicVariableTest
 
         Assert.AreEqual("(x+y+z)^(3*x)+(x+y+z)^y", aB.ShouldNotBeNull().ToString());
 
-        var rs = _y + 3 * _x;
-        var ls = 3 * _x + _y;
+        var rs = _y + (3 * _x);
+        var ls = (3 * _x) + _y;
 
         Assert.AreEqual(rs.ShouldNotBeNull().Equals(ls), true);
 
@@ -399,7 +399,7 @@ public class SymbolicVariableTest
 
         Assert.AreEqual("4*x^(3*z)*y^(2*z-1)*z", dfX.ToString());
 
-        var g = _two * _y + 3 * _x.RaiseToSymbolicPower(_z) - 5 * _x.RaiseToSymbolicPower(_y - _one);
+        var g = (_two * _y) + (3 * _x.RaiseToSymbolicPower(_z)) - (5 * _x.RaiseToSymbolicPower(_y - _one));
         var dgX = g.ShouldNotBeNull().Differentiate("x");
 
         Assert.AreEqual("3*x^(z-1)*z-5*x^(y-2)*y+5*x^(y-2)", dgX.ToString());
@@ -420,7 +420,7 @@ public class SymbolicVariableTest
         var djY = j.ShouldNotBeNull().Differentiate("y");
         Assert.AreEqual("18*x*z^2", djY.ToString());
 
-        var k = 18 * _x.Power(2) + _y.Power(3) * _x + 2 * _x * _y;
+        var k = (18 * _x.Power(2)) + (_y.Power(3) * _x) + (2 * _x * _y);
         var dkY = k.ShouldNotBeNull().Differentiate("y");
 
         Assert.AreEqual("3*x*y^2+2*x", dkY.ToString());
@@ -713,10 +713,10 @@ public class SymbolicVariableTest
         Assert.AreEqual(5 * Math.Sin(5), v);
 
         v = SymbolicVariable.Parse("20*cos(x)*sin(x)^3+x").ShouldNotBeNull().Execute(3);
-        Assert.AreEqual(20 * Math.Cos(3) * Math.Pow(Math.Sin(3), 3) + 3, v);
+        Assert.AreEqual((20 * Math.Cos(3) * Math.Pow(Math.Sin(3), 3)) + 3, v);
 
         v = SymbolicVariable.Parse("20*cos(x)*sin(x)^3-x").ShouldNotBeNull().Execute(3);
-        Assert.AreEqual(20 * Math.Cos(3) * Math.Pow(Math.Sin(3), 3) - 3, v);
+        Assert.AreEqual((20 * Math.Cos(3) * Math.Pow(Math.Sin(3), 3)) - 3, v);
 
         //v = SymbolicVariable.Parse("7*sin(x)*log(x)").Execute(3);
         //Assert.AreEqual(7 * Math.Sin(3) * Math.Log(3), v);

@@ -33,7 +33,7 @@ public struct Rational(float num, float den)
     /// <returns></returns>
     public static Rational operator +(Rational a, Rational b)
     {
-        var num = a.num * b.den + b.num * a.den;
+        var num = (a.num * b.den) + (b.num * a.den);
         var den = a.den * b.den;
 
         Simplify(ref num, ref den);
@@ -43,7 +43,7 @@ public struct Rational(float num, float den)
 
     public static Rational operator -(Rational a, Rational b)
     {
-        var num = a.num * b.den - b.num * a.den;
+        var num = (a.num * b.den) - (b.num * a.den);
         var den = a.den * b.den;
 
         Simplify(ref num, ref den);

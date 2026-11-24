@@ -130,7 +130,7 @@ public static class QsGamma
                 y++;
             }
 
-            var r = Math.Exp(y * Math.Log(y) - y + 1 / (12 * y + 2 / (5 * y + 53 / (42 * y))));
+            var r = Math.Exp((y * Math.Log(y)) - y + (1 / ((12 * y) + (2 / ((5 * y) + (53 / (42 * y)))))));
             if (x < 7)
             {
                 r /= p;
@@ -150,8 +150,8 @@ public static class QsGamma
             const long a6 = 109535241009 / 48264275462;
             var Z = z + 1;
 
-            return (1 / 2) * Math.Log(2 * Math.PI) + (Z - 1 / 2) * Math.Log(Z) - Z
-                + a0 / (Z + a1 / (Z + a2 / (Z + a3 / (Z + a4 / (Z + a5 / (Z + a6 / Z))))));
+            return ((1 / 2) * Math.Log(2 * Math.PI)) + ((Z - (1 / 2)) * Math.Log(Z)) - Z
+                + (a0 / (Z + (a1 / (Z + (a2 / (Z + (a3 / (Z + (a4 / (Z + (a5 / (Z + (a6 / Z)))))))))))));
         };
 
         //gives value of the normal factorial :S

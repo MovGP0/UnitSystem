@@ -167,10 +167,10 @@ public struct Quaternion : IEquatable<Quaternion>
         var ar = rhs.Real;
         var br = rhs.Imaginary;
 
-        var at = lhs.a * ar - lhs.b * br;
-        var bt = lhs.a * br + lhs.b * ar;
-        var ct = lhs.c * ar + lhs.d * br;
-        var dt = -lhs.c * br + lhs.d * ar;
+        var at = (lhs.a * ar) - (lhs.b * br);
+        var bt = (lhs.a * br) + (lhs.b * ar);
+        var ct = (lhs.c * ar) + (lhs.d * br);
+        var dt = (-lhs.c * br) + (lhs.d * ar);
 
         var result = new Quaternion(at, bt, ct, dt);
         return result;
@@ -183,10 +183,10 @@ public struct Quaternion : IEquatable<Quaternion>
         var cr = (rhs.c);
         var dr = (rhs.d);
 
-        var at = lhs.a * ar - lhs.b * br - lhs.c * cr - lhs.d * dr;
-        var bt = lhs.a * br + lhs.b * ar + lhs.c * dr - lhs.d * cr;
-        var ct = lhs.a * cr - lhs.b * dr + lhs.c * ar + lhs.d * br;
-        var dt = lhs.a * dr + lhs.b * cr - lhs.c * br + lhs.d * ar;
+        var at = (lhs.a * ar) - (lhs.b * br) - (lhs.c * cr) - (lhs.d * dr);
+        var bt = (lhs.a * br) + (lhs.b * ar) + (lhs.c * dr) - (lhs.d * cr);
+        var ct = (lhs.a * cr) - (lhs.b * dr) + (lhs.c * ar) + (lhs.d * br);
+        var dt = (lhs.a * dr) + (lhs.b * cr) - (lhs.c * br) + (lhs.d * ar);
 
         var result = new Quaternion(at, bt, ct, dt);
 
@@ -208,12 +208,12 @@ public struct Quaternion : IEquatable<Quaternion>
         var ar = rhs.Real;
         var br = rhs.Imaginary;
 
-        var denominator = ar * ar + br * br;
+        var denominator = (ar * ar) + (br * br);
 
-        var at = (lhs.a * ar + lhs.b * br) / denominator;    //(a*ar+b*br)/denominator;
-        var bt = (-lhs.a * br + lhs.b * ar) / denominator;    //(ar*b-a*br)/denominator;
-        var ct = (lhs.c * ar - lhs.d * br) / denominator;    //(ar*c-d*br)/denominator;
-        var dt = (lhs.c * br + lhs.d * ar) / denominator;    //(ar*d+br*c)/denominator;
+        var at = ((lhs.a * ar) + (lhs.b * br)) / denominator;    //(a*ar+b*br)/denominator;
+        var bt = ((-lhs.a * br) + (lhs.b * ar)) / denominator;    //(ar*b-a*br)/denominator;
+        var ct = ((lhs.c * ar) - (lhs.d * br)) / denominator;    //(ar*c-d*br)/denominator;
+        var dt = ((lhs.c * br) + (lhs.d * ar)) / denominator;    //(ar*d+br*c)/denominator;
 
         var result = new Quaternion(at, bt, ct, dt);
         return result;
@@ -226,12 +226,12 @@ public struct Quaternion : IEquatable<Quaternion>
         var cr = (rhs.c);
         var dr = (rhs.d);
 
-        var denominator = ar * ar + br * br + cr * cr + dr * dr;
+        var denominator = (ar * ar) + (br * br) + (cr * cr) + (dr * dr);
 
-        var at = (lhs.a * ar + lhs.b * br + lhs.c * cr + lhs.d * dr) / denominator;    //(a*ar+b*br+c*cr+d*dr)/denominator;
-        var bt = (-lhs.a * br + lhs.b * ar - lhs.c * dr + lhs.d * cr) / denominator;    //((ar*b-a*br)+(cr*d-c*dr))/denominator;
-        var ct = (-lhs.a * cr + lhs.b * dr + lhs.c * ar - lhs.d * br) / denominator;    //((ar*c-a*cr)+(dr*b-d*br))/denominator;
-        var dt = (-lhs.a * dr - lhs.b * cr + lhs.c * br + lhs.d * ar) / denominator;    //((ar*d-a*dr)+(br*c-b*cr))/denominator;
+        var at = ((lhs.a * ar) + (lhs.b * br) + (lhs.c * cr) + (lhs.d * dr)) / denominator;    //(a*ar+b*br+c*cr+d*dr)/denominator;
+        var bt = ((-lhs.a * br) + (lhs.b * ar) - (lhs.c * dr) + (lhs.d * cr)) / denominator;    //((ar*b-a*br)+(cr*d-c*dr))/denominator;
+        var ct = ((-lhs.a * cr) + (lhs.b * dr) + (lhs.c * ar) - (lhs.d * br)) / denominator;    //((ar*c-a*cr)+(dr*b-d*br))/denominator;
+        var dt = ((-lhs.a * dr) - (lhs.b * cr) + (lhs.c * br) + (lhs.d * ar)) / denominator;    //((ar*d-a*dr)+(br*c-b*cr))/denominator;
 
         var result = new Quaternion(at, bt, ct, dt);
 
@@ -334,17 +334,17 @@ public struct Quaternion : IEquatable<Quaternion>
         var v1 = new QsVector();
         var v2 = new QsVector();
 
-        v0.AddComponent(1 - 2 * y * y - 2 * z * z);
-        v0.AddComponent(2 * x * y - 2 * w * z);
-        v0.AddComponent(2 * x * z + 2 * w * y);
+        v0.AddComponent(1 - (2 * y * y) - (2 * z * z));
+        v0.AddComponent((2 * x * y) - (2 * w * z));
+        v0.AddComponent((2 * x * z) + (2 * w * y));
 
-        v1.AddComponent(2 * x * y + 2 * w * z);
-        v1.AddComponent(1 - 2 * x * x - 2 * z * z);
-        v1.AddComponent(2 * y * z - 2 * w * x);
+        v1.AddComponent((2 * x * y) + (2 * w * z));
+        v1.AddComponent(1 - (2 * x * x) - (2 * z * z));
+        v1.AddComponent((2 * y * z) - (2 * w * x));
 
-        v2.AddComponent(2 * x * z - 2 * w * y);
-        v2.AddComponent(2 * y * z + 2 * w * x);
-        v2.AddComponent(1 - 2 * x * x - 2 * y * y);
+        v2.AddComponent((2 * x * z) - (2 * w * y));
+        v2.AddComponent((2 * y * z) + (2 * w * x));
+        v2.AddComponent(1 - (2 * x * x) - (2 * y * y));
 
         var rm = new QsMatrix(v0, v1, v2);
         return rm;

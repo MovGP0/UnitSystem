@@ -58,9 +58,9 @@ public readonly record struct SianoOrientation(
         var (otherX, otherY, otherZ, otherScalar) = right;
 
         return new SianoOrientation(
-            x * otherScalar + scalar * otherX + y * otherZ + z * otherY,
-            y * otherScalar + scalar * otherY + z * otherX + x * otherZ,
-            z * otherScalar + scalar * otherZ + x * otherY + y * otherX,
-            scalar * otherScalar + x * otherX + y * otherY + z * otherZ);
+            (x * otherScalar) + (scalar * otherX) + (y * otherZ) + (z * otherY),
+            (y * otherScalar) + (scalar * otherY) + (z * otherX) + (x * otherZ),
+            (z * otherScalar) + (scalar * otherZ) + (x * otherY) + (y * otherX),
+            (scalar * otherScalar) + (x * otherX) + (y * otherY) + (z * otherZ));
     }
 }

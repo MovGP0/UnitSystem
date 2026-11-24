@@ -16,7 +16,7 @@ public partial class Unit : IEquatable<Unit>
     public static bool operator ==(Unit? lhs, Unit? rhs)
     {
         return ReferenceEquals(lhs, rhs)
-            || lhs is not null && rhs is not null && lhs.Equals(rhs);
+            || (lhs is not null && rhs is not null && lhs.Equals(rhs));
     }
 
     public static bool operator !=(Unit lhs, Unit rhs) => !(lhs == rhs);

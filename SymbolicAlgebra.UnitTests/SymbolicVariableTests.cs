@@ -365,7 +365,7 @@ public static class SymbolicVariableTests
             var r = _two * (_y * _x * _y); // 2*y^2*x
             var pr = (_four / _two) * _y * _y * _y / _x; // 2*y^3/x
             var ll = _three / _y; // 3/y
-            var h = (3 * _x + 2 * _y) / (2 * _x); // 1.5 + y/x
+            var h = ((3 * _x) + (2 * _y)) / (2 * _x); // 1.5 + y/x
 
             var pr2 = pr - (_three * _y * _y / _x); // 2*y^3/x - 3*y^2/x
             var rr = pr2 / (2 * _y); // y^2/x - 1.5*y/x
@@ -456,7 +456,7 @@ public static class SymbolicVariableTests
         [Test]
         public void TestInvolvedSymbolsExtraction()
         {
-            var b = 2 * _u * _w + _v + _w;
+            var b = (2 * _u * _w) + _v + _w;
             var tv2 = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(b);
             var tv4 = tv2.ShouldNotBeNull().RaiseToSymbolicPower(3 * _x);
 
@@ -503,7 +503,7 @@ public static class SymbolicVariableTests
         public void TestRaiseToSymbolicPower_SingleVariable()
         {
             // arrange
-            var b = 2 * _u * _w + _v + _w;
+            var b = (2 * _u * _w) + _v + _w;
 
             // act
             var tv1 = _x.RaiseToSymbolicPower(b);
@@ -516,7 +516,7 @@ public static class SymbolicVariableTests
         public void TestRaiseToSymbolicPower_SumOfVariables()
         {
             // arrange
-            var b = 2 * _u * _w + _v + _w;
+            var b = (2 * _u * _w) + _v + _w;
 
             // act
             var tv2 = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(b);
@@ -529,7 +529,7 @@ public static class SymbolicVariableTests
         public void TestRaiseToSymbolicPower_WithVariableExponent()
         {
             // arrange
-            var b = 2 * _u * _w + _v + _w;
+            var b = (2 * _u * _w) + _v + _w;
             var tv2 = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(b);
 
             // act
@@ -548,7 +548,7 @@ public static class SymbolicVariableTests
         public void TestPowerOperation()
         {
             // arrange
-            var b = 2 * _u * _w + _v + _w;
+            var b = (2 * _u * _w) + _v + _w;
             var tv2 = (_x + _y + _z).ShouldNotBeNull().RaiseToSymbolicPower(b);
 
             // act

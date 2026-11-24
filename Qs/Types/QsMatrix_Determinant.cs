@@ -152,7 +152,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         {
             // basic 2X2 sub-matrix determinate
             // definition. When n==2, this ends the
-            det = a[0][0] * a[1][1] - a[1][0] * a[0][1];// the recursion series
+            det = (a[0][0] * a[1][1]) - (a[1][0] * a[0][1]);// the recursion series
         }
 
         // recursion continues, solve next sub-matrix

@@ -79,7 +79,7 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 
     public static Complex operator *(Complex a, Complex b)
     {
-        return new Complex(a._real * b._real - a._imaginary * b._imaginary, a._real * b._imaginary + a._imaginary * b._real);
+        return new Complex((a._real * b._real) - (a._imaginary * b._imaginary), (a._real * b._imaginary) + (a._imaginary * b._real));
     }
 
     public static Complex operator /(Complex a, Complex b)
@@ -94,16 +94,16 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
         if (Math.Abs(b._real) >= Math.Abs(b._imaginary))
         {
             r = b._imaginary / b._real;
-            den = b._real + r * b._imaginary;
-            real = (a._real + a._imaginary * r) / den;
-            imag = (a._imaginary - a._real * r) / den;
+            den = b._real + (r * b._imaginary);
+            real = (a._real + (a._imaginary * r)) / den;
+            imag = (a._imaginary - (a._real * r)) / den;
         }
         else
         {
             r = b._real / b._imaginary;
-            den = b._imaginary + r * b._real;
-            real = (a._real * r + a._imaginary) / den;
-            imag = (a._imaginary * r - a._real) / den;
+            den = b._imaginary + (r * b._real);
+            real = ((a._real * r) + a._imaginary) / den;
+            imag = ((a._imaginary * r) - a._real) / den;
         }
 
         return new Complex(real, imag);
@@ -169,10 +169,10 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 
         var a = _real;
         var b = _imaginary;
-        var powers = a * a + b * b;
+        var powers = (a * a) + (b * b);
         var arg = Math.Atan2(b, a);
         var mul = Math.Pow(powers, c / 2) * Math.Exp(-d * arg);
-        var common = c * arg + .5 * d * Math.Log(powers);
+        var common = (c * arg) + (.5 * d * Math.Log(powers));
         return new Complex(mul * Math.Cos(common), mul * Math.Sin(common));
     }
 

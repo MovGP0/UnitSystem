@@ -80,5 +80,5 @@ public sealed class ReferenceUnitAttribute : Attribute
 
     public double Denominator { get; }
 
-    public double Times => _numerator / Denominator + Shift;
+    public double Times => (_numerator / Denominator) + Shift;
 }
