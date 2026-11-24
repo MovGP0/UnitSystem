@@ -1,92 +1,221 @@
 root = true
 
 [*.cs]
-end_of_line = lf
 
+# Remove unnecessary imports
 # dotnet_diagnostic.IDE0005.severity = warning
 
 # Roslynator analyzers
-# see https://josefpihrt.github.io/docs/roslynator/analyzers for details
+# https://josefpihrt.github.io/docs/roslynator/analyzers/
 
+# Separate the using list from the declarations that follow
 # dotnet_diagnostic.RCS0003.severity = warning
+
+# Separate a closing brace from the next statement
 # dotnet_diagnostic.RCS0008.severity = warning
+
+# Separate a declaration from the next documentation comment
 # dotnet_diagnostic.RCS0009.severity = warning
+
+# Separate declarations with a blank line
 # dotnet_diagnostic.RCS0010.severity = warning
+
+# Control spacing between single-line accessors
 # dotnet_diagnostic.RCS0011.severity = warning
 roslynator_blank_line_between_single_line_accessors = false
 
+# Separate neighboring single-line declarations of different kinds
 # dotnet_diagnostic.RCS0013.severity = warning
-# dotnet_diagnostic.RCS0015.severity = warning
-# dotnet_diagnostic.RCS0023.severity = warning
-# dotnet_diagnostic.RCS0025.severity = warning
-# dotnet_diagnostic.RCS0027.severity = warning
-# dotnet_diagnostic.RCS0029.severity = warning
-# dotnet_diagnostic.RCS0030.severity = warning
-# dotnet_diagnostic.RCS0031.severity = warning
-# dotnet_diagnostic.RCS0032.severity = warning
-# dotnet_diagnostic.RCS0033.severity = warning
-# dotnet_diagnostic.RCS0034.severity = warning
-# dotnet_diagnostic.RCS0041.severity = warning
-# dotnet_diagnostic.RCS0042.severity = warning
-# dotnet_diagnostic.RCS0045.severity = warning
-# dotnet_diagnostic.RCS0046.severity = warning
-# dotnet_diagnostic.RCS0050.severity = warning
-# dotnet_diagnostic.RCS0051.severity = warning
-# dotnet_diagnostic.RCS0052.severity = warning
-# dotnet_diagnostic.RCS0053.severity = warning
-# dotnet_diagnostic.RCS0054.severity = warning
-# dotnet_diagnostic.RCS0055.severity = warning
-# dotnet_diagnostic.RCS0056.severity = warning
-# dotnet_diagnostic.RCS0057.severity = warning
-# dotnet_diagnostic.RCS0058.severity = warning
-# dotnet_diagnostic.RCS0059.severity = warning
-# dotnet_diagnostic.RCS0060.severity = warning
-# dotnet_diagnostic.RCS0061.severity = warning
-# dotnet_diagnostic.RCS0062.severity = disabled
-# dotnet_diagnostic.RCS0063.severity = warning
-# dotnet_diagnostic.RCS1001.severity = warning
-# dotnet_diagnostic.RCS1002.severity = disabled
-# dotnet_diagnostic.RCS1003.severity = warning
-# dotnet_diagnostic.RCS1004.severity = disabled
-# dotnet_diagnostic.RCS1005.severity = warning
-# dotnet_diagnostic.RCS1006.severity = warning
-# dotnet_diagnostic.RCS1007.severity = warning
-# dotnet_diagnostic.RCS1013.severity = warning
-# dotnet_diagnostic.RCS1014.severity = warning
 
-roslynator_block_braces_style = multi_line
+# Control blank lines within using lists
+# dotnet_diagnostic.RCS0015.severity = warning
 roslynator_blank_line_between_using_directives = never
+
+# Control line breaks around block braces
+dotnet_diagnostic.RCS0021.severity = none
+roslynator_block_braces_style = multi_line
+
+# Put type declaration braces on their own lines
+# dotnet_diagnostic.RCS0023.severity = warning
+
+# Start each full accessor on its own line
+# dotnet_diagnostic.RCS0025.severity = warning
+
+# Control where wrapped binary operators appear
+# dotnet_diagnostic.RCS0027.severity = warning
 roslynator_binary_operator_new_line = before
+
+# Control where wrapped conditional operators appear
+dotnet_diagnostic.RCS0028.severity = none
 roslynator_conditional_operator_new_line = before
+
+# Start constructor initializers on their own lines
+# dotnet_diagnostic.RCS0029.severity = warning
+
+# Start embedded statements on their own lines
+# dotnet_diagnostic.RCS0030.severity = warning
+
+# Put each enum member on its own line
+# dotnet_diagnostic.RCS0031.severity = warning
+
+# Control where wrapped arrows appear
+# dotnet_diagnostic.RCS0032.severity = warning
 roslynator_arrow_token_new_line = before
+
+# Put each statement on its own line
+# dotnet_diagnostic.RCS0033.severity = warning
+
+# Start each generic constraint clause on its own line
+# dotnet_diagnostic.RCS0034.severity = warning
+
+# Keep else and its following if together
+# dotnet_diagnostic.RCS0041.severity = warning
+
+# Keep automatic accessors on one line
+# dotnet_diagnostic.RCS0042.severity = warning
+
+# Use LF line endings in C# files
+# dotnet_diagnostic.RCS0045.severity = warning
+end_of_line = lf
+
+# Use spaces for indentation
+# dotnet_diagnostic.RCS0046.severity = warning
+
+# Separate the first top-level declaration from any preceding directive
+# dotnet_diagnostic.RCS0050.severity = warning
+
+# Control the line break before a do statement's while clause
+# dotnet_diagnostic.RCS0051.severity = warning
+
+# Control where a wrapped equals sign appears
+# dotnet_diagnostic.RCS0052.severity = warning
 roslynator_equals_token_new_line = before
+
+# Align items in a multiline list
+# dotnet_diagnostic.RCS0053.severity = warning
+
+# Use consistent line breaks in call chains
+# dotnet_diagnostic.RCS0054.severity = warning
+
+# Use consistent line breaks in binary expression chains
+# dotnet_diagnostic.RCS0055.severity = warning
+
+# Limit the width of source lines
+# dotnet_diagnostic.RCS0056.severity = warning
 roslynator_max_line_length = 1024
 roslynator_tab_length = 4
+
+# Remove leading whitespace at the start of a source file
+# dotnet_diagnostic.RCS0057.severity = warning
+
+# Control trailing whitespace and the final newline
+# dotnet_diagnostic.RCS0058.severity = warning
 roslynator_new_line_at_end_of_file = true
+
+# Control where wrapped null-conditional operators appear
+# dotnet_diagnostic.RCS0059.severity = warning
 roslynator_null_conditional_operator_new_line = before
+
+# Control the blank line after a file-scoped namespace
+# dotnet_diagnostic.RCS0060.severity = warning
 roslynator_blank_line_after_file_scoped_namespace_declaration = true
+
+# Control the spacing between switch sections
+# dotnet_diagnostic.RCS0061.severity = warning
 roslynator_blank_line_between_switch_sections = include
-roslynator_arrow_token_new_line = before
+
+# Control whether an expression body starts on a new line
+# dotnet_diagnostic.RCS0062.severity = disabled
+
+# Remove redundant blank lines
+# dotnet_diagnostic.RCS0063.severity = warning
+
+# Brace embedded statements that span multiple lines
+# dotnet_diagnostic.RCS1001.severity = warning
+
+# Remove optional braces from embedded statements
+# dotnet_diagnostic.RCS1002.severity = disabled
+
+# Brace multiline branches in an if-else chain
+# dotnet_diagnostic.RCS1003.severity = warning
+
+# Remove optional braces from if-else branches
+# dotnet_diagnostic.RCS1004.severity = disabled
+
+# Combine nested using statements
+# dotnet_diagnostic.RCS1005.severity = warning
+
+# Combine an else block and its nested if
+# dotnet_diagnostic.RCS1006.severity = warning
+
+# Require braces around embedded statements
+# dotnet_diagnostic.RCS1007.severity = warning
+
+# Use C# keywords for predefined types
+# dotnet_diagnostic.RCS1013.severity = warning
+
+# Use the configured form of array type inference
+# dotnet_diagnostic.RCS1014.severity = warning
 roslynator_array_creation_type_style = implicit
 
 # Existing compiler diagnostics. Raise one rule at a time as its findings are fixed.
+
+# Remove unreachable code
 dotnet_diagnostic.CS0162.severity = suggestion
+
+# Remove unused local variable declarations
 dotnet_diagnostic.CS0168.severity = suggestion
+
+# Replace calls to obsolete members
 dotnet_diagnostic.CS0618.severity = suggestion
+
+# Provide a hash code when overriding equality
 dotnet_diagnostic.CS0659.severity = suggestion
+
+# Override object equality when defining equality operators
 dotnet_diagnostic.CS0660.severity = suggestion
+
+# Override the hash code when defining equality operators
 dotnet_diagnostic.CS0661.severity = suggestion
+
+# Use distinct names for nested and enclosing type parameters
 dotnet_diagnostic.CS0693.severity = suggestion
+
+# Avoid assigning a possibly null value to a nonnullable variable
 dotnet_diagnostic.CS8600.severity = suggestion
+
+# Avoid assigning a possibly null value to a nonnullable target
 dotnet_diagnostic.CS8601.severity = suggestion
+
+# Check a possibly null reference before dereferencing it
 dotnet_diagnostic.CS8602.severity = suggestion
+
+# Make possible null returns match the declared return type
 dotnet_diagnostic.CS8603.severity = suggestion
+
+# Check a possibly null argument before passing it to a nonnullable parameter
 dotnet_diagnostic.CS8604.severity = suggestion
+
+# Check a possibly null object before unboxing it
 dotnet_diagnostic.CS8605.severity = suggestion
+
+# Initialize nonnullable members before construction completes
 dotnet_diagnostic.CS8618.severity = suggestion
+
+# Align nested nullability across assigned values
 dotnet_diagnostic.CS8619.severity = suggestion
+
+# Avoid passing a null literal where a nonnullable value is required
 dotnet_diagnostic.CS8625.severity = suggestion
+
+# Check a nullable value type before reading its value
 dotnet_diagnostic.CS8629.severity = suggestion
+
+# Match return type nullability on overrides
 dotnet_diagnostic.CS8764.severity = suggestion
+
+# Match parameter nullability on overrides
 dotnet_diagnostic.CS8765.severity = suggestion
+
+# Replace obsolete WebRequest and WebClient APIs
 dotnet_diagnostic.SYSLIB0014.severity = suggestion
