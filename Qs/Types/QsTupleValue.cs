@@ -6,12 +6,14 @@ namespace Qs.Types;
 public struct QsTupleValue
 {
     public int Id;
+
     public string Name;
 
     /// <summary>
     /// Holds original source value that wasn't converted into Native Qs Value yet
     /// </summary>
     private Object? _LazyValue;
+
     public Object? LazyValue => _LazyValue;
 
     public QsValue Value;

@@ -7,6 +7,7 @@ public class QsBoolean : QsValue
     public bool Value;
 
     static QsBoolean _QsTrue = new() { Value = true };
+
     static QsBoolean _QsFalse = new() { Value = false };
 
     public static QsBoolean True => _QsTrue;

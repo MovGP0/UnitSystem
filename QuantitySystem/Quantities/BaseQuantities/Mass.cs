@@ -18,6 +18,7 @@ public class Mass<T> : AnyQuantity<T>
 
 
     private static QuantityDimension _Dimension = new(1, 0, 0);
+
     public override QuantityDimension Dimension => _Dimension * Exponent;
 
 

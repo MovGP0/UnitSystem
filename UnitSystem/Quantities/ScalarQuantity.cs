@@ -47,6 +47,7 @@ public sealed partial class ScalarQuantity
     public bool IsPoint { get; }
 
     internal double CoherentAmount { get; }
+
     internal Unit CoherentUnit { get; }
 
     /// <summary>

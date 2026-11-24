@@ -13,6 +13,7 @@ namespace ParticleLexer;
 public sealed partial class Token : IEnumerable<Token>
 {
     public string Value = string.Empty;
+
     public Type TokenClassType { get; set; }
 
     private int _IndexInText;

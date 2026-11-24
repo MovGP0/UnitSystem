@@ -14,7 +14,9 @@ public partial class SymbolicVariable
     class ParameterSquareTrig
     {
         public string Parameter;
+
         public int Sin_2_Count;
+
         public int Cos_2_Count;
 
 

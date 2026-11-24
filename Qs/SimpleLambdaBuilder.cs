@@ -10,7 +10,9 @@ namespace Qs;
 class SimpleLambdaBuilder(string functionName, Type type)
 {
     private List<ParameterExpression> _params = [];
+
     private readonly List<KeyValuePair<ParameterExpression, bool>> _visibleVars = [];
+
     private Expression _body;
 
     private static int _lambdaId; //for generating unique lambda name

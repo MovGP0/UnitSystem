@@ -4,7 +4,9 @@ internal static class FunctionOperation
 {
 
     public const string ExpText = "exp";
+
     public const string LnText = "log";
+
     public const string SqrtText = "sqrt";
 
 

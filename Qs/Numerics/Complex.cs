@@ -15,7 +15,9 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 
 
     public static readonly Complex Zero = new(0, 0);
+
     public static readonly Complex One = new(1.0, 0.0);
+
     public static readonly Complex ImaginaryOne = new(0.0, 1.0);
 
 

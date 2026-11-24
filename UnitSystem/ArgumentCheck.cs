@@ -7,6 +7,7 @@ namespace UnitSystem;
 internal class ArgumentCheck<T>
 {
     private readonly T _argument;
+
     private readonly string _paramName;
 
     /// <summary>

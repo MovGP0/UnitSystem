@@ -7,6 +7,7 @@ public static class Currency
 {
 
     static ParticleLexer.Token _currenciesJson;
+
     static Dictionary<string, double> _currentCurrencies;
 
     static Currency()

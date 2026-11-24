@@ -120,8 +120,12 @@ public sealed class GaugeExpression
     }
 
     private abstract record Node;
+
     private sealed record Field(string Name) : Node;
+
     private sealed record Product(IEnumerable<Node> Terms) : Node;
+
     private sealed record Conjugate(Node Operand) : Node;
+
     private sealed record SingletSelection(Node Operand) : Node;
 }

@@ -10,13 +10,21 @@ internal sealed class UnitInterpreter
     internal const string CanonicalPrefix = "@unit ";
 
     private readonly IUnitSystem _system;
+
     private readonly KnownUnit[] _baseUnits;
+
     private readonly Dictionary<string, KnownUnit> _prefixedBases;
+
     private readonly MetricPrefix[] _prefixes;
+
     private readonly string[] _division;
+
     private readonly string _multiplication;
+
     private readonly string[] _explicitMultiplication;
+
     private readonly int _maxSymbolWords;
+
     private readonly string[] _exponentiation;
 
     public UnitInterpreter(IUnitSystem system, IUnitDialect dialect)

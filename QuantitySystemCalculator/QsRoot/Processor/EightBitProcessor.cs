@@ -5,14 +5,19 @@ namespace QsRoot.Processor;
 public class EightBitProcessor
 {
     public QsValue Af { get; set; } = QsScalar.Zero;
+
     public QsValue Bc { get; set; } = QsScalar.Zero;
+
     public QsValue De { get; set; } = QsScalar.Zero;
+
     public QsValue Hl { get; set; } = QsScalar.Zero;
 
     public QsValue Ix { get; set; } = QsScalar.Zero;
+
     public QsValue Iy { get; set; } = QsScalar.Zero;
 
     public QsValue Sp { get; set; } = QsScalar.Zero;
+
     public QsValue Pc { get; set; } = QsScalar.Zero;
 
     /// <summary>

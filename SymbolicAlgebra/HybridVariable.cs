@@ -8,6 +8,7 @@ internal struct HybridVariable
 {
 
     public SymbolicVariable? SymbolicVariable;
+
     public double NumericalVariable;
 
 

@@ -5,6 +5,7 @@ namespace UnitSystem.Dimensions;
 public sealed partial class Dimension
 {
     private const string NonBreakingSpace = "\u00A0";
+
     private const string CrossProductSymbol = "\u00D7";
 
     /// <summary>

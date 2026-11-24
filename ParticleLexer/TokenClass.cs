@@ -56,11 +56,17 @@ public abstract class TokenClass
 
     //cache token regexes
     static Dictionary<Type, Regex> regexes = new Dictionary<Type, Regex>();
+
     static Dictionary<Type, bool> exactwords = new Dictionary<Type, bool>();
+
     static Dictionary<Type, string> words = new Dictionary<Type, string>();
+
     static Dictionary<Type, string> ShouldBeginingWithList = new Dictionary<Type, string>();
+
     static Dictionary<Type, bool> ContinueAfterSuccessList = new Dictionary<Type, bool>();
+
     static Dictionary<Type, bool> ContinousTokenList = new Dictionary<Type, bool>();
+
     static Dictionary<Type, string> ShouldEndWithList = new Dictionary<Type, string>();
 
     /*

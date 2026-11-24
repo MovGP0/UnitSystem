@@ -29,6 +29,7 @@ public class QsNamespace(string name)
     public string Name { get; } = name;
 
     private Type _NamespaceType = null;
+
     public Type NamespaceType => _NamespaceType;
 
 

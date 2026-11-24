@@ -25,6 +25,7 @@ class QsVar
     public class ExprOp
     {
         public Expression QuantityExpression { get; set; }
+
         public string Operation { get; set; }
 
         public ExprOp Previous { get; set; }
@@ -300,6 +301,7 @@ class QsVar
     }
 
     Stack<string> loopIteratorContainer = new();
+
     Dictionary<string, ParameterExpression> loopIteratorParameter = new();
 
 

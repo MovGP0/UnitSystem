@@ -25,8 +25,11 @@ namespace Qs.Numerics;
 public struct Quaternion : IEquatable<Quaternion>
 {
     private double a;
+
     private double b;
+
     private double c;
+
     private double d;
 
     public double Real => a;

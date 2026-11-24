@@ -18,6 +18,7 @@ public class QsDifferentialOperation : QsOperation
     private struct InnerOperation :IEquatable<InnerOperation>
     {
         public string Operation;
+
         public QsValue value;
 
         public bool Equals(InnerOperation other)

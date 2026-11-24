@@ -10,6 +10,7 @@
 public sealed class ReferenceUnitAttribute : Attribute
 {
     private readonly double _numerator;
+
     private readonly string _source;
 
     /// <summary>

@@ -22,5 +22,6 @@ public class QsVariableNotFoundException : QsException
 
 
    public string Namespace { get; set; }
+
    public string Variable { get; set; }
 }

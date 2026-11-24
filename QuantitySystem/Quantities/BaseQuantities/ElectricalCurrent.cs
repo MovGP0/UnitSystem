@@ -5,6 +5,7 @@ public class ElectricalCurrent<T>(float exponent) : AnyQuantity<T>(exponent)
     public ElectricalCurrent() : this(1) { }
 
     private static QuantityDimension _Dimension = new(0, 0, 0, 0, 1, 0, 0);
+
     public override QuantityDimension Dimension => _Dimension * Exponent;
 
 

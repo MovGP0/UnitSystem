@@ -349,6 +349,7 @@ public partial class SymbolicVariable
     public struct CoeffecienttValue
     {
         public double ConstantValue;
+
         public SymbolicVariable ConstantPower;
     }
 

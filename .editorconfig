@@ -25,7 +25,7 @@ dotnet_diagnostic.RCS0011.severity = warning
 roslynator_blank_line_between_single_line_accessors = false
 
 # Add blank line between single-line declarations
-# dotnet_diagnostic.RCS0012.severity = warning
+dotnet_diagnostic.RCS0012.severity = warning
 
 # Separate neighboring single-line declarations of different kinds
 # dotnet_diagnostic.RCS0013.severity = warning

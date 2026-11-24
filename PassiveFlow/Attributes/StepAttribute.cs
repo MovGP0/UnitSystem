@@ -7,9 +7,13 @@
 public class StepAttribute : Attribute
 {
     public int _StepId;
+
     public Type[] _ItemAssociatedTypes;
+
     public bool Skip = false;
+
     public string Descriptor_1 = string.Empty;
+
     public string Descriptor_2 = string.Empty;
 
     /// <summary>

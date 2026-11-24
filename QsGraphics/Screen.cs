@@ -10,7 +10,9 @@ public class Screen
 {
 
     private readonly int _Width;
+
     private readonly int _Height;
+
     private double _PixelPerMeter;
 
     public double PixelPerMeter
@@ -20,11 +22,14 @@ public class Screen
     }
 
     private readonly ScreenForm _Form;
+
     private readonly Func<DialogResult> _FormDialog;
+
     private readonly Task _FormTask;
 
 
     private readonly Graphics OffGraphics;
+
     private readonly Bitmap OffBitmap;
 
 

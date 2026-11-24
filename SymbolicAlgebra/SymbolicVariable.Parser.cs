@@ -10,6 +10,7 @@ public partial class SymbolicVariable
     private class SymbolicExpressionOperator
     {
         public string Operation;
+
         public SymbolicExpressionOperator? Next;
 
         public SymbolicVariable SymbolicExpression;
@@ -37,12 +38,14 @@ public partial class SymbolicVariable
     private class DynamicExpressionOperator
     {
         public string Operation;
+
         public DynamicExpressionOperator? Next;
 
         public Expression DynamicExpression;
     }
 
     static readonly char[] parse_separators = ['^', '*', '/', '+', '-', '(', '|', '.'];
+
     static readonly char[] parse_seps       = ['^', '*', '/', '+', '-', '|', '.'];
 
     /// <summary>
@@ -832,8 +835,11 @@ public partial class SymbolicVariable
 
 
     private Expression DynamicBody;
+
     private Dictionary<string, ParameterExpression> DynamicParameters = new Dictionary<string,ParameterExpression>();
+
     private LambdaExpression Lambda;
+
     private Delegate FunctionDelegate;
 
 

@@ -8,12 +8,17 @@ public static class QsCommands
     public static bool CommandProcessed;
 
     public static ScriptEngine Engine { get; set; }
+
     public static ScriptScope ScriptScope { get; set; }
+
     public const ConsoleColor BackgroundColor = ConsoleColor.White;
+
     public const ConsoleColor ForegroundColor = ConsoleColor.Black;
+
     public const ConsoleColor HelpColor = ConsoleColor.Blue;
 
     public const ConsoleColor ValuesColor = ConsoleColor.Green;
+
     public const ConsoleColor ExceptionColor = ConsoleColor.Red;
 
     /// <summary>
@@ -413,8 +418,11 @@ public static class QsCommands
     private struct UnitInfo
     {
         public string Uname;
+
         public string Symbol;
+
         public string System;
+
         public string Qtype;
     }
 

@@ -19,6 +19,8 @@ public sealed class MetricPrefixException : UnitException
    }
 
    public double WrongExponent { get; set; }
+
    public MetricPrefix CorrectPrefix { get; set; }
+
    public double OverflowExponent { get; set; }
 }

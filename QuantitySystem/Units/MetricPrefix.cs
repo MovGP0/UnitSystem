@@ -3,6 +3,7 @@
 public struct MetricPrefix(string prefix, string symbol, int exponent)
 {
     public string Prefix { get; } = prefix;
+
     public string Symbol { get; } = symbol;
 
     /// <summary>

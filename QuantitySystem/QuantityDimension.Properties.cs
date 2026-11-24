@@ -7,11 +7,17 @@ public sealed partial class QuantityDimension
 {
     #region Dimension Physical Properties
     public MassDescriptor Mass { get; set; }
+
     public LengthDescriptor Length { get; set; }
+
     public TimeDescriptor Time { get; set; }
+
     public ElectricCurrentDescriptor ElectricCurrent { get; set; }
+
     public TemperatureDescriptor Temperature { get; set; }
+
     public AmountOfSubstanceDescriptor AmountOfSubstance { get; set; }
+
     public LuminousIntensityDescriptor LuminousIntensity { get; set; }
     #endregion
 

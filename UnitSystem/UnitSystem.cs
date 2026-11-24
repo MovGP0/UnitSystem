@@ -10,13 +10,21 @@ namespace UnitSystem;
 internal sealed class UnitSystem : IUnitSystem
 {
     private readonly object _gate = new();
+
     private readonly List<KnownUnit> _baseUnits = new();
+
     private readonly Dictionary<(double Factor, double Offset, Dimension Dimension), KnownUnit> _units = new();
+
     private readonly Dictionary<string, KnownUnit> _unitsBySymbol = new(StringComparer.Ordinal);
+
     private readonly Dictionary<int, string> _dimensionSymbols = new();
+
     private readonly HashSet<Dimension> _affineDimensions = new();
+
     private readonly IUnitFactory _unitFactory = new UnitFactory();
+
     private UnitInterpreter? _interpreter;
+
     private bool _frozen;
 
     public UnitSystem(string name)
