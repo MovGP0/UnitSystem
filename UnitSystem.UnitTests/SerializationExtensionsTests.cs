@@ -8,6 +8,7 @@ using UnitSystem.Systems;
 using Newtonsoft.Json;
 using NSubstitute;
 using Shouldly;
+using ShInUeXx.Numerics;
 using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;
@@ -42,7 +43,7 @@ public static class SerializationExtensionsTests
         public void ShouldSerializeAndDeserializeUsingDataContractSerializer()
         {
             // Arrange
-            var quantity = new ScalarQuantity(100, J / m.Pow(3));
+            var quantity = new ScalarQuantity(100, J / m.Pow(new Rational(1, 3)));
             var info = quantity.ToInfo();
             var serializer = new DataContractSerializer(typeof(QuantityInfo<double>));
 
@@ -69,11 +70,12 @@ public static class SerializationExtensionsTests
         public void ShouldSerializeAndDeserializeUsingJsonNet()
         {
             // Arrange
-            var quantity = new ScalarQuantity(100, J / m.Pow(3));
+            var quantity = new ScalarQuantity(100, J / m.Pow(new Rational(1, 3)));
             var info = quantity.ToInfo();
 
             // Act
             var json = JsonConvert.SerializeObject(info);
+            json.ShouldContain("\"m\":\"5/3\"");
             var deserializedInfo = JsonConvert.DeserializeObject<QuantityInfo<double>>(json);
             var result = SISystem.System.FromInfo(deserializedInfo);
 
@@ -82,10 +84,38 @@ public static class SerializationExtensionsTests
         }
 
         [TestMethod]
+        public void ShouldReadLegacyJsonExponents()
+        {
+            const string json = """{"Amount":12,"Unit":{"m":0.1}}""";
+            var info = JsonConvert.DeserializeObject<QuantityInfo<double>>(json);
+
+            SISystem.System.FromInfo(info).ShouldBe(new ScalarQuantity(12, m.Pow(new Rational(1, 10))));
+        }
+
+        [TestMethod]
+        public void ShouldReadLegacyDataContractExponents()
+        {
+            const string xml = """
+                <QuantityInfoOfdouble xmlns="http://schemas.datacontract.org/2004/07/UnitSystem.Serialization">
+                  <Amount>12</Amount>
+                  <Unit xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+                    <a:KeyValueOfstringfloat><a:Key>m</a:Key><a:Value>0.1</a:Value></a:KeyValueOfstringfloat>
+                  </Unit>
+                </QuantityInfoOfdouble>
+                """;
+            var serializer = new DataContractSerializer(typeof(QuantityInfo<double>));
+            using var reader = XmlReader.Create(new StringReader(xml));
+
+            var info = (QuantityInfo<double>)serializer.ReadObject(reader)!;
+
+            SISystem.System.FromInfo(info).ShouldBe(new ScalarQuantity(12, m.Pow(new Rational(1, 10))));
+        }
+
+        [TestMethod]
         public void ShouldMapToInfoAndBackCorrectly()
         {
             // Arrange
-            var quantity = new ScalarQuantity(100, J / m.Pow(3));
+            var quantity = new ScalarQuantity(100, J / m.Pow(new Rational(1, 3)));
 
             // Act
             var info = quantity.ToInfo();

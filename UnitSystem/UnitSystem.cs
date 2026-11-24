@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
+using ShInUeXx.Numerics;
 using UnitSystem.Dimensions;
 using UnitSystem.Extensions;
 using UnitSystem.Presentation;
@@ -68,8 +69,9 @@ internal sealed class UnitSystem : IUnitSystem
         lock (_gate)
         {
             EnsureMutable();
-            var exponents = new float[_baseUnits.Count + 1];
-            exponents[exponents.Length - 1] = 1;
+            var exponents = new Rational[_baseUnits.Count + 1];
+            Array.Fill(exponents, Rational.Zero);
+            exponents[^1] = Rational.One;
             var unit = new KnownUnit(
                 this,
                 1.0,

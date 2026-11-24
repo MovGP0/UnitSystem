@@ -28,8 +28,12 @@ Temperature quantities default to points on a scale. Pass `isPoint: false` to th
 `ScalarQuantity` constructor for a temperature difference. Subtracting two points
 produces a difference. Adding a difference to a point produces a point.
 
-Use `Pow(exponent)` on units, dimensions, and scalar quantities in C#. Unit strings
-continue to use `^` for exponents, such as `m^2`.
+Use `Pow(exponent)` on units, dimensions, and scalar quantities. Dimension exponents
+are exact rationals. For example, pass `new Rational(1, 3)` from `ShInUeXx.Numerics`
+to `SISystem.m.Pow` to get `m^(1/3)`. Unit strings accept both `m^2` and `m^(1/3)`.
+
+`QuantityInfo` writes exact exponents as strings in `RationalUnit` and can still read
+records with numeric exponents in `Unit`.
 
 Unit formatting uses readable symbols and expressions where they round-trip in the
 same catalog. If a custom symbol would change the parsed result, formatting emits

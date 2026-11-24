@@ -1,4 +1,5 @@
-﻿using UnitSystem.Dimensions;
+﻿using ShInUeXx.Numerics;
+using UnitSystem.Dimensions;
 using UnitSystem.Extensions;
 using UnitSystem.Prefixes;
 
@@ -42,7 +43,7 @@ internal sealed class UnitInterpreter
         {
             unit.Factor.ToString("G17", CultureInfo.InvariantCulture),
             unit.Offset.ToString("G17", CultureInfo.InvariantCulture)
-        }.Concat(unit.Dimension.Select(exponent => exponent.ToString("G9", CultureInfo.InvariantCulture)));
+        }.Concat(unit.Dimension.Select(DimensionExponent.Format));
         return CanonicalPrefix + string.Join(" ", values);
     }
 
@@ -120,8 +121,14 @@ internal sealed class UnitInterpreter
         return null;
     }
 
-    private string DisplayFactor(string symbol, float exponent)
-        => exponent == 1 ? symbol : symbol + _exponentiation[0] + exponent.ToString("R", CultureInfo.InvariantCulture);
+    private string DisplayFactor(string symbol, Rational exponent)
+    {
+        if (exponent == Rational.One) return symbol;
+
+        var power = DimensionExponent.Format(exponent);
+        if (!exponent.Denominator.IsOne) power = $"({power})";
+        return symbol + _exponentiation[0] + power;
+    }
 
     private static string DisplayTransform(Unit unit)
     {
@@ -151,14 +158,14 @@ internal sealed class UnitInterpreter
             }
         }
 
-        var fraction = expression.Split(_division, StringSplitOptions.None);
-        if (fraction.Length > 2 || fraction.Any(string.IsNullOrWhiteSpace))
+        var fraction = SplitFraction(expression);
+        if (fraction.Count > 2 || fraction.Any(string.IsNullOrWhiteSpace))
         {
             throw InvalidExpression(unitExpression);
         }
 
         var unit = ParseProduct(fraction[0].Trim());
-        if (fraction.Length == 2)
+        if (fraction.Count == 2)
         {
             unit /= ParseProduct(fraction[1].Trim());
         }
@@ -166,6 +173,49 @@ internal sealed class UnitInterpreter
         if (factor.Equals(1.0) && offset.Equals(0.0)) return unit;
         Check.EnsureAbsoluteUnit(unit);
         return CreateParsedUnit(unitExpression, factor * unit.Factor, offset, unit.Dimension);
+    }
+
+    private List<string> SplitFraction(string expression)
+    {
+        var terms = new List<string>(2);
+        var start = 0;
+        for (var index = 0; index < expression.Length; index++)
+        {
+            var exponentEnd = FindParenthesizedPowerEnd(expression, index);
+            if (exponentEnd > index)
+            {
+                index = exponentEnd;
+                continue;
+            }
+
+            foreach (var token in _division)
+            {
+                if (!expression.AsSpan(index).StartsWith(token, StringComparison.Ordinal)) continue;
+
+                terms.Add(expression[start..index]);
+                start = index + token.Length;
+                index = start - 1;
+                break;
+            }
+        }
+
+        terms.Add(expression[start..]);
+        return terms;
+    }
+
+    private int FindParenthesizedPowerEnd(string expression, int index)
+    {
+        foreach (var token in _exponentiation)
+        {
+            var opening = index + token.Length;
+            if (opening >= expression.Length || expression[opening] != '('
+                || !expression.AsSpan(index).StartsWith(token, StringComparison.Ordinal)) continue;
+
+            var closing = expression.IndexOf(')', opening + 1);
+            return closing >= 0 ? closing : throw InvalidExpression(expression);
+        }
+
+        return index;
     }
 
     private Unit ParseCanonical(string expression)
@@ -178,10 +228,10 @@ internal sealed class UnitInterpreter
             throw InvalidExpression(expression);
         }
 
-        var exponents = new float[values.Length - 2];
+        var exponents = new Rational[values.Length - 2];
         for (var index = 0; index < exponents.Length; index++)
         {
-            if (!float.TryParse(values[index + 2], NumberStyles.Float, CultureInfo.InvariantCulture, out exponents[index]))
+            if (!DimensionExponent.TryParse(values[index + 2], out exponents[index]))
             {
                 throw InvalidExpression(expression);
             }
@@ -255,11 +305,18 @@ internal sealed class UnitInterpreter
         if (TryParseSymbol(expression) is { } unit) return unit;
 
         var power = expression.Split(_exponentiation, StringSplitOptions.None);
-        if (power.Length == 2 && TryParseSymbol(power[0]) is { } basis
-            && float.TryParse(power[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var exponent)
-            && !float.IsNaN(exponent) && !float.IsInfinity(exponent))
+        if (power.Length == 2 && TryParseSymbol(power[0]) is { } basis)
         {
-            return basis.Pow(exponent);
+            var exponentText = power[1].AsSpan();
+            if (exponentText.Length >= 2 && exponentText[0] == '(' && exponentText[^1] == ')')
+            {
+                exponentText = exponentText[1..^1];
+            }
+
+            if (DimensionExponent.TryParse(exponentText, out var exponent))
+            {
+                return basis.Pow(exponent);
+            }
         }
 
         return null;

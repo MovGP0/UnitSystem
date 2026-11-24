@@ -1,3 +1,4 @@
+using ShInUeXx.Numerics;
 using UnitSystem.Dimensions;
 
 namespace UnitSystem;
@@ -180,10 +181,23 @@ public abstract partial class Unit : IEquatable<Unit>
     /// <param name="exponent">The exponent to raise this unit to.</param>
     /// <returns>A new unit resulting from the exponentiation.</returns>
     [Pure]
-    public Unit Pow(float exponent)
+    public Unit Pow(int exponent) => Pow((Rational)exponent);
+
+    /// <summary>
+    /// Raises the unit to the round-trip decimal representation of a single-precision exponent.
+    /// </summary>
+    [Pure]
+    public Unit Pow(float exponent) => Pow(DimensionExponent.FromSingle(exponent));
+
+    /// <summary>
+    /// Raises the unit to a rational power. The dimension is exact and the scale uses floating-point arithmetic.
+    /// </summary>
+    [Pure]
+    public Unit Pow(Rational exponent)
     {
         Check.EnsureAbsoluteUnit(this);
-        return System.CreateUnit(Math.Pow(Factor, exponent), Dimension.Pow(exponent));
+        var dimension = Dimension.Pow(exponent);
+        return System.CreateUnit(Math.Pow(Factor, exponent.ToDouble()), dimension);
     }
 
     /// <summary>

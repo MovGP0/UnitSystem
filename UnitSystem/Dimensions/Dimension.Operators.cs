@@ -1,66 +1,57 @@
-﻿using UnitSystem.Extensions;
+﻿using ShInUeXx.Numerics;
 
 namespace UnitSystem.Dimensions;
 
 public sealed partial class Dimension
 {
     /// <summary>
-    /// Multiplies two dimensions, adding their exponents.
+    /// Multiplies two dimensions by adding their corresponding exponents.
     /// </summary>
-    /// <param name="dimension1">The first dimension.</param>
-    /// <param name="dimension2">The second dimension.</param>
-    /// <returns>A new <see cref="Dimension"/> resulting from the multiplication.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="dimension1"/> or <paramref name="dimension2"/> is null.</exception>
-    /// <example>
-    /// <code>
-    /// var length = new Dimension(1, 0, 0);
-    /// var time = new Dimension(0, 1, 0);
-    /// var speed = length * time;
-    /// // speed is a new Dimension with exponents [1, 1, 0]
-    /// </code>
-    /// </example>
-    public static Dimension operator *(Dimension dimension1, Dimension dimension2)
-    {
-        Check.Argument(dimension1, nameof(dimension1)).IsNotNull();
-        Check.Argument(dimension2, nameof(dimension2)).IsNotNull();
-
-        return new Dimension(dimension1.ZipMerge(dimension2, (x, y) => x + y).ToArray());
-    }
+    public static Dimension operator *(Dimension left, Dimension right)
+        => Combine(left, right, (first, second) => first + second);
 
     /// <summary>
-    /// Divides two dimensions, subtracting their exponents.
+    /// Divides two dimensions by subtracting their corresponding exponents.
     /// </summary>
-    /// <param name="dimension1">The first dimension.</param>
-    /// <param name="dimension2">The second dimension.</param>
-    /// <returns>A new <see cref="Dimension"/> resulting from the division.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="dimension1"/> or <paramref name="dimension2"/> is null.</exception>
-    /// <example>
-    /// <code>
-    /// var length = new Dimension(1, 0, 0);
-    /// var time = new Dimension(0, 1, 0);
-    /// var speed = length / time;
-    /// // speed is a new Dimension with exponents [1, -1, 0]
-    /// </code>
-    /// </example>
-    public static Dimension operator /(Dimension dimension1, Dimension dimension2)
-    {
-        Check.Argument(dimension1, nameof(dimension1)).IsNotNull();
-        Check.Argument(dimension2, nameof(dimension2)).IsNotNull();
-
-        return new Dimension(dimension1.ZipMerge(dimension2, (x, y) => x - y).ToArray());
-    }
+    public static Dimension operator /(Dimension left, Dimension right)
+        => Combine(left, right, (first, second) => first - second);
 
     /// <summary>
-    /// Raises a dimension to a given exponent, multiplying all its exponents by the given exponent.
+    /// Raises this dimension to an integer power.
     /// </summary>
-    /// <param name="exponent">The exponent to raise the dimension to.</param>
-    /// <returns>A new <see cref="Dimension"/> resulting from the exponentiation.</returns>
-    /// <example>
-    /// <code>
-    /// var length = new Dimension(1, 0, 0);
-    /// var area = length.Pow(2);
-    /// // area is a new Dimension with exponents [2, 0, 0]
-    /// </code>
-    /// </example>
-    public Dimension Pow(float exponent) => new(this.Select(value => value * exponent).ToArray());
+    public Dimension Pow(int exponent) => Pow((Rational)exponent);
+
+    /// <summary>
+    /// Raises this dimension to the round-trip decimal representation of a single-precision exponent.
+    /// </summary>
+    public Dimension Pow(float exponent) => Pow(DimensionExponent.FromSingle(exponent));
+
+    /// <summary>
+    /// Raises this dimension to an exact rational power.
+    /// </summary>
+    public Dimension Pow(Rational exponent)
+    {
+        if (!Rational.IsFinite(exponent))
+        {
+            throw new ArgumentOutOfRangeException(nameof(exponent), "A dimension exponent must be finite.");
+        }
+
+        return new Dimension(this.Select(value => value * exponent).ToArray());
+    }
+
+    private static Dimension Combine(Dimension left, Dimension right, Func<Rational, Rational, Rational> combine)
+    {
+        ArgumentNullException.ThrowIfNull(left);
+        ArgumentNullException.ThrowIfNull(right);
+
+        var exponents = new Rational[Math.Max(left.Count, right.Count)];
+        for (var index = 0; index < exponents.Length; index++)
+        {
+            var first = index < left.Count ? left[index] : Rational.Zero;
+            var second = index < right.Count ? right[index] : Rational.Zero;
+            exponents[index] = combine(first, second);
+        }
+
+        return new Dimension(exponents);
+    }
 }

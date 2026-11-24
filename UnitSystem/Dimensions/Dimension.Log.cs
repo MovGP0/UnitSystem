@@ -1,41 +1,32 @@
+using ShInUeXx.Numerics;
+
 namespace UnitSystem.Dimensions;
 
 public sealed partial class Dimension
 {
     /// <summary>
-    /// Computes the natural logarithm (ln) of a dimension, applying the logarithm to each exponent.
+    /// Approximates the natural logarithm of each nonzero exponent.
     /// </summary>
-    /// <param name="dimension">The dimension to apply the natural logarithm to.</param>
-    /// <returns>A new <see cref="Dimension"/> resulting from the natural logarithm of the original dimension.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="dimension"/> is null.</exception>
-    public static Dimension Ln(Dimension dimension)
-    {
-        Check.Argument(dimension, nameof(dimension)).IsNotNull();
-        return new Dimension(dimension.Select(e => e == 0 ? 0 : (float)Math.Log(e)).ToArray());
-    }
+    [Obsolete("For physical quantities, take the logarithm of a dimensionless ratio.")]
+    public static Dimension Ln(Dimension dimension) => MapLogarithm(dimension, Math.Log);
 
     /// <summary>
-    /// Computes the base-10 logarithm (lg) of a dimension, applying the logarithm to each exponent.
+    /// Approximates the base-10 logarithm of each nonzero exponent.
     /// </summary>
-    /// <param name="dimension">The dimension to apply the base-10 logarithm to.</param>
-    /// <returns>A new <see cref="Dimension"/> resulting from the base-10 logarithm of the original dimension.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="dimension"/> is null.</exception>
-    public static Dimension Lg(Dimension dimension)
-    {
-        Check.Argument(dimension, nameof(dimension)).IsNotNull();
-        return new Dimension(dimension.Select(e => e == 0 ? 0 : (float)Math.Log10(e)).ToArray());
-    }
+    [Obsolete("For physical quantities, take the logarithm of a dimensionless ratio.")]
+    public static Dimension Lg(Dimension dimension) => MapLogarithm(dimension, Math.Log10);
 
     /// <summary>
-    /// Computes the logarithm of a dimension to a specified base, applying the logarithm to each exponent.
+    /// Approximates the logarithm of each nonzero exponent to the specified base.
     /// </summary>
-    /// <param name="dimension">The dimension to apply the logarithm to.</param>
-    /// <param name="base">The base of the logarithm.</param>
-    /// <returns>A new <see cref="Dimension"/> resulting from the logarithm of the original dimension to the specified base.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="dimension"/> is null.</exception>
+    [Obsolete("For physical quantities, take the logarithm of a dimensionless ratio.")]
     public static Dimension Log(Dimension dimension, double @base)
+        => MapLogarithm(dimension, exponent => Math.Log(exponent, @base));
+
+    private static Dimension MapLogarithm(Dimension dimension, Func<double, double> logarithm)
     {
-        Check.Argument(dimension, nameof(dimension)).IsNotNull();
-        return new Dimension(dimension.Select(e => e == 0 ? 0 : (float)(Math.Log(e) / Math.Log(@base))).ToArray());
+        ArgumentNullException.ThrowIfNull(dimension);
+        return new Dimension(dimension.Select(exponent =>
+            exponent == Rational.Zero ? Rational.Zero : Rational.From(logarithm(exponent.ToDouble()))).ToArray());
     }
 }

@@ -1,43 +1,64 @@
+using ShInUeXx.Numerics;
+
 namespace UnitSystem.Dimensions;
 
 /// <summary>
-/// Represents a physical dimension, defined by a collection of exponents corresponding to the fundamental dimensions.
+/// Represents a physical dimension as exact rational exponents of its base dimensions.
 /// </summary>
-public sealed partial class Dimension : ImmutableCollection<float>
+public sealed partial class Dimension : ImmutableCollection<Rational>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="Dimension"/> class with the specified exponents.
+    /// Initializes a dimensionless value.
     /// </summary>
-    /// <param name="exponents">The exponents representing the dimension.</param>
-    public Dimension(params float[] exponents)
-        : base(Trim(exponents))
+    public Dimension()
+        : this(Array.Empty<Rational>())
     {
-        Check.Argument(exponents, nameof(exponents)).IsNotNull();
     }
 
     /// <summary>
-    /// Gets a dimensionless instance of <see cref="Dimension"/>.
+    /// Initializes a dimension with integer exponents.
     /// </summary>
-    public static Dimension DimensionLess { get; } = [];
+    public Dimension(params int[] exponents)
+        : this(exponents.Select(exponent => (Rational)exponent).ToArray())
+    {
+    }
 
     /// <summary>
-    /// Trims trailing zeros from the array of exponents.
+    /// Initializes a dimension from single-precision exponents using their round-trip decimal representations.
     /// </summary>
-    /// <param name="exponents">The array of exponents to trim.</param>
-    /// <returns>The trimmed array of exponents.</returns>
-    private static float[] Trim(float[] exponents)
+    public Dimension(params float[] exponents)
+        : this(exponents.Select(DimensionExponent.FromSingle).ToArray())
     {
-        if (exponents.Length == 0) return exponents;
+    }
 
-        var index = exponents.Length - 1;
+    /// <summary>
+    /// Initializes a dimension with exact rational exponents.
+    /// </summary>
+    public Dimension(params Rational[] exponents)
+        : base(Trim(exponents))
+    {
+    }
 
-        while (index >= 0 && exponents[index] == 0)
+    /// <summary>
+    /// Gets a dimensionless value.
+    /// </summary>
+    public static Dimension DimensionLess { get; } = new();
+
+    private static Rational[] Trim(Rational[] exponents)
+    {
+        ArgumentNullException.ThrowIfNull(exponents);
+        if (exponents.Any(exponent => !Rational.IsFinite(exponent)))
         {
-            index--;
+            throw new ArgumentOutOfRangeException(nameof(exponents), "Dimension exponents must be finite.");
         }
 
-        Array.Resize(ref exponents, index + 1);
+        var count = exponents.Length;
+        while (count > 0 && exponents[count - 1] == Rational.Zero)
+        {
+            count--;
+        }
 
+        Array.Resize(ref exponents, count);
         return exponents;
     }
 }

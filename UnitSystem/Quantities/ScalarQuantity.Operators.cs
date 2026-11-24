@@ -1,4 +1,7 @@
-﻿namespace UnitSystem.Quantities;
+﻿using ShInUeXx.Numerics;
+using UnitSystem.Dimensions;
+
+namespace UnitSystem.Quantities;
 
 public sealed partial class ScalarQuantity
 {
@@ -96,10 +99,23 @@ public sealed partial class ScalarQuantity
     /// Raises a linear quantity to the specified power.
     /// </summary>
     [Pure]
-    public ScalarQuantity Pow(int exponent)
+    public ScalarQuantity Pow(int exponent) => Pow((Rational)exponent);
+
+    /// <summary>
+    /// Raises a linear quantity to the round-trip decimal representation of a single-precision exponent.
+    /// </summary>
+    [Pure]
+    public ScalarQuantity Pow(float exponent) => Pow(DimensionExponent.FromSingle(exponent));
+
+    /// <summary>
+    /// Raises a linear quantity to a rational power.
+    /// </summary>
+    [Pure]
+    public ScalarQuantity Pow(Rational exponent)
     {
         EnsureLinear();
-        return new ScalarQuantity(Math.Pow(CoherentAmount, exponent), CoherentUnit.Pow(exponent), isPoint: false);
+        var unit = CoherentUnit.Pow(exponent);
+        return new ScalarQuantity(Math.Pow(CoherentAmount, exponent.ToDouble()), unit, isPoint: false);
     }
 
     private void EnsureLinear()

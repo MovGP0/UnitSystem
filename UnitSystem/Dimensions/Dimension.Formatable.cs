@@ -1,4 +1,6 @@
-﻿namespace UnitSystem.Dimensions;
+﻿using ShInUeXx.Numerics;
+
+namespace UnitSystem.Dimensions;
 
 public sealed partial class Dimension
 {
@@ -6,37 +8,39 @@ public sealed partial class Dimension
     private const string CrossProductSymbol = "\u00D7";
 
     /// <summary>
-    /// Returns a string representation of the dimension.
+    /// Returns the exact exponent vector as text.
     /// </summary>
-    /// <returns>A string representation of the dimension.</returns>
     [Pure]
-    public override string ToString() => string.Join(CrossProductSymbol, this.Select(i => i.ToString("F2", CultureInfo.InvariantCulture.NumberFormat)));
+    public override string ToString() => ToString(null, null);
 
     /// <summary>
-    /// Returns a formatted string representation of the dimension.
+    /// Returns the exponent vector. A numeric format renders a floating-point approximation.
     /// </summary>
-    /// <param name="format">The format string for the <see cref="float"/> values of the dimension exponents.</param>
-    /// <param name="formatProvider">The format provider to use for formatting the exponents.</param>
-    /// <returns>A formatted string representation of the dimension.</returns>
     [Pure]
     public string ToString(string? format, IFormatProvider? formatProvider)
-        => string.Join(CrossProductSymbol, this.Select(i => i.ToString(format, formatProvider)));
+        => string.Join(CrossProductSymbol, this.Select(exponent => FormatExponent(exponent, format, formatProvider)));
 
+    /// <summary>
+    /// Returns the exponents with the supplied system's base-dimension symbols.
+    /// </summary>
     [Pure]
     public string ToString(IUnitSystem system, string? format, IFormatProvider? formatProvider)
     {
+        var symbols = system.DimensionSymbols;
         return string.Join(NonBreakingSpace, this.Select((value, index) =>
         {
-            if (value == 0)
+            if (value == Rational.Zero)
             {
                 return "";
             }
 
-            var symbol = system.DimensionSymbols[index];
-            return value == 1f
-                ? symbol
-                : $"{symbol}^{value.ToString(format, formatProvider)}";
-        })
-        .Where(v => !string.IsNullOrEmpty(v)));
+            var symbol = symbols[index + 1];
+            return value == Rational.One ? symbol : $"{symbol}^{FormatExponent(value, format, formatProvider)}";
+        }).Where(value => value.Length != 0));
     }
+
+    private static string FormatExponent(Rational exponent, string? format, IFormatProvider? formatProvider)
+        => string.IsNullOrEmpty(format)
+            ? DimensionExponent.Format(exponent)
+            : exponent.ToDouble().ToString(format, formatProvider);
 }
