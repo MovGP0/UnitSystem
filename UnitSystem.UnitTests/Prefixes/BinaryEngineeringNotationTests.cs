@@ -1,6 +1,4 @@
-﻿using Shouldly;
-using UnitSystem.Prefixes;
-using UnitTests.Shared;
+﻿using UnitSystem.Prefixes;
 
 namespace UnitSystem.UnitTests.Prefixes;
 
@@ -8,6 +6,19 @@ namespace UnitSystem.UnitTests.Prefixes;
 [TestOf(typeof(BinaryEngineeringNotation))]
 public sealed class BinaryEngineeringNotationTests
 {
+    [TestMethod]
+    public void ShouldFormatConcurrently()
+    {
+        Parallel.For(0, 128, index =>
+        {
+            var exponent = index % 11;
+            var prefix = BinaryPrefix.GetAll().Single(candidate => candidate.Base1024Exponent == exponent);
+            var expected = prefix.Symbol.Length == 0 ? "1" : $"1\u00A0{prefix.Symbol}";
+
+            BinaryEngineeringNotation.FromValue(prefix.Factor).ShouldBe(expected);
+        });
+    }
+
     [TestMethod]
     [DataRow(5, "5")]
     [DataRow(1024.0, "1 Ki")]

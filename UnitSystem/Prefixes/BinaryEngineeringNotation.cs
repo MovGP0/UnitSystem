@@ -5,11 +5,9 @@ public static class BinaryEngineeringNotation
     [Pure]
     public static string FromValue(double value, IFormatProvider? formatProvider = null)
     {
-        // Get the closest binary exponent
         const string NonBreakingSpace = "\u00A0";
-        var binaryExponent = GetClosestBinaryExponent(value);
-        var prefix = BinaryPrefix.GetAll().Single(p => p.Base1024Exponent == binaryExponent);
-        var scaledValue = value * Math.Pow(2, -prefix.Base2Exponent);
+        var prefix = GetPrefix(value);
+        var scaledValue = value / prefix.Factor;
         return (scaledValue.ToString("0.###,###", formatProvider ?? CultureInfo.InvariantCulture) + NonBreakingSpace + prefix.Symbol).TrimEnd();
     }
 
@@ -23,33 +21,17 @@ public static class BinaryEngineeringNotation
     [DebuggerStepThrough]
     public static string FromValue(float value, IFormatProvider? formatProvider = null) => FromValue((double)value, formatProvider);
 
-    private static readonly Dictionary<int, double> base1024Exponents = new();
+    private static readonly BinaryPrefix[] PrefixesByDescendingFactor =
+        BinaryPrefix.GetAll().OrderByDescending(prefix => prefix.Factor).ToArray();
 
     [Pure]
-    private static int GetClosestBinaryExponent(double value)
+    private static BinaryPrefix GetPrefix(double value)
     {
-        if (value < 0) return 0;
-
-        for (var i = 10; i >= 0; i--)
+        foreach (var prefix in PrefixesByDescendingFactor)
         {
-            if (base1024Exponents.TryGetValue(i, out var pow))
-            {
-                if (value >= pow)
-                {
-                    return i;
-                }
-            }
-            else
-            {
-                pow = Math.Pow(1024, i);
-                base1024Exponents.Add(i, pow);
-                if (value >= pow)
-                {
-                    return i;
-                }
-            }
+            if (value >= prefix.Factor) return prefix;
         }
 
-        return 0;
+        return BinaryPrefix.One;
     }
 }
