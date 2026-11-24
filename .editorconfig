@@ -389,7 +389,7 @@ dotnet_diagnostic.RCS1135.severity = warning
 # dotnet_diagnostic.RCS1136.severity = silent
 
 # Add summary to documentation comment
-# dotnet_diagnostic.RCS1138.severity = warning
+dotnet_diagnostic.RCS1138.severity = warning
 
 # Add summary element to documentation comment
 # dotnet_diagnostic.RCS1139.severity = warning
