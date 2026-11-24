@@ -159,7 +159,7 @@ public partial class SymbolicVariable
 
         if (b.AddedTerms.Count > 0)
         {
-            sub += 1;  //increase
+            sub++;  //increase
             if (sub < b.AddedTerms.Count)
             {
                 // there are still terms to be consumed

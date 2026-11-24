@@ -78,7 +78,7 @@ public sealed partial class QuantityDimension
             {
                 TargetM--;
                 TargetF++;
-                TargetL -= 1;
+                TargetL--;
                 TargetT += 2;
             }
 

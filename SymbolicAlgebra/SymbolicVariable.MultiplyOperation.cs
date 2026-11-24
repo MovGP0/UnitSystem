@@ -366,7 +366,7 @@ public partial class SymbolicVariable
             var TargetTermSubTotal = Multiply(a, TargetSubTerm);
             total = Add(total, TargetTermSubTotal);
 
-            subIndex += 1;  //increase
+            subIndex++;  //increase
         }
 
         // for extra terms  {terms that has different divided term}

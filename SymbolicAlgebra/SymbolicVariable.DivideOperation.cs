@@ -344,7 +344,7 @@ public partial class SymbolicVariable
             // and when I did this the extracted term lost its divided term
 
             total += Divide(a, TargetSubTerm);
-            subIndex += 1;  //increase
+            subIndex++;  //increase
         }
 
         // for extra terms  {terms that has different divided term}

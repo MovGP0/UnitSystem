@@ -371,7 +371,7 @@ public partial class Unit
         {
             //try to find if it as a Metric unit with prefix
             //loop through all prefixes.
-            for (var i = 10; i >= -10; i -= 1)
+            for (var i = 10; i >= -10; --i)
             {
                 if (i == 0)
                 {

@@ -486,12 +486,12 @@ public partial class SymbolicVariable
             {
                 if (Symbol.Equals(functionNames[i] + "(" + iparms + ")", StringComparison.OrdinalIgnoreCase))
                 {
-                    SymbolPower += 1;
+                    SymbolPower++;
                 }
                 else if (FusedSymbols.ContainsKey(functionNames[i] + "(" + iparms + ")"))
                 {
                     var pp = FusedSymbols[functionNames[i] + "(" + iparms + ")"];
-                    pp.NumericalVariable += 1;
+                    pp.NumericalVariable++;
                     FusedSymbols[functionNames[i] + "(" + iparms + ")"] = pp;
                 }
                 else

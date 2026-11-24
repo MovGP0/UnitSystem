@@ -103,7 +103,7 @@ public partial class SymbolicVariable
                 }
                 else
                 {
-                    sv._SymbolPower += 1;
+                    sv._SymbolPower++;
                     sv.Coeffecient /= sv._SymbolPower;
                     sv._Symbol = parameter;
                 }
@@ -148,7 +148,7 @@ public partial class SymbolicVariable
                     }
                     else
                     {
-                        hv.NumericalVariable += 1;
+                        hv.NumericalVariable++;
                         sv.Coeffecient /= hv.NumericalVariable;
                     }
 
@@ -275,7 +275,7 @@ public partial class SymbolicVariable
                 if (sv._SymbolPowerTerm == null)
                 {
                     sv.Coeffecient *= sv._SymbolPower;
-                    sv._SymbolPower -= 1;
+                    sv._SymbolPower--;
                     if (sv._SymbolPower == 0)
                     {
                         sv._Symbol = "";

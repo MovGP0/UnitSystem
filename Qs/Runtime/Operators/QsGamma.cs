@@ -127,7 +127,7 @@ public static class QsGamma
             while (y < 7)
             {
                 p *= y;
-                y += 1;
+                y++;
             }
 
             var r = Math.Exp(y * Math.Log(y) - y + 1 / (12 * y + 2 / (5 * y + 53 / (42 * y))));
@@ -162,7 +162,7 @@ public static class QsGamma
             while (y < 8)
             {
                 p *= y;
-                y += 1;
+                y++;
             }
 
 ;

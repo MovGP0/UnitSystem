@@ -53,7 +53,7 @@ public partial class SymbolicVariable
             if (sv._SymbolPowerTerm == null)
             {
                 sv.Coeffecient *= sv._SymbolPower;
-                sv._SymbolPower -= 1;
+                sv._SymbolPower--;
                 if (sv._SymbolPower == 0)
                 {
                     sv._Symbol = "";
@@ -92,7 +92,7 @@ public partial class SymbolicVariable
                 if (hv.SymbolicVariable == null)
                 {
                     sv.Coeffecient *= hv.NumericalVariable;
-                    hv.NumericalVariable -= 1;
+                    hv.NumericalVariable--;
                     if (hv.NumericalVariable == 0)
                     {
                         sv.FusedSymbols.Remove(parameter);
@@ -236,7 +236,7 @@ public partial class SymbolicVariable
                 if (sv._SymbolPowerTerm == null)
                 {
                     sv.Coeffecient *= sv._SymbolPower;
-                    sv._SymbolPower -= 1;
+                    sv._SymbolPower--;
                     if (sv._SymbolPower == 0)
                     {
                         sv._Symbol = "";
