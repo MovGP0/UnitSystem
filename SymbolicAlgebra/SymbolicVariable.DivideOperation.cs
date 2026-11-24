@@ -397,11 +397,7 @@ public partial class SymbolicVariable
                 if (SourceTerm.Coeffecient == cst.ConstantValue)
                 {
                     // sample: 2^x/2^y = 2^(x-y)
-                    var cpower = cst.ConstantPower;
-                    if (cpower == null)
-                    {
-                        cpower = One;
-                    }
+                    var cpower = cst.ConstantPower ?? One;
 
                     if (SourceTerm._CoeffecientPowerTerm == null)
                     {
@@ -414,11 +410,7 @@ public partial class SymbolicVariable
                 {
                     // then we can use the target base
                     // 27/3^x = 3^3/3^x = 3^(3-x)
-                    var cpower = cst.ConstantPower;
-                    if (cpower == null)
-                    {
-                        cpower = new SymbolicVariable("1");
-                    }
+                    var cpower = cst.ConstantPower ?? new SymbolicVariable("1");
 
                     SourceTerm._CoeffecientPowerTerm = Subtract(new SymbolicVariable(sbase.ToString(CultureInfo.InvariantCulture)), cpower);
                     SourceTerm.Coeffecient = cst.ConstantValue;

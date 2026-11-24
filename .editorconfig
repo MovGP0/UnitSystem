@@ -365,7 +365,7 @@ dotnet_diagnostic.RCS1123.severity = warning
 # dotnet_diagnostic.RCS1126.severity = none
 
 # Use coalesce expression
-# dotnet_diagnostic.RCS1128.severity = warning
+dotnet_diagnostic.RCS1128.severity = warning
 
 # Remove redundant field initialization
 # dotnet_diagnostic.RCS1129.severity = silent
