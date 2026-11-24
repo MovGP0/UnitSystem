@@ -530,7 +530,7 @@ dotnet_diagnostic.RCS1197.severity = warning
 # dotnet_diagnostic.RCS1198.severity = none
 
 # Unnecessary null check
-# dotnet_diagnostic.RCS1199.severity = warning
+dotnet_diagnostic.RCS1199.severity = warning
 
 # Call 'Enumerable.ThenBy' instead of 'Enumerable.OrderBy'
 # dotnet_diagnostic.RCS1200.severity = warning
