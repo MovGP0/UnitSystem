@@ -81,7 +81,7 @@ dotnet_diagnostic.RCS0041.severity = warning
 dotnet_diagnostic.RCS0042.severity = warning
 
 # Use LF line endings in C# files
-# dotnet_diagnostic.RCS0045.severity = warning
+dotnet_diagnostic.RCS0045.severity = warning
 end_of_line = lf
 
 # Use spaces for indentation
