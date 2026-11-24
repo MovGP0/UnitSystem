@@ -894,7 +894,7 @@ dotnet_diagnostic.CA1850.severity = warning
 dotnet_diagnostic.CA1853.severity = warning
 
 # Prefer the 'IDictionary.TryGetValue(TKey, out TValue)' method
-# dotnet_diagnostic.CA1854.severity = warning
+dotnet_diagnostic.CA1854.severity = warning
 
 # Prefer 'Clear' over 'Fill'
 # dotnet_diagnostic.CA1855.severity = warning

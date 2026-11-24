@@ -1045,7 +1045,7 @@ public sealed class QsEvaluator
                                 return q;
                             }
 
-                            if (PropertyInfoIndexed.ContainsKey(ParentPropertyInfo) && PropertyInfoIndexed[ParentPropertyInfo]) // indexer in object
+                            if (PropertyInfoIndexed.TryGetValue(ParentPropertyInfo, out bool value) && value) // indexer in object
                             {
                                 // we are dealing with indexer
                                 // indexer should be called by the index

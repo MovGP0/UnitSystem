@@ -474,7 +474,7 @@ public partial class Unit
 
         foreach (var un in units)
         {
-             if (us.ContainsKey(un.UniqueKey))
+             if (us.TryGetValue(un.UniqueKey, out Unit? value))
              {
                  //check for prefixes before accumulating units
                 //   otherwise I'll lose the UnitExponent value.
@@ -553,8 +553,8 @@ public partial class Unit
                     }
                 }
 
-                us[un.UniqueKey].UnitExponent += un.UnitExponent;
-                us[un.UniqueKey].UnitDimension += un.UnitDimension;
+                value.UnitExponent += un.UnitExponent;
+                value.UnitDimension += un.UnitDimension;
              }
              else
              {

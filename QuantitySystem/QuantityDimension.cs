@@ -378,64 +378,71 @@ public sealed partial class QuantityDimension
                 edps.Add(m.Groups[2].Value[0], float.Parse(m.Groups[3].Value));
             }
 
-            if (!edps.ContainsKey('M'))
+            if (!edps.TryGetValue('M', out float value))
             {
-                edps['M'] = 0;
+                value = 0;
+                edps['M'] = value;
             }
 
-            if (!edps.ContainsKey('L'))
+            if (!edps.TryGetValue('L', out float value1))
             {
-                edps['L'] = 0;
+                value1 = 0;
+                edps['L'] = value1;
             }
 
-            if (!edps.ContainsKey('T'))
+            if (!edps.TryGetValue('T', out float value2))
             {
-                edps['T'] = 0;
+                value2 = 0;
+                edps['T'] = value2;
             }
 
-            if (!edps.ContainsKey('I'))
+            if (!edps.TryGetValue('I', out float value3))
             {
-                edps['I'] = 0;
+                value3 = 0;
+                edps['I'] = value3;
             }
 
-            if (!edps.ContainsKey('O'))
+            if (!edps.TryGetValue('O', out float value4))
             {
-                edps['O'] = 0;
+                value4 = 0;
+                edps['O'] = value4;
             }
 
-            if (!edps.ContainsKey('N'))
+            if (!edps.TryGetValue('N', out float value5))
             {
-                edps['N'] = 0;
+                value5 = 0;
+                edps['N'] = value5;
             }
 
-            if (!edps.ContainsKey('J'))
+            if (!edps.TryGetValue('J', out float value6))
             {
-                edps['J'] = 0;
+                value6 = 0;
+                edps['J'] = value6;
             }
 
-            if (!edps.ContainsKey('C'))
+            if (!edps.TryGetValue('C', out float value7))
             {
-                edps['C'] = 0;
+                value7 = 0;
+                edps['C'] = value7;
             }
 
-            if (!edps.ContainsKey('D'))
+            if (!edps.TryGetValue('D', out float value8))
             {
-                edps['D'] = 0;
+                value8 = 0;
+                edps['D'] = value8;
             }
 
             var qd = new QuantityDimension(
-                edps['M']
-                ,
-                edps['L'],
-                edps['T'],
-                edps['I'],
-                edps['O']
-                ,
-                edps['N'],
-                edps['J'])
+                value,
+                value1,
+                value2,
+                value3,
+                value4,
+                value5,
+                value6)
             {
-                Currency = new CurrencyDescriptor(edps['C']),
-                Digital = new DigitalDescriptor(edps['D'])
+                Currency = new CurrencyDescriptor(value7),
+                Digital = new DigitalDescriptor(value8)
             };
 
             return qd;

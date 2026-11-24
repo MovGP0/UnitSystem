@@ -91,9 +91,9 @@ public class QsNamespace(string name)
                     HardCodedMethods = GetQsNamespaceMethods();
                 }
 
-                if (HardCodedMethods.ContainsKey(name))
+                if (HardCodedMethods.TryGetValue(name, out object? value))
                 {
-                    return HardCodedMethods[name];
+                    return value;
                 }
             }
             else
@@ -129,9 +129,9 @@ public class QsNamespace(string name)
                     HardCodedMethods = GetQsNamespaceMethods();
                 }
 
-                if (HardCodedMethods.ContainsKey(name))
+                if (HardCodedMethods.TryGetValue(name, out object? value))
                 {
-                    return HardCodedMethods[name];
+                    return value;
                 }
             }
             else
