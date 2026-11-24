@@ -515,7 +515,7 @@ dotnet_diagnostic.RCS1192.severity = warning
 dotnet_diagnostic.RCS1193.severity = warning
 
 # Implement exception constructors
-# dotnet_diagnostic.RCS1194.severity = warning
+dotnet_diagnostic.RCS1194.severity = warning
 
 # Use ^ operator
 # dotnet_diagnostic.RCS1195.severity = warning
