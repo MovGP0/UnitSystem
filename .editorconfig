@@ -930,7 +930,7 @@ dotnet_diagnostic.CA1865.severity = warning
 dotnet_diagnostic.CA1866.severity = warning
 
 # Unnecessary call to 'Contains(item)'
-# dotnet_diagnostic.CA1868.severity = warning
+dotnet_diagnostic.CA1868.severity = warning
 
 # Cache and reuse 'JsonSerializerOptions' instances
 # dotnet_diagnostic.CA1869.severity = warning
