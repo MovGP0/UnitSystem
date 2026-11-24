@@ -55,7 +55,7 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
 
     #endregion
 
-    public static DerivedQuantity<T> ConstructDerivedQuantity<T>(params AnyQuantity<T>[] quantities) => new(1, quantities);
+    public static DerivedQuantity<TValue> ConstructDerivedQuantity<TValue>(params AnyQuantity<TValue>[] quantities) => new(1, quantities);
 
     #region Generic Helper Calculations
 
