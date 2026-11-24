@@ -135,7 +135,7 @@ public partial class Unit
         Type? systemUnitType = null;
 
         //search in upper namespaces also to get the default unit of the parent system.
-        while (string.IsNullOrEmpty(currentUnitSystem) == false && systemUnitType == null)
+        while (!string.IsNullOrEmpty(currentUnitSystem) && systemUnitType == null)
         {
             // prepare the query that we will search in
             var systemUnitTypes

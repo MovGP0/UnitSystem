@@ -78,7 +78,7 @@ public partial class SymbolicVariable
                 }
             }
         }
-        else if (sv.IsFunction && sv.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase) == false)
+        else if (sv.IsFunction && !sv.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase))
         {
             cc = true;  // treat the symvar  as an algebraic because there is no variable inside parameters that resemble what we want.
         }

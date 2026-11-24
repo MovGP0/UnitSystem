@@ -462,7 +462,7 @@ public sealed partial class Token : IEnumerable<Token>
 
                 #region Failed in match
 
-                if (!string.IsNullOrEmpty(merged.TokenValue) && tokenClassType.ContinousToken != true)
+                if (!string.IsNullOrEmpty(merged.TokenValue) && !tokenClassType.ContinousToken)
                 {
                     // don't continue if the target token doesn't start with the required text
                     if (!string.IsNullOrEmpty(tokenClassType.ShouldBeginWith))
@@ -640,7 +640,7 @@ public sealed partial class Token : IEnumerable<Token>
         foreach(var tt in tokenClassesTypes)
         {
             var tc = GetTokenClass(tt);
-            if (tc.ExactWord==false)
+            if (!tc.ExactWord)
             {
                 throw new InvalidOperationException("Only exact word tokens are allowed");
             }
@@ -1003,7 +1003,7 @@ public sealed partial class Token : IEnumerable<Token>
 
             //make sure all chars in value are white spaces
 
-            if (tokenType == tok.TokenClassType && reached == false)
+            if (tokenType == tok.TokenClassType && !reached)
             {
                 //all string are white spaces
             }

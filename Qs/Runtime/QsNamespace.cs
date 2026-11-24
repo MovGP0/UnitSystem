@@ -248,8 +248,8 @@ public class QsNamespace(string name)
         */
         var FilteredMethods = from m in methods
             where
-                m.IsSpecialName == false
-            select m;
+                !m.IsSpecialName
+                              select m;
 
         foreach (var member in FilteredMethods)
         {
@@ -273,7 +273,7 @@ public class QsNamespace(string name)
                     // if the attribute were found treat the function as namedargument function that is not default function.
                     method_name = funcAttribute.FunctionName;
 
-                    if (funcAttribute.DefaultScopeFunction == false)
+                    if (!funcAttribute.DefaultScopeFunction)
                     {
                         // alter the name so it includes the parameters also
                         string[] ptext = (from p in mps select p.Name).ToArray();
@@ -309,8 +309,8 @@ public class QsNamespace(string name)
             // m.IsSpecialName == false && m.ReturnType.IsArray == false &&
             //(m.ReturnType.BaseType == typeof(QsValue) || m.ReturnType == typeof(QsValue) ||
             //m.ReturnType == typeof(string) || m.ReturnType.IsValueType == true)
-            where m.IsSpecialName == false
-                && m.PropertyType.IsArray == false
+            where !m.IsSpecialName
+                && !m.PropertyType.IsArray
                 && m.PropertyType != typeof(bool)
                 && (
                     m.PropertyType.BaseType == typeof(QsValue)

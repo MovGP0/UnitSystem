@@ -42,7 +42,7 @@ public static class TokenExtensions
                         c.TokenClassType == typeof(WordToken)               // word token
                             || c.TokenClassType == typeof(NameSpaceAndVariableToken)  // or namespace:value token
                     )
-                        && ignoreWords.Contains(c.TokenValue, stringComparer) == false         // and the whole value is not in  the ignore words
+                        && !ignoreWords.Contains(c.TokenValue, stringComparer)         // and the whole value is not in  the ignore words
                 )
                 {
                     //check if the next token is group

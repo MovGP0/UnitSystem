@@ -58,8 +58,8 @@ public partial class SymbolicVariable
     public static SymbolicVariable? Parse(string expression)
     {
         var r = from zr in expression.Split([":="], StringSplitOptions.RemoveEmptyEntries)
-            where string.IsNullOrWhiteSpace(zr)==false
-            select zr.Trim();
+            where !string.IsNullOrWhiteSpace(zr)
+                select zr.Trim();
 
         string[] rr = r.ToArray();
 

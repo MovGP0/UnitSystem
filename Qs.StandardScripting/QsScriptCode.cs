@@ -100,7 +100,7 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
                         // is it a comment charachter.
                         if (c == '#')
                         {
-                            if (pc == 0 && qcOpened == false)
+                            if (pc == 0 && !qcOpened)
                             {
                                 // found the comment
                                 //  break

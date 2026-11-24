@@ -382,7 +382,7 @@ public class QsEvaluator
                 }
             }
 
-            if (m[ix] == '=' && scs == 0 && rcs == 0 && bcs == 0 && InText == false)
+            if (m[ix] == '=' && scs == 0 && rcs == 0 && bcs == 0 && !InText)
             {
                 return ix;
             }

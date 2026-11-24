@@ -224,7 +224,7 @@ dotnet_diagnostic.RCS1047.severity = warning
 dotnet_diagnostic.RCS1048.severity = warning
 
 # Simplify boolean comparison
-# dotnet_diagnostic.RCS1049.severity = warning
+dotnet_diagnostic.RCS1049.severity = warning
 
 # Include/omit parentheses when creating new object
 # dotnet_diagnostic.RCS1050.severity = none

@@ -213,8 +213,8 @@ public static class TextTools
         TokenBuilder = null;
 
         var ff = from z in results
-            where string.IsNullOrEmpty(z)==false && char.IsDigit(z, 0) == false
-            select z;
+            where !string.IsNullOrEmpty(z) && !char.IsDigit(z, 0)
+                 select z;
 
         return ff.ToArray();
     }

@@ -26,7 +26,7 @@ public partial class Unit
             //double RefShift = 0.0;
 
             // do the iteration until we reach the default unit.
-            while (refUnit!.IsDefaultUnit == false)
+            while (!refUnit!.IsDefaultUnit)
             {
                 path.Push(
                     new UnitPathItem
@@ -220,7 +220,7 @@ public partial class Unit
                 //   because I want special dimensionless quantities like angle and solid angle to be treated
                 //   as normal dimensionless values
 
-                if (UnitDimension.Equals(unit.UnitDimension) == false)
+                if (!UnitDimension.Equals(unit.UnitDimension))
                 {
                     throw new UnitsNotDimensionallyEqualException();
                 }
@@ -233,7 +233,7 @@ public partial class Unit
 
             //test if one of the units are not strongly typed
             //  because this needs special treatment. ;)
-            if (IsStronglyTyped == false || unit.IsStronglyTyped == false)
+            if (!IsStronglyTyped || !unit.IsStronglyTyped)
             {
                 #region Complex units
 

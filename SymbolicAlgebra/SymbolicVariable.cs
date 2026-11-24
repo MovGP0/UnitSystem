@@ -1303,7 +1303,7 @@ public partial class SymbolicVariable
             }
         }
 
-        if (DividedTerm.IsOneTerm == false)
+        if (!DividedTerm.IsOneTerm)
         {
             if (TermsCount > 1)
             {
@@ -1860,7 +1860,7 @@ public partial class SymbolicVariable
     {
         get
         {
-            if (string.IsNullOrEmpty(WholeValueBaseKey) && IsMultiTerm == false)
+            if (string.IsNullOrEmpty(WholeValueBaseKey) && !IsMultiTerm)
             {
                 return true;
             }
@@ -1993,7 +1993,7 @@ public partial class SymbolicVariable
             }
 
             // return all words that are not null and doesn't start with percentage sign
-            return fs.Where(s => string.IsNullOrEmpty(s) == false && s.StartsWith("%") == false).ToArray();
+            return fs.Where(s => !string.IsNullOrEmpty(s) && !s.StartsWith("%")).ToArray();
         };
 
         List<string> symbols = [];
@@ -2141,7 +2141,7 @@ public partial class SymbolicVariable
             clone.FusedConstants.Add(fc.Key, (HybridVariable)fc.Value.Clone());
         }
 
-        if (excludeExtraTerms == false)
+        if (!excludeExtraTerms)
         {
             foreach (var et in ExtraTerms)
             {

@@ -221,7 +221,7 @@ public class QsFlowingTuple : QsValue
             for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
             {
                 if (
-                    ThisFlow.FlowSteps[ix].Name.Equals(ft.ThisFlow.FlowSteps[ix].Name, StringComparison.OrdinalIgnoreCase) == false
+                    !ThisFlow.FlowSteps[ix].Name.Equals(ft.ThisFlow.FlowSteps[ix].Name, StringComparison.OrdinalIgnoreCase)
                         || ThisFlow.FlowSteps[ix].Id != ft.ThisFlow.FlowSteps[ix].Id
                         || !Equals(ThisFlow.FlowSteps[ix].Value, ft.ThisFlow.FlowSteps[ix].Value)
                 )
@@ -405,7 +405,7 @@ public class QsFlowingTuple : QsValue
         var props = StructType.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance );
 
         var all = from o in props
-            where o.IsSpecialName == false && o.GetIndexParameters().Length == 0
+            where !o.IsSpecialName && o.GetIndexParameters().Length == 0
             select o;
 
         var fefe = new QsTupleValue[all.Count()];
@@ -440,7 +440,7 @@ public class QsFlowingTuple : QsValue
         var props = structType.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
 
         var all = from o in props
-            where o.IsSpecialName == false && o.CanWrite && o.GetIndexParameters().Length == 0
+            where !o.IsSpecialName && o.CanWrite && o.GetIndexParameters().Length == 0
             select o;
 
         var svt = Activator.CreateInstance(structType);

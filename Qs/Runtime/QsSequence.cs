@@ -155,7 +155,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         {
             _CachingEnabled = value;
 
-            if (value == false)
+            if (!value)
             {
                 CachedValues.Clear(); //clear the previous cached values.
             }
