@@ -7,11 +7,9 @@ namespace Qs.Numerics;
 /// </summary>
 public struct Complex(double real, double imaginary) : IEquatable<Complex>
 {
-    private double _real = real, _imaginary = imaginary;
+    public double Real { get; } = real;
 
-    public double Real => _real;
-
-    public double Imaginary => _imaginary;
+    public double Imaginary { get; } = imaginary;
 
     public static readonly Complex Zero = new(0, 0);
 
@@ -36,17 +34,17 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 
     public bool Equals(Complex other)
     {
-        return (_real == other._real) && (_imaginary == other._imaginary);
+        return (Real == other.Real) && (Imaginary == other.Imaginary);
     }
 
     public static bool operator ==(Complex lhs, Complex rhs)
     {
-        return (lhs._real == rhs._real) && (lhs._imaginary == rhs._imaginary);
+        return (lhs.Real == rhs.Real) && (lhs.Imaginary == rhs.Imaginary);
     }
 
     public static bool operator !=(Complex lhs, Complex rhs)
     {
-        return (lhs._real != rhs._real) || (lhs._imaginary != rhs._imaginary);
+        return (lhs.Real != rhs.Real) || (lhs.Imaginary != rhs.Imaginary);
     }
 
     public override bool Equals(object? obj)
@@ -61,25 +59,25 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 
     public override int GetHashCode()
     {
-        return _real.GetHashCode() ^ _imaginary.GetHashCode();
+        return Real.GetHashCode() ^ Imaginary.GetHashCode();
     }
 
-    public bool IsZero => _real == 0.0 && _imaginary == 0.0;
+    public bool IsZero => Real == 0.0 && Imaginary == 0.0;
 
     #region Operations
     public static Complex operator +(Complex a, Complex b)
     {
-        return new Complex(a._real + b._real, a._imaginary + b._imaginary);
+        return new Complex(a.Real + b.Real, a.Imaginary + b.Imaginary);
     }
 
     public static Complex operator -(Complex a, Complex b)
     {
-        return new Complex(a._real - b._real, a._imaginary - b._imaginary);
+        return new Complex(a.Real - b.Real, a.Imaginary - b.Imaginary);
     }
 
     public static Complex operator *(Complex a, Complex b)
     {
-        return new Complex((a._real * b._real) - (a._imaginary * b._imaginary), (a._real * b._imaginary) + (a._imaginary * b._real));
+        return new Complex((a.Real * b.Real) - (a.Imaginary * b.Imaginary), (a.Real * b.Imaginary) + (a.Imaginary * b.Real));
     }
 
     public static Complex operator /(Complex a, Complex b)
@@ -91,19 +89,19 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 
         double real, imag, den, r;
 
-        if (Math.Abs(b._real) >= Math.Abs(b._imaginary))
+        if (Math.Abs(b.Real) >= Math.Abs(b.Imaginary))
         {
-            r = b._imaginary / b._real;
-            den = b._real + (r * b._imaginary);
-            real = (a._real + (a._imaginary * r)) / den;
-            imag = (a._imaginary - (a._real * r)) / den;
+            r = b.Imaginary / b.Real;
+            den = b.Real + (r * b.Imaginary);
+            real = (a.Real + (a.Imaginary * r)) / den;
+            imag = (a.Imaginary - (a.Real * r)) / den;
         }
         else
         {
-            r = b._real / b._imaginary;
-            den = b._imaginary + (r * b._real);
-            real = ((a._real * r) + a._imaginary) / den;
-            imag = ((a._imaginary * r) - a._real) / den;
+            r = b.Real / b.Imaginary;
+            den = b.Imaginary + (r * b.Real);
+            real = ((a.Real * r) + a.Imaginary) / den;
+            imag = ((a.Imaginary * r) - a.Real) / den;
         }
 
         return new Complex(real, imag);
@@ -135,8 +133,8 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
 
     public Complex Power(Complex y)
     {
-        var c = y._real;
-        var d = y._imaginary;
+        var c = y.Real;
+        var d = y.Imaginary;
         var power = (int)c;
 
         if (power == c && power >= 0 && d == .0)
@@ -167,8 +165,8 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
             return y.IsZero ? One : Zero;
         }
 
-        var a = _real;
-        var b = _imaginary;
+        var a = Real;
+        var b = Imaginary;
         var powers = (a * a) + (b * b);
         var arg = Math.Atan2(b, a);
         var mul = Math.Pow(powers, c / 2) * Math.Exp(-d * arg);

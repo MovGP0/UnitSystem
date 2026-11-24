@@ -28,7 +28,7 @@ public class QsNamespace(string name)
 
     public Type? NamespaceType => _NamespaceType;
 
-    private Dictionary<string, object> Values = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, object> Values = new(StringComparer.OrdinalIgnoreCase);
 
     public QsReference AddReference(string newVariable, string targetVariable)
     {

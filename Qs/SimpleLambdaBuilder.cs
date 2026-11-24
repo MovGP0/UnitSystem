@@ -9,8 +9,6 @@ namespace Qs;
 /// </summary>
 class SimpleLambdaBuilder(string functionName, Type type)
 {
-    private List<ParameterExpression> _params = [];
-
     private readonly List<KeyValuePair<ParameterExpression, bool>> _visibleVars = [];
 
     private static int _lambdaId; //for generating unique lambda name
@@ -34,7 +32,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
         Contract.Requires(type != null);
 
         var result = Expression.Parameter(type, name);
-        _params.Add(result);
+        Parameters.Add(result);
         _visibleVars.Add(new KeyValuePair<ParameterExpression, bool>(result, false));
         return result;
     }
@@ -42,7 +40,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
     /// <summary>
     /// List of lambda's parameters for direct manipulation
     /// </summary>
-    public List<ParameterExpression> Parameters => _params;
+    public List<ParameterExpression> Parameters { get; } = [];
 
     private static Type GetLambdaType(Type returnType, IList<ParameterExpression> parameterList)
     {
@@ -81,10 +79,10 @@ class SimpleLambdaBuilder(string functionName, Type type)
     public LambdaExpression MakeLambda()
     {
         var lambda = Expression.Lambda(
-            GetLambdaType(type, _params),
+            GetLambdaType(type, Parameters),
             Body,
             functionName + "$" + Interlocked.Increment(ref _lambdaId),
-            _params
+            Parameters
         );
 
         return lambda;

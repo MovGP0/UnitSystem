@@ -458,7 +458,7 @@ dotnet_diagnostic.RCS1166.severity = warning
 # dotnet_diagnostic.RCS1168.severity = silent
 
 # Make field read-only
-# dotnet_diagnostic.RCS1169.severity = warning
+dotnet_diagnostic.RCS1169.severity = warning
 
 # Use read-only auto-implemented property
 # dotnet_diagnostic.RCS1170.severity = warning

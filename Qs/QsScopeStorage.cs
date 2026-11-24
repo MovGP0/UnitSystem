@@ -7,7 +7,7 @@ namespace Qs;
 /// </summary>
 public class QsScopeStorage : IQsStorageProvider
 {
-    Dictionary<string, object> _Storage = new(StringComparer.OrdinalIgnoreCase);
+    readonly Dictionary<string, object> _Storage = new(StringComparer.OrdinalIgnoreCase);
 
     public IEnumerable<KeyValuePair<string, object>> GetItems()
     {

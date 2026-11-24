@@ -44,9 +44,9 @@ class QsVar
 
     public QsVarParseModes ParseMode { get; set; }
 
-    SimpleLambdaBuilder lambdaBuilder = null;
+    readonly SimpleLambdaBuilder lambdaBuilder = null;
 
-    private QsFunction Function;
+    private readonly QsFunction Function;
 
     /// <summary>
     /// Evaluate the function body taking into considerations
@@ -95,7 +95,7 @@ class QsVar
         ResultExpression = ParseArithmatic(expression);
     }
 
-    private QsSequence Sequence= null;
+    private readonly QsSequence Sequence= null;
 
     /// <summary>
     /// Evaulate the line for use in sequence body.
@@ -282,9 +282,9 @@ class QsVar
         return ParseArithmatic(tokens);
     }
 
-    Stack<string> loopIteratorContainer = new();
+    readonly Stack<string> loopIteratorContainer = new();
 
-    Dictionary<string, ParameterExpression> loopIteratorParameter = new();
+    readonly Dictionary<string, ParameterExpression> loopIteratorParameter = new();
 
     /// <summary>
     /// Main parsing method.

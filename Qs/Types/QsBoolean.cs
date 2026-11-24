@@ -6,13 +6,9 @@ public class QsBoolean : QsValue
 {
     public bool Value;
 
-    static QsBoolean _QsTrue = new() { Value = true };
+    public static QsBoolean True { get; } = new() { Value = true };
 
-    static QsBoolean _QsFalse = new() { Value = false };
-
-    public static QsBoolean True => _QsTrue;
-
-    public static  QsBoolean False => _QsFalse;
+    public static QsBoolean False { get; } = new() { Value = false };
 
     public static implicit operator QsBoolean(bool b)
     {

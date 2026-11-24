@@ -37,46 +37,40 @@ public abstract class TokenClass
     public string ShouldEndWith { get; }
 
     //cache token regexes
-    static Dictionary<Type, Regex> regexes = new Dictionary<Type, Regex>();
+    static readonly Dictionary<Type, Regex> regexes = new Dictionary<Type, Regex>();
 
-    static Dictionary<Type, bool> exactwords = new Dictionary<Type, bool>();
+    static readonly Dictionary<Type, bool> exactwords = new Dictionary<Type, bool>();
 
-    static Dictionary<Type, string> words = new Dictionary<Type, string>();
+    static readonly Dictionary<Type, string> words = new Dictionary<Type, string>();
 
-    static Dictionary<Type, string> ShouldBeginingWithList = new Dictionary<Type, string>();
+    static readonly Dictionary<Type, string> ShouldBeginingWithList = new Dictionary<Type, string>();
 
-    static Dictionary<Type, bool> ContinueAfterSuccessList = new Dictionary<Type, bool>();
+    static readonly Dictionary<Type, bool> ContinueAfterSuccessList = new Dictionary<Type, bool>();
 
-    static Dictionary<Type, bool> ContinousTokenList = new Dictionary<Type, bool>();
+    static readonly Dictionary<Type, bool> ContinousTokenList = new Dictionary<Type, bool>();
 
-    static Dictionary<Type, string> ShouldEndWithList = new Dictionary<Type, string>();
+    static readonly Dictionary<Type, string> ShouldEndWithList = new Dictionary<Type, string>();
 
-    /*
-     * worth mentioned note that when I cached the regexes in this part the console calculations went very fast
-     * I couldn't imagine that the reflection here make a lot of slowness.
-     */
-
-    private Type _ThisTokenType;
     protected TokenClass()
     {
-        _ThisTokenType = GetType();
+        Type = GetType();
 
         // Try Cached versions first
-        if (regexes.TryGetValue(_ThisTokenType, out var j))
+        if (regexes.TryGetValue(Type, out var j))
         {
             Regex = j;
 
-            ExactWord = exactwords[_ThisTokenType];
+            ExactWord = exactwords[Type];
 
-            RegexPattern = words[_ThisTokenType];
+            RegexPattern = words[Type];
 
-            ShouldBeginWith = ShouldBeginingWithList[_ThisTokenType];
+            ShouldBeginWith = ShouldBeginingWithList[Type];
 
-            ContinueTestAfterSuccess = ContinueAfterSuccessList[_ThisTokenType];
+            ContinueTestAfterSuccess = ContinueAfterSuccessList[Type];
 
-            ContinousToken = ContinousTokenList[_ThisTokenType];
+            ContinousToken = ContinousTokenList[Type];
 
-            ShouldEndWith = ShouldEndWithList[_ThisTokenType];
+            ShouldEndWith = ShouldEndWithList[Type];
         }
         else
         {
@@ -98,13 +92,13 @@ public abstract class TokenClass
                     ShouldEndWith = TPA.ShouldEndWith;
                 }
 
-                regexes.Add(_ThisTokenType, Regex);
-                exactwords.Add(_ThisTokenType, ExactWord);
-                words.Add(_ThisTokenType, RegexPattern);
-                ShouldBeginingWithList.Add(_ThisTokenType, ShouldBeginWith);
-                ContinueAfterSuccessList.Add(_ThisTokenType, ContinueTestAfterSuccess);
-                ContinousTokenList.Add(_ThisTokenType, ContinousToken);
-                ShouldEndWithList.Add(_ThisTokenType, ShouldEndWith);
+                regexes.Add(Type, Regex);
+                exactwords.Add(Type, ExactWord);
+                words.Add(Type, RegexPattern);
+                ShouldBeginingWithList.Add(Type, ShouldBeginWith);
+                ContinueAfterSuccessList.Add(Type, ContinueTestAfterSuccess);
+                ContinousTokenList.Add(Type, ContinousToken);
+                ShouldEndWithList.Add(Type, ShouldEndWith);
             }
         }
     }
@@ -112,5 +106,5 @@ public abstract class TokenClass
     /// <summary>
     /// Type of TokenClass
     /// </summary>
-    public Type Type => _ThisTokenType;
+    public Type Type { get; }
 }

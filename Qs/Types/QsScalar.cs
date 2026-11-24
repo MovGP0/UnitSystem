@@ -1243,27 +1243,24 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     {
         return a.ModuloScalar(b);
     }
-    #endregion
 
+    #endregion
     #region Special Values
-    private static QsScalar _one = "1".ToScalar();
-    private static QsScalar _zero = "0".ToScalar();
-    private static QsScalar _minusOne = "-1".ToScalar();
 
     /// <summary>
     /// Returns -1 as dimensionless quantity scalar.
     /// </summary>
-    public static QsScalar NegativeOne => _minusOne;
+    public static QsScalar NegativeOne { get; } = "-1".ToScalar();
 
     /// <summary>
     /// return 1 as dimensionless quantity scalar.
     /// </summary>
-    public static QsScalar One => _one;
+    public static QsScalar One { get; } = "1".ToScalar();
 
     /// <summary>
     /// Returns zero as dimensionless quantity.
     /// </summary>
-    public static QsScalar Zero => _zero;
+    public static QsScalar Zero { get; } = "0".ToScalar();
 
     public static QsScalar RandomNumber => new(ScalarTypes.NumericalQuantity) { NumericalQuantity = (new Random().NextDouble()).ToQuantity() };
 
@@ -2195,6 +2192,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return Math.E.ToQuantity().ToScalarValue();
         }
 
-        return _zero;
+        return Zero;
     }
 }

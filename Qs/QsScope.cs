@@ -13,7 +13,7 @@ public class QsScope : IDynamicMetaObjectProvider
         throw new NotImplementedException("QsScope doesn't implement GetMetaObject function");
     }
 
-    Dictionary<string, IQsStorageProvider> StorageProviders = new(StringComparer.OrdinalIgnoreCase);
+    readonly Dictionary<string, IQsStorageProvider> StorageProviders = new(StringComparer.OrdinalIgnoreCase);
 
     public QsScope()
     {

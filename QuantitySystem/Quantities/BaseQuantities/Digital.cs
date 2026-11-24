@@ -5,7 +5,7 @@ public class Digital<T>(float exponent) : AnyQuantity<T>(exponent)
     public Digital()
         : this(1) { }
 
-    private static QuantityDimension _Dimension = new()
+    private static readonly QuantityDimension _Dimension = new()
     {
         Digital = new DimensionDescriptors.DigitalDescriptor(1)
     };

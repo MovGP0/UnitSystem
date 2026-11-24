@@ -37,7 +37,7 @@ public class QsDifferentialOperation : QsOperation
         }
     }
 
-    private List<InnerOperation> operations = [];
+    private readonly List<InnerOperation> operations = [];
 
     public override object Clone()
     {

@@ -10,12 +10,12 @@ public class Flow : IEnumerable<Step>
     /// <summary>
     /// holding instance of every Step Field
     /// </summary>
-    private List<Step> innerSteps = [];
+    private readonly List<Step> innerSteps = [];
 
     /// <summary>
     /// holding the field types
     /// </summary>
-    private List<FieldInfo> _MyFields = [];
+    private readonly List<FieldInfo> _MyFields = [];
 
     /// <summary>
     /// this constructor initialize the class that is inherited from the Flow class to know the fields that marked as steps

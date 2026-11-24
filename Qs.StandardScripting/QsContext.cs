@@ -7,7 +7,7 @@ namespace Qs.Scripting;
 
 public sealed class QsContext : LanguageContext
 {
-    QsBinder _binder;
+    readonly QsBinder _binder;
 
 #pragma warning disable RCS1163 // DLR activation requires this constructor signature.
     public QsContext(ScriptDomainManager manager, IDictionary<string, object> options)

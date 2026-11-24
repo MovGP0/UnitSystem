@@ -57,9 +57,7 @@ public class QsEvaluator
         }
     }
 
-    private QsScope _InternalScope = new();
-
-    public QsScope Scope => _InternalScope;
+    public QsScope Scope { get; } = new();
 
     public object? GetVariable(string varName)
     {
@@ -148,7 +146,7 @@ public class QsEvaluator
     /// <summary>
     /// Stack that reserve the SilentEvaluation during successive calls to the SilentEvaluate
     /// </summary>
-    private Stack<bool> SilentStack = new();
+    private readonly Stack<bool> SilentStack = new();
 
     /// <summary>
     /// Determine if we should echo the output on the screen or not.
@@ -183,9 +181,9 @@ public class QsEvaluator
         }
     }
 
-    static Regex UnitToUnitRegex = new(UnitToUnitExpression);
-    static Regex UnitRegex = new(UnitExpression);
-    static Regex VariableQuantityRegex = new(VariableQuantityExpression);
+    static readonly Regex UnitToUnitRegex = new(UnitToUnitExpression);
+    static readonly Regex UnitRegex = new(UnitExpression);
+    static readonly Regex VariableQuantityRegex = new(VariableQuantityExpression);
     public object? Evaluate(string expr)
     {
 #if WINRT

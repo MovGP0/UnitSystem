@@ -68,10 +68,10 @@ public class Screen
         End();
     }
 
-    private AnyQuantity<double> zm = Unit.ParseQuantity("0<m>");
+    private readonly AnyQuantity<double> zm = Unit.ParseQuantity("0<m>");
     //private AnyQuantity<double> zrm = Unit.ParseQuantity("0<m!>");
 
-    List<Shape> Shapes = [];
+    readonly List<Shape> Shapes = [];
 
     /// <summary>
     /// Draw a circle on the screen.
@@ -140,7 +140,7 @@ public class Screen
         Thread.Sleep(0);
     }
 
-    List<Task> runningTasks = [];
+    readonly List<Task> runningTasks = [];
 
     public void UpdateFor(Time<double> time)
     {

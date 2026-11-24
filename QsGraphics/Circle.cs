@@ -19,7 +19,7 @@ public class Circle : Shape
         var t = new System.Timers.Timer();
     }
 
-    QsFunction xfunc, yfunc, radfunc;
+    readonly QsFunction xfunc, yfunc, radfunc;
 
     /// <summary>
     /// constructor accepts quantities and qs functions also
@@ -57,10 +57,10 @@ public class Circle : Shape
         }
     }
 
-    private Length<double> zm = (Length<double>)Unit.ParseQuantity("0<m>");
+    private readonly Length<double> zm = (Length<double>)Unit.ParseQuantity("0<m>");
 
     // milli second quantity
-    private AnyQuantity<double> zmt = Unit.ParseQuantity("0<m/ms>");
+    private readonly AnyQuantity<double> zmt = Unit.ParseQuantity("0<m/ms>");
 
     public override void Draw(Graphics graphics, float pixelPerMeter)
     {

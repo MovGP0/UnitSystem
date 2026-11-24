@@ -105,7 +105,7 @@ public abstract class BaseQuantity(float exponent)
     /// <summary>
     /// Holds the internal quantity types of specific strongly typed quantity type.
     /// </summary>
-    static Dictionary<Type, Tuple<Type, float>[]> QuantityTypeInternalQuantityTypes = new();
+    static readonly Dictionary<Type, Tuple<Type, float>[]> QuantityTypeInternalQuantityTypes = new();
 
     public static Tuple<Type, float>[] GetInternalQuantities(Type quantity)
     {

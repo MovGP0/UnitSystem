@@ -14,9 +14,9 @@ namespace Qs.Types;
 /// </summary>
 public class QsFlowingTuple : QsValue
 {
-    private Flow ThisFlow = [];
+    private readonly Flow ThisFlow = [];
 
-    QsTupleValue[] InitialValues;
+    readonly QsTupleValue[] InitialValues;
 
     public QsFlowingTuple()
     {
