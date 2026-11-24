@@ -85,7 +85,7 @@ dotnet_diagnostic.RCS0045.severity = warning
 end_of_line = lf
 
 # Use spaces for indentation
-# dotnet_diagnostic.RCS0046.severity = warning
+dotnet_diagnostic.RCS0046.severity = warning
 
 # Separate the first top-level declaration from any preceding directive
 # dotnet_diagnostic.RCS0050.severity = warning
