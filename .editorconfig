@@ -91,7 +91,8 @@ dotnet_diagnostic.RCS0046.severity = warning
 dotnet_diagnostic.RCS0050.severity = warning
 
 # Control the line break before a do statement's while clause
-# dotnet_diagnostic.RCS0051.severity = warning
+dotnet_diagnostic.RCS0051.severity = warning
+roslynator_new_line_before_while_in_do_statement = false
 
 # Control where a wrapped equals sign appears
 # dotnet_diagnostic.RCS0052.severity = warning
