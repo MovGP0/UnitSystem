@@ -307,7 +307,7 @@ public partial class SymbolicVariable
             {
                 //if the operator in node found in the opg (current operator group) then execute the logic
 
-                if (opg.Count(c => c.Equals(eop.Operation, StringComparison.OrdinalIgnoreCase)) > 0)
+                if (opg.Any(c => c.Equals(eop.Operation, StringComparison.OrdinalIgnoreCase)))
                 {
                     short skip;
                     eop.SymbolicExpression = ArithExpression(eop, out skip);
@@ -845,7 +845,7 @@ public partial class SymbolicVariable
             {
                 //if the operator in node found in the opg (current operator group) then execute the logic
 
-                if (opg.Count(c => c.Equals(eop.Operation, StringComparison.OrdinalIgnoreCase)) > 0)
+                if (opg.Any(c => c.Equals(eop.Operation, StringComparison.OrdinalIgnoreCase)))
                 {
                     short skip;
                     eop.DynamicExpression = ArithExpression(eop, out skip);

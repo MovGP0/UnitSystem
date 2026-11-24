@@ -771,7 +771,7 @@ class QsVar
 
                             quantityExpression = Expression.Call(typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]), quantityExpression);
                         }
-                        else if (Sequence.Parameters.Count(s => s.Name.Equals(q, StringComparison.OrdinalIgnoreCase)) > 0)
+                        else if (Sequence.Parameters.Any(s => s.Name.Equals(q, StringComparison.OrdinalIgnoreCase)))
                         {
                             quantityExpression = GetFunctionOrSequenceParameter(q);
                         }
@@ -1006,12 +1006,12 @@ class QsVar
             var NameExist = false;
             var IdExist = false;
 
-            if( t.Count(el => el.TokenClassType == typeof(ExclamationToken))>0)
+            if(t.Any(el => el.TokenClassType == typeof(ExclamationToken)))
             {
                 NameExist =true;
             }
 
-            if ( t.Count(el => el.TokenClassType == typeof(ColonToken))>0)
+            if (t.Any(el => el.TokenClassType == typeof(ColonToken)))
             {
                 IdExist =true;
             }
@@ -1825,13 +1825,13 @@ class QsVar
 
         var valName = valueName.Substring(valueName.LastIndexOf(':') + 1);
 
-        if (ParseMode == QsVarParseModes.Sequence && Sequence.Parameters.Count(s => s.Name.Equals(valueName, StringComparison.OrdinalIgnoreCase)) > 0)
+        if (ParseMode == QsVarParseModes.Sequence && Sequence.Parameters.Any(s => s.Name.Equals(valueName, StringComparison.OrdinalIgnoreCase)))
         {
             // the parameters is coming from the sequence parameters
             return ValueIndexExpression(GetFunctionOrSequenceParameter(valueName), indexes);
         }
 
-        if (ParseMode == QsVarParseModes.Function && Function.ParametersNames.Count(s => s.Equals(valueName, StringComparison.OrdinalIgnoreCase)) > 0)
+        if (ParseMode == QsVarParseModes.Function && Function.ParametersNames.Any(s => s.Equals(valueName, StringComparison.OrdinalIgnoreCase)))
         {
             return ValueIndexExpression(GetFunctionOrSequenceParameter(valueName), indexes);
         }
@@ -2952,7 +2952,7 @@ class QsVar
             {
                 //if the operator in node found in the opg (current operator group) then execute the logic
 
-                if (opg.Count(c => c.Equals(eop.Operation, StringComparison.OrdinalIgnoreCase)) > 0)
+                if (opg.Any(c => c.Equals(eop.Operation, StringComparison.OrdinalIgnoreCase)))
                 {
                     short skip;
                     eop.QuantityExpression = ArithExpression(eop, out skip);

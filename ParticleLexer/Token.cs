@@ -25,7 +25,7 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public bool Contains<TargetTokenClass>() where TargetTokenClass : TokenClass
     {
-        return childTokens.Count(o => o.TokenClassType == typeof(TargetTokenClass)) > 0;
+        return childTokens.Any(o => o.TokenClassType == typeof(TargetTokenClass));
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public sealed partial class Token : IEnumerable<Token>
     /// <returns></returns>
     public bool Contains(Type tokenClassType)
     {
-        return childTokens.Count(o => o.TokenClassType == tokenClassType) > 0;
+        return childTokens.Any(o => o.TokenClassType == tokenClassType);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public sealed partial class Token : IEnumerable<Token>
     {
         foreach(var tokenClassType in tokenClassTypes)
         {
-            if (childTokens.Count(o => o.TokenClassType == tokenClassType) > 0)
+            if (childTokens.Any(o => o.TokenClassType == tokenClassType))
             {
                 return true;
             }
@@ -371,7 +371,7 @@ public sealed partial class Token : IEnumerable<Token>
             {
                 current.AppendSubToken(c);
             }
-            else if (tokenClasses.Count(tok => tok.GetType() == c.TokenClassType) == 0)
+            else if (!tokenClasses.Any(tok => tok.GetType() == c.TokenClassType))
             {
                 mergedTokens.AppendSubToken(c);
             }
@@ -900,7 +900,7 @@ public sealed partial class Token : IEnumerable<Token>
 
             //make sure all chars in value are white spaces
 
-            if (tokenTypes.Count(f => f == tok.TokenClassType) > 0)
+            if (tokenTypes.Any(f => f == tok.TokenClassType))
             {
                 //all string are white spaces
             }
