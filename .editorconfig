@@ -921,7 +921,7 @@ dotnet_diagnostic.CA1861.severity = warning
 dotnet_diagnostic.CA1862.severity = warning
 
 # Prefer the 'IDictionary.TryAdd(TKey, TValue)' method
-# dotnet_diagnostic.CA1864.severity = warning
+dotnet_diagnostic.CA1864.severity = warning
 
 # Use char overload
 # dotnet_diagnostic.CA1865.severity = warning
