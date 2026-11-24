@@ -219,8 +219,8 @@ public static class QsCommands
 
 
         var qscCwr = Assembly
-            .GetEntryAssembly()?
-            .GetCustomAttributes<AssemblyCopyrightAttribute>()
+            .GetEntryAssembly()
+            ?.GetCustomAttributes<AssemblyCopyrightAttribute>()
             .FirstOrDefault();
 
         Console.WriteLine();

@@ -120,7 +120,7 @@ dotnet_diagnostic.RCS0058.severity = warning
 roslynator_new_line_at_end_of_file = true
 
 # Control where wrapped null-conditional operators appear
-# dotnet_diagnostic.RCS0059.severity = warning
+dotnet_diagnostic.RCS0059.severity = warning
 roslynator_null_conditional_operator_new_line = before
 
 # Control the blank line after a file-scoped namespace
