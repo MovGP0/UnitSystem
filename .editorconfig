@@ -638,7 +638,7 @@ dotnet_diagnostic.RCS1234.severity = warning
 dotnet_diagnostic.RCS1235.severity = warning
 
 # Use exception filter
-# dotnet_diagnostic.RCS1236.severity = warning
+dotnet_diagnostic.RCS1236.severity = warning
 
 # Avoid nested ?: operators
 # dotnet_diagnostic.RCS1238.severity = silent
