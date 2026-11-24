@@ -462,7 +462,7 @@ public partial class SymbolicVariable
 
                     SourceTerm._CoeffecientPowerTerm += cpower;
                 }
-                else if ((sbase - Math.Floor(sbase)) == 0.0 && sbase > 0)   // make sure there are no
+                else if (sbase == Math.Floor(sbase) && sbase > 0)   // make sure there are no
                 {
                     // then we can use the target base
                     // 27*3^x = 3^3*3^x = 3^(3+x)

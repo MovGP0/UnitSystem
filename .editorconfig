@@ -728,7 +728,7 @@ dotnet_diagnostic.RCS1266.severity = warning
 dotnet_diagnostic.RCS1267.severity = warning
 
 # Simplify numeric comparison
-# dotnet_diagnostic.RCS1268.severity = warning
+dotnet_diagnostic.RCS1268.severity = warning
 
 # .NET code quality analyzers
 # https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/
