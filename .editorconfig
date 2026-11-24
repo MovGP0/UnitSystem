@@ -162,7 +162,7 @@ dotnet_diagnostic.RCS1007.severity = warning
 dotnet_diagnostic.RCS1013.severity = warning
 
 # Use the configured form of array type inference
-# dotnet_diagnostic.RCS1014.severity = warning
+dotnet_diagnostic.RCS1014.severity = warning
 roslynator_array_creation_type_style = implicit
 
 # Existing compiler diagnostics. Raise one rule at a time as its findings are fixed.
