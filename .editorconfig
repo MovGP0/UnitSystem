@@ -798,7 +798,7 @@ dotnet_diagnostic.CA1511.severity = warning
 dotnet_diagnostic.CA1512.severity = warning
 
 # Use ObjectDisposedException throw helper
-# dotnet_diagnostic.CA1513.severity = warning
+dotnet_diagnostic.CA1513.severity = warning
 
 # Avoid redundant length argument
 # dotnet_diagnostic.CA1514.severity = warning
