@@ -512,7 +512,7 @@ dotnet_diagnostic.RCS1191.severity = warning
 dotnet_diagnostic.RCS1192.severity = warning
 
 # Overriding member should not change 'params' modifier
-# dotnet_diagnostic.RCS1193.severity = warning
+dotnet_diagnostic.RCS1193.severity = warning
 
 # Implement exception constructors
 # dotnet_diagnostic.RCS1194.severity = warning
