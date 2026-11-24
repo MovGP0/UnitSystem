@@ -8,7 +8,7 @@ public class SimpleCycle : Flow
     /// <summary>
     /// Static constructor to activate the initialization of the cycle.
     /// </summary>
-    static SimpleCycle() => new SimpleCycle();
+    static SimpleCycle() => _ = new SimpleCycle();
 
     [Step(10)]
     public static Step Cycle_Started;

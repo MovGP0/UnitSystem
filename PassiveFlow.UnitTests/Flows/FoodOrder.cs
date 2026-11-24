@@ -5,7 +5,7 @@ public class FoodOrder : Flow
     /// <summary>
     /// Static constructor to activate the initialization of the cycle.
     /// </summary>
-    static FoodOrder() => new FoodOrder();
+    static FoodOrder() => _ = new FoodOrder();
 
     [Step(10, typeof(HungryCustomer))]
     public static Step CustomerCall;

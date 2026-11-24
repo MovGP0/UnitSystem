@@ -7,7 +7,7 @@ public class GearBox : Flow
     /// </summary>
     static GearBox()
     {
-        new GearBox();
+        _ = new GearBox();
     }
 
     [StepAction(-15, "From Reverse To Fifth Shift", "FifthShift")]

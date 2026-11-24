@@ -807,7 +807,7 @@ dotnet_diagnostic.CA1514.severity = warning
 dotnet_diagnostic.CA1517.severity = warning
 
 # Do not ignore method results
-# dotnet_diagnostic.CA1806.severity = warning
+dotnet_diagnostic.CA1806.severity = warning
 
 # Dispose methods should call SuppressFinalize
 # dotnet_diagnostic.CA1816.severity = warning
