@@ -191,7 +191,7 @@ dotnet_diagnostic.RCS1021.severity = warning
 # dotnet_diagnostic.RCS1031.severity = silent
 
 # Remove redundant parentheses
-# dotnet_diagnostic.RCS1032.severity = warning
+dotnet_diagnostic.RCS1032.severity = warning
 
 # Remove redundant boolean literal
 # dotnet_diagnostic.RCS1033.severity = warning

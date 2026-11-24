@@ -32,7 +32,7 @@ public sealed class Z80 : EightBitProcessor
         DimensionlessQuantity<double> from,
         DimensionlessQuantity<double> to)
     {
-        var increment = (to - from) / (40).ToQuantity();
+        var increment = (to - from) / 40.ToQuantity();
         var v = new QsVector(40);
 
         for (AnyQuantity<double> dt = from; dt <= to; dt += increment)

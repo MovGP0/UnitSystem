@@ -267,21 +267,21 @@ public struct Quaternion : IEquatable<Quaternion>
                 result *= q; // n odd
             }
 
-            return(result);
+            return result;
         }
 
         if    (n == 1)
         {
-            return(q);
+            return q;
         }
 
         if    (n == 0)
         {
-            return (new Quaternion(1));
+            return new Quaternion(1);
         }
 
         /* n < 0 */
-        return (Pow(new Quaternion(1) / q, -n));
+        return Pow(new Quaternion(1) / q, -n);
     }
 
     public static bool operator ==(Quaternion lhs, Quaternion rhs)

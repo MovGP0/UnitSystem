@@ -1993,7 +1993,7 @@ public partial class SymbolicVariable
             }
 
             // return all words that are not null and doesn't start with percentage sign
-            return fs.Where(s => (string.IsNullOrEmpty(s) == false && s.StartsWith("%") == false)).ToArray();
+            return fs.Where(s => string.IsNullOrEmpty(s) == false && s.StartsWith("%") == false).ToArray();
         };
 
         List<string> symbols = [];

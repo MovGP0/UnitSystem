@@ -587,7 +587,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
                 vcs.Add(v);
             }
 
-            return (new QsMatrix(vcs.ToArray()));
+            return new QsMatrix(vcs.ToArray());
         }
 
         throw new NotSupportedException();
@@ -688,7 +688,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             //the comparison will be based on the vector magnitudes.
             var v = (QsVector)value;
-            return (Magnitude().NumericalQuantity < v.Magnitude().NumericalQuantity);
+            return Magnitude().NumericalQuantity < v.Magnitude().NumericalQuantity;
         }
 
         throw new NotSupportedException();
@@ -716,7 +716,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             //the comparison will be based on the vector magnitudes.
             var v = (QsVector)value;
-            return (Magnitude().NumericalQuantity > v.Magnitude().NumericalQuantity);
+            return Magnitude().NumericalQuantity > v.Magnitude().NumericalQuantity;
         }
 
         throw new NotSupportedException();
@@ -744,7 +744,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             //the comparison will be based on the vector magnitudes.
             var v = (QsVector)value;
-            return (Magnitude().NumericalQuantity <= v.Magnitude().NumericalQuantity);
+            return Magnitude().NumericalQuantity <= v.Magnitude().NumericalQuantity;
         }
 
         throw new NotSupportedException();
@@ -772,7 +772,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             //the comparison will be based on the vector magnitudes.
             var v = (QsVector)value;
-            return (Magnitude().NumericalQuantity >= v.Magnitude().NumericalQuantity);
+            return Magnitude().NumericalQuantity >= v.Magnitude().NumericalQuantity;
         }
 
         throw new NotSupportedException();
@@ -844,7 +844,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             //the comparison will be based on the vector magnitudes.
             var v = (QsVector)value;
-            return (Magnitude().NumericalQuantity != v.Magnitude().NumericalQuantity);
+            return Magnitude().NumericalQuantity != v.Magnitude().NumericalQuantity;
         }
 
         throw new NotSupportedException();

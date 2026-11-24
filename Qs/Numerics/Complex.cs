@@ -145,7 +145,7 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
     public static Complex operator *(Complex a, double b)
     {
         var result = a * new Complex(b, 0);
-        return (result);
+        return result;
     }
 
     public Complex Power(Complex y)
@@ -199,7 +199,7 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
     public static Complex Pow(Complex a, double power)
     {
         var result = a.Power(new Complex(power, 0));
-        return (result);
+        return result;
     }
 
     #endregion

@@ -25,7 +25,7 @@ public class StepBackActionAttribute : ActionAttribute
     /// <param name="relativeIndex">Positive number of the back steps</param>
     /// <param name="statusId">Status of the action (to be known by the user logic)</param>
     public StepBackActionAttribute(int actionId, string actionText, int relativeIndex, int statusId = 0)
-        : base(actionId, actionText, (-1 * relativeIndex), statusId)
+        : base(actionId, actionText, -1 * relativeIndex, statusId)
     {
     }
 }

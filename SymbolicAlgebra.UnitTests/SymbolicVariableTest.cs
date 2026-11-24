@@ -105,7 +105,7 @@ public class SymbolicVariableTest
         var cx = _x * _seven;
         Assert.AreEqual("7*x", cx.ShouldNotBeNull().ToString());
 
-        var cx2Y = cx.RaiseToSymbolicPower((_two * _y));
+        var cx2Y = cx.RaiseToSymbolicPower(_two * _y);
         Assert.AreEqual("7^(2*y)*x^(2*y)", cx2Y.ShouldNotBeNull().ToString());
     }
 

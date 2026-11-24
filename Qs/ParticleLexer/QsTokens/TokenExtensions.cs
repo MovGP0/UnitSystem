@@ -60,7 +60,7 @@ public static class TokenExtensions
                             functionCallToken.TokenClassType = typeof(ParenthesisCallToken);
                             functionCallToken.AppendSubToken(c);
 
-                            if (cnext.Contains((typeof(ParenthesisGroupToken))) | cnext.Contains(typeof(SquareBracketsGroupToken)))
+                            if (cnext.Contains(typeof(ParenthesisGroupToken)) | cnext.Contains(typeof(SquareBracketsGroupToken)))
                             {
                                 cnext = cnext.DiscoverQsCalls(stringComparer, ignoreWords);
                             }
@@ -86,7 +86,7 @@ public static class TokenExtensions
                             sequenceCallToken.TokenClassType = typeof(SequenceCallToken);
                             sequenceCallToken.AppendSubToken(c);
 
-                            if (cnext.Contains((typeof(SquareBracketsGroupToken))) | cnext.Contains((typeof(ParenthesisGroupToken))))
+                            if (cnext.Contains(typeof(SquareBracketsGroupToken)) | cnext.Contains(typeof(ParenthesisGroupToken)))
                             {
                                 cnext = cnext.DiscoverQsCalls(stringComparer, ignoreWords);
                             }
@@ -102,7 +102,7 @@ public static class TokenExtensions
                                 if (cnextnext.TokenClassType == typeof(ParenthesisGroupToken))
                                 {
                                     //then this is a sequence call with parameters.
-                                    if ((cnextnext.Contains((typeof(SquareBracketsGroupToken))) | cnextnext.Contains((typeof(ParenthesisGroupToken)))))
+                                    if (cnextnext.Contains(typeof(SquareBracketsGroupToken)) | cnextnext.Contains(typeof(ParenthesisGroupToken)))
                                     {
                                         cnextnext = cnextnext.DiscoverQsCalls(stringComparer, ignoreWords);
                                     }
