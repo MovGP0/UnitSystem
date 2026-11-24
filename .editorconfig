@@ -302,7 +302,7 @@ dotnet_diagnostic.RCS1089.severity = warning
 # dotnet_diagnostic.RCS1090.severity = none
 
 # File contains no code
-# dotnet_diagnostic.RCS1093.severity = warning
+dotnet_diagnostic.RCS1093.severity = warning
 
 # Declare using directive on top level
 # dotnet_diagnostic.RCS1094.severity = none
