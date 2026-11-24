@@ -494,7 +494,7 @@ dotnet_diagnostic.RCS1180.severity = warning
 # dotnet_diagnostic.RCS1186.severity = silent
 
 # Use constant instead of field
-# dotnet_diagnostic.RCS1187.severity = warning
+dotnet_diagnostic.RCS1187.severity = warning
 
 # Remove redundant auto-property initialization
 # dotnet_diagnostic.RCS1188.severity = silent
