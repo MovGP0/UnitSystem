@@ -185,7 +185,7 @@ public sealed class QsObject : QsValue
     /// <param name="propertyName"></param>
     /// <param name="indices">indices in case of indexed property</param>
     /// <returns></returns>
-    public QsValue? GetProperty(string propertyName, params object[] indices )
+    public QsValue? GetProperty(string propertyName, params object?[]? indices)
     {
         var pi = GetPropertyInfo(propertyName)
             ?? throw new MissingMemberException(InstanceType.FullName, propertyName);

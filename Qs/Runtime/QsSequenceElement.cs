@@ -235,8 +235,7 @@ public class QsSequenceElement
         }
 
         //try direct quantity
-        AnyQuantity<double> v;
-        if (Unit.TryParseQuantity(element, out v))
+        if (Unit.TryParseQuantity(element, out var v))
         {
             var el = FromQuantity(new QsScalar { NumericalQuantity = v });
             el.ElementDeclaration = element;

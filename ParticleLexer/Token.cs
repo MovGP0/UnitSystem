@@ -109,7 +109,7 @@ public sealed partial class Token : IEnumerable<Token>
 
     public Token? ParentToken { get; set; }
 
-    private string _TokenValue = null;
+    private string? _TokenValue;
     private int _previousChildrenTokenCount;
 
     /// <summary>

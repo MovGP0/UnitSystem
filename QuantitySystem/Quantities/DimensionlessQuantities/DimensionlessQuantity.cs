@@ -6,7 +6,7 @@ public class DimensionlessQuantity<T>(float exponent, params AnyQuantity<T>[] in
     : AnyQuantity<T>(exponent)
 {
     public DimensionlessQuantity()
-        : this(1, null)
+        : this(1)
     {
     }
 

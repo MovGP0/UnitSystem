@@ -1,4 +1,5 @@
-﻿using QuantitySystem.Quantities.BaseQuantities;
+﻿using System.Diagnostics.CodeAnalysis;
+using QuantitySystem.Quantities.BaseQuantities;
 using QuantitySystem.Attributes;
 using System.Reflection;
 using System.Globalization;
@@ -505,7 +506,7 @@ public partial class Unit
     private const string UnitizedNumber = "^(?<num>" + DoubleNumber + @")\s*<(?<unit>([\w\$\.\^/!]+)?)>$";
     private static Regex UnitizedNumberRegex = new(UnitizedNumber, RegexOptions.Compiled | RegexOptions.NonBacktracking);
 
-    public static bool TryParseQuantity(string quantity, out AnyQuantity<double> qty)
+    public static bool TryParseQuantity(string quantity, [NotNullWhen(true)] out AnyQuantity<double>? qty)
     {
         double val;
 

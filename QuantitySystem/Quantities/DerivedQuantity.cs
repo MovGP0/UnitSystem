@@ -97,7 +97,7 @@ public class DerivedQuantity<T> : AnyQuantity<T>
     /// <summary>
     /// Cached Dimension.
     /// </summary>
-    private QuantityDimension _Dimension = null;
+    private QuantityDimension? _Dimension;
 
     /// <summary>
     /// The current dimension of the quantity.

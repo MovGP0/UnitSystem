@@ -1154,7 +1154,7 @@ dotnet_diagnostic.CS8618.severity = warning
 dotnet_diagnostic.CS8619.severity = warning
 
 # Avoid passing a null literal where a nonnullable value is required
-dotnet_diagnostic.CS8625.severity = suggestion
+dotnet_diagnostic.CS8625.severity = warning
 
 # Check a nullable value type before reading its value
 dotnet_diagnostic.CS8629.severity = suggestion

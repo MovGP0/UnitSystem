@@ -157,7 +157,7 @@ public class QsNamespace(string name)
     /// <param name="methodInfo"></param>
     /// <param name="funcAttribute"></param>
     /// <returns></returns>
-    public QsFunction GetQsFunctionFromTypeMethod(MethodInfo methodInfo, QsFunctionAttribute funcAttribute)
+    public QsFunction GetQsFunctionFromTypeMethod(MethodInfo methodInfo, QsFunctionAttribute? funcAttribute)
     {
         var qsNamespace = _NamespaceType?.Name ?? Name;
 

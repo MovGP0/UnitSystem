@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using ParticleLexer;
 using ParticleLexer.QsTokens;
@@ -394,9 +395,8 @@ public sealed class QsEvaluator
     /// <param name="seqNamespace"></param>
     /// <param name="nsidx"></param>
     /// <returns></returns>
-    public static bool IsSequence(string varName, out Token seq, out string seqNamespace, out int nsidx)
+    public static bool IsSequence(string varName, [NotNullWhen(true)] out Token? seq, out string seqNamespace, out int nsidx)
     {
-        var IsSequence = false;
         seq = null;
         nsidx = 0;
         seqNamespace = string.Empty;
@@ -421,12 +421,12 @@ public sealed class QsEvaluator
             {
                 if (seq[nsidx + 1].TokenClassType == typeof(SquareBracketsGroupToken))
                 {
-                    IsSequence = true;
+                    return true;
                 }
             }
         }
 
-        return IsSequence;
+        return false;
     }
 
     internal object? ExtraEvaluate(string line)
@@ -494,11 +494,7 @@ public sealed class QsEvaluator
             if (!string.IsNullOrEmpty(varName))
             {
                 #region Processing the variable name region
-                Token seq;
-                int nsidx;
-                string seqNamespace;
-                var IsSequence = QsEvaluator.IsSequence(varName, out seq, out seqNamespace, out nsidx);
-                if (IsSequence)
+                if (IsSequence(varName, out var seq, out var seqNamespace, out var nsidx))
                 {
                     #region Sequence element operation
                     // Sequence element assignation.
