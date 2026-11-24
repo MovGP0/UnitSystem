@@ -53,7 +53,6 @@ public partial class SymbolicVariable
     /// <summary>
     /// Parse expression of variables and make SymbolicVariable
     /// </summary>
-    /// <param name="expr"></param>
     /// <returns></returns>
     public static SymbolicVariable? Parse(string expression)
     {
@@ -295,7 +294,7 @@ public partial class SymbolicVariable
 
         string[] Group2 = ["+", "-"];
 
-        /// Operator Groups Ordered by Priorities.
+        // Operator groups in precedence order.
         string[][] OperatorGroups = [Group, SymGroup, Group1, Group2];
 
         foreach (var opg in OperatorGroups)
@@ -833,7 +832,7 @@ public partial class SymbolicVariable
 
         string[] Group4 = ["=", "<>"];
 
-        /// Operator Groups Ordered by Priorities.
+        // Operator groups in precedence order.
         string[][] OperatorGroups = [Group, Group1, Group2, Group3, Group4];
 
         foreach (var opg in OperatorGroups)

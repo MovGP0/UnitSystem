@@ -2,7 +2,6 @@
 using UnitSystem.Quantities;
 using UnitSystem.Prefixes;
 using UnitSystem.Systems;
-using Shouldly;
 using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;

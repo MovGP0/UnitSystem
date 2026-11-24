@@ -8,9 +8,7 @@ namespace QuantitySystem.Attributes;
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class MetricUnitAttribute : UnitAttribute
 {
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary>Defines the symbol and quantity type of a metric unit.</summary>
     /// <param name="symbol">Symbol of the unit that appears in display</param>
     /// <param name="quantityType">The CLR type of quantity that this unit is associated to.</param>
     public MetricUnitAttribute(string symbol, Type quantityType)
@@ -19,9 +17,7 @@ public sealed class MetricUnitAttribute : UnitAttribute
         SystemDefault = false;  // SI units are implicitly defaults even if this field is true.
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary>Defines a metric unit and whether it is the default for its system.</summary>
     /// <param name="symbol">Symbol of the unit that appears in display</param>
     /// <param name="quantityType">The CLR type of quantity that this unit is associated to.</param>
     /// <param name="systemDefault">Indicates that this unit is default unit of this system in this quantity. {SI namespace not affected}</param>

@@ -82,11 +82,7 @@ public sealed class QsEvaluator
         throw new Exception("No Scope exist");
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="varName"></param>
-    /// <param name="varValue"></param>
+    /// <summary>Assigns a value to a variable in the current scope.</summary>
     public void SetVariable(string varName, object varValue)
     {
         if (Scope != null)
@@ -1225,9 +1221,6 @@ public sealed class QsEvaluator
     /// <summary>
     /// Used by reflection.
     /// </summary>
-    /// <param name="scope"></param>
-    /// <param name="nameSpace"></param>
-    /// <param name="name"></param>
     /// <returns></returns>
     public static QsValue GetScopeQsValue(QsScope scope, string qsNamespace, string name)
     {
@@ -1313,7 +1306,6 @@ public sealed class QsEvaluator
     /// <summary>
     /// Store the function in the scope by choosing the suitable symbolic name for the function.
     /// </summary>
-    /// <param name="function"></param>
     public void StoreFunction(QsFunction qsFunction)
     {
         // 1- find the default function of this name.

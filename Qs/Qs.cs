@@ -19,7 +19,7 @@ public static class Qs
         => quantity.Unit ?? throw new QsException("This operation requires a quantity with a unit.");
 
     /// <summary>
-    /// Force to return integer value from <see cref="AnyQuantity<double>"/>
+    /// Force to return integer value from <see cref="AnyQuantity{T}"/>
     /// used mainly for calculated indexes for sequences.
     /// </summary>
     /// <param name="val"></param>

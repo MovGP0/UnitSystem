@@ -137,7 +137,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <summary>
     /// Evaluate every argument and call the suitable function
     /// </summary>
-    /// <param name="vario"></param>
     /// <returns></returns>
     internal Expression GetInvokeExpression(QsVar vario, string[] args)
     {
@@ -574,8 +573,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <summary>
     /// Get the function that is stored in the scope.
     /// </summary>
-    /// <param name="scope"></param>
-    /// <param name="realName"></param>
     /// <returns></returns>
     public static QsFunction? GetFunction(QsScope scope, string qsNamespace, string functionName)
     {
@@ -609,8 +606,6 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// Get the function from the global heap or from namespace, and throw exception if not found.
     /// This function is used in building expression.
     /// </summary>
-    /// <param name="scope"></param>
-    /// <param name="realName"></param>
     /// <returns></returns>
     public static QsFunction GetFunctionAndThrowIfNotFound(QsScope scope, string functionFullName)
     {

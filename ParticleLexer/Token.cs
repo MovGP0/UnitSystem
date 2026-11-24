@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using ParticleLexer.StandardTokens;
-using System.Diagnostics.Contracts;
 using System.Text;
 using ParticleLexer.CommonTokens;
 
@@ -28,9 +27,7 @@ public sealed partial class Token : IEnumerable<Token>
         return childTokens.Any(o => o.TokenClassType == typeof(TargetTokenClass));
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary>Checks whether a child token has the specified token class.</summary>
     /// <param name="tokenClassType">Type of token class</param>
     /// <returns></returns>
     public bool Contains(Type tokenClassType)
@@ -38,9 +35,7 @@ public sealed partial class Token : IEnumerable<Token>
         return childTokens.Any(o => o.TokenClassType == tokenClassType);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary>Checks whether a child token has any of the specified token classes.</summary>
     /// <param name="tokenClassTypes">Types of token classes</param>
     /// <returns></returns>
     public bool Contains(params Type[] tokenClassTypes)
@@ -257,8 +252,8 @@ public sealed partial class Token : IEnumerable<Token>
     /// <summary>
     /// Merge all tokens into the one and exclude specific token
     /// </summary>
-    /// <param name="tokenType">Excluded tokens or Token(s) that act as separators.</param>
     /// <param name="mergedTokensType">The type of the new token merged from sub tokens.</param>
+    /// <param name="tokenTypes">Excluded tokens or Token(s) that act as separators.</param>
     /// <returns></returns>
     public Token MergeAllBut(Type mergedTokensType, params TokenClass[] tokenTypes)
     {
@@ -268,8 +263,8 @@ public sealed partial class Token : IEnumerable<Token>
     /// <summary>
     /// Merge all tokens into the one and exclude specific token
     /// </summary>
-    /// <param name="tokenType">Excluded tokens or Token(s) that act as separators.</param>
-    /// <param name="mergedTokensType">The type of the new token merged from sub tokens.</param>
+    /// <param name="tokenClasses">Excluded tokens or Token(s) that act as separators.</param>
+    /// <typeparam name="MergedTokenClass">The type of the new token merged from sub tokens.</typeparam>
     /// <returns></returns>
     public Token MergeAllBut<MergedTokenClass>(params TokenClass[] tokenClasses)
         where MergedTokenClass: TokenClass
@@ -341,9 +336,9 @@ public sealed partial class Token : IEnumerable<Token>
     /// <summary>
     /// Merge all tokens into the one Token with specific TokenClass and exclude specific token classes.
     /// </summary>
-    /// <param name="tokenClasses">Excluded token or the separator token.</param>
-    /// <param name="mergedTokensClassType">The type of the new token class that was merged from sub tokens.</param>
     /// <param name="startIndex">Starting from token index</param>
+    /// <param name="mergedTokensClassType">The type of the new token class that was merged from sub tokens.</param>
+    /// <param name="tokenClasses">Excluded token or the separator token.</param>
     /// <returns></returns>
     public Token MergeAllBut(int startIndex, Type mergedTokensClassType, params TokenClass[] tokenClasses)
     {
@@ -607,7 +602,6 @@ public sealed partial class Token : IEnumerable<Token>
     /// <summary>
     /// Merge multiple exact words in the same time to enhance performance.
     /// </summary>
-    /// <param name="tokenClasses"></param>
     /// <returns></returns>
     public Token MergeMultipleWordTokens(params Type[] tokenClassesTypes)
     {
@@ -745,8 +739,6 @@ public sealed partial class Token : IEnumerable<Token>
     /// <summary>
     /// Merge the repeated token into Merged Token
     /// </summary>
-    /// <typeparam name="MergedToken"></typeparam>
-    /// <param name="RepeatedToken"></param>
     /// <returns></returns>
     public Token MergeRepetitiveTokens<MergedToken, RepeatedToken>()
     {
@@ -887,7 +879,7 @@ public sealed partial class Token : IEnumerable<Token>
     /// <summary>
     /// Removes specific tokens from the current tokens.
     /// </summary>
-    /// <param name="tokenType">Array of tokens that should be removed.</param>
+    /// <param name="tokenTypes">Array of tokens that should be removed.</param>
     /// <returns></returns>
     public Token RemoveTokens(params Type[] tokenTypes)
     {
@@ -927,7 +919,6 @@ public sealed partial class Token : IEnumerable<Token>
     /// <summary>
     /// Returns the first occurance of specific token class type
     /// </summary>
-    /// <param name="tokenType"></param>
     /// <returns></returns>
     public int IndexOf(Type tokenClassType)
     {
@@ -1156,7 +1147,6 @@ public sealed partial class Token : IEnumerable<Token>
     /// <summary>
     /// Parse text between " Double Qoutation marks and escape it \" with back slash \" "
     /// </summary>
-    /// <param name="tokens"></param>
     /// <returns></returns>
     public Token TokenizeTextStrings()
     {

@@ -56,9 +56,6 @@ class QsVar
     /// Evaluate the function body taking into considerations
     /// the parameters of the lambda function.
     /// </summary>
-    /// <param name="evaluator"></param>
-    /// <param name="line"></param>
-    /// <param name="lb"></param>
     public QsVar(QsEvaluator evaluator, string line, QsFunction function, SimpleLambdaBuilder lb, out Token tokenizedBody)
     {
         this.Evaluator = evaluator;
@@ -106,9 +103,6 @@ class QsVar
     /// <summary>
     /// Evaulate the line for use in sequence body.
     /// </summary>
-    /// <param name="evaluator"></param>
-    /// <param name="line"></param>
-    /// <param name="sequenceName"></param>
     public QsVar(QsEvaluator evaluator, string line, QsSequence sequence, SimpleLambdaBuilder lb)
     {
         this.Evaluator = evaluator;
@@ -1082,7 +1076,6 @@ class QsVar
     /// <summary>
     /// the token contains the information of the wanted class.
     /// </summary>
-    /// <param name="token"></param>
     /// <returns></returns>
     private MethodCallExpression CreateInstance(Token token, out Type discoveredType)
     {
@@ -1373,7 +1366,6 @@ class QsVar
     /// <summary>
     /// Returns the text components of {Vector} {a b c} I mean a,b, and  c  in text format
     /// </summary>
-    /// <param name="vectorToken"></param>
     /// <returns></returns>
     public static ICollection<string> VectorComponents(Token tok)
     {
@@ -1403,7 +1395,6 @@ class QsVar
     /// <summary>
     /// Vector of the format { 40, 20, f(2), S[10], 23}
     /// </summary>
-    /// <param name="vectorText"></param>
     /// <returns></returns>
     private MethodCallExpression ParseVector(Token tok)
     {
@@ -1598,7 +1589,6 @@ class QsVar
     /// <summary>
     /// gets the function as a scalar of function quantity.
     /// </summary>
-    /// <param name="function"></param>
     /// <returns></returns>
     public Expression GetFunctionAsQuantity(Token functionValueToken)
     {
@@ -1780,9 +1770,7 @@ class QsVar
         return Execute() as QsValue;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary>Compiles and evaluates the parsed expression.</summary>
     /// <returns></returns>
     internal object Execute()
     {
@@ -2670,9 +2658,6 @@ class QsVar
     /// <summary>
     /// Just take the left and right expression with the operator and make arithmatic expression.
     /// </summary>
-    /// <param name="left"></param>
-    /// <param name="op"></param>
-    /// <param name="right"></param>
     /// <returns></returns>
     private static Expression ArithExpression(ExprOp eop, out short skip)
     {
@@ -2932,7 +2917,7 @@ class QsVar
 
     readonly static string[] WhenOtherwiseGroup = ["when", "otherwise"];
 
-    /// Operator Groups Ordered by Priorities.
+    /// <summary>Lists operator groups in precedence order.</summary>
     readonly static string[][] OperatorGroups = [HigherGroup, Group, SymGroup, Group0, Group1, Group2, Shift, RelationalGroup, EqualityGroup, AndGroup, OrGroup, WhenOtherwiseGroup
     ];
 

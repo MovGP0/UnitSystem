@@ -11,8 +11,8 @@ public class StepActionAttribute : ActionAttribute
     /// </summary>
     /// <param name="actionId">Unique id of the action</param>
     /// <param name="actionText">Action description</param>
-    /// <param name="statusId">Status of the action (to be known by the user logic)</param>
     /// <param name="targetStepName">Target step name {the static field in the class you are writign now (case sensitive)}</param>
+    /// <param name="statusId">Status of the action (to be known by the user logic)</param>
     public StepActionAttribute(int actionId, string actionText, string targetStepName, int statusId = 0)
         : base(actionId, actionText, targetStepName, statusId)
     {

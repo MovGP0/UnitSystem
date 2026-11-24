@@ -127,7 +127,7 @@ public partial class SymbolicVariable
     /// <summary>
     /// The only constructor for the symbolic variable
     /// </summary>
-    /// <param name="expression">Could be number, string, or function form</param>
+    /// <param name="token">Could be number, string, or function form</param>
     public SymbolicVariable(string token)
     {
         var sb = new StringBuilder();

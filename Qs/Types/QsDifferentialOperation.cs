@@ -73,10 +73,7 @@ public class QsDifferentialOperation : QsOperation
         throw new NotImplementedException();
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
+    /// <summary>Applies the differential operator to the supplied operand.</summary>
     /// <returns></returns>
     public override QsValue MultiplyOperation(QsValue value)
     {

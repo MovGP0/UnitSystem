@@ -298,7 +298,6 @@ public sealed partial class QuantityDimension
     /// <summary>
     /// Extract the Length Power from MLT string.
     /// </summary>
-    /// <param name="MLT"></param>
     /// <returns></returns>
     private static int ExponentOfLength(string mlt)
     {
@@ -310,7 +309,6 @@ public sealed partial class QuantityDimension
     /// <summary>
     /// Extract the Time Power from MLT string.
     /// </summary>
-    /// <param name="MLT"></param>
     /// <returns></returns>
     private static int ExponentOfTime(string mlt)
     {

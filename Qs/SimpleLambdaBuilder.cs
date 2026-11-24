@@ -21,11 +21,12 @@ class SimpleLambdaBuilder(string functionName, Type type)
     public Expression? Body { get; set; }
 
     /// <summary>
-    /// Creates a parameter on the lambda with a given name and type.
-    ///
+    /// <para>Creates a parameter on the lambda with a given name and type.</para>
+    /// <para>
     /// Parameters maintain the order in which they are created,
     /// however custom ordering is possible via direct access to
     /// Parameters collection.
+    /// </para>
     /// </summary>
     public ParameterExpression Parameter(Type type, string? name)
     {

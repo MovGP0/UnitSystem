@@ -8,6 +8,7 @@ using QsRoot;
 namespace Qs.Runtime;
 
 /// <summary>
+/// <para>
 /// Employing the namespace concept in the Qs
 /// Namespace is in the form of xml namespaces.
 /// Namespace are dual functionality:
@@ -15,8 +16,8 @@ namespace Qs.Runtime;
 ///    2) custom namespace from built-in or external classes during the program load.
 /// For example Math namespace is built-in namespace in the program but you can add
 ///     another variables and functions for it during running.
-///
-/// This class is responsible to act as a provider for the two functionalities.
+/// </para>
+/// <para>This class is responsible to act as a provider for the two functionalities.</para>
 /// </summary>
 public class QsNamespace(string name)
 {
@@ -223,7 +224,6 @@ public class QsNamespace(string name)
     /// <summary>
     /// Gets the members of the QsNamespace or (static class ) that hold the hard coded functions and properties.
     /// </summary>
-    /// <param name="namespaceType"></param>
     /// <returns></returns>
     private Dictionary<string, object?> GetQsNamespaceMethods()
     {
@@ -368,7 +368,6 @@ public class QsNamespace(string name)
     /// <summary>
     /// The namespace is a static C# class under QsRoot.*
     /// </summary>
-    /// <param name="nameSpace"></param>
     /// <returns></returns>
     private static Type? GetQsNamespaceType(string qsNamespace)
     {

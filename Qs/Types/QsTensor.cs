@@ -199,8 +199,6 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     /// <summary>
     /// Only Applied for 3rd rank tensor
     /// </summary>
-    /// <param name="row"></param>
-    /// <param name="column"></param>
     /// <returns></returns>
     public QsScalar this[int face, int row, int column]
     {
@@ -211,7 +209,6 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     /// <summary>
     /// Get the scalar in tensor.
     /// </summary>
-    /// <param name="index"></param>
     /// <returns></returns>
     public QsScalar GetScalar(params int[] indices)
     {

@@ -4,13 +4,12 @@ namespace Qs.Types;
 
 public partial class QsFunction
 {
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="scope"></param>
-    /// <param name="nameSpace"></param>
-    /// <param name="parametersCount">filter functions by number of parameters</param>
-    /// <param name="parametersNames"></param>
+    /// <summary>Finds functions with the specified name and parameters.</summary>
+    /// <param name="scope">The scope to search.</param>
+    /// <param name="qsNamespace">The namespace, or an empty string to search the scope directly.</param>
+    /// <param name="functionName">The name of the function.</param>
+    /// <param name="parametersCount">The number of parameters to match.</param>
+    /// <param name="parametersNames">The parameter names to match.</param>
     /// <returns></returns>
     public static QsFunction[] FindFunctionByParameters(
         QsScope scope,
@@ -50,8 +49,6 @@ public partial class QsFunction
     /// Get the exact function with given parameters names.
     /// by comparing the names and the length of parameters.
     /// </summary>
-    /// <param name="scope"></param>
-    /// <param name="parametersNames"></param>
     /// <returns></returns>
     public static QsFunction? GetExactFunctionWithParameters(
         QsScope scope,
@@ -90,10 +87,6 @@ public partial class QsFunction
     /// Get the default function.
     /// Default function is on the form f#2 f#3  without decoration for parameters.
     /// </summary>
-    /// <param name="scope"></param>
-    /// <param name="nameSpace"></param>
-    /// <param name="functionName"></param>
-    /// <param name="parameterCount"></param>
     /// <returns></returns>
     public static QsFunction? GetDefaultFunction(
         QsScope scope,

@@ -4,7 +4,6 @@ using UnitSystem.Quantities;
 using UnitSystem.Serialization;
 using UnitSystem.Systems;
 using Newtonsoft.Json;
-using Shouldly;
 
 namespace UnitSystem.UnitTests;
 

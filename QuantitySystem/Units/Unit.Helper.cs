@@ -220,7 +220,6 @@ public partial class Unit
     /// <summary>
     /// Find Strongly typed unit.
     /// </summary>
-    /// <param name="unit"></param>
     /// <returns></returns>
     private static Unit FindUnit (string un)
     {
@@ -338,7 +337,6 @@ public partial class Unit
     /// Returns the unit corresponding to the passed string.
     /// Suppors units with exponent.
     /// </summary>
-    /// <param name="unit"></param>
     /// <returns></returns>
     internal static Unit ParseUnit(string un)
     {

@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using Qs.Types;
-using QuantitySystem.Quantities.BaseQuantities;
 using QuantitySystem.Units;
 
 namespace Qs.Runtime;
@@ -225,7 +224,6 @@ public class QsSequenceElement
     /// <summary>
     /// Parse the element text and make the element point to delegate which evaluate the text if necessary.
     /// </summary>
-    /// <param name="element"></param>
     /// <returns></returns>
     public static QsSequenceElement Parse(string element, QsEvaluator qse, QsSequence sequence)
     {

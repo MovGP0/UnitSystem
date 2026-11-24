@@ -105,7 +105,7 @@ public static class ILObjectNames
     /// <summary>Represents the IL operation name for modulus assignment (e.g., %=).</summary>
     public const string ModulusAssignment = "op_ModulusAssignment";
 
-    /// <summary>Represents the IL operation name for bitwise AND assignment (e.g., &=).</summary>
+    /// <summary>Represents the IL operation name for bitwise AND assignment (e.g., <c>&amp;=</c>).</summary>
     public const string BitwiseAndAssignment = "op_BitwiseAndAssignment";
 
     /// <summary>Represents the IL operation name for bitwise OR assignment (e.g., |=).</summary>
@@ -114,7 +114,7 @@ public static class ILObjectNames
     /// <summary>Represents the IL operation name for exclusive OR assignment (e.g., ^=).</summary>
     public const string ExclusiveOrAssignment = "op_ExclusiveOrAssignment";
 
-    /// <summary>Represents the IL operation name for left shift assignment (e.g., <<=).</summary>
+    /// <summary>Represents the IL operation name for left shift assignment (e.g., <c>&lt;&lt;=</c>).</summary>
     public const string LeftShiftAssignment = "op_LeftShiftAssignment";
 
     /// <summary>Represents the IL operation name for right shift assignment (e.g., >>=).</summary>

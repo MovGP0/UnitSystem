@@ -406,8 +406,6 @@ public abstract partial class AnyQuantity<T>
     /// <summary>
     /// Raising power of the same storage types.
     /// </summary>
-    /// <param name="firstQuantity"></param>
-    /// <param name="secondQuantity"></param>
     /// <returns></returns>
     public static AnyQuantity<T> Power(AnyQuantity<T> quantity, AnyQuantity<T> exponent)
     {

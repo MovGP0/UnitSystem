@@ -147,7 +147,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
     private bool _CachingEnabled;
 
     /// <summary>
-    /// If true the sequence ability to to be cached is available.
+    /// If true the sequence ability to be cached is available.
     /// </summary>
     public bool CachingEnabled
     {
@@ -164,7 +164,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
     }
 
     /// <summary>
-    /// Keeps the the values that were calculated before.
+    /// Keeps the values that were calculated before.
     /// When modifieng an item the index of this item and all after items should be deleted.
     /// </summary>
     private Dictionary<int, QsValue> CachedValues = new();

@@ -361,7 +361,6 @@ public class QsFlowingTuple : QsValue
     /// <summary>
     /// ! Operator
     /// </summary>
-    /// <param name="key"></param>
     /// <returns></returns>
     public override QsValue? ExclamationOperator(QsValue value)
     {

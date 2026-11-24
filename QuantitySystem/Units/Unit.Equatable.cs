@@ -2,7 +2,7 @@
 
 public partial class Unit : IEquatable<Unit>
 {
-    /// <inheritdoc cref="IEquatable{T}.Equals(object?)"/>
+    /// <inheritdoc cref="object.Equals(object)"/>
     public override bool Equals(object? obj)
         => obj is Unit unit && Equals(unit);
 

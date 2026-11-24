@@ -2,10 +2,7 @@
 
 namespace QuantitySystem.Quantities;
 
-/// <summary>
-///
-/// </summary>
-/// <typeparam name="T"></typeparam>
+/// <summary>Represents the cube of a displacement dimension.</summary>
 public class PolarVolume<T> : DerivedQuantity<T>
 {
     public PolarVolume()

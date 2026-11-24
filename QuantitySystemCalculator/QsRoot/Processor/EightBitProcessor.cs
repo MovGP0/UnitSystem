@@ -23,7 +23,6 @@ public class EightBitProcessor
     /// <summary>
     /// this function takes the object of z80 and return its PC  (Pointer Counter)
     /// </summary>
-    /// <param name="z80"></param>
     /// <returns></returns>
     public static QsValue GetPc(EightBitProcessor epc)
     {

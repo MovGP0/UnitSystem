@@ -5,8 +5,6 @@ public partial class SymbolicVariable
     /// <summary>
     /// Derive one pure term.
     /// </summary>
-    /// <param name="sv"></param>
-    /// <param name="parameter"></param>
     private static SymbolicVariable? DiffTerm(SymbolicVariable term, string parameter)
     {
         var sv = term.Clone();
@@ -383,7 +381,6 @@ public partial class SymbolicVariable
     /// <summary>
     /// Differentiate the whole term based on the needed variables ... you know what I mean :)
     /// </summary>
-    /// <param name="variable"></param>
     /// <returns></returns>
     public SymbolicVariable Differentiate(string parameter)
     {

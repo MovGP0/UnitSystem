@@ -41,8 +41,6 @@ public partial class SymbolicVariable
     /// <summary>
     /// Integrate one pure term.
     /// </summary>
-    /// <param name="sv"></param>
-    /// <param name="parameter"></param>
     private static SymbolicVariable? IntegTerm(SymbolicVariable term, string parameter)
     {
         var sv = term.Clone();

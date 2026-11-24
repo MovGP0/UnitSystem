@@ -3,7 +3,10 @@ root = true
 [*.cs]
 
 # Remove unnecessary imports
-# dotnet_diagnostic.IDE0005.severity = warning
+dotnet_diagnostic.IDE0005.severity = warning
+
+# XML output enables IDE0005. Public members may omit XML comments.
+dotnet_diagnostic.CS1591.severity = none
 
 # Roslynator analyzers
 # https://josefpihrt.github.io/docs/roslynator/analyzers/

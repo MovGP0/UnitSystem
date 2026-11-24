@@ -1161,8 +1161,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     /// <summary>
     /// Multiply Scalar by Vector.
     /// </summary>
-    /// <param name="q"></param>
-    /// <param name="vector"></param>
     /// <returns></returns>
     public QsVector MultiplyVector(QsVector vector)
     {
@@ -1592,7 +1590,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     /// <summary>
     /// Calculate the modulo of
     /// </summary>
-    /// <param name="value"></param>
     /// <returns></returns>
     public override QsValue ModuloOperation(QsValue vl)
     {
@@ -1979,7 +1976,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     /// <summary>
     /// differentiate the current scalar  by overriding the method
     /// </summary>
-    /// <param name="value"></param>
     /// <returns></returns>
     public override QsValue DifferentiateOperation(QsValue vl)
     {
@@ -2004,7 +2000,6 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     /// <summary>
     /// make a range from  this scalar to the input parameter scalar.
     /// </summary>
-    /// <param name="value"></param>
     /// <returns></returns>
     public override QsValue RangeOperation(QsValue vl)
     {

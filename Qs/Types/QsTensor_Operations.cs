@@ -527,10 +527,7 @@ public partial class QsTensor : QsValue
         throw new NotImplementedException();
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
+    /// <summary>Differentiates the components of the tensor.</summary>
     /// <returns></returns>
     public override QsValue DifferentiateOperation(QsValue vl)
     {

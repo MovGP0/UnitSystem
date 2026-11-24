@@ -247,7 +247,6 @@ public struct MetricPrefix(string prefix, string symbol, int exponent)
     /// if it exceeds 24 or precedes -25 <see cref="MetricPrefixException"/> occur with the closest
     /// <see cref="MetricPrefix"/> and overflow the rest of it.
     /// </summary>
-    /// <param name="exp"></param>
     public static void CheckExponent(double expo)
     {
         var exp = (int)Math.Floor(expo);

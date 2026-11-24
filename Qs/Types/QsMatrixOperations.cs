@@ -9,7 +9,6 @@ public partial class QsMatrix : QsValue
     /// <summary>
     /// Matrix / scalar
     /// </summary>
-    /// <param name="scalarQuantity"></param>
     /// <returns></returns>
     public QsMatrix MultiplyScalar(QsScalar scalar)
     {
@@ -32,7 +31,6 @@ public partial class QsMatrix : QsValue
     /// <summary>
     /// Matrix / scalar
     /// </summary>
-    /// <param name="scalarQuantity"></param>
     /// <returns></returns>
     public QsMatrix DivideScalar(QsScalar scalar)
     {
@@ -101,7 +99,6 @@ public partial class QsMatrix : QsValue
     /// <summary>
     /// Matrix - scalar
     /// </summary>
-    /// <param name="scalarQuantity"></param>
     /// <returns></returns>
     private QsMatrix SubtractScalar(QsScalar scalar)
     {
@@ -158,7 +155,6 @@ public partial class QsMatrix : QsValue
     /// <summary>
     /// Matrix elements ^. scalar
     /// </summary>
-    /// <param name="scalarQuantity"></param>
     /// <returns></returns>
     public QsMatrix ElementsPowerScalar(QsScalar scalar)
     {
@@ -541,7 +537,6 @@ public partial class QsMatrix : QsValue
     /// <summary>
     /// for the tensor product '(*)'  operator
     /// </summary>
-    /// <param name="value"></param>
     /// <returns></returns>
     public override QsValue TensorProductOperation(QsValue vl)
     {
@@ -601,9 +596,8 @@ public partial class QsMatrix : QsValue
     }
 
     /// <summary>
-    /// '<<' left shift operator
+    /// <c>&lt;&lt;</c> left shift operator
     /// </summary>
-    /// <param name="times"></param>
     /// <returns></returns>
     public override QsValue LeftShiftOperation(QsValue vl)
     {
@@ -629,7 +623,6 @@ public partial class QsMatrix : QsValue
     /// <summary>
     /// '>>' Right Shift Operator
     /// </summary>
-    /// <param name="times"></param>
     /// <returns></returns>
     public override QsValue RightShiftOperation(QsValue vl)
     {
@@ -721,7 +714,6 @@ public partial class QsMatrix : QsValue
     /// Return scalar with two indices
     /// or Vector in one index
     /// </summary>
-    /// <param name="indices"></param>
     /// <returns></returns>
     public override QsValue GetIndexedItem(QsParameter[] allIndices)
     {
@@ -752,10 +744,7 @@ public partial class QsMatrix : QsValue
 
     #endregion
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
+    /// <summary>Differentiates each entry of the matrix.</summary>
     /// <returns></returns>
     public override QsValue DifferentiateOperation(QsValue vl)
     {

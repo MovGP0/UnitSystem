@@ -19,7 +19,7 @@ public partial class QsSequence
         {
             // this is a call to form symbolic element
             // like g[n](x) ..> x^n
-            /// and calling g[0++2]                //  the output should be x^0 + x^1 + x^2
+            // and calling g[0++2]                //  the output should be x^0 + x^1 + x^2
             //  and be parsed into function  (QsFunction)
 
             var porma = string.Empty;  // the parameters separated by comma ','

@@ -172,21 +172,25 @@ public sealed partial class Token : IEnumerable<Token>
     }
 
     /// <summary>
+    /// <para>
     /// Should be used after merging by word
     /// and grouping brackets
     /// The function tries to find Word followed by complete parenthesis group or square brackets group.
     ///     or desired group
     /// And can parse this example:
     ///            fn(434,fn((434+434)+8/4,50,fifo(5)))
-    ///
+    /// </para>
+    /// <para>
     ///            S[5,F[4,2,1],G](4, 3, 2,R[2], p(30*o(9)))
     ///            -              - Parameters              -
     ///            -    Indexes   -
     ///            -              Sequence Call             -
+    /// </para>
     /// </summary>
-    /// <param name="ignoreWords">list of words that should be ignored when discovering calls </param>
-    /// <param name="wordTokensClasses">list of word tokens to be included in search</param>
+    /// <param name="stringComparer">The comparer used for ignored words.</param>
     /// <param name="callTokensClasses"> list of call tokens classes that will be discovered like f[3,2] and g(3,f[3]) in the same time</param>
+    /// <param name="wordTokensClasses">list of word tokens to be included in search</param>
+    /// <param name="ignoreWords">List of words to ignore when discovering calls.</param>
     /// <returns></returns>
     public Token DiscoverCalls(StringComparer stringComparer, CallTokenClass[] callTokensClasses,Type[] wordTokensClasses, string[] ignoreWords)
     {

@@ -236,8 +236,8 @@ public abstract partial class Unit : IEquatable<Unit>
     /// <summary>
     /// Multiplies a prefix by a unit, resulting in a new unit with a scaled factor.
     /// </summary>
-    /// <param name="prefix">The unit prefix to multiply by.</param>
     /// <param name="unit">The unit to multiply.</param>
+    /// <param name="prefix">The unit prefix to multiply by.</param>
     /// <returns>A new unit resulting from the multiplication.</returns>
     [Pure]
     public static Unit operator *(Unit unit, IUnitPrefix prefix)

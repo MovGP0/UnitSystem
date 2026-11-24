@@ -538,11 +538,7 @@ public class Root
         throw new QsException("Not Vector");
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="targetType"></param>
-    /// <param name="value"></param>
+    /// <summary>Converts a Qs value for use with a native CLR type.</summary>
     /// <returns></returns>
     public static object? QsToNativeConvert(Type targetType, object? value)
     {

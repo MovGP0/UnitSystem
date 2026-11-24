@@ -1,6 +1,5 @@
 ﻿using UnitSystem.Dimensions;
 using NSubstitute;
-using Shouldly;
 
 namespace UnitSystem.UnitTests;
 

@@ -62,7 +62,7 @@ public static class CGSSystem
     public static Unit AddBaseUnit(string symbol, string name, string inherentPrefix = "", string dimensionSymbol = "")
         => System.AddBaseUnit(symbol, name, inherentPrefix, dimensionSymbol);
 
-    /// <inheritdoc cref="IUnitSystem.AddDerivedUnit(string, string, Unit)"/>
+    /// <inheritdoc cref="IUnitSystem.AddDerivedUnit(string, string, Unit, double)"/>
     public static Unit AddDerivedUnit(string symbol, string name, Unit unit)
         => System.AddDerivedUnit(symbol, name, unit);
 

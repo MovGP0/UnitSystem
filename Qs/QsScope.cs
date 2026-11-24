@@ -3,9 +3,7 @@ using System.Linq.Expressions;
 
 namespace Qs;
 
-/// <summary>
-///
-/// </summary>
+/// <summary>Stores variables in the providers registered with the Qs runtime.</summary>
 public class QsScope : IDynamicMetaObjectProvider
 {
     public DynamicMetaObject GetMetaObject(Expression parameter)

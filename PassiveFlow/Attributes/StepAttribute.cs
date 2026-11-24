@@ -19,7 +19,7 @@ public class StepAttribute : Attribute
     /// <summary>
     /// Identifier of the step.
     /// </summary>
-    /// <param name="stepId">Unique integet id for the step</param>
+    /// <param name="stepId">Unique identifier for the step.</param>
     public StepAttribute(int stepId)
     {
         _StepId = stepId;
@@ -28,18 +28,18 @@ public class StepAttribute : Attribute
     /// <summary>
     /// Identifier of the step beside the types that will be associated with this step.
     /// </summary>
-    /// <param name="stepId">Unique integet id for the step</param>
-    /// <param name="Identifier of the step"></param>
+    /// <param name="stepId">Unique identifier for the step.</param>
+    /// <param name="associatedTypes">Types associated with the step.</param>
     public StepAttribute(int stepId, params Type[] associatedTypes)
     {
         _StepId = stepId;
         _ItemAssociatedTypes = associatedTypes;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="stepId">Unique integet id for the step</param>
+    /// <summary>Defines a step, its associated types, and whether transitions skip it.</summary>
+    /// <param name="stepId">Unique identifier for the step.</param>
+    /// <param name="skipStep">Whether automatic transitions skip this step.</param>
+    /// <param name="associatedTypes">Types associated with the step.</param>
     public StepAttribute(int stepId, bool skipStep, params Type[] associatedTypes)
     {
         _StepId = stepId;

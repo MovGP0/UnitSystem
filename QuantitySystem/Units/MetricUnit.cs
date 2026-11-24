@@ -174,9 +174,7 @@ public abstract partial class MetricUnit : Unit
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary>Returns the metric unit as formatted text.</summary>
     /// <returns></returns>
     public override string ToString()
     {

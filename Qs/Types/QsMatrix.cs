@@ -137,9 +137,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary>Gets or replaces the specified matrix row.</summary>
     /// <param name="row">i index</param>
     /// <returns></returns>
     public QsVector this[int row]
@@ -155,9 +153,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary>Gets or sets the scalar at the specified row and column.</summary>
     /// <param name="row">i index</param>
     /// <param name="column">j index</param>
     /// <returns></returns>
@@ -533,7 +529,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     }
 
     /// <summary>
-    /// returns all quantities in the matrix in <see cref="AnyQuantity<double>"/> array.
+    /// Returns the scalar quantities in the matrix as an array.
     /// starting from left to right then by going down.
     /// </summary>
     /// <returns></returns>
@@ -720,7 +716,6 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     /// used to make sure that the two matrices are dimensionally equal
     /// have the same count of rows and columnss
     /// </summary>
-    /// <param name="obj"></param>
     /// <returns></returns>
     public bool DimensionEquals(QsMatrix matrix)
     {

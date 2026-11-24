@@ -4,7 +4,7 @@ namespace QuantitySystem.Quantities;
 
 /// <summary>
 /// dV = r  dz dr d\theta
-/// dV = PL RL PL RL/PL = PL RL RL
+/// dV = PL RL PL RL/PL = PL RL
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class CylindricalVolume<T> : DerivedQuantity<T>

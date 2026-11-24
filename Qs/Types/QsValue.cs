@@ -160,7 +160,6 @@ public abstract class QsValue: IComparable
     /// <summary>
     /// Any QsValue that contain sub items can be accessed by this method
     /// </summary>
-    /// <param name="indexes"></param>
     /// <returns></returns>
     abstract public QsValue? GetIndexedItem(QsParameter[] indices);
 
@@ -525,9 +524,7 @@ public abstract class QsValue: IComparable
         return mat;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+    /// <summary>Creates a tensor from the supplied matrices and tensors.</summary>
     /// <param name="values">Matrices or Tensors</param>
     /// <returns></returns>
     public static QsValue TensorFromValues(params QsValue[] values)

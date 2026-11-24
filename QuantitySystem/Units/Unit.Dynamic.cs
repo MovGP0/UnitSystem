@@ -24,7 +24,6 @@ public partial class Unit
     /// <summary>
     /// Create the unit directly from the specfied dimension based on the unit system given.
     /// </summary>
-    /// <param name="dimension"></param>
     public static Unit DiscoverUnit(QuantityDimension dimension, string unitSystem)
     {
         List<Unit> subUnits = [];
@@ -385,7 +384,6 @@ public partial class Unit
     /// <summary>
     /// This constructor creates a unit from several units.
     /// </summary>
-    /// <param name="units"></param>
     internal Unit(Type? quantityType, params Unit[] units)
     {
         SubUnits = [];

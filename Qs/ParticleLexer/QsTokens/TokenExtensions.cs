@@ -6,18 +6,23 @@ namespace ParticleLexer.QsTokens;
 public static class TokenExtensions
 {
     /// <summary>
+    /// <para>
     /// Should be used after merging by word
     /// and grouping brackets
     /// The function tries to find Word followed by complete parenthesis group or square brackets group.
     /// And can parse this example:
     ///            fn(434,fn((434+434)+8/4,50,fifo(5)))
-    ///
+    /// </para>
+    /// <para>
     ///            S[5,F[4,2,1],G](4, 3, 2,R[2], p(30*o(9)))
     ///            -              - Parameters              -
     ///            -    Indexes   -
     ///            -              Sequence Call             -
+    /// </para>
     /// </summary>
-    /// <param name="ignoreWords">list of words that should be ignored when discovering calls </param>
+    /// <param name="token">The grouped tokens to scan for calls.</param>
+    /// <param name="stringComparer">The comparer used for ignored words.</param>
+    /// <param name="ignoreWords">The words to skip when discovering calls.</param>
     /// <returns></returns>
     public static Token DiscoverQsCalls(this Token token, StringComparer stringComparer, params string[] ignoreWords)
     {
@@ -148,7 +153,7 @@ public static class TokenExtensions
     /// <summary>
     /// Parsing the loop body
     /// Loop Music:Play(c) On c   # where c = ("C", "D", "E", "F", "G", "A", "B")
-    /// Loop Loop IO:Poke(i, j, u(i)+v(j)) on i on j
+    /// Loop IO:Poke(i, j, u(i)+v(j)) on i on j
     /// </summary>
     /// <param name="tokens"></param>
     /// <returns></returns>

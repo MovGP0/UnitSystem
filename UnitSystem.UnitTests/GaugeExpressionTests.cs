@@ -1,6 +1,5 @@
 using System.Numerics;
 using ShInUeXx.Numerics;
-using Shouldly;
 using UnitSystem.Gauge;
 
 namespace UnitSystem.UnitTests;

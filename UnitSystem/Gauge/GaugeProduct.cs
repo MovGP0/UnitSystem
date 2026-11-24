@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Numerics;
 using ShInUeXx.Numerics;
 
 namespace UnitSystem.Gauge;

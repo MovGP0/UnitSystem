@@ -13,32 +13,23 @@ public sealed class ReferenceUnitAttribute : Attribute
 
     private readonly string? _source;
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="numerator"></param>
+    /// <summary>Defines a reference-unit conversion with a fixed numerator.</summary>
     public ReferenceUnitAttribute(double numerator)
     {
         _numerator = numerator;
         Denominator = 1;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="numerator"></param>
-    /// <param name="denominator"></param>
+    /// <summary>Defines a reference-unit conversion with a fixed ratio.</summary>
     public ReferenceUnitAttribute(double numerator, double denominator)
     {
         _numerator = numerator;
         Denominator = denominator;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="unitType"></param>
-    /// <param name="source">FunctionName.UnitName</param>
+    /// <summary>Defines a conversion factor obtained from a dynamic source.</summary>
+    /// <param name="unitType">The reference unit type.</param>
+    /// <param name="source">The dynamic conversion source in FunctionName.UnitName form.</param>
     public ReferenceUnitAttribute(Type unitType, string source)
     {
         _source = source;

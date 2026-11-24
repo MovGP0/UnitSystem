@@ -109,8 +109,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <summary>
     /// Adds two vectors
     /// </summary>
-    /// <param name="v1"></param>
-    /// <param name="v2"></param>
     /// <returns></returns>
     public QsVector AddVector(QsVector vector)
     {
@@ -132,8 +130,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <summary>
     /// Subtract two vectors
     /// </summary>
-    /// <param name="v1"></param>
-    /// <param name="v2"></param>
     /// <returns></returns>
     public QsVector SubtractVector(QsVector vector)
     {
@@ -221,8 +217,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <summary>
     /// Dot product of two vectors
     /// </summary>
-    /// <param name="v1"></param>
-    /// <param name="v2"></param>
     /// <returns></returns>
     public QsScalar ScalarProduct(QsVector vector)
     {
@@ -244,8 +238,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <summary>
     /// Cross product for 3 components vector.
     /// </summary>
-    /// <param name="v1"></param>
-    /// <param name="v2"></param>
     /// <returns></returns>
     public QsVector VectorProduct(QsVector v2)
     {
@@ -346,7 +338,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <summary>
     /// Normal multiplication.
     /// </summary>
-    /// <param name="value"></param>
     /// <returns></returns>
     public override QsValue MultiplyOperation(QsValue vl)
     {
@@ -383,7 +374,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <summary>
     /// Dot product
     /// </summary>
-    /// <param name="value"></param>
     /// <returns></returns>
     public override QsValue DotProductOperation(QsValue vl)
     {
@@ -550,7 +540,6 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <summary>
     /// Form a matrix from two vectors
     /// </summary>
-    /// <param name="value"></param>
     /// <returns></returns>
     public override QsValue TensorProductOperation(QsValue vl)
     {

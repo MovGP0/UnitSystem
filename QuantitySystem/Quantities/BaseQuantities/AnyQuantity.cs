@@ -117,11 +117,7 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
         return result;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="factor"></param>
+    /// <summary>Raises a quantity value to the specified scalar power.</summary>
     /// <returns></returns>
     public static T RaiseGenericByScalar(T value, double factor)
     {
@@ -211,8 +207,6 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
     /// <summary>
     /// Parse the input name and return the quantity object from it.
     /// </summary>
-    /// <typeparam name="T">container type of the value</typeparam>
-    /// <param name="quantityName"></param>
     /// <returns></returns>
     public static AnyQuantity<T> Parse(string quantityName)
     {
