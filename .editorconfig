@@ -344,7 +344,7 @@ dotnet_diagnostic.RCS1110.severity = warning
 # dotnet_diagnostic.RCS1111.severity = none
 
 # Combine 'Enumerable.Where' method chain
-# dotnet_diagnostic.RCS1112.severity = warning
+dotnet_diagnostic.RCS1112.severity = warning
 
 # Use 'string.IsNullOrEmpty' method
 # dotnet_diagnostic.RCS1113.severity = warning
