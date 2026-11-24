@@ -629,7 +629,7 @@ dotnet_diagnostic.RCS1230.severity = warning
 dotnet_diagnostic.RCS1232.severity = warning
 
 # Use short-circuiting operator
-# dotnet_diagnostic.RCS1233.severity = warning
+dotnet_diagnostic.RCS1233.severity = warning
 
 # Duplicate enum value
 # dotnet_diagnostic.RCS1234.severity = warning

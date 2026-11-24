@@ -78,7 +78,7 @@ public abstract class BaseQuantity(float exponent)
 
         if(bd!=null)
         {
-            if (Dimension.IsDimensionless & bd.Dimension.IsDimensionless)
+            if (Dimension.IsDimensionless && bd.Dimension.IsDimensionless)
             {
                 //why I've tested dimensioless in begining??
                 //   because I want special dimensionless quantities like angle and solid angle to be treated

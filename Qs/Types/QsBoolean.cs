@@ -42,32 +42,35 @@ public class QsBoolean : QsValue
 
     public static QsBoolean operator +(QsBoolean a, QsBoolean b)
     {
-        return new QsBoolean { Value = a.Value | b.Value };
+        return new QsBoolean { Value = a.Value || b.Value };
     }
 
     public static QsBoolean operator -(QsBoolean a, QsBoolean b)
     {
-        return new QsBoolean { Value = a.Value | !b.Value };
+        return new QsBoolean { Value = a.Value || !b.Value };
     }
 
     public static QsBoolean operator *(QsBoolean a, QsBoolean b)
     {
-        return new QsBoolean { Value = a.Value & b.Value };
+        return new QsBoolean { Value = a.Value && b.Value };
     }
 
     public override QsValue AddOperation(QsValue value)
     {
-        return new QsBoolean { Value = Value | ((QsBoolean)value).Value };
+        var otherValue = ((QsBoolean)value).Value;
+        return new QsBoolean { Value = Value || otherValue };
     }
 
     public override QsValue SubtractOperation(QsValue value)
     {
-        return new QsBoolean { Value = Value | !((QsBoolean)value).Value };
+        var otherValue = ((QsBoolean)value).Value;
+        return new QsBoolean { Value = Value || !otherValue };
     }
 
     public override QsValue MultiplyOperation(QsValue value)
     {
-        return new QsBoolean { Value = Value & ((QsBoolean)value).Value };
+        var otherValue = ((QsBoolean)value).Value;
+        return new QsBoolean { Value = Value && otherValue };
     }
 
     public override QsValue DivideOperation(QsValue value)

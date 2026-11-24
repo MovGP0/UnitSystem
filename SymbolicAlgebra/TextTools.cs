@@ -42,7 +42,7 @@ public static class TextTools
                 Split--;
             }
 
-            if (Split == 0 & expression[i] == splitter)
+            if (Split == 0 && expression[i] == splitter)
             {
                 all.Add(SplitedText.ToString());
                 SplitedText = new StringBuilder();
@@ -87,7 +87,7 @@ public static class TextTools
                 Split--;
             }
 
-            if (Split == 0 & expression[i] == character)
+            if (Split == 0 && expression[i] == character)
             {
                 return true;
             }

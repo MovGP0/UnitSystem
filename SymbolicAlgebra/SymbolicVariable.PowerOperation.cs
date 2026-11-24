@@ -13,7 +13,7 @@ public partial class SymbolicVariable
 
         //if the value is only having coeffecient then there is no need to instantiate the powerterm
 
-        if (b.IsOneTerm & b.IsCoeffecientOnly & (Math.Floor(b.Coeffecient) == b.Coeffecient) /*& b.Coeffecient >= 0*/)
+        if (b.IsOneTerm && b.IsCoeffecientOnly && (Math.Floor(b.Coeffecient) == b.Coeffecient) /*& b.Coeffecient >= 0*/)
         {
             an = an.Power(b.Coeffecient);
         }
@@ -29,7 +29,7 @@ public partial class SymbolicVariable
                 {
                     if (an.SymbolPower != 0)
                     {
-                        if (b.IsOneTerm & b.IsCoeffecientOnly)
+                        if (b.IsOneTerm && b.IsCoeffecientOnly)
                         {
                             an.SymbolPower *= b.Coeffecient;
                         }

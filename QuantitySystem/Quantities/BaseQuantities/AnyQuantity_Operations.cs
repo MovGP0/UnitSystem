@@ -411,7 +411,7 @@ public abstract partial class AnyQuantity<T>
     /// <returns></returns>
     public static AnyQuantity<T> Power(AnyQuantity<T> quantity, AnyQuantity<T> exponent)
     {
-        if (!(exponent.Dimension.IsDimensionless & quantity.Dimension.IsDimensionless))
+        if (!(exponent.Dimension.IsDimensionless && quantity.Dimension.IsDimensionless))
         {
             throw new QuantityException("All quantities should be dimensionless, because I don't have a clue about your object power technique", new NotImplementedException());
         }
