@@ -677,7 +677,7 @@ dotnet_diagnostic.RCS1249.severity = warning
 # dotnet_diagnostic.RCS1250.severity = none
 
 # Remove unnecessary braces from record declaration
-# dotnet_diagnostic.RCS1251.severity = warning
+dotnet_diagnostic.RCS1251.severity = warning
 
 # Normalize usage of infinite loop
 # dotnet_diagnostic.RCS1252.severity = none
