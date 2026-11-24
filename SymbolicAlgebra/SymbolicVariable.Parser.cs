@@ -130,8 +130,9 @@ public partial class SymbolicVariable
                         }
                     }
                     else if (ix > 1
-                             && char.ToUpper(expr[ix - 1]) == 'E' && char.IsDigit(expr[ix - 2])
-                             && (expr[ix] == '-' || expr[ix] == '+'))
+                        && char.ToUpper(expr[ix - 1]) == 'E'
+                        && char.IsDigit(expr[ix - 2])
+                        && (expr[ix] == '-' || expr[ix] == '+'))
                     {
                         // case of 3e+2 4e-2  all cases with e in it.
                         TokenBuilder.Append(expr[ix]);
@@ -149,7 +150,7 @@ public partial class SymbolicVariable
                     }
                     else if (
                         parse_seps.Contains(expr[ix - 1])
-                        && (expr[ix] == '-' || expr[ix] == '+')
+                            && (expr[ix] == '-' || expr[ix] == '+')
                     )
                     {
                         if (expr[ix + 1] == '(')
@@ -681,8 +682,9 @@ public partial class SymbolicVariable
                         TokenBuilder.Append(expression[ix]);
                     }
                     else if (ix > 1
-                             && char.ToUpper(expression[ix - 1]) == 'E' && char.IsDigit(expression[ix - 2])
-                             && (expression[ix] == '-' || expression[ix] == '+'))
+                        && char.ToUpper(expression[ix - 1]) == 'E'
+                        && char.IsDigit(expression[ix - 2])
+                        && (expression[ix] == '-' || expression[ix] == '+'))
                     {
                         // test previous charachter if E    and charachter before it to be digit and current character is - or +
                         //    then we are in sceintific representation of number

@@ -51,8 +51,8 @@ public class QsObject : QsValue
 
             var d_method = InstanceType.GetMethods().First(
                 c => c.GetParameters().Length == argn
-                     && c.Name.Equals(MethodName, StringComparison.OrdinalIgnoreCase)
-                     && c.IsStatic == false    // important .. calling a function from object instance is for sure not static
+                    && c.Name.Equals(MethodName, StringComparison.OrdinalIgnoreCase)
+                    && c.IsStatic == false    // important .. calling a function from object instance is for sure not static
             );
 
             var d_method_params = d_method.GetParameters();

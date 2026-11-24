@@ -22,7 +22,7 @@ public sealed partial class UnitPathItem : IEquatable<UnitPathItem>
         }
 
         return Unit.GetType() == upi.Unit.GetType()
-               && Numerator == upi.Numerator
-               && Denominator == upi.Denominator;
+            && Numerator == upi.Numerator
+            && Denominator == upi.Denominator;
     }
 }

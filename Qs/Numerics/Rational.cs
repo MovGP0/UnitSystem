@@ -103,8 +103,10 @@ public struct Rational(float num, float den)
     {
 
         return "Q{ "
-               + num.ToString(CultureInfo.InvariantCulture) + ", "
-               + den.ToString(CultureInfo.InvariantCulture) + "}";
+            + num.ToString(CultureInfo.InvariantCulture)
+            + ", "
+            + den.ToString(CultureInfo.InvariantCulture)
+            + "}";
     }
 
 }

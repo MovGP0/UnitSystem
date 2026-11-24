@@ -369,8 +369,14 @@ public class Root
             return nq;
         }
 
-        if (targetType == typeof(int) || targetType == typeof(double) || targetType == typeof(Single) || targetType == typeof(float) 
-            || targetType == typeof(Int64) || targetType == typeof(uint) || targetType == typeof(UInt16) || targetType == typeof(UInt64))
+        if (targetType == typeof(int)
+            || targetType == typeof(double)
+            || targetType == typeof(Single)
+            || targetType == typeof(float)
+            || targetType == typeof(Int64)
+            || targetType == typeof(uint)
+            || targetType == typeof(UInt16)
+            || targetType == typeof(UInt64))
         {
             var nq = Expression.Property(Expression.Convert(value, typeof(QsScalar)), "NumericalQuantity");
 
@@ -497,8 +503,14 @@ public class Root
             return  value.ToString();
         }
 
-        if (targetType == typeof(int) || targetType == typeof(double) || targetType == typeof(Single) || targetType == typeof(float)
-            || targetType == typeof(Int64) || targetType == typeof(uint) || targetType == typeof(UInt16) || targetType == typeof(UInt64))
+        if (targetType == typeof(int)
+            || targetType == typeof(double)
+            || targetType == typeof(Single)
+            || targetType == typeof(float)
+            || targetType == typeof(Int64)
+            || targetType == typeof(uint)
+            || targetType == typeof(UInt16)
+            || targetType == typeof(UInt64))
         {
             var vs = value as QsScalar;
             if (vs != null)

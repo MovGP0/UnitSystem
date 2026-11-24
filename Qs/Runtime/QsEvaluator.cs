@@ -466,10 +466,10 @@ public class QsEvaluator
         {
             if (
                 line[AssignOperatorIndex - 1] == ':' // test for named argument :=
-                || line[AssignOperatorIndex - 1] == '>'  // >=
-                || line[AssignOperatorIndex - 1] == '<'  // <=
-                || line[AssignOperatorIndex - 1] == '!'  // !=
-                || line[AssignOperatorIndex + 1] == '='  // ==
+                    || line[AssignOperatorIndex - 1] == '>'  // >=
+                    || line[AssignOperatorIndex - 1] == '<'  // <=
+                    || line[AssignOperatorIndex - 1] == '!'  // !=
+                    || line[AssignOperatorIndex + 1] == '='  // ==
 
             )
             {

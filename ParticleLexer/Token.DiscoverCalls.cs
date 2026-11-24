@@ -215,7 +215,7 @@ public sealed partial class Token : IEnumerable<Token>
                     (
                         wordTokensClasses.Contains(c.TokenClassType)
                     )
-                    && ignoreWords.Contains(c.TokenValue, stringComparer) == false         // and the whole value is not in  the ignore words
+                        && ignoreWords.Contains(c.TokenValue, stringComparer) == false         // and the whole value is not in  the ignore words
                 )
                 {
                     //check if the next token is group

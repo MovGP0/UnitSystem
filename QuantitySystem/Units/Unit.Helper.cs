@@ -143,7 +143,7 @@ public partial class Unit
             var systemUnitTypes
                 = from ut in UnitTypes
                 where ut.Namespace.ToUpperInvariant().EndsWith(currentUnitSystem, StringComparison.Ordinal)
-                      || ut.Namespace.ToUpperInvariant().EndsWith("SHARED", StringComparison.Ordinal)
+                    || ut.Namespace.ToUpperInvariant().EndsWith("SHARED", StringComparison.Ordinal)
                 select ut;
 
             // select the default by predictor from the query
@@ -190,7 +190,7 @@ public partial class Unit
         var siUnitTypes
             = from si in UnitTypes
             where si.Namespace.ToUpperInvariant().EndsWith("SI", StringComparison.Ordinal)
-                  || si.Namespace.ToUpperInvariant().EndsWith("SHARED", StringComparison.Ordinal)
+                || si.Namespace.ToUpperInvariant().EndsWith("SHARED", StringComparison.Ordinal)
             select si;
 
         bool SearchForQuantityType(Type unitType)

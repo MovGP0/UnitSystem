@@ -853,9 +853,9 @@ class QsVar
                                 GetIteratorElement(tokens[ix].TokenValue, loopIteratorParameter[tokens[ix].TokenValue]);
                             }
                             else if (loopIteratorContainer.Count > 0
-                                     && tokens[ix].TokenValue.Length > 1
-                                     && tokens[ix].TokenValue.StartsWith("_")
-                                     && loopIteratorContainer.Contains(tokens[ix].TokenValue.Substring(1))
+                                && tokens[ix].TokenValue.Length > 1
+                                && tokens[ix].TokenValue.StartsWith("_")
+                                && loopIteratorContainer.Contains(tokens[ix].TokenValue.Substring(1))
                                     )
                             {
                                 // case of loop counter
@@ -878,9 +878,9 @@ class QsVar
                             GetIteratorElement(tokens[ix].TokenValue, loopIteratorParameter[tokens[ix].TokenValue]);
                         }
                         else if (loopIteratorContainer.Count > 0
-                                 && tokens[ix].TokenValue.Length > 1
-                                 && tokens[ix].TokenValue.StartsWith("_")
-                                 && loopIteratorContainer.Contains(tokens[ix].TokenValue.Substring(1))
+                            && tokens[ix].TokenValue.Length > 1
+                            && tokens[ix].TokenValue.StartsWith("_")
+                            && loopIteratorContainer.Contains(tokens[ix].TokenValue.Substring(1))
                                 )
                         {
                             // case of loop counter
@@ -1457,8 +1457,8 @@ class QsVar
                 {
                     if (
                         vtk.TokenClassType != typeof(MultipleSpaceToken)
-                        &&
-                        vtk.TokenClassType != typeof(CommaToken)
+                            &&
+                                vtk.TokenClassType != typeof(CommaToken)
                     )
                     {
 

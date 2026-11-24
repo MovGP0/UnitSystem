@@ -91,12 +91,12 @@ public sealed partial class QuantityDimension
 
     public bool IsDimensionless
         => Mass.Exponent == 0
-        && Length.Exponent == 0
-        && Time.Exponent == 0
-        && ElectricCurrent.Exponent == 0
-        && Temperature.Exponent == 0
-        && AmountOfSubstance.Exponent == 0
-        && LuminousIntensity.Exponent == 0
-        && Currency.Exponent == 0
-        && Digital.Exponent == 0;
+            && Length.Exponent == 0
+            && Time.Exponent == 0
+            && ElectricCurrent.Exponent == 0
+            && Temperature.Exponent == 0
+            && AmountOfSubstance.Exponent == 0
+            && LuminousIntensity.Exponent == 0
+            && Currency.Exponent == 0
+            && Digital.Exponent == 0;
 }

@@ -73,8 +73,8 @@ public struct LengthDescriptor(float normalExponent, float polarExponent, float 
     public bool Equals(LengthDescriptor ld)
     {
         return ScalarExponent == ld.ScalarExponent
-               && VectorExponent == ld.VectorExponent
-               && MatrixExponent == ld.MatrixExponent;
+            && VectorExponent == ld.VectorExponent
+            && MatrixExponent == ld.MatrixExponent;
     }
 
     public override bool Equals(object? obj)

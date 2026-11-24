@@ -102,8 +102,8 @@ public abstract partial class Unit : IEquatable<Unit>
             return false;
 
         return HasSameDimension(other)
-               && Offset.Equals(other.Offset)
-               && Factor.Equals(other.Factor);
+            && Offset.Equals(other.Offset)
+            && Factor.Equals(other.Factor);
     }
 
     /// <summary>
@@ -296,8 +296,8 @@ public abstract partial class Unit : IEquatable<Unit>
             return false;
 
         return unit1.HasSameDimension(unit2)
-               && unit1.Factor.Equals(unit2.Factor)
-               && unit1.Offset.Equals(unit2.Offset);
+            && unit1.Factor.Equals(unit2.Factor)
+            && unit1.Offset.Equals(unit2.Offset);
     }
 
     /// <summary>

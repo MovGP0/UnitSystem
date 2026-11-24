@@ -227,7 +227,8 @@ internal sealed class UnitInterpreter
         foreach (var token in _exponentiation)
         {
             var opening = index + token.Length;
-            if (opening >= expression.Length || expression[opening] != '('
+            if (opening >= expression.Length
+                || expression[opening] != '('
                 || !expression.AsSpan(index).StartsWith(token, StringComparison.Ordinal))
                 continue;
 

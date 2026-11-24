@@ -219,17 +219,25 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                 break;
 
             case ScalarTypes.ComplexNumberQuantity:  // return C{Real, Imaginary}
-                rv =  "C{" + ComplexQuantity.Value.Real.ToString(CultureInfo.InvariantCulture) + ", "
-                      + ComplexQuantity.Value.Imaginary.ToString(CultureInfo.InvariantCulture) + "}"
-                      + ComplexQuantity.UnitText;
+                rv =  "C{"
+                    + ComplexQuantity.Value.Real.ToString(CultureInfo.InvariantCulture)
+                    + ", "
+                    + ComplexQuantity.Value.Imaginary.ToString(CultureInfo.InvariantCulture)
+                    + "}"
+                    + ComplexQuantity.UnitText;
                 break;
 
             case ScalarTypes.QuaternionNumberQuantity: // return H{a, b, c, d}
-                rv =  "H{" + QuaternionQuantity.Value.Real.ToString(CultureInfo.InvariantCulture) + ", "
-                      + QuaternionQuantity.Value.i.ToString(CultureInfo.InvariantCulture) + ", "
-                      + QuaternionQuantity.Value.j.ToString(CultureInfo.InvariantCulture) + ", "
-                      + QuaternionQuantity.Value.k.ToString(CultureInfo.InvariantCulture) + "}"
-                      + QuaternionQuantity.UnitText;
+                rv =  "H{"
+                    + QuaternionQuantity.Value.Real.ToString(CultureInfo.InvariantCulture)
+                    + ", "
+                    + QuaternionQuantity.Value.i.ToString(CultureInfo.InvariantCulture)
+                    + ", "
+                    + QuaternionQuantity.Value.j.ToString(CultureInfo.InvariantCulture)
+                    + ", "
+                    + QuaternionQuantity.Value.k.ToString(CultureInfo.InvariantCulture)
+                    + "}"
+                    + QuaternionQuantity.UnitText;
                 break;
 
             case ScalarTypes.SymbolicQuantity: // return symbolic quantity into parsable format
@@ -244,9 +252,12 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
                 rv = FunctionQuantity.Value.SymbolicBodyText;
                 break;
             case ScalarTypes.RationalNumberQuantity:  // return Q{a, b}
-                rv = "Q{" + RationalQuantity.Value.num.ToString(CultureInfo.InvariantCulture) + ", "
-                     + RationalQuantity.Value.den.ToString(CultureInfo.InvariantCulture) + "}"
-                     + RationalQuantity.UnitText;
+                rv = "Q{"
+                    + RationalQuantity.Value.num.ToString(CultureInfo.InvariantCulture)
+                    + ", "
+                    + RationalQuantity.Value.den.ToString(CultureInfo.InvariantCulture)
+                    + "}"
+                    + RationalQuantity.UnitText;
                 break;
             default:
                 throw new NotImplementedException(_ScalarType + " ToExpression String is not implemented yet");

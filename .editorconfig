@@ -105,7 +105,7 @@ dotnet_diagnostic.RCS0053.severity = warning
 dotnet_diagnostic.RCS0054.severity = warning
 
 # Use consistent line breaks in binary expression chains
-# dotnet_diagnostic.RCS0055.severity = warning
+dotnet_diagnostic.RCS0055.severity = warning
 
 # Limit the width of source lines
 # dotnet_diagnostic.RCS0056.severity = warning

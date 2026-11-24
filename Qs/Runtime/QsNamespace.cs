@@ -315,14 +315,15 @@ public class QsNamespace(string name)
             // m.IsSpecialName == false && m.ReturnType.IsArray == false &&
             //(m.ReturnType.BaseType == typeof(QsValue) || m.ReturnType == typeof(QsValue) ||
             //m.ReturnType == typeof(string) || m.ReturnType.IsValueType == true)
-            where m.IsSpecialName == false && m.PropertyType.IsArray == false
-                                           && m.PropertyType != typeof(bool)
-            && (
-                                               m.PropertyType.BaseType == typeof(QsValue)
-                                               || m.PropertyType == typeof(QsValue)
-                                               || m.PropertyType == typeof(string)
-                                               || m.PropertyType.IsValueType == true
-                                           )
+            where m.IsSpecialName == false
+                && m.PropertyType.IsArray == false
+                && m.PropertyType != typeof(bool)
+                && (
+                    m.PropertyType.BaseType == typeof(QsValue)
+                        || m.PropertyType == typeof(QsValue)
+                        || m.PropertyType == typeof(string)
+                        || m.PropertyType.IsValueType == true
+                    )
             select m;
 
         List<KeyValuePair<string, object>> CodedMembers = [];

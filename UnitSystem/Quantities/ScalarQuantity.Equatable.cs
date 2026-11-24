@@ -21,8 +21,8 @@ public sealed partial class ScalarQuantity : IEquatable<ScalarQuantity>
             return false;
 
         return IsPoint == other.IsPoint
-               && CoherentUnit == other.CoherentUnit
-               && CoherentAmount.Equals(other.CoherentAmount);
+            && CoherentUnit == other.CoherentUnit
+            && CoherentAmount.Equals(other.CoherentAmount);
     }
 
     /// <summary>

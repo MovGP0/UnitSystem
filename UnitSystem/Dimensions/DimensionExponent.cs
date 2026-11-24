@@ -26,7 +26,8 @@ internal static class DimensionExponent
                 text[(exponentMarker + 1)..],
                 NumberStyles.AllowLeadingSign,
                 CultureInfo.InvariantCulture,
-                out var exponent) || exponent is < -MaxScientificExponent or > MaxScientificExponent))
+                out var exponent)
+                || exponent is < -MaxScientificExponent or > MaxScientificExponent))
         {
             value = default;
             return false;

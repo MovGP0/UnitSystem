@@ -82,12 +82,14 @@ public struct Quaternion : IEquatable<Quaternion>
     public override string ToString()
     {
         return "("
-               + a.ToString(CultureInfo.InvariantCulture) + ", "
-               + b.ToString(CultureInfo.InvariantCulture)
-               + "i, "
-               + c.ToString(CultureInfo.InvariantCulture)
-               + "j, "
-               + d.ToString(CultureInfo.InvariantCulture) + "k )";
+            + a.ToString(CultureInfo.InvariantCulture)
+            + ", "
+            + b.ToString(CultureInfo.InvariantCulture)
+            + "i, "
+            + c.ToString(CultureInfo.InvariantCulture)
+            + "j, "
+            + d.ToString(CultureInfo.InvariantCulture)
+            + "k )";
     }
 
 
@@ -95,10 +97,14 @@ public struct Quaternion : IEquatable<Quaternion>
     {
 
         return "H{ "
-               + a.ToString(CultureInfo.InvariantCulture) + ", "
-               + b.ToString(CultureInfo.InvariantCulture) + ", "
-               + c.ToString(CultureInfo.InvariantCulture) + ", "
-               + d.ToString(CultureInfo.InvariantCulture) + " }";
+            + a.ToString(CultureInfo.InvariantCulture)
+            + ", "
+            + b.ToString(CultureInfo.InvariantCulture)
+            + ", "
+            + c.ToString(CultureInfo.InvariantCulture)
+            + ", "
+            + d.ToString(CultureInfo.InvariantCulture)
+            + " }";
 
     }
 
