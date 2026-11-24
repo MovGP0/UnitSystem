@@ -80,17 +80,17 @@ public class SymbolicVariableTest
         Assert.AreEqual(expected: "1", actual: x0.ShouldNotBeNull().ToString());
 
         var x3 = _x.RaiseToSymbolicPower(_three);
-        Assert.AreEqual(actual: x3.ShouldNotBeNull().ToString(), expected: "x^3");
+        Assert.AreEqual(expected: "x^3", actual: x3.ShouldNotBeNull().ToString());
 
         var r = _three.RaiseToSymbolicPower(_x);
-        Assert.AreEqual(actual: r.ShouldNotBeNull().ToString(), expected:"3^x");
+        Assert.AreEqual(expected: "3^x", actual: r.ShouldNotBeNull().ToString());
 
         var xx = _x * _x;
         var xx3 = _three * xx;
 
         var xx3Y = xx3.ShouldNotBeNull().RaiseToSymbolicPower(_y);
 
-        Assert.AreEqual(actual: xx3Y.ShouldNotBeNull().ToString(), expected: "3^y*x^(2*y)");
+        Assert.AreEqual(expected: "3^y*x^(2*y)", actual: xx3Y.ShouldNotBeNull().ToString());
 
         var cplx = _x * _y * _z * _four * _y * _z * _z;
 
@@ -268,7 +268,7 @@ public class SymbolicVariableTest
 
         var rx = (_x + _y) / _x.Power(2);   // x+y/x^2  ==  x/x^2 + y/x^2 == 1/x + y/x^2
 
-        Assert.AreEqual(actual: rx.ShouldNotBeNull().ToString(), expected: "1/x+y/x^2");
+        Assert.AreEqual(expected: "1/x+y/x^2", actual: rx.ShouldNotBeNull().ToString());
     }
 
     [Test]
