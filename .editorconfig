@@ -183,7 +183,7 @@ dotnet_diagnostic.CS0659.severity = warning
 dotnet_diagnostic.CS0660.severity = warning
 
 # Override the hash code when defining equality operators
-dotnet_diagnostic.CS0661.severity = suggestion
+dotnet_diagnostic.CS0661.severity = warning
 
 # Use distinct names for nested and enclosing type parameters
 dotnet_diagnostic.CS0693.severity = suggestion
