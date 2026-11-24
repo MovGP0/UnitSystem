@@ -72,7 +72,7 @@ roslynator_arrow_token_new_line = before
 dotnet_diagnostic.RCS0033.severity = warning
 
 # Start each generic constraint clause on its own line
-# dotnet_diagnostic.RCS0034.severity = warning
+dotnet_diagnostic.RCS0034.severity = warning
 
 # Keep else and its following if together
 # dotnet_diagnostic.RCS0041.severity = warning
