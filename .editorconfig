@@ -978,7 +978,7 @@ dotnet_diagnostic.CA2014.severity = warning
 dotnet_diagnostic.CA2015.severity = warning
 
 # Forward the 'CancellationToken' parameter to methods
-# dotnet_diagnostic.CA2016.severity = warning
+dotnet_diagnostic.CA2016.severity = warning
 
 # Parameter count mismatch
 dotnet_diagnostic.CA2017.severity = warning
