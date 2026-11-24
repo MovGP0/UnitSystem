@@ -1432,7 +1432,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
         if (ScalarType == ScalarTypes.SymbolicQuantity && value is QsScalar sc && sc.ScalarType == ScalarTypes.SymbolicQuantity)
         {
-            var fbody = "(" + SymbolicQuantity.Value + ")" + "." + "(" + sc.SymbolicQuantity.Value + ")";
+            var fbody = "(" + SymbolicQuantity.Value + ").(" + sc.SymbolicQuantity.Value + ")";
 
             var fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
 

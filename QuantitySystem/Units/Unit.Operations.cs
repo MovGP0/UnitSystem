@@ -121,7 +121,7 @@ public partial class Unit
     /// <returns></returns>
     public string UnitToUnitSymbol(Unit x, Unit y)
     {
-        var key =  "[" + x.Symbol + ":" + x.UnitDimension + "]" + "__" + "[" + y.Symbol + ":" + y.UnitDimension + "]";
+        var key =  "[" + x.Symbol + ":" + x.UnitDimension + "]__[" + y.Symbol + ":" + y.UnitDimension + "]";
 
         if(x is DynamicUnit && y is DynamicUnit)
         {

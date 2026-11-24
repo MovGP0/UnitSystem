@@ -503,7 +503,7 @@ dotnet_diagnostic.RCS1187.severity = warning
 # dotnet_diagnostic.RCS1189.severity = silent
 
 # Join string expressions
-# dotnet_diagnostic.RCS1190.severity = warning
+dotnet_diagnostic.RCS1190.severity = warning
 
 # Declare enum value as combination of names
 # dotnet_diagnostic.RCS1191.severity = warning
