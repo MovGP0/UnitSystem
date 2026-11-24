@@ -31,7 +31,7 @@ dotnet_diagnostic.RCS0012.severity = warning
 dotnet_diagnostic.RCS0013.severity = warning
 
 # Control blank lines within using lists
-# dotnet_diagnostic.RCS0015.severity = warning
+dotnet_diagnostic.RCS0015.severity = warning
 roslynator_blank_line_between_using_directives = never
 
 # Put attribute list on its own line
