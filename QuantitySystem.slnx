@@ -1,0 +1,33 @@
+<Solution>
+  <Folder Name="/libs/">
+    <Project Path="ParticleLexer/ParticleLexer.csproj" />
+    <Project Path="UnitTests.Shared/UnitTests.Shared.csproj" />
+  </Folder>
+  <Folder Name="/PassiveFlow/">
+    <Project Path="PassiveFlow.UnitTests/PassiveFlow.UnitTests.csproj" />
+    <Project Path="PassiveFlow/PassiveFlow.csproj" />
+  </Folder>
+  <Folder Name="/SolutionItems/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="License.md" />
+    <File Path="Readme.md" />
+  </Folder>
+  <Folder Name="/SymbolicAlgebra/">
+    <Project Path="SymbolicAlgebra.Console/SymbolicAlgebra.Console.csproj" />
+    <Project Path="SymbolicAlgebra.UnitTests/SymbolicAlgebra.UnitTests.csproj" />
+    <Project Path="SymbolicAlgebra/SymbolicAlgebra.csproj" />
+  </Folder>
+  <Folder Name="/UnitSystem/">
+    <Project Path="UnitSystem.UnitTests/UnitSystem.UnitTests.csproj" />
+    <Project Path="UnitSystem/UnitSystem.csproj" />
+  </Folder>
+  <Project Path="Qs.StandardScripting/Qs.StandardScripting.csproj" />
+  <Project Path="Qs/Qs.csproj" />
+  <Project Path="QsGraphics/QsGraphics.csproj" />
+  <Project Path="QuantitySystem/QuantitySystem.csproj" />
+  <Project Path="QuantitySystemCalculator/QuantitySystemCalculator.csproj" />
+</Solution>

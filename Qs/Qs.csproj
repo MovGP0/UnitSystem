@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <TransformOnBuild>true</TransformOnBuild>
     <!--WarningsAsErrors>CS8765;CS8766;CS8767;CS8603;CS8600;CS8625</WarningsAsErrors-->
     <Confiurations>Debug;Release</Confiurations>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <DefineConstants>$(DefineConstants);CONTRACTS_FULL</DefineConstants>

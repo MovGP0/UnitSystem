@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <RepositoryTargetFramework>net11.0</RepositoryTargetFramework>
+    <TargetFramework>$(RepositoryTargetFramework)</TargetFramework>
+    <LangVersion>15.0</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+</Project>

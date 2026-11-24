@@ -2,13 +2,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <ImplicitUsings>enable</ImplicitUsings>
     <IsTestProject>false</IsTestProject>
-    <Nullable>enable</Nullable>
     <RootNamespace>UnitSystem</RootNamespace>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <TargetFramework>net9.0</TargetFramework>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers">
