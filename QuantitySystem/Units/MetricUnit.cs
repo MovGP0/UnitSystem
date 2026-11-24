@@ -86,7 +86,7 @@ public abstract partial class MetricUnit : Unit
         }
     }
 
-    public override Unit ReferenceUnit
+    public override Unit? ReferenceUnit
     {
         get
         {

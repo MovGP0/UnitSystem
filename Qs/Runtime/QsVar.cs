@@ -966,7 +966,7 @@ class QsVar
             throw new QsIncompleteExpression();
         }
 
-        return FirstEop;
+        return FirstEop ?? throw new QsIncompleteExpression();
     }
 
     internal Expression ParseArithmatic(Token toks)
@@ -1606,7 +1606,7 @@ class QsVar
     /// <returns></returns>
     public Expression GetFunctionAsQuantity(Token functionValueToken)
     {
-        QsFunction f;
+        QsFunction? f;
 
         if (functionValueToken.TokenValue.Contains("("))
         {
@@ -1671,7 +1671,7 @@ class QsVar
 
     public Expression GetFunctionAsQuantity(Token functionValueToken, Token unit)
     {
-        QsFunction f;
+        QsFunction? f;
         if (functionValueToken.Count == 2)
         {
             if (functionValueToken[1].TokenClassType == typeof(WordToken))
@@ -1778,7 +1778,7 @@ class QsVar
     #endregion
 
     #region Execution Global Code
-    public QsValue Execute(string line)
+    public QsValue? Execute(string line)
     {
         ParseArithmatic(line);
         return Execute() as QsValue;
@@ -2303,7 +2303,7 @@ class QsVar
         var FirstNamedArgumentIndex = ArgumentTokens.Count - argNames.Count; //point to the index of the first named argument in the caller.
 
         #region Specifing the target function
-        QsFunction TargetFunction;
+        QsFunction? TargetFunction;
 
         if (argNames.Count > 0)
         {
@@ -2385,7 +2385,7 @@ class QsVar
 
         #region Helper delegates
         //delegate to check if the function name in the Function object of the current function expression formation or if parsemode = function
-        Func<string, Expression> ParameterFunction = delegate(string funcName)
+        Func<string, Expression?> ParameterFunction = delegate(string funcName)
         {
             //this anonymous function is calling the function dynamically from the passed function argument.
 
@@ -2996,7 +2996,7 @@ class QsVar
             }
         }
 
-        return FirstEop.QuantityExpression;
+        return FirstEop.QuantityExpression ?? throw new QsIncompleteExpression();
     }
 
     /// <summary>

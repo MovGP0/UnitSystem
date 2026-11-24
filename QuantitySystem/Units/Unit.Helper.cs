@@ -76,7 +76,7 @@ public partial class Unit
     /// <param name="quantityType">quantity type</param>
     /// <param name="unitSystem">The Unit System or explicitly the namespace under Units Namespace</param>
     /// <returns>Unit Type Based on the unit system</returns>
-    public static Type GetDefaultUnitTypeOf(Type quantityType, string unitSystem)
+    public static Type? GetDefaultUnitTypeOf(Type quantityType, string unitSystem)
     {
         unitSystem = unitSystem.ToUpperInvariant();
 

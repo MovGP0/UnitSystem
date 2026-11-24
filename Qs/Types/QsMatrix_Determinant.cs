@@ -208,7 +208,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             }
         }
 
-        return (det);
+        return det ?? throw new QsMatrixException("The determinant could not be calculated.");
     }
 
     public QsMatrix LowerMatrix

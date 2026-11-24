@@ -87,7 +87,7 @@ public partial class QsSequence
     /// <param name="qse"></param>
     /// <param name="sequence">Sequence Text on the form S[i,j,k, ...]() ..> 40;50&lt;kg>; ..  </param>
     /// <returns></returns>
-    public static QsSequence ParseSequence(QsEvaluator qse, string sequence)
+    public static QsSequence? ParseSequence(QsEvaluator qse, string sequence)
     {
         if (sequence.IndexOf("..>") < 0)
         {
@@ -373,18 +373,22 @@ public partial class QsSequence
     /// <param name="qsNamespace"></param>
     /// <param name="sequenceName"></param>
     /// <returns></returns>
-    public static QsSequence GetSequence(QsScope scope, string qsNamespace, string sequenceName)
+    public static QsSequence? GetSequence(QsScope scope, string qsNamespace, string sequenceName)
     {
         if (string.IsNullOrEmpty(qsNamespace))
         {
             // no namespace included then it is from the local scope.
-            var seq = (QsSequence)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, sequenceName);
+            var seq = (QsSequence?)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, sequenceName);
             return seq;
         }
 
         var ns = QsNamespace.GetNamespace(scope, qsNamespace);
-        return (QsSequence)ns.GetValueOrNull(sequenceName);
+        return (QsSequence?)ns.GetValueOrNull(sequenceName);
     }
+
+    internal static QsSequence GetRequiredSequence(QsScope scope, string qsNamespace, string sequenceName)
+        => GetSequence(scope, qsNamespace, sequenceName)
+            ?? throw new QsVariableNotFoundException($"Sequence '{sequenceName}' was not found.");
 
     /// <summary>
     /// Helper function to create the scope memory name of the sequence.

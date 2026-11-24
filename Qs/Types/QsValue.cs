@@ -162,7 +162,7 @@ public abstract class QsValue: IComparable
     /// </summary>
     /// <param name="indexes"></param>
     /// <returns></returns>
-    abstract public QsValue GetIndexedItem(QsParameter[] indices);
+    abstract public QsValue? GetIndexedItem(QsParameter[] indices);
 
     abstract public void SetIndexedItem(QsParameter[] indices, QsValue value);
 
@@ -171,7 +171,7 @@ public abstract class QsValue: IComparable
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    virtual public QsValue Execute(Token expression)
+    virtual public QsValue? Execute(Token expression)
     {
         throw new QsException(string.Format("Execute ({0}) command is not valid for {1}", expression.TokenValue, GetType()));
     }

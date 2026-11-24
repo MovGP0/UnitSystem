@@ -21,7 +21,7 @@ public static class Io
         return new QsText(Console.ReadLine());
     }
 
-    public static QsValue PrintLine([QsParamInfo(QsParamType.Text)] QsParameter val)
+    public static QsValue? PrintLine([QsParamInfo(QsParamType.Text)] QsParameter val)
     {
         Console.WriteLine(val.UnknownValueText);
         return null;
@@ -34,7 +34,7 @@ public static class Io
         return data.ToQsVector();
     }
 
-    public static QsValue Speak(
+    public static QsValue? Speak(
         [QsParamInfo(QsParamType.Text)] QsParameter text
     )
     {

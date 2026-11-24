@@ -34,7 +34,8 @@ public partial class QsSequence
 
             var FunctionDeclaration = "_(" + porma + ") = " + FunctionBody;
 
-            var qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration);
+            var qs = QsFunction.ParseFunction(QsEvaluator.CurrentEvaluator, FunctionDeclaration)
+                ?? throw new QsException("The sequence mean could not be parsed as a function.");
             return qs;
         }
 

@@ -12,6 +12,9 @@ public static class Qs
 {
     #region Extensions and helper methods
 
+    internal static Unit RequireUnit(this QsScalar scalar)
+        => scalar.Unit ?? throw new QsException("This operation requires a scalar with a unit.");
+
     internal static Unit RequireUnit<T>(this AnyQuantity<T> quantity)
         => quantity.Unit ?? throw new QsException("This operation requires a quantity with a unit.");
 

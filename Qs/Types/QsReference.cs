@@ -18,7 +18,8 @@ public class QsReference(string varname) : QsValue
                 var nm = varname.Substring(lc + 1);
 
                 var cns = QsNamespace.GetNamespace(QsEvaluator.CurrentEvaluator.Scope, ns);
-                return (QsValue)cns.GetValue(nm);
+                return (QsValue?)cns.GetValue(nm)
+                    ?? throw new QsVariableNotFoundException($"Variable '{varname}' was not found.");
             }
 
             return (QsValue?)QsEvaluator.CurrentEvaluator.GetVariable(varname)
@@ -150,7 +151,7 @@ public class QsReference(string varname) : QsValue
         return ContentValue.LeftShiftOperation(times);
     }
 
-    public override QsValue GetIndexedItem(QsParameter[] indices)
+    public override QsValue? GetIndexedItem(QsParameter[] indices)
     {
         return ContentValue.GetIndexedItem(indices);
     }
@@ -165,7 +166,7 @@ public class QsReference(string varname) : QsValue
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    public override QsValue Execute(ParticleLexer.Token expression)
+    public override QsValue? Execute(ParticleLexer.Token expression)
     {
         return ContentValue.Execute(expression);
     }

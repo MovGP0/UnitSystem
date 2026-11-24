@@ -85,7 +85,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
                 }
             }
 
-            return el;
+            return el ?? throw new QsException($"Sequence element {index} was not found.");
         }
         set
         {

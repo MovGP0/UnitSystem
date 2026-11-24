@@ -126,20 +126,20 @@ public class QsFlowingTuple : QsValue
             if (expression[0].TokenValue.Equals("GetName", StringComparison.OrdinalIgnoreCase))
             {
                 // one parameter only
-                var ordinal = (int)((QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(arg)).NumericalQuantity.Value;
+                var ordinal = (int)QsEvaluator.CurrentEvaluator.EvaluateRequired<QsScalar>(arg).NumericalQuantity.Value;
                 return new QsText(ThisFlow.FlowSteps[ordinal].Name);
             }
 
             if (expression[0].TokenValue.Equals("GetValue", StringComparison.OrdinalIgnoreCase))
             {
                 // one parameter only
-                var ordinal = (int)((QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(arg)).NumericalQuantity.Value;
+                var ordinal = (int)QsEvaluator.CurrentEvaluator.EvaluateRequired<QsScalar>(arg).NumericalQuantity.Value;
                 return (QsValue?)ThisFlow.FlowSteps[ordinal].Value;
             }
 
             if (expression[0].TokenValue.Equals("GetId", StringComparison.OrdinalIgnoreCase))
             {
-                var ordinal = (int)((QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(arg)).NumericalQuantity.Value;
+                var ordinal = (int)QsEvaluator.CurrentEvaluator.EvaluateRequired<QsScalar>(arg).NumericalQuantity.Value;
                 return ThisFlow.FlowSteps[ordinal].Id.ToScalarValue();
             }
 
@@ -152,7 +152,7 @@ public class QsFlowingTuple : QsValue
 
                 if (param is QsScalar)
                 {
-                    id = (int)((QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(arg)).NumericalQuantity.Value;
+                    id = (int)QsEvaluator.CurrentEvaluator.EvaluateRequired<QsScalar>(arg).NumericalQuantity.Value;
                     for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
                     {
                         if (ThisFlow.FlowSteps[ix].Id == id)
@@ -164,7 +164,8 @@ public class QsFlowingTuple : QsValue
                     return QsScalar.NegativeOne;
                 }
 
-                var argtext = ((QsText)param).Text;
+                var argtext = ((QsText?)param
+                    ?? throw new QsInvalidInputException("A tuple name must be text.")).Text;
 
                 for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
                 {

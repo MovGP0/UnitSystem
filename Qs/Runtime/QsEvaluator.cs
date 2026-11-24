@@ -171,7 +171,10 @@ public class QsEvaluator
     /// </summary>
     /// <param name="line"></param>
     /// <returns></returns>
-    public object SilentEvaluate(string line)
+    internal T EvaluateRequired<T>(string line) where T : QsValue
+        => (T?)SilentEvaluate(line) ?? throw new QsException($"Expression '{line}' did not produce a value.");
+
+    public object? SilentEvaluate(string line)
     {
         SilentStack.Push(true);
         try
@@ -188,7 +191,7 @@ public class QsEvaluator
     static Regex UnitToUnitRegex = new(UnitToUnitExpression);
     static Regex UnitRegex = new(UnitExpression);
     static Regex VariableQuantityRegex = new(VariableQuantityExpression);
-    public object Evaluate(string expr)
+    public object? Evaluate(string expr)
     {
 #if WINRT
 #else
@@ -433,7 +436,7 @@ public class QsEvaluator
         return IsSequence;
     }
 
-    internal object ExtraEvaluate(string line)
+    internal object? ExtraEvaluate(string line)
     {
         // f(x,y,z) = x + y + (z/2.04 * 32<kg>)
         var func = QsFunction.ParseFunction(this, line);
@@ -536,7 +539,7 @@ public class QsEvaluator
 
                                 var sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, parameters.Length);
 
-                                var sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
+                                var sq = QsSequence.GetRequiredSequence(Scope, seqNamespace, sqname);
 
                                 //replace the index name used with the real index of the sequence.
                                 var evline = line.Replace(indexName, sq.SequenceIndexName);
@@ -554,7 +557,7 @@ public class QsEvaluator
                             {
                                 #region Parameterless indexed Sequence
                                 var sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, 0);
-                                var sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
+                                var sq = QsSequence.GetRequiredSequence(Scope, seqNamespace, sqname);
 
                                 //replace the index name used with the real index of the sequence.
                                 var evline = line.Replace(indexName, sq.SequenceIndexName);
@@ -593,7 +596,7 @@ public class QsEvaluator
 
                                     var sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, parameters.Length);
 
-                                    var sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
+                                    var sq = QsSequence.GetRequiredSequence(Scope, seqNamespace, sqname);
 
                                     var evline = line;
 
@@ -622,7 +625,7 @@ public class QsEvaluator
                                     {
                                         var sqname = QsSequence.FormSequenceSymbolicName(seq[nsidx + 0].TokenValue, 1, 0);
 
-                                        var sq = QsSequence.GetSequence(Scope, seqNamespace, sqname);
+                                        var sq = QsSequence.GetRequiredSequence(Scope, seqNamespace, sqname);
 
                                         sq[n] = QsSequenceElement.Parse(line, this, sq);
                                     }
@@ -730,7 +733,8 @@ public class QsEvaluator
 
                                     fh = fh.TrimEnd(',', ' ') + ") = ";
 
-                                    var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value);
+                                    var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value)
+                                        ?? throw new QsException("The generated function could not be parsed.");
 
                                     qf.FunctionNamespace = vnToken.TokenValue.TrimEnd(vnToken[vnToken.Count - 1].TokenValue.ToCharArray()).TrimEnd(':');
                                     qf.FunctionName = vnToken[vnToken.Count - 1].TokenValue.TrimStart('@');
@@ -816,7 +820,8 @@ public class QsEvaluator
 
                                 fh = fh.TrimEnd(',', ' ') + ") = ";
 
-                                var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value);
+                                var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value)
+                                    ?? throw new QsException("The generated function could not be parsed.");
                                 qf.FunctionName = varName;
 
                                 StoreFunction(qf);
@@ -879,7 +884,8 @@ public class QsEvaluator
 
                                 fhb.Append('}');
 
-                                var qf = QsFunction.ParseFunction(this, fh + fhb);
+                                var qf = QsFunction.ParseFunction(this, fh + fhb)
+                                    ?? throw new QsException("The generated function could not be parsed.");
                                 qf.FunctionName = varName;
 
                                 StoreFunction(qf);
@@ -905,7 +911,8 @@ public class QsEvaluator
 
                                 var all = fh + fhb.ToString().Trim(';', ' ') + "]";
 
-                                var qf = QsFunction.ParseFunction(this, all);
+                                var qf = QsFunction.ParseFunction(this, all)
+                                    ?? throw new QsException("The generated function could not be parsed.");
                                 qf.FunctionName = varName;
 
                                 StoreFunction(qf);
@@ -1204,7 +1211,7 @@ public class QsEvaluator
     /// <param name="nameSpace"></param>
     /// <param name="name"></param>
     /// <returns></returns>
-    public static object GetScopeValueOrNull(QsScope scope, string nameSpace, string name)
+    public static object? GetScopeValueOrNull(QsScope scope, string nameSpace, string name)
     {
         if (string.IsNullOrEmpty(nameSpace))
         {
@@ -1264,10 +1271,11 @@ public class QsEvaluator
 
         var module = QsNamespace.GetNamespace(scope, qsNamespace);
 
-        return (QsValue)module.GetValue(name);
+        return (QsValue?)module.GetValue(name)
+            ?? throw new QsVariableNotFoundException($"Variable '{name}' was not found.");
     }
 
-    public QsValue DeleteQsValue(string qsNamespace, string name)
+    public QsValue? DeleteQsValue(string qsNamespace, string name)
     {
         if (string.IsNullOrEmpty(qsNamespace))
         {

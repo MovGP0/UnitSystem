@@ -878,7 +878,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// </summary>
     /// <param name="expression"></param>
     /// <returns></returns>
-    public override QsValue Execute(ParticleLexer.Token expression)
+    public override QsValue? Execute(ParticleLexer.Token expression)
     {
         if (expression.TokenValue.Equals("length", StringComparison.OrdinalIgnoreCase))
         {

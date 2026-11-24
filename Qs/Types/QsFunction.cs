@@ -430,7 +430,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         return functionToken;
     }
 
-    public static QsFunction ParseFunction(QsEvaluator qse, string functionDeclaration)
+    public static QsFunction? ParseFunction(QsEvaluator qse, string functionDeclaration)
     {
         if (functionDeclaration.StartsWith("@"))
         {
@@ -475,7 +475,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         return ParseFunction(qse, functionDeclaration, functionToken);
     }
 
-    public static QsFunction ParseFunction(QsEvaluator qse, string functionDeclaration, Token functionToken)
+    public static QsFunction? ParseFunction(QsEvaluator qse, string functionDeclaration, Token functionToken)
     {
         var nsidx = 0; // surve as a base for indexing token if there is namespace it will be 1 otherwise remain 0
 
@@ -581,7 +581,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <param name="scope"></param>
     /// <param name="realName"></param>
     /// <returns></returns>
-    public static QsFunction GetFunction(QsScope scope, string qsNamespace, string functionName)
+    public static QsFunction? GetFunction(QsScope scope, string qsNamespace, string functionName)
     {
         if (string.IsNullOrEmpty(qsNamespace))
         {
@@ -590,7 +590,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             // I am adding the mathmatical functions in the root namespace
             // so I will test for the function namespace and
 
-            var function = (QsFunction)MathNamespace.GetValueOrNull(functionName);
+            var function = (QsFunction?)MathNamespace.GetValueOrNull(functionName);
 
             // built int math functions will be overwrite any other functions
             if (function != null)
@@ -598,7 +598,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                 return function;
             }
 
-            function = (QsFunction)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, functionName);
+            function = (QsFunction?)QsEvaluator.GetScopeValueOrNull(scope, qsNamespace, functionName);
 
             return function;
         }
@@ -607,7 +607,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         {
             var ns = QsNamespace.GetNamespace(scope, qsNamespace);
 
-            return (QsFunction)ns.GetValue(functionName);
+            return (QsFunction?)ns.GetValue(functionName);
         }
         catch(QsVariableNotFoundException)
         {

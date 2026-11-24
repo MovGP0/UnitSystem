@@ -35,7 +35,7 @@ public class QsObject : QsValue
     /// </summary>
     public Type InstanceType => _NativeObject.GetType();
 
-    public override  QsValue Execute(Token expression)
+    public override  QsValue? Execute(Token expression)
     {
         Expression? ResultExpression = null;
         if (expression.TokenClassType == typeof(ParenthesisCallToken))
@@ -149,7 +149,7 @@ public class QsObject : QsValue
         pi.SetValue(_NativeObject, vc, null);
     }
 
-    public PropertyInfo GetPropertyInfo(string propertyName)
+    public PropertyInfo? GetPropertyInfo(string propertyName)
     {
         return InstanceType.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
     }
@@ -161,9 +161,10 @@ public class QsObject : QsValue
     /// <param name="propertyName"></param>
     /// <param name="indices"></param>
     /// <returns></returns>
-    public QsValue GetIndexedProperty(string propertyName, params object[] indices)
+    public QsValue? GetIndexedProperty(string propertyName, params object[] indices)
     {
-        var pi = GetPropertyInfo(propertyName);
+        var pi = GetPropertyInfo(propertyName)
+            ?? throw new MissingMemberException(InstanceType.FullName, propertyName);
 
         if (pi.PropertyType.IsArray)
         {
@@ -186,14 +187,15 @@ public class QsObject : QsValue
     /// <param name="propertyName"></param>
     /// <param name="indices">indices in case of indexed property</param>
     /// <returns></returns>
-    public QsValue GetProperty(string propertyName, params object[] indices )
+    public QsValue? GetProperty(string propertyName, params object[] indices )
     {
-        var pi = GetPropertyInfo(propertyName);
+        var pi = GetPropertyInfo(propertyName)
+            ?? throw new MissingMemberException(InstanceType.FullName, propertyName);
 
         return Root.NativeToQsConvert(pi.GetValue(_NativeObject, indices));
     }
 
-    public QsValue GetProperty(string propertyName)
+    public QsValue? GetProperty(string propertyName)
     {
         return GetProperty(propertyName, null);
     }
@@ -472,7 +474,7 @@ public class QsObject : QsValue
         throw new NotImplementedException();
     }
 
-    public override QsValue GetIndexedItem(QsParameter[] indices)
+    public override QsValue? GetIndexedItem(QsParameter[] indices)
     {
         var pi = InstanceType.GetProperty(
             "Item"

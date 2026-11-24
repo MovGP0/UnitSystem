@@ -62,7 +62,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     /// <summary>
     /// Return the current scalar unit.
     /// </summary>
-    public Unit Unit
+    public Unit? Unit
     {
         get
         {
@@ -2160,7 +2160,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     }
     #endregion
 
-    public override QsValue Execute(ParticleLexer.Token expression)
+    public override QsValue? Execute(ParticleLexer.Token expression)
     {
         if (_ScalarType == ScalarTypes.QuaternionNumberQuantity && expression.TokenValue.Equals("RotationMatrix", StringComparison.OrdinalIgnoreCase))
         {

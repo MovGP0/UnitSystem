@@ -198,7 +198,7 @@ dotnet_diagnostic.CS8601.severity = warning
 dotnet_diagnostic.CS8602.severity = warning
 
 # Make possible null returns match the declared return type
-dotnet_diagnostic.CS8603.severity = suggestion
+dotnet_diagnostic.CS8603.severity = warning
 
 # Check a possibly null argument before passing it to a nonnullable parameter
 dotnet_diagnostic.CS8604.severity = suggestion

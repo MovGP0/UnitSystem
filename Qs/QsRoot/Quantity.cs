@@ -18,7 +18,7 @@ public static class Quantity
     {
         if (value.QsNativeValue is QsScalar s)
         {
-            return new QsText(s.Unit.UnitDimension.ToString());
+            return new QsText(s.RequireUnit().UnitDimension.ToString());
         }
 
         return new QsText("Works on scalar quantities");
@@ -33,7 +33,7 @@ public static class Quantity
     {
         if (value.QsNativeValue is QsScalar s)
         {
-            var qt = s.Unit.QuantityTypeName ?? throw new QsException("The unit has no associated quantity type.");
+            var qt = s.RequireUnit().QuantityTypeName ?? throw new QsException("The unit has no associated quantity type.");
             return new QsText(qt.Substring(0, qt.Length - 2));
         }
 
@@ -111,7 +111,7 @@ public static class Quantity
             return new QsText("Works on scalar quantities");
         }
 
-        var invertedDimension = s.Unit.UnitDimension.Invert();
+        var invertedDimension = s.RequireUnit().UnitDimension.Invert();
         return new QsText(invertedDimension.ToString());
     }
 
@@ -119,7 +119,7 @@ public static class Quantity
     {
         if (value.QsNativeValue is QsScalar s)
         {
-            var quantityTypeName = s.Unit.QuantityTypeName ?? throw new QsException("The unit has no associated quantity type.");
+            var quantityTypeName = s.RequireUnit().QuantityTypeName ?? throw new QsException("The unit has no associated quantity type.");
             return new QsText(quantityTypeName.TrimEnd('`', '1'));
         }
 
@@ -133,7 +133,7 @@ public static class Quantity
             return new QsText("Works on scalar quantities");
         }
 
-        var invertedDimension = s.Unit.UnitDimension.Invert();
+        var invertedDimension = s.RequireUnit().UnitDimension.Invert();
         var qp = QsParameter.MakeParameter(null, invertedDimension.ToString());
         return FromDimension(qp);
     }

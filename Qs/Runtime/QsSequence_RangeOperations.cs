@@ -494,7 +494,7 @@ public partial class QsSequence
                 Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
                 foreach (var pel in ProcessedElements)
                 {
-                    ((QsVector)Total).AddComponent((QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(pel));
+                    ((QsVector)Total).AddComponent(QsEvaluator.CurrentEvaluator.EvaluateRequired<QsScalar>(pel));
                 }
             }
             else if (ee is QsVector)
@@ -502,7 +502,7 @@ public partial class QsSequence
                 Total = new QsMatrix();
                 foreach (var pel in ProcessedElements)
                 {
-                    ((QsMatrix)Total).AddVector((QsVector)QsEvaluator.CurrentEvaluator.SilentEvaluate(pel));
+                    ((QsMatrix)Total).AddVector(QsEvaluator.CurrentEvaluator.EvaluateRequired<QsVector>(pel));
                 }
             }
             else if (ee is QsMatrix)
@@ -510,7 +510,7 @@ public partial class QsSequence
                 Total = new QsTensor();
                 foreach (var pel in ProcessedElements)
                 {
-                    ((QsTensor)Total).AddMatrix((QsMatrix)QsEvaluator.CurrentEvaluator.SilentEvaluate(pel));
+                    ((QsTensor)Total).AddMatrix(QsEvaluator.CurrentEvaluator.EvaluateRequired<QsMatrix>(pel));
                 }
             }
             else

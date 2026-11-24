@@ -24,9 +24,9 @@ public class QsNamespace(string name)
 
     public string Name { get; } = name;
 
-    private Type _NamespaceType = null;
+    private Type? _NamespaceType;
 
-    public Type NamespaceType => _NamespaceType;
+    public Type? NamespaceType => _NamespaceType;
 
     private Dictionary<string, object> Values = new(StringComparer.OrdinalIgnoreCase);
 
@@ -80,7 +80,7 @@ public class QsNamespace(string name)
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public object GetValue(string name)
+    public object? GetValue(string name)
     {
         if (_NamespaceType != null)
         {
@@ -118,7 +118,7 @@ public class QsNamespace(string name)
         return o;
     }
 
-    public object GetValueOrNull(string name)
+    public object? GetValueOrNull(string name)
     {
         if (_NamespaceType != null)
         {
@@ -159,7 +159,7 @@ public class QsNamespace(string name)
     /// <returns></returns>
     public QsFunction GetQsFunctionFromTypeMethod(MethodInfo methodInfo, QsFunctionAttribute funcAttribute)
     {
-        var qsNamespace = _NamespaceType.Name;
+        var qsNamespace = _NamespaceType?.Name ?? Name;
 
         var qsFuncName = funcAttribute == null ? methodInfo.Name : funcAttribute.FunctionName;
 
@@ -228,7 +228,7 @@ public class QsNamespace(string name)
     private Dictionary<string, object> GetQsNamespaceMethods()
     {
         // The namespace is a static class with public visibility to its static members.
-        var methods = _NamespaceType.GetMethods(
+        var methods = (_NamespaceType ?? throw new QsException("The namespace has no native type.")).GetMethods(
             BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Public
             /*| BindingFlags.InvokeMethod */
         );
@@ -302,7 +302,7 @@ public class QsNamespace(string name)
 
     private IEnumerable<KeyValuePair<string, object>> GetQsNamespaceProperties()
     {
-        var properties = _NamespaceType.GetProperties(
+        var properties = (_NamespaceType ?? throw new QsException("The namespace has no native type.")).GetProperties(
             BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Public);
 
         var FilteredProperties = from m in properties
@@ -370,7 +370,7 @@ public class QsNamespace(string name)
     /// </summary>
     /// <param name="nameSpace"></param>
     /// <returns></returns>
-    private static Type GetQsNamespaceType(string qsNamespace)
+    private static Type? GetQsNamespaceType(string qsNamespace)
     {
         qsNamespace = qsNamespace.Replace(':', '.');
 
@@ -437,35 +437,23 @@ public class QsNamespace(string name)
     /// <returns></returns>
     public static QsNamespace GetNamespace(QsScope scope, string moduleNamespace, bool forceCreation)
     {
-        QsNamespace? NameSpace = null;
-
-        // try to get the namespace object from the scope
-        //  then see if it represent a custom namespace also or not.
-        // then return the object that hold the whole thing.
-        if (scope != null)
+        ArgumentNullException.ThrowIfNull(scope);
+        var nameSpace = scope.HasValue(moduleNamespace) ? (QsNamespace?)scope.GetValue(moduleNamespace) : null;
+        if (nameSpace is not null)
         {
-            if (scope.HasValue(moduleNamespace))
-            {
-                NameSpace = (QsNamespace)scope.GetValue(moduleNamespace);
-            }
-
-            if (NameSpace == null)
-            {
-                // no namespace in this scope
-                NameSpace = new QsNamespace(moduleNamespace);
-
-                // search if this namespace represent hardcoded namespace
-                var nst = GetQsNamespaceType(moduleNamespace);
-                NameSpace._NamespaceType = nst;
-
-                if (forceCreation | (nst != null))
-                {
-                    scope.SetValue(moduleNamespace, NameSpace);
-                }
-            }
+            return nameSpace;
         }
 
-        return NameSpace;
+        nameSpace = new QsNamespace(moduleNamespace)
+        {
+            _NamespaceType = GetQsNamespaceType(moduleNamespace)
+        };
+        if (forceCreation || nameSpace._NamespaceType is not null)
+        {
+            scope.SetValue(moduleNamespace, nameSpace);
+        }
+
+        return nameSpace;
     }
 
     /// <summary>
@@ -639,7 +627,7 @@ public class QsNamespace(string name)
         return lbe.Compile();
     }
 
-    internal static object IndirectInvoke(MethodInfo method, params object[] parameters)
+    internal static object? IndirectInvoke(MethodInfo method, params object[] parameters)
     {
         return  method.Invoke(null, parameters);
     }

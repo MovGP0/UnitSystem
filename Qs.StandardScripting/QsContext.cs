@@ -37,7 +37,9 @@ public sealed class QsContext : LanguageContext
         return sc;
     }
 
-    public override Version LanguageVersion => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+    public override Version LanguageVersion
+        => typeof(QsContext).Assembly.GetName().Version
+            ?? throw new InvalidOperationException("The scripting assembly has no version.");
 
     /// <summary>
     /// Creates the language runtime to be used in hosting.

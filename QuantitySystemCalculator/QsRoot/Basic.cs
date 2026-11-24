@@ -16,12 +16,12 @@ public static class Basic
         Console.WriteLine(text);
     }
 
-    public static string Input()
+    public static string? Input()
     {
         return Console.ReadLine();
     }
 
-    public static string Input(string alert)
+    public static string? Input(string alert)
     {
         Console.Write(alert);
         return Console.ReadLine();

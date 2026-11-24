@@ -157,17 +157,19 @@ public partial class QsFunction
 
             try
             {
-                var sc = (QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(fpt);
+                var sc = QsEvaluator.CurrentEvaluator.EvaluateRequired<QsScalar>(fpt);
                 var FuncBody = sc.SymbolicQuantity.Value.ToString().Replace("__FAC__", "!");
                 var WholeFunction = "_(" + fParameters + ") = " + FuncBody;
-                return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction);
+                return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction)
+                    ?? throw new QsException("The generated function could not be parsed.");
             }
             catch(QsIncompleteExpression)
             {
                 // something happened make the operation in old fashion
                 string WholeFunction;
                 var FunctionToken = JoinFunctionsArrayTokensWithOperation(operation, out WholeFunction,this,fn2);
-                return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction, FunctionToken);
+                return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction, FunctionToken)
+                    ?? throw new QsException("The generated function could not be parsed.");
             }
         }
 
@@ -232,7 +234,8 @@ public partial class QsFunction
             }
 
             var f = fname + "(" + RemoveRedundantParameters(functionParametersArray) + ") = " + FuncBody;
-            return ParseFunction(QsEvaluator.CurrentEvaluator, f);
+            return ParseFunction(QsEvaluator.CurrentEvaluator, f)
+                ?? throw new QsException("The generated function could not be parsed.");
         }
 
         throw new NotImplementedException();
@@ -259,7 +262,8 @@ public partial class QsFunction
 
     public SymbolicVariable ToSymbolicVariable()
     {
-        return SymbolicVariable.Parse(FunctionBody);
+        return SymbolicVariable.Parse(FunctionBody)
+            ?? throw new QsException("The function body contains no symbolic expression.");
     }
 
     public AnyQuantity<SymbolicVariable> ToSymbolicQuantity()
@@ -498,7 +502,8 @@ public partial class QsFunction
                 WholeFunction = fname + "(" + RemoveRedundantParameters(ParametersNames) + ") = " + nsv;
             }
 
-            return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction);
+            return ParseFunction(QsEvaluator.CurrentEvaluator, WholeFunction)
+                ?? throw new QsException("The generated function could not be parsed.");
         }
 
         return base.DifferentiateOperation(value);

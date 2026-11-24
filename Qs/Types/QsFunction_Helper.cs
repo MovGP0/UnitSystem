@@ -53,7 +53,7 @@ public partial class QsFunction
     /// <param name="scope"></param>
     /// <param name="parametersNames"></param>
     /// <returns></returns>
-    public static QsFunction GetExactFunctionWithParameters(
+    public static QsFunction? GetExactFunctionWithParameters(
         QsScope scope,
         string nameSpace,
         string functionName,
@@ -95,7 +95,7 @@ public partial class QsFunction
     /// <param name="functionName"></param>
     /// <param name="parameterCount"></param>
     /// <returns></returns>
-    public static QsFunction GetDefaultFunction(
+    public static QsFunction? GetDefaultFunction(
         QsScope scope,
         string nameSpace,
         string functionName,
@@ -115,7 +115,7 @@ public partial class QsFunction
     /// <param name="nameSpace"></param>
     /// <param name="functionName"></param>
     /// <returns></returns>
-    public static QsFunction GetFirstDeclaredFunction(
+    public static QsFunction? GetFirstDeclaredFunction(
         QsScope scope,
         string nameSpace,
         string functionName)
