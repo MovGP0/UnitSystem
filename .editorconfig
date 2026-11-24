@@ -1089,7 +1089,7 @@ dotnet_diagnostic.CA2260.severity = warning
 dotnet_diagnostic.CA2261.severity = warning
 
 # Set 'MaxResponseHeadersLength' properly
-# dotnet_diagnostic.CA2262.severity = warning
+dotnet_diagnostic.CA2262.severity = warning
 
 # Prefer generic overload when type is known
 # dotnet_diagnostic.CA2263.severity = warning
