@@ -25,8 +25,14 @@ public class Root
         {
             if (library.EndsWith("]"))
             {
-                // load from GAC
-                var a = Assembly.LoadWithPartialName(library.Trim('[', ']'));
+                try
+                {
+                    Assembly.Load(library.Trim('[', ']'));
+                }
+                catch (FileNotFoundException)
+                {
+                    // Named libraries are optional.
+                }
             }
         }
         else

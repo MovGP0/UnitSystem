@@ -174,7 +174,7 @@ dotnet_diagnostic.CS0162.severity = warning
 dotnet_diagnostic.CS0168.severity = warning
 
 # Replace calls to obsolete members
-dotnet_diagnostic.CS0618.severity = suggestion
+dotnet_diagnostic.CS0618.severity = warning
 
 # Provide a hash code when overriding equality
 dotnet_diagnostic.CS0659.severity = suggestion
