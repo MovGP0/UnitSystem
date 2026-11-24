@@ -272,7 +272,7 @@ dotnet_diagnostic.RCS1073.severity = warning
 # dotnet_diagnostic.RCS1074.severity = silent
 
 # Avoid empty catch clause that catches System.Exception
-# dotnet_diagnostic.RCS1075.severity = warning
+dotnet_diagnostic.RCS1075.severity = warning
 
 # Optimize LINQ method call
 # dotnet_diagnostic.RCS1077.severity = warning
