@@ -581,7 +581,7 @@ dotnet_diagnostic.RCS1214.severity = warning
 dotnet_diagnostic.RCS1215.severity = warning
 
 # Unnecessary unsafe context
-# dotnet_diagnostic.RCS1216.severity = warning
+dotnet_diagnostic.RCS1216.severity = warning
 
 # Convert interpolated string to concatenation
 # dotnet_diagnostic.RCS1217.severity = silent
