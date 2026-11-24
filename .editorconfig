@@ -774,7 +774,7 @@ dotnet_diagnostic.CA1417.severity = warning
 dotnet_diagnostic.CA1418.severity = warning
 
 # Provide a parameterless constructor that is as visible as the containing type for concrete types derived from 'System.Runtime.InteropServices.SafeHandle'
-# dotnet_diagnostic.CA1419.severity = warning
+dotnet_diagnostic.CA1419.severity = warning
 
 # Property, type, or attribute requires runtime marshalling
 dotnet_diagnostic.CA1420.severity = warning
