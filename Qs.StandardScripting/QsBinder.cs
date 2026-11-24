@@ -19,8 +19,8 @@ public class QsBinder : DefaultBinder
 
     public override Expression ConvertExpression(Expression expr, Type toType, ConversionResultKind kind, Microsoft.Scripting.Actions.Calls.OverloadResolverFactory resolverFactory)
     {
-        ContractUtils.RequiresNotNull(expr, "expr");
-        ContractUtils.RequiresNotNull(toType, "toType");
+        ContractUtils.RequiresNotNull(expr, nameof(expr));
+        ContractUtils.RequiresNotNull(toType, nameof(toType));
 
         var exprType = expr.Type;
 

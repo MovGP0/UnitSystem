@@ -170,7 +170,7 @@ dotnet_diagnostic.RCS1014.severity = warning
 roslynator_array_creation_type_style = implicit
 
 # Use nameof operator
-# dotnet_diagnostic.RCS1015.severity = warning
+dotnet_diagnostic.RCS1015.severity = warning
 
 # Use block body or expression body
 # dotnet_diagnostic.RCS1016.severity = none
