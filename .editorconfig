@@ -942,7 +942,7 @@ dotnet_diagnostic.CA1870.severity = warning
 dotnet_diagnostic.CA1871.severity = warning
 
 # Prefer 'Convert.ToHexString' and 'Convert.ToHexStringLower' over call chains based on 'BitConverter.ToString'
-# dotnet_diagnostic.CA1872.severity = warning
+dotnet_diagnostic.CA1872.severity = warning
 
 # Avoid potentially expensive logging
 # dotnet_diagnostic.CA1873.severity = warning
