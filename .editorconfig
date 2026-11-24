@@ -587,7 +587,7 @@ dotnet_diagnostic.RCS1216.severity = warning
 # dotnet_diagnostic.RCS1217.severity = silent
 
 # Simplify code branching
-# dotnet_diagnostic.RCS1218.severity = warning
+dotnet_diagnostic.RCS1218.severity = warning
 
 # Use pattern matching instead of combination of 'is' operator and cast operator
 # dotnet_diagnostic.RCS1220.severity = warning

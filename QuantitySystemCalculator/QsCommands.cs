@@ -120,10 +120,7 @@ public static class QsCommands
                     Unit.ClearUnitsCaching();
                     Console.WriteLine("    Units Cached Cleared.");
                 }
-                else if (command.Length < 4)
-                {
-                }
-                else if (commands[2] == "dynamic")
+                else if (command.Length >= 4 && commands[2] == "dynamic")
                 {
                     Unit.ClearDynamicUnitsCaching();
                     Console.WriteLine("    Dynamic Units Caching Cleared.");

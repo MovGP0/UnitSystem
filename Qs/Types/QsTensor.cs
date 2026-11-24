@@ -141,10 +141,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
             {
                 if (matrix.RowsCount == FaceRowsCount)
                 {
-                    if (matrix.ColumnsCount == FaceColumnsCount)
-                    {
-                    }
-                    else
+                    if (matrix.ColumnsCount != FaceColumnsCount)
                     {
                         throw new QsInvalidOperationException("Adding Second Rank tensor with different number of columns");
                     }
@@ -172,9 +169,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     {
         if (MatrixLayers.Count > 0)
         {
-            if (qsMatrix.RowsCount == FaceRowsCount && qsMatrix.ColumnsCount == FaceColumnsCount)
-            { }
-            else
+            if (qsMatrix.RowsCount != FaceRowsCount || qsMatrix.ColumnsCount != FaceColumnsCount)
             {
                 throw new QsException("The matrix about to be added is not in the same dimension");
             }

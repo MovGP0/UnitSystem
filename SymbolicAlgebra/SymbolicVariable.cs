@@ -405,10 +405,7 @@ public partial class SymbolicVariable
                         #endregion
                     }
 
-                    if (log)
-                    {
-                    }
-                    else
+                    if (!log)
                     {
                         Symbol = _FunctionName + "(";
                         foreach (var argument in FunctionArguments)
@@ -951,10 +948,7 @@ public partial class SymbolicVariable
 
             if (_SymbolPowerTerm != null)
             {
-                if (_SymbolPowerTerm.IsZero)
-                {
-                }
-                else
+                if (!_SymbolPowerTerm.IsZero)
                 {
                     result = Symbol + "^(" + SymbolPowerText + ")";
                 }
