@@ -485,7 +485,7 @@ public sealed class QsEvaluator
                     throw (new QsSyntaxErrorException("Variable shouldn't contain spaces"));
                 }
 
-                line = line.Substring(AssignOperatorIndex + 1, line.Length - AssignOperatorIndex - 1);
+                line = line.Substring(AssignOperatorIndex + 1);
             }
         }
 
