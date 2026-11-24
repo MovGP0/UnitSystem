@@ -524,7 +524,7 @@ dotnet_diagnostic.RCS1195.severity = warning
 dotnet_diagnostic.RCS1196.severity = warning
 
 # Optimize StringBuilder.Append/AppendLine call
-# dotnet_diagnostic.RCS1197.severity = warning
+dotnet_diagnostic.RCS1197.severity = warning
 
 # Avoid unnecessary boxing of value type
 # dotnet_diagnostic.RCS1198.severity = none
