@@ -1044,7 +1044,7 @@ dotnet_diagnostic.CA2244.severity = warning
 dotnet_diagnostic.CA2245.severity = warning
 
 # Assigning symbol and its member in the same statement
-# dotnet_diagnostic.CA2246.severity = warning
+dotnet_diagnostic.CA2246.severity = warning
 
 # Argument passed to TaskCompletionSource constructor should be TaskCreationOptions enum instead of TaskContinuationOptions enum
 dotnet_diagnostic.CA2247.severity = warning
