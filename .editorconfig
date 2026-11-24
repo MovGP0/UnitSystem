@@ -428,7 +428,7 @@ dotnet_diagnostic.RCS1156.severity = warning
 dotnet_diagnostic.RCS1157.severity = warning
 
 # Static member in generic type should use a type parameter
-# dotnet_diagnostic.RCS1158.severity = warning
+dotnet_diagnostic.RCS1158.severity = warning
 
 # Use EventHandler<T>
 # dotnet_diagnostic.RCS1159.severity = warning

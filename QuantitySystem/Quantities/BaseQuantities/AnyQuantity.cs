@@ -55,38 +55,7 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
 
     #endregion
 
-    public static DerivedQuantity<TValue> ConstructDerivedQuantity<TValue>(params AnyQuantity<TValue>[] quantities) => new(1, quantities);
-
     #region Generic Helper Calculations
-
-    /// <summary>
-    /// Multiply scalar value by generic values
-    /// </summary>
-    /// <typeparam name="Q"></typeparam>
-    /// <param name="factor"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public static Q MultiplyScalarByGeneric<Q>(double factor, Q value)
-    {
-        if (factor == 1.0)
-        {
-            return value;  // return the same value
-        }
-
-        var expr = Expression.Multiply(Expression.Constant(factor), Expression.Constant(value));
-
-        // Construct Lambda function which return one object.
-        Expression<Func<Q>> cq = Expression.Lambda<Func<Q>>(expr);
-
-        // compile the function
-        Func<Q> aqf = cq.Compile();
-
-        // execute the function
-        var result = aqf();
-
-        // return the result
-        return result;
-    }
 
     public static T DivideScalarByGeneric(double factor, T value)
     {
