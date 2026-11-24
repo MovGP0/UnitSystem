@@ -1598,7 +1598,7 @@ class QsVar
     {
         QsFunction? f;
 
-        if (functionValueToken.TokenValue.Contains("("))
+        if (functionValueToken.TokenValue.Contains('('))
         {
             // the existence of open parenthesis indicates that we refered to the function name with its parameters list also
             // like this   @f(x,y)  or Y:@F(u,v)
@@ -1618,7 +1618,7 @@ class QsVar
 
             var ns = string.Empty;
 
-            if (functionValueToken.TokenValue.Contains(":"))
+            if (functionValueToken.TokenValue.Contains(':'))
             {
                 ns = functionValueToken.TokenValue.Substring(0, functionValueToken.TokenValue.LastIndexOf(':'));
             }

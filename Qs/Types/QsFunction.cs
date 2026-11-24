@@ -611,7 +611,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         var nameSpace = string.Empty;
         var functionName = functionFullName;
 
-        if (functionFullName.Contains(":"))
+        if (functionFullName.Contains(':'))
         {
             nameSpace = functionFullName.Substring(0, functionFullName.IndexOf(':'));
             functionName = functionFullName.Substring(functionFullName.IndexOf(':') + 1);

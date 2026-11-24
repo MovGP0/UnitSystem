@@ -10,7 +10,7 @@ public class QsReference(string varname) : QsValue
     {
         get
         {
-            if (varname.Contains(":"))
+            if (varname.Contains(':'))
             {
                 var lc = varname.LastIndexOf(':');
 
@@ -27,7 +27,7 @@ public class QsReference(string varname) : QsValue
         }
         set
         {
-            if (varname.Contains(":"))
+            if (varname.Contains(':'))
             {
                 var lc = varname.LastIndexOf(':');
 

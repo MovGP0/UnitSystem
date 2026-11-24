@@ -400,7 +400,7 @@ public sealed class QsEvaluator
         seq = null;
         nsidx = 0;
         seqNamespace = string.Empty;
-        if (varName.Contains("["))
+        if (varName.Contains('['))
         {
             // May be sequence element.
             seq = Token.ParseText(varName);
@@ -480,7 +480,7 @@ public sealed class QsEvaluator
                     throw (new QsSyntaxErrorException("Variable must start with a letter"));
                 }
 
-                if (varName.Contains(" ") || varName.Contains("\t"))
+                if (varName.Contains(' ') || varName.Contains('\t'))
                 {
                     throw (new QsSyntaxErrorException("Variable shouldn't contain spaces"));
                 }
@@ -675,7 +675,7 @@ public sealed class QsEvaluator
                     // get the after assign expression value
                     var qv = new QsVar(this, line);
 
-                    if (varName.Contains(":"))
+                    if (varName.Contains(':'))
                     {
                         #region namespace in variable
                         var vnToken = Token.ParseText(varName);

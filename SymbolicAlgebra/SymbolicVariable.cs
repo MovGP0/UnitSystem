@@ -1001,7 +1001,7 @@ public partial class SymbolicVariable
         {
             var g = WholeValueBaseKey;
 
-            if (g.Contains("|"))
+            if (g.Contains('|'))
             {
                 return g.Substring(g.IndexOf('|') + 1);
             }

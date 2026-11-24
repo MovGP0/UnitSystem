@@ -885,7 +885,7 @@ dotnet_diagnostic.CA1845.severity = warning
 dotnet_diagnostic.CA1846.severity = warning
 
 # Use char literal for a single character lookup
-# dotnet_diagnostic.CA1847.severity = warning
+dotnet_diagnostic.CA1847.severity = warning
 
 # Prefer static 'HashData' method over 'ComputeHash'
 # dotnet_diagnostic.CA1850.severity = warning
