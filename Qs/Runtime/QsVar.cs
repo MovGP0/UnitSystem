@@ -360,6 +360,7 @@ class QsVar
                 {
                     OperatorTokenText = "_h*";
                 }
+
                 ix--;
                 goto ExpressionCompleted;
 
@@ -1721,6 +1722,7 @@ class QsVar
 
             unit = token[1].TokenValue.Trim('<', '>');
         }
+
         var sv  = SymbolicVariable.Parse(s);
         var SymbolicScalar = sv.ToQuantity(unit).ToScalar();
 
@@ -1801,6 +1803,7 @@ class QsVar
         {
             return ValueIndexExpression(GetFunctionOrSequenceParameter(valueName), indexes);
         }
+
         // global mode
         var value = QsEvaluator.GetScopeValueOrNull(Scope, ns, valName) as QsValue;
 
@@ -2079,6 +2082,7 @@ class QsVar
                 default:
                     throw new QsException("Number of sequence parameters exceed the built in functionality");
             }
+
             // insert the index parameter.
             parameters.Insert(0, IndexExpression);
             #endregion
@@ -2123,6 +2127,7 @@ class QsVar
                 default:
                     throw new QsException("Number of sequence parameters exceed the built in functionality");
             }
+
             // insert the index parameter.
             parameters.Insert(0, ToExpression);
             parameters.Insert(0, FromExpression);
@@ -2214,6 +2219,7 @@ class QsVar
             {
                 throw new QsFunctionNotFoundException("No functions found at all, please review your parameters");
             }
+
             if (DiscoveredFunctions.Length > 1)
             {
 

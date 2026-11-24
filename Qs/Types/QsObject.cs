@@ -173,6 +173,7 @@ public class QsObject : QsValue
         {
             return GetProperty(propertyName, indices);
         }
+
         throw new QsException("The property " + propertyName + " is not array nor object to be indexed");
     }
 
@@ -524,6 +525,7 @@ public class QsObject : QsValue
 
                 fefe[ix].Value = new QsText(mms[ix].PropertyType.Name);
             }
+
             if (fefe.Length == 0) return new QsFlowingTuple();
             return new QsFlowingTuple(fefe);
         }
@@ -543,6 +545,7 @@ public class QsObject : QsValue
 
                 fefe[ix].Value = new QsText(mms.ElementAt(ix).ReturnType.Name);
             }
+
             if (fefe.Length == 0) return new QsFlowingTuple();
             return new QsFlowingTuple(fefe);
         }
@@ -551,6 +554,7 @@ public class QsObject : QsValue
         {
             return new QsObject(InstanceType);
         }
+
         return new QsText("Unknown Command");
     }
 }

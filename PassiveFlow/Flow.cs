@@ -56,6 +56,7 @@ public class Flow : IEnumerable<Step>
                         aa.ActionStatus = aas[i].StageStatusID;
                         acts[i] = aa;
                     }
+
                     fli = Add(fi.Name, fia[0]._StepId, fia[0]._ItemAssociatedTypes, fia[0].Skip, acts);
                 }
                 else
@@ -148,6 +149,7 @@ public class Flow : IEnumerable<Step>
                 }
             }
         }
+
         return "";
     }
 
@@ -163,6 +165,7 @@ public class Flow : IEnumerable<Step>
             if (fi.Id == stepId)
                 return fi.Name;
         }
+
         return "";
     }
 
@@ -198,6 +201,7 @@ public class Flow : IEnumerable<Step>
                 }
             }
         }
+
         if (al.Count > 0) return al.ToArray();
         else
             return null;
@@ -211,6 +215,7 @@ public class Flow : IEnumerable<Step>
             {
                 if (fi.Id == index) return fi;
             }
+
             throw new StepException("Flow step not found");
         }
     }
@@ -355,6 +360,7 @@ public class Flow : IEnumerable<Step>
                 _Current_StepIndex = i;
                 break;
             }
+
             i++;
         }
 
@@ -380,6 +386,7 @@ public class Flow : IEnumerable<Step>
                 _Previous_StepIndex = i;
                 break;
             }
+
             i++;
         }
 
@@ -597,6 +604,7 @@ public class Flow : IEnumerable<Step>
                     }
                 }
             }
+
             return null;
         }
     }

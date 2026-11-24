@@ -13,6 +13,7 @@ public partial class UnitPathStack : Stack<UnitPathItem>, ICloneable
                 cf *= this.ElementAt(ix).Times;
                 ix++;
             }
+
             return cf;
         }
     }
@@ -32,6 +33,7 @@ public partial class UnitPathStack : Stack<UnitPathItem>, ICloneable
                 Unit = (Unit)upi.Unit.Clone()
             });
         }
+
         return up;
     }
 }

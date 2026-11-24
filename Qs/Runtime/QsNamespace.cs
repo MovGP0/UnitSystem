@@ -348,6 +348,7 @@ public class QsNamespace(string name)
             {
                 HardCodedMethods = GetQsNamespaceMethods();
             }
+
             items.AddRange(HardCodedMethods);
         }
 

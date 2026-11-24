@@ -46,6 +46,7 @@ public static class TextTools
                 // add charachter
                 if (!char.IsWhiteSpace(expression[i])) SplitedText.Append(expression[i]);
             }
+
             i++;
         }
 
@@ -154,6 +155,7 @@ public static class TextTools
                 {
                     PLevels.Push(1);
                 }
+
                 if (expression[ix] == ')')
                 {
                     PLevels.Pop();
@@ -193,6 +195,7 @@ public static class TextTools
 
 
         }
+
         TokenBuilder = null;
 
 

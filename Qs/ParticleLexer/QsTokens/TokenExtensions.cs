@@ -126,6 +126,7 @@ public static class TokenExtensions
                             {
                                 ci += 2;
                             }
+
                             current.AppendSubToken(sequenceCallToken);
                             continue;
                         }
@@ -141,6 +142,7 @@ public static class TokenExtensions
 
             ci++;
         }
+
         first.TokenClassType = token.TokenClassType;
 
         return Token.Zabbat(first);

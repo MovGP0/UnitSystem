@@ -113,8 +113,10 @@ public class DerivedQuantity<T> : AnyQuantity<T>
                 {
                     QDTotal += aq.Dimension;
                 }
+
                 _Dimension = QDTotal;
             }
+
             return _Dimension;
         }
     }

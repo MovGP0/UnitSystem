@@ -160,9 +160,11 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
                 {
                     result = result * factor;
                 }
+
                 factor = factor * factor;
                 power >>= 1;
             }
+
             return result;
         }
 
@@ -170,6 +172,7 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
         {
             return y.IsZero ? One : Zero;
         }
+
         var a = _real;
         var b = _imaginary;
         var powers = a * a + b * b;

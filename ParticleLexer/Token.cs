@@ -147,6 +147,7 @@ public sealed partial class Token : IEnumerable<Token>
                     _TokenValue = Value;
                 }
             }
+
             return _TokenValue;
         }
     }
@@ -213,8 +214,10 @@ public sealed partial class Token : IEnumerable<Token>
                     Trimmed.AppendSubToken(tok);
                     ci++;
                 }
+
                 break;
             }
+
             ci++;
         }
 
@@ -252,6 +255,7 @@ public sealed partial class Token : IEnumerable<Token>
                     tok = childTokens[i];
                     Trimmed.AppendSubToken(tok);
                 }
+
                 break;
             }
 
@@ -326,6 +330,7 @@ public sealed partial class Token : IEnumerable<Token>
 
                         current.AppendSubToken(mergedTokens);
                     }
+
                     current.AppendSubToken(c);
 
                     mergedTokens = new Token();
@@ -403,6 +408,7 @@ public sealed partial class Token : IEnumerable<Token>
 
                         current.AppendSubToken(mergedTokens);
                     }
+
                     current.AppendSubToken(c);
 
                     mergedTokens = new Token();
@@ -640,7 +646,9 @@ public sealed partial class Token : IEnumerable<Token>
             var tc = GetTokenClass(tt);
             if (tc.ExactWord==false) throw new InvalidOperationException("Only exact word tokens are allowed");
             tokenClasses.Add(tc);
-        };
+        }
+
+;
 
         // the required tokens are exact words that have a definite start and a definite end.
         var current = new Token();
@@ -683,6 +691,7 @@ public sealed partial class Token : IEnumerable<Token>
                         {
                             break;
                         }
+
                         subTokIndex++;
                     }
                 }
@@ -726,6 +735,7 @@ public sealed partial class Token : IEnumerable<Token>
             instance = (TokenClass)Activator.CreateInstance(tokenClassType);
             CachedTokenClasses.Add(tokenClassType, instance);
         }
+
         return instance;
     }
 
@@ -738,6 +748,7 @@ public sealed partial class Token : IEnumerable<Token>
             instance = new DesiredTokenClass();
             CachedTokenClasses.Add(typeof(DesiredTokenClass), instance);
         }
+
         return instance;
     }
 
@@ -956,6 +967,7 @@ public sealed partial class Token : IEnumerable<Token>
                 break;
             }
         }
+
         return idx;
     }
 
@@ -1123,6 +1135,7 @@ public sealed partial class Token : IEnumerable<Token>
             total += this[idx].TokenValue;
             idx++;
         }
+
         return total;
 
     }
@@ -1172,6 +1185,7 @@ public sealed partial class Token : IEnumerable<Token>
         {
             rtk.AppendSubToken(this[b]);
         }
+
         foreach (var t in ParseText(rightText))
         {
             rtk.AppendSubToken(t);
@@ -1276,6 +1290,7 @@ public sealed partial class Token : IEnumerable<Token>
 
             ci++;
         }
+
         return current;
     }
 

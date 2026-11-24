@@ -69,6 +69,7 @@ public sealed partial class Token : IEnumerable<Token>
 
                 goto LoopAgain;
             }
+
             //not open nor close.
             current.AppendSubToken(c);
 

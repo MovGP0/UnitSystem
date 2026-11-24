@@ -309,6 +309,7 @@ public partial class Unit
                     //then it is unit with sub units in it
                     if (uu.SubUnits.Count == 1) uu = uu.SubUnits[0];
                 }
+
                 dunits.Add(uu.Invert());
             }
         }

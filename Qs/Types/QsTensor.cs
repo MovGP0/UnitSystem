@@ -44,6 +44,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
                     if (vector.Count > 1) return 1;
                     return 0;   //scalar
                 }
+
                 throw new QsException("Tensor is not initialized yet");
             }
             // inner tensors do exist
@@ -121,6 +122,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
                         throw new QsInvalidInputException("Adding first rank tensor with different number of columns");
 
                 }
+
                 MatrixLayers[0].AddVector(v);
             }
         }
@@ -146,6 +148,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
                     throw new QsInvalidOperationException("Adding Second Rank tensor with different number of rows");
                 }
             }
+
             MatrixLayers.Add(matrix);
         }
         else
@@ -173,6 +176,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
                 throw new QsException("The matrix about to be added is not in the same dimension");
             }
         }
+
         MatrixLayers.Add(qsMatrix);
     }
 
@@ -223,15 +227,18 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
         {
             return this[0][0][indices[0]];
         }
+
         if (indices.Count() == 2)
         {
             return this[0][indices[0]][indices[1]];
         }
+
         if (indices.Count() == 3)
         {
             // cube
             return this[indices[0]][indices[1]][indices[2]];
         }
+
         if (indices.Count() == 4)
         {
             // hyper cube
@@ -268,6 +275,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
             sb.Append(mat.MatrixText);
             sb.AppendLine();
         }
+
         return sb.ToString();
     }
 

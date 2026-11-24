@@ -46,6 +46,7 @@ public static class QsGamma
 
             return rvec;
         }
+
         if (value is QsMatrix)
         {
             var mat = value as QsMatrix;
@@ -62,8 +63,10 @@ public static class QsGamma
 
                 Total.AddRow(row.ToArray());
             }
+
             return Total;
         }
+
         throw new NotSupportedException();
     }
 
@@ -125,6 +128,7 @@ public static class QsGamma
         {
             var y = x + 1; var p = 1.0;
             while (y < 7) { p = p * y; y = y + 1; }
+
             var r = Math.Exp(y * Math.Log(y) - y + 1 / (12 * y + 2 / (5 * y + 53 / (42 * y))));
             if (x < 7) r = r / p;
             return r * Math.Sqrt(2 * Math.PI / y);
@@ -150,7 +154,9 @@ public static class QsGamma
             {
                 p = p*y;
                 y = y+1;
-            };
+            }
+
+;
             var r = Math.Exp(StieltjesLnFactorial(y));
 
             if (x < 8) return  (r * x) / (p * y);

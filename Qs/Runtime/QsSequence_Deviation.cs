@@ -22,6 +22,7 @@ public partial class QsSequence
             var pp2 = p.PowerOperation(Two);
             Total = Total + pp2;
         }
+
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
 
         return Total / count;
@@ -44,6 +45,7 @@ public partial class QsSequence
             var pp2 = p.PowerOperation(Two);
             Total = Total + pp2;
         }
+
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
 
         return Total / count;
@@ -65,6 +67,7 @@ public partial class QsSequence
             var pp2 = p.PowerOperation(Two);
             Total = Total + pp2;
         }
+
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
 
         return Total / count;
@@ -84,6 +87,7 @@ public partial class QsSequence
             var pp2 = p.PowerOperation(Two);
             Total = Total + pp2;
         }
+
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
 
         return Total / count;
@@ -103,6 +107,7 @@ public partial class QsSequence
             var pp2 = p.PowerOperation(Two);
             Total = Total + pp2;
         }
+
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
 
         return Total / count;
@@ -122,6 +127,7 @@ public partial class QsSequence
             var pp2 = p.PowerOperation(Two);
             Total = Total + pp2;
         }
+
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
 
         return Total / count;
@@ -141,6 +147,7 @@ public partial class QsSequence
             var pp2 = p.PowerOperation(Two);
             Total = Total + pp2;
         }
+
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
 
         return Total / count;
@@ -161,6 +168,7 @@ public partial class QsSequence
             var pp2 = p.PowerOperation(Two);
             Total = Total + pp2;
         }
+
         var count = new QsScalar { NumericalQuantity = Qs.ToQuantity((double)n) };
 
         return Total / count;

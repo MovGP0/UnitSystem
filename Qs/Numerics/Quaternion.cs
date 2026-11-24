@@ -286,6 +286,7 @@ public struct Quaternion : IEquatable<Quaternion>
         {
             return(q);
         }
+
         if    (n == 0)
         {
             return (new Quaternion(1));

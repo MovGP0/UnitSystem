@@ -67,6 +67,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
                     {
                         IX--;  //decrease the index.
                     }
+
                     //Bingo we found it
                     TryGetValue(IX, out el);
                 }
@@ -77,6 +78,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
                     {
                         IX++;  //decrease the index.
                     }
+
                     //Bingo we found it
                     TryGetValue(IX, out el);
                 }
@@ -86,6 +88,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
                     throw new QsException("Damn it. Where is the zero element");
                 }
             }
+
             return el;
         }
         set
@@ -215,6 +218,7 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
             {
                 porma += prm.Name + ", ";
             }
+
             porma = porma.TrimEnd(',', ' ');
 
             var FunctionDeclaration = "_(" + porma + ") = " + FunctionBody;

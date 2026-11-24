@@ -373,6 +373,7 @@ public class QsEvaluator
 
             ix++;
         }
+
         return -1;
     }
 
@@ -721,6 +722,7 @@ public class QsEvaluator
                                     StoreFunction(qf);
                                     return qf;
                                 }
+
                                 throw new QsException("Cannot store scalar " + fsc.ScalarType + " into function variable");
                             }
 
@@ -797,6 +799,7 @@ public class QsEvaluator
                                 StoreFunction(qf);
                                 return qf;
                             }
+
                             throw new QsException("Cannot store scalar " + fsc.ScalarType + " into function variable");
 
                             #endregion
@@ -846,6 +849,7 @@ public class QsEvaluator
                                     fhb.Append(c.ToParsableValuedString());
                                     fhb.Append(' ');
                                 }
+
                                 fhb.Append('}');
 
                                 var qf = QsFunction.ParseFunction(this, fh + fhb);
@@ -868,6 +872,7 @@ public class QsEvaluator
                                         fhb.Append(c.ToParsableValuedString());
                                         fhb.Append(' ');
                                     }
+
                                     fhb.Append("; ");
                                 }
 
@@ -881,10 +886,12 @@ public class QsEvaluator
                                 return qf;
 
                             }
+
                             throw new QsException("QsType " + qvType.Name + " is not supported to be converted into function");
 
                             #endregion
                         }
+
                         if (varName.StartsWith("&") && qvResult is QsValue)
                         {
                             var existValue = GetVariable(line.Trim());
@@ -892,6 +899,7 @@ public class QsEvaluator
                             PrintQuantity(q);
                             return q;
                         }
+
                         var varNameTokens = QsVar.TokenzieExpression(varName);
                         var v_index = 0;
                         QsValue parent_object = null;
@@ -1234,6 +1242,7 @@ public class QsEvaluator
                 throw new QsException("Can't delete the variable");
             GC.Collect();
         }
+
         return null;
     }
 
@@ -1258,6 +1267,7 @@ public class QsEvaluator
                 _CurrentEvaluator = new QsEvaluator();
                 _CallingAssembly = Assembly.GetCallingAssembly();
             }
+
             return _CurrentEvaluator;
         }
     }

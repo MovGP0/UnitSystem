@@ -447,6 +447,7 @@ public partial class Unit
             else
                 all.AddRange(un.SubUnits);
         }
+
         return all;
     }
 
@@ -547,6 +548,7 @@ public partial class Unit
                     }
 
                 }
+
                 us[un.UniqueKey].UnitExponent += un.UnitExponent;
                 us[un.UniqueKey].UnitDimension += un.UnitDimension;
              }
@@ -555,6 +557,7 @@ public partial class Unit
                  us[un.UniqueKey] = (Unit)un.MemberwiseClone();
              }
         }
+
         foreach (var un in us.Values)
         {
             if (un.UnitExponent != 0)

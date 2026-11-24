@@ -72,6 +72,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
             typeArgs[paramCount] = returnType;
             delegateType = Expression.GetFuncType(typeArgs);
         }
+
         return delegateType;
     }
 

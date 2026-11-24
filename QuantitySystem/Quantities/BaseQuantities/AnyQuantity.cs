@@ -42,6 +42,7 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
 
                 if (un[0] != '<') un = "<" + un + ">";
             }
+
             return un;
         }
     }

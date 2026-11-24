@@ -73,6 +73,7 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
                 return GradientResult;
             }
         }
+
         if (value is QsVector)
         {
             return DelVector.MultiplyVector((QsVector)value);

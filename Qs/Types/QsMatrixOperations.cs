@@ -26,6 +26,7 @@ public partial class QsMatrix : QsValue
 
             Total.AddRow(row.ToArray());
         }
+
         return Total;
 
     }
@@ -49,6 +50,7 @@ public partial class QsMatrix : QsValue
 
             Total.AddRow(row.ToArray());
         }
+
         return Total;
 
     }
@@ -72,6 +74,7 @@ public partial class QsMatrix : QsValue
 
             Total.AddRow(row.ToArray());
         }
+
         return Total;
     }
 
@@ -94,6 +97,7 @@ public partial class QsMatrix : QsValue
 
             Total.AddRow(row.ToArray());
         }
+
         return Total;
     }
 
@@ -116,6 +120,7 @@ public partial class QsMatrix : QsValue
 
             Total.AddRow(row.ToArray());
         }
+
         return Total;
     }
 
@@ -177,6 +182,7 @@ public partial class QsMatrix : QsValue
 
             Total.AddRow(row.ToArray());
         }
+
         return Total;
     }
 
@@ -298,10 +304,12 @@ public partial class QsMatrix : QsValue
         {
             throw new NotSupportedException();
         }
+
         if (value is QsMatrix)
         {
             return AddMatrix((QsMatrix)value);
         }
+
         throw new NotSupportedException();
     }
 
@@ -321,10 +329,12 @@ public partial class QsMatrix : QsValue
         {
             throw new NotSupportedException();
         }
+
         if (value is QsMatrix)
         {
             return SubtractMatrix((QsMatrix)value);
         }
+
         throw new NotSupportedException();
     }
 
@@ -347,10 +357,12 @@ public partial class QsMatrix : QsValue
             // make it ordinary vector again.
             return mvec.Columns[0];
         }
+
         if (value is QsMatrix)
         {
             return MultiplyMatrix((QsMatrix)value);
         }
+
         throw new NotSupportedException();
     }
 
@@ -371,11 +383,13 @@ public partial class QsMatrix : QsValue
             throw new NotSupportedException();
 
         }
+
         if (value is QsMatrix)
         {
 
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -400,10 +414,12 @@ public partial class QsMatrix : QsValue
         {
             throw new NotSupportedException();
         }
+
         if (value is QsMatrix)
         {
             return MultiplyMatrix(((QsMatrix)value).Inverse);
         }
+
         throw new NotSupportedException();
     }
 
@@ -423,10 +439,12 @@ public partial class QsMatrix : QsValue
         {
             throw new NotSupportedException();
         }
+
         if (value is QsMatrix)
         {
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -448,10 +466,12 @@ public partial class QsMatrix : QsValue
         {
             throw new NotSupportedException();
         }
+
         if (value is QsMatrix)
         {
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -487,10 +507,12 @@ public partial class QsMatrix : QsValue
         {
             throw new NotSupportedException();
         }
+
         if (value is QsMatrix)
         {
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -526,6 +548,7 @@ public partial class QsMatrix : QsValue
                     else rowM = rowM.AppendRightMatrix(imat);
 
                 }
+
                 lm.Add(rowM);
             }
 
@@ -539,6 +562,7 @@ public partial class QsMatrix : QsValue
 
             return result;
         }
+
         throw new NotImplementedException();
     }
 
@@ -560,6 +584,7 @@ public partial class QsMatrix : QsValue
         {
             ShiftedMatrix.AddVector((QsVector)vec.LeftShiftOperation(times));
         }
+
         return ShiftedMatrix;
     }
 
@@ -581,6 +606,7 @@ public partial class QsMatrix : QsValue
         {
             ShiftedMatrix.AddVector((QsVector)vec.RightShiftOperation(times));
         }
+
         return ShiftedMatrix;
     }
 
@@ -665,6 +691,7 @@ public partial class QsMatrix : QsValue
         {
             return this[indices[0]];
         }
+
         throw new QsException("Matrices indices only up to two");
     }
 
@@ -696,6 +723,7 @@ public partial class QsMatrix : QsValue
             {
                 n.AddRow(row.DifferentiateScalar((QsScalar)value).ToArray());
             }
+
             return n;
         }
 
@@ -715,6 +743,7 @@ public partial class QsMatrix : QsValue
         {
             if (iy != rowIndex) m.AddVector(this[iy]);
         }
+
         return m;
     }
 
@@ -731,6 +760,7 @@ public partial class QsMatrix : QsValue
         {
             if (ix != columnIndex) m.AddColumnVector(GetColumnVector(ix));
         }
+
         return m;
     }
 
@@ -760,6 +790,7 @@ public partial class QsMatrix : QsValue
                     _Cofactors.AddVector(v);
                 }
             }
+
             return _Cofactors;
         }
     }

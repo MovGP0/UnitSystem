@@ -133,6 +133,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             {
                 vs[i] = GetColumnVector(i);
             }
+
             return vs;
         }
     }
@@ -203,6 +204,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
                 Total.AddRow(row.ToArray());
             }
+
             return Total;
         }
 
@@ -234,6 +236,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
                 Total.AddRow(row.ToArray());
             }
+
             return Total;
         }
 
@@ -259,6 +262,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
                 Total.AddRow(row.ToArray());
             }
+
             return Total;
         }
 
@@ -285,6 +289,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
                 Total.AddRow(row.ToArray());
             }
+
             return Total;
         }
 
@@ -318,6 +323,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
                 Total.AddRow(row.ToArray());
             }
+
             return Total;
         }
 
@@ -394,6 +400,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
             m.AddRow(vec.ToArray());
         }
+
         return m;
     }
 
@@ -466,6 +473,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             col[nc] = this[IY, columnIndex];
             nc++;
         }
+
         var vec = new QsVector(col);
 
 
@@ -543,6 +551,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
                 sb.AppendLine();
             }
+
             return sb.ToString();
         }
     }
@@ -650,6 +659,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
                 return vec;
             }
+
             if (RowsCount == 3)
             {
                 var vec = new QsVector(3);
@@ -668,6 +678,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
 
                 return vec;
             }
+
             throw new NotImplementedException();
         }
 
@@ -694,6 +705,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
                 return true;   //just for now.
             }
         }
+
         //dimensions not equal.
         return false;
     }
@@ -720,6 +732,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
                 else
                     v.AddComponent(QsScalar.Zero);
             }
+
             m.AddVector(v);
         }
 
@@ -742,6 +755,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
                 v.AddComponent(sr);
 
             }
+
             m.AddVector(v);
         }
 
@@ -807,8 +821,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
             {
                 v.AddComponent(QsScalar.Zero);
             }
+
             m.AddVector(v);
         }
+
         return m;
     }
 

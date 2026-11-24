@@ -51,6 +51,7 @@ public static class Quantity
         {
             ss = qsText.Text;
         }
+
         var q = QuantityDimension.Parse(ss);
 
         var qt = QuantityDimension.GetQuantityTypeFrom(q).Name;
@@ -70,6 +71,7 @@ public static class Quantity
         {
             ss = qsText.Text;
         }
+
         var q = QuantityDimension.Parse(ss);
 
         var unit = Unit.DiscoverUnit(q);

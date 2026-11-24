@@ -393,6 +393,7 @@ public partial class Unit
                 {
                     total.Push(systemsPath.ElementAt(i));
                 }
+
                 total.Push(new UnitPathItem { Denominator = 1, Numerator = 1, Unit = one });
             }
 
@@ -465,6 +466,7 @@ public partial class Unit
 
                     path.Push(refUpi);
                 }
+
                 return path;
             }
 

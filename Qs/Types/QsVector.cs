@@ -156,6 +156,7 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
         {
             vec.AddComponent((QsScalar)q.Clone());
         }
+
         return vec;
     }
 

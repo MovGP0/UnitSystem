@@ -59,6 +59,7 @@ public class QsDifferentialOperation : QsOperation
                 return new QsScalar(ScalarTypes.QsOperation) { Operation = (QsOperation)Clone() };
             }
         }
+
         throw new NotImplementedException();
     }
 
@@ -144,6 +145,7 @@ public class QsDifferentialOperation : QsOperation
 
             return true;
         }
+
         return false;
     }
 
@@ -154,6 +156,7 @@ public class QsDifferentialOperation : QsOperation
         {
             g += o.Operation + o.value.ToValueString();
         }
+
         return g;
 
     }

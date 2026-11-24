@@ -341,6 +341,7 @@ public abstract class QsValue: IComparable
         {
             v.AddComponent(new QsScalar { NumericalQuantity = q.ToQuantity() });
         }
+
         return v;
     }
 
@@ -402,6 +403,7 @@ public abstract class QsValue: IComparable
                     throw new QsException("Non Tensor in a matrix of tensors is not valid expression.");
                 tensor.AddInnerTensor((QsTensor)inTensor);
             }
+
             return tensor;
         }
 
@@ -480,6 +482,7 @@ public abstract class QsValue: IComparable
                     throw new QsException("Non Tensor in a matrix of tensors is not valid expression.");
                 tensor.AddInnerTensor((QsTensor)tn);
             }
+
             return tensor;
         }
 

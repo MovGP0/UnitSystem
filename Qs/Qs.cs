@@ -323,6 +323,7 @@ public static class Qs
 
             ss[i] = d.ToQuantity().ToScalar();
         }
+
         return ss;
     }
 

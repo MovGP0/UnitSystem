@@ -152,6 +152,7 @@ public partial class SymbolicVariable
                         sv.Coeffecient = sv.Coeffecient / hv.NumericalVariable;
 
                     }
+
                     sv._FusedSymbols[parameter] = hv;
                 }
                 else

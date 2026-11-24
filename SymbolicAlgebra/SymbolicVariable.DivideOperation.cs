@@ -285,6 +285,7 @@ public partial class SymbolicVariable
                 var newv = Divide(vv.Value, TSubTerm);
                 newAddedVariables.Add(newv.WholeValueBaseKey, newv);
             }
+
             SourceTerm._AddedTerms = newAddedVariables;
         }
 
@@ -300,6 +301,7 @@ public partial class SymbolicVariable
                 var newe = Divide(eterm, TargetSubTerm);
                 newExtraTerms.Add(new ExtraTerm { Term = newe });
             }
+
             SourceTerm._ExtraTerms = newExtraTerms;
         }
 

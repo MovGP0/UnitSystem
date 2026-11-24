@@ -38,6 +38,7 @@ public partial class SymbolicVariable
 
                 a_b.ExtraTerms.Add(new ExtraTerm { Term = negative_b, Negative = true });
             }
+
             AdjustZeroCoeffecientTerms(ref a_b);
             return a_b;
 

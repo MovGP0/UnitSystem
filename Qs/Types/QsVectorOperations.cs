@@ -87,6 +87,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             v.AddComponent(this[i].PowerScalar(scalar));
         }
+
         return v;
     }
 
@@ -266,6 +267,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             {
                 v.AddComponent(QsScalar.One);
             }
+
             return v;
         }
     }
@@ -287,6 +289,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             return AddVector((QsVector)value);
         }
+
         throw new NotSupportedException();
     }
 
@@ -306,6 +309,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             return SubtractVector((QsVector)value);
         }
+
         throw new NotSupportedException();
     }
 
@@ -331,12 +335,14 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             return MultiplyVector((QsVector)value);
         }
+
         if (value is QsMatrix)
         {
             var mvec =  ToVectorMatrix().MultiplyMatrix((QsMatrix)value);
             // make it vector again.
             return mvec[0];
         }
+
         throw new NotSupportedException();
     }
 
@@ -362,6 +368,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             return ScalarProduct((QsVector)value);
         }
+
         throw new NotSupportedException();
     }
 
@@ -381,6 +388,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             return VectorProduct((QsVector)value);
         }
+
         throw new NotSupportedException();
     }
 
@@ -401,6 +409,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             return DivideVector((QsVector)value);
         }
+
         throw new NotSupportedException();
     }
 
@@ -474,6 +483,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         {
             return ModuloVector((QsVector)value);
         }
+
         throw new NotSupportedException();
     }
 
@@ -512,6 +522,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             return (new QsMatrix(vcs.ToArray()));
 
         }
+
         throw new NotSupportedException();
     }
 
@@ -598,6 +609,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             var v = (QsVector)value;
             return (Magnitude().NumericalQuantity < v.Magnitude().NumericalQuantity);
         }
+
         throw new NotSupportedException();
     }
 
@@ -622,6 +634,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             return (Magnitude().NumericalQuantity > v.Magnitude().NumericalQuantity);
 
         }
+
         throw new NotSupportedException();
     }
 
@@ -646,6 +659,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             return (Magnitude().NumericalQuantity <= v.Magnitude().NumericalQuantity);
 
         }
+
         throw new NotSupportedException();
     }
 
@@ -670,6 +684,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             return (Magnitude().NumericalQuantity >= v.Magnitude().NumericalQuantity);
 
         }
+
         throw new NotSupportedException();
     }
 
@@ -700,6 +715,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
             return true;
         }
+
         throw new NotSupportedException();
     }
 
@@ -724,6 +740,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
             return (Magnitude().NumericalQuantity != v.Magnitude().NumericalQuantity);
 
         }
+
         throw new NotSupportedException();
     }
 

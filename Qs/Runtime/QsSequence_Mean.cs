@@ -31,6 +31,7 @@ public partial class QsSequence
             {
                 porma += prm.Name + ", ";
             }
+
             porma = porma.TrimEnd(',', ' ');
 
             var FunctionBody = "(" + JoinElementsWithOperation(fromIndex, toIndex, "+") + ")/" + n.ToString(CultureInfo.InvariantCulture);

@@ -64,6 +64,7 @@ public class QsFlowingTuple : QsValue
         {
             return qsValue;
         }
+
         return Root.NativeToQsConvert(value);
     }
 
@@ -80,6 +81,7 @@ public class QsFlowingTuple : QsValue
             else sb.Append("nil");
             sb.Append(", ");
         }
+
         var lll = sb.ToString().TrimEnd(',', ' ') + ")";
         return lll;
     }
@@ -192,8 +194,10 @@ public class QsFlowingTuple : QsValue
                 )
                     return false;
             }
+
             return true;
         }
+
         return false;
     }
 

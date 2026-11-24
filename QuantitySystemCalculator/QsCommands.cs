@@ -127,6 +127,7 @@ public static class QsCommands
                     }
                 }
             }
+
             CommandProcessed = true;
         }
 
@@ -152,6 +153,7 @@ public static class QsCommands
                 }
             }
         }
+
         return true;
     }
 
@@ -378,6 +380,7 @@ public static class QsCommands
                     Console.WriteLine("        " + nsvar + " = " + ns.GetValue(nsvar).ToString());
                 }
             }
+
             Console.WriteLine();
         }
 
@@ -467,6 +470,7 @@ public static class QsCommands
 
                 Console.WriteLine(ut);
             }
+
         Console.ForegroundColor = ForegroundColor;
     }
 

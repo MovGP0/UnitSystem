@@ -109,6 +109,7 @@ public partial class SymbolicVariable
                             // also revert the original symbol power into 1  for validation after this
                             SourceTerm.SymbolPower = 1;
                         }
+
                         if (TargetSubTerm._SymbolPowerTerm == null)
                         {
                             TargetSubTerm._SymbolPowerTerm = new SymbolicVariable(TargetSubTerm.SymbolPower.ToString(CultureInfo.InvariantCulture));
@@ -279,6 +280,7 @@ public partial class SymbolicVariable
 
                 newAddedVariables.Add(newv.WholeValueBaseKey, newv);
             }
+
             SourceTerm._AddedTerms = newAddedVariables;
         }
 
@@ -294,6 +296,7 @@ public partial class SymbolicVariable
                 var newe = Multiply(eterm, TargetSubTerm);
                 newExtraTerms.Add(new ExtraTerm { Term = newe });
             }
+
             SourceTerm._ExtraTerms = newExtraTerms;
         }
 

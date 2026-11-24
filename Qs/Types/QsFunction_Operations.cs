@@ -59,6 +59,7 @@ public partial class QsFunction
             fbody += " " + f.FunctionBody + " " + operation;
             fparamList.AddRange(f.ParametersNames);
         }
+
         fbody = fbody.TrimEnd(operation.ToCharArray());
 
         string[] fparam = fparamList.ToArray();
@@ -215,6 +216,7 @@ public partial class QsFunction
             var f = fname + "(" + RemoveRedundantParameters(functionParametersArray) + ") = " + FuncBody;
             return ParseFunction(QsEvaluator.CurrentEvaluator, f);
         }
+
         throw new NotImplementedException();
     }
 
@@ -379,6 +381,7 @@ public partial class QsFunction
             return thisDebugView.Equals(funcDebugView);
 
         }
+
         return false;
     }
 
@@ -454,9 +457,11 @@ public partial class QsFunction
                         nsv = nsv.Differentiate(dsv.Symbol);
                         times--;
                     }
+
                     sc.Append(nsv);
                     sc.Append(" ");
                 }
+
                 sc.Append("}");
 
                 WholeFunction = sc.ToString();

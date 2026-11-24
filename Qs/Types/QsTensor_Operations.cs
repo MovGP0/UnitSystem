@@ -33,6 +33,7 @@ public partial class QsTensor : QsValue
                     NewTensor.AddMatrix(ResultMatrix);
                 }
             }
+
             return NewTensor;
         }
 
@@ -50,6 +51,7 @@ public partial class QsTensor : QsValue
                     NewTensor.AddInnerTensor((QsTensor)
                         iTensor.AddOperation(tensor.InnerTensors[i]));
                 }
+
                 return NewTensor;
             }
 
@@ -66,6 +68,7 @@ public partial class QsTensor : QsValue
                             var ResultMatrix = (QsMatrix)MatrixLayers[il].AddOperation(tensor.MatrixLayers[il]);
                             NewTensor.AddMatrix(ResultMatrix);
                         }
+
                         return NewTensor;
                     }
                 }
@@ -102,6 +105,7 @@ public partial class QsTensor : QsValue
                     NewTensor.AddMatrix(ResultMatrix);
                 }
             }
+
             return NewTensor;
         }
 
@@ -119,6 +123,7 @@ public partial class QsTensor : QsValue
                     NewTensor.AddInnerTensor((QsTensor)
                         iTensor.SubtractOperation(tensor.InnerTensors[i]));
                 }
+
                 return NewTensor;
             }
 
@@ -135,6 +140,7 @@ public partial class QsTensor : QsValue
                             var ResultMatrix = (QsMatrix)MatrixLayers[il].SubtractOperation(tensor.MatrixLayers[il]);
                             NewTensor.AddMatrix(ResultMatrix);
                         }
+
                         return NewTensor;
                     }
                 }
@@ -185,6 +191,7 @@ public partial class QsTensor : QsValue
                 var result = (QsMatrix)thisVec.TensorProductOperation(thatVec);
                 return new QsTensor(result);
             }
+
             if (Order == 2 && tensor.Order <= 2)
             {
                 //tenosrial product of two matrices will result in another matrix also.
@@ -280,6 +287,7 @@ public partial class QsTensor : QsValue
             return true;
 
         }
+
         return false;
     }
 
@@ -396,6 +404,7 @@ public partial class QsTensor : QsValue
         {
             return GetScalar(indices);
         }
+
         if (dr == 1)
         {
             // return vector
@@ -408,6 +417,7 @@ public partial class QsTensor : QsValue
             {
                 return this[indices[0]][indices[1]];
             }
+
             var t = this;
             var ix = 0;
             var ic = indices.Count();
@@ -418,8 +428,10 @@ public partial class QsTensor : QsValue
                 t = t.InnerTensors[idx];
                 ix++;
             }
+
             return t[indices[ix]][indices[ix + 1]];  //ix was increased the latest time.
         }
+
         if (dr == 2)
         {
             // return matrix;
@@ -459,6 +471,7 @@ public partial class QsTensor : QsValue
                 t = t.InnerTensors[idx];
                 ix++;
             }
+
             return t;
         }
     }
@@ -487,6 +500,7 @@ public partial class QsTensor : QsValue
             {
                 t.AddMatrix((QsMatrix)m.DifferentiateOperation(value));
             }
+
             return t;
         }
 

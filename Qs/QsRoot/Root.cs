@@ -232,6 +232,7 @@ public class Root
 
                 tupleValues.Add(tpv);
             }
+
             return new QsFlowingTuple(tupleValues.ToArray());
         }
 
@@ -268,6 +269,7 @@ public class Root
                 var r = (double)Convert.ChangeType(m, typeof(double), null);
                 v.AddComponent(new QsScalar { NumericalQuantity = r.ToQuantity() });
             }
+
             return v;
         }
 
@@ -280,6 +282,7 @@ public class Root
             {
                 v.AddTupleValue(QsObject.CreateNativeObject(m));
             }
+
             return v;
         }
 
@@ -432,8 +435,10 @@ public class Root
 
                 ix--;
             }
+
             return dd;
         }
+
         throw new QsException("Not Vector");
     }
 

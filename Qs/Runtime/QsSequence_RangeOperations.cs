@@ -72,9 +72,11 @@ public partial class QsSequence
                 counterIndex++;
                 if (counterIndex > toIndex) still = false;
             }
+
             if (still)
                 FunctionBody += " " + operation + " ";
         }
+
         return FunctionBody;
     }
 
@@ -105,6 +107,7 @@ public partial class QsSequence
                 counterIndex++;
                 if (counterIndex > toIndex) still = false;
             }
+
             if (still)
             {
             }
@@ -135,6 +138,7 @@ public partial class QsSequence
             {
                 porma += prm.Name + ", ";
             }
+
             porma = porma.TrimEnd(',', ' ');
 
             var FunctionBody = JoinElementsWithOperation(fromIndex, toIndex, "+");
@@ -288,6 +292,7 @@ public partial class QsSequence
             {
                 porma += prm.Name + ", ";
             }
+
             porma = porma.TrimEnd(',', ' ');
 
             var FunctionBody = JoinElementsWithOperation(fromIndex, toIndex, "*");
@@ -518,6 +523,7 @@ public partial class QsSequence
                     ProcessedElements.Add(se_text);
                 }
             }
+
             var ee = QsEvaluator.CurrentEvaluator.SilentEvaluate(ProcessedElements[0]);
             QsValue Total;
 
@@ -607,11 +613,13 @@ public partial class QsSequence
 
             return Total;
         }
+
         if (firstElement is QsMatrix)
         {
 
             throw new NotImplementedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -671,11 +679,13 @@ public partial class QsSequence
 
             return Total;
         }
+
         if (firstElement is QsMatrix)
         {
 
             throw new NotImplementedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -703,6 +713,7 @@ public partial class QsSequence
                     Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1));
                 }
             }
+
             return Total;
         }
 
@@ -726,12 +737,15 @@ public partial class QsSequence
                     Total.AddVector((QsVector)GetElementValue(i, arg0, arg1));
                 }
             }
+
             return Total;
         }
+
         if (firstElement is QsMatrix)
         {
             throw new NotImplementedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -759,6 +773,7 @@ public partial class QsSequence
                     Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1, arg2));
                 }
             }
+
             return Total;
         }
 
@@ -782,12 +797,15 @@ public partial class QsSequence
                     Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2));
                 }
             }
+
             return Total;
         }
+
         if (firstElement is QsMatrix)
         {
             throw new NotImplementedException();
         }
+
         throw new NotSupportedException();
     }
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
@@ -838,12 +856,15 @@ public partial class QsSequence
                     Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2, arg3));
                 }
             }
+
             return Total;
         }
+
         if (firstElement is QsMatrix)
         {
             throw new NotImplementedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -871,6 +892,7 @@ public partial class QsSequence
                     Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1, arg2, arg3, arg4));
                 }
             }
+
             return Total;
         }
 
@@ -894,12 +916,15 @@ public partial class QsSequence
                     Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2, arg3, arg4));
                 }
             }
+
             return Total;
         }
+
         if (firstElement is QsMatrix)
         {
             throw new NotImplementedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -927,6 +952,7 @@ public partial class QsSequence
                     Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5));
                 }
             }
+
             return Total;
         }
 
@@ -950,12 +976,15 @@ public partial class QsSequence
                     Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5));
                 }
             }
+
             return Total;
         }
+
         if (firstElement is QsMatrix)
         {
             throw new NotImplementedException();
         }
+
         throw new NotSupportedException();
     }
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
@@ -982,6 +1011,7 @@ public partial class QsSequence
                     Total.AddComponent((QsScalar)GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6));
                 }
             }
+
             return Total;
         }
 
@@ -1005,12 +1035,15 @@ public partial class QsSequence
                     Total.AddVector((QsVector)GetElementValue(i, arg0, arg1, arg2, arg3, arg4, arg5, arg6));
                 }
             }
+
             return Total;
         }
+
         if (firstElement is QsMatrix)
         {
             throw new NotImplementedException();
         }
+
         throw new NotSupportedException();
     }
 

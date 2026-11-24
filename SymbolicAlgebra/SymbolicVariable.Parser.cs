@@ -167,6 +167,7 @@ public partial class SymbolicVariable
                                 // negative sign
                                 NextGroupIsNegativeSign = true;
                             }
+
                             TokenBuilder.Clear();
                         }
                         else
@@ -192,6 +193,7 @@ public partial class SymbolicVariable
 
                                 NextGroupIsNegativeSign = false;
                             }
+
                             Inner = false;
                         }
                         else
@@ -218,6 +220,7 @@ public partial class SymbolicVariable
                 {
                     PLevels.Push(1);
                 }
+
                 if (expr[ix] == ')')
                 {
                     PLevels.Pop();
@@ -262,6 +265,7 @@ public partial class SymbolicVariable
         {
             ep.SymbolicExpression = new SymbolicVariable(TokenBuilder.ToString());
         }
+
         TokenBuilder = null;
 
 
@@ -362,6 +366,7 @@ public partial class SymbolicVariable
                 v = v.Differentiate(rp);
                 p--;
             }
+
             return v;
         }
 
@@ -376,6 +381,7 @@ public partial class SymbolicVariable
                 v = v.Integrate(rp);
                 p--;
             }
+
             return v;
         }
 
@@ -596,6 +602,7 @@ public partial class SymbolicVariable
                             {
                                 tfparams[ixf] = ParseDynamicExpression(ref parameters, pss[ixf]);
                             }
+
                             ep.DynamicExpression = Expression.Call(targetfunction, tfparams);
                         }
                         else
@@ -715,6 +722,7 @@ public partial class SymbolicVariable
                 {
                     PLevels.Push(1);
                 }
+
                 if (expression[ix] == ')')
                 {
                     PLevels.Pop();

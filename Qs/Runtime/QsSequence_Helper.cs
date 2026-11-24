@@ -18,6 +18,7 @@ public partial class QsSequence
             {
                 gg += v.ToString(CultureInfo.InvariantCulture).Trim() + ": " + base[v].ElementDeclaration + "; ";
             }
+
             return _SequenceDeclaration + " ..> " + gg;
         }
         set => _SequenceDeclaration = value;
@@ -336,6 +337,7 @@ public partial class QsSequence
                     else
                         ix++;
                 }
+
                 seqoIndex++;
             }
 

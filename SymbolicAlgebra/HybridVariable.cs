@@ -25,6 +25,7 @@ internal struct HybridVariable
                 nhv.SymbolicVariable = null;
             }
         }
+
         return nhv;
     }
 
@@ -46,6 +47,7 @@ internal struct HybridVariable
             nhv.NumericalVariable = nhv.SymbolicVariable.Coeffecient;
             nhv.SymbolicVariable = null;
         }
+
         return nhv;
     }
 

@@ -232,6 +232,7 @@ public partial class Unit : ICloneable
             unit.UnitExponent = 0 - UnitExponent;
             unit.UnitDimension = unit.UnitDimension.Invert();
         }
+
         return unit;
     }
 
@@ -297,6 +298,7 @@ public partial class Unit : ICloneable
             Quantity = new DerivedQuantity<T>(UnitDimension);
 
         }
+
         Quantity.Unit = this;
 
         Quantity.Value = value;
@@ -348,6 +350,7 @@ public partial class Unit : ICloneable
                     ns = MixedSystem;
                     break;
                 }
+
                 suidx++;
             }
 

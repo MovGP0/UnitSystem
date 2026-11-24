@@ -38,6 +38,7 @@ public partial class SymbolicVariable
                 var positive_b = b.Clone();
                 a_b.ExtraTerms.Add(new ExtraTerm { Term = positive_b, Negative = false });
             }
+
             AdjustZeroCoeffecientTerms(ref a_b);
             return a_b;
 

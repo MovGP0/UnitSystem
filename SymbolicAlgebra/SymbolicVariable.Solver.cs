@@ -56,6 +56,7 @@ public partial class SymbolicVariable
                     break;
                 }
             }
+
             AdjustZeroCoeffecientTerms(ref RestTerm);
         }
 
@@ -127,6 +128,7 @@ public partial class SymbolicVariable
                 }
             }
         }
+
         return cf;
     }
 
@@ -155,6 +157,7 @@ public partial class SymbolicVariable
                 }
             }
         }
+
         return cf;
     }
 }

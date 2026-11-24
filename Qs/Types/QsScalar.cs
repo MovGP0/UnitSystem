@@ -1009,6 +1009,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             Total.AddRow(row.ToArray());
         }
+
         return Total;
     }
 
@@ -1031,6 +1032,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             Total.AddRow(row.ToArray());
         }
+
         return Total;
     }
 
@@ -1053,6 +1055,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             Total.AddRow(row.ToArray());
         }
+
         return Total;
     }
 
@@ -1133,12 +1136,14 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return AddVector(b);
 
         }
+
         if (value is QsText)
         {
             var text = value as QsText;
             var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
             return AddOperation(qt);
         }
+
         if (value is QsFunction)
         {
             if (ScalarType == ScalarTypes.SymbolicQuantity)
@@ -1149,6 +1154,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             throw new NotImplementedException("Adding QsScalar[" + ScalarType + "] from QsFunction is not implemented yet");
         }
+
         throw new NotImplementedException("Adding QsScalar to " + value.GetType().Name + " is not implemented yet");
     }
 
@@ -1171,17 +1177,20 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return SubtractVector(b);
 
         }
+
         if (value is QsMatrix)
         {
             var m = value as QsMatrix;
             return SubtractMatrix(m);
         }
+
         if (value is QsText)
         {
             var text = value as QsText;
             var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
             return SubtractOperation(qt);
         }
+
         if (value is QsFunction)
         {
             if (ScalarType == ScalarTypes.SymbolicQuantity)
@@ -1192,6 +1201,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             throw new NotImplementedException("Subtracting QsScalar[" + ScalarType + "] from QsFunction is not implemented yet");
         }
+
         throw new NotImplementedException("Subtracting QsScalar from " + value.GetType().Name + " is not implemented yet");
     }
 
@@ -1222,17 +1232,20 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             return MultiplyVector(b);
         }
+
         if (value is QsMatrix)
         {
             var m = value as QsMatrix;
             return MultiplyMatrix(m);
         }
+
         if (value is QsText)
         {
             var text = value as QsText;
             var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
             return MultiplyOperation(qt);
         }
+
         if (value is QsFunction)
         {
             if (ScalarType == ScalarTypes.SymbolicQuantity)
@@ -1243,6 +1256,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             throw new NotImplementedException("Multiplying QsScalar[" + ScalarType + "] from QsFunction is not implemented yet");
         }
+
         throw new NotImplementedException("Multiplying QsScalar with " + value.GetType().Name + " is not implemented yet");
     }
 
@@ -1269,10 +1283,12 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             return fb;
         }
+
         if (_ScalarType == ScalarTypes.FunctionQuantity && value is QsScalar scalar && scalar.ScalarType == ScalarTypes.SymbolicQuantity)
         {
             return ((QsFunction)FunctionQuantity.Value.DotProductOperation(scalar)).ToQuantity().ToScalar();
         }
+
         return MultiplyOperation(value);
     }
 
@@ -1308,6 +1324,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             var qt = QsEvaluator.CurrentEvaluator.SilentEvaluate(text.Text) as QsValue;
             return DivideOperation(qt);
         }
+
         if (value is QsFunction)
         {
             if (ScalarType == ScalarTypes.SymbolicQuantity)
@@ -1318,6 +1335,7 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             throw new NotImplementedException("Dividing QsScalar[" + ScalarType + "] from QsFunction is not implemented yet");
         }
+
         throw new NotImplementedException("Dividing QsScalar over " + value.GetType().Name + " is not implemented yet");
     }
 
@@ -1435,11 +1453,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return ((QsScalar)AbsOperation()).NumericalQuantity < mag.NumericalQuantity;
 
         }
+
         if (value is QsMatrix)
         {
             var matrix = (QsMatrix)value;
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -1465,11 +1485,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             return ((QsScalar)AbsOperation()).NumericalQuantity > mag.NumericalQuantity;
         }
+
         if (value is QsMatrix)
         {
             var matrix = (QsMatrix)value;
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -1494,11 +1516,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             return ((QsScalar)AbsOperation()).NumericalQuantity <= mag.NumericalQuantity;
         }
+
         if (value is QsMatrix)
         {
             var matrix = (QsMatrix)value;
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -1523,11 +1547,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             return ((QsScalar)AbsOperation()).NumericalQuantity >= mag.NumericalQuantity;
         }
+
         if (value is QsMatrix)
         {
             var matrix = (QsMatrix)value;
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -1575,11 +1601,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             return ((QsScalar)AbsOperation()).NumericalQuantity == mag.NumericalQuantity;
         }
+
         if (value is QsMatrix)
         {
             var matrix = (QsMatrix)value;
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 
@@ -1604,11 +1632,13 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
 
             return ((QsScalar)AbsOperation()).NumericalQuantity != mag.NumericalQuantity;
         }
+
         if (value is QsMatrix)
         {
             var matrix = (QsMatrix)value;
             throw new NotSupportedException();
         }
+
         throw new NotSupportedException();
     }
 

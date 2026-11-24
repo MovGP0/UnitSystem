@@ -58,6 +58,7 @@ public static partial class QsMath
                 {
                     rm.AddVector((QsVector)Log(QsParameter.MakeParameter(vecRow, string.Empty)));
                 }
+
                 return rm;
             }
 

@@ -28,6 +28,7 @@ public partial class SymbolicVariable
                     var value = string.Format("-Sin({0})^2-Cos({0})^2+1", Parameter);
                     _NegativeSimplifyValue = Parse(value);
                 }
+
                 return _NegativeSimplifyValue;
             }
         }

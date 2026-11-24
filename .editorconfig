@@ -12,7 +12,7 @@ root = true
 dotnet_diagnostic.RCS0003.severity = warning
 
 # Separate a closing brace from the next statement
-# dotnet_diagnostic.RCS0008.severity = warning
+dotnet_diagnostic.RCS0008.severity = warning
 
 # Separate a declaration from the next documentation comment
 # dotnet_diagnostic.RCS0009.severity = warning

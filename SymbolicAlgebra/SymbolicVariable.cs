@@ -388,6 +388,7 @@ public partial class SymbolicVariable
                         log = true;
                         #endregion
                     }
+
                     if (log)
                     {
                     }
@@ -1182,6 +1183,7 @@ public partial class SymbolicVariable
                         result += "+" + sv.FormSymbolTextValue();
 
                     }
+
                     if (!sv.DividedTerm.IsOne) result += "/(" + sv.DividedTerm.FinalText() + ")";
                 }
             }
@@ -1361,6 +1363,7 @@ public partial class SymbolicVariable
             {
                 if (!rv.Value.IsZero) return false;
             }
+
             return true;
         }
         else
@@ -1386,6 +1389,7 @@ public partial class SymbolicVariable
 
             }
         }
+
         return false;
     }
 
@@ -1433,6 +1437,7 @@ public partial class SymbolicVariable
                 }
             }
         }
+
         return false;
     }
 
@@ -1540,6 +1545,7 @@ public partial class SymbolicVariable
                 svar._Symbol = ""; //make sure to empty the symbol because its power is zero
             }
         }
+
         foreach (var r in svar.AddedTerms.Values) AdjustZeroPowerTerms(r);
     }
 
@@ -1657,6 +1663,7 @@ public partial class SymbolicVariable
                 if (_AddedTerms.Count > 0)
                     return false;
             }
+
             return true;
         }
     }
@@ -1769,6 +1776,7 @@ public partial class SymbolicVariable
                     // will conduct the test again of current fs[i] to see if it is a function or not.
                     // so we are adding undiscovered symbols to later passes when i is increasing after this loop.
                 }
+
                 i++;
             }
 
@@ -1856,6 +1864,7 @@ public partial class SymbolicVariable
                     symbols.Add(ss);
             }
         }
+
         symbols.Sort();
         return symbols.ToArray();
 
