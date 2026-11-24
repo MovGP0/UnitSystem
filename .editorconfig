@@ -1014,7 +1014,7 @@ dotnet_diagnostic.CA2027.severity = warning
 dotnet_diagnostic.CA2028.severity = warning
 
 # Specify marshaling for P/Invoke string arguments
-# dotnet_diagnostic.CA2101.severity = warning
+dotnet_diagnostic.CA2101.severity = warning
 
 # Rethrow to preserve stack details
 dotnet_diagnostic.CA2200.severity = warning
