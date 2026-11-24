@@ -667,9 +667,7 @@ class QsVar
             else if (tokens[ix].TokenClassType == typeof(LoopBodyToken))
             {
                 // get the count of the loop
-                var v = Evaluator.GetVariable(tokens[ix][3].TokenValue) as QsValue;
-
-                if (v == null)
+                if (!(Evaluator.GetVariable(tokens[ix][3].TokenValue) is QsValue v))
                 {
                     throw new QsException(tokens[ix][3].TokenValue + " doesn't exist in memoir");
                 }
@@ -1839,9 +1837,7 @@ class QsVar
         }
 
         // global mode
-        var value = QsEvaluator.GetScopeValueOrNull(Scope, ns, valName) as QsValue;
-
-        if (value == null)
+        if (!(QsEvaluator.GetScopeValueOrNull(Scope, ns, valName) is QsValue value))
         {
             // we are in global code context
             //   or we didn't find the variable name in the parameters list of the function

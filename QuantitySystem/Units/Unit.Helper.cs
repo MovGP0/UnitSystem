@@ -387,9 +387,7 @@ public partial class Unit
 
                     //then it should be MetricUnit otherwise die :)
 
-                    var u = FindUnit(upart) as MetricUnit;
-
-                    if (u == null)
+                    if (!(FindUnit(upart) is MetricUnit u))
                     {
                         goto nounit;
                     }

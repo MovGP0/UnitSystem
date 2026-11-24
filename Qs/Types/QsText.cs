@@ -122,8 +122,7 @@ public partial class QsText(string text) : QsValue
 
     public override bool Equality(QsValue value)
     {
-        var text = value as QsText;
-        if (text==null)
+        if (!(value is QsText text))
         {
             return false;
         }
