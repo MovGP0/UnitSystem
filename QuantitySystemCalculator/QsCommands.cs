@@ -3,6 +3,8 @@ using Qs.Runtime;
 using Microsoft.Scripting.Hosting;
 using QuantitySystem.Units;
 
+namespace QuantitySystemCalculator;
+
 public static class QsCommands
 {
     public static bool CommandProcessed;

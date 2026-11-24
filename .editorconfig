@@ -338,7 +338,7 @@ dotnet_diagnostic.RCS1107.severity = warning
 dotnet_diagnostic.RCS1108.severity = warning
 
 # Declare type inside namespace
-# dotnet_diagnostic.RCS1110.severity = warning
+dotnet_diagnostic.RCS1110.severity = warning
 
 # Add braces to switch section with multiple statements
 # dotnet_diagnostic.RCS1111.severity = none

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Scripting.Hosting.Shell;
 
+namespace QuantitySystemCalculator;
+
 public sealed class QsCommandLine : CommandLine
 {
     protected override string Prompt => "Qs> ";

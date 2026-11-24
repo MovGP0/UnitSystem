@@ -1,5 +1,7 @@
 ﻿using Microsoft.Scripting.Hosting.Shell;
 
+namespace QuantitySystemCalculator;
+
 internal sealed class QsHost : ConsoleHost
 {
     protected override Type Provider
