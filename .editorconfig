@@ -939,7 +939,7 @@ dotnet_diagnostic.CA1869.severity = warning
 dotnet_diagnostic.CA1870.severity = warning
 
 # Do not pass a nullable struct to 'ArgumentNullException.ThrowIfNull'
-# dotnet_diagnostic.CA1871.severity = warning
+dotnet_diagnostic.CA1871.severity = warning
 
 # Prefer 'Convert.ToHexString' and 'Convert.ToHexStringLower' over call chains based on 'BitConverter.ToString'
 # dotnet_diagnostic.CA1872.severity = warning
