@@ -888,7 +888,7 @@ dotnet_diagnostic.CA1846.severity = warning
 dotnet_diagnostic.CA1847.severity = warning
 
 # Prefer static 'HashData' method over 'ComputeHash'
-# dotnet_diagnostic.CA1850.severity = warning
+dotnet_diagnostic.CA1850.severity = warning
 
 # Unnecessary call to 'Dictionary.ContainsKey(key)'
 # dotnet_diagnostic.CA1853.severity = warning
