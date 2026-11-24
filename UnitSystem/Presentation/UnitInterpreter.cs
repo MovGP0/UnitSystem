@@ -1,10 +1,13 @@
-﻿using UnitSystem.Extensions;
+﻿using UnitSystem.Dimensions;
+using UnitSystem.Extensions;
 using UnitSystem.Prefixes;
 
 namespace UnitSystem.Presentation;
 
 internal sealed class UnitInterpreter
 {
+    internal const string CanonicalPrefix = "@unit ";
+
     private readonly IUnitSystem _system;
     private readonly KnownUnit[] _baseUnits;
     private readonly Dictionary<string, KnownUnit> _prefixedBases;
@@ -31,6 +34,31 @@ internal sealed class UnitInterpreter
     }
 
     public string Display(Unit unit)
+    {
+        var expression = DisplayExpression(unit);
+        if (RoundTrips(expression, unit)) return expression;
+
+        var values = new[]
+        {
+            unit.Factor.ToString("G17", CultureInfo.InvariantCulture),
+            unit.Offset.ToString("G17", CultureInfo.InvariantCulture)
+        }.Concat(unit.Dimension.Select(exponent => exponent.ToString("G9", CultureInfo.InvariantCulture)));
+        return CanonicalPrefix + string.Join(" ", values);
+    }
+
+    private bool RoundTrips(string expression, Unit unit)
+    {
+        try
+        {
+            return Parse(expression) == unit;
+        }
+        catch (Exception exception) when (exception is FormatException or InvalidOperationException or ArgumentOutOfRangeException)
+        {
+            return false;
+        }
+    }
+
+    private string DisplayExpression(Unit unit)
     {
         if (!unit.IsCoherent && unit is KnownUnit known && _system[known.Symbol] == unit)
         {
@@ -106,6 +134,7 @@ internal sealed class UnitInterpreter
         Check.Argument(unitExpression, nameof(unitExpression)).IsNotNull();
         var expression = unitExpression.Trim();
         if (expression.Length == 0) return _system.NoUnit;
+        if (expression.StartsWith(CanonicalPrefix, StringComparison.Ordinal)) return ParseCanonical(expression);
         if (_system[expression] is { } known) return known;
 
         double factor = 1, offset = 0;
@@ -136,13 +165,40 @@ internal sealed class UnitInterpreter
 
         if (factor.Equals(1.0) && offset.Equals(0.0)) return unit;
         Check.EnsureAbsoluteUnit(unit);
+        return CreateParsedUnit(unitExpression, factor * unit.Factor, offset, unit.Dimension);
+    }
+
+    private Unit ParseCanonical(string expression)
+    {
+        var values = expression.Substring(CanonicalPrefix.Length).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        if (values.Length < 2
+            || !double.TryParse(values[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var factor)
+            || !double.TryParse(values[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var offset))
+        {
+            throw InvalidExpression(expression);
+        }
+
+        var exponents = new float[values.Length - 2];
+        for (var index = 0; index < exponents.Length; index++)
+        {
+            if (!float.TryParse(values[index + 2], NumberStyles.Float, CultureInfo.InvariantCulture, out exponents[index]))
+            {
+                throw InvalidExpression(expression);
+            }
+        }
+
+        return CreateParsedUnit(expression, factor, offset, new Dimension(exponents));
+    }
+
+    private Unit CreateParsedUnit(string expression, double factor, double offset, Dimension dimension)
+    {
         try
         {
-            return _system.CreateUnit(factor * unit.Factor, offset, unit.Dimension);
+            return _system.CreateUnit(factor, offset, dimension);
         }
         catch (ArgumentOutOfRangeException exception)
         {
-            throw new FormatException(Messages.UnitExpressionInvalid.FormatWith(unitExpression), exception);
+            throw new FormatException(Messages.UnitExpressionInvalid.FormatWith(expression), exception);
         }
     }
 

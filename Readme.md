@@ -29,6 +29,10 @@ produces a difference. Adding a difference to a point produces a point.
 Use `Pow(exponent)` on units, dimensions, and scalar quantities in C#. Unit strings
 continue to use `^` for exponents, such as `m^2`.
 
+Unit formatting uses readable symbols and expressions where they round-trip in the
+same catalog. If a custom symbol would change the parsed result, formatting emits
+`@unit <scale> <offset> <exponents...>` using the catalog's base-unit order.
+
 ## Open issues
 
 - Add support for Siano's extensions to support units with directed dimensions

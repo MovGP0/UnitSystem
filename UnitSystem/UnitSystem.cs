@@ -225,7 +225,8 @@ internal sealed class UnitSystem : IUnitSystem
 
     private void EnsureSymbolAvailable(string symbol)
     {
-        if (string.IsNullOrWhiteSpace(symbol) || symbol == "1")
+        if (string.IsNullOrWhiteSpace(symbol) || symbol == "1"
+            || symbol.Trim().StartsWith(UnitInterpreter.CanonicalPrefix, StringComparison.Ordinal))
         {
             throw new ArgumentException("A unit requires a nonempty, nonreserved symbol.", nameof(symbol));
         }

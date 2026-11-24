@@ -153,6 +153,26 @@ public sealed class UnitSystemRegressionTests
     }
 
     [TestMethod]
+    public void ShouldRoundTripProductsAndPrefixesShadowedByRegisteredSymbols()
+    {
+        var system = UnitSystemFactory.CreateSystem("test");
+        var length = system.AddBaseUnit("m", "metre");
+        var time = system.AddBaseUnit("s", "second");
+        var product = length * time;
+        var shadow = system.AddDerivedUnit("m s", "custom product", 2 * product);
+
+        system.Parse("m s").ShouldBeSameAs(shadow);
+        system.Parse(system.Display(product)).ShouldBe(product);
+
+        system.AddBaseUnit("dam", "another base unit", inherentPrefix: "da");
+        var decimetre = MetricPrefix.Deci * length;
+        system.Parse("dm").HasSameDimension(decimetre).ShouldBeFalse();
+        system.Parse(system.Display(decimetre)).ShouldBe(decimetre);
+
+        Should.Throw<ArgumentException>(() => system.AddBaseUnit("@unit 1 0", "reserved symbol"));
+    }
+
+    [TestMethod]
     public void ShouldRefreshCustomRegistrationsWithoutPartialChangesOnFailure()
     {
         var system = UnitSystemFactory.CreateSystem("test");
