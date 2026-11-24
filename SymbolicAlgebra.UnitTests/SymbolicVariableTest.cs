@@ -1183,7 +1183,7 @@ public class SymbolicVariableTest
     }
 
     [TestCase("z^2*x^2", "(x^2+y^2+z^2)^3", "z^2*x^2/(x^6+3*y^2*x^4+3*z^2*x^4+3*y^4*x^2+6*z^2*y^2*x^2+3*z^4*x^2+y^6+3*z^2*y^4+3*z^4*y^2+z^6)")]
-    [TestCase("z^2*x^2/(x^2+y^2+z^2)^3", "sqrt(1-z^2/(x^2+y^2+z^2))^2", "z^2*x^2/(x^6+3*y^2*x^4+3*z^2*x^4+3*y^4*x^2+6*z^2*y^2*x^2+3*z^4*x^2+y^6+3*z^2*y^4+3*z^4*y^2+z^6+(-x^6*z^2-3*y^2*x^4*z^2-3*z^4*x^4-3*y^4*x^2*z^2-6*z^4*y^2*x^2-3*z^6*x^2-y^6*z^2-3*z^4*y^4-3*z^6*y^2-z^8)/(x^2+y^2+z^2)")]
+    [TestCase("z^2*x^2/(x^2+y^2+z^2)^3", "sqrt(1-z^2/(x^2+y^2+z^2))^2", "z^2*x^2/(x^6+3*y^2*x^4+3*z^2*x^4+3*y^4*x^2+6*z^2*y^2*x^2+3*z^4*x^2+y^6+3*z^2*y^4+3*z^4*y^2+z^6+(-x^6*z^2-3*y^2*x^4*z^2-3*z^4*x^4-3*y^4*x^2*z^2-6*z^4*y^2*x^2-3*z^6*x^2-y^6*z^2-3*z^4*y^4-3*z^6*y^2-z^8)/(x^2+y^2+z^2))")]
     public void DivisionTest(string numerator, string denominator, string expectedResult)
     {
         var t1 = SymbolicVariable.Parse(numerator);
