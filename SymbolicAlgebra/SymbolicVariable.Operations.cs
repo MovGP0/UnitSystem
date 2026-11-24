@@ -10,7 +10,8 @@ public partial class SymbolicVariable
 
         public bool Divided = divided;
 
-        public MultipliedTerm(SymbolicVariable term) : this(term, false)
+        public MultipliedTerm(SymbolicVariable term)
+            : this(term, false)
         {
         }
     }

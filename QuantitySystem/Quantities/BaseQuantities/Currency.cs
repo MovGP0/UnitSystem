@@ -5,7 +5,8 @@ public class Currency<T> : AnyQuantity<T>
     /// <summary>
     /// Create Money object with dimension equals 1 M^1.
     /// </summary>
-    public Currency() : base(1)
+    public Currency()
+        : base(1)
     {
 
     }
@@ -14,7 +15,8 @@ public class Currency<T> : AnyQuantity<T>
     /// Create Mass object with the desired dimension.
     /// </summary>
     /// <param name="exponent">exponent of created Quantity</param>
-    public Currency(float exponent) : base(exponent) { }
+    public Currency(float exponent)
+        : base(exponent) { }
 
 
     private static QuantityDimension _Dimension = new()

@@ -2,7 +2,8 @@
 
 public class AmountOfSubstance<T>(float exponent) : AnyQuantity<T>(exponent)
 {
-    public AmountOfSubstance() : this(1) { }
+    public AmountOfSubstance()
+        : this(1) { }
 
     private static readonly QuantityDimension dimension = new(0, 0, 0, 0, 0, 1, 0);
 

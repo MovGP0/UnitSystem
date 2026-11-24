@@ -13,7 +13,8 @@ public class QsParameterNotFoundException : QsException
         // Add any type-specific logic.
     }
 
-    public QsParameterNotFoundException(string message, Exception innerException) :
+    public QsParameterNotFoundException(string message, Exception innerException)
+        :
         base(message, innerException)
     {
         // Add any type-specific logic for inner exceptions.

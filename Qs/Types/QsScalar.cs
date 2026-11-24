@@ -143,7 +143,8 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         }
     }
 
-    public QsScalar() : this(ScalarTypes.NumericalQuantity)
+    public QsScalar()
+        : this(ScalarTypes.NumericalQuantity)
     {
     }
 

@@ -56,7 +56,7 @@ dotnet_diagnostic.RCS0028.severity = none
 roslynator_conditional_operator_new_line = before
 
 # Start constructor initializers on their own lines
-# dotnet_diagnostic.RCS0029.severity = warning
+dotnet_diagnostic.RCS0029.severity = warning
 
 # Start embedded statements on their own lines
 # dotnet_diagnostic.RCS0030.severity = warning

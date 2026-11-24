@@ -7,12 +7,14 @@ public class QsMatrixException : QsException
       // Add any type-specific logic, and supply the default message.
    }
 
-   public QsMatrixException(string message): base(message)
+   public QsMatrixException(string message)
+      : base(message)
    {
       // Add any type-specific logic.
    }
 
-   public QsMatrixException(string message, Exception innerException):
+   public QsMatrixException(string message, Exception innerException)
+      :
       base (message, innerException)
    {
       // Add any type-specific logic for inner exceptions.

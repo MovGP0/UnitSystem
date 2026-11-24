@@ -7,7 +7,8 @@ public class Length<T> : AnyQuantity<T>
 
     public TensorRank LengthRank { get; set; }
 
-    public Length() : base(1)
+    public Length()
+        : base(1)
     {
         LengthRank = TensorRank.Scalar;
     }

@@ -7,12 +7,14 @@
 /// <typeparam name="T"></typeparam>
 public class Displacement<T> : Length<T>
 {
-    public Displacement() : base(1)
+    public Displacement()
+        : base(1)
     {
         LengthRank = TensorRank.Vector;
     }
 
-    public Displacement(float exponent) : base(exponent)
+    public Displacement(float exponent)
+        : base(exponent)
     {
         LengthRank = TensorRank.Vector;
     }

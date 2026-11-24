@@ -7,12 +7,14 @@ public class SymbolicException : Exception
       // Add any type-specific logic, and supply the default message.
    }
 
-   public SymbolicException(string message): base(message)
+   public SymbolicException(string message)
+      : base(message)
    {
       // Add any type-specific logic.
    }
 
-   public SymbolicException(string message, Exception innerException):
+   public SymbolicException(string message, Exception innerException)
+      :
       base (message, innerException)
    {
       // Add any type-specific logic for inner exceptions.

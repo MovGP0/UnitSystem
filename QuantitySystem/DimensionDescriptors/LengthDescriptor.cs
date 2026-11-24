@@ -7,7 +7,8 @@ public struct LengthDescriptor(float normalExponent, float polarExponent, float 
         IComparable<LengthDescriptor>,
         IComparable
 {
-    public LengthDescriptor(float normalExponent, float polarExponent): this(normalExponent, polarExponent, 0)
+    public LengthDescriptor(float normalExponent, float polarExponent)
+        : this(normalExponent, polarExponent, 0)
     {
     }
 

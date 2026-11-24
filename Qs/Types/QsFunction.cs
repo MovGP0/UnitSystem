@@ -387,7 +387,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     }
 
 
-    public QsFunction(string functionBody) : this(functionBody, false)
+    public QsFunction(string functionBody)
+        : this(functionBody, false)
     {
     }
 

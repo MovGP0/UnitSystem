@@ -18,7 +18,8 @@ public class UnitNotFoundException : UnitException
         // Add any type-specific logic.
     }
 
-    public UnitNotFoundException(string message, Exception innerException):
+    public UnitNotFoundException(string message, Exception innerException)
+        :
         base (message, innerException)
     {
         // Add any type-specific logic for inner exceptions.

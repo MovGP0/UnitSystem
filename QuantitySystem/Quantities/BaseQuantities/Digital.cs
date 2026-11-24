@@ -2,7 +2,8 @@
 
 public class Digital<T>(float exponent) : AnyQuantity<T>(exponent)
 {
-    public Digital() : this(1) { }
+    public Digital()
+        : this(1) { }
 
     private static QuantityDimension _Dimension = new()
     {

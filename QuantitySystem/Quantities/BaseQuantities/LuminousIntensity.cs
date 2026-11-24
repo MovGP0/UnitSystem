@@ -2,7 +2,8 @@
 
 public class LuminousIntensity<T>(float exponent) : AnyQuantity<T>(exponent)
 {
-    public LuminousIntensity() : this(1) { }
+    public LuminousIntensity()
+        : this(1) { }
 
     private static QuantityDimension _Dimension = new(0, 0, 0, 0, 0, 0, 1);
 

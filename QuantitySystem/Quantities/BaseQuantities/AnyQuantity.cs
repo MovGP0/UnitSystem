@@ -10,7 +10,8 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
 {
     #region constructors
 
-    protected AnyQuantity() : this(1) { }
+    protected AnyQuantity()
+        : this(1) { }
 
     #endregion
 
