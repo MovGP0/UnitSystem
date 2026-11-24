@@ -383,10 +383,7 @@ public partial class Unit
     {
         SubUnits = [];
 
-        foreach (var un in units)
-        {
-            SubUnits.Add(un);
-        }
+        SubUnits.AddRange(units);
 
         SubUnits = GroupUnits(SubUnits); //group similar units
 

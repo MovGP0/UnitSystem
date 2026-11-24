@@ -60,10 +60,7 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     /// <param name="vector"></param>
     public void AddComponents(QsVector vector)
     {
-        foreach (var s in vector)
-        {
-            ListStorage.Add(s);
-        }
+        ListStorage.AddRange(vector);
     }
 
     #endregion
