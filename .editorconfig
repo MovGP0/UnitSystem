@@ -45,7 +45,7 @@ roslynator_block_braces_style = multi_line
 dotnet_diagnostic.RCS0023.severity = warning
 
 # Start each full accessor on its own line
-# dotnet_diagnostic.RCS0025.severity = warning
+dotnet_diagnostic.RCS0025.severity = warning
 
 # Control where wrapped binary operators appear
 # dotnet_diagnostic.RCS0027.severity = warning
