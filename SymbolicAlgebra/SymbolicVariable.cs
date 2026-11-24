@@ -1884,7 +1884,7 @@ public partial class SymbolicVariable
             for (var i = 0; i < fs.Count; i++)
             {
                 // this loop extract the inner parameters from the enclosed function calls as f(g(n(x)))
-                while (FunctionRegex.Match(fs[i]).Success)
+                while (FunctionRegex.IsMatch(fs[i]))
                 {
                     fs[i] = FunctionRegex.Match(fs[i]).Groups["parameters"].Value;
 

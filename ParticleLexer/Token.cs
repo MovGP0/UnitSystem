@@ -422,7 +422,7 @@ public sealed partial class Token : IEnumerable<Token>
             loopHead:
             var tok = childTokens[tokIndex];
 
-            var Matched = rx.Match(merged.TokenValue + tok.TokenValue).Success;
+            var Matched = rx.IsMatch(merged.TokenValue + tok.TokenValue);
 
             if (Matched)
             {

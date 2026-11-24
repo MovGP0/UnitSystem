@@ -240,7 +240,7 @@ public partial class Unit
             if (ua != null)
             {
                 // units are case sensitive
-                if (Regex.Match(ua.Symbol, "^" + unit + "$", RegexOptions.Singleline).Success)
+                if (Regex.IsMatch(ua.Symbol, "^" + unit + "$", RegexOptions.Singleline))
                 {
                     var u = (Unit)Activator.CreateInstance(unitType)!;
 

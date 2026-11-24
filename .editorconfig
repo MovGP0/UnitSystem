@@ -948,7 +948,7 @@ dotnet_diagnostic.CA1872.severity = warning
 dotnet_diagnostic.CA1873.severity = warning
 
 # Use 'Regex.IsMatch'
-# dotnet_diagnostic.CA1874.severity = warning
+dotnet_diagnostic.CA1874.severity = warning
 
 # Use 'Regex.Count'
 # dotnet_diagnostic.CA1875.severity = warning
