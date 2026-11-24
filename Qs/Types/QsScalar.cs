@@ -1262,18 +1262,18 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue AddOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return AddScalar((QsScalar)value);
+            return AddScalar(qsScalar);
         }
 
         if (value is QsVector)
@@ -1305,18 +1305,18 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue SubtractOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return SubtractScalar((QsScalar)value);
+            return SubtractScalar(qsScalar);
         }
 
         if (value is QsVector)
@@ -1354,9 +1354,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue MultiplyOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -1414,9 +1414,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue DotProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -1448,9 +1448,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue CrossProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -1468,18 +1468,18 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue DivideOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return DivideScalar((QsScalar)value);
+            return DivideScalar(qsScalar);
         }
 
         if (value is QsText text)
@@ -1504,23 +1504,23 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue PowerOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
             if (ScalarType == ScalarTypes.QsOperation)
             {
                 return Operation.PowerOperation(vl);
             }
 
-            return PowerScalar((QsScalar)value);
+            return PowerScalar(qsScalar);
         }
 
         throw new NotImplementedException("Raising QsScalar to power of " + value.GetType().Name + " is not implemented yet");
@@ -1559,9 +1559,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue ModuloOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -1571,9 +1571,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
         // this is tricky because if you divide 5<m>/2<s> you got Speed 2.5<m/s>
         //   but the modulus will be 5<m> / 2<s> = 2<m/s> + 1<m>
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return ModuloScalar((QsScalar)value);
+            return ModuloScalar(qsScalar);
         }
 
         throw new NotImplementedException("Modulo of QsScalar over " + value.GetType().Name + " is not implemented yet");
@@ -1582,9 +1582,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue TensorProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -1610,24 +1610,24 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override bool LessThan(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            var scalar = (QsScalar)value;
+            var scalar = qsScalar;
             return NumericalQuantity < scalar.NumericalQuantity;
         }
 
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
-            var vector = (QsVector)value;
+            var vector = qsVectors;
 
             //compare with the magnitude of the vector
             var mag = vector.Magnitude();
@@ -1635,9 +1635,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return ((QsScalar)AbsOperation()).NumericalQuantity < mag.NumericalQuantity;
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            var matrix = (QsMatrix)value;
+            var matrix = qsMatrixes;
             throw new NotSupportedException();
         }
 
@@ -1647,24 +1647,24 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override bool GreaterThan(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            var scalar = (QsScalar)value;
+            var scalar = qsScalar;
             return NumericalQuantity > scalar.NumericalQuantity;
         }
 
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
-            var vector = (QsVector)value;
+            var vector = qsVectors;
 
             //compare with the magnitude of the vector
             var mag = vector.Magnitude();
@@ -1672,9 +1672,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return ((QsScalar)AbsOperation()).NumericalQuantity > mag.NumericalQuantity;
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            var matrix = (QsMatrix)value;
+            var matrix = qsMatrixes;
             throw new NotSupportedException();
         }
 
@@ -1684,33 +1684,33 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override bool LessThanOrEqual(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            var scalar = (QsScalar)value;
+            var scalar = qsScalar;
             return NumericalQuantity <= scalar.NumericalQuantity;
         }
 
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
-            var vector = (QsVector)value;
+            var vector = qsVectors;
             //compare with the magnitude of the vector
             var mag = vector.Magnitude();
 
             return ((QsScalar)AbsOperation()).NumericalQuantity <= mag.NumericalQuantity;
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            var matrix = (QsMatrix)value;
+            var matrix = qsMatrixes;
             throw new NotSupportedException();
         }
 
@@ -1720,33 +1720,33 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override bool GreaterThanOrEqual(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            var scalar = (QsScalar)value;
+            var scalar = qsScalar;
             return NumericalQuantity >= scalar.NumericalQuantity;
         }
 
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
-            var vector = (QsVector)value;
+            var vector = qsVectors;
             //compare with the magnitude of the vector
             var mag = vector.Magnitude();
 
             return ((QsScalar)AbsOperation()).NumericalQuantity >= mag.NumericalQuantity;
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            var matrix = (QsMatrix)value;
+            var matrix = qsMatrixes;
             throw new NotSupportedException();
         }
 
@@ -1756,9 +1756,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override bool Equality(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -1770,9 +1770,9 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return false;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            var scalar = (QsScalar)value;
+            var scalar = qsScalar;
             if (ScalarType == scalar.ScalarType)
             {
                 switch(ScalarType)
@@ -1803,18 +1803,18 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
             return false;
         }
 
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
-            var vector = (QsVector)value;
+            var vector = qsVectors;
             //compare with the magnitude of the vector
             var mag = vector.Magnitude();
 
             return ((QsScalar)AbsOperation()).NumericalQuantity == mag.NumericalQuantity;
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            var matrix = (QsMatrix)value;
+            var matrix = qsMatrixes;
             throw new NotSupportedException();
         }
 
@@ -1824,33 +1824,33 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override bool Inequality(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            var scalar = (QsScalar)value;
+            var scalar = qsScalar;
             return NumericalQuantity != scalar.NumericalQuantity;
         }
 
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
-            var vector = (QsVector)value;
+            var vector = qsVectors;
             //compare with the magnitude of the vector
             var mag = vector.Magnitude();
 
             return ((QsScalar)AbsOperation()).NumericalQuantity != mag.NumericalQuantity;
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            var matrix = (QsMatrix)value;
+            var matrix = qsMatrixes;
             throw new NotSupportedException();
         }
 
@@ -1946,18 +1946,18 @@ public sealed class QsScalar(ScalarTypes scalarType) : QsValue, IConvertible
     public override QsValue DifferentiateOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return DifferentiateScalar((QsScalar)value);
+            return DifferentiateScalar(qsScalar);
         }
 
         return base.DifferentiateOperation(value);

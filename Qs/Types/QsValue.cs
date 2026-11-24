@@ -361,9 +361,9 @@ public abstract class QsValue: IComparable
 
         foreach (var val in values)
         {
-            if (val is QsScalar)
+            if (val is QsScalar qsScalar)
             {
-                vec.AddComponent((QsScalar)val);
+                vec.AddComponent(qsScalar);
             }
             else if (val is QsVector vc)
             {
@@ -432,15 +432,15 @@ public abstract class QsValue: IComparable
                 }
             }
 
-            if (v is QsVector)
+            if (v is QsVector qsVectors)
             {
                 if (m.RowsCount == 0)
                 {
-                    m.AddVector(((QsVector)v).Clone() as QsVector);
+                    m.AddVector(qsVectors.Clone() as QsVector);
                 }
                 else if (m.RowsCount == 1)
                 {
-                    m.Rows[0].AddComponents((QsVector)v);
+                    m.Rows[0].AddComponents(qsVectors);
                 }
                 else
                 {
@@ -448,16 +448,16 @@ public abstract class QsValue: IComparable
                 }
             }
 
-            if (v is QsMatrix)
+            if (v is QsMatrix qsMatrixes)
             {
                 if (m.RowsCount == 0)
                 {
                     m = null;
-                    m = QsMatrix.CopyMatrix((QsMatrix)v);
+                    m = QsMatrix.CopyMatrix(qsMatrixes);
                 }
-                else if (m.RowsCount == ((QsMatrix)v).RowsCount)
+                else if (m.RowsCount == qsMatrixes.RowsCount)
                 {
-                    foreach (var col in ((QsMatrix)v).Columns)
+                    foreach (var col in qsMatrixes.Columns)
                     {
                         m.AddColumnVector(col);
                     }
@@ -505,13 +505,13 @@ public abstract class QsValue: IComparable
 
         foreach (var val in values)
         {
-            if (val is QsVector)
+            if (val is QsVector qsVectors)
             {
-                mat.AddVector((QsVector)val);
+                mat.AddVector(qsVectors);
             }
-            else if (val is QsMatrix)
+            else if (val is QsMatrix qsMatrixes)
             {
-                foreach (var vc in ((QsMatrix)val))
+                foreach (var vc in (qsMatrixes))
                 {
                     mat.AddVector((QsVector)vc);
                 }
@@ -536,13 +536,13 @@ public abstract class QsValue: IComparable
 
         foreach (var val in values)
         {
-            if (val is QsMatrix)
+            if (val is QsMatrix qsMatrixes)
             {
-                tens.AddMatrix((QsMatrix)val);
+                tens.AddMatrix(qsMatrixes);
             }
-            else if (val is QsTensor)
+            else if (val is QsTensor qsTensors)
             {
-                tens.AddInnerTensor((QsTensor)val);
+                tens.AddInnerTensor(qsTensors);
             }
             else
             {

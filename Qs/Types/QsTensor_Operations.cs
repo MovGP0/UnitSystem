@@ -8,9 +8,9 @@ public partial class QsTensor : QsValue
     public override QsValue AddOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -87,9 +87,9 @@ public partial class QsTensor : QsValue
     public override QsValue SubtractOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -166,9 +166,9 @@ public partial class QsTensor : QsValue
     public override QsValue MultiplyOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -199,9 +199,9 @@ public partial class QsTensor : QsValue
             return NewTensor;
         }
 
-        if (value is QsTensor)
+        if (value is QsTensor qsTensors)
         {
-            var tensor = (QsTensor) value;
+            var tensor =  qsTensors;
             if (Order == 1 && tensor.Order == 1)
             {
                 var thisVec = this[0][0];
@@ -318,9 +318,9 @@ public partial class QsTensor : QsValue
     public override QsValue DotProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -329,21 +329,21 @@ public partial class QsTensor : QsValue
 
         QsTensor tensor;
 
-        if (value is QsTensor)
+        if (value is QsTensor qsTensors)
         {
-            tensor = (QsTensor)value;
+            tensor = qsTensors;
         }
-        else if (value is QsMatrix)
+        else if (value is QsMatrix qsMatrixes)
         {
-            tensor = new QsTensor((QsMatrix)value);
+            tensor = new QsTensor(qsMatrixes);
         }
-        else if (value is QsVector)
+        else if (value is QsVector qsVectors)
         {
-            tensor = new QsTensor(new QsMatrix((QsVector)value));
+            tensor = new QsTensor(new QsMatrix(qsVectors));
         }
-        else if (value is QsScalar)
+        else if (value is QsScalar qsScalar)
         {
-            tensor = new QsTensor(new QsMatrix(new QsVector((QsScalar)value)));
+            tensor = new QsTensor(new QsMatrix(new QsVector(qsScalar)));
         }
         else
         {
@@ -541,9 +541,9 @@ public partial class QsTensor : QsValue
     public override QsValue DifferentiateOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {

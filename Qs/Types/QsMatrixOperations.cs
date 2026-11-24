@@ -277,18 +277,18 @@ public partial class QsMatrix : QsValue
     public override QsValue AddOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return AddScalar((QsScalar)value);
+            return AddScalar(qsScalar);
         }
 
         if (value is QsVector)
@@ -296,9 +296,9 @@ public partial class QsMatrix : QsValue
             throw new NotSupportedException();
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            return AddMatrix((QsMatrix)value);
+            return AddMatrix(qsMatrixes);
         }
 
         throw new NotSupportedException();
@@ -307,18 +307,18 @@ public partial class QsMatrix : QsValue
     public override QsValue SubtractOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return SubtractScalar((QsScalar)value);
+            return SubtractScalar(qsScalar);
         }
 
         if (value is QsVector)
@@ -326,9 +326,9 @@ public partial class QsMatrix : QsValue
             throw new NotSupportedException();
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            return SubtractMatrix((QsMatrix)value);
+            return SubtractMatrix(qsMatrixes);
         }
 
         throw new NotSupportedException();
@@ -337,32 +337,32 @@ public partial class QsMatrix : QsValue
     public override QsValue MultiplyOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return MultiplyScalar((QsScalar)value);
+            return MultiplyScalar(qsScalar);
         }
 
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
             // return value is column vector
-            var mvec =  MultiplyMatrix(((QsVector)value).ToCoVectorMatrix());
+            var mvec =  MultiplyMatrix(qsVectors.ToCoVectorMatrix());
 
             // make it ordinary vector again.
             return mvec.Columns[0];
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            return MultiplyMatrix((QsMatrix)value);
+            return MultiplyMatrix(qsMatrixes);
         }
 
         throw new NotSupportedException();
@@ -371,18 +371,18 @@ public partial class QsMatrix : QsValue
     public override QsValue DotProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return MultiplyScalar((QsScalar)value);
+            return MultiplyScalar(qsScalar);
         }
 
         if (value is QsVector)
@@ -406,18 +406,18 @@ public partial class QsMatrix : QsValue
     public override QsValue DivideOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return DivideScalar((QsScalar)value);
+            return DivideScalar(qsScalar);
         }
 
         if (value is QsVector)
@@ -425,9 +425,9 @@ public partial class QsMatrix : QsValue
             throw new NotSupportedException();
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
-            return MultiplyMatrix(((QsMatrix)value).Inverse);
+            return MultiplyMatrix(qsMatrixes.Inverse);
         }
 
         throw new NotSupportedException();
@@ -436,18 +436,18 @@ public partial class QsMatrix : QsValue
     public override QsValue ModuloOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            return ModuloScalar((QsScalar)value);
+            return ModuloScalar(qsScalar);
         }
 
         if (value is QsVector)
@@ -466,9 +466,9 @@ public partial class QsMatrix : QsValue
     public override QsValue PowerOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -512,9 +512,9 @@ public partial class QsMatrix : QsValue
     public override QsValue PowerDotOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
@@ -548,19 +548,19 @@ public partial class QsMatrix : QsValue
     public override QsValue TensorProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsMatrix)
+        if (value is QsMatrix qsMatrixes)
         {
             // Kronecker product
-            var tm = (QsMatrix)value;
+            var tm = qsMatrixes;
 
             var result = new QsMatrix();
 
@@ -607,9 +607,9 @@ public partial class QsMatrix : QsValue
     public override QsValue LeftShiftOperation(QsValue vl)
     {
         QsValue times;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            times = ((QsReference)vl).ContentValue;
+            times = qsReference.ContentValue;
         }
         else
         {
@@ -633,9 +633,9 @@ public partial class QsMatrix : QsValue
     public override QsValue RightShiftOperation(QsValue vl)
     {
         QsValue times;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            times = ((QsReference)vl).ContentValue;
+            times = qsReference.ContentValue;
         }
         else
         {
@@ -759,21 +759,21 @@ public partial class QsMatrix : QsValue
     public override QsValue DifferentiateOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            value = ((QsReference)vl).ContentValue;
+            value = qsReference.ContentValue;
         }
         else
         {
             value = vl;
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
             var n = new QsMatrix();
             foreach (var row in n.Rows)
             {
-                n.AddRow(row.DifferentiateScalar((QsScalar)value).ToArray());
+                n.AddRow(row.DifferentiateScalar(qsScalar).ToArray());
             }
 
             return n;

@@ -284,9 +284,9 @@ public class QsFlowingTuple : QsValue
     public override QsValue LeftShiftOperation(QsValue vl)
     {
         QsValue times;
-        if (vl is QsReference)
+        if (vl is QsReference qsReference)
         {
-            times = ((QsReference)vl).ContentValue;
+            times = qsReference.ContentValue;
         }
         else
         {

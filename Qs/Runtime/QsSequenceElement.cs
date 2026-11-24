@@ -87,9 +87,9 @@ public class QsSequenceElement
 
     public QsValue Execute(int executionIndex, params QsParameter[] args)
     {
-        if (ElementValue is QsValue)
+        if (ElementValue is QsValue qsValue)
         {
-            return (QsValue)ElementValue;
+            return qsValue;
         }
 
         switch (args.Length)

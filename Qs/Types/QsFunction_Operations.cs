@@ -131,9 +131,9 @@ public partial class QsFunction
     /// <returns></returns>
     private QsFunction FOperation(QsValue value, string operation)
     {
-        if (value is QsFunction)
+        if (value is QsFunction qsFunction)
         {
-            var fn2 = (QsFunction)value;
+            var fn2 = qsFunction;
 
             var fParameters = RemoveRedundantParameters(ParametersNames.Union(fn2.ParametersNames).ToArray());
 
@@ -173,9 +173,9 @@ public partial class QsFunction
             }
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            var svl = (QsScalar)value;
+            var svl = qsScalar;
 
             const string fname = "_";
 

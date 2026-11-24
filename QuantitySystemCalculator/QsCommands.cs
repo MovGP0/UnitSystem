@@ -362,9 +362,8 @@ public static class QsCommands
         {
             var v = GetVariable(var);
             Console.WriteLine("    " + var + " = " + (v?.ToString() ?? "nil"));
-            if (v is QsNamespace)
+            if (v is QsNamespace ns)
             {
-                var ns = (QsNamespace)v;
                 foreach (var nsvar in ns.GetVariablesKeys())
                 {
                     Console.WriteLine("        " + nsvar + " = " + (ns.GetValue(nsvar)?.ToString() ?? "nil"));

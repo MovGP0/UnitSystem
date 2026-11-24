@@ -524,13 +524,13 @@ public partial class QsSequence
         }
 
         var firstElement = (QsValue)GetElementValue(fromIndex);
-        if (firstElement is QsScalar)
+        if (firstElement is QsScalar qsScalar)
         {
             //return vector
             var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
 
             #region Numerical Representation
-            Total.AddComponent((QsScalar)firstElement);
+            Total.AddComponent(qsScalar);
 
             if (toIndex >= fromIndex)
             {
@@ -551,11 +551,11 @@ public partial class QsSequence
             return Total;
         }
 
-        if (firstElement is QsVector)
+        if (firstElement is QsVector qsVectors)
         {
             //return vector
             var Total = new QsMatrix();
-            Total.AddVector((QsVector)firstElement);
+            Total.AddVector(qsVectors);
 
             if (toIndex >= fromIndex)
             {
@@ -587,12 +587,12 @@ public partial class QsSequence
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0)
     {
         var firstElement = GetElementValue(fromIndex, arg0);
-        if (firstElement is QsScalar)
+        if (firstElement is QsScalar qsScalar)
         {
             //return vector
             var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
 
-            Total.AddComponent((QsScalar)firstElement);
+            Total.AddComponent(qsScalar);
 
             if (toIndex >= fromIndex)
             {
@@ -612,11 +612,11 @@ public partial class QsSequence
             return Total;
         }
 
-        if (firstElement is QsVector)
+        if (firstElement is QsVector qsVectors)
         {
             //return vector
             var Total = new QsMatrix();
-            Total.AddVector((QsVector)firstElement);
+            Total.AddVector(qsVectors);
 
             if (toIndex >= fromIndex)
             {
@@ -647,12 +647,12 @@ public partial class QsSequence
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1)
     {
         var firstElement = GetElementValue(fromIndex, arg0, arg1);
-        if (firstElement is QsScalar)
+        if (firstElement is QsScalar qsScalar)
         {
             //return vector
             var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
 
-            Total.AddComponent((QsScalar)firstElement);
+            Total.AddComponent(qsScalar);
 
             if (toIndex >= fromIndex)
             {
@@ -672,11 +672,11 @@ public partial class QsSequence
             return Total;
         }
 
-        if (firstElement is QsVector)
+        if (firstElement is QsVector qsVectors)
         {
             //return vector
             var Total = new QsMatrix();
-            Total.AddVector((QsVector)firstElement);
+            Total.AddVector(qsVectors);
 
             if (toIndex >= fromIndex)
             {
@@ -707,12 +707,12 @@ public partial class QsSequence
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2)
     {
         var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2);
-        if (firstElement is QsScalar)
+        if (firstElement is QsScalar qsScalar)
         {
             //return vector
             var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
 
-            Total.AddComponent((QsScalar)firstElement);
+            Total.AddComponent(qsScalar);
 
             if (toIndex >= fromIndex)
             {
@@ -732,11 +732,11 @@ public partial class QsSequence
             return Total;
         }
 
-        if (firstElement is QsVector)
+        if (firstElement is QsVector qsVectors)
         {
             //return vector
             var Total = new QsMatrix();
-            Total.AddVector((QsVector)firstElement);
+            Total.AddVector(qsVectors);
 
             if (toIndex >= fromIndex)
             {
@@ -766,12 +766,12 @@ public partial class QsSequence
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3)
     {
         var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3);
-        if (firstElement is QsScalar)
+        if (firstElement is QsScalar qsScalar)
         {
             //return vector
             var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
 
-            Total.AddComponent((QsScalar)firstElement);
+            Total.AddComponent(qsScalar);
 
             if (toIndex >= fromIndex)
             {
@@ -791,11 +791,11 @@ public partial class QsSequence
             return Total;
         }
 
-        if (firstElement is QsVector)
+        if (firstElement is QsVector qsVectors)
         {
             //return vector
             var Total = new QsMatrix();
-            Total.AddVector((QsVector)firstElement);
+            Total.AddVector(qsVectors);
 
             if (toIndex >= fromIndex)
             {
@@ -826,12 +826,12 @@ public partial class QsSequence
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4)
     {
         var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4);
-        if (firstElement is QsScalar)
+        if (firstElement is QsScalar qsScalar)
         {
             //return vector
             var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
 
-            Total.AddComponent((QsScalar)firstElement);
+            Total.AddComponent(qsScalar);
 
             if (toIndex >= fromIndex)
             {
@@ -851,11 +851,11 @@ public partial class QsSequence
             return Total;
         }
 
-        if (firstElement is QsVector)
+        if (firstElement is QsVector qsVectors)
         {
             //return vector
             var Total = new QsMatrix();
-            Total.AddVector((QsVector)firstElement);
+            Total.AddVector(qsVectors);
 
             if (toIndex >= fromIndex)
             {
@@ -886,12 +886,12 @@ public partial class QsSequence
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5)
     {
         var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5);
-        if (firstElement is QsScalar)
+        if (firstElement is QsScalar qsScalar)
         {
             //return vector
             var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
 
-            Total.AddComponent((QsScalar)firstElement);
+            Total.AddComponent(qsScalar);
 
             if (toIndex >= fromIndex)
             {
@@ -911,11 +911,11 @@ public partial class QsSequence
             return Total;
         }
 
-        if (firstElement is QsVector)
+        if (firstElement is QsVector qsVectors)
         {
             //return vector
             var Total = new QsMatrix();
-            Total.AddVector((QsVector)firstElement);
+            Total.AddVector(qsVectors);
 
             if (toIndex >= fromIndex)
             {
@@ -945,12 +945,12 @@ public partial class QsSequence
     public QsValue QsValueElements(int fromIndex, int toIndex, QsParameter arg0, QsParameter arg1, QsParameter arg2, QsParameter arg3, QsParameter arg4, QsParameter arg5, QsParameter arg6)
     {
         var firstElement = GetElementValue(fromIndex, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
-        if (firstElement is QsScalar)
+        if (firstElement is QsScalar qsScalar)
         {
             //return vector
             var Total = new QsVector(Math.Abs(toIndex - fromIndex) + 1);
 
-            Total.AddComponent((QsScalar)firstElement);
+            Total.AddComponent(qsScalar);
 
             if (toIndex >= fromIndex)
             {
@@ -970,11 +970,11 @@ public partial class QsSequence
             return Total;
         }
 
-        if (firstElement is QsVector)
+        if (firstElement is QsVector qsVectors)
         {
             //return vector
             var Total = new QsMatrix();
-            Total.AddVector((QsVector)firstElement);
+            Total.AddVector(qsVectors);
 
             if (toIndex >= fromIndex)
             {

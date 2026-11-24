@@ -15,15 +15,15 @@ public static class QsGamma
     /// <returns></returns>
     public static QsValue Factorial(QsValue value)
     {
-        if (value is QsBoolean)
+        if (value is QsBoolean qsBoolean)
         {
-            var b = (QsBoolean)value;
+            var b = qsBoolean;
             return new QsBoolean { Value = !b.Value };
         }
 
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            var sv = (QsScalar)value;
+            var sv = qsScalar;
             if (sv.ScalarType == ScalarTypes.NumericalQuantity)
             {
                 var number = sv.NumericalQuantity;

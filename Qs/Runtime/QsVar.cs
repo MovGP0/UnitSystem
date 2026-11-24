@@ -676,17 +676,17 @@ class QsVar
 
                 var count = 0;
 
-                if (v is QsVector)
+                if (v is QsVector qsVectors)
                 {
-                    count = ((QsVector)v).Count;
+                    count = qsVectors.Count;
                 }
-                else if (v is QsFlowingTuple)
+                else if (v is QsFlowingTuple qsFlowingTuple)
                 {
-                    count = ((QsFlowingTuple)v).Count;
+                    count = qsFlowingTuple.Count;
                 }
-                else if (v is QsText)
+                else if (v is QsText qsText)
                 {
-                    count = ((QsText)v).Text.Length;
+                    count = qsText.Text.Length;
                 }
                 else
                 {
@@ -1849,9 +1849,9 @@ class QsVar
         }
 
         // no there is a value there
-        if (value is QsScalar)
+        if (value is QsScalar qsScalar)
         {
-            var sc = (QsScalar)value;
+            var sc = qsScalar;
             if (sc.ScalarType == ScalarTypes.FunctionQuantity)
             {
                 return ValueIndexExpression(sc, indexes);

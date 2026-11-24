@@ -75,9 +75,9 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
             }
         }
 
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
-            return DelVector.MultiplyVector((QsVector)value);
+            return DelVector.MultiplyVector(qsVectors);
         }
 
         throw new NotImplementedException(@"Multiplication of \/ * " + value.GetType().Name +" Not implemented yet");
@@ -90,9 +90,9 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
     /// <returns></returns>
     public override QsValue DotProductOperation(QsValue value)
     {
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
-            return DelVector.DotProductOperation((QsVector)value);
+            return DelVector.DotProductOperation(qsVectors);
         }
 
         throw new NotImplementedException(@"\/ . " + value.GetType().Name + " not implemented");
@@ -105,9 +105,9 @@ public class QsNablaOperation(params string[] coordinates) : QsOperation
     /// <returns></returns>
     public override QsValue CrossProductOperation(QsValue value)
     {
-        if (value is QsVector)
+        if (value is QsVector qsVectors)
         {
-            return DelVector.CrossProductOperation((QsVector)value);
+            return DelVector.CrossProductOperation(qsVectors);
         }
 
         throw new NotImplementedException(@"\/ x " + value.GetType().Name + " not implemented");
