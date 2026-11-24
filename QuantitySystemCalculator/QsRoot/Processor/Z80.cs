@@ -13,7 +13,9 @@ public sealed class Z80 : EightBitProcessor
 {
     public static QsScalar R { get; set; } = QsScalar.Zero;
 
+#pragma warning disable CA1822 // The Qs scripting host resolves this member on object instances.
     public double Sum(double a, double b)
+#pragma warning restore CA1822
         => a + b;
 
     public static Length<double> SumQ(Length<double> x, Length<double> y)
@@ -45,7 +47,9 @@ public sealed class Z80 : EightBitProcessor
 
     public QsValue Rpc => R + Pc;
 
+#pragma warning disable CA1822 // The Qs scripting host resolves this member on object instances.
     public double Accumulate(params double[] all)
+#pragma warning restore CA1822
         => all.Sum();
 
 #pragma warning disable RCS1163 // The sample exercises the scripting binder with native and Qs object arguments.

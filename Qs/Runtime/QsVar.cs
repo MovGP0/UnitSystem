@@ -968,7 +968,7 @@ class QsVar
         var FirstEop = ParseOperations(toks);
 
         //then form the calculation expression
-        return  ConstructExpression(FirstEop);
+        return ConstructExpression(FirstEop);
     }
 
     private Expression ConstructTupleExpression(Token x)
@@ -1165,7 +1165,7 @@ class QsVar
     /// </summary>
     /// <param name="complexToken"></param>
     /// <returns></returns>
-    private Expression RationalScalar(Token complexToken)
+    private static Expression RationalScalar(Token complexToken)
     {
         Token? cn = null;
         if (complexToken.TokenClassType == typeof(RationalQuantityToken))
@@ -1218,7 +1218,7 @@ class QsVar
         return Expression.Constant(sc, typeof(QsScalar));
     }
 
-    private Expression QuaternionScalar(Token quaternionToken)
+    private static Expression QuaternionScalar(Token quaternionToken)
     {
         Token? cn = null;
         if (quaternionToken.TokenClassType == typeof(QuaternionQuantityToken))
@@ -1281,7 +1281,7 @@ class QsVar
         return Expression.Constant(sc, typeof(QsScalar));
     }
 
-    private Expression ComplexScalar(Token complexToken)
+    private static Expression ComplexScalar(Token complexToken)
     {
         Token? cn = null;
         if (complexToken.TokenClassType == typeof(ComplexQuantityToken))
@@ -1529,7 +1529,7 @@ class QsVar
         return tensorExpression;
     }
 
-    public Expression ParseText(Token tok)
+    public static Expression ParseText(Token tok)
     {
         var tx = Expression.Constant( tok.TrimTokens(1,1).TokenValue);
         var texte = Expression.New(typeof(QsText).GetConstructor([typeof(string)]), tx);
@@ -1731,7 +1731,7 @@ class QsVar
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    public Expression SymbolicScalar(Token token)
+    public static Expression SymbolicScalar(Token token)
     {
         var s = string.Empty;
         var unit = "1";
@@ -2668,7 +2668,7 @@ class QsVar
     /// <param name="op"></param>
     /// <param name="right"></param>
     /// <returns></returns>
-    private Expression ArithExpression(ExprOp eop, out short skip)
+    private static Expression ArithExpression(ExprOp eop, out short skip)
     {
         var left = eop.QuantityExpression;
         var op = eop.Operation;
@@ -2941,7 +2941,7 @@ class QsVar
     /// </summary>
     /// <param name="FirstEop"></param>
     /// <returns></returns>
-    private Expression ConstructExpression(ExprOp FirstEop)
+    private static Expression ConstructExpression(ExprOp FirstEop)
     {
         foreach (var opg in OperatorGroups)
         {

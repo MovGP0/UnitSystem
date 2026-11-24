@@ -705,7 +705,7 @@ public sealed partial class Token : IEnumerable<Token>
     /// </summary>
     /// <param name="tokenClassType"></param>
     /// <returns></returns>
-    private TokenClass GetTokenClass(Type tokenClassType)
+    private static TokenClass GetTokenClass(Type tokenClassType)
     {
         CachedTokenClasses.TryGetValue(tokenClassType, out var instance);
         if (instance == null)
@@ -718,7 +718,9 @@ public sealed partial class Token : IEnumerable<Token>
         return instance;
     }
 
+#pragma warning disable CA1822 // This shipped member is part of the public instance API.
     public TokenClass GetTokenClass<DesiredTokenClass>() where DesiredTokenClass : TokenClass, new()
+#pragma warning restore CA1822
     {
         CachedTokenClasses.TryGetValue(typeof(DesiredTokenClass), out var instance);
         if (instance == null)

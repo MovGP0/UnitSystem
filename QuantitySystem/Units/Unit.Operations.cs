@@ -119,7 +119,9 @@ public partial class Unit
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
+#pragma warning disable CA1822 // This shipped member is part of the public instance API.
     public string UnitToUnitSymbol(Unit x, Unit y)
+#pragma warning restore CA1822
     {
         var key =  "[" + x.Symbol + ":" + x.UnitDimension + "]__[" + y.Symbol + ":" + y.UnitDimension + "]";
 

@@ -46,9 +46,13 @@ public sealed class Planet
 
     public Planet[] SubPlanets => _subPlanets.Values.ToArray();
 
+#pragma warning disable CA1822 // The Qs scripting host resolves this member on object instances.
     public int Sum(int a, int b) => a+b;
+#pragma warning restore CA1822
 
+#pragma warning disable CA1822 // The Qs scripting host resolves this member on object instances.
     public Planet GetNextPlanet() => new();
+#pragma warning restore CA1822
 
     public override string ToString() => Name;
 }

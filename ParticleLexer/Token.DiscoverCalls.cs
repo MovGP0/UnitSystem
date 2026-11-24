@@ -276,7 +276,9 @@ public sealed partial class Token : IEnumerable<Token>
     /// <param name="cnext"></param>
     /// <param name="separator"></param>
     /// <returns></returns>
+#pragma warning disable CA1822 // This shipped member is part of the public instance API.
     public Token SplitParamerers(Token cnext, TokenClass separator)
+#pragma warning restore CA1822
     {
         //here I must merge all but the parenthesis
         var temp = new Token();

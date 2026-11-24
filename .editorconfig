@@ -816,7 +816,7 @@ dotnet_diagnostic.CA1816.severity = warning
 dotnet_diagnostic.CA1821.severity = warning
 
 # Mark members as static
-# dotnet_diagnostic.CA1822.severity = warning
+dotnet_diagnostic.CA1822.severity = warning
 
 # Mark assemblies with NeutralResourcesLanguageAttribute
 # dotnet_diagnostic.CA1824.severity = warning

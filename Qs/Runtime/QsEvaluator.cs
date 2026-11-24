@@ -1158,7 +1158,9 @@ public sealed class QsEvaluator
 
     #region print information helpers
 
+#pragma warning disable CA1822 // This shipped member is part of the public instance API.
     public void PrintUnitInfo(Unit unit)
+#pragma warning restore CA1822
     {
 #if WINRT
 #else

@@ -66,7 +66,7 @@ public class QsFlowingTuple : QsValue
         }
     }
 
-    private QsValue? ValueToQsValue(object? value)
+    private static QsValue? ValueToQsValue(object? value)
     {
         if (value is QsValue qsValue)
         {

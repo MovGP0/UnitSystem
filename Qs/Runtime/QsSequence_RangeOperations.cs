@@ -12,7 +12,7 @@ public partial class QsSequence
     /// </summary>
     /// <param name="fromIndex"></param>
     /// <param name="toIndex"></param>
-    private void FixIndices(ref int fromIndex, ref int toIndex)
+    private static void FixIndices(ref int fromIndex, ref int toIndex)
     {
         if (fromIndex > toIndex)
         {
