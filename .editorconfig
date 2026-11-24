@@ -665,7 +665,7 @@ dotnet_diagnostic.RCS1243.severity = warning
 dotnet_diagnostic.RCS1246.severity = warning
 
 # Fix documentation comment tag
-# dotnet_diagnostic.RCS1247.severity = warning
+dotnet_diagnostic.RCS1247.severity = warning
 
 # Normalize null check
 # dotnet_diagnostic.RCS1248.severity = none
