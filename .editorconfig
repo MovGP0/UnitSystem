@@ -1029,7 +1029,7 @@ dotnet_diagnostic.CA2211.severity = warning
 dotnet_diagnostic.CA2219.severity = warning
 
 # Overload operator equals on overriding value type Equals
-# dotnet_diagnostic.CA2231.severity = warning
+dotnet_diagnostic.CA2231.severity = warning
 
 # Provide correct arguments to formatting methods
 # dotnet_diagnostic.CA2241.severity = warning
