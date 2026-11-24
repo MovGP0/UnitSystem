@@ -89,18 +89,17 @@ public sealed partial class ScalarQuantity
     public static ScalarQuantity operator /(double factor, ScalarQuantity quantity)
     {
         quantity.EnsureLinear();
-        return new ScalarQuantity(factor / quantity.CoherentAmount, quantity.CoherentUnit ^ -1, isPoint: false);
+        return new ScalarQuantity(factor / quantity.CoherentAmount, quantity.CoherentUnit.Pow(-1), isPoint: false);
     }
 
     /// <summary>
     /// Raises a linear quantity to the specified power.
     /// </summary>
     [Pure]
-    public static ScalarQuantity operator ^(ScalarQuantity quantity, int exponent)
+    public ScalarQuantity Pow(int exponent)
     {
-        quantity.EnsureLinear();
-        return new ScalarQuantity(Math.Pow(quantity.CoherentAmount, exponent), quantity.CoherentUnit ^ exponent,
-            isPoint: false);
+        EnsureLinear();
+        return new ScalarQuantity(Math.Pow(CoherentAmount, exponent), CoherentUnit.Pow(exponent), isPoint: false);
     }
 
     private void EnsureLinear()

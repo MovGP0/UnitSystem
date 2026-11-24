@@ -21,7 +21,7 @@ public static class SerializationExtensionsTests
         public void ShouldSerializeAndDeserializeUsingDataContractSerializer()
         {
             // Arrange
-            var quantity = new ScalarQuantity(100, J / (m ^ 3));
+            var quantity = new ScalarQuantity(100, J / m.Pow(3));
             var info = quantity.ToInfo();
             var serializer = new DataContractSerializer(typeof(QuantityInfo<double>));
 
@@ -48,7 +48,7 @@ public static class SerializationExtensionsTests
         public void ShouldSerializeAndDeserializeUsingJsonNet()
         {
             // Arrange
-            var quantity = new ScalarQuantity(100, J / (m ^ 3));
+            var quantity = new ScalarQuantity(100, J / m.Pow(3));
             var info = quantity.ToInfo();
 
             // Act
@@ -64,7 +64,7 @@ public static class SerializationExtensionsTests
         public void ShouldMapToInfoAndBackCorrectly()
         {
             // Arrange
-            var quantity = new ScalarQuantity(100, J / (m ^ 3));
+            var quantity = new ScalarQuantity(100, J / m.Pow(3));
 
             // Act
             var info = quantity.ToInfo();

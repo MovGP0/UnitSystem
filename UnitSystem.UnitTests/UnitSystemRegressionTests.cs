@@ -90,8 +90,8 @@ public sealed class UnitSystemRegressionTests
         CGSSystem.Parse("stC").ShouldBeSameAs(CGSSystem.statC);
         CGSSystem.kg.ShouldBeSameAs(SISystem.kg);
         CGSSystem.Gs.ShouldBe(SISystem.T / 10_000);
-        SISystem.T.ShouldBe(SISystem.Wb / (SISystem.m ^ 2));
-        ImperialSystem.psi.ShouldBe(ImperialSystem.lbf / (ImperialSystem.@in ^ 2));
+        SISystem.T.ShouldBe(SISystem.Wb / SISystem.m.Pow(2));
+        ImperialSystem.psi.ShouldBe(ImperialSystem.lbf / ImperialSystem.@in.Pow(2));
         ImperialSystem.hp.HasSameDimension(SISystem.W).ShouldBeTrue();
         ImperialSystem.btu.HasSameDimension(SISystem.J).ShouldBeTrue();
         new ScalarQuantity(1, CGSSystem.cm).Convert(SISystem.m).Amount.ShouldBe(0.01);
@@ -105,7 +105,7 @@ public sealed class UnitSystemRegressionTests
         SISystem.Parse("m").ShouldBeSameAs(SISystem.m);
         SISystem.Parse("°C").ShouldBeSameAs(SISystem.degC);
         ImperialSystem.Parse("long ton").ShouldBeSameAs(ImperialSystem.ton_long);
-        SISystem.Parse("kg^2").ShouldBe(SISystem.kg ^ 2);
+        SISystem.Parse("kg^2").ShouldBe(SISystem.kg.Pow(2));
         SISystem.Parse("km").ToString().ShouldBe("km");
         SISystem.Parse("mm").ShouldBe(MetricPrefix.Milli * SISystem.m);
         Should.Throw<FormatException>(() => SISystem.Parse("m//s"));
@@ -116,8 +116,8 @@ public sealed class UnitSystemRegressionTests
         var units = new[]
         {
             SISystem.kg / 100,
-            3.25 * (SISystem.m ^ 0.5f) / SISystem.s,
-            SISystem.s ^ -1,
+            3.25 * SISystem.m.Pow(0.5f) / SISystem.s,
+            SISystem.s.Pow(-1),
             0.01 * system.NoUnit,
             system.CreateUnit(0.42, 2, SISystem.K.Dimension)
         };
@@ -125,6 +125,15 @@ public sealed class UnitSystemRegressionTests
         {
             system.Parse(system.Display(unit)).ShouldBe(unit);
         }
+    }
+
+    [TestMethod]
+    public void ShouldMultiplyAfterRaisingAQuantityToAPower()
+    {
+        var length = new ScalarQuantity(2, SISystem.m);
+        var area = length.Pow(2) * 3;
+
+        area.ShouldBe(new ScalarQuantity(12, SISystem.m.Pow(2)));
     }
 
     [TestMethod]

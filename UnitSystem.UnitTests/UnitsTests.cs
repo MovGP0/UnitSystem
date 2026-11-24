@@ -39,7 +39,7 @@ public static class UnitsTests
         public void ShouldReturnKnownUnitsWhenPossible()
         {
             // Arrange
-            var result = kg * m * (s ^ -2);
+            var result = kg * m * s.Pow(-2);
 
             // Act & Assert
             ReferenceEquals(result, N).ShouldBeTrue();

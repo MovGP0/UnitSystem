@@ -17,8 +17,8 @@ public static class CGSSystem
         var cm = system.AddDerivedUnit("cm", "centimetre", MetricPrefix.Centi * SISystem.m);
         var g = system.AddDerivedUnit("g", "gram", SISystem.kg / 1000);
         var s = SISystem.s;
-        var cmSquared = cm ^ 2;
-        var dyne = system.AddDerivedUnit("dyn", "dyne", g * cm / (s ^ 2));
+        var cmSquared = cm.Pow(2);
+        var dyne = system.AddDerivedUnit("dyn", "dyne", g * cm / s.Pow(2));
         var erg = system.AddDerivedUnit("erg", "erg", dyne * cm);
         system.AddDerivedUnit("Ba", "barye", dyne / cmSquared);
 
@@ -37,10 +37,10 @@ public static class CGSSystem
         system.AddDerivedUnit("Gs", "gauss", SISystem.T / 10_000);
         system.AddDerivedUnit("ph", "phot", 10_000 * SISystem.lx);
         system.AddDerivedUnit("r", "roentgen", 2.58e-4 * SISystem.C / SISystem.kg);
-        system.AddDerivedUnit("k", "kayser", cm ^ -1);
+        system.AddDerivedUnit("k", "kayser", cm.Pow(-1));
         system.AddDerivedUnit("St", "stokes", cmSquared / s);
         system.AddDerivedUnit("P", "poise", g / (cm * s));
-        system.AddDerivedUnit("Gal", "gal", cm / (s ^ 2));
+        system.AddDerivedUnit("Gal", "gal", cm / s.Pow(2));
         system.AddDerivedUnit("sb", "stilb", SISystem.cd / cmSquared);
     }
 

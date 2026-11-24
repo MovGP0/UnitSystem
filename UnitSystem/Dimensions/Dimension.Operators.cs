@@ -53,21 +53,14 @@ public sealed partial class Dimension
     /// <summary>
     /// Raises a dimension to a given exponent, multiplying all its exponents by the given exponent.
     /// </summary>
-    /// <param name="dimension">The dimension to raise.</param>
     /// <param name="exponent">The exponent to raise the dimension to.</param>
     /// <returns>A new <see cref="Dimension"/> resulting from the exponentiation.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="dimension"/> is null.</exception>
     /// <example>
     /// <code>
     /// var length = new Dimension(1, 0, 0);
-    /// var area = length ^ 2;
+    /// var area = length.Pow(2);
     /// // area is a new Dimension with exponents [2, 0, 0]
     /// </code>
     /// </example>
-    public static Dimension operator ^(Dimension dimension, float exponent)
-    {
-        Check.Argument(dimension, nameof(dimension)).IsNotNull();
-
-        return new Dimension(dimension.Select(e => e*exponent).ToArray());
-    }
+    public Dimension Pow(float exponent) => new(this.Select(value => value * exponent).ToArray());
 }

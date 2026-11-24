@@ -19,7 +19,7 @@ public static class ScalarQuantityTests
         {
             // Arrange
             var kWh = MetricPrefix.Kilo * W * h;
-            var m3 = m ^ 3;
+            var m3 = m.Pow(3);
             var energy = new ScalarQuantity(100, kWh);
             var volume = new ScalarQuantity(5, m3);
             var expected = new ScalarQuantity(20, kWh / m3);
@@ -104,7 +104,7 @@ public static class ScalarQuantityTests
     }
 
     [TestClass]
-    [TestOf(typeof(ScalarQuantity), ILObjectNames.Power)]
+    [TestOf(typeof(ScalarQuantity), nameof(ScalarQuantity.Pow))]
     public sealed class ExponentTests
     {
         [TestMethod]
@@ -116,7 +116,7 @@ public static class ScalarQuantityTests
             var expected = new ScalarQuantity(16, square);
 
             // Act
-            var result = length ^ 2;
+            var result = length.Pow(2);
 
             // Assert
             result.ShouldBe(expected);

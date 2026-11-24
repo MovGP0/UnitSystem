@@ -77,15 +77,15 @@ public static class SISystemTests
         public void ShouldParseUnitsWithExponent()
         {
             // Arrange & Act & Assert
-            Parse("J/m^3").ShouldBe(J / (m ^ 3));
-            Parse("J / m^3").ShouldBe(J / (m ^ 3));
+            Parse("J/m^3").ShouldBe(J / m.Pow(3));
+            Parse("J / m^3").ShouldBe(J / m.Pow(3));
         }
 
         [TestMethod]
         public void ShouldParseUnitsWithNegativeExponent()
         {
             // Arrange & Act & Assert
-            Parse("J m^-3").ShouldBe(J * (m ^ -3));
+            Parse("J m^-3").ShouldBe(J * m.Pow(-3));
         }
 
         [TestMethod]
@@ -125,7 +125,7 @@ public static class SISystemTests
         public void ShouldPrintAndReparseUnit()
         {
             // Arrange
-            var expected = kg * m * (s ^ -2);
+            var expected = kg * m * s.Pow(-2);
 
             // Act
             var display = Display(expected);

@@ -26,6 +26,9 @@ Temperature quantities default to points on a scale. Pass `isPoint: false` to th
 `ScalarQuantity` constructor for a temperature difference. Subtracting two points
 produces a difference. Adding a difference to a point produces a point.
 
+Use `Pow(exponent)` on units, dimensions, and scalar quantities in C#. Unit strings
+continue to use `^` for exponents, such as `m^2`.
+
 ## Open issues
 
 - Add support for Siano's extensions to support units with directed dimensions

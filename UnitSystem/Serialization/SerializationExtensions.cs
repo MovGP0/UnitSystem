@@ -26,7 +26,7 @@ public static class SerializationExtensions
                 throw new InvalidOperationException(Messages.UnitsNotSameSystem);
             }
 
-            unit *= baseUnit ^ component.Value;
+            unit *= baseUnit.Pow(component.Value);
         }
 
         return new ScalarQuantity(info.Amount, unit, info.IsPoint ?? unit.SupportsPoints);

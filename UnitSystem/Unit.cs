@@ -178,16 +178,13 @@ public abstract partial class Unit : IEquatable<Unit>
     /// <summary>
     /// Raises a unit to a given exponent, resulting in a new unit with scaled dimension and factor.
     /// </summary>
-    /// <param name="unit">The unit to raise.</param>
-    /// <param name="exponent">The exponent to raise the unit to.</param>
+    /// <param name="exponent">The exponent to raise this unit to.</param>
     /// <returns>A new unit resulting from the exponentiation.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="unit"/> is null.</exception>
     [Pure]
-    public static Unit operator ^(Unit unit, float exponent)
+    public Unit Pow(float exponent)
     {
-        Check.Argument(unit, nameof(unit)).IsNotNull();
-        Check.EnsureAbsoluteUnit(unit);
-        return unit.System.CreateUnit(Math.Pow(unit.Factor, exponent), unit.Dimension ^ exponent);
+        Check.EnsureAbsoluteUnit(this);
+        return System.CreateUnit(Math.Pow(Factor, exponent), Dimension.Pow(exponent));
     }
 
     /// <summary>

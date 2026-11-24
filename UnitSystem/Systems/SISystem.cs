@@ -29,9 +29,9 @@ public static class SISystem
         deg = _system.AddDerivedUnit("°", "degrees", rad * (Math.PI / 180d));
 
         // Derived units
-        Hz = _system.AddDerivedUnit("Hz", "hertz", s^-1);
-        N = _system.AddDerivedUnit("N", "newton", kg*m*(s^-2));
-        Pa = _system.AddDerivedUnit("Pa", "pascal", N*(m^-2));
+        Hz = _system.AddDerivedUnit("Hz", "hertz", s.Pow(-1));
+        N = _system.AddDerivedUnit("N", "newton", kg*m*s.Pow(-2));
+        Pa = _system.AddDerivedUnit("Pa", "pascal", N*m.Pow(-2));
         J = _system.AddDerivedUnit("J", "joule", N*m);
         W = _system.AddDerivedUnit("W", "watt", J/s);
         C = _system.AddDerivedUnit("C", "coulomb", s*A);
@@ -40,12 +40,12 @@ public static class SISystem
         Ω = _system.AddDerivedUnit("Ω", "ohm", V/A);
         S = _system.AddDerivedUnit("S", "siemens", A/V);
         Wb = _system.AddDerivedUnit("Wb", "weber", V*s);
-        T = _system.AddDerivedUnit("T", "tesla", Wb / (m ^ 2));
+        T = _system.AddDerivedUnit("T", "tesla", Wb / m.Pow(2));
         H = _system.AddDerivedUnit("H", "inductance", Wb/A);
         lm = _system.AddDerivedUnit("lm", "lumen", cd * sr);
-        lx = _system.AddDerivedUnit("lx", "illuminance", lm / (m ^ 2));
+        lx = _system.AddDerivedUnit("lx", "illuminance", lm / m.Pow(2));
         Sv = _system.AddDerivedUnit("Sv", "sievert", J/kg);
-        kat = _system.AddDerivedUnit("kat", "katal", (s^-1)*mol);
+        kat = _system.AddDerivedUnit("kat", "katal", s.Pow(-1)*mol);
         degC = _system.AddDerivedUnit("°C", "degrees Celsius", K, 273.15);
 
         // Incoherent units

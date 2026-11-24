@@ -39,12 +39,6 @@ public static class ILObjectNames
     /// <summary>Represents the IL operation name for exclusive OR.</summary>
     public const string ExclusiveOr = "op_ExclusiveOr";
 
-    /// <summary>Represents the IL operation name for power.</summary>
-    /// <remarks>
-    /// Since there is no dedicated power operator in .NET, this defaults to XOR.
-    /// </remarks>
-    public const string Power = "op_ExclusiveOr";
-
     /// <summary>Represents the IL operation name for left shift.</summary>
     public const string LeftShift = "op_LeftShift";
 

@@ -20,16 +20,16 @@ public static class ImperialSystem
         system.AddDerivedUnit("long ton", "long ton", 2240 * lb);
         system.AddDerivedUnit("short ton", "short ton", 2000 * lb);
 
-        var cubicInch = inch ^ 3;
-        var gallon = system.AddDerivedUnit("gal", "gallon", 0.00454609 * (SISystem.m ^ 3));
+        var cubicInch = inch.Pow(3);
+        var gallon = system.AddDerivedUnit("gal", "gallon", 0.00454609 * SISystem.m.Pow(3));
         system.AddDerivedUnit("us gal", "US gallon", 231 * cubicInch);
         system.AddDerivedUnit("qt", "quart", gallon / 4);
         system.AddDerivedUnit("pt", "pint", gallon / 8);
         system.AddDerivedUnit("fl_oz", "fluid ounce", gallon / 160);
 
-        var lbf = system.AddDerivedUnit("lbf", "pound-force", lb * (9.80665 * SISystem.m / (s ^ 2)));
+        var lbf = system.AddDerivedUnit("lbf", "pound-force", lb * (9.80665 * SISystem.m / s.Pow(2)));
         system.AddDerivedUnit("hp", "horsepower", 550 * ft * lbf / s);
-        system.AddDerivedUnit("psi", "pound per square inch", lbf / (inch ^ 2));
+        system.AddDerivedUnit("psi", "pound per square inch", lbf / inch.Pow(2));
         system.AddDerivedUnit("mph", "miles per hour", mile / SISystem.h);
         system.AddDerivedUnit("btu", "British thermal unit", 778.169 * ft * lbf);
 

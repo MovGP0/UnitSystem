@@ -203,7 +203,7 @@ internal sealed class UnitInterpreter
             && float.TryParse(power[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var exponent)
             && !float.IsNaN(exponent) && !float.IsInfinity(exponent))
         {
-            return basis ^ exponent;
+            return basis.Pow(exponent);
         }
 
         return null;
