@@ -804,7 +804,7 @@ dotnet_diagnostic.CA1513.severity = warning
 dotnet_diagnostic.CA1514.severity = warning
 
 # Use 'ReadOnlySpan<T>' or 'ReadOnlyMemory<T>' instead of 'Span<T>' or 'Memory<T>'
-# dotnet_diagnostic.CA1517.severity = warning
+dotnet_diagnostic.CA1517.severity = warning
 
 # Do not ignore method results
 # dotnet_diagnostic.CA1806.severity = warning
