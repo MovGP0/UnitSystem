@@ -632,7 +632,7 @@ dotnet_diagnostic.RCS1232.severity = warning
 dotnet_diagnostic.RCS1233.severity = warning
 
 # Duplicate enum value
-# dotnet_diagnostic.RCS1234.severity = warning
+dotnet_diagnostic.RCS1234.severity = warning
 
 # Optimize method call
 # dotnet_diagnostic.RCS1235.severity = warning
