@@ -422,7 +422,7 @@ dotnet_diagnostic.RCS1154.severity = warning
 dotnet_diagnostic.RCS1155.severity = warning
 
 # Use string.Length instead of comparison with empty string
-# dotnet_diagnostic.RCS1156.severity = warning
+dotnet_diagnostic.RCS1156.severity = warning
 
 # Composite enum value contains undefined flag
 # dotnet_diagnostic.RCS1157.severity = warning

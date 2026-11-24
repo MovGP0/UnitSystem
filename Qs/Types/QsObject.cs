@@ -43,7 +43,7 @@ public class QsObject : QsValue
             string[] args = expression[1].TrimTokens(1, 1).TokenValue.Split(',');
             var argn = args.Length;
 
-            if (args.Length == 1 && args[0] == string.Empty)
+            if (args.Length == 1 && args[0]?.Length == 0)
             {
                 argn =0;
             }

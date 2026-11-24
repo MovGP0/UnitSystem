@@ -1520,7 +1520,7 @@ public partial class SymbolicVariable
         }
         else if (Symbol.Equals(sv.Symbol, StringComparison.OrdinalIgnoreCase) && DividedTerm.Equals(sv.DividedTerm))
         {
-            if (Symbol == string.Empty)
+            if (Symbol?.Length == 0)
             {
                 return true;  //because there is no symbol or empty symbol which indicates that the term is coefficient only
             }
@@ -1679,7 +1679,7 @@ public partial class SymbolicVariable
     {
         for (var i = svar.FusedSymbols.Count - 1; i >= 0; i--)
         {
-            if (svar.FusedSymbols.ElementAt(i).Value.IsZero || svar.FusedSymbols.ElementAt(i).Key == string.Empty)
+            if (svar.FusedSymbols.ElementAt(i).Value.IsZero || svar.FusedSymbols.ElementAt(i).Key?.Length == 0)
             {
                 svar.FusedSymbols.Remove(svar.FusedSymbols.ElementAt(i).Key);
             }
