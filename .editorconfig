@@ -575,7 +575,7 @@ dotnet_diagnostic.RCS1212.severity = warning
 dotnet_diagnostic.RCS1213.severity = warning
 
 # Unnecessary interpolated string
-# dotnet_diagnostic.RCS1214.severity = warning
+dotnet_diagnostic.RCS1214.severity = warning
 
 # Expression is always equal to true/false
 # dotnet_diagnostic.RCS1215.severity = warning
