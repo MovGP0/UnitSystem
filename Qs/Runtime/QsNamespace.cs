@@ -316,7 +316,7 @@ public class QsNamespace(string name)
                     m.PropertyType.BaseType == typeof(QsValue)
                         || m.PropertyType == typeof(QsValue)
                         || m.PropertyType == typeof(string)
-                        || m.PropertyType.IsValueType == true
+                        || m.PropertyType.IsValueType
                     )
             select m;
 

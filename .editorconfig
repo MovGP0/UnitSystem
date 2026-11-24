@@ -194,7 +194,7 @@ dotnet_diagnostic.RCS1021.severity = warning
 dotnet_diagnostic.RCS1032.severity = warning
 
 # Remove redundant boolean literal
-# dotnet_diagnostic.RCS1033.severity = warning
+dotnet_diagnostic.RCS1033.severity = warning
 
 # Remove redundant 'sealed' modifier
 # dotnet_diagnostic.RCS1034.severity = silent

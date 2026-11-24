@@ -54,7 +54,7 @@ public sealed partial class Token : IEnumerable<Token>
                 goto LoopAgain;
             }
 
-            if (closeTokenClasses.Contains(c.TokenClassType) && InComplete == true)
+            if (closeTokenClasses.Contains(c.TokenClassType) && InComplete)
             {
                 //put the close token inside the current container
                 current.AppendSubToken(c);

@@ -440,7 +440,7 @@ public class QsFlowingTuple : QsValue
         var props = structType.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
 
         var all = from o in props
-            where o.IsSpecialName == false && o.CanWrite == true && o.GetIndexParameters().Length == 0
+            where o.IsSpecialName == false && o.CanWrite && o.GetIndexParameters().Length == 0
             select o;
 
         var svt = Activator.CreateInstance(structType);

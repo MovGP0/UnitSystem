@@ -159,7 +159,7 @@ public class Screen
 
         var t = Task.Factory.StartNew(() =>
         {
-            while (sw.ElapsedMilliseconds < mtime.Value && loop==true)
+            while (sw.ElapsedMilliseconds < mtime.Value && loop)
             {
                 Update();
             }

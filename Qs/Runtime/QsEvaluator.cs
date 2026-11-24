@@ -960,7 +960,7 @@ public class QsEvaluator
                                         {
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
                                         }
-                                        else if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
+                                        else if (ParentPropertyInfo.PropertyType.IsArray || ParentPropertyInfo.GetIndexParameters().Length > 0)
                                         {
                                             parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
                                             parent = (QsObject?)parent_object
@@ -1009,7 +1009,7 @@ public class QsEvaluator
                                     {
                                         // if the previous parent property has an indexers then we need to get it as an index
                                         // if not then it was a normal variable
-                                        if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
+                                        if (ParentPropertyInfo.PropertyType.IsArray || ParentPropertyInfo.GetIndexParameters().Length > 0)
                                         {
                                             parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
                                             parent = (QsObject?)parent_object
@@ -1037,7 +1037,7 @@ public class QsEvaluator
 
                         if (parent_object!=null && ParentPropertyInfo!=null)
                         {
-                            if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
+                            if (ParentPropertyInfo.PropertyType.IsArray || ParentPropertyInfo.GetIndexParameters().Length > 0)
                             {
                                 // set the value to the indexed item.
                                 var parent = (QsObject?)parent_object

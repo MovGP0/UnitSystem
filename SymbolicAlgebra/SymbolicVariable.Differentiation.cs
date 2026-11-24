@@ -30,7 +30,7 @@ public partial class SymbolicVariable
         {
             cc = sv.BaseVariable.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase); // case of base variable
         }
-        else if (sv.IsFunction && symbolpowercontainParameter == true)
+        else if (sv.IsFunction && symbolpowercontainParameter)
         {
             // search if a parameter contains the same parameter
             foreach (var pf in sv.FunctionArguments)

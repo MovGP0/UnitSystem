@@ -137,11 +137,11 @@ public partial class SymbolicVariable
         {
             if (t != ' ')
             {
-                if (t == '-' && inStart == true)
+                if (t == '-' && inStart)
                 {
                     minuscount++;
                 }
-                else if (t == '+' && inStart == true)
+                else if (t == '+' && inStart)
                 {
                     /*ignore*/
                 }
@@ -781,7 +781,7 @@ public partial class SymbolicVariable
             {
                 result = variableName + "^" + power.ToString(CultureInfo.InvariantCulture);
             }
-            else if (TextTools.TopLevelExist(variableName, '+') == true || TextTools.TopLevelExist(variableName, '-') == true)
+            else if (TextTools.TopLevelExist(variableName, '+') || TextTools.TopLevelExist(variableName, '-'))
             {
                 result = "(" + variableName + ")";
             }
@@ -1589,7 +1589,7 @@ public partial class SymbolicVariable
         }
         else
         {
-            if (IsMultiTerm == true || sv.IsMultiTerm == true)
+            if (IsMultiTerm || sv.IsMultiTerm)
             {
                 return false;
             }
