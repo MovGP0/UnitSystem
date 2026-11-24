@@ -620,7 +620,7 @@ dotnet_diagnostic.RCS1227.severity = warning
 dotnet_diagnostic.RCS1229.severity = warning
 
 # Unnecessary explicit use of enumerator
-# dotnet_diagnostic.RCS1230.severity = warning
+dotnet_diagnostic.RCS1230.severity = warning
 
 # Make parameter ref read-only
 # dotnet_diagnostic.RCS1231.severity = none
