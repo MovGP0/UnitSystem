@@ -51,7 +51,7 @@ public partial class QsTensor : QsValue
             if (Order > 3)
             {
                 var NewTensor = new QsTensor();
-                for (var i=0; i< InnerTensors.Count(); i++)
+                for (var i=0; i< InnerTensors.Count; i++)
                 {
                     var iTensor = InnerTensors[i];
                     NewTensor.AddInnerTensor((QsTensor)
@@ -130,7 +130,7 @@ public partial class QsTensor : QsValue
             if (Order > 3)
             {
                 var NewTensor = new QsTensor();
-                for (var i = 0; i < InnerTensors.Count(); i++)
+                for (var i = 0; i < InnerTensors.Count; i++)
                 {
                     var iTensor = InnerTensors[i];
                     NewTensor.AddInnerTensor((QsTensor)
@@ -437,7 +437,7 @@ public partial class QsTensor : QsValue
             indices[ix] = allIndices[ix].GetScalarIndex();
         }
 
-        var dr = Order - indices.Count();
+        var dr = Order - indices.Length;
         if (dr < 0)
         {
             throw new QsException("Indices count exceed the tensor rank, only specify indices to the same rank to get scalar, or less to get vectors to tensors");
@@ -463,7 +463,7 @@ public partial class QsTensor : QsValue
 
             var t = this;
             var ix = 0;
-            var ic = indices.Count();
+            var ic = indices.Length;
             while (ix < ic - 2)
             {
                 var idx = indices[ix];
@@ -490,7 +490,7 @@ public partial class QsTensor : QsValue
             // specify the tensor
             var t = this;
             var ix = 0;
-            var ic = indices.Count();
+            var ic = indices.Length;
             while (ix < ic - 1)
             {
                 var idx = indices[ix];
@@ -512,7 +512,7 @@ public partial class QsTensor : QsValue
             // return tensor
             var t = this;
             var ix = 0;
-            while (ix < indices.Count())
+            while (ix < indices.Length)
             {
                 var idx = indices[ix];
                 if (idx < 0)

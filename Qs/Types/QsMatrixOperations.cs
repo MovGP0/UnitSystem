@@ -730,7 +730,7 @@ public partial class QsMatrix : QsValue
             indices[ix] = allIndices[ix].GetScalarIndex();
         }
 
-        var icount = indices.Count();
+        var icount = indices.Length;
         if (icount == 2)
         {
             return this[indices[0], indices[1]];

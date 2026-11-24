@@ -143,7 +143,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     {
         List<Expression> parameters = [];
 
-        for (var ip = 0; ip < args.Count(); ip++)
+        for (var ip = 0; ip < args.Length; ip++)
         {
             Expression nakedParameter;
             Expression rawParameter = Expression.Constant(args[ip].Trim());
@@ -217,7 +217,7 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     {
         List<QsParameter> ProcessedParameters = [];
 
-        for (var ip = 0; ip < parameters.Count(); ip++)
+        for (var ip = 0; ip < parameters.Length; ip++)
         {
             QsParameter nakedParameter;
 

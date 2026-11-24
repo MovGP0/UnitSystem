@@ -256,7 +256,7 @@ public class QsFlowingTuple : QsValue
 
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
-        var c = InitialValues.Count();
+        var c = InitialValues.Length;
 
         if (itimes > c)
         {
@@ -295,7 +295,7 @@ public class QsFlowingTuple : QsValue
 
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
-        var c = InitialValues.Count();
+        var c = InitialValues.Length;
 
         if (itimes > c)
         {

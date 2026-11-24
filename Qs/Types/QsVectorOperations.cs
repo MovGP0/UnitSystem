@@ -852,7 +852,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
     public override QsValue GetIndexedItem(QsParameter[] allIndices)
     {
-        if (allIndices.Count() > 1)
+        if (allIndices.Length > 1)
         {
             throw new QsException("Vector have one index only");
         }

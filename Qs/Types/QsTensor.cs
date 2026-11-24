@@ -225,7 +225,7 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     /// <returns></returns>
     public QsScalar GetScalar(params int[] indices)
     {
-        if (indices.Count() != Order)
+        if (indices.Length != Order)
         {
             throw new QsException("Indices number (" + indices.Length + ") doesn't equal the tensor rank (" + Order + ") (remember that you are getting a scalar)");
         }
@@ -235,23 +235,23 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
             return this[0][0][0];
         }
 
-        if (indices.Count() == 1)
+        if (indices.Length == 1)
         {
             return this[0][0][indices[0]];
         }
 
-        if (indices.Count() == 2)
+        if (indices.Length == 2)
         {
             return this[0][indices[0]][indices[1]];
         }
 
-        if (indices.Count() == 3)
+        if (indices.Length == 3)
         {
             // cube
             return this[indices[0]][indices[1]][indices[2]];
         }
 
-        if (indices.Count() == 4)
+        if (indices.Length == 4)
         {
             // hyper cube
             var idx = indices[0];

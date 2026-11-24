@@ -275,7 +275,7 @@ dotnet_diagnostic.RCS1073.severity = warning
 dotnet_diagnostic.RCS1075.severity = warning
 
 # Optimize LINQ method call
-# dotnet_diagnostic.RCS1077.severity = warning
+dotnet_diagnostic.RCS1077.severity = warning
 
 # Use "" or 'string.Empty'
 # dotnet_diagnostic.RCS1078.severity = none

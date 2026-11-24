@@ -393,7 +393,7 @@ public abstract class QsValue: IComparable
         //   from the higher degree of above g
         if (values[0] is QsTensor)
         {
-            if (values.Count() == 1)
+            if (values.Length == 1)
             {
                 return values[0];
             }
@@ -481,7 +481,7 @@ public abstract class QsValue: IComparable
     {
         if (values[0] is QsTensor)
         {
-            if (values.Count() == 1)
+            if (values.Length == 1)
             {
                 return values[0];
             }
