@@ -21,19 +21,17 @@ public class QsObject : QsValue
         return new QsObject(nativeObject);
     }
 
-    private readonly object _NativeObject;
-
     private QsObject(object nativeObject)
     {
-        _NativeObject = nativeObject;
+        ThisObject = nativeObject;
     }
 
-    public object ThisObject => _NativeObject;
+    public object ThisObject { get; }
 
     /// <summary>
     /// Native Type.
     /// </summary>
-    public Type InstanceType => _NativeObject.GetType();
+    public Type InstanceType => ThisObject.GetType();
 
     public override  QsValue? Execute(Token expression)
     {
@@ -120,7 +118,7 @@ public class QsObject : QsValue
 
         {
             // property access.
-            ResultExpression =  Expression.Property(Expression.Constant(_NativeObject), expression.TokenValue);
+            ResultExpression =  Expression.Property(Expression.Constant(ThisObject), expression.TokenValue);
 
             var mi = typeof(Root).GetMethod("NativeToQsConvert", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Static);
             ResultExpression = Expression.Call(mi, Expression.Convert(ResultExpression, typeof(object)));
@@ -146,7 +144,7 @@ public class QsObject : QsValue
 
         var vc = Root.QsToNativeConvert(pi.PropertyType, value);
 
-        pi.SetValue(_NativeObject, vc, null);
+        pi.SetValue(ThisObject, vc, null);
     }
 
     public PropertyInfo? GetPropertyInfo(string propertyName)
@@ -168,7 +166,7 @@ public class QsObject : QsValue
 
         if (pi.PropertyType.IsArray)
         {
-            var array = (Array?)pi.GetValue(_NativeObject, null)
+            var array = (Array?)pi.GetValue(ThisObject, null)
                 ?? throw new QsException($"Array property '{propertyName}' has no value.");
             return Root.NativeToQsConvert(array.GetValue((int)indices[0]));
         }
@@ -192,7 +190,7 @@ public class QsObject : QsValue
         var pi = GetPropertyInfo(propertyName)
             ?? throw new MissingMemberException(InstanceType.FullName, propertyName);
 
-        return Root.NativeToQsConvert(pi.GetValue(_NativeObject, indices));
+        return Root.NativeToQsConvert(pi.GetValue(ThisObject, indices));
     }
 
     public QsValue? GetProperty(string propertyName)
@@ -202,7 +200,7 @@ public class QsObject : QsValue
 
     public override string ToString()
     {
-        return "Native: " + _NativeObject;
+        return "Native: " + ThisObject;
     }
 
     public override string ToShortString()
@@ -280,7 +278,7 @@ public class QsObject : QsValue
         var o = value as QsObject;
         if (o != null)
         {
-            var expr = Expression.Add(Expression.Constant(_NativeObject), Expression.Constant(o._NativeObject));
+            var expr = Expression.Add(Expression.Constant(ThisObject), Expression.Constant(o.ThisObject));
 
             // Construct Lambda function which return one object.
             Expression<Func<object>> cq = Expression.Lambda<Func<object>>(expr);
@@ -314,7 +312,7 @@ public class QsObject : QsValue
         var o = value as QsObject;
         if (o != null)
         {
-            var expr = Expression.Subtract(Expression.Constant(_NativeObject), Expression.Constant(o._NativeObject));
+            var expr = Expression.Subtract(Expression.Constant(ThisObject), Expression.Constant(o.ThisObject));
 
             // Construct Lambda function which return one object.
             Expression<Func<object>> cq = Expression.Lambda<Func<object>>(expr);
@@ -348,7 +346,7 @@ public class QsObject : QsValue
         var o = value as QsObject;
         if (o != null)
         {
-            var expr = Expression.Multiply(Expression.Constant(_NativeObject), Expression.Constant(o._NativeObject));
+            var expr = Expression.Multiply(Expression.Constant(ThisObject), Expression.Constant(o.ThisObject));
 
             // Construct Lambda function which return one object.
             Expression<Func<object>> cq = Expression.Lambda<Func<object>>(expr);
@@ -381,7 +379,7 @@ public class QsObject : QsValue
         var o = value as QsObject;
         if (o != null)
         {
-            var expr = Expression.Divide(Expression.Constant(_NativeObject), Expression.Constant(o._NativeObject));
+            var expr = Expression.Divide(Expression.Constant(ThisObject), Expression.Constant(o.ThisObject));
 
             // Construct Lambda function which return one object.
             Expression<Func<object>> cq = Expression.Lambda<Func<object>>(expr);
@@ -486,7 +484,7 @@ public class QsObject : QsValue
         var getter = pi.GetGetMethod() ?? throw new MissingMethodException(InstanceType.FullName, "get_Item");
         var r = Root.QsParametersToNativeValues(getter, indices);
 
-        return Root.NativeToQsConvert(pi.GetValue(_NativeObject, r));
+        return Root.NativeToQsConvert(pi.GetValue(ThisObject, r));
     }
 
     public override void SetIndexedItem(QsParameter[] indices, QsValue value)
@@ -503,7 +501,7 @@ public class QsObject : QsValue
 
         var nativeValue = Root.QsToNativeConvert(pi.PropertyType, value);
 
-        pi.SetValue(_NativeObject, nativeValue, r);
+        pi.SetValue(ThisObject, nativeValue, r);
     }
     #endregion
 

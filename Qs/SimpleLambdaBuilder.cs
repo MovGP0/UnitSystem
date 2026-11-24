@@ -13,8 +13,6 @@ class SimpleLambdaBuilder(string functionName, Type type)
 
     private readonly List<KeyValuePair<ParameterExpression, bool>> _visibleVars = [];
 
-    private Expression _body;
-
     private static int _lambdaId; //for generating unique lambda name
 
     // TODO: Complete member initialization
@@ -22,11 +20,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
     /// <summary>
     /// The body of the lambda. This must be non-null.
     /// </summary>
-    public Expression Body
-    {
-        get => _body;
-        set => _body = value;
-    }
+    public Expression Body { get; set; }
 
     /// <summary>
     /// Creates a parameter on the lambda with a given name and type.
@@ -88,7 +82,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
     {
         var lambda = Expression.Lambda(
             GetLambdaType(type, _params),
-            _body,
+            Body,
             functionName + "$" + Interlocked.Increment(ref _lambdaId),
             _params
         );

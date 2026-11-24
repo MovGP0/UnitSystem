@@ -26,17 +26,11 @@ public abstract class TokenClass
     /// </summary>
     public string ShouldBeginWith { get; }
 
-    private bool _ContinueTestAfterSuccess = false;
-
     /// <summary>
     /// Indicates if parser should continue test after success and consume other tokens or not.
     /// This property by default is false.
     /// </summary>
-    public bool ContinueTestAfterSuccess
-    {
-        get => _ContinueTestAfterSuccess;
-        set => _ContinueTestAfterSuccess = value;
-    }
+    public bool ContinueTestAfterSuccess { get; set; } = false;
 
     public bool ContinousToken { get; set; }
 

@@ -12,13 +12,7 @@ public class Screen
 
     private readonly int _Height;
 
-    private double _PixelPerMeter;
-
-    public double PixelPerMeter
-    {
-        get => _PixelPerMeter;
-        set => _PixelPerMeter = value;
-    }
+    public double PixelPerMeter { get; set; }
 
     private readonly ScreenForm _Form;
 
@@ -42,7 +36,7 @@ public class Screen
     {
         _Width = width;
         _Height = height;
-        _PixelPerMeter = pixelPerMeter;
+        PixelPerMeter = pixelPerMeter;
 
         _Form = new ScreenForm();
         _Form.Width = _Width;
@@ -136,7 +130,7 @@ public class Screen
         // draw the shapes
         foreach (var sp in Shapes)
         {
-            sp.Draw(OffGraphics, (float)_PixelPerMeter);
+            sp.Draw(OffGraphics, (float)PixelPerMeter);
         }
 
         // draw the offscreen into the displayed screen

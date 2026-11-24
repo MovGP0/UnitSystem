@@ -16,9 +16,7 @@ namespace Qs.Runtime;
 
 class QsVar
 {
-    private readonly QsEvaluator evaluator;
-
-    public QsEvaluator Evaluator => evaluator;
+    public QsEvaluator Evaluator { get; }
 
     public class ExprOp
     {
@@ -59,7 +57,7 @@ class QsVar
     /// <param name="lb"></param>
     public QsVar(QsEvaluator evaluator, string line, QsFunction function, SimpleLambdaBuilder lb, out Token tokenizedBody)
     {
-        this.evaluator = evaluator;
+        this.Evaluator = evaluator;
         if (function != null)
         {
             lambdaBuilder = lb;
@@ -85,14 +83,14 @@ class QsVar
     /// <param name="line"></param>
     public QsVar(QsEvaluator evaluator, string line)
     {
-        this.evaluator = evaluator;
+        this.Evaluator = evaluator;
 
         ResultExpression = ParseArithmatic(line);
     }
 
     public QsVar(QsEvaluator evaluator, Token expression)
     {
-        this.evaluator = evaluator;
+        this.Evaluator = evaluator;
 
         ResultExpression = ParseArithmatic(expression);
     }
@@ -107,7 +105,7 @@ class QsVar
     /// <param name="sequenceName"></param>
     public QsVar(QsEvaluator evaluator, string line, QsSequence sequence, SimpleLambdaBuilder lb)
     {
-        this.evaluator = evaluator;
+        this.Evaluator = evaluator;
 
         if (sequence != null)
         {
