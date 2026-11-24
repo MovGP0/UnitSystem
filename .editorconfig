@@ -159,7 +159,7 @@ dotnet_diagnostic.RCS1006.severity = warning
 dotnet_diagnostic.RCS1007.severity = warning
 
 # Use C# keywords for predefined types
-# dotnet_diagnostic.RCS1013.severity = warning
+dotnet_diagnostic.RCS1013.severity = warning
 
 # Use the configured form of array type inference
 # dotnet_diagnostic.RCS1014.severity = warning

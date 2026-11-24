@@ -28,7 +28,7 @@ public class QsObject : QsValue
         _NativeObject = nativeObject;
     }
 
-    public Object ThisObject => _NativeObject;
+    public object ThisObject => _NativeObject;
 
     /// <summary>
     /// Native Type.

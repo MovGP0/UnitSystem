@@ -160,7 +160,7 @@ public sealed partial class QuantityDimension
 
             //store dimension as key and Quantity Type .
             //create AnyQuantity<Object>  Object container used just for instantiation
-            var quantity = (AnyQuantity<Object>)Activator.CreateInstance(quantityType.MakeGenericType(typeof(object)))!;
+            var quantity = (AnyQuantity<object>)Activator.CreateInstance(quantityType.MakeGenericType(typeof(object)))!;
 
             //store the Dimension and the corresponding Type;
             CurrentQuantitiesDictionary.Add(quantity.Dimension, quantityType);

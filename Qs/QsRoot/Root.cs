@@ -250,7 +250,7 @@ public class Root
 
         var vType = value.GetType();
 
-        if (vType == typeof(int) || vType == typeof(double) || vType == typeof(Single) || vType == typeof(float) || vType == typeof(Int64) || vType == typeof(uint) || vType == typeof(UInt16) || vType == typeof(UInt64))
+        if (vType == typeof(int) || vType == typeof(double) || vType == typeof(float) || vType == typeof(float) || vType == typeof(long) || vType == typeof(uint) || vType == typeof(ushort) || vType == typeof(ulong))
         {
             var vv = (double)Convert.ChangeType(value, typeof(double), null);
             return new QsScalar
@@ -259,7 +259,7 @@ public class Root
             };
         }
 
-        if (vType == typeof(String))
+        if (vType == typeof(string))
         {
             return new QsText((string)value);
         }
@@ -274,7 +274,7 @@ public class Root
             return new QsScalar { NumericalQuantity = (AnyQuantity<double>)value };
         }
 
-        if (vType == typeof(int[]) || vType == typeof(double[]) || vType == typeof(Single[]) || vType == typeof(float[]) || vType == typeof(Int64[]) || vType == typeof(uint[]) || vType == typeof(UInt16[]) || vType == typeof(UInt64[]))
+        if (vType == typeof(int[]) || vType == typeof(double[]) || vType == typeof(float[]) || vType == typeof(float[]) || vType == typeof(long[]) || vType == typeof(uint[]) || vType == typeof(ushort[]) || vType == typeof(ulong[]))
         {
             var rr = (Array)value;
             var v = new QsVector(rr.Length);
@@ -405,12 +405,12 @@ public class Root
 
         if (targetType == typeof(int)
             || targetType == typeof(double)
-            || targetType == typeof(Single)
             || targetType == typeof(float)
-            || targetType == typeof(Int64)
+            || targetType == typeof(float)
+            || targetType == typeof(long)
             || targetType == typeof(uint)
-            || targetType == typeof(UInt16)
-            || targetType == typeof(UInt64))
+            || targetType == typeof(ushort)
+            || targetType == typeof(ulong))
         {
             var nq = Expression.Property(Expression.Convert(value, typeof(QsScalar)), "NumericalQuantity");
 
@@ -418,7 +418,7 @@ public class Root
             return Expression.Convert(nqv, targetType);
         }
 
-        if (targetType == typeof(int[]) || targetType == typeof(double[]) || targetType == typeof(Single[]) || targetType == typeof(float[]) || targetType == typeof(Int64[]) || targetType == typeof(uint[]) || targetType == typeof(UInt16[]) || targetType == typeof(UInt64[]))
+        if (targetType == typeof(int[]) || targetType == typeof(double[]) || targetType == typeof(float[]) || targetType == typeof(float[]) || targetType == typeof(long[]) || targetType == typeof(uint[]) || targetType == typeof(ushort[]) || targetType == typeof(ulong[]))
         {
             // then the value should be a qsvector or qsmatrix
             var mi = typeof(Root).GetMethod("ToNumericArray", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(targetType.GetElementType());
@@ -481,9 +481,9 @@ public class Root
                     dd[ix] = (Numeric)(object)(double)ListStorage[ix].NumericalQuantity.Value;
                 }
 
-                if (targetType == typeof(Single))
+                if (targetType == typeof(float))
                 {
-                    dd[ix] = (Numeric)(object)(Single)ListStorage[ix].NumericalQuantity.Value;
+                    dd[ix] = (Numeric)(object)(float)ListStorage[ix].NumericalQuantity.Value;
                 }
 
                 if (targetType == typeof(float))
@@ -491,9 +491,9 @@ public class Root
                     dd[ix] = (Numeric)(object)(float)ListStorage[ix].NumericalQuantity.Value;
                 }
 
-                if (targetType == typeof(Int64))
+                if (targetType == typeof(long))
                 {
-                    dd[ix] = (Numeric)(object)(Int64)ListStorage[ix].NumericalQuantity.Value;
+                    dd[ix] = (Numeric)(object)(long)ListStorage[ix].NumericalQuantity.Value;
                 }
 
                 if (targetType == typeof(uint))
@@ -501,14 +501,14 @@ public class Root
                     dd[ix] = (Numeric)(object)(uint)ListStorage[ix].NumericalQuantity.Value;
                 }
 
-                if (targetType == typeof(UInt16))
+                if (targetType == typeof(ushort))
                 {
-                    dd[ix] = (Numeric)(object)(UInt16)ListStorage[ix].NumericalQuantity.Value;
+                    dd[ix] = (Numeric)(object)(ushort)ListStorage[ix].NumericalQuantity.Value;
                 }
 
-                if (targetType == typeof(UInt64))
+                if (targetType == typeof(ulong))
                 {
-                    dd[ix] = (Numeric)(object)(UInt64)ListStorage[ix].NumericalQuantity.Value;
+                    dd[ix] = (Numeric)(object)(ulong)ListStorage[ix].NumericalQuantity.Value;
                 }
 
                 ix--;
@@ -567,12 +567,12 @@ public class Root
 
         if (targetType == typeof(int)
             || targetType == typeof(double)
-            || targetType == typeof(Single)
             || targetType == typeof(float)
-            || targetType == typeof(Int64)
+            || targetType == typeof(float)
+            || targetType == typeof(long)
             || targetType == typeof(uint)
-            || targetType == typeof(UInt16)
-            || targetType == typeof(UInt64))
+            || targetType == typeof(ushort)
+            || targetType == typeof(ulong))
         {
             var vs = value as QsScalar;
             if (vs != null)
@@ -583,7 +583,7 @@ public class Root
             throw new QsException("Can't Convert " + value.GetType().Name + " into " + targetType.Name);
         }
 
-        if (targetType == typeof(int[]) || targetType == typeof(double[]) || targetType == typeof(Single[]) || targetType == typeof(float[]) || targetType == typeof(Int64[]) || targetType == typeof(uint[]) || targetType == typeof(UInt16[]) || targetType == typeof(UInt64[]))
+        if (targetType == typeof(int[]) || targetType == typeof(double[]) || targetType == typeof(float[]) || targetType == typeof(float[]) || targetType == typeof(long[]) || targetType == typeof(uint[]) || targetType == typeof(ushort[]) || targetType == typeof(ulong[]))
         {
             // then the value should be a qsvector or qsmatrix
             if (value is QsValue vs)

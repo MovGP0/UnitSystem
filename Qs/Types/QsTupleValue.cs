@@ -12,9 +12,9 @@ public struct QsTupleValue
     /// <summary>
     /// Holds original source value that wasn't converted into Native Qs Value yet
     /// </summary>
-    private Object? _LazyValue;
+    private object? _LazyValue;
 
-    public Object? LazyValue => _LazyValue;
+    public object? LazyValue => _LazyValue;
 
     public QsValue Value;
 
@@ -22,7 +22,7 @@ public struct QsTupleValue
     /// Set the tuple value to a value that will be evaluated when value accessed first time
     /// </summary>
     /// <param name="value"></param>
-    public void SetLazyValue(Object value)
+    public void SetLazyValue(object value)
     {
         _LazyValue = value;
     }

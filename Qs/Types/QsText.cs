@@ -177,7 +177,7 @@ public partial class QsText(string text) : QsValue
 #if WINRT
             return Char.GetNumericValue(Text, i).ToQuantity().ToScalar();
 #else
-        return Char.ConvertToUtf32(Text, i).ToQuantity().ToScalar();
+        return char.ConvertToUtf32(Text, i).ToQuantity().ToScalar();
 #endif
     }
 
