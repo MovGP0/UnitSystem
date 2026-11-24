@@ -57,24 +57,21 @@ public partial class SymbolicVariable
                 if (sv._SymbolPower == 0)
                     sv._Symbol = "";
             }
+            else if (symbolpowercontainParameter)
+            {
+                // here is the case when base and power are the same with the parameter we are differentiating with
+                //  i.e.  x^x|x
+                // Logarithmic Differentiation
+                var lnterm = new SymbolicVariable($"{FunctionOperation.LnText}(" + sv.ToString() + ")");
+                var dlnterm = lnterm.Differentiate(parameter);
+                sv = Multiply(sv, dlnterm);
+            }
             else
             {
-                if (symbolpowercontainParameter)
-                {
-                    // here is the case when base and power are the same with the parameter we are differentiating with
-                    //  i.e.  x^x|x
-                    // Logarithmic Differentiation
-                    var lnterm = new SymbolicVariable($"{FunctionOperation.LnText}(" + sv.ToString() + ")");
-                    var dlnterm = lnterm.Differentiate(parameter);
-                    sv = Multiply(sv, dlnterm);
-                }
-                else
-                {
-                    // symbol power term exist
-                    var oldPower = sv._SymbolPowerTerm;
-                    sv._SymbolPowerTerm = Subtract(sv._SymbolPowerTerm, One);
-                    sv = Multiply(sv, oldPower);
-                }
+                // symbol power term exist
+                var oldPower = sv._SymbolPowerTerm;
+                sv._SymbolPowerTerm = Subtract(sv._SymbolPowerTerm, One);
+                sv = Multiply(sv, oldPower);
             }
         }
         else if (symbolpowercontainParameter)
@@ -110,158 +107,155 @@ public partial class SymbolicVariable
                     sv = Multiply(sv, oldPower);
                 }
             }
-            else
+            else if (sv.IsFunction)
             {
-                if (sv.IsFunction)
+                var fv = sv.Clone();
+
+                // remove the power term in this copied function term
+                fv._SymbolPowerTerm = null;
+                fv.SymbolPower = 1.0;
+                fv.Coeffecient = 1.0;
+
+                if (fv.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
                 {
-                    var fv = sv.Clone();
+                    if (fv._FunctionParameters.Length != 1)
+                        throw new SymbolicException("Exp function must have one parameter for differentiation to be done.");
 
-                    // remove the power term in this copied function term
-                    fv._SymbolPowerTerm = null;
-                    fv.SymbolPower = 1.0;
-                    fv.Coeffecient = 1.0;
+                    // d/dx e^x = e^x
+                    // d/dx e^(x^2) = 2*x*e^(x^2)
 
-                    if (fv.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
+                    var pa = fv._FunctionParameters[0];
+                    var presult = pa.Differentiate(parameter);
+                    fv = Multiply(presult, fv);
+                }
+                else if (fv.FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (fv._FunctionParameters.Length != 1)
+                        throw new SymbolicException("Log function must have one parameter for differentiation to be done.");
+
+                    // d/dx ( ln( g(x) ) ) = g'(x)/g(x)
+
+                    var pa = fv._FunctionParameters[0];
+                    var dpa = pa.Differentiate(parameter);
+                    fv = Divide(dpa, pa);
+                }
+                else if (fv.FunctionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
+                {
+                    // d/dx ( sqrt( g(x) ) ) = g'(x) / 2* sqrt(g(x))
+                    if (fv._FunctionParameters.Length != 1)
+                        throw new SymbolicException("Sqrt function must have one parameter for differentiation to be done.");
+
+                    var pa = fv._FunctionParameters[0];
+                    var dpa = pa.Differentiate(parameter);
+                    var den = Multiply(Two, fv);
+                    fv = Divide(dpa, den);
+                }
+                else if (FunctionOperation.InversedTrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
+                {
+                    fv = FunctionOperation.DiffInversedTrigFunction(fv, parameter);
+                }
+                else if (FunctionOperation.TrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
+                {
+                    // triogonometric functions
+                    bool IsNegativeResult;
+                    string[] newfuntions = FunctionOperation.DiffTrigFunction(fv, out IsNegativeResult);
+
+                    if (newfuntions != null)
                     {
-                        if (fv._FunctionParameters.Length != 1)
-                            throw new SymbolicException("Exp function must have one parameter for differentiation to be done.");
-
-                        // d/dx e^x = e^x
-                        // d/dx e^(x^2) = 2*x*e^(x^2)
-
-                        var pa = fv._FunctionParameters[0];
-                        var presult = pa.Differentiate(parameter);
-                        fv = Multiply(presult, fv);
-                    }
-                    else if (fv.FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
-                    {
-                        if (fv._FunctionParameters.Length != 1)
-                            throw new SymbolicException("Log function must have one parameter for differentiation to be done.");
-
-                        // d/dx ( ln( g(x) ) ) = g'(x)/g(x)
-
-                        var pa = fv._FunctionParameters[0];
-                        var dpa = pa.Differentiate(parameter);
-                        fv = Divide(dpa, pa);
-                    }
-                    else if(fv.FunctionName.Equals(FunctionOperation.SqrtText, StringComparison.OrdinalIgnoreCase))
-                    {
-                        // d/dx ( sqrt( g(x) ) ) = g'(x) / 2* sqrt(g(x))
-                        if (fv._FunctionParameters.Length != 1)
-                            throw new SymbolicException("Sqrt function must have one parameter for differentiation to be done.");
-
-                        var pa = fv._FunctionParameters[0];
-                        var dpa = pa.Differentiate(parameter);
-                        var den = Multiply(Two, fv);
-                        fv = Divide(dpa, den);
-                    }
-                    else if (FunctionOperation.InversedTrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
-                    {
-                        fv = FunctionOperation.DiffInversedTrigFunction(fv, parameter);
-                    }
-                    else if (FunctionOperation.TrigFunctions.Contains(fv.FunctionName, StringComparer.OrdinalIgnoreCase))
-                    {
-                        // triogonometric functions
-                        bool IsNegativeResult;
-                        string[] newfuntions = FunctionOperation.DiffTrigFunction(fv, out IsNegativeResult);
-
-                        if (newfuntions != null)
+                        //if(IsNegative)
+                        // get the parameters in the function and differentiate them
+                        if (fv._FunctionParameters.Length == 0)
                         {
-                            //if(IsNegative)
-                            // get the parameters in the function and differentiate them
-                            if (fv._FunctionParameters.Length == 0)
-                            {
-                                throw new SymbolicException("Special function without any parameters is not suitable for differentiation");
-                            }
-                            else if (fv._FunctionParameters.Length == 1)
-                            {
-                                var pa = fv._FunctionParameters[0];
-                                var presult = pa.Differentiate(parameter);
-                                fv.SetFunctionName(newfuntions);
-
-                                if (IsNegativeResult)
-                                    fv = Multiply(presult, NegativeOne * fv);
-                                else
-                                    fv = Multiply(presult, fv);
-                            }
-                            else
-                            {
-                                throw new SymbolicException("more than one parameter is not normal for this special function");
-                            }
+                            throw new SymbolicException("Special function without any parameters is not suitable for differentiation");
                         }
-                    }
-                    else
-                    {
-                        // the function is not a special function like sin, cos, and log.
-                        // search for the function in the running context.
-
-                        var extendedFunction = Functions.Keys.FirstOrDefault(c => c.StartsWith(fv.FunctionName, StringComparison.OrdinalIgnoreCase));
-                        if (!string.IsNullOrEmpty(extendedFunction))
+                        else if (fv._FunctionParameters.Length == 1)
                         {
-                            string[] fps = extendedFunction.Substring(extendedFunction.IndexOf("(")).TrimStart('(').TrimEnd(')').Split(',');
+                            var pa = fv._FunctionParameters[0];
+                            var presult = pa.Differentiate(parameter);
+                            fv.SetFunctionName(newfuntions);
 
-                            if(fps.Length != fv._RawFunctionParameters.Length)
-                                throw new SymbolicException("Insufficient function parameters");
-
-                            // replace parameters
-                            var dsf = Functions[extendedFunction].ToString();
-
-                            for(var ipxf=0; ipxf < fps.Length ;ipxf++)
-                            {
-                                dsf = dsf.Replace(fps[ipxf], fv._RawFunctionParameters[ipxf]);
-                            }
-
-                            fv = Parse(dsf).Differentiate(parameter);
+                            if (IsNegativeResult)
+                                fv = Multiply(presult, NegativeOne * fv);
+                            else
+                                fv = Multiply(presult, fv);
                         }
                         else
                         {
-                            throw new SymbolicException("This function is not a special function, and it is not being defined before .. to define a user function write f(x):= x^2  or h(u,v):=u-v^2");
+                            throw new SymbolicException("more than one parameter is not normal for this special function");
                         }
                     }
-
-                    // second treat the function normally as if it is one big symbol
-                    if (sv._SymbolPowerTerm == null)
-                    {
-                        sv.Coeffecient *= sv._SymbolPower;
-                        sv._SymbolPower -= 1;
-                        if (sv._SymbolPower == 0)
-                            sv._Symbol = "";
-                    }
-                    else
-                    {
-                        // symbol power term exist
-                        var oldPower = sv._SymbolPowerTerm;
-                        sv._SymbolPowerTerm = Subtract(sv._SymbolPowerTerm, One);
-                        sv = Multiply(sv, oldPower);
-                    }
-
-                    sv = Multiply(fv, sv);
-                }
-                else if (sv.IsCoeffecientOnly && sv._CoeffecientPowerTerm != null)
-                {
-                    // hint: the coeffecient only term has power of 1 or symbolic power should exist in case of raise to symbolic power
-
-                    // get log(coeffeniect)
-                    var log = new SymbolicVariable(FunctionOperation.LnText + "(" + sv.Coeffecient.ToString(CultureInfo.InvariantCulture) + ")");
-                    var dp = sv._CoeffecientPowerTerm.Differentiate(parameter);
-                    sv = Multiply(log, Multiply(dp, sv));
                 }
                 else
                 {
-                    // the whole term will be converted to zero.
-                    // empty everything :)
-                    sv._SymbolPowerTerm = null;
-                    sv._CoeffecientPowerTerm = null;
-                    sv._SymbolPower = 1;
-                    sv.Coeffecient = 0;
-                    //sv._DividedTerm = null;
-                    sv._BaseVariable = null;
-                    sv._Symbol = string.Empty;
-                    if (sv._SymbolPowerTerm != null)
+                    // the function is not a special function like sin, cos, and log.
+                    // search for the function in the running context.
+
+                    var extendedFunction = Functions.Keys.FirstOrDefault(c => c.StartsWith(fv.FunctionName, StringComparison.OrdinalIgnoreCase));
+                    if (!string.IsNullOrEmpty(extendedFunction))
                     {
-                        sv._FusedSymbols.Clear();
-                        sv._FusedSymbols = null;
+                        string[] fps = extendedFunction.Substring(extendedFunction.IndexOf("(")).TrimStart('(').TrimEnd(')').Split(',');
+
+                        if (fps.Length != fv._RawFunctionParameters.Length)
+                            throw new SymbolicException("Insufficient function parameters");
+
+                        // replace parameters
+                        var dsf = Functions[extendedFunction].ToString();
+
+                        for (var ipxf = 0; ipxf < fps.Length; ipxf++)
+                        {
+                            dsf = dsf.Replace(fps[ipxf], fv._RawFunctionParameters[ipxf]);
+                        }
+
+                        fv = Parse(dsf).Differentiate(parameter);
                     }
+                    else
+                    {
+                        throw new SymbolicException("This function is not a special function, and it is not being defined before .. to define a user function write f(x):= x^2  or h(u,v):=u-v^2");
+                    }
+                }
+
+                // second treat the function normally as if it is one big symbol
+                if (sv._SymbolPowerTerm == null)
+                {
+                    sv.Coeffecient *= sv._SymbolPower;
+                    sv._SymbolPower -= 1;
+                    if (sv._SymbolPower == 0)
+                        sv._Symbol = "";
+                }
+                else
+                {
+                    // symbol power term exist
+                    var oldPower = sv._SymbolPowerTerm;
+                    sv._SymbolPowerTerm = Subtract(sv._SymbolPowerTerm, One);
+                    sv = Multiply(sv, oldPower);
+                }
+
+                sv = Multiply(fv, sv);
+            }
+            else if (sv.IsCoeffecientOnly && sv._CoeffecientPowerTerm != null)
+            {
+                // hint: the coeffecient only term has power of 1 or symbolic power should exist in case of raise to symbolic power
+
+                // get log(coeffeniect)
+                var log = new SymbolicVariable(FunctionOperation.LnText + "(" + sv.Coeffecient.ToString(CultureInfo.InvariantCulture) + ")");
+                var dp = sv._CoeffecientPowerTerm.Differentiate(parameter);
+                sv = Multiply(log, Multiply(dp, sv));
+            }
+            else
+            {
+                // the whole term will be converted to zero.
+                // empty everything :)
+                sv._SymbolPowerTerm = null;
+                sv._CoeffecientPowerTerm = null;
+                sv._SymbolPower = 1;
+                sv.Coeffecient = 0;
+                //sv._DividedTerm = null;
+                sv._BaseVariable = null;
+                sv._Symbol = string.Empty;
+                if (sv._SymbolPowerTerm != null)
+                {
+                    sv._FusedSymbols.Clear();
+                    sv._FusedSymbols = null;
                 }
             }
         }

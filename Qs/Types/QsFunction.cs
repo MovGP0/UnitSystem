@@ -499,17 +499,14 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
                 {
                     //ignore these things.
                 }
+                else if (char.IsLetter(c.TokenValue[0]))
+                {
+                    textParams.Add(c.TokenValue);
+                    prms.Add(new QsParamInfo { Name = c.TokenValue, Type = QsParamType.Value });
+                }
                 else
                 {
-                    if (char.IsLetter(c.TokenValue[0]))
-                    {
-                        textParams.Add(c.TokenValue);
-                        prms.Add(new QsParamInfo { Name = c.TokenValue, Type = QsParamType.Value });
-                    }
-                    else
-                    {
-                        throw new QsSyntaxErrorException("Parameter name must statrt with a letter");
-                    }
+                    throw new QsSyntaxErrorException("Parameter name must statrt with a letter");
                 }
             }
 

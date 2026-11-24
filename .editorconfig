@@ -153,7 +153,7 @@ dotnet_diagnostic.RCS1004.severity = none
 dotnet_diagnostic.RCS1005.severity = warning
 
 # Combine an else block and its nested if
-# dotnet_diagnostic.RCS1006.severity = warning
+dotnet_diagnostic.RCS1006.severity = warning
 
 # Require braces around embedded statements
 # dotnet_diagnostic.RCS1007.severity = warning

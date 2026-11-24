@@ -920,24 +920,21 @@ public class QsEvaluator
                                         {
                                             ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
                                         }
+                                        else if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
+                                        {
+                                            parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
+                                            parent = (QsObject)parent_object;
+                                            ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
+                                        }
                                         else
                                         {
-                                            if (ParentPropertyInfo.PropertyType.IsArray == true || ParentPropertyInfo.GetIndexParameters().Length > 0)
-                                            {
-                                                parent_object = parent.GetIndexedProperty(ParentPropertyInfo.Name, ParentPropertyInfoIndexer.Value);
-                                                parent = (QsObject)parent_object;
-                                                ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index][0].TokenValue);
-                                            }
-                                            else
-                                            {
-                                                // we had previous unresolved property info
-                                                // so we get it as an object
-                                                //   set this object as the parent
-                                                //  then get the sub property metadata again.
-                                                parent_object = parent.GetProperty(ParentPropertyInfo.Name);
-                                                parent = (QsObject)parent_object;
-                                                ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
-                                            }
+                                            // we had previous unresolved property info
+                                            // so we get it as an object
+                                            //   set this object as the parent
+                                            //  then get the sub property metadata again.
+                                            parent_object = parent.GetProperty(ParentPropertyInfo.Name);
+                                            parent = (QsObject)parent_object;
+                                            ParentPropertyInfo = parent.GetPropertyInfo(varNameTokens[v_index].TokenValue);
                                         }
                                     }
                                     else

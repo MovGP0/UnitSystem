@@ -105,29 +105,20 @@ public static class QsCommands
             {
                 Console.WriteLine("   Yes I am caching things.");
             }
-            else
+            else if (commands[1] == "clear")
             {
-                if (commands[1] == "clear" )
+                if (commands.Length < 3)
                 {
-                    if (commands.Length < 3)
-                    {
-                        Unit.ClearUnitsCaching();
-                        Console.WriteLine("    Units Cached Cleared.");
-                    }
-                    else
-                    {
-                        if (command.Length < 4)
-                        {
-                        }
-                        else
-                        {
-                            if (commands[2] == "dynamic")
-                            {
-                                Unit.ClearDynamicUnitsCaching();
-                                Console.WriteLine("    Dynamic Units Caching Cleared.");
-                            }
-                        }
-                    }
+                    Unit.ClearUnitsCaching();
+                    Console.WriteLine("    Units Cached Cleared.");
+                }
+                else if (command.Length < 4)
+                {
+                }
+                else if (commands[2] == "dynamic")
+                {
+                    Unit.ClearDynamicUnitsCaching();
+                    Console.WriteLine("    Dynamic Units Caching Cleared.");
                 }
             }
 

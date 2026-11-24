@@ -306,26 +306,23 @@ public sealed partial class Token : IEnumerable<Token>
             {
                 current.AppendSubToken(c);
             }
+            else if (c.TokenClassType == typeof(SingleSpaceToken) || c.TokenClassType == typeof(MultipleSpaceToken))
+            {
+                //found a separator
+                if (mergedTokens.Count > 0)
+                {
+                    mergedTokens.TokenClassType = typeof(MergedTokenClass);
+
+                    current.AppendSubToken(mergedTokens);
+                }
+
+                current.AppendSubToken(c);
+
+                mergedTokens = new Token();
+            }
             else
             {
-                if (c.TokenClassType == typeof (SingleSpaceToken)|| c.TokenClassType == typeof(MultipleSpaceToken))
-                {
-                    //found a separator
-                    if (mergedTokens.Count > 0)
-                    {
-                        mergedTokens.TokenClassType = typeof(MergedTokenClass);
-
-                        current.AppendSubToken(mergedTokens);
-                    }
-
-                    current.AppendSubToken(c);
-
-                    mergedTokens = new Token();
-                }
-                else
-                {
-                    mergedTokens.AppendSubToken(c);
-                }
+                mergedTokens.AppendSubToken(c);
             }
 
             ci++;
@@ -377,26 +374,23 @@ public sealed partial class Token : IEnumerable<Token>
             {
                 current.AppendSubToken(c);
             }
+            else if (tokenClasses.Count(tok => tok.GetType() == c.TokenClassType) == 0)
+            {
+                mergedTokens.AppendSubToken(c);
+            }
             else
             {
-                if (tokenClasses.Count(tok => tok.GetType() == c.TokenClassType) == 0)
+                //found a separator
+                if (mergedTokens.Count > 0)
                 {
-                    mergedTokens.AppendSubToken(c);
+                    mergedTokens.TokenClassType = mergedTokensClassType;
+
+                    current.AppendSubToken(mergedTokens);
                 }
-                else
-                {
-                    //found a separator
-                    if (mergedTokens.Count > 0)
-                    {
-                        mergedTokens.TokenClassType = mergedTokensClassType;
 
-                        current.AppendSubToken(mergedTokens);
-                    }
+                current.AppendSubToken(c);
 
-                    current.AppendSubToken(c);
-
-                    mergedTokens = new Token();
-                }
+                mergedTokens = new Token();
             }
 
             ci++;

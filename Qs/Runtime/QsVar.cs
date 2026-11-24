@@ -815,35 +815,8 @@ class QsVar
 
                             eop.Operation = "Skip";
                         }
-                        else
+                        else if (loopIteratorContainer.Count > 0 && loopIteratorContainer.Contains(tokens[ix].TokenValue))
                         {
-                            if (loopIteratorContainer.Count > 0 && loopIteratorContainer.Contains(tokens[ix].TokenValue))
-                            {
-                                GetIteratorElement(tokens[ix].TokenValue, loopIteratorParameter[tokens[ix].TokenValue]);
-                            }
-                            else if (loopIteratorContainer.Count > 0
-                                && tokens[ix].TokenValue.Length > 1
-                                && tokens[ix].TokenValue.StartsWith("_")
-                                && loopIteratorContainer.Contains(tokens[ix].TokenValue.Substring(1))
-                                    )
-                            {
-                                // case of loop counter
-                                var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]);
-
-                                quantityExpression = Expression.Call(ItoQsv, loopIteratorParameter[tokens[ix].TokenValue.Substring(1)]);
-                            }
-                            else
-                            {
-                                //quantity variable  //get it from evaluator  global heap
-                                quantityExpression = GetQsVariable(tokens[ix]);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (loopIteratorContainer.Count > 0 && loopIteratorContainer.Contains(tokens[ix].TokenValue))
-                        {
-                            // the case of accessing the iterator
                             GetIteratorElement(tokens[ix].TokenValue, loopIteratorParameter[tokens[ix].TokenValue]);
                         }
                         else if (loopIteratorContainer.Count > 0
@@ -862,6 +835,27 @@ class QsVar
                             //quantity variable  //get it from evaluator  global heap
                             quantityExpression = GetQsVariable(tokens[ix]);
                         }
+                    }
+                    else if (loopIteratorContainer.Count > 0 && loopIteratorContainer.Contains(tokens[ix].TokenValue))
+                    {
+                        // the case of accessing the iterator
+                        GetIteratorElement(tokens[ix].TokenValue, loopIteratorParameter[tokens[ix].TokenValue]);
+                    }
+                    else if (loopIteratorContainer.Count > 0
+                        && tokens[ix].TokenValue.Length > 1
+                        && tokens[ix].TokenValue.StartsWith("_")
+                        && loopIteratorContainer.Contains(tokens[ix].TokenValue.Substring(1))
+                            )
+                    {
+                        // case of loop counter
+                        var ItoQsv = typeof(Qs).GetMethod("ToScalarValue", [typeof(int)]);
+
+                        quantityExpression = Expression.Call(ItoQsv, loopIteratorParameter[tokens[ix].TokenValue.Substring(1)]);
+                    }
+                    else
+                    {
+                        //quantity variable  //get it from evaluator  global heap
+                        quantityExpression = GetQsVariable(tokens[ix]);
                     }
                     #endregion
                 }
@@ -917,14 +911,11 @@ class QsVar
 
                 eop = FirstEop;
             }
-            else
+            else if (eop.Operation != "Skip")
             {
-                if (eop.Operation != "Skip")
-                {
-                    //use the next object to be eop.
-                    eop.Next = new ExprOp();
-                    eop = eop.Next;
-                }
+                //use the next object to be eop.
+                eop.Next = new ExprOp();
+                eop = eop.Next;
             }
 
             eop.Operation = OperatorTokenText;
@@ -1564,23 +1555,20 @@ class QsVar
                 pp
             );
         }
+        else if (functionValueToken.TokenValue.StartsWith("@"))
+        {
+            f = QsFunction.GetFirstDeclaredFunction(
+                Scope,
+                string.Empty,
+                functionValueToken.TokenValue.Substring(1));
+        }
         else
         {
-            if (functionValueToken.TokenValue.StartsWith("@"))
-            {
-                f = QsFunction.GetFirstDeclaredFunction(
-                    Scope,
-                    string.Empty,
-                    functionValueToken.TokenValue.Substring(1));
-            }
-            else
-            {
-                //namespace included
-                f = QsFunction.GetFirstDeclaredFunction(
-                    Scope,
-                    functionValueToken.TokenValue.Substring(0, functionValueToken.TokenValue.LastIndexOf(':')),
-                    functionValueToken.TokenValue.Substring(functionValueToken.TokenValue.LastIndexOf(':') + 2));
-            }
+            //namespace included
+            f = QsFunction.GetFirstDeclaredFunction(
+                Scope,
+                functionValueToken.TokenValue.Substring(0, functionValueToken.TokenValue.LastIndexOf(':')),
+                functionValueToken.TokenValue.Substring(functionValueToken.TokenValue.LastIndexOf(':') + 2));
         }
 
         if (f != null)
@@ -2187,10 +2175,9 @@ class QsVar
                 argNames.Add(paraToken[0].TokenValue);  //trim the argument name ;)
                 NamedArgumentOccured = true;
             }
-            else
+            else if (NamedArgumentOccured)
             {
-                if (NamedArgumentOccured)
-                    throw new QsException("Normal argument after named argument is not permitted");
+                throw new QsException("Normal argument after named argument is not permitted");
             }
         }
 

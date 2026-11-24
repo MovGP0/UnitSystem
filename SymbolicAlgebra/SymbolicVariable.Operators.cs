@@ -53,24 +53,21 @@ public partial class SymbolicVariable
                 p.SymbolPower = power;
             p.Coeffecient = Math.Pow(p.Coeffecient, power);
         }
+        else if (power == 0.5)
+        {
+            // return sqrt function of the multi term
+
+            return new SymbolicVariable("Sqrt(" + p.ToString() + ")");
+        }
+        else if (power > 0 && power < 1)
+        {
+            // I don't have solution for this now
+            throw new SymbolicException("I don't have solution for this type of power " + p.ToString() + "^ (" + power.ToString() + ")");
+        }
         else
         {
-            if (power == 0.5)
-            {
-                // return sqrt function of the multi term
-
-                return new SymbolicVariable("Sqrt(" + p.ToString() + ")");
-            }
-            else if (power > 0 && power < 1)
-            {
-                // I don't have solution for this now
-                throw new SymbolicException("I don't have solution for this type of power " + p.ToString() + "^ (" + power.ToString() + ")");
-            }
-            else
-            {
-                // multi term that we can't raise it to the double
-                return p.RaiseToSymbolicPower(new SymbolicVariable(power.ToString()));
-            }
+            // multi term that we can't raise it to the double
+            return p.RaiseToSymbolicPower(new SymbolicVariable(power.ToString()));
         }
 
         return p;

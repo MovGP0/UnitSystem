@@ -243,16 +243,13 @@ public partial class SymbolicVariable
                                         SourceTerm._SymbolPower = 1;
                                     }
                                 }
+                                else if (SourceTerm.SymbolPowerTerm != null)
+                                {
+                                    SourceTerm._SymbolPowerTerm += new SymbolicVariable(fsv.Value.ToString());
+                                }
                                 else
                                 {
-                                    if (SourceTerm.SymbolPowerTerm != null)
-                                    {
-                                        SourceTerm._SymbolPowerTerm += new SymbolicVariable(fsv.Value.ToString());
-                                    }
-                                    else
-                                    {
-                                        SourceTerm._SymbolPower += fsv.Value.NumericalVariable;
-                                    }
+                                    SourceTerm._SymbolPower += fsv.Value.NumericalVariable;
                                 }
                             }
                             else

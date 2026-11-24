@@ -87,191 +87,185 @@ public partial class SymbolicVariable
                 }
                 #endregion
             }
-            else
+            else if (SourceTerm.Symbol.Equals(TargetSubTerm.Symbol, StringComparison.OrdinalIgnoreCase))
             {
-                if (SourceTerm.Symbol.Equals(TargetSubTerm.Symbol, StringComparison.OrdinalIgnoreCase))
+                #region Second Case: Primary symbol in both source and target exist and equal
+                if (SourceTerm._SymbolPowerTerm != null || TargetSubTerm._SymbolPowerTerm != null)
                 {
-                    #region Second Case: Primary symbol in both source and target exist and equal
-                    if (SourceTerm._SymbolPowerTerm != null || TargetSubTerm._SymbolPowerTerm != null)
+                    // make sure the object of symbol power term have values if they don't
+                    if (SourceTerm._SymbolPowerTerm == null)
                     {
-                        // make sure the object of symbol power term have values if they don't
-                        if (SourceTerm._SymbolPowerTerm == null)
-                        {
-                            // transfer the numerical power into symbolic variable mode
-                            SourceTerm._SymbolPowerTerm = new SymbolicVariable(SourceTerm.SymbolPower.ToString(CultureInfo.InvariantCulture));
+                        // transfer the numerical power into symbolic variable mode
+                        SourceTerm._SymbolPowerTerm = new SymbolicVariable(SourceTerm.SymbolPower.ToString(CultureInfo.InvariantCulture));
 
-                            // also revert the original symbol power into 1  for validation after this
-                            SourceTerm.SymbolPower = 1;
-                        }
+                        // also revert the original symbol power into 1  for validation after this
+                        SourceTerm.SymbolPower = 1;
+                    }
 
-                        if (TargetSubTerm._SymbolPowerTerm == null)
-                        {
-                            TargetSubTerm._SymbolPowerTerm = new SymbolicVariable(TargetSubTerm.SymbolPower.ToString(CultureInfo.InvariantCulture));
+                    if (TargetSubTerm._SymbolPowerTerm == null)
+                    {
+                        TargetSubTerm._SymbolPowerTerm = new SymbolicVariable(TargetSubTerm.SymbolPower.ToString(CultureInfo.InvariantCulture));
 
-                            TargetSubTerm.SymbolPower = -1; // the target will always be dominator
-                        }
+                        TargetSubTerm.SymbolPower = -1; // the target will always be dominator
+                    }
 
-                        SourceTerm._SymbolPowerTerm -= TargetSubTerm._SymbolPowerTerm;
+                    SourceTerm._SymbolPowerTerm -= TargetSubTerm._SymbolPowerTerm;
 
-                        if (SourceTerm._SymbolPowerTerm.IsCoeffecientOnly)
-                        {
-                            SourceTerm._SymbolPower = SourceTerm._SymbolPowerTerm.Coeffecient;
-                            SourceTerm._SymbolPowerTerm = null;  // remove it because we don't need symbolic when we reach co
-                        }
-                        else
-                        {
-                            // correct the source symbol power (because after division the power may still be positive
-                            if (SourceTerm._SymbolPowerTerm.IsNegative)
-                            {
-                                SourceTerm._SymbolPower = -1;
-
-                                SourceTerm._SymbolPowerTerm *= NegativeOne;
-                            }
-                        }
+                    if (SourceTerm._SymbolPowerTerm.IsCoeffecientOnly)
+                    {
+                        SourceTerm._SymbolPower = SourceTerm._SymbolPowerTerm.Coeffecient;
+                        SourceTerm._SymbolPowerTerm = null;  // remove it because we don't need symbolic when we reach co
                     }
                     else
                     {
-                        SourceTerm.SymbolPower -= TargetSubTerm.SymbolPower;
-                    }
-
-                    // also subtract the fused variables
-                    foreach (var fv in TargetSubTerm.FusedSymbols)
-                    {
-                        if (SourceTerm.FusedSymbols.ContainsKey(fv.Key))
-                            SourceTerm.FusedSymbols[fv.Key] -= fv.Value;
-                        else
-                            SourceTerm.FusedSymbols.Add(fv.Key, fv.Value * -1);
-                    }
-                    #endregion
-
-                }
-                else if (SourceTerm.FusedSymbols.ContainsKey(TargetSubTerm.Symbol))
-                {
-                    #region Third Case: Target primary symbol exist in source fused variables
-
-                    if (TargetSubTerm.SymbolPowerTerm != null)
-                    {
-                        SourceTerm.FusedSymbols[TargetSubTerm.Symbol] -= TargetSubTerm.SymbolPowerTerm;
-                    }
-                    else
-                    {
-                        SourceTerm.FusedSymbols[TargetSubTerm.Symbol] -= TargetSubTerm.SymbolPower;
-                    }
-
-                    // however primary symbol in source still the same so we need to add it to the value in target (if applicable)
-
-                    // also
-
-                    // there are still some fused variables in source that weren't altered by the target fused symbols
-                    // go through every symbol in fused symbols and add it to the source fused symbols
-                    foreach (var tfs in TargetSubTerm.FusedSymbols)
-                    {
-                        if (SourceTerm.FusedSymbols.ContainsKey(tfs.Key))
+                        // correct the source symbol power (because after division the power may still be positive
+                        if (SourceTerm._SymbolPowerTerm.IsNegative)
                         {
-                            // symbol exist so accumulate it
-                            SourceTerm._FusedSymbols[tfs.Key] -= tfs.Value;
-                        }
-                        else
-                        {
-                            // two cases here
-                            // 1 the fused key equal the primary symbol in source
-                            if (SourceTerm.Symbol.Equals(tfs.Key, StringComparison.OrdinalIgnoreCase))
-                            {
-                                if (tfs.Value.SymbolicVariable != null)
-                                {
-                                    if (SourceTerm._SymbolPowerTerm != null)
-                                    {
-                                        SourceTerm._SymbolPowerTerm -= tfs.Value.SymbolicVariable;
-                                    }
-                                    else
-                                    {
-                                        // sum the value in the numerical part to the value in symbolic part
-                                        SourceTerm._SymbolPowerTerm = new SymbolicVariable(SourceTerm._SymbolPower.ToString(CultureInfo.InvariantCulture)) - tfs.Value.SymbolicVariable;
-                                        // reset the value in numerical part
-                                        SourceTerm._SymbolPower = -1;
-                                    }
+                            SourceTerm._SymbolPower = -1;
 
-                                    if (SourceTerm._SymbolPowerTerm.IsCoeffecientOnly)
-                                    {
-                                        SourceTerm._SymbolPower = SourceTerm._SymbolPowerTerm.Coeffecient;
-                                        SourceTerm._SymbolPowerTerm = null;
-                                    }
-                                }
-                                else
-                                {
-                                    SourceTerm._SymbolPower -= tfs.Value.NumericalVariable;
-                                }
-                            }
-                            else
-                            {
-                                // 2 no matching at all which needs to add the symbol in target into the fused symbols in source.
-                                SourceTerm.FusedSymbols.Add(tfs.Key, tfs.Value * -1);
-                            }
+                            SourceTerm._SymbolPowerTerm *= NegativeOne;
                         }
                     }
-                    #endregion
                 }
                 else
                 {
-                    #region Fourth Case: Target primary symbol doesn't exist in Source Primary Symbol nor Source Fused symbols
+                    SourceTerm.SymbolPower -= TargetSubTerm.SymbolPower;
+                }
 
-                    // Add Target primary symbol to the fused symbols in source
-                    SourceTerm.FusedSymbols.Add(
-                        TargetSubTerm.Symbol,
-                        new HybridVariable
-                        {
-                            NumericalVariable = -1 * TargetSubTerm.SymbolPower,
-                            SymbolicVariable = TargetSubTerm.SymbolPowerTerm == null ? null : -1 * (SymbolicVariable)TargetSubTerm.SymbolPowerTerm
-                        });
+                // also subtract the fused variables
+                foreach (var fv in TargetSubTerm.FusedSymbols)
+                {
+                    if (SourceTerm.FusedSymbols.ContainsKey(fv.Key))
+                        SourceTerm.FusedSymbols[fv.Key] -= fv.Value;
+                    else
+                        SourceTerm.FusedSymbols.Add(fv.Key, fv.Value * -1);
+                }
+                #endregion
 
-                    // But the primary symbol of source may exist in the target fused variables.
+            }
+            else if (SourceTerm.FusedSymbols.ContainsKey(TargetSubTerm.Symbol))
+            {
+                #region Third Case: Target primary symbol exist in source fused variables
 
-                    foreach (var fsv in TargetSubTerm.FusedSymbols)
+                if (TargetSubTerm.SymbolPowerTerm != null)
+                {
+                    SourceTerm.FusedSymbols[TargetSubTerm.Symbol] -= TargetSubTerm.SymbolPowerTerm;
+                }
+                else
+                {
+                    SourceTerm.FusedSymbols[TargetSubTerm.Symbol] -= TargetSubTerm.SymbolPower;
+                }
+
+                // however primary symbol in source still the same so we need to add it to the value in target (if applicable)
+
+                // also
+
+                // there are still some fused variables in source that weren't altered by the target fused symbols
+                // go through every symbol in fused symbols and add it to the source fused symbols
+                foreach (var tfs in TargetSubTerm.FusedSymbols)
+                {
+                    if (SourceTerm.FusedSymbols.ContainsKey(tfs.Key))
                     {
-                        if (SourceTerm.FusedSymbols.ContainsKey(fsv.Key))
+                        // symbol exist so accumulate it
+                        SourceTerm._FusedSymbols[tfs.Key] -= tfs.Value;
+                    }
+                    else
+                    {
+                        // two cases here
+                        // 1 the fused key equal the primary symbol in source
+                        if (SourceTerm.Symbol.Equals(tfs.Key, StringComparison.OrdinalIgnoreCase))
                         {
-                            SourceTerm.FusedSymbols[fsv.Key] -= fsv.Value;
-                        }
-                        else
-                        {
-                            // 1- if symbol is the same as priamry source
-                            if (SourceTerm.Symbol.Equals(fsv.Key, StringComparison.OrdinalIgnoreCase))
+                            if (tfs.Value.SymbolicVariable != null)
                             {
-                                if (fsv.Value.SymbolicVariable != null)
+                                if (SourceTerm._SymbolPowerTerm != null)
                                 {
-                                    if (SourceTerm._SymbolPowerTerm != null)
-                                    {
-                                        SourceTerm._SymbolPowerTerm -= fsv.Value.SymbolicVariable;
-                                    }
-                                    else
-                                    {
-                                        // sum the value in the numerical part to the value in symbolic part
-                                        SourceTerm._SymbolPowerTerm
-                                            = new SymbolicVariable(SourceTerm._SymbolPower.ToString(CultureInfo.InvariantCulture)) - fsv.Value.SymbolicVariable;
-                                        // reset the value in numerical part
-                                        SourceTerm._SymbolPower = -1;
-                                    }
+                                    SourceTerm._SymbolPowerTerm -= tfs.Value.SymbolicVariable;
                                 }
                                 else
                                 {
-                                    if (SourceTerm.SymbolPowerTerm != null)
-                                    {
-                                        SourceTerm._SymbolPowerTerm -= new SymbolicVariable(fsv.Value.ToString());
-                                    }
-                                    else
-                                    {
-                                        SourceTerm._SymbolPower -= fsv.Value.NumericalVariable;
-                                    }
+                                    // sum the value in the numerical part to the value in symbolic part
+                                    SourceTerm._SymbolPowerTerm = new SymbolicVariable(SourceTerm._SymbolPower.ToString(CultureInfo.InvariantCulture)) - tfs.Value.SymbolicVariable;
+                                    // reset the value in numerical part
+                                    SourceTerm._SymbolPower = -1;
+                                }
+
+                                if (SourceTerm._SymbolPowerTerm.IsCoeffecientOnly)
+                                {
+                                    SourceTerm._SymbolPower = SourceTerm._SymbolPowerTerm.Coeffecient;
+                                    SourceTerm._SymbolPowerTerm = null;
                                 }
                             }
                             else
                             {
-                                SourceTerm.FusedSymbols.Add(fsv.Key, fsv.Value * -1);
+                                SourceTerm._SymbolPower -= tfs.Value.NumericalVariable;
                             }
                         }
+                        else
+                        {
+                            // 2 no matching at all which needs to add the symbol in target into the fused symbols in source.
+                            SourceTerm.FusedSymbols.Add(tfs.Key, tfs.Value * -1);
+                        }
                     }
-                    #endregion
                 }
+                #endregion
+            }
+            else
+            {
+                #region Fourth Case: Target primary symbol doesn't exist in Source Primary Symbol nor Source Fused symbols
+
+                // Add Target primary symbol to the fused symbols in source
+                SourceTerm.FusedSymbols.Add(
+                    TargetSubTerm.Symbol,
+                    new HybridVariable
+                    {
+                        NumericalVariable = -1 * TargetSubTerm.SymbolPower,
+                        SymbolicVariable = TargetSubTerm.SymbolPowerTerm == null ? null : -1 * (SymbolicVariable)TargetSubTerm.SymbolPowerTerm
+                    });
+
+                // But the primary symbol of source may exist in the target fused variables.
+
+                foreach (var fsv in TargetSubTerm.FusedSymbols)
+                {
+                    if (SourceTerm.FusedSymbols.ContainsKey(fsv.Key))
+                    {
+                        SourceTerm.FusedSymbols[fsv.Key] -= fsv.Value;
+                    }
+                    else
+                    {
+                        // 1- if symbol is the same as priamry source
+                        if (SourceTerm.Symbol.Equals(fsv.Key, StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (fsv.Value.SymbolicVariable != null)
+                            {
+                                if (SourceTerm._SymbolPowerTerm != null)
+                                {
+                                    SourceTerm._SymbolPowerTerm -= fsv.Value.SymbolicVariable;
+                                }
+                                else
+                                {
+                                    // sum the value in the numerical part to the value in symbolic part
+                                    SourceTerm._SymbolPowerTerm
+                                        = new SymbolicVariable(SourceTerm._SymbolPower.ToString(CultureInfo.InvariantCulture)) - fsv.Value.SymbolicVariable;
+                                    // reset the value in numerical part
+                                    SourceTerm._SymbolPower = -1;
+                                }
+                            }
+                            else if (SourceTerm.SymbolPowerTerm != null)
+                            {
+                                SourceTerm._SymbolPowerTerm -= new SymbolicVariable(fsv.Value.ToString());
+                            }
+                            else
+                            {
+                                SourceTerm._SymbolPower -= fsv.Value.NumericalVariable;
+                            }
+                        }
+                        else
+                        {
+                            SourceTerm.FusedSymbols.Add(fsv.Key, fsv.Value * -1);
+                        }
+                    }
+                }
+                #endregion
             }
 
             DivideCoeffecients(ref SourceTerm, TargetSubTerm);
