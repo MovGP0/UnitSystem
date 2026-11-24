@@ -383,7 +383,7 @@ dotnet_diagnostic.RCS1132.severity = warning
 # dotnet_diagnostic.RCS1134.severity = silent
 
 # Declare enum member with zero value (when enum has FlagsAttribute)
-# dotnet_diagnostic.RCS1135.severity = warning
+dotnet_diagnostic.RCS1135.severity = warning
 
 # Merge switch sections with equivalent content
 # dotnet_diagnostic.RCS1136.severity = silent
