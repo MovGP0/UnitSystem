@@ -467,7 +467,7 @@ dotnet_diagnostic.RCS1170.severity = warning
 dotnet_diagnostic.RCS1171.severity = warning
 
 # Use 'is' operator instead of 'as' operator
-# dotnet_diagnostic.RCS1172.severity = warning
+dotnet_diagnostic.RCS1172.severity = warning
 
 # Use coalesce expression instead of 'if'
 # dotnet_diagnostic.RCS1173.severity = warning
