@@ -11,12 +11,12 @@ public class StepAction
     /// ID for the text
     /// </summary>
     public int ActionId = int.MinValue;
-    
+
     /// <summary>
     /// target stage relative to this stage
     /// </summary>
     public int TargetPosition = int.MinValue;
-    
+
     /// <summary>
     /// target flow item name
     /// </summary>

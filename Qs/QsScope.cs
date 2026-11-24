@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 namespace Qs;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public class QsScope : IDynamicMetaObjectProvider
 {

@@ -36,7 +36,7 @@ public sealed partial class Token : IEnumerable<Token>
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="tokenClassType">Type of token class</param>
     /// <returns></returns>
@@ -53,7 +53,7 @@ public sealed partial class Token : IEnumerable<Token>
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="tokenClassTypes">Types of token classes</param>
     /// <returns></returns>

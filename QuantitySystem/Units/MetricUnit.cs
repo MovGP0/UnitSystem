@@ -182,7 +182,7 @@ public abstract partial class MetricUnit : Unit
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     public override string ToString()

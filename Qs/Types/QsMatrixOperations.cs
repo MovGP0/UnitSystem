@@ -752,7 +752,7 @@ public partial class QsMatrix : QsValue
     #endregion
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>

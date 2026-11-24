@@ -178,7 +178,7 @@ public sealed partial class Token : IEnumerable<Token>
     ///     or desired group
     /// And can parse this example:
     ///            fn(434,fn((434+434)+8/4,50,fifo(5)))
-    ///            
+    ///
     ///            S[5,F[4,2,1],G](4, 3, 2,R[2], p(30*o(9)))
     ///            -              - Parameters              -
     ///            -    Indexes   -

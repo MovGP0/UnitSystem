@@ -388,7 +388,7 @@ public class Root
             }
         }
 
-        if (targetType == typeof(QsValue) || targetType.BaseType == typeof(QsValue)) 
+        if (targetType == typeof(QsValue) || targetType.BaseType == typeof(QsValue))
         {
             return Expression.Convert(value, targetType);   //no need to change because target type is QsValue which is the Qs primary type.
         }
@@ -539,7 +539,7 @@ public class Root
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="targetType"></param>
     /// <param name="value"></param>

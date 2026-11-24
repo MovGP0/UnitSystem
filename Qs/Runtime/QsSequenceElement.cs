@@ -160,7 +160,7 @@ public class QsSequenceElement
         var el = new QsSequenceElement();
         el.ElementValue = sequence;
 
-        el.IndexEvaluation = false;  
+        el.IndexEvaluation = false;
         el.ParameterEvaluation = false;
 
         return el;

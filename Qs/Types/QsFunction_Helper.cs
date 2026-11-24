@@ -5,7 +5,7 @@ namespace Qs.Types;
 public partial class QsFunction
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="scope"></param>
     /// <param name="nameSpace"></param>

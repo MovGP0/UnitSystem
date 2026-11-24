@@ -138,7 +138,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="row">i index</param>
     /// <returns></returns>
@@ -156,7 +156,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="row">i index</param>
     /// <param name="column">j index</param>
@@ -370,7 +370,7 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
     /// <summary>
     /// Ordinary multiplicatinon of the matrix.
     /// Naive implementation :D  and I am proud :P
-    /// 
+    ///
     /// </summary>
     /// <param name="matrix"></param>
     /// <returns></returns>

@@ -526,7 +526,7 @@ public abstract class QsValue: IComparable
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="values">Matrices or Tensors</param>
     /// <returns></returns>

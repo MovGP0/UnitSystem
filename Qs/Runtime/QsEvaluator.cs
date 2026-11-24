@@ -84,7 +84,7 @@ public class QsEvaluator
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="varName"></param>
     /// <param name="varValue"></param>

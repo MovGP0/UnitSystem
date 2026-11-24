@@ -1785,7 +1785,7 @@ class QsVar
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     internal object Execute()

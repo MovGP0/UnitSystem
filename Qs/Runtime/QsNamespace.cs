@@ -15,7 +15,7 @@ namespace Qs.Runtime;
 ///    2) custom namespace from built-in or external classes during the program load.
 /// For example Math namespace is built-in namespace in the program but you can add
 ///     another variables and functions for it during running.
-///     
+///
 /// This class is responsible to act as a provider for the two functionalities.
 /// </summary>
 public class QsNamespace(string name)

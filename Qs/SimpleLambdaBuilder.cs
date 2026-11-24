@@ -30,7 +30,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
 
     /// <summary>
     /// Creates a parameter on the lambda with a given name and type.
-    /// 
+    ///
     /// Parameters maintain the order in which they are created,
     /// however custom ordering is possible via direct access to
     /// Parameters collection.

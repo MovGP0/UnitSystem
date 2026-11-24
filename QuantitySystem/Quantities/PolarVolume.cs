@@ -3,7 +3,7 @@
 namespace QuantitySystem.Quantities;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class PolarVolume<T> : DerivedQuantity<T>

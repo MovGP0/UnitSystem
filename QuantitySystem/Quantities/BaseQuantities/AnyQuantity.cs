@@ -6,7 +6,7 @@ namespace QuantitySystem.Quantities.BaseQuantities;
 /// <summary>
 /// This class hold the mathmatical operations of quantity.
 /// </summary>
-public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(exponent) 
+public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(exponent)
 {
     #region constructors
 
@@ -145,7 +145,7 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="value"></param>
     /// <param name="factor"></param>

@@ -200,7 +200,7 @@ dotnet_diagnostic.RCS1033.severity = warning
 # dotnet_diagnostic.RCS1034.severity = silent
 
 # Remove trailing white-space
-# dotnet_diagnostic.RCS1037.severity = warning
+dotnet_diagnostic.RCS1037.severity = warning
 
 # Remove argument list from attribute
 # dotnet_diagnostic.RCS1039.severity = silent

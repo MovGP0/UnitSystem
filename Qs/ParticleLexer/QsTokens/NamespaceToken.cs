@@ -2,7 +2,7 @@
 
 /// <summary>
 /// Reference token on the form WordToken, ColonToken  x:  oh:  D80: may contain in its end letters
-/// 
+///
 /// May begin with ':'
 /// Must Begin with alphabet [a-zA-Z]
 /// Follwed by any number of letter  \w*

@@ -14,7 +14,7 @@ public sealed class ReferenceUnitAttribute : Attribute
     private readonly string _source;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="numerator"></param>
     public ReferenceUnitAttribute(double numerator)
@@ -24,7 +24,7 @@ public sealed class ReferenceUnitAttribute : Attribute
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="numerator"></param>
     /// <param name="denominator"></param>
@@ -35,7 +35,7 @@ public sealed class ReferenceUnitAttribute : Attribute
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="unitType"></param>
     /// <param name="source">FunctionName.UnitName</param>

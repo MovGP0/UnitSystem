@@ -37,7 +37,7 @@ public class StepAttribute : Attribute
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="stepId">Unique integet id for the step</param>
     public StepAttribute(int stepId, bool skipStep, params Type[] associatedTypes)

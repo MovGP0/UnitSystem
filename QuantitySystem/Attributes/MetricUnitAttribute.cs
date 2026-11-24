@@ -9,7 +9,7 @@ namespace QuantitySystem.Attributes;
 public sealed class MetricUnitAttribute : UnitAttribute
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="symbol">Symbol of the unit that appears in display</param>
     /// <param name="quantityType">The CLR type of quantity that this unit is associated to.</param>
@@ -20,7 +20,7 @@ public sealed class MetricUnitAttribute : UnitAttribute
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="symbol">Symbol of the unit that appears in display</param>
     /// <param name="quantityType">The CLR type of quantity that this unit is associated to.</param>

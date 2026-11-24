@@ -534,7 +534,7 @@ public partial class QsTensor : QsValue
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>

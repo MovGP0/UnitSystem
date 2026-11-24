@@ -4,7 +4,7 @@
 /// The class will hold intermediate operations that could be applied to function
 /// example  @ alone will do nothing
 /// @|$x  is deriving function operator over x symbol [this will store this operation inside this class]
-/// 
+///
 /// </summary>
 public class QsDifferentialOperation : QsOperation
 {
@@ -70,7 +70,7 @@ public class QsDifferentialOperation : QsOperation
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
