@@ -914,6 +914,10 @@ public abstract partial class AnyQuantity<T>
         return GreaterThanOrEqual(firstQuantity, secondQuantity);
     }
 
+    public override bool Equals(object? obj) => base.Equals(obj);
+
+    public override int GetHashCode() => base.GetHashCode();
+
     public static bool operator ==(AnyQuantity<T> firstQuantity, AnyQuantity<T> secondQuantity)
     {
         return Equality(firstQuantity, secondQuantity);
