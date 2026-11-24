@@ -70,7 +70,8 @@ public partial class QsSequence
 
         Parameters = (from v in parameters select new QsParamInfo { Name = v }).ToArray();
 
-        if (parameters.Length == 0) CachingEnabled = true;  //Allow caching for parameterless sequence.
+        if (parameters.Length == 0)
+            CachingEnabled = true;  //Allow caching for parameterless sequence.
     }
 
 
@@ -174,7 +175,8 @@ public partial class QsSequence
                         //shift = nsidx + 1;
                         shift = 1;
                     }
-                    else return null;
+                    else
+                        return null;
                 }
                 else
                 {
@@ -247,7 +249,8 @@ public partial class QsSequence
                 rangeEndNames.Add(string.Empty);
             }
 
-            if (indexes.Count > 1) throw new QsException("Sequences with more than one index are not supported now");
+            if (indexes.Count > 1)
+                throw new QsException("Sequences with more than one index are not supported now");
 
 
             // get parameters
@@ -385,7 +388,8 @@ public partial class QsSequence
     /// <returns></returns>
     public static string FormSequenceSymbolicName(string name, int indexesCount, int parametersCount)
     {
-        if (indexesCount == 0) indexesCount = 1;
+        if (indexesCount == 0)
+            indexesCount = 1;
 
         var sn = name + "%" + indexesCount.ToString(CultureInfo.InvariantCulture); // +"#" + parametersCount.ToString(CultureInfo.InvariantCulture);
 

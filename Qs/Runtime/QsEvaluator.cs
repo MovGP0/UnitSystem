@@ -164,7 +164,8 @@ public class QsEvaluator
     {
         get
         {
-            if (SilentStack.Count > 0) return true;
+            if (SilentStack.Count > 0)
+                return true;
             return false;
         }
     }
@@ -200,7 +201,8 @@ public class QsEvaluator
 
 #if WINRT
 #else
-        if (string.IsNullOrEmpty(expr)) return null;
+        if (string.IsNullOrEmpty(expr))
+            return null;
         Match m = null;
 
         #region Match <unit> to <unit>
@@ -239,7 +241,8 @@ public class QsEvaluator
 
                 var cf = "    Conversion Factor => " + ConversionFactor.ToString(CultureInfo.InvariantCulture);
 
-                foreach (var upi in up) Console.WriteLine("    -> {0}", upi);
+                foreach (var upi in up)
+                    Console.WriteLine("    -> {0}", upi);
 
                 var dashes = "    ".PadRight(cf.Length, '-');
 
@@ -350,13 +353,19 @@ public class QsEvaluator
         var InText = false;
         while (ix < sl)
         {
-            if (m[ix] == '(') scs++;
-            if (m[ix] == ')') scs--;
-            if (m[ix] == '[') bcs++;
-            if (m[ix] == ']') bcs--;
+            if (m[ix] == '(')
+                scs++;
+            if (m[ix] == ')')
+                scs--;
+            if (m[ix] == '[')
+                bcs++;
+            if (m[ix] == ']')
+                bcs--;
 
-            if (m[ix] == '{') rcs++;
-            if (m[ix] == '}') rcs--;
+            if (m[ix] == '{')
+                rcs++;
+            if (m[ix] == '}')
+                rcs--;
 
             if (m[ix] == '"')
             {
@@ -369,7 +378,8 @@ public class QsEvaluator
                     InText = !InText;
             }
 
-            if (m[ix] == '=' && scs == 0 && rcs == 0 && bcs == 0 && InText == false) return ix;
+            if (m[ix] == '=' && scs == 0 && rcs == 0 && bcs == 0 && InText == false)
+                return ix;
 
             ix++;
         }
@@ -711,7 +721,8 @@ public class QsEvaluator
                                 if (fsc.ScalarType == ScalarTypes.SymbolicQuantity)
                                 {
                                     var fh = "_(";
-                                    foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols) fh += p + ", ";
+                                    foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols)
+                                        fh += p + ", ";
                                     fh = fh.TrimEnd(',', ' ') + ") = ";
 
                                     var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value);
@@ -790,7 +801,8 @@ public class QsEvaluator
                             if (fsc.ScalarType == ScalarTypes.SymbolicQuantity)
                             {
                                 var fh = "_(";
-                                foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols) fh += p + ", ";
+                                foreach (var p in fsc.SymbolicQuantity.Value.InvolvedSymbols)
+                                    fh += p + ", ";
                                 fh = fh.TrimEnd(',', ' ') + ") = ";
 
                                 var qf = QsFunction.ParseFunction(this, fh + fsc.SymbolicQuantity.Value);
@@ -832,13 +844,15 @@ public class QsEvaluator
                                 {
                                     foreach (var sym in c.SymbolicQuantity.Value.InvolvedSymbols)
                                     {
-                                        if (!vparameters.Contains(sym)) vparameters.Add(sym);
+                                        if (!vparameters.Contains(sym))
+                                            vparameters.Add(sym);
                                     }
                                 }
 
 
                             var fh = "_(";
-                            foreach (var p in vparameters) fh += p + ", ";
+                            foreach (var p in vparameters)
+                                fh += p + ", ";
                             fh = fh.TrimEnd(',', ' ') + ") = ";
                             if(qvType == typeof(QsVector))
                             {
@@ -1069,7 +1083,8 @@ public class QsEvaluator
                 var qv = new QsVar(this, line);
                 //only print the result.
                 var q = qv.Execute();
-                if (q != null) PrintQuantity(q);
+                if (q != null)
+                    PrintQuantity(q);
                 return q;
             }
         }

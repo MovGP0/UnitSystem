@@ -58,7 +58,8 @@ public partial class QsText(string text) : QsValue
     {
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
-        if (itimes > Text.Length) itimes = itimes % Text.Length;
+        if (itimes > Text.Length)
+            itimes = itimes % Text.Length;
 
 
         var vec = new StringBuilder(Text.Length);
@@ -82,7 +83,8 @@ public partial class QsText(string text) : QsValue
     {
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
-        if (itimes > Text.Length) itimes = itimes % Text.Length;
+        if (itimes > Text.Length)
+            itimes = itimes % Text.Length;
 
         // 1 2 3 4 5 >> 2  == 4 5 1 2 3
              
@@ -168,7 +170,8 @@ public partial class QsText(string text) : QsValue
     {
         var i = (int)((QsScalar)indices[0].QsNativeValue).NumericalQuantity.Value;
 
-        if (i < 0) i = Text.Length + i;
+        if (i < 0)
+            i = Text.Length + i;
 #if WINRT
             return Char.GetNumericValue(Text, i).ToQuantity().ToScalar();
 #else

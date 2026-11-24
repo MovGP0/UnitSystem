@@ -164,8 +164,10 @@ public partial class Unit
 
     public static void ClearUnitsCaching()
     {
-        lock (CachedPaths) CachedPaths.Clear();
-        lock (CachedUnitsValues) CachedUnitsValues.Clear();
+        lock (CachedPaths)
+            CachedPaths.Clear();
+        lock (CachedUnitsValues)
+            CachedUnitsValues.Clear();
         CacheCleared?.Invoke(null, EventArgs.Empty);
     }
 
@@ -411,7 +413,8 @@ public partial class Unit
                 foreach (var upi in total)
                 {
                     // only invert the item if it is already not inverted
-                    if(!upi.IsInverted) upi.Invert();
+                    if(!upi.IsInverted)
+                        upi.Invert();
                 }
             }
 
@@ -511,7 +514,8 @@ public partial class Unit
                 if (un.IsInverted)
                 {
                     // only invert the item if it is already not inverted.
-                    if (!upi.IsInverted) upi.Invert();
+                    if (!upi.IsInverted)
+                        upi.Invert();
                 }
 
                 paths.Push(upi);

@@ -11,11 +11,14 @@ public static class MathConstants
     public static double Constant(string name)
     {
 
-        if (name.Equals("pi", StringComparison.OrdinalIgnoreCase)) return Math.PI;
+        if (name.Equals("pi", StringComparison.OrdinalIgnoreCase))
+            return Math.PI;
 
-        if (name.Equals("e", StringComparison.OrdinalIgnoreCase)) return Math.E;
+        if (name.Equals("e", StringComparison.OrdinalIgnoreCase))
+            return Math.E;
 
-        if (name.Equals("phi", StringComparison.OrdinalIgnoreCase)) return (1 + Math.Sqrt(5)) / 2;
+        if (name.Equals("phi", StringComparison.OrdinalIgnoreCase))
+            return (1 + Math.Sqrt(5)) / 2;
 
         // if(name.Equals("i", StringComparison.OrdinalIgnoreCase)) return  complex value
 

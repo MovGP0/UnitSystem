@@ -5,7 +5,8 @@ public partial class SymbolicVariable
 
     public static SymbolicVariable? Divide(SymbolicVariable a, SymbolicVariable b)
     {
-        if (a == null || b == null) return null;
+        if (a == null || b == null)
+            return null;
 
         var SourceTerm = a.Clone();
 
@@ -13,7 +14,8 @@ public partial class SymbolicVariable
         // x^2/(y-x)  ==>
         if (b.AddedTerms.Count > 0 || (b._ExtraTerms != null && b._ExtraTerms.Count > 0))
         {
-            if (a.Equals(b)) return new SymbolicVariable("1");
+            if (a.Equals(b))
+                return new SymbolicVariable("1");
 
             //multiply divided term by this value
             if (!a.IsZero)
@@ -71,11 +73,14 @@ public partial class SymbolicVariable
                 #region First Case: Source primary symbol doesn't exist
                 // the instance have an empty primary variable so we should add it
 
-                if (TargetSubTerm._BaseVariable != null) SourceTerm._BaseVariable = TargetSubTerm._BaseVariable;
-                else SourceTerm.Symbol = TargetSubTerm.Symbol;
+                if (TargetSubTerm._BaseVariable != null)
+                    SourceTerm._BaseVariable = TargetSubTerm._BaseVariable;
+                else
+                    SourceTerm.Symbol = TargetSubTerm.Symbol;
 
                 SourceTerm.SymbolPower = -1 * TargetSubTerm.SymbolPower;
-                if (TargetSubTerm.SymbolPowerTerm != null) SourceTerm._SymbolPowerTerm = -1 * TargetSubTerm.SymbolPowerTerm.Clone();
+                if (TargetSubTerm.SymbolPowerTerm != null)
+                    SourceTerm._SymbolPowerTerm = -1 * TargetSubTerm.SymbolPowerTerm.Clone();
 
                 //fuse the fusedvariables in b into sv
                 foreach (var bfv in TargetSubTerm.FusedSymbols)
@@ -296,7 +301,8 @@ public partial class SymbolicVariable
             foreach (var et in SourceTerm.ExtraTerms)
             {
                 var eterm = et.Term;
-                if (et.Negative) eterm = Multiply(NegativeOne, eterm);
+                if (et.Negative)
+                    eterm = Multiply(NegativeOne, eterm);
 
                 var newe = Divide(eterm, TargetSubTerm);
                 newExtraTerms.Add(new ExtraTerm { Term = newe });
@@ -331,7 +337,8 @@ public partial class SymbolicVariable
         {
             var eTerm = b.ExtraTerms[extraIndex];
             TargetSubTerm = eTerm.Term;
-            if (eTerm.Negative) TargetSubTerm = Multiply(NegativeOne, TargetSubTerm);
+            if (eTerm.Negative)
+                TargetSubTerm = Multiply(NegativeOne, TargetSubTerm);
 
             var TargetTermSubTotal = Divide(a, TargetSubTerm);
             total = Add(total, TargetTermSubTotal);
@@ -379,9 +386,11 @@ public partial class SymbolicVariable
                 {
                     // sample: 2^x/2^y = 2^(x-y)
                     var cpower = cst.ConstantPower;
-                    if (cpower == null) cpower = One;
+                    if (cpower == null)
+                        cpower = One;
 
-                    if (SourceTerm._CoeffecientPowerTerm == null) SourceTerm._CoeffecientPowerTerm = One;
+                    if (SourceTerm._CoeffecientPowerTerm == null)
+                        SourceTerm._CoeffecientPowerTerm = One;
                     SourceTerm._CoeffecientPowerTerm -= cpower;
                 }
                 else if ((sbase - Math.Floor(sbase)) == 0.0 && sbase > 0)   // make sure there are no
@@ -389,7 +398,8 @@ public partial class SymbolicVariable
                     // then we can use the target base
                     // 27/3^x = 3^3/3^x = 3^(3-x)
                     var cpower = cst.ConstantPower;
-                    if (cpower == null) cpower = new SymbolicVariable("1");
+                    if (cpower == null)
+                        cpower = new SymbolicVariable("1");
                     SourceTerm._CoeffecientPowerTerm = Subtract(new SymbolicVariable(sbase.ToString(CultureInfo.InvariantCulture)), cpower);
                     SourceTerm.Coeffecient = cst.ConstantValue;
 
@@ -422,7 +432,8 @@ public partial class SymbolicVariable
                             // First Attempt: to try to get the power of this number with base of available coeffecients
                             // if no base produced an integer power value then we add it into fused constants as it is.
 
-                            if (cst.ConstantValue == 1.0) continue;  // ONE doesn't change anything so we bypass it
+                            if (cst.ConstantValue == 1.0)
+                                continue;  // ONE doesn't change anything so we bypass it
 
                             double? SucceededConstant = null;
                             double ower = 0;

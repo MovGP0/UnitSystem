@@ -9,8 +9,10 @@ public partial class QsTensor : QsValue
     public override QsValue AddOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -40,7 +42,8 @@ public partial class QsTensor : QsValue
         if (value is QsTensor)
         {
             var tensor = value as QsTensor;
-            if (Order != (tensor.Order)) throw new QsException("Adding two different ranked tensors are not supported");
+            if (Order != (tensor.Order))
+                throw new QsException("Adding two different ranked tensors are not supported");
 
             if (Order > 3)
             {
@@ -81,8 +84,10 @@ public partial class QsTensor : QsValue
     public override QsValue SubtractOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -112,7 +117,8 @@ public partial class QsTensor : QsValue
         if (value is QsTensor)
         {
             var tensor = value as QsTensor;
-            if (Order != (tensor.Order)) throw new QsException("Adding two different ranked tensors are not supported");
+            if (Order != (tensor.Order))
+                throw new QsException("Adding two different ranked tensors are not supported");
 
             if (Order > 3)
             {
@@ -153,8 +159,10 @@ public partial class QsTensor : QsValue
     public override QsValue MultiplyOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -256,7 +264,8 @@ public partial class QsTensor : QsValue
     {
         if (value is QsTensor ts)
         {
-            if (Order != ts.Order) return false;
+            if (Order != ts.Order)
+                return false;
             if (!ReferenceEquals(ts, this))
             {
 
@@ -266,7 +275,8 @@ public partial class QsTensor : QsValue
                 {
                     for (var i = 0; i < InnerTensors.Count; i++)
                     {
-                        if (!InnerTensors[i].Equality(ts.InnerTensors[i])) return false;
+                        if (!InnerTensors[i].Equality(ts.InnerTensors[i]))
+                            return false;
                     }
                 }
                 else
@@ -274,7 +284,8 @@ public partial class QsTensor : QsValue
 
                     for (var mn = 0; mn < MatrixLayers.Count; mn++)
                     {
-                        if (!MatrixLayers[mn].Equality(ts.MatrixLayers[mn])) return false;
+                        if (!MatrixLayers[mn].Equality(ts.MatrixLayers[mn]))
+                            return false;
                     }
 
                 }
@@ -299,20 +310,28 @@ public partial class QsTensor : QsValue
     public override QsValue DotProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
 
         QsTensor tensor;
 
-        if (value is QsTensor) tensor = (QsTensor)value;
-        else if (value is QsMatrix) tensor = new QsTensor((QsMatrix)value);
-        else if (value is QsVector) tensor = new QsTensor(new QsMatrix((QsVector)value));
-        else if (value is QsScalar) tensor = new QsTensor(new QsMatrix(new QsVector((QsScalar)value)));
-        else throw new QsException("Tensor Operation with non mathematical type is not permitted");
+        if (value is QsTensor)
+            tensor = (QsTensor)value;
+        else if (value is QsMatrix)
+            tensor = new QsTensor((QsMatrix)value);
+        else if (value is QsVector)
+            tensor = new QsTensor(new QsMatrix((QsVector)value));
+        else if (value is QsScalar)
+            tensor = new QsTensor(new QsMatrix(new QsVector((QsScalar)value)));
+        else
+            throw new QsException("Tensor Operation with non mathematical type is not permitted");
 
-        if (tensor == null) throw new QsException("Must be a tensor for scalar product");
+        if (tensor == null)
+            throw new QsException("Must be a tensor for scalar product");
 
         if (Order > 3)
         {
@@ -392,7 +411,8 @@ public partial class QsTensor : QsValue
     {
         var indices = new int[allIndices.Length];
 
-        for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
+        for (var ix = 0; ix < indices.Length; ix++)
+            indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
 
         var dr = Order - indices.Count();
         if (dr < 0)
@@ -424,7 +444,8 @@ public partial class QsTensor : QsValue
             while (ix < ic - 2)
             {
                 var idx = indices[ix];
-                if (idx < 0) idx = t.InnerTensors.Count + idx;
+                if (idx < 0)
+                    idx = t.InnerTensors.Count + idx;
                 t = t.InnerTensors[idx];
                 ix++;
             }
@@ -448,7 +469,8 @@ public partial class QsTensor : QsValue
             {
                 var idx = indices[ix];
 
-                if (idx < 0) idx = t.InnerTensors.Count + idx;
+                if (idx < 0)
+                    idx = t.InnerTensors.Count + idx;
 
                 t = t.InnerTensors[idx];
                 ix++;
@@ -467,7 +489,8 @@ public partial class QsTensor : QsValue
             while (ix < indices.Count())
             {
                 var idx = indices[ix];
-                if (idx < 0) idx = t.InnerTensors.Count + idx;
+                if (idx < 0)
+                    idx = t.InnerTensors.Count + idx;
                 t = t.InnerTensors[idx];
                 ix++;
             }
@@ -489,8 +512,10 @@ public partial class QsTensor : QsValue
     public override QsValue DifferentiateOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)

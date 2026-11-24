@@ -139,7 +139,8 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
         var n = a.RowsCount;
         var det = default(QsScalar);
 
-        if (n < 1) throw new QsException("Zero component matrix, are you crazy :)");                // error condition, should never get here
+        if (n < 1)
+            throw new QsException("Zero component matrix, are you crazy :)");                // error condition, should never get here
 
         if (n == 1)
         {
@@ -174,7 +175,8 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
                     // loop to copy source matrix less one column
                     for (j = 0; j < n; j++)
                     {
-                        if (j == j1) continue; // don't copy the minor column element
+                        if (j == j1)
+                            continue; // don't copy the minor column element
 
                         m[i - 1][j2] = a[i][j];  // copy source element into new sub-matrix
                         // i-1 because new sub-matrix is one row
@@ -187,8 +189,10 @@ public partial class QsMatrix : QsValue, IEnumerable<QsVector>
                 var f = fn.ToQuantity().ToScalar();
                 var mr = Determinant(m);
 
-                if (det == null) det = f * (a[0][j1] * mr);
-                else det += f * (a[0][j1] * mr);
+                if (det == null)
+                    det = f * (a[0][j1] * mr);
+                else
+                    det += f * (a[0][j1] * mr);
 
                 // sum x raised to y power
                 // recursively get determinant of next

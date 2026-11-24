@@ -481,7 +481,8 @@ public sealed partial class Token : IEnumerable<Token>
                     // don't continue if the target token doesn't start with the required text
                     if (!string.IsNullOrEmpty(tokenClassType.ShouldBeginWith))
                     {
-                        if (!merged.TokenValue.StartsWith(tokenClassType.ShouldBeginWith, StringComparison.OrdinalIgnoreCase)) goto NoStartWith;
+                        if (!merged.TokenValue.StartsWith(tokenClassType.ShouldBeginWith, StringComparison.OrdinalIgnoreCase))
+                            goto NoStartWith;
                     }
 
 
@@ -510,7 +511,8 @@ public sealed partial class Token : IEnumerable<Token>
 
                             // second check: check letter by letter that they are identical
                             for (var iai = 0; iai < AccumulatedInnerText.Length; iai++)
-                                if (AccumulatedInnerText[iai] != tokenClassType.OriginalPatternWord[iai]) goto WhileBreak;
+                                if (AccumulatedInnerText[iai] != tokenClassType.OriginalPatternWord[iai])
+                                    goto WhileBreak;
                         }
                         else if (!string.IsNullOrEmpty(tokenClassType.ShouldBeginWith))
                         {
@@ -518,7 +520,8 @@ public sealed partial class Token : IEnumerable<Token>
                             // test that the accumulated text begins with the token beginwith value.
                             // otherwise no need to make other accumulation.
 
-                            if (!AccumulatedInnerText.StartsWith(tokenClassType.ShouldBeginWith, StringComparison.OrdinalIgnoreCase)) goto WhileBreak;
+                            if (!AccumulatedInnerText.StartsWith(tokenClassType.ShouldBeginWith, StringComparison.OrdinalIgnoreCase))
+                                goto WhileBreak;
                         }
 
 
@@ -534,7 +537,8 @@ public sealed partial class Token : IEnumerable<Token>
                             //  after we run over tokens for unknown steps we found a success
                             // merge all tokens that made the success
                             // alter the original loop index and go to the loop tail
-                            for (; tokIndex <= rtokIndex; tokIndex++) merged.AppendSubToken(childTokens[tokIndex]);
+                            for (; tokIndex <= rtokIndex; tokIndex++)
+                                merged.AppendSubToken(childTokens[tokIndex]);
 
 
                             if (tokIndex < childTokens.Count)
@@ -570,7 +574,8 @@ public sealed partial class Token : IEnumerable<Token>
                             //   to prevent this we will chech for the ending of the accumulated text
                             //    if we found the ending resemble the end string of target token class then we will assume that we don't have matching token suitable and
                             //    we will end the loop to prevent unnecessary loops
-                            if (AccumulatedInnerText.EndsWith(tokenClassType.ShouldEndWith, StringComparison.OrdinalIgnoreCase)) goto WhileBreak;
+                            if (AccumulatedInnerText.EndsWith(tokenClassType.ShouldEndWith, StringComparison.OrdinalIgnoreCase))
+                                goto WhileBreak;
                         }
 
                         rtokIndex++;
@@ -617,7 +622,8 @@ public sealed partial class Token : IEnumerable<Token>
 
         if (!string.IsNullOrEmpty(merged.TokenValue))
         {
-            if (rx.IsMatch(merged.TokenValue)) merged.TokenClassType = tokenClassType.GetType();
+            if (rx.IsMatch(merged.TokenValue))
+                merged.TokenClassType = tokenClassType.GetType();
             current.AppendSubToken(merged);
         }
 
@@ -645,7 +651,8 @@ public sealed partial class Token : IEnumerable<Token>
         foreach(var tt in tokenClassesTypes)
         {
             var tc = GetTokenClass(tt);
-            if (tc.ExactWord==false) throw new InvalidOperationException("Only exact word tokens are allowed");
+            if (tc.ExactWord==false)
+                throw new InvalidOperationException("Only exact word tokens are allowed");
             tokenClasses.Add(tc);
         }
 
@@ -701,7 +708,8 @@ public sealed partial class Token : IEnumerable<Token>
                 //  or we didn't get this token either.
                 // so we go for another tokenclass to compare
 
-                if (merged.Count > 0) merged = new Token(); //reset the merged object because it was modified
+                if (merged.Count > 0)
+                    merged = new Token(); //reset the merged object because it was modified
                 TokenClassesIndex++;
 
             }
@@ -894,8 +902,10 @@ public sealed partial class Token : IEnumerable<Token>
         {
             if (h.Count == 1)
             {
-                if (h.TokenClassType == h[0].TokenClassType) Metzabbat.AppendSubToken(h[0]);
-                else Metzabbat.AppendSubToken(h);
+                if (h.TokenClassType == h[0].TokenClassType)
+                    Metzabbat.AppendSubToken(h[0]);
+                else
+                    Metzabbat.AppendSubToken(h);
             }
             else
             {
@@ -1010,7 +1020,8 @@ public sealed partial class Token : IEnumerable<Token>
             }
             else
             {
-                if (tok.TokenClassType == untilToken) reached = true;
+                if (tok.TokenClassType == untilToken)
+                    reached = true;
 
                 //not the required token add it to the return value.
                 current.AppendSubToken(tok);

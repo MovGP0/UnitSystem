@@ -42,7 +42,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     {
         get
         {
-            if (InternalFunctionDelegate == null) return false;
+            if (InternalFunctionDelegate == null)
+                return false;
             return true;
         }
     }
@@ -366,7 +367,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <returns></returns>
     public bool ContainsParameter(string parameterName)
     {
-        if (GetParameterOrdinal(parameterName) > -1) return true;
+        if (GetParameterOrdinal(parameterName) > -1)
+            return true;
         return false;
     }
 
@@ -430,7 +432,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
     public static QsFunction ParseFunction(QsEvaluator qse, string functionDeclaration)
     {
-        if (functionDeclaration.StartsWith("@")) return null;
+        if (functionDeclaration.StartsWith("@"))
+            return null;
 
         // fast check for function as = and ) before it.
         var eqIdx = functionDeclaration.IndexOf('=');
@@ -440,9 +443,12 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
             while (eqIdx > 0)
             {
                 eqIdx--;
-                if (functionDeclaration[eqIdx] == ' ') continue;   // ignore spaces.
-                if (functionDeclaration[eqIdx] == '\t') continue;  // ignore tabs
-                if (functionDeclaration[eqIdx] == ')') goto GoParseFunction;
+                if (functionDeclaration[eqIdx] == ' ')
+                    continue;   // ignore spaces.
+                if (functionDeclaration[eqIdx] == '\t')
+                    continue;  // ignore tabs
+                if (functionDeclaration[eqIdx] == ')')
+                    goto GoParseFunction;
                 return null;
             }
         }
@@ -633,7 +639,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
 
         var f = GetFunction(scope, nameSpace, functionName);
 
-        if (f == null) throw new QsFunctionNotFoundException("Function: '" + functionName + "' Couldn't be found in " + nameSpace + ".");
+        if (f == null)
+            throw new QsFunctionNotFoundException("Function: '" + functionName + "' Couldn't be found in " + nameSpace + ".");
         return f;
     }
 
@@ -661,7 +668,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
         // i.e.   f#2_x_y_z
 
         var symbol = functionName + "#" + paramNames.Length.ToString(CultureInfo.InvariantCulture);
-        foreach (var p in paramNames) symbol += "_" + p.ToLowerInvariant();
+        foreach (var p in paramNames)
+            symbol += "_" + p.ToLowerInvariant();
         return symbol;
     }
 
@@ -685,7 +693,8 @@ public partial class QsFunction(string functionBody, bool isReadOnly) : QsValue
     /// <returns></returns>
     public static bool IsItDefaultFunctionSymbolicName(string name)
     {
-        if (char.IsDigit(name.ToCharArray().Last())) return true;
+        if (char.IsDigit(name.ToCharArray().Last()))
+            return true;
         return false;
     }
 

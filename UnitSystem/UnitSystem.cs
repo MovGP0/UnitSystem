@@ -42,7 +42,8 @@ internal sealed class UnitSystem : IUnitSystem
     {
         get
         {
-            lock (_gate) return _baseUnits.Count;
+            lock (_gate)
+                return _baseUnits.Count;
         }
     }
 
@@ -54,7 +55,8 @@ internal sealed class UnitSystem : IUnitSystem
     {
         get
         {
-            lock (_gate) return _baseUnits.ToArray();
+            lock (_gate)
+                return _baseUnits.ToArray();
         }
     }
 
@@ -135,7 +137,8 @@ internal sealed class UnitSystem : IUnitSystem
 
     internal bool IsAffineDimension(Dimension dimension)
     {
-        lock (_gate) return _affineDimensions.Contains(dimension);
+        lock (_gate)
+            return _affineDimensions.Contains(dimension);
     }
 
     internal void Freeze()
@@ -202,14 +205,16 @@ internal sealed class UnitSystem : IUnitSystem
     {
         get
         {
-            lock (_gate) return new ReadOnlyDictionary<int, string>(new Dictionary<int, string>(_dimensionSymbols));
+            lock (_gate)
+                return new ReadOnlyDictionary<int, string>(new Dictionary<int, string>(_dimensionSymbols));
         }
     }
 
     /// <inheritdoc />
     public IEnumerator<KnownUnit> GetEnumerator()
     {
-        lock (_gate) return ((IEnumerable<KnownUnit>)_units.Values.ToArray()).GetEnumerator();
+        lock (_gate)
+            return ((IEnumerable<KnownUnit>)_units.Values.ToArray()).GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

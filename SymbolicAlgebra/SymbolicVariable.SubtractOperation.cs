@@ -11,7 +11,8 @@ public partial class SymbolicVariable
     /// <returns></returns>
     public static SymbolicVariable? Subtract(SymbolicVariable? a, SymbolicVariable? b)
     {
-        if (a == null || b == null) return null;
+        if (a == null || b == null)
+            return null;
 
         if (!a.DividedTerm.Equals(b.DividedTerm))
         {
@@ -178,7 +179,8 @@ public partial class SymbolicVariable
             {
                 var eeb = eb.Clone();
 
-                if (eeb.Negative) eeb.Negative = false;  // -- == +
+                if (eeb.Negative)
+                    eeb.Negative = false;  // -- == +
 
                 sv.ExtraTerms.Add(eeb);
             }

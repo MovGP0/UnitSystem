@@ -121,11 +121,13 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <returns></returns>
     public QsVector AddVector(QsVector vector)
     {
-        if (Count != vector.Count) throw new QsException("Vectors are not equal");
+        if (Count != vector.Count)
+            throw new QsException("Vectors are not equal");
 
         var v = CopyVector(this);
 
-        for (var ix = 0; ix < Count; ix++) v[ix] = v[ix] + vector[ix];
+        for (var ix = 0; ix < Count; ix++)
+            v[ix] = v[ix] + vector[ix];
 
         return v;
     }
@@ -138,11 +140,13 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <returns></returns>
     public QsVector SubtractVector(QsVector vector)
     {
-        if (Count != vector.Count) throw new QsException("Vectors are not equal");
+        if (Count != vector.Count)
+            throw new QsException("Vectors are not equal");
 
         var v = CopyVector(this);
 
-        for (var ix = 0; ix < Count; ix++) v[ix] = v[ix] - vector[ix];
+        for (var ix = 0; ix < Count; ix++)
+            v[ix] = v[ix] - vector[ix];
 
         return v;
     }
@@ -156,11 +160,13 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <returns></returns>
     public QsVector MultiplyVector(QsVector vector)
     {
-        if (Count != vector.Count) throw new QsException("Vectors are not equal");
+        if (Count != vector.Count)
+            throw new QsException("Vectors are not equal");
 
         var v = CopyVector(this);
 
-        for (var ix = 0; ix < Count; ix++) v[ix] = v[ix].MultiplyScalar( vector[ix]);
+        for (var ix = 0; ix < Count; ix++)
+            v[ix] = v[ix].MultiplyScalar( vector[ix]);
 
         return v;
     }
@@ -173,11 +179,13 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <returns></returns>
     public QsVector DivideVector(QsVector vector)
     {
-        if (Count != vector.Count) throw new QsException("Vectors are not equal");
+        if (Count != vector.Count)
+            throw new QsException("Vectors are not equal");
 
         var v = CopyVector(this);
 
-        for (var ix = 0; ix < Count; ix++) v[ix] = v[ix] / vector[ix];
+        for (var ix = 0; ix < Count; ix++)
+            v[ix] = v[ix] / vector[ix];
 
 
         return v;
@@ -185,12 +193,14 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
     private QsValue ModuloVector(QsVector vector)
     {
-        if (Count != vector.Count) throw new QsException("Vectors are not equal");
+        if (Count != vector.Count)
+            throw new QsException("Vectors are not equal");
 
 
         var v = CopyVector(this);
 
-        for (var ix = 0; ix < Count; ix++) v[ix] = v[ix] % vector[ix];
+        for (var ix = 0; ix < Count; ix++)
+            v[ix] = v[ix] % vector[ix];
 
         return v;
     }
@@ -211,7 +221,8 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <returns></returns>
     public QsScalar ScalarProduct(QsVector vector)
     {
-        if (Count != vector.Count) throw new QsException("Vectors are not equal");
+        if (Count != vector.Count)
+            throw new QsException("Vectors are not equal");
 
         var Total = this[0] * vector[0];
 
@@ -232,8 +243,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     /// <returns></returns>
     public QsVector VectorProduct(QsVector v2)
     {
-        if (Count != v2.Count) throw new QsException("Vectors are not equal");
-        if (Count != 3) throw new QsException("Cross product only happens with 3 component vector");
+        if (Count != v2.Count)
+            throw new QsException("Vectors are not equal");
+        if (Count != 3)
+            throw new QsException("Cross product only happens with 3 component vector");
 
         // cross product as determinant of matrix.
 
@@ -276,8 +289,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue AddOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -296,8 +311,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue SubtractOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -322,8 +339,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue MultiplyOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -355,8 +374,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue DotProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -375,8 +396,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue CrossProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -395,8 +418,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue DivideOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -416,8 +441,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue DifferentiateOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -431,8 +458,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue PowerOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -469,8 +498,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue ModuloOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -495,8 +526,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue TensorProductOperation(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -509,7 +542,8 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
             var vec = (QsVector)value;
 
-            if (vec.Count != Count) throw new QsException("Not equal vector components");
+            if (vec.Count != Count)
+                throw new QsException("Not equal vector components");
 
             List<QsVector> vcs = [];
             foreach (var c in this)
@@ -530,13 +564,16 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue LeftShiftOperation(QsValue vl)
     {
         QsValue times;
-        if (vl is QsReference) times = ((QsReference)vl).ContentValue;
-        else times = vl;
+        if (vl is QsReference)
+            times = ((QsReference)vl).ContentValue;
+        else
+            times = vl;
 
 
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
-        if (itimes > Count) itimes = itimes % Count;
+        if (itimes > Count)
+            itimes = itimes % Count;
 
 
         var vec = new QsVector(Count);
@@ -558,13 +595,16 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override QsValue RightShiftOperation(QsValue vl)
     {
         QsValue times;
-        if (vl is QsReference) times = ((QsReference)vl).ContentValue;
-        else times = vl;
+        if (vl is QsReference)
+            times = ((QsReference)vl).ContentValue;
+        else
+            times = vl;
 
 
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
-        if (itimes > Count) itimes = itimes % Count;
+        if (itimes > Count)
+            itimes = itimes % Count;
 
         // 1 2 3 4 5 >> 2  == 4 5 1 2 3
 
@@ -592,8 +632,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override bool LessThan(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -616,8 +658,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override bool GreaterThan(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -641,8 +685,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override bool LessThanOrEqual(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -666,8 +712,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override bool GreaterThanOrEqual(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -691,11 +739,14 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override bool Equality(QsValue vl)
     {
 
-        if ((object)vl == null) return false;
+        if ((object)vl == null)
+            return false;
 
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -707,10 +758,12 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
         if (value is QsVector v)
         {
-            if (Count != v.Count) return false;
+            if (Count != v.Count)
+                return false;
             for(var i = 0; i < ListStorage.Count; i++)
             {
-                if (!ListStorage[i].Equality(v.ListStorage[i])) return false;
+                if (!ListStorage[i].Equality(v.ListStorage[i]))
+                    return false;
             }
 
             return true;
@@ -722,8 +775,10 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
     public override bool Inequality(QsValue vl)
     {
         QsValue value;
-        if (vl is QsReference) value = ((QsReference)vl).ContentValue;
-        else value = vl;
+        if (vl is QsReference)
+            value = ((QsReference)vl).ContentValue;
+        else
+            value = vl;
 
 
         if (value is QsScalar)
@@ -746,9 +801,11 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
 
     public override QsValue GetIndexedItem(QsParameter[] allIndices)
     {
-        if (allIndices.Count() > 1) throw new QsException("Vector have one index only");
+        if (allIndices.Count() > 1)
+            throw new QsException("Vector have one index only");
         var indices = new int[allIndices.Length];
-        for (var ix = 0; ix < indices.Length; ix++) indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
+        for (var ix = 0; ix < indices.Length; ix++)
+            indices[ix] = (int)((QsScalar)allIndices[ix].QsNativeValue).NumericalQuantity.Value;
         var index = indices[0];
 
         return this[index];

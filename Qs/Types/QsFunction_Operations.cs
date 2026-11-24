@@ -83,7 +83,8 @@ public partial class QsFunction
                 fTokens.AppendSubToken(t);
             }
 
-            if (i < functions.Length - 1) fTokens.AppendSubToken(Token.ParseText(operation.Trim())[0]);  //operation is only one charachter
+            if (i < functions.Length - 1)
+                fTokens.AppendSubToken(Token.ParseText(operation.Trim())[0]);  //operation is only one charachter
         }
 
 
@@ -113,7 +114,8 @@ public partial class QsFunction
                 fTokens.AppendSubToken(t);
             }
 
-            if (i < functions.Length - 1) fTokens.AppendSubToken(Token.ParseText(operation.Trim())[0]);  //operation is only one charachter
+            if (i < functions.Length - 1)
+                fTokens.AppendSubToken(Token.ParseText(operation.Trim())[0]);  //operation is only one charachter
         }
 
 
@@ -176,11 +178,16 @@ public partial class QsFunction
             var fname = "_";
 
             var fbody = FunctionBody;
-            if (svl.ScalarType == ScalarTypes.SymbolicQuantity) fbody = "(" + fbody + ")" + operation + "(" + svl.SymbolicQuantity.Value + ")";
-            else if (svl.ScalarType == ScalarTypes.NumericalQuantity) fbody = "(" + fbody + ")" + operation + svl.NumericalQuantity.Value;
-            else if (svl.ScalarType == ScalarTypes.RationalNumberQuantity) fbody = "(" + fbody + ")" + operation + svl.RationalQuantity.Value.Value;
-            else if (svl.ScalarType == ScalarTypes.FunctionQuantity) fbody = "(" + fbody + ")" + operation + "(" + svl.FunctionQuantity.Value.FunctionBody + ")";
-            else throw new QsException("Operation '" + operation + "' for the target scalar type (" + svl.ScalarType + ") is not supported");
+            if (svl.ScalarType == ScalarTypes.SymbolicQuantity)
+                fbody = "(" + fbody + ")" + operation + "(" + svl.SymbolicQuantity.Value + ")";
+            else if (svl.ScalarType == ScalarTypes.NumericalQuantity)
+                fbody = "(" + fbody + ")" + operation + svl.NumericalQuantity.Value;
+            else if (svl.ScalarType == ScalarTypes.RationalNumberQuantity)
+                fbody = "(" + fbody + ")" + operation + svl.RationalQuantity.Value.Value;
+            else if (svl.ScalarType == ScalarTypes.FunctionQuantity)
+                fbody = "(" + fbody + ")" + operation + "(" + svl.FunctionQuantity.Value.FunctionBody + ")";
+            else
+                throw new QsException("Operation '" + operation + "' for the target scalar type (" + svl.ScalarType + ") is not supported");
 
 
             var fb = SymbolicVariable.Parse(fbody).ToQuantity().ToScalar();
@@ -374,7 +381,8 @@ public partial class QsFunction
     {
         if(value is QsFunction func)
         {
-            if (ReferenceEquals(func, this)) return true;
+            if (ReferenceEquals(func, this))
+                return true;
 
             var thisDebugView = ExpressionDebugView.GetValue(_FunctionExpression.Body) as string;
             var funcDebugView = ExpressionDebugView.GetValue(func._FunctionExpression.Body) as string;

@@ -93,8 +93,10 @@ public partial class SymbolicVariable
         };
 
         SpliBaseTerm(sv);
-        if (sv.FusedConstants.Count > 0) SpliFusedConstants(sv);
-        if (sv.FusedSymbols.Count > 0) SplitFusedSymbols(sv);
+        if (sv.FusedConstants.Count > 0)
+            SpliFusedConstants(sv);
+        if (sv.FusedSymbols.Count > 0)
+            SplitFusedSymbols(sv);
 
         return MultipliedTerms;
     }

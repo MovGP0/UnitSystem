@@ -65,7 +65,8 @@ public class Flow : IEnumerable<Step>
                 }
 
                 fli.Description_1 = fi.Name;
-                if (fia[0].Descriptor_1 != "") fli.Description_1 = fia[0].Descriptor_1;
+                if (fia[0].Descriptor_1 != "")
+                    fli.Description_1 = fia[0].Descriptor_1;
                 fli.Description_2 = fia[0].Descriptor_2;
                 innerSteps[innerSteps.Count - 1] = fli;
 
@@ -202,7 +203,8 @@ public class Flow : IEnumerable<Step>
             }
         }
 
-        if (al.Count > 0) return al.ToArray();
+        if (al.Count > 0)
+            return al.ToArray();
         else
             return null;
     }
@@ -213,7 +215,8 @@ public class Flow : IEnumerable<Step>
         {
             foreach (var fi in innerSteps)
             {
-                if (fi.Id == index) return fi;
+                if (fi.Id == index)
+                    return fi;
             }
 
             throw new StepException("Flow step not found");
@@ -254,7 +257,8 @@ public class Flow : IEnumerable<Step>
 
         _Current_StepIndex = FlowSteps.GetLowerBound(0);
 
-        if (StepChanged != null) StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+        if (StepChanged != null)
+            StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
     }
 
 
@@ -286,7 +290,8 @@ public class Flow : IEnumerable<Step>
             goto skipping;
         }
 
-        if (StepChanged != null) StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+        if (StepChanged != null)
+            StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
 
     }
 
@@ -311,7 +316,8 @@ public class Flow : IEnumerable<Step>
             goto skipping;
         }
 
-        if (StepChanged != null) StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+        if (StepChanged != null)
+            StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
     }
 
 
@@ -339,7 +345,8 @@ public class Flow : IEnumerable<Step>
 
             _Current_StepIndex = stepIndex;
 
-            if (StepChanged != null) StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+            if (StepChanged != null)
+                StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
         }
     }
 
@@ -364,7 +371,8 @@ public class Flow : IEnumerable<Step>
             i++;
         }
 
-        if (StepChanged != null) StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
+        if (StepChanged != null)
+            StepChanged(this, new StepEventArgs(PreviousStep, CurrentStep, ActiveAction));
     }
 
 

@@ -378,15 +378,24 @@ public sealed partial class QuantityDimension
                 edps.Add(m.Groups[2].Value[0], float.Parse(m.Groups[3].Value));
             }
 
-            if (!edps.ContainsKey('M')) edps['M'] = 0;
-            if (!edps.ContainsKey('L')) edps['L'] = 0;
-            if (!edps.ContainsKey('T')) edps['T'] = 0;
-            if (!edps.ContainsKey('I')) edps['I'] = 0;
-            if (!edps.ContainsKey('O')) edps['O'] = 0;
-            if (!edps.ContainsKey('N')) edps['N'] = 0;
-            if (!edps.ContainsKey('J')) edps['J'] = 0;
-            if (!edps.ContainsKey('C')) edps['C'] = 0;
-            if (!edps.ContainsKey('D')) edps['D'] = 0;
+            if (!edps.ContainsKey('M'))
+                edps['M'] = 0;
+            if (!edps.ContainsKey('L'))
+                edps['L'] = 0;
+            if (!edps.ContainsKey('T'))
+                edps['T'] = 0;
+            if (!edps.ContainsKey('I'))
+                edps['I'] = 0;
+            if (!edps.ContainsKey('O'))
+                edps['O'] = 0;
+            if (!edps.ContainsKey('N'))
+                edps['N'] = 0;
+            if (!edps.ContainsKey('J'))
+                edps['J'] = 0;
+            if (!edps.ContainsKey('C'))
+                edps['C'] = 0;
+            if (!edps.ContainsKey('D'))
+                edps['D'] = 0;
 
             var qd = new QuantityDimension(edps['M']
                 , edps['L'], edps['T'], edps['I'], edps['O']

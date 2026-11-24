@@ -63,7 +63,8 @@ public partial class SymbolicVariable
         }
 
         var cc = false;
-        if (sv.BaseVariable != null) cc = sv.BaseVariable.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase); // case of base variable
+        if (sv.BaseVariable != null)
+            cc = sv.BaseVariable.InvolvedSymbols.Contains(parameter, StringComparer.OrdinalIgnoreCase); // case of base variable
         else if (sv.IsFunction && symbolpowercontainParameter == true)
         {
             // search if a parameter contains the same parameter
@@ -179,7 +180,8 @@ public partial class SymbolicVariable
 
                     if (fv.FunctionName.Equals(FunctionOperation.ExpText, StringComparison.OrdinalIgnoreCase))
                     {
-                        if (fv._FunctionParameters.Length != 1) throw new SymbolicException("Exp function must have one parameter for differentiation to be done.");
+                        if (fv._FunctionParameters.Length != 1)
+                            throw new SymbolicException("Exp function must have one parameter for differentiation to be done.");
 
                         // ∫ e^x = e^x
                         // ∫ exp(x*y) = exp(x*y)/y
@@ -190,13 +192,16 @@ public partial class SymbolicVariable
 
                         var divo = Divide(pa, spara);
 
-                        if (divo.IsOne) return fv;
-                        else return Divide(fv, divo);
+                        if (divo.IsOne)
+                            return fv;
+                        else
+                            return Divide(fv, divo);
 
                     }
                     else if (fv.FunctionName.Equals(FunctionOperation.LnText, StringComparison.OrdinalIgnoreCase))
                     {
-                        if (fv._FunctionParameters.Length != 1) throw new SymbolicException("Log function must have one parameter for differentiation to be done.");
+                        if (fv._FunctionParameters.Length != 1)
+                            throw new SymbolicException("Log function must have one parameter for differentiation to be done.");
 
                         // actually  .. in here we need to factorize the paramter if it was a complex equation
 
@@ -250,7 +255,8 @@ public partial class SymbolicVariable
                     {
                         throw new NotImplementedException();
                         // d/dx ( sqrt( g(x) ) ) = g'(x) / 2* sqrt(g(x))
-                        if (fv._FunctionParameters.Length != 1) throw new SymbolicException("Sqrt function must have one parameter for differentiation to be done.");
+                        if (fv._FunctionParameters.Length != 1)
+                            throw new SymbolicException("Sqrt function must have one parameter for differentiation to be done.");
 
                         var pa = fv._FunctionParameters[0];
                         var dpa = pa.Differentiate(parameter);
@@ -285,7 +291,8 @@ public partial class SymbolicVariable
                         {
                             string[] fps = extendedFunction.Substring(extendedFunction.IndexOf("(")).TrimStart('(').TrimEnd(')').Split(',');
 
-                            if (fps.Length != fv._RawFunctionParameters.Length) throw new SymbolicException("Insufficient function parameters");
+                            if (fps.Length != fv._RawFunctionParameters.Length)
+                                throw new SymbolicException("Insufficient function parameters");
 
                             // replace parameters
                             var dsf = Functions[extendedFunction].ToString();
@@ -310,7 +317,8 @@ public partial class SymbolicVariable
                     {
                         sv.Coeffecient *= sv._SymbolPower;
                         sv._SymbolPower -= 1;
-                        if (sv._SymbolPower == 0) sv._Symbol = "";
+                        if (sv._SymbolPower == 0)
+                            sv._Symbol = "";
                     }
                     else
                     {
@@ -481,11 +489,16 @@ public partial class SymbolicVariable
         }
 
         Stack<SymbolicVariable> OrderedVariables = new Stack<SymbolicVariable>();
-        if (!Exponential_Term.IsOne) OrderedVariables.Push(Exponential_Term);
-        if (!Trig_Term.IsOne) OrderedVariables.Push(Trig_Term);
-        if (!Algebra_Term.IsOne) OrderedVariables.Push(Algebra_Term);
-        if (!Logarithms_Term.IsOne) OrderedVariables.Push(Logarithms_Term);
-        if (!InversedTrig_Term.IsOne) OrderedVariables.Push(InversedTrig_Term);
+        if (!Exponential_Term.IsOne)
+            OrderedVariables.Push(Exponential_Term);
+        if (!Trig_Term.IsOne)
+            OrderedVariables.Push(Trig_Term);
+        if (!Algebra_Term.IsOne)
+            OrderedVariables.Push(Algebra_Term);
+        if (!Logarithms_Term.IsOne)
+            OrderedVariables.Push(Logarithms_Term);
+        if (!InversedTrig_Term.IsOne)
+            OrderedVariables.Push(InversedTrig_Term);
 
 
         var result = IntegByParts(parameter, OrderedVariables.Pop(), OrderedVariables);
@@ -538,12 +551,14 @@ public partial class SymbolicVariable
 
         foreach (var cc in CalculatedIntegs)
         {
-            if (cc.IsZero) continue;
+            if (cc.IsZero)
+                continue;
 
             total = Add(total, cc);
         }
 
-        if (!SvDividedTerm.IsOne) total.DividedTerm = Multiply(SvDividedTerm, SvDividedTerm);
+        if (!SvDividedTerm.IsOne)
+            total.DividedTerm = Multiply(SvDividedTerm, SvDividedTerm);
 
         return total;
     }

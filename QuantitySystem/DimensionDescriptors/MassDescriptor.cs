@@ -59,7 +59,8 @@ public struct MassDescriptor(float exponent) :
 
     public int CompareTo(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return 1;
+        if (ReferenceEquals(null, obj))
+            return 1;
         return obj is MassDescriptor other
             ? CompareTo(other)
             : throw new ArgumentException($"Object must be of type {nameof(MassDescriptor)}");

@@ -70,7 +70,8 @@ public class Root
         if (!allrefloaded)
         {
             var ss = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
-            foreach (var vo in ss) Assembly.Load(vo);
+            foreach (var vo in ss)
+                Assembly.Load(vo);
             allrefloaded = true;
         }
 
@@ -83,7 +84,8 @@ public class Root
         {
             dt = a.GetType(type, false, true);
 
-            if (dt != null) break;
+            if (dt != null)
+                break;
         }
 
         return dt;
@@ -215,7 +217,8 @@ public class Root
     /// <returns></returns>
     public static QsValue? NativeToQsConvert(object? value)
     {
-        if (value == null) return null;
+        if (value == null)
+            return null;
 
         if (value is Type EnumType)
         {
@@ -257,9 +260,11 @@ public class Root
         if (vType == typeof(String))
             return new QsText((string)value);
 
-        if (vType.BaseType == typeof(QsValue)) return (QsValue)value;
+        if (vType.BaseType == typeof(QsValue))
+            return (QsValue)value;
 
-        if (vType.BaseType == typeof(AnyQuantity<double>)) return new QsScalar { NumericalQuantity = (AnyQuantity<double>)value };
+        if (vType.BaseType == typeof(AnyQuantity<double>))
+            return new QsScalar { NumericalQuantity = (AnyQuantity<double>)value };
          if (vType == typeof(int[]) || vType == typeof(double[]) || vType == typeof(Single[]) || vType == typeof(float[]) || vType == typeof(Int64[]) || vType == typeof(uint[]) || vType == typeof(UInt16[]) || vType == typeof(UInt64[]))
         {
             var rr = (Array)value;
@@ -286,20 +291,24 @@ public class Root
             return v;
         }
 
-        if (vType == typeof(SymbolicVariable)) return new QsScalar(ScalarTypes.SymbolicQuantity) { SymbolicQuantity = ((SymbolicVariable)value).ToQuantity() };
+        if (vType == typeof(SymbolicVariable))
+            return new QsScalar(ScalarTypes.SymbolicQuantity) { SymbolicQuantity = ((SymbolicVariable)value).ToQuantity() };
 
         // the last thing is to return object from this type
-        if (!vType.IsValueType) return QsObject.CreateNativeObject(value);
+        if (!vType.IsValueType)
+            return QsObject.CreateNativeObject(value);
 
         if (vType == typeof(bool))
         {
             var v = (bool)value;
-            if (v) return QsBoolean.True;
+            if (v)
+                return QsBoolean.True;
             return QsBoolean.False;
         }
 
 
-        if (vType.IsValueType) return QsFlowingTuple.FromStruct((ValueType)value);
+        if (vType.IsValueType)
+            return QsFlowingTuple.FromStruct((ValueType)value);
 
         throw new QsException(vType + " doesn't have corresponding type in Quantity System");
     }
@@ -322,12 +331,18 @@ public class Root
         if (SourceType == typeof(QsScalar))
         {
             // checking for conversion for inner types in the scalar
-            if (targetType == typeof(QsFunction)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "FunctionQuantity"), "Value"); 
-           if (targetType == typeof(Complex)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "ComplexQuantity"), "Value"); 
-           if (targetType == typeof(Quaternion)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "QuaternionQuantity"), "Value"); 
-           if (targetType == typeof(Rational)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "RationalQuantity"), "Value");
-           if (targetType == typeof(SymbolicVariable)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "SymbolicQuantity"), "Value");
-           if (targetType == typeof(double)) return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "NumericalQuantity"), "Value"); 
+            if (targetType == typeof(QsFunction))
+                return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "FunctionQuantity"), "Value");
+           if (targetType == typeof(Complex))
+              return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "ComplexQuantity"), "Value");
+           if (targetType == typeof(Quaternion))
+              return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "QuaternionQuantity"), "Value");
+           if (targetType == typeof(Rational))
+              return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "RationalQuantity"), "Value");
+           if (targetType == typeof(SymbolicVariable))
+              return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "SymbolicQuantity"), "Value");
+           if (targetType == typeof(double))
+              return Expression.Property(Expression.Property(Expression.Convert(value, typeof(QsScalar)), "NumericalQuantity"), "Value");
         }
 
         if (targetType == typeof(QsValue) || targetType.BaseType == typeof(QsValue)) 
@@ -450,7 +465,8 @@ public class Root
     /// <returns></returns>
     public static object? QsToNativeConvert(Type targetType, object value)
     {
-        if (targetType == typeof(QsValue)) return value;   //no need to change because target type is QsValue which is the Qs primary type.
+        if (targetType == typeof(QsValue))
+            return value;   //no need to change because target type is QsValue which is the Qs primary type.
 
         if (targetType == typeof(QsValue) || targetType.BaseType == typeof(QsValue))
         {

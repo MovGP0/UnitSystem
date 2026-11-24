@@ -155,7 +155,8 @@ public struct Complex(double real, double imaginary) : IEquatable<Complex>
         if (power == c && power >= 0 && d == .0)
         {
             var result = One;
-            if (power == 0) return result;
+            if (power == 0)
+                return result;
             var factor = this;
             while (power != 0)
             {

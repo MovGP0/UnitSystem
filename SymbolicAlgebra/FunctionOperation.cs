@@ -284,7 +284,8 @@ internal static class FunctionOperation
         else
             throw new SymbolicException(fv.FunctionName + " integration not implemented yet");
 
-        if (divo.IsOne) return result;
+        if (divo.IsOne)
+            return result;
         else
             return SymbolicVariable.Divide(result, divo);
 
@@ -404,7 +405,8 @@ internal static class FunctionOperation
         else
             throw new SymbolicException(fv.FunctionName + " integration not implemented yet");
 
-        if (divo.IsOne) return result;
+        if (divo.IsOne)
+            return result;
         else
             return SymbolicVariable.Divide(result, divo);
 

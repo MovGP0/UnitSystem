@@ -80,7 +80,8 @@ public static class QsGamma
         var v = (int)number.Value;
 
         //if (v > 170) throw new ArgumentOutOfRangeException("Number", number, "Number is greater than 170");
-        if (v < 0) throw new ArgumentOutOfRangeException("Number", "Number is less than 0");
+        if (v < 0)
+            throw new ArgumentOutOfRangeException("Number", "Number is less than 0");
 
         var num = (AnyQuantity<double>)number.Clone();
         num.Value = Math.Floor(num.Value);
@@ -127,10 +128,12 @@ public static class QsGamma
         var StieltjesFactorial = delegate(double x)
         {
             var y = x + 1; var p = 1.0;
-            while (y < 7) { p = p * y; y = y + 1; }
+            while (y < 7)
+                { p = p * y; y = y + 1; }
 
             var r = Math.Exp(y * Math.Log(y) - y + 1 / (12 * y + 2 / (5 * y + 53 / (42 * y))));
-            if (x < 7) r = r / p;
+            if (x < 7)
+                r = r / p;
             return r * Math.Sqrt(2 * Math.PI / y);
         };
 
@@ -159,7 +162,8 @@ public static class QsGamma
 ;
             var r = Math.Exp(StieltjesLnFactorial(y));
 
-            if (x < 8) return  (r * x) / (p * y);
+            if (x < 8)
+                return  (r * x) / (p * y);
             return r;
         };
 

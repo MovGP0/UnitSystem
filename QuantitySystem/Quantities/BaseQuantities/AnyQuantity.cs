@@ -41,7 +41,8 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
             {
                 un = Unit.Symbol.Trim();
 
-                if (un[0] != '<') un = "<" + un + ">";
+                if (un[0] != '<')
+                    un = "<" + un + ">";
             }
 
             return un;
@@ -266,7 +267,8 @@ public abstract partial class AnyQuantity<T>(float exponent) : BaseQuantity(expo
     {
         var t = MemberwiseClone();
         var t2 = (AnyQuantity<T>)t;
-        if (t2.Unit != null) t2.Unit = (Unit)Unit.Clone();
+        if (t2.Unit != null)
+            t2.Unit = (Unit)Unit.Clone();
         return t2;
     }
 

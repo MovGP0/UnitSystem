@@ -46,7 +46,8 @@ public class QsObject : QsValue
             string[] args = expression[1].TrimTokens(1, 1).TokenValue.Split(',');
             var argn = args.Length;
 
-            if (args.Length == 1 && args[0] == string.Empty) argn=0;
+            if (args.Length == 1 && args[0] == string.Empty)
+                argn=0;
 
             var d_method = InstanceType.GetMethods().First(
                 c => c.GetParameters().Length == argn
@@ -527,7 +528,8 @@ public class QsObject : QsValue
                 fefe[ix].Value = new QsText(mms[ix].PropertyType.Name);
             }
 
-            if (fefe.Length == 0) return new QsFlowingTuple();
+            if (fefe.Length == 0)
+                return new QsFlowingTuple();
             return new QsFlowingTuple(fefe);
         }
 
@@ -547,7 +549,8 @@ public class QsObject : QsValue
                 fefe[ix].Value = new QsText(mms.ElementAt(ix).ReturnType.Name);
             }
 
-            if (fefe.Length == 0) return new QsFlowingTuple();
+            if (fefe.Length == 0)
+                return new QsFlowingTuple();
             return new QsFlowingTuple(fefe);
         }
 

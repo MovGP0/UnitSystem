@@ -23,9 +23,11 @@ public class QsDifferentialOperation : QsOperation
 
         public bool Equals(InnerOperation other)
         {
-            if(Operation != other.Operation) return false;
+            if(Operation != other.Operation)
+                return false;
 
-            if(!value.Equality(other.value)) return false;
+            if(!value.Equality(other.value))
+                return false;
 
             return true;
         }
@@ -136,7 +138,8 @@ public class QsDifferentialOperation : QsOperation
     {
         if (value is QsDifferentialOperation op)
         {
-            if (operations.Count != op.operations.Count) return false;
+            if (operations.Count != op.operations.Count)
+                return false;
 
             for (var i = 0; i < op.operations.Count; i++)
             {

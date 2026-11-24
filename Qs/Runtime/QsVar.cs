@@ -38,7 +38,8 @@ class QsVar
             set
             {
                 _Next = value;
-                if (value != null) value.Previous = this;
+                if (value != null)
+                    value.Previous = this;
             }
         }
     }
@@ -624,7 +625,8 @@ class QsVar
             {
                 var g = tokens[ix].TrimTokens(2, 1);
                 var funcbody = g.TokenValue;
-                if (funcbody.StartsWith("(")) funcbody = "_" + funcbody;
+                if (funcbody.StartsWith("("))
+                    funcbody = "_" + funcbody;
 
                 var sf = new QsScalar(ScalarTypes.FunctionQuantity)
                 {
@@ -660,20 +662,27 @@ class QsVar
                 --ix;   //decrease ix with one because operator was fused in this token.
 
             }
-            else if (tokens[ix].TokenClassType == typeof(TrueToken)) quantityExpression = Expression.Constant(QsBoolean.True);
-            else if (tokens[ix].TokenClassType == typeof(FalseToken)) quantityExpression = Expression.Constant(QsBoolean.False);
+            else if (tokens[ix].TokenClassType == typeof(TrueToken))
+                quantityExpression = Expression.Constant(QsBoolean.True);
+            else if (tokens[ix].TokenClassType == typeof(FalseToken))
+                quantityExpression = Expression.Constant(QsBoolean.False);
             else if (tokens[ix].TokenClassType == typeof(LoopBodyToken))
             {
                 // get the count of the loop
                 var v = Evaluator.GetVariable(tokens[ix][3].TokenValue) as QsValue;
 
-                if (v == null) throw new QsException(tokens[ix][3].TokenValue + " doesn't exist in memoir");
+                if (v == null)
+                    throw new QsException(tokens[ix][3].TokenValue + " doesn't exist in memoir");
                 var count = 0;
 
-                if (v is QsVector) count = ((QsVector)v).Count;
-                else if (v is QsFlowingTuple) count = ((QsFlowingTuple)v).Count;
-                else if (v is QsText) count = ((QsText)v).Text.Length;
-                else throw new QsException(tokens[ix][3].TokenValue + " of type " + v.GetType().Name + " is not supported");
+                if (v is QsVector)
+                    count = ((QsVector)v).Count;
+                else if (v is QsFlowingTuple)
+                    count = ((QsFlowingTuple)v).Count;
+                else if (v is QsText)
+                    count = ((QsText)v).Text.Length;
+                else
+                    throw new QsException(tokens[ix][3].TokenValue + " of type " + v.GetType().Name + " is not supported");
 
                 // expression that hold the counter.
                 var counter = Expression.Parameter(typeof(int), "Counter_" + loopIteratorContainer.Count);
@@ -1011,8 +1020,10 @@ class QsVar
             var NameExist = false;
             var IdExist = false;
 
-            if( t.Count(el => el.TokenClassType == typeof(ExclamationToken))>0) NameExist=true;
-            if( t.Count(el => el.TokenClassType == typeof(ColonToken))>0) IdExist=true;
+            if( t.Count(el => el.TokenClassType == typeof(ExclamationToken))>0)
+                NameExist=true;
+            if( t.Count(el => el.TokenClassType == typeof(ColonToken))>0)
+                IdExist=true;
 
             if (NameExist && IdExist)
             {
@@ -1118,10 +1129,12 @@ class QsVar
             discoveredType = Root.GetInternalType(cls);
 #else
         discoveredType = Type.GetType(cls, false);
-        if (discoveredType == null) discoveredType = Root.GetExternalType(cls);
+        if (discoveredType == null)
+            discoveredType = Root.GetExternalType(cls);
 #endif
 
-        if (discoveredType == null) throw new QsException(string.Format("[{0}] type doesn't exist.", cls));
+        if (discoveredType == null)
+            throw new QsException(string.Format("[{0}] type doesn't exist.", cls));
 
         if (args.Length == 0)
         {
@@ -1188,8 +1201,10 @@ class QsVar
 
         float num = 0, den = 0;
 
-        if (nums.Count > 0) num = nums[0];
-        if (nums.Count > 1) den = nums[1];
+        if (nums.Count > 0)
+            num = nums[0];
+        if (nums.Count > 1)
+            den = nums[1];
 
         var c = new Rational(num, den);
         QsScalar sc = null;
@@ -1230,10 +1245,14 @@ class QsVar
 
         double real = 0, im = 0, j = 0, k = 0;
 
-        if (nums.Count > 0) real = nums[0];
-        if (nums.Count > 1) im = nums[1];
-        if (nums.Count > 2) j = nums[2];
-        if (nums.Count > 3) k = nums[3];
+        if (nums.Count > 0)
+            real = nums[0];
+        if (nums.Count > 1)
+            im = nums[1];
+        if (nums.Count > 2)
+            j = nums[2];
+        if (nums.Count > 3)
+            k = nums[3];
 
         var c = new Quaternion(real, im, j, k);
         QsScalar sc = null;
@@ -1271,8 +1290,10 @@ class QsVar
 
         double real = 0, imaginary = 0;
 
-        if(nums.Count>0) real = nums[0];
-        if(nums.Count>1) imaginary = nums[1];
+        if(nums.Count>0)
+            real = nums[0];
+        if(nums.Count>1)
+            imaginary = nums[1];
 
         var c = new Complex(real, imaginary);
         QsScalar sc = null;
@@ -1328,7 +1349,8 @@ class QsVar
     /// <returns></returns>
     public static ICollection<string> VectorComponents(Token tok)
     {
-        if (tok.TokenClassType != typeof(CurlyBracketGroupToken)) throw new QsException("The passed token type is not curly bracket group token, it is " + tok.TokenClassType.Name);
+        if (tok.TokenClassType != typeof(CurlyBracketGroupToken))
+            throw new QsException("The passed token type is not curly bracket group token, it is " + tok.TokenClassType.Name);
 
         List<string> qtyExpressions = [];
         var token = tok.TrimStart(typeof(LeftCurlyBracketToken));
@@ -1584,7 +1606,8 @@ class QsVar
                 select p.Trim()).ToArray();
 
 
-            if (pp.Length == 1 && string.IsNullOrEmpty(pp[0])) pp = null;
+            if (pp.Length == 1 && string.IsNullOrEmpty(pp[0]))
+                pp = null;
 
             var ns = string.Empty;
 
@@ -1791,7 +1814,8 @@ class QsVar
 
 
         var ns = string.Empty;
-        if (valueName.LastIndexOf(':') > -1) ns = valueName.Substring(0, valueName.LastIndexOf(':'));
+        if (valueName.LastIndexOf(':') > -1)
+            ns = valueName.Substring(0, valueName.LastIndexOf(':'));
 
         var valName = valueName.Substring(valueName.LastIndexOf(':') + 1);
 
@@ -1921,7 +1945,8 @@ class QsVar
     {
 
         //discover the index
-        if (indexes.Count > 3) throw new QsException("Calling sequence with more than one index is not supported yet.");
+        if (indexes.Count > 3)
+            throw new QsException("Calling sequence with more than one index is not supported yet.");
 
         var indexText = indexes[1].TokenValue; //this is parameter between [.]  to be evaluated later
         if (indexText == "]") // empty square brackets
@@ -1977,7 +2002,8 @@ class QsVar
         // discover namespace
 
         var sequenceNamespace = string.Empty;
-        if (sequenceName.IndexOf(':') > -1) sequenceNamespace = sequenceName.Substring(0, sequenceName.LastIndexOf(':'));
+        if (sequenceName.IndexOf(':') > -1)
+            sequenceNamespace = sequenceName.Substring(0, sequenceName.LastIndexOf(':'));
 
         var seqCallName = sequenceName.Substring(sequenceName.LastIndexOf(':') + 1);
 
@@ -2175,7 +2201,8 @@ class QsVar
         // discover namespace
         var functionNameSpace = "";
 
-        if (functionName.LastIndexOf(':') > -1) functionNameSpace = functionName.Substring(0, functionName.LastIndexOf(':'));
+        if (functionName.LastIndexOf(':') > -1)
+            functionNameSpace = functionName.Substring(0, functionName.LastIndexOf(':'));
 
         // function name part after namespace
         var funcCallName = functionName.Substring(functionName.LastIndexOf(':') + 1);
@@ -2201,7 +2228,8 @@ class QsVar
             }
             else
             {
-                if (NamedArgumentOccured) throw new QsException("Normal argument after named argument is not permitted");
+                if (NamedArgumentOccured)
+                    throw new QsException("Normal argument after named argument is not permitted");
             }
         }
 
@@ -2250,7 +2278,8 @@ class QsVar
                         }
                     }
 
-                    if (include) Pass2Functions.Add(func);
+                    if (include)
+                        Pass2Functions.Add(func);
                 }
 
                 if (Pass2Functions.Count == 0)
@@ -2424,7 +2453,8 @@ class QsVar
                 //  and call it dynamically from there.
 
                 var FunP = ParameterFunction(functionName); //caling the helper delegate.
-                if (FunP != null) return FunP;
+                if (FunP != null)
+                    return FunP;
             }
 
 
@@ -2479,7 +2509,8 @@ class QsVar
                 }
                 else
                 {
-                    if (NamedArgumentOccured) throw new QsException("Normal argument after named argument is not permitted");
+                    if (NamedArgumentOccured)
+                        throw new QsException("Normal argument after named argument is not permitted");
                     setParameters[TargetFunction.Parameters[i].Name] = true;
                 }
 
@@ -2499,7 +2530,8 @@ class QsVar
         {
             var FunP = ParameterFunction(functionName); //try to get the function from the parameter
 
-            if (FunP != null) return FunP;
+            if (FunP != null)
+                return FunP;
         }
 
         throw new QsFunctionNotFoundException(functionName + " Can't be found.");
@@ -2581,15 +2613,20 @@ class QsVar
 
         var aqType = typeof(QsValue);
 
-        if (op == ":") return Expression.Call(left, aqType.GetMethod("ColonOperator"), right);
+        if (op == ":")
+            return Expression.Call(left, aqType.GetMethod("ColonOperator"), right);
 
-        if (op == "!") return Expression.Call(left, aqType.GetMethod("ExclamationOperator"), right);
+        if (op == "!")
+            return Expression.Call(left, aqType.GetMethod("ExclamationOperator"), right);
 
-        if (op == "->") return Expression.Call(left, aqType.GetMethod("Execute"), right);
+        if (op == "->")
+            return Expression.Call(left, aqType.GetMethod("Execute"), right);
 
-        if (op == "..") return Expression.Call(left, aqType.GetMethod("RangeOperation"), right);
+        if (op == "..")
+            return Expression.Call(left, aqType.GetMethod("RangeOperation"), right);
 
-        if (op == "_h*") return Expression.Multiply(left, right);  // higher multiplication priority in case of 5^-3 to be 5^(-1*3) == 5^-1_h*3
+        if (op == "_h*")
+            return Expression.Multiply(left, right);  // higher multiplication priority in case of 5^-3 to be 5^(-1*3) == 5^-1_h*3
 
         if (op == "^")
         {
@@ -2616,7 +2653,8 @@ class QsVar
             return Expression.Power(left, right, aqType.GetMethod("Pow"));
         }
 
-        if (op == "^.") return Expression.Power(left, right, aqType.GetMethod("PowDot"));
+        if (op == "^.")
+            return Expression.Power(left, right, aqType.GetMethod("PowDot"));
 
         if (op.Equals("^x", StringComparison.OrdinalIgnoreCase))
             return Expression.Power(left, right, aqType.GetMethod("PowCross"));
@@ -2624,9 +2662,11 @@ class QsVar
         if (op.Equals("|"))
             return Expression.Call(left, aqType.GetMethod("DifferentiateOperation"), right);
 
-        if (op == "*") return Expression.Multiply(left, right);
+        if (op == "*")
+            return Expression.Multiply(left, right);
 
-        if (op == ".") return Expression.Multiply(left, right, aqType.GetMethod("DotProduct"));
+        if (op == ".")
+            return Expression.Multiply(left, right, aqType.GetMethod("DotProduct"));
 
         if (op.Equals("x", StringComparison.OrdinalIgnoreCase))
             return Expression.Multiply(left, right, aqType.GetMethod("CrossProduct"));
@@ -2634,21 +2674,33 @@ class QsVar
         if (op.Equals("(*)", StringComparison.OrdinalIgnoreCase))
             return Expression.Multiply(left, right, aqType.GetMethod("TensorProduct"));
 
-        if (op == "/") return Expression.Divide(left, right);
-        if (op == "%") return Expression.Modulo(left, right);
-        if (op == "+") return Expression.Add(left, right);
-        if (op == "-") return Expression.Subtract(left, right);
+        if (op == "/")
+            return Expression.Divide(left, right);
+        if (op == "%")
+            return Expression.Modulo(left, right);
+        if (op == "+")
+            return Expression.Add(left, right);
+        if (op == "-")
+            return Expression.Subtract(left, right);
 
-        if (op == "<<") return Expression.LeftShift(left, right, aqType.GetMethod("LeftShiftOperator"));
-        if (op == ">>") return Expression.RightShift(left, right, aqType.GetMethod("RightShiftOperator"));
+        if (op == "<<")
+            return Expression.LeftShift(left, right, aqType.GetMethod("LeftShiftOperator"));
+        if (op == ">>")
+            return Expression.RightShift(left, right, aqType.GetMethod("RightShiftOperator"));
 
-        if (op == "<") return Expression.LessThan(left, right);
-        if (op == ">") return Expression.GreaterThan(left, right);
-        if (op == "<=") return Expression.LessThanOrEqual(left, right);
-        if (op == ">=") return Expression.GreaterThanOrEqual(left, right);
+        if (op == "<")
+            return Expression.LessThan(left, right);
+        if (op == ">")
+            return Expression.GreaterThan(left, right);
+        if (op == "<=")
+            return Expression.LessThanOrEqual(left, right);
+        if (op == ">=")
+            return Expression.GreaterThanOrEqual(left, right);
 
-        if (op == "==") return Expression.Equal(left, right, true, aqType.GetMethod("op_Equality"));
-        if (op == "!=") return Expression.NotEqual(left, right, true, aqType.GetMethod("op_Inequality"));
+        if (op == "==")
+            return Expression.Equal(left, right, true, aqType.GetMethod("op_Equality"));
+        if (op == "!=")
+            return Expression.NotEqual(left, right, true, aqType.GetMethod("op_Inequality"));
 
         if (op.Equals("and", StringComparison.OrdinalIgnoreCase))
             return Expression.And(left, right);

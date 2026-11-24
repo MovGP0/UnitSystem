@@ -63,7 +63,8 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     /// <param name="vector"></param>
     public void AddComponents(QsVector vector)
     {
-        foreach (var s in vector) ListStorage.Add(s);
+        foreach (var s in vector)
+            ListStorage.Add(s);
     }
 
     #endregion
@@ -91,7 +92,8 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     public QsScalar Sum()
     {
         var total = this[0];
-        for (var i = 1; i < Count; i++) total = total + this[i];
+        for (var i = 1; i < Count; i++)
+            total = total + this[i];
         return total;
 
     }
@@ -104,12 +106,14 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     {
         get
         {
-            if (i < 0) i = ListStorage.Count + i;
+            if (i < 0)
+                i = ListStorage.Count + i;
             return ListStorage[i];
         }
         set
         {
-            if (i < 0) i = ListStorage.Count + i;
+            if (i < 0)
+                i = ListStorage.Count + i;
             ListStorage[i] = value;
         }
     }
@@ -123,7 +127,8 @@ public partial class QsVector: QsValue, IEnumerable<QsScalar>
     {
         get
         {
-            if (Count == 1) return true;
+            if (Count == 1)
+                return true;
             return false;
         }
     }

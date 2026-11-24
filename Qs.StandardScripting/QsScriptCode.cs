@@ -75,7 +75,8 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
                     while (ix < line.Length)
                     {
                         var c = line[ix];
-                        if (c == '(') pc++;
+                        if (c == '(')
+                            pc++;
 
                         if (line[ix] == '"')
                         {
@@ -99,7 +100,8 @@ public class QsScriptCode(SourceUnit sourceUnit) : ScriptCode(sourceUnit)
                             }
                         }
 
-                        if (c == ')') pc--;
+                        if (c == ')')
+                            pc--;
 
                         sb.Append(c);
 

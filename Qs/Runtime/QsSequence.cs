@@ -93,8 +93,10 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
         }
         set
         {
-            if (index < MinimumIndex) MinimumIndex = index;
-            if (index > MaximumIndex) MaximumIndex = index;
+            if (index < MinimumIndex)
+                MinimumIndex = index;
+            if (index > MaximumIndex)
+                MaximumIndex = index;
 
             value.ParentSequence = this;
             value.IndexInParentSequence = index;
@@ -231,7 +233,8 @@ public partial class QsSequence : SortedList<int, QsSequenceElement> , IEnumerab
 
         val = GetElement(index).Execute(index);
 
-        if (CachingEnabled) CachedValues[index] = val;
+        if (CachingEnabled)
+            CachedValues[index] = val;
 
         return val;
 

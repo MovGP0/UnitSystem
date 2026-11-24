@@ -119,7 +119,8 @@ public class Screen
     public void Reset()
     {
         loop = false;
-        foreach (var sh in Shapes) sh.Reset();
+        foreach (var sh in Shapes)
+            sh.Reset();
         Task.WaitAll(runningTasks.ToArray());
     }
 

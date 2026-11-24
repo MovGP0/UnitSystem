@@ -130,7 +130,8 @@ public class QsScope : IDynamicMetaObjectProvider
 
             result = result | sprov.TryGetValue(variable, out q);
 
-            if (result) return true;
+            if (result)
+                return true;
         }
 
         q = null;

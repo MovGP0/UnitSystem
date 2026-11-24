@@ -35,15 +35,18 @@ public class Circle : Shape
     {
         if (x.ScalarType == ScalarTypes.FunctionQuantity)
             xfunc = x.FunctionQuantity.Value;
-        else _x = x.NumericalQuantity;
+        else
+            _x = x.NumericalQuantity;
 
         if (y.ScalarType == ScalarTypes.FunctionQuantity)
             yfunc = y.FunctionQuantity.Value;
-        else _y = y.NumericalQuantity;
+        else
+            _y = y.NumericalQuantity;
 
         if (radius.ScalarType == ScalarTypes.FunctionQuantity)
             radfunc = radius.FunctionQuantity.Value;
-        else _radius = radius.NumericalQuantity;
+        else
+            _radius = radius.NumericalQuantity;
 
     }
 
@@ -128,6 +131,7 @@ public class Circle : Shape
         );
 
         // start the timer after drawing the first round
-        if (!Timer.IsRunning) Timer.Start();
+        if (!Timer.IsRunning)
+            Timer.Start();
     }
 }

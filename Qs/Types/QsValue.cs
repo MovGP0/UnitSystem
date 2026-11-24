@@ -390,7 +390,8 @@ public abstract class QsValue: IComparable
         //   from the higher degree of above g
         if (values[0] is QsTensor)
         {
-            if (values.Count() == 1) return values[0];
+            if (values.Count() == 1)
+                return values[0];
 
             // in rare cases or event known cases by me Ahmed Sadek and because of parsing
             // sometimes I enclose tensor variable inside matrix  [g g <|4 3|> ]
@@ -472,7 +473,8 @@ public abstract class QsValue: IComparable
 
         if (values[0] is QsTensor)
         {
-            if (values.Count() == 1) return values[0];
+            if (values.Count() == 1)
+                return values[0];
 
             // treat the case of tensors
             var tensor = new QsTensor();
@@ -559,9 +561,12 @@ public abstract class QsValue: IComparable
         var value = obj as QsValue;
         if (obj != null)
         {
-            if (LessThan(value)) return -1;
-            if (Equality(value)) return 0;
-            if (GreaterThan(value)) return 1;
+            if (LessThan(value))
+                return -1;
+            if (Equality(value))
+                return 0;
+            if (GreaterThan(value))
+                return 1;
             throw new QsException("Comparison failed between " + GetType().Name + " and " + value.GetType().Name);
         }
 

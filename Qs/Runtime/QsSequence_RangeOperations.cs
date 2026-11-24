@@ -65,12 +65,14 @@ public partial class QsSequence
             if (fromIndex > toIndex)
             {
                 counterIndex--;
-                if (counterIndex < toIndex) still = false;
+                if (counterIndex < toIndex)
+                    still = false;
             }
             else
             {
                 counterIndex++;
-                if (counterIndex > toIndex) still = false;
+                if (counterIndex > toIndex)
+                    still = false;
             }
 
             if (still)
@@ -100,12 +102,14 @@ public partial class QsSequence
             if (fromIndex > toIndex)
             {
                 counterIndex--;
-                if (counterIndex < toIndex) still = false;
+                if (counterIndex < toIndex)
+                    still = false;
             }
             else
             {
                 counterIndex++;
-                if (counterIndex > toIndex) still = false;
+                if (counterIndex > toIndex)
+                    still = false;
             }
 
             if (still)

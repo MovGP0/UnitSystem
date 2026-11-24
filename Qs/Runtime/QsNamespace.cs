@@ -91,7 +91,8 @@ public class QsNamespace(string name)
         {
             if (QsFunction.IsItFunctionSymbolicName(name))
             {
-                if (HardCodedMethods == null) HardCodedMethods = GetQsNamespaceMethods();
+                if (HardCodedMethods == null)
+                    HardCodedMethods = GetQsNamespaceMethods();
 
                 if (HardCodedMethods.ContainsKey(name))
                 {
@@ -114,7 +115,8 @@ public class QsNamespace(string name)
         object o;
         Values.TryGetValue(name, out o);
 
-        if (o == null) throw new QsVariableNotFoundException("Variable '" + name + "' not found in '" + Name + "' namespace.");
+        if (o == null)
+            throw new QsVariableNotFoundException("Variable '" + name + "' not found in '" + Name + "' namespace.");
         return o;
     }
 
@@ -125,7 +127,8 @@ public class QsNamespace(string name)
         {
             if (QsFunction.IsItFunctionSymbolicName(name))
             {
-                if (HardCodedMethods == null) HardCodedMethods = GetQsNamespaceMethods();
+                if (HardCodedMethods == null)
+                    HardCodedMethods = GetQsNamespaceMethods();
 
                 if (HardCodedMethods.ContainsKey(name))
                 {
@@ -193,8 +196,10 @@ public class QsNamespace(string name)
         QsModFunc.Parameters = prms.ToArray();
         QsModFunc.FunctionDeclaration += "(";
         var sb = new StringBuilder();
-        foreach (var p in prms) sb.Append(", " + p.Name);
-        if (sb.Length > 0) QsModFunc.FunctionDeclaration += sb.ToString().TrimStart(',', ' ');
+        foreach (var p in prms)
+            sb.Append(", " + p.Name);
+        if (sb.Length > 0)
+            QsModFunc.FunctionDeclaration += sb.ToString().TrimStart(',', ' ');
         QsModFunc.FunctionDeclaration += ")";
 
 
@@ -510,7 +515,8 @@ public class QsNamespace(string name)
     {
         var DecorateNativeFunction = false;
 
-        if (method.ReturnType != typeof(QsValue)) DecorateNativeFunction = true;
+        if (method.ReturnType != typeof(QsValue))
+            DecorateNativeFunction = true;
         //construct the lambda
 
         var lb = SimpleLambdaBuilder.Create(typeof(QsValue), method.Name);
@@ -521,7 +527,8 @@ public class QsNamespace(string name)
 
         foreach (var prm in parameters)
         {
-            if (prm.ParameterType != typeof(QsParameter)) DecorateNativeFunction = true;
+            if (prm.ParameterType != typeof(QsParameter))
+                DecorateNativeFunction = true;
             lb.Parameter(typeof(QsParameter), prm.Name);
         }
 

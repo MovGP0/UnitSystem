@@ -307,7 +307,8 @@ public abstract partial class AnyQuantity<T>
 
                 var un = new Unit(qresult.GetType(), firstQuantity.Unit, secondQuantity.Unit);
                 qresult.Unit = un;
-                if (un.IsOverflowed) qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object)qresult.Value);
+                if (un.IsOverflowed)
+                    qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object)qresult.Value);
             }
         }
         else
@@ -323,7 +324,8 @@ public abstract partial class AnyQuantity<T>
 
                 var un = new Unit(qresult.GetType(), firstQuantity.Unit, secondQuantity.Unit);
                 qresult.Unit = un;
-                if (un.IsOverflowed) qresult.Value = MultiplyScalarByGeneric(un.GetUnitOverflow(), qresult.Value);
+                if (un.IsOverflowed)
+                    qresult.Value = MultiplyScalarByGeneric(un.GetUnitOverflow(), qresult.Value);
 
 
             }
@@ -369,7 +371,8 @@ public abstract partial class AnyQuantity<T>
 
                 var un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
                 qresult.Unit = un;
-                if (un.IsOverflowed) qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object)qresult.Value);
+                if (un.IsOverflowed)
+                    qresult.Value = (T)(object)(un.GetUnitOverflow() * (double)(object)qresult.Value);
             }
         }
         else
@@ -385,7 +388,8 @@ public abstract partial class AnyQuantity<T>
 
                 var un = new Unit(qresult.GetType(), firstQuantity.Unit, sec_qty.Unit);
                 qresult.Unit = un;
-                if (un.IsOverflowed) qresult.Value = MultiplyScalarByGeneric(un.GetUnitOverflow(), qresult.Value);
+                if (un.IsOverflowed)
+                    qresult.Value = MultiplyScalarByGeneric(un.GetUnitOverflow(), qresult.Value);
 
             }
         }

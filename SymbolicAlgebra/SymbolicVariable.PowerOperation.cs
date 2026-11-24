@@ -46,7 +46,8 @@ public partial class SymbolicVariable
 
                 if (an._CoeffecientPowerTerm == null)
                 {
-                    if (Math.Abs(an.Coeffecient) != 1) an._CoeffecientPowerTerm = b;
+                    if (Math.Abs(an.Coeffecient) != 1)
+                        an._CoeffecientPowerTerm = b;
                     // because 1^(Any Thing) equals == 1 :)
                 }
                 else

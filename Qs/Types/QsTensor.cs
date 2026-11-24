@@ -34,14 +34,17 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
             if (InnerTensors == null)
             {
 
-                if (MatrixLayers.Count > 1) return 3;
+                if (MatrixLayers.Count > 1)
+                    return 3;
                 if (MatrixLayers.Count == 1)
                 {
                     var matrix = MatrixLayers[0];
-                    if (matrix.RowsCount > 1) return 2;
+                    if (matrix.RowsCount > 1)
+                        return 2;
                     // only one row then it is vector
                     var vector = matrix.Rows[0];
-                    if (vector.Count > 1) return 1;
+                    if (vector.Count > 1)
+                        return 1;
                     return 0;   //scalar
                 }
 
@@ -154,7 +157,8 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
         else
         {
             // Third rank tensor or more
-            if (InnerTensors == null) InnerTensors = [];
+            if (InnerTensors == null)
+                InnerTensors = [];
 
             InnerTensors.Add(qsTensor);
         }
@@ -189,7 +193,8 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     {
         get
         {
-            if (face < 0) face = MatrixLayers.Count + face;
+            if (face < 0)
+                face = MatrixLayers.Count + face;
             return MatrixLayers[face];
         }
     }
@@ -243,16 +248,19 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
         {
             // hyper cube
             var idx = indices[0];
-            if (idx < 0) idx = InnerTensors.Count + idx;
+            if (idx < 0)
+                idx = InnerTensors.Count + idx;
 
             return InnerTensors[idx][indices[1]][indices[2]][indices[3]];
         }
         else
         {
             var newIndices = new List<int>(indices.Length - 1);
-            for (var ix = 1; ix < indices.Length; ix++) newIndices.Add(indices[ix]);
+            for (var ix = 1; ix < indices.Length; ix++)
+                newIndices.Add(indices[ix]);
             var idx = indices[0];
-            if (idx < 0) idx = InnerTensors.Count + idx;
+            if (idx < 0)
+                idx = InnerTensors.Count + idx;
             return InnerTensors[idx].GetScalar(newIndices.ToArray());
         }
     }
@@ -261,11 +269,16 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     {
         var sb = new StringBuilder();
         var rankText = Order.ToString();
-        if (Order == 0) rankText += "th";
-        if (Order == 1) rankText += "st";
-        if (Order == 2) rankText += "nd";
-        if (Order == 3) rankText += "rd";
-        if (Order > 3) rankText += "th";
+        if (Order == 0)
+            rankText += "th";
+        if (Order == 1)
+            rankText += "st";
+        if (Order == 2)
+            rankText += "nd";
+        if (Order == 3)
+            rankText += "rd";
+        if (Order > 3)
+            rankText += "th";
 
         sb.Append("QsTensor: " + rankText + " Order");
         sb.AppendLine();
@@ -283,11 +296,16 @@ public partial class QsTensor : QsValue, IEnumerable<QsMatrix>
     {
         var sb = new StringBuilder();
         var rankText = Order.ToString();
-        if (Order == 0) rankText += "th";
-        if (Order == 1) rankText += "st";
-        if (Order == 2) rankText += "nd";
-        if (Order == 3) rankText += "rd";
-        if (Order > 3) rankText += "th";
+        if (Order == 0)
+            rankText += "th";
+        if (Order == 1)
+            rankText += "st";
+        if (Order == 2)
+            rankText += "nd";
+        if (Order == 3)
+            rankText += "rd";
+        if (Order > 3)
+            rankText += "th";
 
         sb.Append("QsTensor: " + rankText + " Order");
 

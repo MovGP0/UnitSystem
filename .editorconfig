@@ -59,7 +59,7 @@ roslynator_conditional_operator_new_line = before
 dotnet_diagnostic.RCS0029.severity = warning
 
 # Start embedded statements on their own lines
-# dotnet_diagnostic.RCS0030.severity = warning
+dotnet_diagnostic.RCS0030.severity = warning
 
 # Put each enum member on its own line
 # dotnet_diagnostic.RCS0031.severity = warning

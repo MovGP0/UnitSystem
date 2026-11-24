@@ -70,7 +70,8 @@ public sealed partial class ScalarQuantity : IFormattable
     {
         var amount = Amount.ToString(format, formatProvider);
         var symbol = Unit.ToString();
-        if (symbol.Length == 0) return amount;
+        if (symbol.Length == 0)
+            return amount;
 
         return !IsPoint && Unit.SupportsPoints ? $"{amount} Δ{symbol}" : $"{amount} {symbol}";
     }

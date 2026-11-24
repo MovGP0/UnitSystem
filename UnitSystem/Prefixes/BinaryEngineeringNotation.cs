@@ -29,7 +29,8 @@ public static class BinaryEngineeringNotation
     {
         foreach (var prefix in PrefixesByDescendingFactor)
         {
-            if (value >= prefix.Factor) return prefix;
+            if (value >= prefix.Factor)
+                return prefix;
         }
 
         return BinaryPrefix.One;

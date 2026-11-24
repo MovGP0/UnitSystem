@@ -32,7 +32,8 @@ public class QsFlowingTuple : QsValue
 
         foreach (var v in values)
         {
-            if (v.Id == 0) sid += 10;
+            if (v.Id == 0)
+                sid += 10;
 
             var st = ThisFlow.Add(v.Name, v.Id == 0 ? sid : v.Id);
 
@@ -55,7 +56,8 @@ public class QsFlowingTuple : QsValue
         {
             v.Value = new QsText("n/a");
         }
-        else v.Value = value;
+        else
+            v.Value = value;
     }
 
     private QsValue? ValueToQsValue(object? value)
@@ -77,8 +79,10 @@ public class QsFlowingTuple : QsValue
             if (!string.IsNullOrEmpty(s.Name))
                 sb.Append(s.Name + "!");
 
-            if (s.Value != null) sb.Append(ValueToQsValue(s.Value).ToShortString());
-            else sb.Append("nil");
+            if (s.Value != null)
+                sb.Append(ValueToQsValue(s.Value).ToShortString());
+            else
+                sb.Append("nil");
             sb.Append(", ");
         }
 
@@ -99,7 +103,8 @@ public class QsFlowingTuple : QsValue
 
     public override QsValue? Execute(Token expression)
     {
-        if (expression.TokenValue.Equals("COUNT", StringComparison.OrdinalIgnoreCase)) return Count.ToScalarValue();
+        if (expression.TokenValue.Equals("COUNT", StringComparison.OrdinalIgnoreCase))
+            return Count.ToScalarValue();
 
         if (expression.TokenClassType == typeof(ParenthesisCallToken))
         {
@@ -136,7 +141,8 @@ public class QsFlowingTuple : QsValue
                     id = (int)((QsScalar)QsEvaluator.CurrentEvaluator.SilentEvaluate(arg)).NumericalQuantity.Value;
                     for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
                     {
-                        if (ThisFlow.FlowSteps[ix].Id == id) return ix.ToScalarValue();
+                        if (ThisFlow.FlowSteps[ix].Id == id)
+                            return ix.ToScalarValue();
                     }
 
                     return QsScalar.NegativeOne;
@@ -183,8 +189,10 @@ public class QsFlowingTuple : QsValue
     {
         if (value is QsFlowingTuple ft)
         {
-            if (ReferenceEquals(ft, this)) return true;
-            if(Count != ft.Count) return false;
+            if (ReferenceEquals(ft, this))
+                return true;
+            if(Count != ft.Count)
+                return false;
             for (var ix = 0; ix < ThisFlow.FlowSteps.Length; ix++)
             {
                 if (
@@ -223,7 +231,8 @@ public class QsFlowingTuple : QsValue
 
         var c = InitialValues.Count();
 
-        if (itimes > c) itimes = itimes % c;
+        if (itimes > c)
+            itimes = itimes % c;
 
 
         var NewValues = new QsTupleValue[c];
@@ -251,13 +260,15 @@ public class QsFlowingTuple : QsValue
         {
             times = ((QsReference)vl).ContentValue;
         }
-        else times = vl;
+        else
+            times = vl;
 
         var itimes = Qs.IntegerFromQsValue((QsScalar)times);
 
         var c = InitialValues.Count();
 
-        if (itimes > c) itimes = itimes % c;
+        if (itimes > c)
+            itimes = itimes % c;
 
 
         var NewValues = new QsTupleValue[c];
@@ -292,7 +303,8 @@ public class QsFlowingTuple : QsValue
         // or get the integer number from this parameter and get the value associated of this step index
 
         var ix = (int)((QsScalar?)indices[0].QsNativeValue).NumericalQuantity.Value;
-        if (ix < 0) ix = ThisFlow.FlowSteps.Length + ix;
+        if (ix < 0)
+            ix = ThisFlow.FlowSteps.Length + ix;
 
         return ValueToQsValue(ThisFlow.FlowSteps[ix].Value);
     }

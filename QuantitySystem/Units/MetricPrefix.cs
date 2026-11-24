@@ -234,14 +234,16 @@ public struct MetricPrefix(string prefix, string symbol, int exponent)
 
         var ov = expo - exp;
 
-        if (exp > 24) throw new MetricPrefixException("Exponent Exceed 24")
+        if (exp > 24)
+            throw new MetricPrefixException("Exponent Exceed 24")
         {
             WrongExponent = exp,
             CorrectPrefix = FromExponent(24),
             OverflowExponent = exp - 24 + ov
         };
 
-        if (exp < -24) throw new MetricPrefixException("Exponent Precede -24")
+        if (exp < -24)
+            throw new MetricPrefixException("Exponent Precede -24")
         {
             WrongExponent = exp,
             CorrectPrefix = FromExponent(-24),
@@ -257,8 +259,10 @@ public struct MetricPrefix(string prefix, string symbol, int exponent)
             if (Math.Abs(exp) == wrongexp[i])
             {
                 var cexp = 0;
-                if (exp > 0) cexp = correctexp[i];
-                if (exp < 0) cexp = -1 * correctexp[i];
+                if (exp > 0)
+                    cexp = correctexp[i];
+                if (exp < 0)
+                    cexp = -1 * correctexp[i];
 
                 throw new MetricPrefixException("Exponent not aligned")
                 {

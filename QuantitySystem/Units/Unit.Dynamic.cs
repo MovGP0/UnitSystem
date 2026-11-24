@@ -291,8 +291,10 @@ public partial class Unit
 
         var gen_q = m_QuantityType.GetGenericTypeDefinition() ;
 
-        if (gen_q == typeof(Currency<>)) return new Currency.Coin();
-        if (gen_q == typeof(Digital<>)) return new Digital.Bit();
+        if (gen_q == typeof(Currency<>))
+            return new Currency.Coin();
+        if (gen_q == typeof(Digital<>))
+            return new Digital.Bit();
 
         if (gen_q == typeof(Displacement<>))
         {
@@ -408,7 +410,8 @@ public partial class Unit
 
         if (quantityType != typeof(DerivedQuantity<>) && quantityType != null)
         {
-            if (quantityType != typeof(DimensionlessQuantity<>)) _IsDefaultUnit = true;
+            if (quantityType != typeof(DimensionlessQuantity<>))
+                _IsDefaultUnit = true;
 
             _QuantityType = quantityType;
 
@@ -461,7 +464,8 @@ public partial class Unit
     {
         List<Unit> units = FlattenUnits(bulk_units);
 
-        if (units.Count == 1) return units;
+        if (units.Count == 1)
+            return units;
 
         List<Unit> groupedUnits = [];
 
@@ -623,7 +627,8 @@ public partial class Unit
         {
             if (exponent > 0)
             {
-                if (unitNumerator.Length > 0) unitNumerator += ".";
+                if (unitNumerator.Length > 0)
+                    unitNumerator += ".";
 
                 unitNumerator += symbol;
 
@@ -640,7 +645,8 @@ public partial class Unit
 
             if (exponent < 0)
             {
-                if (unitDenominator.Length > 0) unitDenominator += ".";
+                if (unitDenominator.Length > 0)
+                    unitDenominator += ".";
 
                 unitDenominator += symbol;
 
@@ -673,7 +679,8 @@ public partial class Unit
             else
                 unitSymbol += "1";
 
-            if (unitDenominator.Length > 0) unitSymbol += "/" + unitDenominator;
+            if (unitDenominator.Length > 0)
+                unitSymbol += "/" + unitDenominator;
 
             unitSymbol += ">";
 

@@ -226,7 +226,8 @@ public class QsSequenceElement
     /// <returns></returns>
     public static QsSequenceElement Parse(string element, QsEvaluator qse, QsSequence sequence)
     {
-        if (string.IsNullOrEmpty(element)) throw new QsException("Can't create element from empty string.");
+        if (string.IsNullOrEmpty(element))
+            throw new QsException("Can't create element from empty string.");
         //try direct quantity
         AnyQuantity<double> v;
         if (Unit.TryParseQuantity(element, out v))

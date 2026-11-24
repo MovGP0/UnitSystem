@@ -34,7 +34,8 @@ public static class QsCommands
         for (var i = 0; i < commands.Length; i++)
             commands[i] = commands[i].Trim();
 
-        if (commands[0] == "quit") return false;
+        if (commands[0] == "quit")
+            return false;
 
         if (commands[0] == "exit")
         {
@@ -465,7 +466,8 @@ public static class QsCommands
                 else
                 {
                     //print if only the unit is for this quantity
-                    if (qtype.Equals(quantity, StringComparison.InvariantCultureIgnoreCase)) Console.WriteLine("    " + uname + " " + symbol + " " + system + qtype);
+                    if (qtype.Equals(quantity, StringComparison.InvariantCultureIgnoreCase))
+                        Console.WriteLine("    " + uname + " " + symbol + " " + system + qtype);
                 }
             }
         }
