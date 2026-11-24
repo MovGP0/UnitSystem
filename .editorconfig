@@ -861,7 +861,7 @@ dotnet_diagnostic.CA1836.severity = warning
 dotnet_diagnostic.CA1837.severity = warning
 
 # Use 'Environment.ProcessPath'
-# dotnet_diagnostic.CA1839.severity = warning
+dotnet_diagnostic.CA1839.severity = warning
 
 # Use 'Environment.CurrentManagedThreadId'
 # dotnet_diagnostic.CA1840.severity = warning
