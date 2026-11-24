@@ -62,7 +62,7 @@ dotnet_diagnostic.RCS0029.severity = warning
 dotnet_diagnostic.RCS0030.severity = warning
 
 # Put each enum member on its own line
-# dotnet_diagnostic.RCS0031.severity = warning
+dotnet_diagnostic.RCS0031.severity = warning
 
 # Control where wrapped arrows appear
 # dotnet_diagnostic.RCS0032.severity = warning
