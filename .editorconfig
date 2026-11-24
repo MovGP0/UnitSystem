@@ -452,7 +452,7 @@ dotnet_diagnostic.RCS1164.severity = warning
 # dotnet_diagnostic.RCS1165.severity = silent
 
 # Value type object is never equal to null
-# dotnet_diagnostic.RCS1166.severity = warning
+dotnet_diagnostic.RCS1166.severity = warning
 
 # Parameter name differs from base name
 # dotnet_diagnostic.RCS1168.severity = silent
