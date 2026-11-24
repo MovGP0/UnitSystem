@@ -306,8 +306,8 @@ internal sealed class UnitInterpreter
             return double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out factor);
         }
 
-        return double.TryParse(token.Substring(0, separator), NumberStyles.Float, CultureInfo.InvariantCulture, out factor)
-            && double.TryParse(token.Substring(separator + 1), NumberStyles.Float, CultureInfo.InvariantCulture, out offset);
+        return double.TryParse(token.AsSpan(0, separator), NumberStyles.Float, CultureInfo.InvariantCulture, out factor)
+            && double.TryParse(token.AsSpan(separator + 1), NumberStyles.Float, CultureInfo.InvariantCulture, out offset);
     }
 
     private Unit ParseProduct(string expression)

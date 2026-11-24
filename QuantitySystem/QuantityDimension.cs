@@ -292,7 +292,7 @@ public sealed partial class QuantityDimension
     {
         const int m_index = 0;
         var l_index = mlt.IndexOf('L');
-        return int.Parse(mlt.Substring(m_index + 1, l_index - m_index - 1), CultureInfo.InvariantCulture);
+        return int.Parse(mlt.AsSpan(m_index + 1, l_index - m_index - 1), CultureInfo.InvariantCulture);
     }
 
     /// <summary>
@@ -304,7 +304,7 @@ public sealed partial class QuantityDimension
     {
         var l_index = mlt.IndexOf('L');
         var t_index = mlt.IndexOf('T');
-        return int.Parse(mlt.Substring(l_index + 1, t_index - l_index - 1), CultureInfo.InvariantCulture);
+        return int.Parse(mlt.AsSpan(l_index + 1, t_index - l_index - 1), CultureInfo.InvariantCulture);
     }
 
     /// <summary>
@@ -315,7 +315,7 @@ public sealed partial class QuantityDimension
     private static int ExponentOfTime(string mlt)
     {
         var t_index = mlt.IndexOf('T');
-        return int.Parse(mlt.Substring(t_index + 1), CultureInfo.InvariantCulture);
+        return int.Parse(mlt.AsSpan(t_index + 1), CultureInfo.InvariantCulture);
     }
 
     public static QuantityDimension ParseMLT(string mlt)
