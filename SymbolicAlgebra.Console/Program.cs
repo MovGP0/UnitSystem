@@ -21,14 +21,14 @@ Console.WriteLine(Resources.Help.Pastel(ConsoleColor.DarkYellow));
 Console.WriteLine();
 Console.WriteLine(Resources.Help2.Pastel(ConsoleColor.DarkYellow));
 
-while (line.ToUpperInvariant() != ":Q")
+while (!line.Equals(":Q", StringComparison.OrdinalIgnoreCase))
 {
     Console.Write(Prompt.Pastel(ConsoleColor.White));
     line = Console.ReadLine();
 
     if (!string.IsNullOrEmpty(line))
     {
-        if (line.ToUpperInvariant() == ":Q") break;
+        if (line.Equals(":Q", StringComparison.OrdinalIgnoreCase)) break;
 
         try
         {

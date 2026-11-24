@@ -39,7 +39,7 @@ public sealed class Planet
 
     static int _planets;
 
-    public Planet NextPlanet => new();
+    public Planet NextPlanet => GetNextPlanet();
 
     readonly Dictionary<string, Planet> _subPlanets = new();
     public Planet this[string planetName]

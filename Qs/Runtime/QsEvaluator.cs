@@ -1086,9 +1086,9 @@ public class QsEvaluator
         {
             throw new QsException("Overflow", e);
         }
-        catch (QsException e)
+        catch (QsException)
         {
-            throw e;
+            throw;
         }
         catch (Exception e)
         {

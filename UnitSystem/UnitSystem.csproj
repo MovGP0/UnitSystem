@@ -4,7 +4,6 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsTestProject>false</IsTestProject>
     <RootNamespace>UnitSystem</RootNamespace>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FParsec.CSharp" />

@@ -97,7 +97,7 @@ public class QsFlowingTuple : QsValue
 
     public override QsValue? Execute(Token expression)
     {
-        if (expression.TokenValue.ToUpperInvariant() == "COUNT") return Count.ToScalarValue();
+        if (expression.TokenValue.Equals("COUNT", StringComparison.OrdinalIgnoreCase)) return Count.ToScalarValue();
 
         if (expression.TokenClassType == typeof(ParenthesisCallToken))
         {

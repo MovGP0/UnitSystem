@@ -11,4 +11,9 @@ public class StepException : Exception
         : base(message)
     {
     }
+
+    public StepException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
 }

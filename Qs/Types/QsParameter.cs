@@ -78,7 +78,7 @@ public class QsParameter
             e.ExtraData = ParameterRawText;
 
             // and throw it again
-            throw e;
+            throw;
         }
     }
 

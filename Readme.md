@@ -112,6 +112,16 @@ Singlet selection is symbolic and requires exactly one independent contraction.
 The prototype checks internal gauge symmetry. Lorentz indices and field
 statistics require their own checks.
 
+## Build diagnostics
+
+Builds treat warnings as errors. Set individual severities in `.editorconfig`.
+The compiler warning baseline uses `suggestion` for existing diagnostics so
+each rule can be raised to `warning` as its findings are fixed.
+
+```sh
+dotnet build QuantitySystem.slnx --configuration Release
+```
+
 ## Open issues
 
 - Explore oriented angles and tensor components from

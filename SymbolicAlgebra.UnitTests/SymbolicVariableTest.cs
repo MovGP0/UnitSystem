@@ -1024,7 +1024,7 @@ public class SymbolicVariableTest
     {
         var iif = SymbolicVariable.Parse("IIF(x <= 5, x^2, x^3)");
 
-        Assert.That(iif.InvolvedSymbols[0], Is.EqualTo("x"));
+        iif.InvolvedSymbols[0].ShouldBe("x");
 
         Assert.AreEqual(iif.Execute(3), 3 * 3);
         Assert.AreEqual(iif.Execute(5), 5 * 5);

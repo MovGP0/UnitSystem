@@ -5,7 +5,7 @@ using UnitTests.Shared;
 namespace UnitSystem.UnitTests;
 
 [TestOf(typeof(Dimension))]
-public class DimensionTests
+public static class DimensionTests
 {
     [TestFixture]
     [TestOf(typeof(Dimension), ILObjectNames.Constructor)]
