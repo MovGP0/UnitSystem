@@ -35,7 +35,7 @@ dotnet_diagnostic.RCS0015.severity = warning
 roslynator_blank_line_between_using_directives = never
 
 # Put attribute list on its own line
-# dotnet_diagnostic.RCS0016.severity = warning
+dotnet_diagnostic.RCS0016.severity = warning
 
 # Control line breaks around block braces
 dotnet_diagnostic.RCS0021.severity = none
