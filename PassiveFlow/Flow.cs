@@ -605,8 +605,7 @@ public class Flow : IEnumerable<Step>
                         if (CurrentStep.Id == RequiredFlowStep.Id)
                             return flact;
                     }
-                    else
-                    if (flact.TargetPosition == delta)
+                    else if (flact.TargetPosition == delta)
                     {
                         return flact;
                     }
