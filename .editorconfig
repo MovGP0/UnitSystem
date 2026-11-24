@@ -945,7 +945,7 @@ dotnet_diagnostic.CA1871.severity = warning
 dotnet_diagnostic.CA1872.severity = warning
 
 # Avoid potentially expensive logging
-# dotnet_diagnostic.CA1873.severity = warning
+dotnet_diagnostic.CA1873.severity = warning
 
 # Use 'Regex.IsMatch'
 # dotnet_diagnostic.CA1874.severity = warning
