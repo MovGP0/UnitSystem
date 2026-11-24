@@ -62,7 +62,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         return v;
     }
 
-    private QsValue ModuloScalar(QsScalar scalar)
+    private QsVector ModuloScalar(QsScalar scalar)
     {
         var v = new QsVector(Count);
 
@@ -196,7 +196,7 @@ public partial class QsVector : QsValue, IEnumerable<QsScalar>
         return v;
     }
 
-    private QsValue ModuloVector(QsVector vector)
+    private QsVector ModuloVector(QsVector vector)
     {
         if (Count != vector.Count)
         {

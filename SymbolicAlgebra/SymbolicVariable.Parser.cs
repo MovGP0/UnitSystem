@@ -445,7 +445,7 @@ public partial class SymbolicVariable
         throw new NotSupportedException("Not Supported Operator '" + op + "'");
     }
 
-    private static Expression ArithExpression(DynamicExpressionOperator eop, out short skip)
+    private static BinaryExpression ArithExpression(DynamicExpressionOperator eop, out short skip)
     {
         var left = eop.DynamicExpression;
         var op = eop.Operation;

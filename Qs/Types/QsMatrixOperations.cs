@@ -57,7 +57,7 @@ public partial class QsMatrix : QsValue
     /// </summary>
     /// <param name="scalar"></param>
     /// <returns></returns>
-    private QsValue ModuloScalar(QsScalar scalar)
+    private QsMatrix ModuloScalar(QsScalar scalar)
     {
         var Total = new QsMatrix();
         for (var IY = 0; IY < RowsCount; IY++)

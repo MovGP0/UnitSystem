@@ -300,7 +300,7 @@ public class QsNamespace(string name)
         return CodedMembers;
     }
 
-    private IEnumerable<KeyValuePair<string, object>> GetQsNamespaceProperties()
+    private List<KeyValuePair<string, object>> GetQsNamespaceProperties()
     {
         var properties = (_NamespaceType ?? throw new QsException("The namespace has no native type.")).GetProperties(
             BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Public);

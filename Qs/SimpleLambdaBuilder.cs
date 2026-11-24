@@ -42,7 +42,7 @@ class SimpleLambdaBuilder(string functionName, Type type)
     /// </summary>
     public List<ParameterExpression> Parameters { get; } = [];
 
-    private static Type GetLambdaType(Type returnType, IList<ParameterExpression> parameterList)
+    private static Type GetLambdaType(Type returnType, List<ParameterExpression> parameterList)
     {
         ArgumentNullException.ThrowIfNull(returnType);
         ArgumentNullException.ThrowIfNull(parameterList);

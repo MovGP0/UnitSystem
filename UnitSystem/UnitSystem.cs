@@ -21,7 +21,7 @@ internal sealed class UnitSystem : IUnitSystem
 
     private readonly HashSet<Dimension> _affineDimensions = new();
 
-    private readonly IUnitFactory _unitFactory = new UnitFactory();
+    private readonly UnitFactory _unitFactory = new();
 
     private UnitInterpreter? _interpreter;
 

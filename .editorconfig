@@ -909,7 +909,7 @@ dotnet_diagnostic.CA1857.severity = warning
 dotnet_diagnostic.CA1858.severity = warning
 
 # Use concrete types when possible for improved performance
-# dotnet_diagnostic.CA1859.severity = warning
+dotnet_diagnostic.CA1859.severity = warning
 
 # Avoid using 'Enumerable.Any()' extension method
 # dotnet_diagnostic.CA1860.severity = warning

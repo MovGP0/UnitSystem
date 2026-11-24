@@ -971,7 +971,7 @@ class QsVar
         return ConstructExpression(FirstEop);
     }
 
-    private Expression ConstructTupleExpression(Token x)
+    private NewExpression ConstructTupleExpression(Token x)
     {
         List<Expression> ps = [];
 
@@ -1059,7 +1059,7 @@ class QsVar
         return Expression.New(cp, Expression.NewArrayInit(typeof(QsTupleValue), ps.ToArray()));
     }
 
-    private Expression DeleteInstance(Token token)
+    private MethodCallExpression DeleteInstance(Token token)
     {
         var ex = Expression.Constant(Evaluator);
 
@@ -1078,7 +1078,7 @@ class QsVar
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    private Expression CreateInstance(Token token, out Type discoveredType)
+    private MethodCallExpression CreateInstance(Token token, out Type discoveredType)
     {
         var cls = string.Empty;
         string[] args = [];
@@ -1165,7 +1165,7 @@ class QsVar
     /// </summary>
     /// <param name="complexToken"></param>
     /// <returns></returns>
-    private static Expression RationalScalar(Token complexToken)
+    private static ConstantExpression RationalScalar(Token complexToken)
     {
         Token? cn = null;
         if (complexToken.TokenClassType == typeof(RationalQuantityToken))
@@ -1218,7 +1218,7 @@ class QsVar
         return Expression.Constant(sc, typeof(QsScalar));
     }
 
-    private static Expression QuaternionScalar(Token quaternionToken)
+    private static ConstantExpression QuaternionScalar(Token quaternionToken)
     {
         Token? cn = null;
         if (quaternionToken.TokenClassType == typeof(QuaternionQuantityToken))
@@ -1281,7 +1281,7 @@ class QsVar
         return Expression.Constant(sc, typeof(QsScalar));
     }
 
-    private static Expression ComplexScalar(Token complexToken)
+    private static ConstantExpression ComplexScalar(Token complexToken)
     {
         Token? cn = null;
         if (complexToken.TokenClassType == typeof(ComplexQuantityToken))
@@ -1339,7 +1339,7 @@ class QsVar
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    private Expression ValueAbsolute(Token token)
+    private MethodCallExpression ValueAbsolute(Token token)
     {
         // parsing within absolute will re-execute the parsing
         var rr = ParseArithmatic(token.TrimTokens(1, 1));
@@ -1352,7 +1352,7 @@ class QsVar
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    private Expression ValueNorm(Token token)
+    private MethodCallExpression ValueNorm(Token token)
     {
         //the token is holding the vector or the expression that will lead to the vector.
 
@@ -1399,7 +1399,7 @@ class QsVar
     /// </summary>
     /// <param name="vectorText"></param>
     /// <returns></returns>
-    private Expression ParseVector(Token tok)
+    private MethodCallExpression ParseVector(Token tok)
     {
         List<Expression> qtyExpressions = [];
         var token = tok.TrimStart(typeof(LeftCurlyBracketToken));
@@ -1431,7 +1431,7 @@ class QsVar
     /// </summary>
     /// <param name="tok"></param>
     /// <returns></returns>
-    private Expression ParseMatrix(Token tok)
+    private MethodCallExpression ParseMatrix(Token tok)
     {
         List<Expression> vctExpressions = [];
 
@@ -2619,7 +2619,7 @@ class QsVar
     /// </summary>
     /// <param name="parameterName"></param>
     /// <returns></returns>
-    Expression GetFunctionOrSequenceParameter(string parameterName)
+    ConditionalExpression GetFunctionOrSequenceParameter(string parameterName)
     {
         //get it from the parameters of the lambda
         //  :) if it is found here then it will not be obtained from the global heap :)
