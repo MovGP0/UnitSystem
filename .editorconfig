@@ -735,7 +735,7 @@ dotnet_diagnostic.RCS1268.severity = warning
 # Info rules are queued for promotion. Rules already enforced keep their default severity.
 
 # Mark assemblies with assembly version
-# dotnet_diagnostic.CA1016.severity = warning
+dotnet_diagnostic.CA1016.severity = warning
 
 # Mark attributes with AttributeUsageAttribute
 # dotnet_diagnostic.CA1018.severity = warning
