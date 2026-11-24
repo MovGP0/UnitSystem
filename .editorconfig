@@ -596,7 +596,7 @@ dotnet_diagnostic.RCS1220.severity = warning
 dotnet_diagnostic.RCS1221.severity = warning
 
 # Merge preprocessor directives
-# dotnet_diagnostic.RCS1222.severity = warning
+dotnet_diagnostic.RCS1222.severity = warning
 
 # Mark publicly visible type with DebuggerDisplay attribute
 # dotnet_diagnostic.RCS1223.severity = none
