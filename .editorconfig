@@ -602,7 +602,7 @@ dotnet_diagnostic.RCS1222.severity = warning
 # dotnet_diagnostic.RCS1223.severity = none
 
 # Make method an extension method
-# dotnet_diagnostic.RCS1224.severity = warning
+dotnet_diagnostic.RCS1224.severity = warning
 
 # Make class sealed
 # dotnet_diagnostic.RCS1225.severity = warning
