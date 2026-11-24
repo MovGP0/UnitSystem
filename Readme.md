@@ -39,11 +39,48 @@ Unit formatting uses readable symbols and expressions where they round-trip in t
 same catalog. If a custom symbol would change the parsed result, formatting emits
 `@unit <scale> <offset> <exponents...>` using the catalog's base-unit order.
 
+## Siano orientation
+
+`UnitSystem.Orientations.OrientedQuantity` attaches one of Siano's four labels
+to a scalar or an individual signed Cartesian component. Each label is its own
+inverse, and the product of two distinct axis labels gives the third axis label.
+The orientationless label is the identity and applies to scalars such as mass
+and time.
+
+`SianoOrientation` represents these labels as basis vectors with complex
+coefficients. For example, `3 * SianoOrientation.X + 4 * SianoOrientation.Y`
+has coefficients `(3, 4, 0, 0)` in X, Y, Z, scalar order. Its multiplication
+extends the Siano table to sums by distributivity. Geometric dot and cross
+products use their own rules.
+
+`OrientedQuantity` accepts a single basis label per component. For a displacement
+of `(3, 4, 0) m`, attach X to `3 m` and Y to `4 m`. Express both vectors in a
+common frame and add corresponding components when adding vectors. Components
+must have matching labels and compatible units for addition and subtraction.
+
+```csharp
+using UnitSystem.Orientations;
+using UnitSystem.Quantities;
+using static UnitSystem.Systems.SISystem;
+
+var displacement = new OrientedQuantity(new ScalarQuantity(2, m), SianoOrientation.X);
+var forceX = new OrientedQuantity(new ScalarQuantity(5, N), SianoOrientation.X);
+var forceY = new OrientedQuantity(new ScalarQuantity(5, N), SianoOrientation.Y);
+
+var work = displacement * forceX;    // 10 J, orientationless
+var momentZ = displacement * forceY; // 10 N·m, Z orientation
+```
+
+The prototype supports integer powers. An even power is orientationless, so its
+orientation alone cannot recover the original axis. Use the underlying
+`ScalarQuantity` for plain dimensional calculations.
+
+[Siano, Orientational Analysis I](https://doi.org/10.1016/0016-0032%2885%2990031-6)
+
 ## Open issues
 
-- Add support for Siano's extensions to support units with directed dimensions
-  - [Units of Measurement Wiki: Siano's extension: orientational analysis](https://units.fandom.com/wiki/Dimensional_analysis#Siano's_extension:_orientational_analysis)
-  - [Wikipedia: Siano's extension: orientational analysis](https://en.wikipedia.org/wiki/Dimensional_analysis#Siano's_extension:_orientational_analysis)
+- Explore oriented angles and tensor components from
+  [Siano, Orientational Analysis II](https://doi.org/10.1016/0016-0032%2885%2990032-8).
 - Improve unit test coverage & bugfixing
 
 ## Related work
