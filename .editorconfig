@@ -713,7 +713,7 @@ dotnet_diagnostic.RCS1261.severity = warning
 dotnet_diagnostic.RCS1262.severity = warning
 
 # Invalid reference in a documentation comment
-# dotnet_diagnostic.RCS1263.severity = warning
+dotnet_diagnostic.RCS1263.severity = warning
 
 # Use 'var' or explicit type
 # dotnet_diagnostic.RCS1264.severity = none
