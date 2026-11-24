@@ -671,7 +671,7 @@ dotnet_diagnostic.RCS1247.severity = warning
 # dotnet_diagnostic.RCS1248.severity = none
 
 # Unnecessary null-forgiving operator
-# dotnet_diagnostic.RCS1249.severity = warning
+dotnet_diagnostic.RCS1249.severity = warning
 
 # Use implicit/explicit object creation
 # dotnet_diagnostic.RCS1250.severity = none
