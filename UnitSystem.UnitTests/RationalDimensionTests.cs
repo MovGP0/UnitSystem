@@ -7,11 +7,11 @@ using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;
 
-[TestClass]
+[TestFixture]
 [TestOf(typeof(Dimension))]
 public sealed class RationalDimensionTests
 {
-    [TestMethod]
+    [Test]
     public void ShouldRecoverTheOriginalUnitWhenFractionalPowersCombine()
     {
         var third = m.Pow(new Rational(1, 3));
@@ -25,7 +25,7 @@ public sealed class RationalDimensionTests
         third.ShouldNotBe(m.Pow(0.33333333f));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldPreserveExponentsAcrossDifferentBaseDimensions()
     {
         var dimension = m.Pow(new Rational(1, 3)).Dimension / s.Pow(new Rational(2, 3)).Dimension;
@@ -34,7 +34,7 @@ public sealed class RationalDimensionTests
         dimension.ToString(SISystem.System, null, null).ShouldBe("L^1/3\u00A0T^-2/3");
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldDisplayAndParseFractionalExponents()
     {
         var unit = m.Pow(new Rational(1, 3)) / s.Pow(new Rational(2, 3));
@@ -45,7 +45,7 @@ public sealed class RationalDimensionTests
         SISystem.System.Parse("@unit 1 0 1/3").ShouldBe(m.Pow(new Rational(1, 3)));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldInterpretDecimalAndScientificExponentsExactly()
     {
         SISystem.System.Parse("m^0.1").ShouldBe(m.Pow(0.1f));
@@ -54,7 +54,7 @@ public sealed class RationalDimensionTests
         SISystem.System.Parse("@unit 1 0 0.1").ShouldBe(m.Pow(new Rational(1, 10)));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRaiseQuantitiesToRationalPowers()
     {
         var quantity = new ScalarQuantity(8, m).Pow(new Rational(1, 3));
@@ -64,7 +64,7 @@ public sealed class RationalDimensionTests
         new ScalarQuantity(8, m).Pow(0.1f).Unit.ShouldBe(m.Pow(new Rational(1, 10)));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRejectNonfiniteExponents()
     {
         Should.Throw<ArgumentOutOfRangeException>(() => new Dimension(default(Rational)));
@@ -73,7 +73,7 @@ public sealed class RationalDimensionTests
         Should.Throw<FormatException>(() => SISystem.System.Parse("m^(1/3"));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRejectOversizedScientificExponents()
     {
         Should.Throw<FormatException>(() => SISystem.System.Parse("m^1e100000000"));

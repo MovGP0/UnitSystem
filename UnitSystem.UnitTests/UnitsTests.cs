@@ -7,11 +7,11 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(Unit))]
 public static class UnitsTests
 {
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(Unit), ILObjectNames.Multiply)]
     public sealed class MultiplyTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldMultiplyUnitsCorrectly()
         {
             // Arrange
@@ -22,7 +22,7 @@ public static class UnitsTests
             result.Dimension.Count.ShouldBe(Math.Max(m.Dimension.Count, s.Dimension.Count));
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldRevertMultiplicationWithDivision()
         {
             // Arrange
@@ -35,7 +35,7 @@ public static class UnitsTests
             result.ShouldBe(m);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldReturnKnownUnitsWhenPossible()
         {
             // Arrange
@@ -46,11 +46,11 @@ public static class UnitsTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(Unit), ILObjectNames.Division)]
     public sealed class DivisionTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldDivideUnitsCorrectly()
         {
             // Arrange

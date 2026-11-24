@@ -16,11 +16,11 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(SerializationExtensions))]
 public static class SerializationExtensionsTests
 {
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SerializationExtensions), nameof(SerializationExtensions.ToInfo))]
     public sealed class ToInfoTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldRejectAQuantityWhenItsCatalogCannotNameAllDimensions()
         {
             var system = Substitute.For<IUnitSystem>();
@@ -35,11 +35,11 @@ public static class SerializationExtensionsTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SerializationExtensions), nameof(SerializationExtensions.FromInfo))]
     public sealed class FromInfoTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldSerializeAndDeserializeUsingDataContractSerializer()
         {
             // Arrange
@@ -66,7 +66,7 @@ public static class SerializationExtensionsTests
             quantity.ShouldBe(result);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldSerializeAndDeserializeUsingJsonNet()
         {
             // Arrange
@@ -83,7 +83,7 @@ public static class SerializationExtensionsTests
             quantity.ShouldBe(result);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldReadLegacyJsonExponents()
         {
             const string json = """{"Amount":12,"Unit":{"m":0.1}}""";
@@ -92,7 +92,7 @@ public static class SerializationExtensionsTests
             SISystem.System.FromInfo(info).ShouldBe(new ScalarQuantity(12, m.Pow(new Rational(1, 10))));
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldReadLegacyDataContractExponents()
         {
             const string xml = """
@@ -111,7 +111,7 @@ public static class SerializationExtensionsTests
             SISystem.System.FromInfo(info).ShouldBe(new ScalarQuantity(12, m.Pow(new Rational(1, 10))));
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldMapToInfoAndBackCorrectly()
         {
             // Arrange

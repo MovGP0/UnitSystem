@@ -1,9 +1,9 @@
 namespace PassiveFlow.UnitTests;
 
-[TestClass]
+[TestFixture]
 public sealed class DynamicFlowTests
 {
-    [TestMethod]
+    [Test]
     public void TestDynamicFlowOperations()
     {
         StringBuilder log = new();

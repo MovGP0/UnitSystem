@@ -1,9 +1,9 @@
 namespace PassiveFlow.UnitTests;
 
-[TestClass]
+[TestFixture]
 public sealed class GearBoxTests
 {
-    [TestMethod]
+    [Test]
     public void TestGearBoxOperationsAndLog()
     {
         // arrange

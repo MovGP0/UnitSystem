@@ -7,11 +7,11 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(UnitFactory))]
 public static class UnitFactoryTests
 {
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(UnitFactory), nameof(UnitFactory.CreateUnit))]
     public sealed class CreateUnitTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldNotCreateTrailingEmptyDimensions()
         {
             // Arrange
@@ -26,7 +26,7 @@ public static class UnitFactoryTests
             baseUnit.Dimension.Count.ShouldBe(2);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldRejectDimensionsAbsentFromTheCatalog()
         {
             var system = UnitSystemFactory.CreateSystem("example");

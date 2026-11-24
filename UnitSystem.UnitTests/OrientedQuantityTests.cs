@@ -7,7 +7,7 @@ using static UnitSystem.Systems.SISystem;
 
 namespace UnitSystem.UnitTests;
 
-[TestClass]
+[TestFixture]
 [TestOf(typeof(OrientedQuantity))]
 public sealed class OrientedQuantityTests
 {
@@ -22,8 +22,7 @@ public sealed class OrientedQuantityTests
         [Z, X, Y],
     ];
 
-    [TestMethod]
-    [DynamicData(nameof(OrientationProducts))]
+    [TestCaseSource(nameof(OrientationProducts))]
     public void ShouldCombineOrientations(
         SianoOrientation first, SianoOrientation second, SianoOrientation expected)
     {
@@ -35,7 +34,7 @@ public sealed class OrientedQuantityTests
         (left / right).Orientation.ShouldBe(expected);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRequireASingleBasisElementForAQuantityComponent()
     {
         var length = new ScalarQuantity(2, m);
@@ -44,7 +43,7 @@ public sealed class OrientedQuantityTests
         Should.Throw<ArgumentOutOfRangeException>(() => new OrientedQuantity(length, Zero));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldDistinguishWorkFromMoment()
     {
         var xForce = new OrientedQuantity(new ScalarQuantity(5, N), X);
@@ -62,7 +61,7 @@ public sealed class OrientedQuantityTests
         Should.Throw<InvalidOperationException>(() => work + moment);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRequireMatchingOrientationsForAdditionAndSubtraction()
     {
         var x = new OrientedQuantity(new ScalarQuantity(2, m), X);
@@ -77,7 +76,7 @@ public sealed class OrientedQuantityTests
         Should.Throw<InvalidOperationException>(() => x + xTime);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRetainOrientationDuringUnitConversion()
     {
         var length = new OrientedQuantity(new ScalarQuantity(2, m), Y);
@@ -88,7 +87,7 @@ public sealed class OrientedQuantityTests
         length.Convert(centimetre).Quantity.Unit.ShouldBe(centimetre);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldApplyParityToIntegerPowers()
     {
         var length = new OrientedQuantity(new ScalarQuantity(-2, m), Z);

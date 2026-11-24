@@ -10,11 +10,11 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(ScalarQuantity))]
 public static class ScalarQuantityTests
 {
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), ILObjectNames.Division)]
     public sealed class DivisionTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldDivideCorrectly()
         {
             // Arrange
@@ -31,7 +31,7 @@ public static class ScalarQuantityTests
             result.ShouldBe(expected);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldBehaveCorrectly()
         {
             // Arrange
@@ -45,7 +45,7 @@ public static class ScalarQuantityTests
             result.ShouldBe(mass25);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldYieldARatioWhenDividingSameUnits()
         {
             // Arrange
@@ -61,11 +61,11 @@ public static class ScalarQuantityTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), ILObjectNames.Addition)]
     public sealed class AdditionTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldAddQuantitiesCorrectly()
         {
             // Arrange
@@ -82,11 +82,11 @@ public static class ScalarQuantityTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), ILObjectNames.Subtraction)]
     public sealed class SubtractionTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldSubtractQuantitiesCorrectly()
         {
             // Arrange
@@ -103,11 +103,11 @@ public static class ScalarQuantityTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), nameof(ScalarQuantity.Pow))]
     public sealed class ExponentTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldExponentizeQuantitiesCorrectly()
         {
             // Arrange
@@ -123,11 +123,11 @@ public static class ScalarQuantityTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), ILObjectNames.Inequality)]
     public sealed class InEqualityTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldWorkAsExpected()
         {
             // Arrange
@@ -149,11 +149,11 @@ public static class ScalarQuantityTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), ILObjectNames.Equality)]
     public sealed class EqualityTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldCheckEqualityForEquivalentQuantities()
         {
             // Arrange
@@ -165,7 +165,7 @@ public static class ScalarQuantityTests
             hour1.ShouldBe(hour2);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldWorkAsExpected()
         {
             // Arrange
@@ -187,11 +187,11 @@ public static class ScalarQuantityTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), ILObjectNames.LessThan)]
     public sealed class LessThanTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldWorkAsExpected1()
         {
             // Arrange
@@ -207,7 +207,7 @@ public static class ScalarQuantityTests
             (energy1 == energy2).ShouldBeFalse();
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldWorkAsExpected2()
         {
             // Arrange
@@ -241,11 +241,11 @@ public static class ScalarQuantityTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), nameof(ScalarQuantity.CompareTo))]
     public sealed class CompareToTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldCompareToWorkAsExpected()
         {
             // Arrange
@@ -264,11 +264,11 @@ public static class ScalarQuantityTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), nameof(ScalarQuantity.Convert))]
     public sealed class ConvertTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldBeEquivalentWhenConverted()
         {
             // Arrange
@@ -282,7 +282,7 @@ public static class ScalarQuantityTests
             quantity.ShouldBe(result);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldThrowExceptionForInequivalentUnits()
         {
             // Arrange
@@ -293,7 +293,7 @@ public static class ScalarQuantityTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(ScalarQuantity), nameof(ScalarQuantity.ToString))]
     public sealed class ToStringTests
     {
@@ -303,7 +303,7 @@ public static class ScalarQuantityTests
             CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldPrintQuantityInDesiredUnitAndFormat()
         {
             // Arrange
@@ -316,7 +316,7 @@ public static class ScalarQuantityTests
             quantity.ToString("N3", MWh).ShouldBe("0.003 MWh");
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldBehaveCorrectly()
         {
             // Arrange

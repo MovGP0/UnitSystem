@@ -7,11 +7,11 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(Dimension))]
 public class DimensionTests
 {
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(Dimension), ILObjectNames.Constructor)]
     public sealed class ConstructorTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldDetermineEqualityBasedOnExponents()
         {
             // Arrange
@@ -36,7 +36,7 @@ public class DimensionTests
             dim6.GetHashCode().ShouldBe(dim7.GetHashCode());
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldIgnoreTrailingZeros()
         {
             // Arrange
@@ -48,7 +48,7 @@ public class DimensionTests
             dim1.GetHashCode().ShouldBe(dim2.GetHashCode());
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldNotIgnoreStartingZeros()
         {
             // Arrange
@@ -59,14 +59,14 @@ public class DimensionTests
             dim1.ShouldNotBe(dim2);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldBeDimensionlessWithEmptyList()
         {
             // Act & Assert
             new Dimension().ShouldBe(Dimension.DimensionLess);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldBeDimensionlessWithOnlyZeroExponents()
         {
             // Act & Assert

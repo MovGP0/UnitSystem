@@ -8,10 +8,10 @@ using Shouldly;
 
 namespace UnitSystem.UnitTests;
 
-[TestClass]
+[TestFixture]
 public sealed class UnitSystemRegressionTests
 {
-    [TestMethod]
+    [Test]
     public void ShouldConvertTemperaturePointsThroughTheSamePath()
     {
         var freezingCelsius = new ScalarQuantity(0, SISystem.degC);
@@ -25,7 +25,7 @@ public sealed class UnitSystemRegressionTests
         freezingCelsius.ShouldBe(freezingFahrenheit);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldApplyOnlyScaleWhenConvertingTemperatureDifferences()
     {
         var start = new ScalarQuantity(10, SISystem.degC);
@@ -45,7 +45,7 @@ public sealed class UnitSystemRegressionTests
         Should.Throw<InvalidOperationException>(() => start * 2);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldPreserveTemperatureSemanticsInSerializedCanonicalValues()
     {
         var point = new ScalarQuantity(0, SISystem.degC);
@@ -63,7 +63,7 @@ public sealed class UnitSystemRegressionTests
         SISystem.System.FromInfo(pointInfo).ShouldBe(point);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldUseCanonicalValuesForEqualityHashingAndOrdering()
     {
         var metre = new ScalarQuantity(1, SISystem.m);
@@ -83,7 +83,7 @@ public sealed class UnitSystemRegressionTests
         Should.Throw<InvalidOperationException>(() => point.CompareTo(difference));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldPublishTheValidatedStandardCatalogWithCompatibleDimensions()
     {
         CGSSystem.dyn.ShouldBeSameAs(CGSSystem.dyne);
@@ -99,7 +99,7 @@ public sealed class UnitSystemRegressionTests
         Should.Throw<InvalidOperationException>(() => SISystem.AddDerivedUnit("extra", "extra", 2 * SISystem.m));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldParseRegisteredSymbolsBeforePrefixesAndRoundTripExpressions()
     {
         SISystem.Parse("m").ShouldBeSameAs(SISystem.m);
@@ -127,7 +127,7 @@ public sealed class UnitSystemRegressionTests
         }
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldMultiplyAfterRaisingAQuantityToAPower()
     {
         var length = new ScalarQuantity(2, SISystem.m);
@@ -136,7 +136,7 @@ public sealed class UnitSystemRegressionTests
         area.ShouldBe(new ScalarQuantity(12, SISystem.m.Pow(2)));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRejectNoninvertibleUnitTransforms()
     {
         var system = SISystem.System;
@@ -152,7 +152,7 @@ public sealed class UnitSystemRegressionTests
         Unit.Ln(SISystem.NoUnit).ShouldBe(0.0);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRoundTripProductsAndPrefixesShadowedByRegisteredSymbols()
     {
         var system = UnitSystemFactory.CreateSystem("test");
@@ -172,7 +172,7 @@ public sealed class UnitSystemRegressionTests
         Should.Throw<ArgumentException>(() => system.AddBaseUnit("@unit 1 0", "reserved symbol"));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRefreshCustomRegistrationsWithoutPartialChangesOnFailure()
     {
         var system = UnitSystemFactory.CreateSystem("test");

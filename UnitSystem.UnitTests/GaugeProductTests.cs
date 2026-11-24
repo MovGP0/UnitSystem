@@ -6,11 +6,11 @@ using static UnitSystem.Gauge.StandardModelGaugeRepresentations;
 
 namespace UnitSystem.UnitTests;
 
-[TestClass]
+[TestFixture]
 [TestOf(typeof(GaugeProduct))]
 public sealed class GaugeProductTests
 {
-    [TestMethod]
+    [Test]
     public void ShouldProjectEveryStandardModelMultipletToItsGaugeRepresentation()
     {
         (StandardModelGaugeRepresentations Multiplet, GaugeRepresentation Representation)[] cases =
@@ -31,7 +31,7 @@ public sealed class GaugeProductTests
         Should.Throw<InvalidOperationException>(() => default(StandardModelGaugeRepresentations).Representation);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldDistinguishAnAvailableSingletFromAnInvariantProduct()
     {
         var product = GaugeProduct.Analyze(UpQuark, UpQuark.Conjugate());
@@ -44,7 +44,7 @@ public sealed class GaugeProductTests
         product.SelectUniqueSinglet().ShouldBe(GaugeRepresentation.Singlet);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldDecomposeTheWeakDoubletProduct()
     {
         var product = GaugeProduct.Analyze(HiggsDoublet.Conjugate(), HiggsDoublet);
@@ -54,7 +54,7 @@ public sealed class GaugeProductTests
         product.SingletMultiplicity.ShouldBe(BigInteger.One);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldPreserveTheLargestWeakIsospinLabelWhenMultiplyingByASinglet()
     {
         var representation = new GaugeRepresentation(ColorRepresentation.Singlet, uint.MaxValue, Rational.Zero);
@@ -65,7 +65,7 @@ public sealed class GaugeProductTests
         product.Channels[representation].ShouldBe(BigInteger.One);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldThrowWhenTheLargestWeakChannelExceedsTheLabelRange()
     {
         var representation = new GaugeRepresentation(ColorRepresentation.Singlet, uint.MaxValue, Rational.Zero);
@@ -73,7 +73,7 @@ public sealed class GaugeProductTests
         Should.Throw<OverflowException>(() => GaugeProduct.Analyze(representation, HiggsDoublet));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldUseExactHyperchargeForYukawaTerms()
     {
         var down = GaugeProduct.Analyze(QuarkDoublet.Conjugate(), HiggsDoublet, DownQuark);
@@ -88,7 +88,7 @@ public sealed class GaugeProductTests
         Should.Throw<InvalidOperationException>(() => wrongHiggs.SelectUniqueSinglet());
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRejectAnUnpairedWeakDoubletAndAColorTripletPair()
     {
         var triplet = new GaugeRepresentation(ColorRepresentation.Triplet, 0, Rational.Zero);
@@ -98,7 +98,7 @@ public sealed class GaugeProductTests
         GaugeProduct.Analyze(weakDoublet).HasSinglet.ShouldBeFalse();
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldFindTheThreeTripletColorSinglet()
     {
         var product = GaugeProduct.Analyze(UpQuark, DownQuark, DownQuark);
@@ -108,7 +108,7 @@ public sealed class GaugeProductTests
         product.SingletMultiplicity.ShouldBe(BigInteger.One);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldReportIndependentContractions()
     {
         var product = GaugeProduct.Analyze(
@@ -118,7 +118,7 @@ public sealed class GaugeProductTests
         Should.Throw<InvalidOperationException>(() => product.SelectUniqueSinglet());
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldConjugateColorLabelsAcrossTheUnsignedRange()
     {
         var representation = new ColorRepresentation(uint.MaxValue, 1);
@@ -126,7 +126,7 @@ public sealed class GaugeProductTests
         representation.Conjugate().ShouldBe(new ColorRepresentation(1, uint.MaxValue));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldDecomposeTwoColorOctets()
     {
         var octet = new GaugeRepresentation(ColorRepresentation.Octet, 0, Rational.Zero);
@@ -140,7 +140,7 @@ public sealed class GaugeProductTests
         }
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldTreatTheEmptyProductAsInvariant()
     {
         var product = GaugeProduct.Analyze();

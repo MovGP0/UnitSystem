@@ -15,6 +15,7 @@
     <File Path="global.json" />
     <File Path="License.md" />
     <File Path="Readme.md" />
+    <File Path="UnitTests.props" />
   </Folder>
   <Folder Name="/SymbolicAlgebra/">
     <Project Path="SymbolicAlgebra.Console/SymbolicAlgebra.Console.csproj" />

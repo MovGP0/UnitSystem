@@ -1,9 +1,9 @@
 namespace PassiveFlow.UnitTests;
 
-[TestClass]
+[TestFixture]
 public sealed class FoodOrderTests
 {
-    [TestMethod]
+    [Test]
     public void TestCustomerStepsInFoodOrder()
     {
         StringBuilder log = new();

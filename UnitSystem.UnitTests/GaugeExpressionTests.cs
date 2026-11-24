@@ -5,11 +5,11 @@ using UnitSystem.Gauge;
 
 namespace UnitSystem.UnitTests;
 
-[TestClass]
+[TestFixture]
 [TestOf(typeof(GaugeExpression))]
 public sealed class GaugeExpressionTests
 {
-    [TestMethod]
+    [Test]
     public void ShouldParseAndSelectTheDownTypeYukawaSinglet()
     {
         var product = GaugeExpression.Parse("  conj (Q_L) * H\n* d_R  ").Analyze();
@@ -21,7 +21,7 @@ public sealed class GaugeExpressionTests
         selected.IsGaugeInvariant.ShouldBeTrue();
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldParseAndAnalyzeTextInOneCall()
     {
         GaugeExpression.Analyze("singlet(conj(H) * H)").IsGaugeInvariant.ShouldBeTrue();
@@ -30,7 +30,7 @@ public sealed class GaugeExpressionTests
         GaugeExpression.Analyze("S", fields).IsGaugeInvariant.ShouldBeTrue();
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldConjugateAGroupedProduct()
     {
         var result = GaugeExpression.Parse("conj(Q_L * conj(H)) * (d_R)").Analyze();
@@ -44,7 +44,7 @@ public sealed class GaugeExpressionTests
         }
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldSelectEachSubexpressionIndependently()
     {
         var product = GaugeExpression.Parse("(conj(H) * H) * (conj(H) * H)").Analyze();
@@ -57,14 +57,14 @@ public sealed class GaugeExpressionTests
         nested.IsGaugeInvariant.ShouldBeTrue();
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldCheckTheSingletOfTheSelectedSubexpression()
     {
         GaugeExpression.Parse("H * conj(H)").Analyze().HasSinglet.ShouldBeTrue();
         Should.Throw<InvalidOperationException>(() => GaugeExpression.Parse("singlet(H) * conj(H)").Analyze());
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldBoundParenthesisNesting()
     {
         var withinLimit = new string('(', 64) + "H" + new string(')', 64);
@@ -73,35 +73,34 @@ public sealed class GaugeExpressionTests
         Should.Throw<FormatException>(() => GaugeExpression.Parse("(" + withinLimit + ")"));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldReportAnUnknownField()
     {
         Should.Throw<FormatException>(() => GaugeExpression.Parse("H * missing").Analyze()).Message.ShouldContain("missing");
     }
 
-    [TestMethod]
-    [DataRow("H *")]
-    [DataRow("H H")]
-    [DataRow("H + H")]
-    [DataRow("")]
-    [DataRow("conj(H")]
-    [DataRow("conj()")]
-    [DataRow("singlet()")]
-    [DataRow("(H * )")]
-    [DataRow("singlet(conj(H) * H) extra")]
+    [TestCase("H *")]
+    [TestCase("H H")]
+    [TestCase("H + H")]
+    [TestCase("")]
+    [TestCase("conj(H")]
+    [TestCase("conj()")]
+    [TestCase("singlet()")]
+    [TestCase("(H * )")]
+    [TestCase("singlet(conj(H) * H) extra")]
     public void ShouldRejectMalformedExpressions(string expression)
     {
         Should.Throw<FormatException>(() => GaugeExpression.Parse(expression));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRejectAnAmbiguousOrMissingSingletSelection()
     {
         Should.Throw<InvalidOperationException>(() => GaugeExpression.Parse("singlet(conj(H) * H * conj(H) * H)").Analyze());
         Should.Throw<InvalidOperationException>(() => GaugeExpression.Parse("singlet(H)").Analyze());
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldAnalyzeOneParsedExpressionAgainstDifferentFieldMaps()
     {
         var expression = GaugeExpression.Parse("field * field");
@@ -118,7 +117,7 @@ public sealed class GaugeExpressionTests
         chargedProduct.HasSinglet.ShouldBeFalse();
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldResolveCustomFieldNamesThatStartWithKeywords()
     {
         var fields = new Dictionary<string, GaugeRepresentation>

@@ -8,11 +8,11 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(KnownUnit))]
 public static class KnownUnitTests
 {
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(KnownUnit), nameof(KnownUnit.Equals))]
     public sealed class EqualsTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldBeEqualWhenSameDimensionAndFactor()
         {
             // Arrange

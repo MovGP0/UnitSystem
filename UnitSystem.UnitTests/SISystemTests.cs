@@ -8,11 +8,11 @@ namespace UnitSystem.UnitTests;
 [TestOf(typeof(SISystem))]
 public static class SISystemTests
 {
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SISystem), nameof(BaseUnits))]
     public sealed class BaseUnitsTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldDefineBaseUnitsIncludingAngle()
         {
             // Arrange & Act & Assert
@@ -27,7 +27,7 @@ public static class SISystemTests
             cd.ShouldNotBeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldKnowSomeDerivedUnits()
         {
             // Arrange & Act & Assert
@@ -50,11 +50,11 @@ public static class SISystemTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SISystem), nameof(Parse))]
     public sealed class ParseTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldParseUnitsWithoutDenominator()
         {
             // Arrange & Act & Assert
@@ -65,7 +65,7 @@ public static class SISystemTests
             Parse("kW · h").ShouldBe(MetricPrefix.Kilo * W * h);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldParseUnitsWithDenominator()
         {
             // Arrange & Act & Assert
@@ -73,7 +73,7 @@ public static class SISystemTests
             Parse("m / s").ShouldBe(m / s);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldParseUnitsWithExponent()
         {
             // Arrange & Act & Assert
@@ -81,35 +81,35 @@ public static class SISystemTests
             Parse("J / m^3").ShouldBe(J / m.Pow(3));
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldParseUnitsWithNegativeExponent()
         {
             // Arrange & Act & Assert
             Parse("J m^-3").ShouldBe(J * m.Pow(-3));
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldParseMilligramsCorrectly()
         {
             // Arrange & Act & Assert
             Parse("mg").ShouldBe(kg / 1000000);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldParseGramsCorrectly()
         {
             // Arrange & Act & Assert
             Parse("g").ShouldBe(kg / 1000);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldThrowFormatExceptionForKiloKilograms()
         {
             // Arrange & Act & Assert
             Should.Throw<FormatException>(() => Parse("kkg"));
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldParseInconsistentUnit()
         {
             // Arrange & Act & Assert
@@ -117,11 +117,11 @@ public static class SISystemTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SISystem), nameof(Display))]
     public sealed class DisplayTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldPrintAndReparseUnit()
         {
             // Arrange

@@ -3,14 +3,14 @@ namespace SymbolicAlgebra.UnitTests;
 [TestOf(typeof(TextTools))]
 public static class TextToolsTest
 {
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(TextTools), nameof(TextTools.ComaSplit))]
     public sealed class ComaSplitTests
     {
         /// <summary>
         /// A test for ComaSplit
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void ComaSplitTest()
         {
             // arrange

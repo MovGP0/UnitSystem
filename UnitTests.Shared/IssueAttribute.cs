@@ -1,12 +1,17 @@
 using System.Globalization;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace UnitTests.Shared;
 
-public sealed class IssueAttribute : TestCategoryBaseAttribute
+public sealed class IssueAttribute : CategoryAttribute
 {
-    public override IList<string> TestCategories { get; } = new List<string>();
+    public IssueAttribute(string issueId)
+        : base("Issue " + issueId)
+    {
+    }
 
-    public IssueAttribute(string issueId) => TestCategories.Add("Issue " + issueId);
-    public IssueAttribute(long issueId) => TestCategories.Add("Issue " + issueId.ToString(CultureInfo.InvariantCulture));
+    public IssueAttribute(long issueId)
+        : this(issueId.ToString(CultureInfo.InvariantCulture))
+    {
+    }
 }

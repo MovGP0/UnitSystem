@@ -5,22 +5,21 @@ namespace SymbolicAlgebra.UnitTests;
 [TestOf(typeof(SymbolicVariable))]
 public static class SymbolicVariableTests
 {
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), ILObjectNames.Constructor)]
     public sealed class ConstructorTests
     {
-        [TestMethod]
-        [DataRow("log(1)", "0")]
-        [DataRow("log(exp(1))", "1")]
-        [DataRow("log(exp(x^2/4))", "0.25*x^2")]
-        [DataRow("log(x*y)", "log(x)+log(y)")]
-        [DataRow("log(2*x*y)", "log(2)+log(x)+log(y)")]
-        [DataRow("log(2*x)", "log(2)+log(x)")]
-        [DataRow("log(y^x)", "x*log(y)")]
-        [DataRow("log(y^(2*x+3))", "2*x*log(y)+3*log(y)")]
-        [DataRow("log(3^y*i^5)", "y*log(3)+5*log(i)")]
-        [DataRow("log(3^y/i^5)", "y*log(3)-5*log(i)")]
-        [DataRow("log(3^y-4^u)", "log(3^y-4^u)")]
+        [TestCase("log(1)", "0")]
+        [TestCase("log(exp(1))", "1")]
+        [TestCase("log(exp(x^2/4))", "0.25*x^2")]
+        [TestCase("log(x*y)", "log(x)+log(y)")]
+        [TestCase("log(2*x*y)", "log(2)+log(x)+log(y)")]
+        [TestCase("log(2*x)", "log(2)+log(x)")]
+        [TestCase("log(y^x)", "x*log(y)")]
+        [TestCase("log(y^(2*x+3))", "2*x*log(y)+3*log(y)")]
+        [TestCase("log(3^y*i^5)", "y*log(3)+5*log(i)")]
+        [TestCase("log(3^y/i^5)", "y*log(3)-5*log(i)")]
+        [TestCase("log(3^y-4^u)", "log(3^y-4^u)")]
         public void LogSimplificationTest(string input, string expectedOutput)
         {
             // act
@@ -31,11 +30,11 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.FactorWithCommonFactor))]
     public sealed class FactorWithCommonFactorTests
     {
-        [TestMethod]
+        [Test]
         [Ignore("Test is not working in original version either")]
         public void FactorTest()
         {
@@ -50,16 +49,15 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.Integrate))]
     public sealed class IntegrateTests
     {
-        [TestMethod]
-        [DataRow("2*x", "x", "x^2")]
-        [DataRow("2*x*y", "x", "x^2*y")]
-        [DataRow("2*x*y", "y", "x*y^2")]
-        [DataRow("2*y*x", "x", "y*x^2")]
-        [DataRow("2*y*x", "y", "y^2*x")]
+        [TestCase("2*x", "x", "x^2")]
+        [TestCase("2*x*y", "x", "x^2*y")]
+        [TestCase("2*x*y", "y", "x*y^2")]
+        [TestCase("2*y*x", "x", "y*x^2")]
+        [TestCase("2*y*x", "y", "y^2*x")]
         public void SimpleIntegrationTest(string expression, string variable, string expectedResult)
         {
             // arrange
@@ -72,17 +70,16 @@ public static class SymbolicVariableTests
             integratedExpression.ToString().ShouldBe(expectedResult);
         }
 
-        [TestMethod]
-        [DataRow("log(x)", "x", "log(x)*x-x")]
-        [DataRow("log(x+1)", "x", "(x+1)*log(x+1)-x-1", true)]
-        [DataRow("log(x^2)", "x", "2*x*log(x)-2*x", true)]
-        [DataRow("log(x^2+x)", "x", "-2x+x*log(x*(x+1))+log(x+1)", true)]
-        [DataRow("log(x^2)", "y", "2*log(x)*y")]
+        [TestCase("log(x)", "x", "log(x)*x-x")]
+        [TestCase("log(x+1)", "x", "(x+1)*log(x+1)-x-1", true)]
+        [TestCase("log(x^2)", "x", "2*x*log(x)-2*x", true)]
+        [TestCase("log(x^2+x)", "x", "-2x+x*log(x*(x+1))+log(x+1)", true)]
+        [TestCase("log(x^2)", "y", "2*log(x)*y")]
         public void LogIntegrationTest(string expression, string variableToIntegrate, string expectedResult, bool isDisabled = false)
         {
             if (isDisabled)
             {
-                Assert.Inconclusive("Test is disabled");
+                Assert.Ignore("Test is disabled");
                 return;
             }
 
@@ -97,11 +94,11 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.Parse))]
     public sealed class ParseTests
     {
-        [TestMethod]
+        [Test]
         [Issue("#11")]
         public void Issues11Testing()
         {
@@ -115,7 +112,7 @@ public static class SymbolicVariableTests
         /// <summary>
         /// Entering $-sin(x)^2$ produces $sin(x)^2$, which is wrong
         /// </summary>
-        [TestMethod]
+        [Test]
         public void Issues17Test()
         {
             // act
@@ -125,9 +122,8 @@ public static class SymbolicVariableTests
             result.ToString().ShouldBe("-Sin(x)^2");
         }
 
-        [TestMethod]
-        [DataRow("4*x^-(h^6-4*x^2)", "4*x^(-h^6+4*x^2)")]
-        [DataRow("4^-(3*x-8*y^6)*u^---+-+(x^-(h^6-4*x^2))", "4^(-3*x+8*y^6)*u^(x^(-h^6+4*x^2))")]
+        [TestCase("4*x^-(h^6-4*x^2)", "4*x^(-h^6+4*x^2)")]
+        [TestCase("4^-(3*x-8*y^6)*u^---+-+(x^-(h^6-4*x^2))", "4^(-3*x+8*y^6)*u^(x^(-h^6+4*x^2))")]
         public void ParsingAndSimplificationTest(string expression, string expectedResult)
         {
             // arrange
@@ -137,8 +133,7 @@ public static class SymbolicVariableTests
             symbolicExpression.ToString().ShouldBe(expectedResult);
         }
 
-        [TestMethod]
-        [DataRow("y^2/x^4/(y^4/x^4+2*y^2/x^2+1)", "y^2/x^4/(y^4/x^4+2*y^2/x^2+1)")]
+        [TestCase("y^2/x^4/(y^4/x^4+2*y^2/x^2+1)", "y^2/x^4/(y^4/x^4+2*y^2/x^2+1)")]
         public void AdditionalDivisionTest(string expression, string expectedResult)
         {
             // act
@@ -148,9 +143,8 @@ public static class SymbolicVariableTests
             result.ToString().ShouldBe(expectedResult);
         }
 
-        [TestMethod]
         [Ignore("Test is not working in original version either")]
-        [DataRow(
+        [TestCase(
             "x^2/sqrt(x^2+y^2+z^2)^2+z^2*x^2/(x^2+y^2+z^2)^3/sqrt(1-z^2/(x^2+y^2+z^2))^2+y^2/x^4/(y^4/x^4+2*y^2/x^2+1)",
             "x^2/(x^2+y^2+z^2)+z^2*x^2/(x^6+3*y^2*x^4+3*z^2*x^4+3*y^4*x^2+6*z^2*y^2*x^2+3*z^4*x^2+y^6+3*z^2*y^4+3*z^4*y^2+z^6+(-x^6*z^2-3*y^2*x^4*z^2-3*z^4*x^4-3*y^4*x^2*z^2-6*z^4*y^2*x^2-3*z^6*x^2-y^6*z^2-3*z^4*y^4-3*z^6*y^2-z^8)/(x^2+y^2+z^2)+y^2/x^4/(y^4/x^4+2*y^2/x^2+1)")]
         public void ComprehensiveTest(string expression, string expectedResult)
@@ -163,13 +157,12 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.Solve))]
     public sealed class SolveTests
     {
-        [TestMethod]
-        [DataRow("3*x-4", 4.0 / 3)]
-        [DataRow("5-3*x", 5.0 / 3.0)]
+        [TestCase("3*x-4", 4.0 / 3)]
+        [TestCase("5-3*x", 5.0 / 3.0)]
         public void SolveTest(string expression, double expected)
         {
             // arrange
@@ -182,10 +175,9 @@ public static class SymbolicVariableTests
             result.ShouldBe(expected);
         }
 
-        [TestMethod]
-        [DataRow("2*x+4*y-4", "x", "-2*y+2")]
-        [DataRow("5*u-4/r+3*h-2*x", "x", "2.5*u-2/r+1.5*h")]
-        [DataRow("5*u-4/r+3*h-2*x", "h", "-1.6666666666666667*u+1.3333333333333333/r+0.6666666666666666*x")]
+        [TestCase("2*x+4*y-4", "x", "-2*y+2")]
+        [TestCase("5*u-4/r+3*h-2*x", "x", "2.5*u-2/r+1.5*h")]
+        [TestCase("5*u-4/r+3*h-2*x", "h", "-1.6666666666666667*u+1.3333333333333333/r+0.6666666666666666*x")]
         public void SolveVariableTest(
             string expression,
             string variableToSolveFor,
@@ -202,14 +194,13 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.ReOrderNegativeSymbols))]
     public sealed class ReOrderNegativeSymbolsTests
     {
-        [TestMethod]
-        [DataRow("5/a", "a")]
-        [DataRow("4*x^-2*y^6*u^-4", "x^2*u^4")]
-        [DataRow("4*x^-(h^6-4*x^2)", "1")]
+        [TestCase("5/a", "a")]
+        [TestCase("4*x^-2*y^6*u^-4", "x^2*u^4")]
+        [TestCase("4*x^-(h^6-4*x^2)", "1")]
         public void ReOrderNegativeSymbolsTest(string inputExpression, string expectedResult)
         {
             // arrange
@@ -223,25 +214,24 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.UnifyDenominators))]
     public sealed class UnifyDenominatorsTests
     {
-        [TestMethod]
-        [DataRow(
+        [TestCase(
             "5/a+6/b",
             "(5*b+6*a)/(a*b)")]
-        [DataRow(
+        [TestCase(
             "a/(x-y)+b/(x+y)",
             "(x*a+y*a+x*b-y*b)/(x^2-y^2)")]
-        [DataRow(
+        [TestCase(
             "z^2*x^2/(x^2+y^2+z^2)^3/sqrt(1-z^2/(x^2+y^2+z^2))^2",
             "(x^2*z^2)/((x^2+y^2)*(x^2+y^2+z^2)^2)", true)]
         public void UnifyDenominatorsTest(string inputExpression, string expectedResult, bool disabled = false)
         {
             if (disabled)
             {
-                Assert.Inconclusive("Test is disabled");
+                Assert.Ignore("Test is disabled");
                 return;
             }
 
@@ -256,18 +246,17 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.TrigSimplify))]
     public sealed class TrigSimplifyTests
     {
-        [TestMethod]
-        [DataRow("(cos(x)^2+sin(x)^2)", "1")]
-        [DataRow("(cos(x)^2+sin(x)^2)^5", "1", true)]
+        [TestCase("(cos(x)^2+sin(x)^2)", "1")]
+        [TestCase("(cos(x)^2+sin(x)^2)^5", "1", true)]
         public void AdvancedFactorizationTest(string expression, string expectedResult, bool isDisabled = false)
         {
             if (isDisabled)
             {
-                Assert.Inconclusive("Test is disabled");
+                Assert.Ignore("Test is disabled");
             }
 
             // arrange
@@ -280,13 +269,12 @@ public static class SymbolicVariableTests
             simplifiedExpression.ToString().ShouldBe(expectedResult);
         }
 
-        [TestMethod]
-        [DataRow("cos(x)^2+sin(x)^2", "1")]
-        [DataRow("a^2*alpha^2*sin(alpha*t)^2+a^2*alpha^2*cos(alpha*t)^2+b^2", "a^2*alpha^2+b^2")]
-        [DataRow("(sin(phi)^2+cos(phi)^2)*sin(theta)^2+cos(theta)^2", "1")]
-        [DataRow("cos(phi)^2*cos(theta)^2 + sin(phi)^2*cos(theta)^2 + sin(theta)^2", "1")]
-        [DataRow("0", "0")]
-        [DataRow("r^2*cos(phi)^2*cos(theta)^2+r^2*sin(phi)^2*cos(theta)^2+r^2*sin(theta)^2", "r^2")]
+        [TestCase("cos(x)^2+sin(x)^2", "1")]
+        [TestCase("a^2*alpha^2*sin(alpha*t)^2+a^2*alpha^2*cos(alpha*t)^2+b^2", "a^2*alpha^2+b^2")]
+        [TestCase("(sin(phi)^2+cos(phi)^2)*sin(theta)^2+cos(theta)^2", "1")]
+        [TestCase("cos(phi)^2*cos(theta)^2 + sin(phi)^2*cos(theta)^2 + sin(theta)^2", "1")]
+        [TestCase("0", "0")]
+        [TestCase("r^2*cos(phi)^2*cos(theta)^2+r^2*sin(phi)^2*cos(theta)^2+r^2*sin(theta)^2", "r^2")]
         public void TrigSimplifyTest(string input, string expectedOutput)
         {
             // arrange
@@ -303,7 +291,7 @@ public static class SymbolicVariableTests
     [TestOf(typeof(SymbolicVariable), ILObjectNames.Multiply)]
     public sealed class MultiplyTests
     {
-        [TestMethod]
+        [Test]
         public void MultiplyTermByOneOnRightSide()
         {
             var term = _x - _y + _z;
@@ -311,7 +299,7 @@ public static class SymbolicVariableTests
             result.ToString().ShouldBe("x-y+z");
         }
 
-        [TestMethod]
+        [Test]
         public void MultiplyTermByOneOnLeftSide()
         {
             var term = _x - _y + _z;
@@ -320,11 +308,11 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.Execute))]
     public sealed class ExecuteTests
     {
-        [TestMethod]
+        [Test]
         public void TestIntFunction()
         {
             // arrange
@@ -345,9 +333,8 @@ public static class SymbolicVariableTests
         /// <li>The negative sign is dropped in the evaluation of the parameter expression.</li>
         /// </nl>
         /// </summary>
-        [TestMethod]
-        [DataRow("IIF(x>45,---27*x^3,-50)", 50, -3375000)]
-        [DataRow("IIF(x>45,---27*x^3,-50)", 40, -50.0)]
+        [TestCase("IIF(x>45,---27*x^3,-50)", 50, -3375000)]
+        [TestCase("IIF(x>45,---27*x^3,-50)", 40, -50.0)]
         public void Issue18Test(string expression, double inputValue, double expectedOutput)
         {
             // arrange
@@ -361,14 +348,14 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), ILObjectNames.Addition)]
     [TestOf(typeof(SymbolicVariable), ILObjectNames.Subtraction)]
     [TestOf(typeof(SymbolicVariable), ILObjectNames.Multiply)]
     [TestOf(typeof(SymbolicVariable), ILObjectNames.Division)]
     public sealed class OperationsTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldSimplifyOperations()
         {
             // Act
@@ -409,11 +396,11 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.Differentiate))]
     public sealed class DifferentiateTests
     {
-        [TestMethod]
+        [Test]
         [Issue("#11")]
         public void DifferentiateAcosTest()
         {
@@ -427,7 +414,7 @@ public static class SymbolicVariableTests
             result.ToString().ShouldBe("-2*x/sqrt(1-x^4-2*y^2*x^2-y^4)");
         }
 
-        [TestMethod]
+        [Test]
         [Issue("#11")]
         [Ignore("Test is not working in original version either")]
         public void DifferentiateAcosWithSqrtTest()
@@ -443,17 +430,16 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.InvolvedSymbols))]
     public sealed class InvolvedSymbolsTests
     {
-        [TestMethod]
-        [DataRow("2^(2*f*t)*t^(8*i*u)*g^(7^(h*l)*s*c)", 9, "c,f,g,h,i,l,s,t,u")]
-        [DataRow("2*sin(x)*sin(cos(y))*log(z)+ g(f(t(u)))", 4, "u,x,y,z")]
-        [DataRow("2*x*sqrt(u,G(F(v,c,x)))*l", 5, "c,l,u,v,x")]
-        [DataRow("5*sin(x)", 1, "x")]
-        [DataRow("sin(3*x)", 1, "x")]
-        [DataRow("sum(x,y)", 2, "x,y")]
+        [TestCase("2^(2*f*t)*t^(8*i*u)*g^(7^(h*l)*s*c)", 9, "c,f,g,h,i,l,s,t,u")]
+        [TestCase("2*sin(x)*sin(cos(y))*log(z)+ g(f(t(u)))", 4, "u,x,y,z")]
+        [TestCase("2*x*sqrt(u,G(F(v,c,x)))*l", 5, "c,l,u,v,x")]
+        [TestCase("5*sin(x)", 1, "x")]
+        [TestCase("sin(3*x)", 1, "x")]
+        [TestCase("sum(x,y)", 2, "x,y")]
         public void InvolvedSymbolsTest(string expression, int expectedCount, string expectedSymbols)
         {
             var symbols = expectedSymbols.Split(",");
@@ -466,7 +452,7 @@ public static class SymbolicVariableTests
             );
         }
 
-        [TestMethod]
+        [Test]
         public void TestInvolvedSymbolsExtraction()
         {
             var b = 2 * _u * _w + _v + _w;
@@ -484,7 +470,7 @@ public static class SymbolicVariableTests
                 () => gg[5].ShouldBe("z"));
         }
 
-        [TestMethod]
+        [Test]
         public void TestInvolvedSymbols_SingleVariable()
         {
             // arrange
@@ -500,7 +486,7 @@ public static class SymbolicVariableTests
                 () => ppP[1].ShouldBe("x"));
         }
 
-        [TestMethod]
+        [Test]
         public void TestInvolvedSymbols_Constant()
         {
             // act & assert
@@ -508,11 +494,11 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.RaiseToSymbolicPower))]
     public sealed class RaiseToSymbolicPowerTests
     {
-        [TestMethod]
+        [Test]
         public void TestRaiseToSymbolicPower_SingleVariable()
         {
             // arrange
@@ -525,7 +511,7 @@ public static class SymbolicVariableTests
             tv1.ToString().ShouldBe("x^(2*u*w+v+w)");
         }
 
-        [TestMethod]
+        [Test]
         public void TestRaiseToSymbolicPower_SumOfVariables()
         {
             // arrange
@@ -538,7 +524,7 @@ public static class SymbolicVariableTests
             tv2.ToString().ShouldBe("(x+y+z)^(2*u*w+v+w)");
         }
 
-        [TestMethod]
+        [Test]
         public void TestRaiseToSymbolicPower_WithVariableExponent()
         {
             // arrange
@@ -553,11 +539,11 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), nameof(SymbolicVariable.Power))]
     public sealed class PowerTests
     {
-        [TestMethod]
+        [Test]
         public void TestPowerOperation()
         {
             // arrange
@@ -572,11 +558,11 @@ public static class SymbolicVariableTests
         }
     }
 
-    [TestClass]
+    [TestFixture]
     [TestOf(typeof(SymbolicVariable), ILObjectNames.Addition)]
     public sealed class AdditionTests
     {
-        [TestMethod]
+        [Test]
         [Issue("#5")]
         public void Issue5Testing0()
         {
@@ -587,7 +573,7 @@ public static class SymbolicVariableTests
             p.ToString().ShouldBe("x+x^5");
         }
 
-        [TestMethod]
+        [Test]
         [Issue("#5")]
         public void Issue5Testing1()
         {

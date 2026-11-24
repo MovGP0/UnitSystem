@@ -5,11 +5,11 @@ using static UnitSystem.Orientations.SianoOrientation;
 
 namespace UnitSystem.UnitTests;
 
-[TestClass]
+[TestFixture]
 [TestOf(typeof(SianoOrientation))]
 public sealed class SianoOrientationTests
 {
-    [TestMethod]
+    [Test]
     public void ShouldUseTheFourCoordinateBasisVectors()
     {
         X.ShouldBe(new SianoOrientation(1, 0, 0, 0));
@@ -18,7 +18,7 @@ public sealed class SianoOrientationTests
         Orientationless.ShouldBe(new SianoOrientation(0, 0, 0, 1));
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldRepresentACombinationOfAxes()
     {
         var combination = 3 * X + Y * 4;
@@ -29,7 +29,7 @@ public sealed class SianoOrientationTests
         (combination * Zero).ShouldBe(Zero);
     }
 
-    [TestMethod]
+    [Test]
     public void ShouldMultiplyComplexCoefficientsBilinearly()
     {
         var combination = Complex.ImaginaryOne * X + Y;
